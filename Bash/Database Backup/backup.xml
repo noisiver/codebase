@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <mysql>
+        <hostname>10.0.0.101</hostname>
+        <port>3306</port>
+        <username>backup</username>
+        <password>backup</password>
+    </mysql>
+    <backup>
+        <max_files>168</max_files>
+    </backup>
+</config>
