@@ -1,0 +1,9 @@
+30 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 30 minutes^m" >/dev/null 2>&1
+45 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 15 minutes^m" >/dev/null 2>&1
+50 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 10 minutes^m" >/dev/null 2>&1
+55 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 5 minutes^m" >/dev/null 2>&1
+56 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 4 minutes^m" >/dev/null 2>&1
+57 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 3 minutes^m" >/dev/null 2>&1
+58 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 2 minutes^m" >/dev/null 2>&1
+59 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 1 minute^m" >/dev/null 2>&1
+0 6 * * 0 cd /root && ./ac.sh all all >/dev/null 2>&1

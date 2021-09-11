@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<config>
+  <mysql>
+    <!-- Hostname of the MySQL server -->
+    <hostname>127.0.0.1</hostname>
+    <!-- Port of the MySQL server -->
+    <port>3306</port>
+    <!-- Username used to connect to the MySQL server -->
+    <username>acore</username>
+    <!-- Password used to connect to the MySQL server -->
+    <password>acore</password>
+    <database>
+      <!-- Name of the auth database -->
+      <auth>acore_auth</auth>
+      <!-- Name of the characters database -->
+      <characters>acore_characters</characters>
+      <!-- Name of the world database -->
+      <world>acore_world</world>
+    </database>
+  </mysql>
+  <core>
+    <!-- Directory where the cloned git repository is located -->
+    <directory>/opt/azerothcore</directory>
+    <!-- Selected git commit. Main means the latest available commit -->
+    <git_commit>main</git_commit>
+    <!-- Selected pull request. None means not using any pull request -->
+    <pull_request>none</pull_request>
+  </core>
+  <world>
+    <!-- Name shown to the player at the realm selection screen -->
+    <name>AzerothCore</name>
+    <!-- Message of the day to send the player when entering the world -->
+    <motd>Welcome to AzerothCore!</motd>
+    <!-- Realm id. If only one realm is used, it should be left as 1 -->
+    <id>1</id>
+    <!-- IP-address used to connect to the world server -->
+    <ip>127.0.0.1</ip>
+    <!-- Game type to use. 0 = PVE, 1 = PVP, 6 = RP -->
+    <game_type>1</game_type>
+    <!-- Realm zone to use. 1 = Development, 8 = English, 9 = German, 10 = French, 11 = Spanish, 12 = Russian, 13 = Tournament, 14 = Taiwan -->
+    <realm_zone>8</realm_zone>
+    <!-- Expansion to use. 0 = Vanilla, 1 = The Burning Crusade, 2 = Wrath of the Lich King -->
+    <expansion>2</expansion>
+    <!-- Max amount of players allowed to be in the world -->
+    <player_limit>1000</player_limit>
+    <!-- Skip opening cinematics. 0 = Show cinematics for every new characters, 1 = Show cinematics for characters of a new race, 2 = Never show cinematics -->
+    <skip_cinematics>0</skip_cinematics>
+    <!-- Max level a player can achieve -->
+    <max_level>80</max_level>
+    <!-- The level a character starts at -->
+    <start_level>1</start_level>
+    <!-- The amount of gold, in copper, that a character starts with -->
+    <start_money>0</start_money>
+    <!-- Always keep a characters skills maxed out -->
+    <always_max_skill>0</always_max_skill>
+    <!-- Give all players every flight path -->
+    <all_flight_paths>0</all_flight_paths>
+    <!-- Characters start with all maps explored -->
+    <maps_explored>0</maps_explored>
+    <!-- Allow players to use in-game commands -->
+    <allow_commands>0</allow_commands>
+    <!-- Quests can be done while in a raid gorup -->
+    <quest_ignore_raid>0</quest_ignore_raid>
+    <!-- Prevent a character from being logged out due to inactivity -->
+    <prevent_afk_logout>0</prevent_afk_logout>
+    <!-- Max level refer-a-friend will be active -->
+    <raf_max_level>60</raf_max_level>
+    <!-- Preload all map grids -->
+    <preload_map_grids>0</preload_map_grids>
+    <!-- Set all waypoints to be active -->
+    <set_all_waypoints_active>0</set_all_waypoints_active>
+    <!-- Allow a group to change the loot mode. Kind of hacky, it changes the source code -->
+    <allow_lfg_lootmode>false</allow_lfg_lootmode>
+    <!-- Enable Minigob Manabonk to roam Dalaran and turn characters into sheeps -->
+    <enable_minigob_manabonk>1</enable_minigob_manabonk>
+    <rates>
+      <!-- Experience gain multiplier -->
+      <experience>1</experience>
+      <!-- Rested exp gain multiplier -->
+      <rested_exp>1</rested_exp>
+      <!-- Reputation gain multiplier -->
+      <reputation>1</reputation>
+      <!-- Money gain multiplier -->
+      <money>1</money>
+      <!-- Crafting skill up multiplier -->
+      <crafting>1</crafting>
+      <!-- Gathering skill up multiplier -->
+      <gathering>1</gathering>
+      <!-- Weapon skill up multiplier -->
+      <weapon_skill>1</weapon_skill>
+      <!-- Defense skill up multiplier -->
+      <defense_skill>1</defense_skill>
+    </rates>
+    <gm>
+      <!-- GM state when entering the world. 0 = Off, 1 = On, 2 = The same state as when the character was online last -->
+      <login_state>1</login_state>
+      <!-- GM visibility state when entering the world. 0 = Off, 1 = On, 2 = The same state as when the character was online last -->
+      <visible>0</visible>
+      <!-- GM chat state when entering the world. 0 = Off, 1 = On, 2 = The same state as when the character was online last -->
+      <chat>0</chat>
+      <!-- GM whispers state when entering the world. 0 = Off, 1 = On, 2 = The same state as when the character was online last -->
+      <whisper>0</whisper>
+      <!-- GM shown in GM list when entering the world -->
+      <gm_list>0</gm_list>
+      <!-- GM shown in who list when entering the world -->
+      <who_list>0</who_list>
+      <!-- Allow players to add a GM as a friend. 0 = Off, 1 = On -->
+      <allow_friend>0</allow_friend>
+      <!-- Allow players to invite a GM to a group. 0 = Off, 1 = On -->
+      <allow_invite>0</allow_invite>
+      <!-- Allow lower security players to interact with a higher security player. 0 = Off, 1 = On -->
+      <lower_security>0</lower_security>
+    </gm>
+  </world>
+  <module>
+    <eluna>
+      <!-- Enable the Eluna module -->
+      <enabled>false</enabled>
+    </eluna>
+    <ahbot>
+      <!-- Enable the auction house bot module -->
+      <enabled>false</enabled>
+      <!-- Enable the auction house seller, it adds items to the auction house -->
+      <enable_seller>0</enable_seller>
+      <!-- Enable the AH bot buyer, it buys items posted on the auction house -->
+      <enable_buyer>0</enable_buyer>
+      <!-- Account id of the character posing as the auction house bot -->
+      <account_id>1</account_id>
+      <!-- Character id of the character posing as the auction house bot -->
+      <character_guid>1</character_guid>
+      <!-- Min amount of items to post on the auction house -->
+      <min_items>250</min_items>
+      <!-- Max amount of items to post on the action house -->
+      <max_items>250</max_items>
+    </ahbot>
+    <skip_dk_area>
+      <!-- Enable the skip DK area module -->
+      <enabled>false</enabled>
+    </skip_dk_area>
+  </module>
+</config>
