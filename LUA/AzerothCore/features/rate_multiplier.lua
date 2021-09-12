@@ -65,3 +65,24 @@ function multiplierOnCommand(event, player, command)
 end
 
 RegisterPlayerEvent(EVENT_ON_COMMAND, multiplierOnCommand)
+
+-- Character enters the world
+function multiplierOnLogin(event, player)
+    if (ENABLE_ANNOUNCE_ON_LOGIN and (player:GetLevel() <= MULTIPLIER_ANNOUNCE_MAX_LEVEL)) then
+        if (ENABLE_EXPERIENCE_MULTIPLIER) then
+            player:SendBroadcastMessage("The experience you receive is "..(100 * rateMultiplier(player)).."% of the normal value.")
+        end
+
+        if (ENABLE_REPUTATION_MULTIPLIER) then
+            player:SendBroadcastMessage("The reputation you receive is "..(100 * rateMultiplier(player)).."% of the normal value.")
+        end
+
+        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER)) then
+            if (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 1) then
+                player:SendBroadcastMessage("The weekend multiplier is currently active, increasing the above values.")
+            end
+        end
+    end
+end
+
+RegisterPlayerEvent(EVENT_ON_LOGIN, multiplierOnLogin)
