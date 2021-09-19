@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("distribution" "packages" "configuration")
+INCLUDES=("distribution" "packages" "configuration" "source" "database")
 
 clear
 echo -e "\e[0;32mInitializing...\e[0m"
@@ -13,3 +13,42 @@ for i in "${INCLUDES[@]}"; do
         exit 1
     fi
 done
+
+function invalid_arguments()
+{
+    clear
+    echo -e "\e[0;32mInvalid arguments\e[0m"
+    echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
+}
+
+if [ $# -gt 0 ]; then
+    if [ $# -eq 1 ]; then
+        if [[ $1 == "start" ]]; then
+            echo "$1"
+        elif [[ $1 == "stop" ]]; then
+            echo "$1"
+        else
+            invalid_arguments
+        fi
+    elif [ $# -eq 2 ]; then
+        if [[ $1 == "auth" ]] || [[ $1 == "world" ]] || [[ $1 == "all" ]]; then
+            if [[ $2 == "setup" ]] || [[ $2 == "install" ]] || [[ $2 == "update" ]]; then
+                echo "$1 $2"
+            elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
+                echo "$1 $2"
+            elif [[ $2 == "conf" ]] || [[ $2 == "config" ]] || [[ $2 == "configuration" ]]; then
+                echo "$1 $2"
+            elif [[ $2 == "all" ]]; then
+                echo "$1 $2"
+            else
+                invalid_arguments
+            fi
+        else
+            invalid_arguments
+        fi
+    else
+        invalid_arguments
+    fi
+else
+    invalid_arguments
+fi
