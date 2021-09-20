@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("distribution" "packages" "configuration" "source" "database")
+INCLUDES=("distribution" "packages" "configuration" "menu" "source" "database")
 
 clear
 echo -e "\e[0;32mInitializing...\e[0m"
@@ -50,5 +50,6 @@ if [ $# -gt 0 ]; then
         invalid_arguments
     fi
 else
-    invalid_arguments
+    install_menu_packages
+    main_menu
 fi

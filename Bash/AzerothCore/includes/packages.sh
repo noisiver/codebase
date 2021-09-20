@@ -16,6 +16,26 @@ if [ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok inst
     fi
 fi
 
+function install_menu_packages()
+{
+    if [ $(dpkg-query -W -f='${Status}' whiptail 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+        if [[ $(id -u) -ne 0 ]]; then
+            echo -e "\e[0;31mThis script needs to be run as root or using sudo\e[0m"
+            exit 1
+        fi
+
+        apt-get update -y
+        if [ $? -ne 0 ]; then
+            exit $?
+        fi
+
+        apt-get install -y whiptail
+        if [ $? -ne 0 ]; then
+            exit $?
+        fi
+    fi
+}
+
 function install_build_packages()
 {
     PACKAGES=("git" "cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-6.*" "libace-dev" "libboost1.71-all-dev" "libmariadb-dev-compat" "mariadb-client")
