@@ -25,20 +25,17 @@ function source_menu
 {
     SELECTION=$(whiptail --title "Manage the source code" --menu "Choose an option" 25 78 16 \
     1 "Download or update the source code" \
-    2 "Manage the available modules" \
-    3 "Compile the source into binaries" \
-    4 "Download or update the client data files" \
+    2 "Compile the source into binaries" \
+    3 "Download or update the client data files" \
     3>&1 1>&2 2>&3)
 
     if [ $SELECTION ]; then
         if [ $SELECTION == 1 ]; then
-            echo "Download or update the source code"
+            clone_source 0
         elif [ $SELECTION == 2 ]; then
-            echo "Manage the available modules"
+            compile_source 0
         elif [ $SELECTION == 3 ]; then
-            echo "Compile the source into binaries"
-        elif [ $SELECTION == 4 ]; then
-            echo "Download or update the client data files"
+            source_menu
         fi
     else
         main_menu
@@ -53,7 +50,7 @@ function database_menu
 
     if [ $SELECTION ]; then
         if [ $SELECTION == 1 ]; then
-            echo "Not yet determined options"
+            database_menu
         fi
     else
         main_menu
@@ -68,7 +65,7 @@ function configuration_menu
 
     if [ $SELECTION ]; then
         if [ $SELECTION == 1 ]; then
-            echo "Not yet determined options"
+            configuration_menu
         fi
     else
         main_menu
@@ -85,9 +82,9 @@ function binary_menu
 
         if [ $SELECTION ]; then
             if [ $SELECTION == 1 ]; then
-                echo "Start all processes"
+                binary_menu
             elif [ $SELECTION == 2 ]; then
-                echo "Stop all processes"
+                binary_menu
             fi
         else
             main_menu

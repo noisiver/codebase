@@ -33,13 +33,15 @@ if [ $# -gt 0 ]; then
     elif [ $# -eq 2 ]; then
         if [[ $1 == "auth" ]] || [[ $1 == "world" ]] || [[ $1 == "all" ]]; then
             if [[ $2 == "setup" ]] || [[ $2 == "install" ]] || [[ $2 == "update" ]]; then
-                echo "$1 $2"
+                clone_source
+                compile_source
             elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
                 echo "$1 $2"
             elif [[ $2 == "conf" ]] || [[ $2 == "config" ]] || [[ $2 == "configuration" ]]; then
                 echo "$1 $2"
             elif [[ $2 == "all" ]]; then
-                echo "$1 $2"
+                clone_source
+                compile_source
             else
                 invalid_arguments
             fi
