@@ -25,21 +25,47 @@ function source_menu
 {
     SELECTION=$(whiptail --title "Manage the source code" --menu "Choose an option" 25 78 16 \
     1 "Download or update the source code" \
-    2 "Compile the source into binaries" \
-    3 "Download or update the client data files" \
+    2 "Manage the available modules" \
+    3 "Compile the source into binaries" \
+    4 "Download or update the client data files" \
     3>&1 1>&2 2>&3)
 
     if [ $SELECTION ]; then
         if [ $SELECTION == 1 ]; then
             clone_source 0
         elif [ $SELECTION == 2 ]; then
-            compile_source 0
+            source_module_menu
         elif [ $SELECTION == 3 ]; then
+            compile_source 0
+        elif [ $SELECTION == 4 ]; then
             source_menu
         fi
     else
         main_menu
     fi
+}
+
+function source_module_menu
+{
+    SELECTION=$(whiptail --title "Available Modules" --checklist \
+    "Select the modules to use" 20 78 4 \
+    "Eluna" "A LUA engine allowing the use of scripts written in LUA" ${MODULE_ELUNA_ENABLED/true/ON} \
+    3>&1 1>&2 2>&3)
+
+    if [ $SELECTION ]; then
+        if [[ $SELECTION == *"Eluna"* ]]; then
+            MODULE_ELUNA_ENABLED="true"
+            generate_settings
+        else
+            MODULE_ELUNA_ENABLED="false"
+            generate_settings
+        fi
+    else
+        MODULE_ELUNA_ENABLED="false"
+        generate_settings
+    fi
+
+    source_menu
 }
 
 function database_menu

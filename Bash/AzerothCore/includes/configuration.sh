@@ -4,7 +4,7 @@ ROOT=$(pwd)
 CONFIG_FILE="azerothcore.xml"
 MYSQL_CONFIG="$ROOT/mysql.cnf"
 
-function export_settings()
+function export_settings
 {
     echo "<?xml version=\"1.0\"?>
     <config>
@@ -77,7 +77,7 @@ function export_settings()
     </config>" | xmllint --format - > $ROOT/$CONFIG_FILE
 }
 
-function generate_settings()
+function generate_settings
 {
     export_settings \
     $MYSQL_HOSTNAME \
