@@ -47,6 +47,7 @@ function source_menu
             fi
 
             clone_source 0
+            source_menu
         elif [ $SELECTION == 2 ]; then
             [ -f $CORE_DIRECTORY/bin/auth.sh ] && AUTH=1 || AUTH=0
             [ -f $CORE_DIRECTORY/bin/world.sh ] && WORLD=1 || WORLD=0
@@ -66,13 +67,16 @@ function source_menu
                 elif [[ $SOURCE == *"World"* ]]; then
                     compile_source 0 2
                 fi
+
+                source_menu
             fi
         elif [ $SELECTION == 3 ]; then
             fetch_client_data 0
+            source_menu
         fi
+    else
+        main_menu
     fi
-
-    main_menu
 }
 
 function database_menu
@@ -102,9 +106,9 @@ function database_menu
 
     if [ $SELECTION ]; then
         main_menu
+    else
+        main_menu
     fi
-
-    main_menu
 }
 
 function configuration_menu
@@ -117,9 +121,9 @@ function configuration_menu
         if [ $SELECTION == 1 ]; then
             configuration_menu
         fi
+    else
+        main_menu
     fi
-
-    main_menu
 }
 
 function binary_menu

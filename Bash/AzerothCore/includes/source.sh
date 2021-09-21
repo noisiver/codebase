@@ -62,12 +62,6 @@ function clone_source
             fi
         fi
     fi
-
-    if [ $1 ]; then
-        if [ $1 == 0 ]; then
-            source_menu
-        fi
-    fi
 }
 
 function compile_source
@@ -127,12 +121,6 @@ function compile_source
 
     chmod +x $CORE_DIRECTORY/bin/start.sh
     chmod +x $CORE_DIRECTORY/bin/shutdown.sh
-
-    if [ $1 ]; then
-        if [ $1 == 0 ]; then
-            source_menu
-        fi
-    fi
 }
 
 function fetch_client_data
@@ -163,11 +151,5 @@ function fetch_client_data
 
         CORE_INSTALLED_CLIENT_DATA=$CORE_REQUIRED_CLIENT_DATA
         generate_settings
-    fi
-
-    if [ $1 ]; then
-        if [ $1 == 0 ]; then
-            source_menu
-        fi
     fi
 }
