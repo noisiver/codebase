@@ -32,9 +32,13 @@ if [ $# -gt 0 ]; then
         fi
     elif [ $# -eq 2 ]; then
         if [[ $1 == "auth" ]] || [[ $1 == "world" ]] || [[ $1 == "all" ]]; then
+            [[ $1 == "all" ]] && TYPE=0
+            [[ $1 == "auth" ]] && TYPE=1
+            [[ $1 == "world" ]] && TYPE=2
+
             if [[ $2 == "setup" ]] || [[ $2 == "install" ]] || [[ $2 == "update" ]]; then
                 clone_source
-                compile_source
+                compile_source 1 $TYPE
                 fetch_client_data
             elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
                 echo "$1 $2"
@@ -42,7 +46,7 @@ if [ $# -gt 0 ]; then
                 echo "$1 $2"
             elif [[ $2 == "all" ]]; then
                 clone_source
-                compile_source
+                compile_source 1 $TYPE
                 fetch_client_data
             else
                 invalid_arguments

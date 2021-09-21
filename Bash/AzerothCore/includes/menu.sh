@@ -36,13 +36,38 @@ function source_menu
         elif [ $SELECTION == 2 ]; then
             source_module_menu
         elif [ $SELECTION == 3 ]; then
-            compile_source 0
+            compile_source_menu
         elif [ $SELECTION == 4 ]; then
             fetch_client_data 0
         fi
     else
         main_menu
     fi
+}
+
+function compile_source_menu
+{
+    [ -f $CORE_DIRECTORY/bin/auth.sh ] && AUTH=1 || AUTH=0
+    [ -f $CORE_DIRECTORY/bin/world.sh ] && WORLD=1 || WORLD=0
+    [ ! -f $CORE_DIRECTORY/bin/start.sh ] && AUTH=1 WORLD=1
+
+    SELECTION=$(whiptail --title "Compile the source into binaries" --checklist \
+    "Select the parts to use for this compilation" 20 78 4 \
+    "Auth" "Set up and use the authserver" $AUTH \
+    "World" "Set up and use the worldserver" $WORLD \
+    3>&1 1>&2 2>&3)
+
+    if [[ $SELECTION ]]; then
+        if [[ $SELECTION == *"Auth"* ]] && [[ $SELECTION == *"World"* ]]; then
+            compile_source 0 0
+        elif [[ $SELECTION == *"Auth"* ]]; then
+            compile_source 0 1
+        elif [[ $SELECTION == *"World"* ]]; then
+            compile_source 0 2
+        fi
+    fi
+
+    source_menu
 }
 
 function source_module_menu
@@ -52,7 +77,7 @@ function source_module_menu
     "Eluna" "A LUA engine allowing the use of scripts written in LUA" ${MODULE_ELUNA_ENABLED/true/ON} \
     3>&1 1>&2 2>&3)
 
-    if [ $SELECTION ]; then
+    if [[ $SELECTION ]]; then
         if [[ $SELECTION == *"Eluna"* ]]; then
             MODULE_ELUNA_ENABLED="true"
             generate_settings

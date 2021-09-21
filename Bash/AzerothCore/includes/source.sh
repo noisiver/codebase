@@ -88,6 +88,46 @@ function compile_source
         exit $?
     fi
 
+    echo "#!/bin/bash" > $CORE_DIRECTORY/bin/start.sh
+    echo "#!/bin/bash" > $CORE_DIRECTORY/bin/shutdown.sh
+
+    if [[ $2 == 0 ]] || [[ $2 == 1 ]]; then
+        echo "screen -AmdS auth ./auth.sh" >> $CORE_DIRECTORY/bin/start.sh
+        echo "screen -X -S \"auth\" quit" >> $CORE_DIRECTORY/bin/shutdown.sh
+
+        echo "#!/bin/sh" > $CORE_DIRECTORY/bin/auth.sh
+        echo "while :; do" >> $CORE_DIRECTORY/bin/auth.sh
+        echo "./authserver" >> $CORE_DIRECTORY/bin/auth.sh
+        echo "sleep 20" >> $CORE_DIRECTORY/bin/auth.sh
+        echo "done" >> $CORE_DIRECTORY/bin/auth.sh
+
+        chmod +x $CORE_DIRECTORY/bin/auth.sh
+    else
+        if [ -f $CORE_DIRECTORY/bin/auth.sh ]; then
+            rm -rf $CORE_DIRECTORY/bin/auth.sh
+        fi
+    fi
+
+    if [[ $2 == 0 ]] || [[ $2 == 2 ]]; then
+        echo "screen -AmdS world ./world.sh" >> $CORE_DIRECTORY/bin/start.sh
+        echo "screen -X -S \"world\" quit" >> $CORE_DIRECTORY/bin/shutdown.sh
+
+        echo "#!/bin/sh" > $CORE_DIRECTORY/bin/world.sh
+        echo "while :; do" >> $CORE_DIRECTORY/bin/world.sh
+        echo "./worldserver" >> $CORE_DIRECTORY/bin/world.sh
+        echo "sleep 20" >> $CORE_DIRECTORY/bin/world.sh
+        echo "done" >> $CORE_DIRECTORY/bin/world.sh
+
+        chmod +x $CORE_DIRECTORY/bin/world.sh
+    else
+        if [ -f $CORE_DIRECTORY/bin/world.sh ]; then
+            rm -rf $CORE_DIRECTORY/bin/world.sh
+        fi
+    fi
+
+    chmod +x $CORE_DIRECTORY/bin/start.sh
+    chmod +x $CORE_DIRECTORY/bin/shutdown.sh
+
     if [ $1 ]; then
         if [ $1 == 0 ]; then
             source_menu
@@ -97,6 +137,10 @@ function compile_source
 
 function fetch_client_data
 {
+    if [[ ! -d $CORE_DIRECTORY/bin/Cameras ]] || [[ ! -d $CORE_DIRECTORY/bin/dbc ]] || [[ ! -d $CORE_DIRECTORY/bin/maps ]] || [[ ! -d $CORE_DIRECTORY/bin/mmaps ]] || [[ ! -d $CORE_DIRECTORY/bin/vmaps ]]; then
+        CORE_INSTALLED_CLIENT_DATA=0
+    fi
+
     if [ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]; then
         if [[ -d $CORE_DIRECTORY/bin/Cameras ]] || [[ -d $CORE_DIRECTORY/bin/dbc ]] || [[ -d $CORE_DIRECTORY/bin/maps ]] || [[ -d $CORE_DIRECTORY/bin/mmaps ]] || [[ -d $CORE_DIRECTORY/bin/vmaps ]]; then
             rm -rf $CORE_DIRECTORY/bin/Cameras $CORE_DIRECTORY/bin/dbc $CORE_DIRECTORY/bin/maps $CORE_DIRECTORY/bin/mmaps $CORE_DIRECTORY/bin/vmaps
