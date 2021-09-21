@@ -95,6 +95,17 @@ function source_module_menu
 
 function database_menu
 {
+    if (whiptail --title "Manage the databases" --yesno "Do you wish to customize the database credentials before proceeding?" 8 72); then
+        MYSQL_HOSTNAME=$(whiptail --inputbox "The IP or hostname of the MySQL/MariaDB server" 8 60 $MYSQL_HOSTNAME --title "Manage the databases" 3>&1 1>&2 2>&3)
+        MYSQL_PORT=$(whiptail --inputbox "The port number of the MySQL/MariaDB server" 8 60 $MYSQL_PORT --title "Manage the databases" 3>&1 1>&2 2>&3)
+        MYSQL_USERNAME=$(whiptail --inputbox "The username used to connect to the MySQL/MariaDB server" 8 60 $MYSQL_USERNAME --title "Manage the databases" 3>&1 1>&2 2>&3)
+        MYSQL_PASSWORD=$(whiptail --passwordbox "The password used to connect to the MySQL/MariaDB server" 8 60 $MYSQL_PASSWORD --title "Manage the databases" 3>&1 1>&2 2>&3)
+        MYSQL_DATABASE_AUTH=$(whiptail --inputbox "The name of the auth database" 8 60 $MYSQL_DATABASE_AUTH --title "Manage the databases" 3>&1 1>&2 2>&3)
+        MYSQL_DATABASE_CHARACTERS=$(whiptail --inputbox "The name of the characters database" 8 60 $MYSQL_DATABASE_CHARACTERS --title "Manage the databases" 3>&1 1>&2 2>&3)
+        MYSQL_DATABASE_WORLD=$(whiptail --inputbox "The name of the world database" 8 60 $MYSQL_DATABASE_WORLD --title "Manage the databases" 3>&1 1>&2 2>&3)
+        generate_settings
+    fi
+
     SELECTION=$(whiptail --title "Manage the databases" --menu "Choose an option" 25 78 16 \
     1 "Not yet determined options" \
     3>&1 1>&2 2>&3)
@@ -127,14 +138,11 @@ function binary_menu
 {
     if [[ -f $CORE_DIRECTORY/bin/start.sh ]] && [[ -f $CORE_DIRECTORY/bin/worldserver ]] && [[ -f $CORE_DIRECTORY/bin/authserver ]]; then
         SELECTION=$(whiptail --title "Manage the compiled binaries" --menu "Choose an option" 25 78 16 \
-        1 "Start all processes" \
-        2 "Stop all processes" \
+        1 "Not yet determined options" \
         3>&1 1>&2 2>&3)
 
         if [ $SELECTION ]; then
             if [ $SELECTION == 1 ]; then
-                binary_menu
-            elif [ $SELECTION == 2 ]; then
                 binary_menu
             fi
         else
