@@ -14,13 +14,6 @@ for i in "${INCLUDES[@]}"; do
     fi
 done
 
-function invalid_arguments()
-{
-    clear
-    echo -e "\e[0;32mInvalid arguments\e[0m"
-    echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
-}
-
 if [ $# -gt 0 ]; then
     if [ $# -eq 1 ]; then
         if [[ $1 == "start" ]]; then
@@ -28,7 +21,8 @@ if [ $# -gt 0 ]; then
         elif [[ $1 == "stop" ]]; then
             echo "$1"
         else
-            invalid_arguments
+            echo -e "\n\e[0;32mInvalid arguments\e[0m"
+            echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
         fi
     elif [ $# -eq 2 ]; then
         if [[ $1 == "auth" ]] || [[ $1 == "world" ]] || [[ $1 == "all" ]]; then
@@ -49,13 +43,16 @@ if [ $# -gt 0 ]; then
                 compile_source $TYPE
                 fetch_client_data
             else
-                invalid_arguments
+                echo -e "\n\e[0;32mInvalid arguments\e[0m"
+                echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
             fi
         else
-            invalid_arguments
+            echo -e "\n\e[0;32mInvalid arguments\e[0m"
+            echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
         fi
     else
-        invalid_arguments
+        echo -e "\n\e[0;32mInvalid arguments\e[0m"
+        echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
     fi
 else
     install_menu_packages

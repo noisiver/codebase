@@ -44,6 +44,9 @@ function source_menu
                     MODULE_ELUNA_ENABLED="false"
                     generate_settings
                 fi
+            else
+                source_menu
+                exit 0
             fi
 
             clone_source 0
@@ -95,6 +98,7 @@ function database_menu
         else
             whiptail --title "An error has occured" --msgbox "At least one of the entered values is invalid or empty" 7 58
             main_menu
+            exit 0
         fi
     fi
 
