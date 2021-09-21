@@ -11,12 +11,16 @@ function main_menu
     if [ $SELECTION ]; then
         if [ $SELECTION == 1 ]; then
             source_menu
+            exit 0
         elif [ $SELECTION == 2 ]; then
             database_menu
+            exit 0
         elif [ $SELECTION == 3 ]; then
             configuration_menu
+            exit 0
         elif [ $SELECTION == 4 ]; then
             binary_menu
+            exit 0
         fi
     fi
 }
@@ -51,6 +55,7 @@ function source_menu
 
             clone_source 0
             source_menu
+            exit 0
         elif [ $SELECTION == 2 ]; then
             [ -f $CORE_DIRECTORY/bin/auth.sh ] && AUTH=1 || AUTH=0
             [ -f $CORE_DIRECTORY/bin/world.sh ] && WORLD=1 || WORLD=0
@@ -72,13 +77,16 @@ function source_menu
                 fi
 
                 source_menu
+                exit 0
             fi
         elif [ $SELECTION == 3 ]; then
             fetch_client_data
             source_menu
+            exit 0
         fi
     else
         main_menu
+        exit 0
     fi
 }
 
@@ -125,6 +133,7 @@ function database_menu
         fi
     else
         main_menu
+        exit 0
     fi
 }
 
@@ -140,6 +149,7 @@ function configuration_menu
         fi
     else
         main_menu
+        exit 0
     fi
 }
 
@@ -153,6 +163,7 @@ function binary_menu
         if [ $SELECTION ]; then
             if [ $SELECTION == 1 ]; then
                 binary_menu
+                exit 0
             fi
         fi
     else
@@ -160,4 +171,5 @@ function binary_menu
     fi
 
     main_menu
+    exit 0
 }
