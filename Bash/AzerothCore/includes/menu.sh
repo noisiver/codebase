@@ -61,17 +61,17 @@ function source_menu
 
             if [[ $SOURCE ]]; then
                 if [[ $SOURCE == *"Auth"* ]] && [[ $SOURCE == *"World"* ]]; then
-                    compile_source 0 0
+                    compile_source 0
                 elif [[ $SOURCE == *"Auth"* ]]; then
-                    compile_source 0 1
+                    compile_source 1
                 elif [[ $SOURCE == *"World"* ]]; then
-                    compile_source 0 2
+                    compile_source 2
                 fi
 
                 source_menu
             fi
         elif [ $SELECTION == 3 ]; then
-            fetch_client_data 0
+            fetch_client_data
             source_menu
         fi
     else

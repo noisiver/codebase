@@ -85,7 +85,7 @@ function compile_source
     echo "#!/bin/bash" > $CORE_DIRECTORY/bin/start.sh
     echo "#!/bin/bash" > $CORE_DIRECTORY/bin/shutdown.sh
 
-    if [[ $2 == 0 ]] || [[ $2 == 1 ]]; then
+    if [[ $1 == 0 ]] || [[ $1 == 1 ]]; then
         echo "screen -AmdS auth ./auth.sh" >> $CORE_DIRECTORY/bin/start.sh
         echo "screen -X -S \"auth\" quit" >> $CORE_DIRECTORY/bin/shutdown.sh
 
@@ -102,7 +102,7 @@ function compile_source
         fi
     fi
 
-    if [[ $2 == 0 ]] || [[ $2 == 2 ]]; then
+    if [[ $1 == 0 ]] || [[ $1 == 2 ]]; then
         echo "screen -AmdS world ./world.sh" >> $CORE_DIRECTORY/bin/start.sh
         echo "screen -X -S \"world\" quit" >> $CORE_DIRECTORY/bin/shutdown.sh
 
