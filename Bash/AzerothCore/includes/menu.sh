@@ -38,7 +38,7 @@ function source_menu
         elif [ $SELECTION == 3 ]; then
             compile_source 0
         elif [ $SELECTION == 4 ]; then
-            source_menu
+            fetch_client_data 0
         fi
     else
         main_menu

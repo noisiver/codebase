@@ -35,6 +35,7 @@ if [ $# -gt 0 ]; then
             if [[ $2 == "setup" ]] || [[ $2 == "install" ]] || [[ $2 == "update" ]]; then
                 clone_source
                 compile_source
+                fetch_client_data
             elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
                 echo "$1 $2"
             elif [[ $2 == "conf" ]] || [[ $2 == "config" ]] || [[ $2 == "configuration" ]]; then
@@ -42,6 +43,7 @@ if [ $# -gt 0 ]; then
             elif [[ $2 == "all" ]]; then
                 clone_source
                 compile_source
+                fetch_client_data
             else
                 invalid_arguments
             fi
