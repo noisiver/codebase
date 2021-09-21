@@ -81,10 +81,12 @@ function source_module_menu
         if [[ $SELECTION == *"Eluna"* ]]; then
             MODULE_ELUNA_ENABLED="true"
             generate_settings
+        else
+            MODULE_ELUNA_ENABLED="false"
+            generate_settings
         fi
-    else
-        MODULE_ELUNA_ENABLED="false"
-        generate_settings
+
+        whiptail --title "Notice" --msgbox "A change of modules will require you to update the source code again" 7 72
     fi
 
     source_menu
