@@ -31,13 +31,13 @@ function source_menu
 
     if [ $SELECTION ]; then
         if [ $SELECTION == 1 ]; then
-            MODULE=$(whiptail --title "Available Modules" --checklist \
+            SELECTION=$(whiptail --title "Available Modules" --checklist \
             "Select the modules to use" 11 50 4 \
             "Eluna" "Allows scripts written in LUA" ${MODULE_ELUNA_ENABLED/true/ON} \
             3>&1 1>&2 2>&3)
 
-            if [[ $MODULE ]]; then
-                if [[ $MODULE == *"Eluna"* ]]; then
+            if [[ $SELECTION ]]; then
+                if [[ $SELECTION == *"Eluna"* ]]; then
                     MODULE_ELUNA_ENABLED="true"
                     generate_settings
                 else
@@ -53,18 +53,18 @@ function source_menu
             [ -f $CORE_DIRECTORY/bin/world.sh ] && WORLD=1 || WORLD=0
             [ ! -f $CORE_DIRECTORY/bin/start.sh ] && AUTH=1 WORLD=1
 
-            SOURCE=$(whiptail --title "Compile the source into binaries" --checklist \
+            SELECTION=$(whiptail --title "Compile the source into binaries" --checklist \
             "Select the parts to use for this compilation" 11 50 4 \
             "Auth" "Enable the use of authserver" $AUTH \
             "World" "Enable the use of worldserver" $WORLD \
             3>&1 1>&2 2>&3)
 
-            if [[ $SOURCE ]]; then
-                if [[ $SOURCE == *"Auth"* ]] && [[ $SOURCE == *"World"* ]]; then
+            if [[ $SELECTION ]]; then
+                if [[ $SELECTION == *"Auth"* ]] && [[ $SELECTION == *"World"* ]]; then
                     compile_source 0
-                elif [[ $SOURCE == *"Auth"* ]]; then
+                elif [[ $SELECTION == *"Auth"* ]]; then
                     compile_source 1
-                elif [[ $SOURCE == *"World"* ]]; then
+                elif [[ $SELECTION == *"World"* ]]; then
                     compile_source 2
                 fi
 
@@ -90,7 +90,7 @@ function database_menu
         MYSQL_DATABASE_CHARACTERS=$(whiptail --inputbox "The name of the characters database" 8 60 $MYSQL_DATABASE_CHARACTERS --title "Manage the databases" 3>&1 1>&2 2>&3)
         MYSQL_DATABASE_WORLD=$(whiptail --inputbox "The name of the world database" 8 60 $MYSQL_DATABASE_WORLD --title "Manage the databases" 3>&1 1>&2 2>&3)
 
-        if [[ $MYSQL_HOSTNAME ]] && [[ $MYSQL_PORT ]] && [[ $MYSQL_USERNAME ]] && [[ $MYSQL_PASSWORD ]] && [[ $MYSQL_DATABASE_AUTH ]] && [[ $MYSQL_DATABASE_CHARACTERS ]] && [[ $MYSQL_DATABASE_WORLD ]]; then
+        if [[ ! -z $MYSQL_HOSTNAME ]] && [[ ! -z $MYSQL_PORT ]] && [[ ! -z $MYSQL_USERNAME ]] && [[ ! -z $MYSQL_PASSWORD ]] && [[ ! -z $MYSQL_DATABASE_AUTH ]] && [[ ! -z $MYSQL_DATABASE_CHARACTERS ]] && [[ ! -z $MYSQL_DATABASE_WORLD ]]; then
             generate_settings
         else
             whiptail --title "An error has occured" --msgbox "At least one of the entered values is invalid or empty" 7 58
@@ -105,7 +105,20 @@ function database_menu
     3>&1 1>&2 2>&3)
 
     if [ $SELECTION ]; then
-        main_menu
+        [[ $SELECTION == 1 ]] && DATABASE=$MYSQL_DATABASE_AUTH
+        [[ $SELECTION == 2 ]] && DATABASE=$MYSQL_DATABASE_CHARACTERS
+        [[ $SELECTION == 3 ]] && DATABASE=$MYSQL_DATABASE_WORLD
+
+        SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
+        1 "Import all the required tables" \
+        2 "Import all the available updates" \
+        3>&1 1>&2 2>&3)
+
+        if [ $SELECTION == 1 ]; then
+            echo "Import all the required tables for $DATABASE"
+        elif [ $SELECTION == 2 ]; then
+            echo "Import all the available updates $DATABASE"
+        fi
     else
         main_menu
     fi
