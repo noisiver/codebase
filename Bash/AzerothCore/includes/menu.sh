@@ -70,9 +70,9 @@ function source_menu
         elif [ $SELECTION == 3 ]; then
             fetch_client_data 0
         fi
-    else
-        main_menu
     fi
+
+    main_menu
 }
 
 function database_menu
@@ -102,9 +102,9 @@ function database_menu
 
     if [ $SELECTION ]; then
         main_menu
-    else
-        main_menu
     fi
+
+    main_menu
 }
 
 function configuration_menu
@@ -117,9 +117,9 @@ function configuration_menu
         if [ $SELECTION == 1 ]; then
             configuration_menu
         fi
-    else
-        main_menu
     fi
+
+    main_menu
 }
 
 function binary_menu
@@ -133,11 +133,10 @@ function binary_menu
             if [ $SELECTION == 1 ]; then
                 binary_menu
             fi
-        else
-            main_menu
         fi
     else
         whiptail --title "An error has occured" --msgbox "Unable to locate the required files\n\nYou first need to compile the source code into binaries" 9 59
-        main_menu
     fi
+
+    main_menu
 }
