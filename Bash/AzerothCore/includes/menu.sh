@@ -8,19 +8,15 @@ function main_menu
     4 "Manage the compiled binaries" \
     3>&1 1>&2 2>&3)
 
-    if [ $SELECTION ]; then
-        if [ $SELECTION == 1 ]; then
+    if [[ $SELECTION ]]; then
+        if [[ $SELECTION == 1 ]]; then
             source_menu
-            exit 0
-        elif [ $SELECTION == 2 ]; then
+        elif [[ $SELECTION == 2 ]]; then
             database_menu
-            exit 0
-        elif [ $SELECTION == 3 ]; then
+        elif [[ $SELECTION == 3 ]]; then
             configuration_menu
-            exit 0
-        elif [ $SELECTION == 4 ]; then
+        elif [[ $SELECTION == 4 ]]; then
             binary_menu
-            exit 0
         fi
     fi
 }
@@ -33,8 +29,8 @@ function source_menu
     3 "Download or update the client data files" \
     3>&1 1>&2 2>&3)
 
-    if [ $SELECTION ]; then
-        if [ $SELECTION == 1 ]; then
+    if [[ $SELECTION ]]; then
+        if [[ $SELECTION == 1 ]]; then
             SELECTION=$(whiptail --title "Available Modules" --checklist \
             "Select the modules to use" 11 50 4 \
             "Eluna" "Allows scripts written in LUA" ${MODULE_ELUNA_ENABLED/true/ON} \
@@ -55,8 +51,7 @@ function source_menu
 
             clone_source 0
             source_menu
-            exit 0
-        elif [ $SELECTION == 2 ]; then
+        elif [[ $SELECTION == 2 ]]; then
             [ -f $CORE_DIRECTORY/bin/auth.sh ] && AUTH=1 || AUTH=0
             [ -f $CORE_DIRECTORY/bin/world.sh ] && WORLD=1 || WORLD=0
             [ ! -f $CORE_DIRECTORY/bin/start.sh ] && AUTH=1 WORLD=1
@@ -77,16 +72,13 @@ function source_menu
                 fi
 
                 source_menu
-                exit 0
             fi
-        elif [ $SELECTION == 3 ]; then
+        elif [[ $SELECTION == 3 ]]; then
             fetch_client_data
             source_menu
-            exit 0
         fi
     else
         main_menu
-        exit 0
     fi
 }
 
@@ -106,7 +98,6 @@ function database_menu
         else
             whiptail --title "An error has occured" --msgbox "At least one of the entered values is invalid or empty" 7 58
             main_menu
-            exit 0
         fi
     fi
 
@@ -116,7 +107,7 @@ function database_menu
     3 "Manage the database $MYSQL_DATABASE_WORLD" \
     3>&1 1>&2 2>&3)
 
-    if [ $SELECTION ]; then
+    if [[ $SELECTION ]]; then
         [[ $SELECTION == 1 ]] && DATABASE=$MYSQL_DATABASE_AUTH
         [[ $SELECTION == 2 ]] && DATABASE=$MYSQL_DATABASE_CHARACTERS
         [[ $SELECTION == 3 ]] && DATABASE=$MYSQL_DATABASE_WORLD
@@ -126,14 +117,13 @@ function database_menu
         2 "Import all the available updates" \
         3>&1 1>&2 2>&3)
 
-        if [ $SELECTION == 1 ]; then
+        if [[ $SELECTION == 1 ]]; then
             echo "Import all the required tables for $DATABASE"
-        elif [ $SELECTION == 2 ]; then
+        elif [[ $SELECTION == 2 ]]; then
             echo "Import all the available updates $DATABASE"
         fi
     else
         main_menu
-        exit 0
     fi
 }
 
@@ -143,13 +133,12 @@ function configuration_menu
     1 "Not yet determined options" \
     3>&1 1>&2 2>&3)
 
-    if [ $SELECTION ]; then
-        if [ $SELECTION == 1 ]; then
+    if [[ $SELECTION ]]; then
+        if [[ $SELECTION == 1 ]]; then
             configuration_menu
         fi
     else
         main_menu
-        exit 0
     fi
 }
 
@@ -160,10 +149,9 @@ function binary_menu
         1 "Not yet determined options" \
         3>&1 1>&2 2>&3)
 
-        if [ $SELECTION ]; then
-            if [ $SELECTION == 1 ]; then
+        if [[ $SELECTION ]]; then
+            if [[ $SELECTION == 1 ]]; then
                 binary_menu
-                exit 0
             fi
         fi
     else
@@ -171,5 +159,4 @@ function binary_menu
     fi
 
     main_menu
-    exit 0
 }
