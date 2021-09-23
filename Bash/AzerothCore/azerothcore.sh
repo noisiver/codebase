@@ -35,31 +35,51 @@ if [ $# -gt 0 ]; then
                 compile_source $TYPE
                 fetch_client_data
             elif [ $2 == "database" ] || [ $2 == "db" ]; then
+                clear
                 if [ $TYPE == 0 ]; then
                     import_database 0
+                    update_database 0
                     import_database 1
+                    update_database 1
                     import_database 2
+                    update_database 2
                 elif [ $TYPE == 1 ]; then
                     import_database 0
+                    update_database 0
                 elif [ $TYPE == 2 ]; then
                     import_database 1
+                    update_database 1
                     import_database 2
+                    update_database 2
                 fi
-            elif [ $2 == "conf" ] || [ $2 == "config" ] || [ $2 == "configuration" ]; then
-                echo "$1 $2"
+            elif [ $2 == "cfg" ] || [ $2 == "conf" ] || [ $2 == "config" ] || [ $2 == "configuration" ]; then
+                update_configuration $TYPE
+                if [ $MODULE_ELUNA_ENABLED ]; then
+                    update_configuration 3
+                fi
             elif [ $2 == "all" ]; then
                 clone_source
                 compile_source $TYPE
                 fetch_client_data
                 if [ $TYPE == 0 ]; then
                     import_database 0
+                    update_database 0
                     import_database 1
+                    update_database 1
                     import_database 2
+                    update_database 2
                 elif [ $TYPE == 1]; then
                     import_database 0
+                    update_database 0
                 elif [ $TYPE == 2 ]; then
                     import_database 1
+                    update_database 1
                     import_database 2
+                    update_database 2
+                fi
+                update_configuration $TYPE
+                if [ $MODULE_ELUNA_ENABLED ]; then
+                    update_configuration 3
                 fi
             else
                 echo -e "\n\e[0;32mInvalid arguments\e[0m"

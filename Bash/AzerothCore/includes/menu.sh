@@ -14,7 +14,7 @@ function main_menu
         elif [[ $SELECTION == 2 ]]; then
             database_menu
         elif [[ $SELECTION == 3 ]]; then
-            main_menu
+            configuration_menu 1
         elif [[ $SELECTION == 4 ]]; then
             main_menu
         fi
@@ -84,20 +84,22 @@ function source_menu
 
 function database_menu
 {
-    if (whiptail --title "Manage the databases" --yesno "Do you wish to customize the database credentials before proceeding?" 7 72); then
-        MYSQL_HOSTNAME=$(whiptail --inputbox "The IP or hostname of the MySQL/MariaDB server" 8 60 $MYSQL_HOSTNAME --title "Manage the databases" 3>&1 1>&2 2>&3)
-        MYSQL_PORT=$(whiptail --inputbox "The port number of the MySQL/MariaDB server" 8 60 $MYSQL_PORT --title "Manage the databases" 3>&1 1>&2 2>&3)
-        MYSQL_USERNAME=$(whiptail --inputbox "The username used to connect to the MySQL/MariaDB server" 8 60 $MYSQL_USERNAME --title "Manage the databases" 3>&1 1>&2 2>&3)
-        MYSQL_PASSWORD=$(whiptail --passwordbox "The password used to connect to the MySQL/MariaDB server" 8 60 $MYSQL_PASSWORD --title "Manage the databases" 3>&1 1>&2 2>&3)
-        MYSQL_DATABASE_AUTH=$(whiptail --inputbox "The name of the auth database" 8 60 $MYSQL_DATABASE_AUTH --title "Manage the databases" 3>&1 1>&2 2>&3)
-        MYSQL_DATABASE_CHARACTERS=$(whiptail --inputbox "The name of the characters database" 8 60 $MYSQL_DATABASE_CHARACTERS --title "Manage the databases" 3>&1 1>&2 2>&3)
-        MYSQL_DATABASE_WORLD=$(whiptail --inputbox "The name of the world database" 8 60 $MYSQL_DATABASE_WORLD --title "Manage the databases" 3>&1 1>&2 2>&3)
+    if [ $1 == 1 ]; then
+        if (whiptail --title "Manage the databases" --yesno "Do you wish to customize the database credentials before proceeding?" 7 72); then
+            MYSQL_HOSTNAME=$(whiptail --inputbox "The IP or hostname of the MySQL/MariaDB server" 8 60 $MYSQL_HOSTNAME --title "Manage the databases" 3>&1 1>&2 2>&3)
+            MYSQL_PORT=$(whiptail --inputbox "The port number of the MySQL/MariaDB server" 8 60 $MYSQL_PORT --title "Manage the databases" 3>&1 1>&2 2>&3)
+            MYSQL_USERNAME=$(whiptail --inputbox "The username used to connect to the MySQL/MariaDB server" 8 60 $MYSQL_USERNAME --title "Manage the databases" 3>&1 1>&2 2>&3)
+            MYSQL_PASSWORD=$(whiptail --passwordbox "The password used to connect to the MySQL/MariaDB server" 8 60 $MYSQL_PASSWORD --title "Manage the databases" 3>&1 1>&2 2>&3)
+            MYSQL_DATABASE_AUTH=$(whiptail --inputbox "The name of the auth database" 8 60 $MYSQL_DATABASE_AUTH --title "Manage the databases" 3>&1 1>&2 2>&3)
+            MYSQL_DATABASE_CHARACTERS=$(whiptail --inputbox "The name of the characters database" 8 60 $MYSQL_DATABASE_CHARACTERS --title "Manage the databases" 3>&1 1>&2 2>&3)
+            MYSQL_DATABASE_WORLD=$(whiptail --inputbox "The name of the world database" 8 60 $MYSQL_DATABASE_WORLD --title "Manage the databases" 3>&1 1>&2 2>&3)
 
-        if [[ ! -z $MYSQL_HOSTNAME ]] && [[ ! -z $MYSQL_PORT ]] && [[ ! -z $MYSQL_USERNAME ]] && [[ ! -z $MYSQL_PASSWORD ]] && [[ ! -z $MYSQL_DATABASE_AUTH ]] && [[ ! -z $MYSQL_DATABASE_CHARACTERS ]] && [[ ! -z $MYSQL_DATABASE_WORLD ]]; then
-            generate_settings
-        else
-            whiptail --title "An error has occured" --msgbox "At least one of the entered values is invalid or empty" 7 58
-            main_menu
+            if [[ ! -z $MYSQL_HOSTNAME ]] && [[ ! -z $MYSQL_PORT ]] && [[ ! -z $MYSQL_USERNAME ]] && [[ ! -z $MYSQL_PASSWORD ]] && [[ ! -z $MYSQL_DATABASE_AUTH ]] && [[ ! -z $MYSQL_DATABASE_CHARACTERS ]] && [[ ! -z $MYSQL_DATABASE_WORLD ]]; then
+                generate_settings
+            else
+                whiptail --title "An error has occured" --msgbox "At least one of the entered values is invalid or empty" 7 58
+                main_menu
+            fi
         fi
     fi
 
@@ -119,10 +121,26 @@ function database_menu
 
         if [[ $SELECTION == 1 ]]; then
             import_database $TYPE
+            database_menu
         elif [[ $SELECTION == 2 ]]; then
             update_database $TYPE
+            database_menu
         fi
     else
         main_menu
+    fi
+}
+
+function configuration_menu
+{
+    SELECTION=$(whiptail --title "Manage the configuration files" --menu "Choose an option" 11 50 0 \
+    1 "Copy and update authserver.conf" \
+    2 "Copy and update worldserver.conf" \
+    3 "Copy and update mod_LuaEngine.conf" \
+    3>&1 1>&2 2>&3)
+
+    if [[ $SELECTION ]]; then
+        update_configuration $SELECTION
+        configuration_menu
     fi
 }
