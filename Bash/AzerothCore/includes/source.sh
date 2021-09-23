@@ -5,6 +5,8 @@ function clone_source
 
     clear
 
+    echo -e "\e[0;32mDownloading the source code\e[0m"
+
     if [ ! -d $CORE_DIRECTORY ]; then
         git clone --recursive --branch master https://github.com/azerothcore/azerothcore-wotlk.git $CORE_DIRECTORY
         if [ $? -ne 0 ]; then
@@ -66,6 +68,10 @@ function clone_source
 
 function compile_source
 {
+    clear
+
+    echo -e "\e[0;32mCompiling the source code\e[0m"
+
     mkdir -p $CORE_DIRECTORY/build && cd $_
     cmake ../ -DCMAKE_INSTALL_PREFIX=$CORE_DIRECTORY -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=0 -DTOOLS=0 -DSCRIPTS=static
     if [ $? -ne 0 ]; then
@@ -130,6 +136,10 @@ function fetch_client_data
     fi
 
     if [ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]; then
+        clear
+
+        echo -e "\e[0;32mDownloading client data files\e[0m"
+
         if [ -d $CORE_DIRECTORY/bin/Cameras ] || [ -d $CORE_DIRECTORY/bin/dbc ] || [ -d $CORE_DIRECTORY/bin/maps ] || [ -d $CORE_DIRECTORY/bin/mmaps ] || [ -d $CORE_DIRECTORY/bin/vmaps ]; then
             rm -rf $CORE_DIRECTORY/bin/Cameras $CORE_DIRECTORY/bin/dbc $CORE_DIRECTORY/bin/maps $CORE_DIRECTORY/bin/mmaps $CORE_DIRECTORY/bin/vmaps
         fi

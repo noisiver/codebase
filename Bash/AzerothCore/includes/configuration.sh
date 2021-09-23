@@ -334,7 +334,7 @@ function update_configuration
         fi
     fi
 
-    if [ $1 == 0 ] || [ $1 == 3 ]; then
+    if [ $1 == 0 ] || [ $1 == 2 ]; then
         if [ -f $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist ]; then
             echo -e "\e[0;33mUpdating mod_LuaEngine.conf\e[0m"
 

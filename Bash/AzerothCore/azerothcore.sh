@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("distribution" "packages" "configuration" "menu" "source" "database")
+INCLUDES=("distribution" "packages" "configuration" "source" "database" "process")
 
 clear
 echo -e "\e[0;32mInitializing...\e[0m"
@@ -17,9 +17,9 @@ done
 if [ $# -gt 0 ]; then
     if [ $# -eq 1 ]; then
         if [ $1 == "start" ]; then
-            echo "$1"
+            start_process
         elif [ $1 == "stop" ]; then
-            echo "$1"
+            stop_process
         else
             echo -e "\n\e[0;32mInvalid arguments\e[0m"
             echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
@@ -31,60 +31,30 @@ if [ $# -gt 0 ]; then
             [ $1 == "world" ] && TYPE=2
 
             if [ $2 == "setup" ] || [ $2 == "install" ] || [ $2 == "update" ]; then
+                stop_process
                 clone_source
                 compile_source $TYPE
                 fetch_client_data
             elif [ $2 == "database" ] || [ $2 == "db" ]; then
-                clear
-                if [ $TYPE == 0 ]; then
-                    import_database 0
-                    update_database 0
-                    import_database 1
-                    update_database 1
-                    import_database 2
-                    update_database 2
-                elif [ $TYPE == 1 ]; then
-                    import_database 0
-                    update_database 0
-                elif [ $TYPE == 2 ]; then
-                    import_database 1
-                    update_database 1
-                    import_database 2
-                    update_database 2
-                fi
+                import_database $TYPE
             elif [ $2 == "cfg" ] || [ $2 == "conf" ] || [ $2 == "config" ] || [ $2 == "configuration" ]; then
                 update_configuration $TYPE
-                if [ $MODULE_ELUNA_ENABLED ]; then
-                    update_configuration 3
-                fi
             elif [ $2 == "all" ]; then
+                stop_process
                 clone_source
                 compile_source $TYPE
                 fetch_client_data
-                if [ $TYPE == 0 ]; then
-                    import_database 0
-                    update_database 0
-                    import_database 1
-                    update_database 1
-                    import_database 2
-                    update_database 2
-                elif [ $TYPE == 1]; then
-                    import_database 0
-                    update_database 0
-                elif [ $TYPE == 2 ]; then
-                    import_database 1
-                    update_database 1
-                    import_database 2
-                    update_database 2
-                fi
+                import_database $TYPE
                 update_configuration $TYPE
-                if [ $MODULE_ELUNA_ENABLED ]; then
-                    update_configuration 3
-                fi
+                start_process
             else
                 echo -e "\n\e[0;32mInvalid arguments\e[0m"
                 echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
             fi
+
+            clear
+            echo -e "\e[0;32mFinished\e[0m"
+            echo -e "\e[0;33mAll actions completed successfully\e[0m"
         else
             echo -e "\n\e[0;32mInvalid arguments\e[0m"
             echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
@@ -94,6 +64,6 @@ if [ $# -gt 0 ]; then
         echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
     fi
 else
-    install_menu_packages
-    main_menu
+    echo -e "\n\e[0;32mInvalid arguments\e[0m"
+    echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
 fi
