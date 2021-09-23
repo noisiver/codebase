@@ -85,7 +85,7 @@ function compile_source
     echo "#!/bin/bash" > $CORE_DIRECTORY/bin/start.sh
     echo "#!/bin/bash" > $CORE_DIRECTORY/bin/stop.sh
 
-    if [[ $1 == 0 ]] || [[ $1 == 1 ]]; then
+    if [ $1 == 0 ] || [ $1 == 1 ]; then
         echo "screen -AmdS auth ./auth.sh" >> $CORE_DIRECTORY/bin/start.sh
         echo "screen -X -S \"auth\" quit" >> $CORE_DIRECTORY/bin/stop.sh
 
@@ -102,7 +102,7 @@ function compile_source
         fi
     fi
 
-    if [[ $1 == 0 ]] || [[ $1 == 2 ]]; then
+    if [ $1 == 0 ] || [ $1 == 2 ]; then
         echo "screen -AmdS world ./world.sh" >> $CORE_DIRECTORY/bin/start.sh
         echo "screen -X -S \"world\" quit" >> $CORE_DIRECTORY/bin/stop.sh
 
@@ -125,12 +125,12 @@ function compile_source
 
 function fetch_client_data
 {
-    if [[ ! -d $CORE_DIRECTORY/bin/Cameras ]] || [[ ! -d $CORE_DIRECTORY/bin/dbc ]] || [[ ! -d $CORE_DIRECTORY/bin/maps ]] || [[ ! -d $CORE_DIRECTORY/bin/mmaps ]] || [[ ! -d $CORE_DIRECTORY/bin/vmaps ]]; then
+    if [ ! -d $CORE_DIRECTORY/bin/Cameras ] || [ ! -d $CORE_DIRECTORY/bin/dbc ] || [ ! -d $CORE_DIRECTORY/bin/maps ] || [ ! -d $CORE_DIRECTORY/bin/mmaps ] || [ ! -d $CORE_DIRECTORY/bin/vmaps ]; then
         CORE_INSTALLED_CLIENT_DATA=0
     fi
 
     if [ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]; then
-        if [[ -d $CORE_DIRECTORY/bin/Cameras ]] || [[ -d $CORE_DIRECTORY/bin/dbc ]] || [[ -d $CORE_DIRECTORY/bin/maps ]] || [[ -d $CORE_DIRECTORY/bin/mmaps ]] || [[ -d $CORE_DIRECTORY/bin/vmaps ]]; then
+        if [ -d $CORE_DIRECTORY/bin/Cameras ] || [ -d $CORE_DIRECTORY/bin/dbc ] || [ -d $CORE_DIRECTORY/bin/maps ] || [ -d $CORE_DIRECTORY/bin/mmaps ] || [ -d $CORE_DIRECTORY/bin/vmaps ]; then
             rm -rf $CORE_DIRECTORY/bin/Cameras $CORE_DIRECTORY/bin/dbc $CORE_DIRECTORY/bin/maps $CORE_DIRECTORY/bin/mmaps $CORE_DIRECTORY/bin/vmaps
         fi
 

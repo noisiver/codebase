@@ -31,9 +31,7 @@ function import_database
                 done
             fi
         fi
-    fi
-
-    if [ $1 == 0 ]; then
+    elif [ $1 == 1 ]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_CHARACTERS'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/base/db_characters ]; then
                 for f in $CORE_DIRECTORY/data/sql/base/db_characters/*.sql; do
@@ -51,9 +49,7 @@ function import_database
                 done
             fi
         fi
-    fi
-
-    if [ $1 == 0 ]; then
+    elif [ $1 == 2 ]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/base/db_world ]; then
                 for f in $CORE_DIRECTORY/data/sql/base/db_world/*.sql; do
@@ -103,9 +99,7 @@ function update_database
                 done
             fi
         fi
-    fi
-
-    if [ $1 == 0 ]; then
+    elif [ $1 == 1 ]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_CHARACTERS'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_characters ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_characters/*.sql; do
@@ -118,9 +112,7 @@ function update_database
                 done
             fi
         fi
-    fi
-
-    if [ $1 == 0 ]; then
+    elif [ $1 == 2 ]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_world ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_world/*.sql; do
