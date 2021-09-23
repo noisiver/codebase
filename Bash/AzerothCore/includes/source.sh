@@ -83,11 +83,11 @@ function compile_source
     fi
 
     echo "#!/bin/bash" > $CORE_DIRECTORY/bin/start.sh
-    echo "#!/bin/bash" > $CORE_DIRECTORY/bin/shutdown.sh
+    echo "#!/bin/bash" > $CORE_DIRECTORY/bin/stop.sh
 
     if [[ $1 == 0 ]] || [[ $1 == 1 ]]; then
         echo "screen -AmdS auth ./auth.sh" >> $CORE_DIRECTORY/bin/start.sh
-        echo "screen -X -S \"auth\" quit" >> $CORE_DIRECTORY/bin/shutdown.sh
+        echo "screen -X -S \"auth\" quit" >> $CORE_DIRECTORY/bin/stop.sh
 
         echo "#!/bin/sh" > $CORE_DIRECTORY/bin/auth.sh
         echo "while :; do" >> $CORE_DIRECTORY/bin/auth.sh
@@ -104,7 +104,7 @@ function compile_source
 
     if [[ $1 == 0 ]] || [[ $1 == 2 ]]; then
         echo "screen -AmdS world ./world.sh" >> $CORE_DIRECTORY/bin/start.sh
-        echo "screen -X -S \"world\" quit" >> $CORE_DIRECTORY/bin/shutdown.sh
+        echo "screen -X -S \"world\" quit" >> $CORE_DIRECTORY/bin/stop.sh
 
         echo "#!/bin/sh" > $CORE_DIRECTORY/bin/world.sh
         echo "while :; do" >> $CORE_DIRECTORY/bin/world.sh
@@ -120,7 +120,7 @@ function compile_source
     fi
 
     chmod +x $CORE_DIRECTORY/bin/start.sh
-    chmod +x $CORE_DIRECTORY/bin/shutdown.sh
+    chmod +x $CORE_DIRECTORY/bin/stop.sh
 }
 
 function fetch_client_data
