@@ -13,7 +13,7 @@
     </mysql>
     <core>
         <directory>/opt/azerothcore</directory>
-        <required_client_data>11</required_client_data>
+        <required_client_data>12</required_client_data>
         <installed_client_data>0</installed_client_data>
     </core>
     <world>
