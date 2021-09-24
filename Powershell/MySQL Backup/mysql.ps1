@@ -1,6 +1,8 @@
-Write-Host -ForegroundColor Green "Starting backup..."
-
 $dateTime = Get-Date -Format "yyyy-MM-dd_HH-mm"
+$storage = "C:\Users\Administrator\My Drive"
+$amountSaved = 72
+
+Write-Host -ForegroundColor Green "Starting backup..."
 
 if (-Not (Test-Path -PathType Leaf -Path "bin\mysql.cnf"))
 {
@@ -32,18 +34,17 @@ foreach ($db in $databases)
     $tables = .\bin\mysql.exe --defaults-extra-file="bin\mysql.cnf" -Bse "USE $db;SHOW TABLES"
     foreach ($tbl in $tables)
     {
-        #Write-Host -ForegroundColor Yellow "Exporting table $tbl"
         .\bin\mysqldump.exe --defaults-extra-file="bin\mysql.cnf" --extended-insert=FALSE $db $tbl > "database\$db\$tbl.sql"
     }
 }
 
 Write-Host -ForegroundColor Yellow "Creating archive $dateTime.zip"
-.\bin\7z.exe a -mx9 "C:\Users\Administrator\My Drive\$dateTime.zip" ".\database\*" | Out-Null
+.\bin\7z.exe a -mx9 "$storage\$dateTime.zip" ".\database\*" | Out-Null
 
 Remove-Item -Path "database" -Force -Recurse
 
-$files = Get-ChildItem -Path "C:\Users\Administrator\My Drive\*.zip" -Recurse | Where-Object {-not $_.PsIsContainer}
-if ($files.Count -gt 72)
+$files = Get-ChildItem -Path "$storage\*.zip" -Recurse | Where-Object {-not $_.PsIsContainer}
+if ($files.Count -gt $amountSaved)
 {
-    $files | Sort-Object CreationTime | Select-Object -First ($files.Count - 72) | Remove-Item -Force
+    $files | Sort-Object CreationTime | Select-Object -First ($files.Count - $amountSaved) | Remove-Item -Force
 }
