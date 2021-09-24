@@ -42,7 +42,4 @@ function backup_database
         MAX_FILES="$((MAX_FILES + 1))"
         ls -tp $1/*.tar.gz | grep -v '/$' | tail -n +$MAX_FILES | xargs -d '\n' -r rm --
     fi
-
-    #cd ~/gdrive
-    #drive push -no-prompt
 }
