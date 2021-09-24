@@ -1,3 +1,5 @@
+Write-Host -ForegroundColor Green "Starting backup..."
+
 $dateTime = Get-Date -Format "yyyy-MM-dd_HH-mm"
 
 if (-Not (Test-Path -PathType Leaf -Path "bin\mysql.cnf"))
@@ -21,29 +23,27 @@ $databases = .\bin\mysql.exe --defaults-extra-file="bin\mysql.cnf" -Bse "SELECT 
 
 foreach ($db in $databases)
 {
-    Write-Host -ForegroundColor Green "Performing a backup of $db"
-    if (-Not (Test-Path -PathType Container -Path "database\$db\$dateTime"))
+    Write-Host -ForegroundColor Yellow "Exporting database $db"
+    if (-Not (Test-Path -PathType Container -Path "database\$db"))
     {
-        New-Item -ItemType Container -Path "database\$db\$dateTime" | Out-Null
+        New-Item -ItemType Container -Path "database\$db" | Out-Null
     }
 
     $tables = .\bin\mysql.exe --defaults-extra-file="bin\mysql.cnf" -Bse "USE $db;SHOW TABLES"
     foreach ($tbl in $tables)
     {
-        Write-Host -ForegroundColor Yellow "Exporting table $tbl"
-        .\bin\mysqldump.exe --defaults-extra-file="bin\mysql.cnf" --extended-insert=FALSE $db $tbl > "database\$db\$dateTime\$tbl.sql"
-    }
-
-    Write-Host -ForegroundColor Yellow "Creating archive database\$db\$dateTime.zip`n"
-    .\bin\7z.exe a -mx9 "database\$db\$dateTime.zip" ".\database\$db\$dateTime\*" | Out-Null
-
-    Remove-Item -Path "database\$db\$dateTime" -Force -Recurse
-
-    $files = Get-ChildItem -Path "database\$db\*.zip" -Recurse | Where-Object {-not $_.PsIsContainer}
-    if ($files.Count -gt 10)
-    {
-        $files | Sort-Object CreationTime | Select-Object -First ($files.Count - 10) | Remove-Item -Force
+        #Write-Host -ForegroundColor Yellow "Exporting table $tbl"
+        .\bin\mysqldump.exe --defaults-extra-file="bin\mysql.cnf" --extended-insert=FALSE $db $tbl > "database\$db\$tbl.sql"
     }
 }
 
-Write-Host -ForegroundColor Green "Actions completed"
+Write-Host -ForegroundColor Yellow "Creating archive $dateTime.zip"
+.\bin\7z.exe a -mx9 "C:\Users\Administrator\My Drive\$dateTime.zip" ".\database\*" | Out-Null
+
+Remove-Item -Path "database" -Force -Recurse
+
+$files = Get-ChildItem -Path "C:\Users\Administrator\My Drive\*.zip" -Recurse | Where-Object {-not $_.PsIsContainer}
+if ($files.Count -gt 72)
+{
+    $files | Sort-Object CreationTime | Select-Object -First ($files.Count - 72) | Remove-Item -Force
+}
