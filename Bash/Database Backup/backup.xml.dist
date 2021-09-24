@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <config>
-  <mysql>
-    <hostname>127.0.0.1</hostname>
-    <port>3306</port>
-    <username>acore</username>
-    <password>acore</password>
-  </mysql>
-  <backup>
-    <max_files>24</max_files>
-  </backup>
+    <mysql>
+        <hostname>127.0.0.1</hostname>
+        <port>3306</port>
+        <username>backup</username>
+        <password>backup</password>
+    </mysql>
+    <backup>
+        <type>local</type>
+        <max_files>24</max_files>
+    </backup>
 </config>

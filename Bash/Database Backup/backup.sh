@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("distro" "packages" "config" "functions")
+INCLUDES=("distribution" "packages" "configuration" "database" "drive")
 
 clear
 echo -e "\e[0;32mInitializing...\e[0m"
@@ -14,4 +14,18 @@ for i in "${INCLUDES[@]}"; do
     fi
 done
 
-backup_database
+if [ $BACKUP_TYPE == "local" ]; then
+    backup_database "$root/database"
+elif [ $BACKUP_TYPE == "gdrive" ]; then
+    if [ $USER == "root" ]; then
+        backup_database "/root/gdrive/database"
+        push_drive "/root/gdrive"
+    else
+        backup_database "/home/$USER/gdrive/database"
+        push_drive "/home/$USER/gdrive"
+    fi
+else
+    echo -e "\e[0;32mBackup aborted\e[0m"
+    echo -e "\e[0;33mThe defined backup type is not valid\e[0m"
+    exit 1  
+fi
