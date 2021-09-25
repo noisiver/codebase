@@ -205,7 +205,7 @@ function main_menu
     fi
     printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Exit${COLOR_END}\n"
     printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-    read -n 1 s
+    read -s -n 1 s
 
     case $s in
         1) source_menu;;
@@ -226,7 +226,7 @@ function source_menu
     printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Compile the source code into binaries${COLOR_END}\n"
     printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
     printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-    read -n 1 s
+    read -s -n 1 s
 
     case $s in
         1) source_module_menu;;
@@ -245,7 +245,7 @@ function source_module_menu
     [ $MODULE_ELUNA_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
     printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
     printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-    read -n 1 s
+    read -s -n 1 s
 
     case $s in
         1) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; generate_settings; source_module_menu;;
@@ -265,7 +265,7 @@ function source_compile_menu
     printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Compile with these settings${COLOR_END}\n"
     printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
     printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-    read -n 1 s
+    read -s -n 1 s
 
     case $s in
         1) [ $ENABLE_AUTHSERVER == 0 ] && ENABLE_AUTHSERVER=1 || ENABLE_AUTHSERVER=0; source_compile_menu;;
@@ -282,6 +282,53 @@ function database_menu
 }
 
 function configuration_menu
+{
+    clear
+    printf "${COLOR_PURPLE}Manage the configuration options${COLOR_END}\n"
+    printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the database options${COLOR_END}\n"
+    printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the server options${COLOR_END}\n"
+    printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+    printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+    read -s -n 1 s
+
+    case $s in
+        1) configuration_database_menu;;
+        2) configuration_server_menu;;
+        0) main_menu;;
+        *) source_menu;;
+    esac
+}
+
+function configuration_database_menu
+{
+    clear
+    printf "${COLOR_PURPLE}Manage the database options${COLOR_END}\n"
+    printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Hostname: ${MYSQL_HOSTNAME}${COLOR_END}\n"
+    printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Port: ${MYSQL_PORT}${COLOR_END}\n"
+    printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Username: ${MYSQL_USERNAME}${COLOR_END}\n"
+    printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Password: ${MYSQL_PASSWORD//?/*}${COLOR_END}\n\n"
+    printf "${COLOR_PURPLE}Specified databases${COLOR_END}\n"
+    printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Auth: ${MYSQL_DATABASE_AUTH}${COLOR_END}\n"
+    printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Characters: ${MYSQL_DATABASE_CHARACTERS}${COLOR_END}\n"
+    printf "${COLOR_CYAN}7) ${COLOR_ORANGE}World: ${MYSQL_DATABASE_WORLD}${COLOR_END}\n\n"
+    printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+    printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+    read -s -n 1 s
+
+    case $s in
+        1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_HOSTNAME}" i; if [ ! -z $i ]; then MYSQL_HOSTNAME=$i; fi; generate_settings; configuration_database_menu;;
+        2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PORT}" i; if [ ! -z $i ]; then MYSQL_PORT=$i; fi; generate_settings; configuration_database_menu;;
+        3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_USERNAME}" i; if [ ! -z $i ]; then MYSQL_USERNAME=$i; fi; generate_settings; configuration_database_menu;;
+        4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PASSWORD}" i; if [ ! -z $i ]; then MYSQL_PASSWORD=$i; fi; generate_settings; configuration_database_menu;;
+        5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_AUTH}" i; if [ ! -z $i ]; then MYSQL_DATABASE_AUTH=$i; fi; generate_settings; configuration_database_menu;;
+        6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_CHARACTERS}" i; if [ ! -z $i ]; then MYSQL_DATABASE_CHARACTERS=$i; fi; generate_settings; configuration_database_menu;;
+        7) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_WORLD}" i; if [ ! -z $i ]; then MYSQL_DATABASE_WORLD=$i; fi; generate_settings; configuration_database_menu;;
+        0) main_menu;;
+        *) source_menu;;
+    esac
+}
+
+function configuration_server_menu
 {
     clear
 }
