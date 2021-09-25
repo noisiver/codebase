@@ -186,7 +186,8 @@ QUOTES=("You can please some of the people all of the time, you can please all o
         "Honesty is the best policy." \
         "Don’t count your chickens before they hatch." \
         "Even a stopped clock is right twice a day." \
-        "Great minds think alike.")
+        "Great minds think alike." \
+)
 
 function main_menu
 {
@@ -236,7 +237,8 @@ function source_module_menu
 {
     clear
     printf "${COLOR_PURPLE}Manage the available modules${COLOR_END}\n"
-    printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END} $("$MODULE_ELUNA_ENABLED" | sed "s/true/${COLOR_GREEN}Enabled${COLOR_END}/" | sed "s/false/${COLOR_RED}Disabled${COLOR_END}/")"
+    printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END}"
+    [ $MODULE_ELUNA_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
     printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
     printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
     read -n 1 s
@@ -251,6 +253,23 @@ function source_module_menu
 function source_compile_menu
 {
     clear
+    printf "${COLOR_PURPLE}Compile the source code into binaries${COLOR_END}\n"
+    printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Authserver: ${COLOR_END}"
+    [ $ENABLE_AUTHSERVER == 1 ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+    printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Worldserver: ${COLOR_END}"
+    [ $ENABLE_WORLDSERVER == 1 ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+    printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Compile with the settings below${COLOR_END}\n"
+    printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+    printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+    read -n 1 s
+
+    case $s in
+        1) [ $ENABLE_AUTHSERVER == 0 ] && ENABLE_AUTHSERVER=1 || ENABLE_AUTHSERVER=0; source_compile_menu;;
+        2) [ $ENABLE_WORLDSERVER == 0 ] && ENABLE_WORLDSERVER=1 || ENABLE_WORLDSERVER=0; source_compile_menu;;
+        3) if [[ $ENABLE_AUTHSERVER == 1 && $ENABLE_WORLDSERVER == 1 ]]; then compile_source 0; elif [[ $ENABLE_AUTHSERVER == 1 && $ENABLE_WORLDSERVER == 0 ]]; then compile_source 1; elif [[ $ENABLE_AUTHSERVER == 0 && $ENABLE_WORLDSERVER == 1 ]]; then compile_source 2; fi; source_compile_menu;;
+        0) source_menu;;
+        *) source_compile_menu;;
+    esac
 }
 
 function database_menu
