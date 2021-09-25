@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("distribution" "packages" "configuration" "source" "database" "process")
+INCLUDES=("distribution" "packages" "configuration" "menu" "source" "database" "process")
 
 clear
 echo -e "\e[0;32mInitializing...\e[0m"
@@ -66,6 +66,5 @@ if [ $# -gt 0 ]; then
         echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
     fi
 else
-    echo -e "\n\e[0;32mInvalid arguments\e[0m"
-    echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
+    main_menu
 fi
