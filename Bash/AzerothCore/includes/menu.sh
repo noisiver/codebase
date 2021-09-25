@@ -113,20 +113,11 @@ function database_menu
         TYPE=$SELECTION
 
         if [[ $SELECTION == 3 ]]; then
-            if [[ -d $ROOT/sql/world && ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
-                SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
-                1 "Import all the required tables" \
-                2 "Import all the available updates" \
-                3 "Import any available custom content" \
-                4 "Update the realmlist" \
-                3>&1 1>&2 2>&3)
-            else
-                SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
-                1 "Import all the required tables" \
-                2 "Import all the available updates" \
-                4 "Update the realmlist" \
-                3>&1 1>&2 2>&3)
-            fi
+            SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
+            1 "Import all the required tables" \
+            2 "Import all the available updates" \
+            3 "Update the realmlist" \
+            3>&1 1>&2 2>&3)
         else
             SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
             1 "Import all the required tables" \
@@ -137,7 +128,7 @@ function database_menu
         if [[ $SELECTION ]]; then
             if [[ $SELECTION == 1 ]]; then
                 import_database $TYPE $SELECTION
-            elif [[ $SELECTION == 2 ]] || [[ $SELECTION == 3 ]] || [[ $SELECTION == 4 ]]; then
+            elif [[ $SELECTION == 2 ]] || [[ $SELECTION == 3 ]]; then
                 update_database $TYPE $SELECTION
             fi
 
