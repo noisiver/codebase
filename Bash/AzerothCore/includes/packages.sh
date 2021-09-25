@@ -3,7 +3,7 @@ if [ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok inst
     clear
 
     if [ $(id -u) -ne 0 ]; then
-        echo -e "\e[0;31mThis script needs to be run as root or using sudo\e[0m"
+        printf "${COLOR_RED}This script needs to be run as root or using sudo${COLOR_END}\n"
         exit 1
     fi
 
@@ -36,7 +36,7 @@ function install_build_packages
         clear
 
         if [ $(id -u) -ne 0 ]; then
-            echo -e "\e[0;31mThis script needs to be run as root or using sudo\e[0m"
+            printf "${COLOR_RED}This script needs to be run as root or using sudo${COLOR_END}\n"
             exit 1
         fi
 
@@ -58,7 +58,7 @@ function install_database_packages
         clear
 
         if [ $(id -u) -ne 0 ]; then
-            echo -e "\e[0;31mThis script needs to be run as root or using sudo\e[0m"
+            printf "${COLOR_RED}This script needs to be run as root or using sudo${COLOR_END}\n"
             exit 1
         fi
 

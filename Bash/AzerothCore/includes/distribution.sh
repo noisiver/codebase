@@ -7,7 +7,7 @@ if [ -f /etc/os-release ]; then
     VERSION=$VERSION_ID
 
     if [[ ! " ${DISTRIBUTION[@]} " =~ " ${OS}${VERSION} " ]]; then
-        echo -e "\e[0;31mThis distribution is currently not supported\e[0m"
+        printf "${COLOR_RED}This distribution is currently not supported${COLOR_END}\n"
         exit $?
     fi
 fi

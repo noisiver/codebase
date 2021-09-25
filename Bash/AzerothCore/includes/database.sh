@@ -5,7 +5,7 @@ function import_database
 
     clear
 
-    echo -e "\e[0;32mImporting database files\e[0m"
+    printf "${COLOR_GREEN}Importing database files${COLOR_END}\n"
 
     echo "[client]" > $MYSQL_CONFIG
     echo "host=\"$MYSQL_HOSTNAME\"" >> $MYSQL_CONFIG
@@ -18,11 +18,11 @@ function import_database
             if [ -d $CORE_DIRECTORY/data/sql/base/db_auth ]; then
                 for f in $CORE_DIRECTORY/data/sql/base/db_auth/*.sql; do
                     if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names $MYSQL_DATABASE_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
-                        echo -e "\e[0;33mSkipping "$(basename $f)"\e[0m"
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
 
-                    echo -e "\e[0;33mImporting "$(basename $f)"\e[0m"
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_AUTH < $f
                     if [ $? -ne 0 ]; then
                         rm -rf $MYSQL_CONFIG
@@ -38,11 +38,11 @@ function import_database
             if [ -d $CORE_DIRECTORY/data/sql/base/db_characters ]; then
                 for f in $CORE_DIRECTORY/data/sql/base/db_characters/*.sql; do
                     if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names $MYSQL_DATABASE_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
-                        echo -e "\e[0;33mSkipping "$(basename $f)"\e[0m"
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
 
-                    echo -e "\e[0;33mImporting "$(basename $f)"\e[0m"
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_CHARACTERS < $f
                     if [ $? -ne 0 ]; then
                         rm -rf $MYSQL_CONFIG
@@ -58,11 +58,11 @@ function import_database
             if [ -d $CORE_DIRECTORY/data/sql/base/db_world ]; then
                 for f in $CORE_DIRECTORY/data/sql/base/db_world/*.sql; do
                     if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names $MYSQL_DATABASE_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
-                        echo -e "\e[0;33mSkipping "$(basename $f)"\e[0m"
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
 
-                    echo -e "\e[0;33mImporting "$(basename $f)"\e[0m"
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
                     if [ $? -ne 0 ]; then
                         rm -rf $MYSQL_CONFIG
@@ -82,7 +82,7 @@ function update_database
 
     clear
 
-    echo -e "\e[0;32mImporting database files\e[0m"
+    printf "${COLOR_GREEN}Importing database files${COLOR_END}\n"
 
     echo "[client]" > $MYSQL_CONFIG
     echo "host=\"$MYSQL_HOSTNAME\"" >> $MYSQL_CONFIG
@@ -94,7 +94,7 @@ function update_database
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_AUTH'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_auth ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_auth/*.sql; do
-                    echo -e "\e[0;33mImporting "$(basename $f)"\e[0m"
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_AUTH < $f
                     if [ $? -ne 0 ]; then
                         rm -rf $MYSQL_CONFIG
@@ -109,7 +109,7 @@ function update_database
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_CHARACTERS'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_characters ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_characters/*.sql; do
-                    echo -e "\e[0;33mImporting "$(basename $f)"\e[0m"
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_CHARACTERS < $f
                     if [ $? -ne 0 ]; then
                         rm -rf $MYSQL_CONFIG
@@ -124,7 +124,7 @@ function update_database
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_world ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_world/*.sql; do
-                    echo -e "\e[0;33mImporting "$(basename $f)"\e[0m"
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
                     if [ $? -ne 0 ]; then
                         rm -rf $MYSQL_CONFIG
@@ -142,7 +142,7 @@ function update_database
                     if [ -d "$f" ]; then
                         if [[ ! -z "$(ls -A $f)" ]]; then
                             for d in $f/*.sql; do
-                                echo -e "\e[0;33mImporting "$(basename $d)"\e[0m"
+                                printf "${COLOR_ORANGE}Importing "$(basename $d)"${COLOR_END}\n"
                                 mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $d
                                 if [ $? -ne 0 ]; then
                                     rm -rf $MYSQL_CONFIG
@@ -151,7 +151,7 @@ function update_database
                             done
                         fi
                     else
-                        echo -e "\e[0;33mImporting "$(basename $f)"\e[0m"
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                         mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
                         if [ $? -ne 0 ]; then
                             rm -rf $MYSQL_CONFIG
@@ -164,7 +164,7 @@ function update_database
     fi
 
     if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 3 ]]; then
-        echo -e "\e[0;33mUpdating realmlist (id: $WORLD_ID, name: $WORLD_NAME, address: $WORLD_IP)\e[0m"
+        printf "${COLOR_ORANGE}Updating realmlist (id: $WORLD_ID, name: $WORLD_NAME, address: $WORLD_IP)${COLOR_END}\n"
         mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_AUTH -e "DELETE FROM realmlist WHERE id='$WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$WORLD_ID', '$WORLD_NAME', '$WORLD_IP', '$WORLD_IP', '255.255.255.0', '8085')"
         if [ $? -ne 0 ]; then
             rm -rf $MYSQL_CONFIG

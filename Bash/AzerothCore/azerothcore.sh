@@ -2,14 +2,19 @@
 INCLUDES=("distribution" "packages" "configuration" "source" "database" "process")
 
 clear
-echo -e "\e[0;32mInitializing...\e[0m"
+
+if [ -f "includes/color.sh" ]; then
+    source "includes/color.sh"
+fi
+
+printf "${COLOR_GREEN}Initializing...${COLOR_END}\n"
 
 for i in "${INCLUDES[@]}"; do
     if [ -f "includes/$i.sh" ]; then
-        echo -e "\e[0;33mLoading includes/$i.sh\e[0m"
+        printf "${COLOR_ORANGE}Loading includes/$i.sh${COLOR_END}\n"
         source "includes/$i.sh"
     else
-        echo -e "\e[0;33mUnable to access includes/$i.sh\e[0m"
+        printf "${COLOR_ORANGE}Unable to access includes/$i.sh${COLOR_END}\n"
         exit 1
     fi
 done
@@ -21,8 +26,8 @@ if [ $# -gt 0 ]; then
         elif [ $1 == "stop" ]; then
             stop_process
         else
-            echo -e "\n\e[0;32mInvalid arguments\e[0m"
-            echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
+            printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+            printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
         fi
     elif [ $# -eq 2 ]; then
         if [ $1 == "auth" ] || [ $1 == "world" ] || [ $1 == "all" ]; then
@@ -50,22 +55,22 @@ if [ $# -gt 0 ]; then
                 update_configuration $TYPE
                 start_process
             else
-                echo -e "\n\e[0;32mInvalid arguments\e[0m"
-                echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
+                printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+                printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
             fi
 
             clear
-            echo -e "\e[0;32mFinished\e[0m"
-            echo -e "\e[0;33mAll actions completed successfully\e[0m"
+            printf "${COLOR_GREEN}Finished${COLOR_END}\n"
+            printf "${COLOR_ORANGE}All actions completed successfully${COLOR_END}\n"
         else
-            echo -e "\n\e[0;32mInvalid arguments\e[0m"
-            echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
+            printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+            printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
         fi
     else
-        echo -e "\n\e[0;32mInvalid arguments\e[0m"
-        echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
+        printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+        printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
     fi
 else
-    echo -e "\n\e[0;32mInvalid arguments\e[0m"
-    echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
+    printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+    printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
 fi

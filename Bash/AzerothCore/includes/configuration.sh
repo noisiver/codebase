@@ -134,7 +134,7 @@ function generate_settings
 
 if [ ! -f $ROOT/$CONFIG_FILE ]; then
     clear
-    echo -e "\e[0;33mGenerating default configuration\e[0m"
+    printf "${COLOR_ORANGE}Generating default configuration${COLOR_END}\n"
     export_settings
     exit $?
 fi
@@ -244,7 +244,7 @@ if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]] ||
    [[ -z $WORLD_GM_LOWER_SECURITY ]] || [[ $WORLD_GM_LOWER_SECURITY == "" ]] || 
    [[ -z $MODULE_ELUNA_ENABLED ]] || [[ $MODULE_ELUNA_ENABLED == "" ]]; then
     clear
-    echo -e "\e[0;31mAtleast one of the configuration options is missing or invalid\e[0m"
+    printf "${COLOR_RED}Atleast one of the configuration options is missing or invalid${COLOR_END}\n"
     exit $?
 fi
 
@@ -252,11 +252,11 @@ function update_configuration
 {
     clear
 
-    echo -e "\e[0;32mUpdating configuration files\e[0m"
+    printf "${COLOR_GREEN}Updating configuration files${COLOR_END}\n"
 
     if [ $1 == 0 ] || [ $1 == 1 ]; then
         if [ -f $CORE_DIRECTORY/etc/authserver.conf.dist ]; then
-            echo -e "\e[0;33mUpdating authserver.conf\e[0m"
+            printf "${COLOR_ORANGE}Updating authserver.conf${COLOR_END}\n"
 
             cp $CORE_DIRECTORY/etc/authserver.conf.dist $CORE_DIRECTORY/etc/authserver.conf
 
@@ -267,7 +267,7 @@ function update_configuration
 
     if [ $1 == 0 ] || [ $1 == 2 ]; then
         if [ -f $CORE_DIRECTORY/etc/worldserver.conf.dist ]; then
-            echo -e "\e[0;33mUpdating worldserver.conf\e[0m"
+            printf "${COLOR_ORANGE}Updating worldserver.conf${COLOR_END}\n"
 
             cp $CORE_DIRECTORY/etc/worldserver.conf.dist $CORE_DIRECTORY/etc/worldserver.conf
             sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASE_AUTH'"/g' $CORE_DIRECTORY/etc/worldserver.conf
@@ -336,7 +336,7 @@ function update_configuration
 
     if [ $1 == 0 ] || [ $1 == 2 ]; then
         if [ -f $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist ]; then
-            echo -e "\e[0;33mUpdating mod_LuaEngine.conf\e[0m"
+            printf "${COLOR_ORANGE}Updating mod_LuaEngine.conf${COLOR_END}\n"
 
             cp $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf
         fi

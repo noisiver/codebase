@@ -3,20 +3,20 @@ function start_process
 {
     clear
 
-    echo -e "\e[0;32mStarting processes\e[0m"
+    printf "${COLOR_GREEN}Starting processes${COLOR_END}\n"
 
     if [[ -z `screen -list | grep -E "auth"` ]] && [[ -z `screen -list | grep -E "world"` ]]; then
         if [ -f $CORE_DIRECTORY/bin/start.sh ]; then
-            echo -e "\e[0;33mStarting the server process\e[0m"
+            printf "${COLOR_ORANGE}Starting the server process${COLOR_END}\n"
 
             cd $CORE_DIRECTORY/bin && ./start.sh
         else
-            echo -e "\e[0;33mUnable to locate the required executable\e[0m"
+            printf "${COLOR_ORANGE}Unable to locate the required executable${COLOR_END}\n"
 
             exit $?
         fi
     else
-        echo -e "\e[0;33mThe server is already running\e[0m"
+        printf "${COLOR_ORANGE}The server is already running${COLOR_END}\n"
     fi
 }
 
@@ -24,10 +24,10 @@ function stop_process
 {
     clear
 
-    echo -e "\e[0;32mStopping processes\e[0m"
+    printf "${COLOR_GREEN}Stopping processes${COLOR_END}\n"
 
     if [[ ! -z `screen -list | grep -E "world"` ]]; then
-        echo -e "\e[0;33mTelling the world server to save\e[0m"
+        printf "${COLOR_ORANGE}Telling the world server to save${COLOR_END}\n"
 
         screen -S world -p 0 -X stuff "saveall^m"
 
@@ -36,15 +36,15 @@ function stop_process
 
     if [[ ! -z `screen -list | grep -E "auth"` ]] || [[ ! -z `screen -list | grep -E "world"` ]]; then
         if [ -f $CORE_DIRECTORY/bin/stop.sh ]; then
-            echo -e "\e[0;33mStopping the server process\e[0m"
+            printf "${COLOR_ORANGE}Stopping the server process${COLOR_END}\n"
 
             cd $CORE_DIRECTORY/bin && ./stop.sh
         else
-            echo -e "\e[0;33mUnable to locate the required executable\e[0m"
+            printf "${COLOR_ORANGE}Unable to locate the required executable${COLOR_END}\n"
 
             exit $?
         fi
     else
-        echo -e "\e[0;33mNo running server found\e[0m"
+        printf "${COLOR_ORANGE}No running server found${COLOR_END}\n"
     fi
 }
