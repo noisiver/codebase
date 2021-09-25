@@ -1,4 +1,10 @@
 #!/bin/bash
+QUOTES=("You can please some of the people all of the time, you can please all of the people some of the time, but you can’t please all of the people all of the time" \
+        "I disapprove of what you say, but I will defend to the death your right to say it" \
+        "Don't let your friends you made memories with, become the memories" \
+        "You can not excel at anything you do not love" \
+        "Early is on time, on time is late and late is unacceptable")
+
 function main_menu
 {
     clear
@@ -83,6 +89,6 @@ function binary_menu
 function exit_menu
 {
     clear
-    printf "${COLOR_PURPLE}Good bye!${COLOR_END}\n"
-    printf "${COLOR_ORANGE}I hope you have an absolutely wonderful day!${COLOR_END}\n"
+    printf "${COLOR_PURPLE}Have a amazingly wonderful day!${COLOR_END}\n"
+    printf "${COLOR_ORANGE}${QUOTES[$(( RANDOM % ${#QUOTES[@]} ))]}${COLOR_END}\n"
 }
