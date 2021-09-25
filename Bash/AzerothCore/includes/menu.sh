@@ -112,13 +112,21 @@ function database_menu
     if [[ $SELECTION ]]; then
         TYPE=$SELECTION
 
-        if [[ $SELECTION == 3 ]] && [[ -d $ROOT/sql/world && ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
-            SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
-            1 "Import all the required tables" \
-            2 "Import all the available updates" \
-            3 "Import any available custom content" \
-            4 "Update the realmlist" \
-            3>&1 1>&2 2>&3)
+        if [[ $SELECTION == 3 ]]; then
+            if [[ -d $ROOT/sql/world && ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
+                SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
+                1 "Import all the required tables" \
+                2 "Import all the available updates" \
+                3 "Import any available custom content" \
+                4 "Update the realmlist" \
+                3>&1 1>&2 2>&3)
+            else
+                SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
+                1 "Import all the required tables" \
+                2 "Import all the available updates" \
+                4 "Update the realmlist" \
+                3>&1 1>&2 2>&3)
+            fi
         else
             SELECTION=$(whiptail --title "$DATABASE" --menu "Choose an option" 11 50 0 \
             1 "Import all the required tables" \
