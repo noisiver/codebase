@@ -1,17 +1,10 @@
 #!/bin/bash
-INCLUDES=("distribution" "packages" "configuration" "source" "database" "process")
+INCLUDES=("color" "distribution" "packages" "menu" "configuration" "source" "database" "process")
 
 clear
 
-if [ -f "includes/color.sh" ]; then
-    source "includes/color.sh"
-fi
-
-printf "${COLOR_GREEN}Initializing...${COLOR_END}\n"
-
 for i in "${INCLUDES[@]}"; do
     if [ -f "includes/$i.sh" ]; then
-        printf "${COLOR_ORANGE}Loading includes/$i.sh${COLOR_END}\n"
         source "includes/$i.sh"
     else
         printf "${COLOR_ORANGE}Unable to access includes/$i.sh${COLOR_END}\n"
@@ -26,7 +19,7 @@ if [ $# -gt 0 ]; then
         elif [ $1 == "stop" ]; then
             stop_process
         else
-            printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+            printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
             printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
         fi
     elif [ $# -eq 2 ]; then
@@ -55,7 +48,7 @@ if [ $# -gt 0 ]; then
                 update_configuration $TYPE
                 start_process
             else
-                printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+                printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
                 printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
             fi
 
@@ -63,14 +56,13 @@ if [ $# -gt 0 ]; then
             printf "${COLOR_GREEN}Finished${COLOR_END}\n"
             printf "${COLOR_ORANGE}All actions completed successfully${COLOR_END}\n"
         else
-            printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+            printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
             printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
         fi
     else
-        printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+        printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
         printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
     fi
 else
-    printf "\n${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
-    printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
+    main_menu
 fi
