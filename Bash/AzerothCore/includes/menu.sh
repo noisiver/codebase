@@ -324,7 +324,138 @@ function configuration_menu
             *) configuration_menu 1;;
         esac
     elif [ $1 == 2 ]; then
-        clear
+        [ $WORLD_GAME_TYPE == 0 ] && WORLD_GAME_TYPE_TEXT="${COLOR_YELLOW}Normal"
+        [ $WORLD_GAME_TYPE == 1 ] && WORLD_GAME_TYPE_TEXT="${COLOR_RED}PVP"
+        [ $WORLD_GAME_TYPE == 6 ] && WORLD_GAME_TYPE_TEXT="${COLOR_GREEN}RP"
+        [ $WORLD_GAME_TYPE == 8 ] && WORLD_GAME_TYPE_TEXT="${COLOR_GREEN}RPPVP"
+        [ $WORLD_REALM_ZONE == 1 ] && WORLD_REALM_ZONE_TEXT="${COLOR_RED}Development"
+        [ $WORLD_REALM_ZONE == 8 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}English"
+
+        printf "${COLOR_PURPLE}Manage the server options - Page 1 of 5${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Location of the source code: ${COLOR_GREEN}${CORE_DIRECTORY}${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Required client data version: ${COLOR_GREEN}${CORE_REQUIRED_CLIENT_DATA}${COLOR_END}\n"
+        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Name of the realm: ${COLOR_GREEN}${WORLD_NAME}${COLOR_END}\n"
+        printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Message of the day: ${COLOR_GREEN}${WORLD_MOTD}${COLOR_END}\n"
+        printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Realm id: ${COLOR_GREEN}${WORLD_ID}${COLOR_END}\n"
+        printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Realm address: ${COLOR_GREEN}${WORLD_IP}${COLOR_END}\n"
+        printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Game type: ${WORLD_GAME_TYPE_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Realm zone: ${WORLD_REALM_ZONE_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Go to the next page${COLOR_END}\n"
+        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+
+        case $s in
+            9) configuration_menu 3;;
+            0) configuration_menu;;
+            *) configuration_menu 2;;
+        esac
+    elif [ $1 == 3 ]; then
+        [ $WORLD_EXPANSION == 0 ] && WORLD_EXPANSION_TEXT="${COLOR_RED}None"
+        [ $WORLD_EXPANSION == 1 ] && WORLD_EXPANSION_TEXT="${COLOR_GREEN}The Burning Crusade"
+        [ $WORLD_EXPANSION == 2 ] && WORLD_EXPANSION_TEXT="${COLOR_CYAN}Wrath of the Lich King"
+        [ $WORLD_SKIP_CINEMATICS == 0 ] && WORLD_SKIP_CINEMATICS_TEXT="${COLOR_GREEN}Show for all characters"
+        [ $WORLD_SKIP_CINEMATICS == 1 ] && WORLD_SKIP_CINEMATICS_TEXT="${COLOR_YELLOW}Show only for new races"
+        [ $WORLD_SKIP_CINEMATICS == 2 ] && WORLD_SKIP_CINEMATICS_TEXT="${COLOR_RED}Never show"
+        [ $WORLD_ALWAYS_MAX_SKILL == 0 ] && WORLD_ALWAYS_MAX_SKILL_TEXT="${COLOR_RED}Disabled" || WORLD_ALWAYS_MAX_SKILL_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_ALL_FLIGHT_PATHS == 0 ] && WORLD_ALL_FLIGHT_PATHS_TEXT="${COLOR_RED}Disabled" || WORLD_ALL_FLIGHT_PATHS_TEXT="${COLOR_GREEN}Enabled"
+
+        printf "${COLOR_PURPLE}Manage the server options - Page 2 of 5${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Active expansion: ${WORLD_EXPANSION_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Player limit: ${COLOR_GREEN}${WORLD_PLAYER_LIMIT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Intro cinematics: ${WORLD_SKIP_CINEMATICS_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Max level: ${COLOR_GREEN}${WORLD_MAX_LEVEL}${COLOR_END}\n"
+        printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Starting level: ${COLOR_GREEN}${WORLD_START_LEVEL}${COLOR_END}\n"
+        printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Starting money: ${COLOR_GREEN}${WORLD_START_MONEY}${COLOR_END}\n"
+        printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Always max player skills: ${WORLD_ALWAYS_MAX_SKILL_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}8) ${COLOR_ORANGE}All flight paths: ${WORLD_ALL_FLIGHT_PATHS_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Go to the next page${COLOR_END}\n"
+        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+
+        case $s in
+            9) configuration_menu 4;;
+            0) configuration_menu 2;;
+            *) configuration_menu 3;;
+        esac
+    elif [ $1 == 4 ]; then
+        [ $WORLD_MAPS_EXPLORED == 0 ] && WORLD_MAPS_EXPLORED_TEXT="${COLOR_RED}Disabled" || WORLD_MAPS_EXPLORED_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_ALLOW_COMMANDS == 0 ] && WORLD_ALLOW_COMMANDS_TEXT="${COLOR_RED}Disabled" || WORLD_ALLOW_COMMANDS_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_QUEST_IGNORE_RAID == 0 ] && WORLD_QUEST_IGNORE_RAID_TEXT="${COLOR_RED}Disabled" || WORLD_QUEST_IGNORE_RAID_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_PREVENT_AFK_LOGOUT == 0 ] && WORLD_PREVENT_AFK_LOGOUT_TEXT="${COLOR_RED}Disabled" || WORLD_PREVENT_AFK_LOGOUT_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_PRELOAD_MAP_GRIDS == 0 ] && WORLD_PRELOAD_MAP_GRIDS_TEXT="${COLOR_RED}Disabled" || WORLD_PRELOAD_MAP_GRIDS_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_SET_WAYPOINTS_ACTIVE == 0 ] && WORLD_SET_WAYPOINTS_ACTIVE_TEXT="${COLOR_RED}Disabled" || WORLD_SET_WAYPOINTS_ACTIVE_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_ENABLE_MINIGOB_MANABONK == 0 ] && WORLD_ENABLE_MINIGOB_MANABONK_TEXT="${COLOR_RED}Disabled" || WORLD_ENABLE_MINIGOB_MANABONK_TEXT="${COLOR_GREEN}Enabled"
+
+        printf "${COLOR_PURPLE}Manage the server options - Page 3 of 5${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}All maps explored: ${WORLD_MAPS_EXPLORED_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Allow player commands: ${WORLD_ALLOW_COMMANDS_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Allow questing in a raid group: ${WORLD_QUEST_IGNORE_RAID_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Prevent AFK logout: ${WORLD_PREVENT_AFK_LOGOUT_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Max level to benefit from refer-a-friend: ${COLOR_GREEN}${WORLD_RAF_MAX_LEVEL}${COLOR_END}\n"
+        printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Preload map grids: ${WORLD_PRELOAD_MAP_GRIDS_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Set all waypoints as active: ${WORLD_SET_WAYPOINTS_ACTIVE_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Enable Minigob Manabonk: ${WORLD_ENABLE_MINIGOB_MANABONK_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Go to the next page${COLOR_END}\n"
+        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+
+        case $s in
+            9) configuration_menu 5;;
+            0) configuration_menu 3;;
+            *) configuration_menu 4;;
+        esac
+    elif [ $1 == 5 ]; then
+        printf "${COLOR_PURPLE}Manage the server options - Page 4 of 5${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Rate of gaining experience: ${COLOR_GREEN}${WORLD_RATE_EXPERIENCE}x${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Rate of gaining rested experience: ${COLOR_GREEN}${WORLD_RATE_RESTED_EXP}x${COLOR_END}\n"
+        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Rate of gaining reputation: ${COLOR_GREEN}${WORLD_RATE_REPUTATION}x${COLOR_END}\n"
+        printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Rate of gaining gold: ${COLOR_GREEN}${WORLD_RATE_MONEY}x${COLOR_END}\n"
+        printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Rate of gaining skills up from crafting: ${COLOR_GREEN}${WORLD_RATE_CRAFTING}x${COLOR_END}\n"
+        printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Rate of gaining skills up from gathering: ${COLOR_GREEN}${WORLD_RATE_GATHERING}x${COLOR_END}\n"
+        printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Rate of gaining skills up from weapon: ${COLOR_GREEN}${WORLD_RATE_WEAPON_SKILL}x${COLOR_END}\n"
+        printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Rate of gaining skills up from defense: ${COLOR_GREEN}${WORLD_RATE_DEFENSE_SKILL}x${COLOR_END}\n"
+        printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Go to the next page${COLOR_END}\n"
+        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+
+        case $s in
+            9) configuration_menu 6;;
+            0) configuration_menu 4;;
+            *) configuration_menu 5;;
+        esac
+    elif [ $1 == 6 ]; then
+        [ $WORLD_GM_LOGIN_STATE == 0 ] && WORLD_GM_LOGIN_STATE_TEXT="${COLOR_RED}Inactive" || WORLD_GM_LOGIN_STATE_TEXT="${COLOR_GREEN}Active"
+        [ $WORLD_GM_VISIBLE == 0 ] && WORLD_GM_VISIBLE_TEXT="${COLOR_RED}Invisible" || WORLD_GM_VISIBLE_TEXT="${COLOR_GREEN}Visible"
+        [ $WORLD_GM_CHAT == 0 ] && WORLD_GM_CHAT_TEXT="${COLOR_RED}Disabled" || WORLD_GM_CHAT_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_GM_WHISPER == 0 ] && WORLD_GM_WHISPER_TEXT="${COLOR_RED}Disabled" || WORLD_GM_WHISPER_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_GM_GM_LIST == 0 ] && WORLD_GM_GM_LIST_TEXT="${COLOR_RED}Disabled" || WORLD_GM_GM_LIST_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_GM_WHO_LIST == 0 ] && WORLD_GM_WHO_LIST_TEXT="${COLOR_RED}Disabled" || WORLD_GM_WHO_LIST_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_GM_ALLOW_FRIEND == 0 ] && WORLD_GM_ALLOW_FRIEND_TEXT="${COLOR_RED}Disabled" || WORLD_GM_ALLOW_FRIEND_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_GM_ALLOW_INVITE == 0 ] && WORLD_GM_ALLOW_INVITE_TEXT="${COLOR_RED}Disabled" || WORLD_GM_ALLOW_INVITE_TEXT="${COLOR_GREEN}Enabled"
+        [ $WORLD_GM_LOWER_SECURITY == 0 ] && WORLD_GM_LOWER_SECURITY_TEXT="${COLOR_RED}Disabled" || WORLD_GM_LOWER_SECURITY_TEXT="${COLOR_GREEN}Enabled"
+
+        printf "${COLOR_PURPLE}Manage the server options - Page 5 of 5${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Set GM state when entering the world: ${WORLD_GM_LOGIN_STATE_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Set GM visibility when entering the world: ${WORLD_GM_VISIBLE_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Set GM chat mode when entering the world: ${WORLD_GM_CHAT_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Allow GM whispers when entering the world: ${WORLD_GM_WHISPER_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Show GM in GM list: ${WORLD_GM_GM_LIST_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Show GM in who list: ${WORLD_GM_WHO_LIST_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Allow players to add a GM to the list of friends: ${WORLD_GM_ALLOW_FRIEND_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Allow players to invite a GM: ${WORLD_GM_ALLOW_INVITE_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Allow lower security GM to interact with higher security: ${WORLD_GM_LOWER_SECURITY_TEXT}${COLOR_END}\n"
+        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+
+        case $s in
+            0) configuration_menu 5;;
+            *) configuration_menu 6;;
+        esac
     fi
 }
 
