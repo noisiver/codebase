@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("distribution" "packages" "configuration" "source" "database" "process")
+INCLUDES=("distribution" "packages" "configuration" "menu" "source" "database" "process")
 
 clear
 echo -e "\e[0;32mInitializing...\e[0m"
@@ -37,6 +37,7 @@ if [ $# -gt 0 ]; then
                 fetch_client_data
             elif [ $2 == "database" ] || [ $2 == "db" ]; then
                 import_database $TYPE
+                update_database $TYPE
             elif [ $2 == "cfg" ] || [ $2 == "conf" ] || [ $2 == "config" ] || [ $2 == "configuration" ]; then
                 update_configuration $TYPE
             elif [ $2 == "all" ]; then
@@ -45,6 +46,7 @@ if [ $# -gt 0 ]; then
                 compile_source $TYPE
                 fetch_client_data
                 import_database $TYPE
+                update_database $TYPE
                 update_configuration $TYPE
                 start_process
             else
@@ -64,6 +66,5 @@ if [ $# -gt 0 ]; then
         echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
     fi
 else
-    echo -e "\n\e[0;32mInvalid arguments\e[0m"
-    echo -e "\e[0;33mThe supplied arguments are invalid.\e[0m"
+    main_menu
 fi

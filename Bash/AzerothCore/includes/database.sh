@@ -105,7 +105,7 @@ function update_database
         fi
     fi
 
-    if [ $1 == 0 ] || [ $1 == 1 ]; then
+    if [ $1 == 0 ] || [ $1 == 2 ]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_CHARACTERS'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_characters ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_characters/*.sql; do
@@ -120,7 +120,7 @@ function update_database
         fi
     fi
 
-    if [ $1 == 0 ] || [ $1 == 1 ]; then
+    if [ $1 == 0 ] || [ $1 == 2 ]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_world ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_world/*.sql; do
@@ -129,6 +129,34 @@ function update_database
                     if [ $? -ne 0 ]; then
                         rm -rf $MYSQL_CONFIG
                         exit $?
+                    fi
+                done
+            fi
+        fi
+    fi
+
+    if [ $1 == 0 ] || [ $1 == 2 ]; then
+        if [[ -d $ROOT/sql/world ]]; then
+            if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
+                for f in $ROOT/sql/world/*; do
+                    if [ -d "$f" ]; then
+                        if [[ ! -z "$(ls -A $f)" ]]; then
+                            for d in $f/*.sql; do
+                                echo -e "\e[0;33mImporting "$(basename $d)"\e[0m"
+                                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $d
+                                if [ $? -ne 0 ]; then
+                                    rm -rf $MYSQL_CONFIG
+                                    exit $?
+                                fi
+                            done
+                        fi
+                    else
+                        echo -e "\e[0;33mImporting "$(basename $f)"\e[0m"
+                        mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
+                        if [ $? -ne 0 ]; then
+                            rm -rf $MYSQL_CONFIG
+                            exit $?
+                        fi
                     fi
                 done
             fi

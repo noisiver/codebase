@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config>
+    <mysql>
+        <hostname>127.0.0.1</hostname>
+        <port>3306</port>
+        <username>vmangos</username>
+        <password>vmangos</password>
+        <database>
+            <auth>vmangos_auth</auth>
+            <characters>vmangos_characters</characters>
+            <world>vmangos_world</world>
+            <logs>vmangos_logs</logs>
+        </database>
+    </mysql>
+    <core>
+        <directory>/opt/vmangos</directory>
+    </core>
+</config>
