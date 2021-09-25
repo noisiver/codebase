@@ -66,7 +66,7 @@ QUOTES=("You can please some of the people all of the time, you can please all o
         "The only thing necessary for the triumph of evil is for good men to do nothing." \
         "Insanity is doing the same thing over and over again and expecting different results." \
         "Life would be tragic if it weren’t funny." \
-        "Simplicity is the ultimate sophistication" \
+        "Simplicity is the ultimate sophistication." \
         "It is never too late to be what you might have been." \
         "The power of imagination makes us infinite." \
         "Everything you’ve ever wanted is on the other side of fear." \
@@ -149,7 +149,7 @@ QUOTES=("You can please some of the people all of the time, you can please all o
         "The time is always right to do what is right." \
         "Well done is better than well said." \
         "There is nothing impossible to him who will try." \
-        "The pen is mightier than the sword" \
+        "The pen is mightier than the sword." \
         "This above all: to thine own self be true." \
         "Actions speak louder than words." \
         "The purpose of our lives is to be happy." \
@@ -160,20 +160,20 @@ QUOTES=("You can please some of the people all of the time, you can please all o
         "All’s well that ends well." \
         "The end doesn’t justify the means." \
         "Look before you leap." \
-        "All's fair in love and war" \
+        "All's fair in love and war." \
         "Two heads are better than one." \
         "Leave no stone unturned." \
         "The more things change, the more they remain the same." \
         "Leave nothing for tomorrow which can be done today." \
         "There’s a sucker born every minute." \
         "Everyone will be famous for 15 minutes." \
-        "A picture is worth a thousand words" \
+        "A picture is worth a thousand words." \
         "An ounce of action is worth a ton of theory." \
         "A fool and his money are soon parted." \
         "He who angers you conquers you." \
         "A mind is a terrible thing to waste." \
         "Two wrongs don’t make a right." \
-        "Don't put the cart before the horse" \
+        "Don't put the cart before the horse." \
         "You can’t make an omelet without breaking a few eggs." \
         "Beggars can’t be choosers." \
         "If it ain’t broke, don’t fix it." \
@@ -195,7 +195,7 @@ function main_menu
     printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the source code${COLOR_END}\n"
     printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the databases${COLOR_END}\n"
     printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Manage the configuration options${COLOR_END}\n"
-    if [[ -f $CORE_DIRECTORY/bin/start.sh && -f $CORE_DIRECTORY/bin/stop.sh ]] && [[ -f $CORE_DIRECTORY/bin/auth.sh || -f $CORE_DIRECTORY/bin/world.sh ]]; then
+    if [[ -f $CORE_DIRECTORY/bin/start.sh && -f $CORE_DIRECTORY/bin/stop.sh ]] && [[ -f $CORE_DIRECTORY/bin/auth.sh || -f $CORE_DIRECTORY/bin/world.sh ]] && [[ -f $CORE_DIRECTORY/bin/authserver && -f $CORE_DIRECTORY/bin/worldserver ]]; then
         printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Manage the compiled binaries${COLOR_END}\n"
     fi
     printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Exit${COLOR_END}\n"
@@ -236,8 +236,7 @@ function source_module_menu
 {
     clear
     printf "${COLOR_PURPLE}Manage the available modules${COLOR_END}\n"
-    printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END}"
-    if [ $MODULE_ELUNA_ENABLED == "true" ]; then printf "${COLOR_GREEN}Enabled${COLOR_END}\n"; else printf "${COLOR_RED}Disabled${COLOR_END}\n"; fi
+    printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END} $("$MODULE_ELUNA_ENABLED" | sed "s/true/${COLOR_GREEN}Enabled${COLOR_END}/" | sed "s/false/${COLOR_RED}Disabled${COLOR_END}/")"
     printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
     printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
     read -n 1 s
