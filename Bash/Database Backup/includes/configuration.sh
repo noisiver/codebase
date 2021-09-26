@@ -10,13 +10,19 @@ function export_settings
     echo "<?xml version=\"1.0\"?>
     <config>
         <mysql>
+            <!-- The ip-address or hostname used to connect to the database server -->
             <hostname>${1:-127.0.0.1}</hostname>
+            <!-- The port used to connect to the database server -->
             <port>${2:-3306}</port>
+            <!-- The username used to connect to the database server -->
             <username>${3:-backup}</username>
+            <!-- The password used to connect to the database server -->
             <password>${4:-backup}</password>
         </mysql>
         <backup>
+            <!-- The type of storage to use. local = store it locally, gdrive = store it on an initialized google drive which must be at ~/gdrive -->
             <type>${5:-local}</type>
+            <!-- The max amount of files to store. The type of storage has no effect on this setting -->
             <max_files>${6:-24}</max_files>
         </backup>
     </config>" | xmllint --format - > $CONFIG_FILE
