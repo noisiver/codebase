@@ -31,7 +31,7 @@ function export_settings
             <directory>${8:-/opt/azerothcore}</directory>
             <!-- The required client data version -->
             <required_client_data>${9:-12}</required_client_data>
-            <!-- The installed client data version -->
+            <!-- The installed client data version. WARNING: DO NOT EDIT! The script will handle this value -->
             <installed_client_data>${10:-0}</installed_client_data>
         </core>
         <world>
