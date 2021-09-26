@@ -31,7 +31,7 @@ function export_settings
             <directory>${8:-/opt/azerothcore}</directory>
             <!-- The required client data version -->
             <required_client_data>${9:-12}</required_client_data>
-            <!-- The installed client data version. WARNING: DO NOT EDIT! The script will handle this value -->
+            <!-- The installed client data version. WARNING: DO NOT EDIT! -->
             <installed_client_data>${10:-0}</installed_client_data>
         </core>
         <world>
@@ -106,9 +106,9 @@ function export_settings
                 <chat>${43:-0}</chat>
                 <!-- Is GM accepting whispers from player by default or not. 0 = disabled, 1 = enabled, 2 = last save state -->
                 <whisper>${44:-0}</whisper>
-                <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only playters, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
+                <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
                 <gm_list>${45:-0}</gm_list>
-                <!-- Max GM level showed in who list (if visible). 0 = only playters, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
+                <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
                 <who_list>${46:-0}</who_list>
                 <!-- Allow players to add GM characters to their friends list. 0 = disabled, 1 = enabled -->
                 <allow_friend>${47:-0}</allow_friend>
