@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("color" "distribution" "packages" "configuration" "menu" "source" "database" "process")
+INCLUDES=("color" "distribution" "packages" "configuration" "quote" "menu" "source" "database" "process")
 
 clear
 
@@ -22,6 +22,8 @@ if [ $# -gt 0 ]; then
             printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
             printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
         fi
+
+        print_quote
     elif [ $# -eq 2 ]; then
         if [ $1 == "auth" ] || [ $1 == "world" ] || [ $1 == "all" ]; then
             [ $1 == "all" ] && TYPE=0
@@ -52,9 +54,7 @@ if [ $# -gt 0 ]; then
                 printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
             fi
 
-            clear
-            printf "${COLOR_GREEN}Finished${COLOR_END}\n"
-            printf "${COLOR_ORANGE}All actions completed successfully${COLOR_END}\n"
+            print_quote
         else
             printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
             printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
