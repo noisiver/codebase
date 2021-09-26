@@ -226,6 +226,9 @@ function source_menu
         printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the available modules${COLOR_END}\n"
         printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Download the latest version of the repository${COLOR_END}\n"
         printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Compile the source code into binaries${COLOR_END}\n"
+        if [[ -d $CORE_DIRECTORY/bin ]] && [[ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]]; then
+            printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Download the client data files${COLOR_END}\n"
+        fi
         printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
         printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
         read -s -n 1 s
@@ -234,6 +237,7 @@ function source_menu
             1) source_menu 1;;
             2) source_menu 2;;
             3) source_menu 3;;
+            4) fetch_client_data; source_menu;;
             0) main_menu;;
             *) source_menu;;
         esac
