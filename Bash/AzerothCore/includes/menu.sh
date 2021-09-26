@@ -182,11 +182,19 @@ function configuration_menu
         esac
     elif [ $1 == 2 ]; then
         [ $WORLD_GAME_TYPE == 0 ] && WORLD_GAME_TYPE_TEXT="${COLOR_YELLOW}Normal"
-        [ $WORLD_GAME_TYPE == 1 ] && WORLD_GAME_TYPE_TEXT="${COLOR_RED}PVP"
-        [ $WORLD_GAME_TYPE == 6 ] && WORLD_GAME_TYPE_TEXT="${COLOR_GREEN}RP"
-        [ $WORLD_GAME_TYPE == 8 ] && WORLD_GAME_TYPE_TEXT="${COLOR_GREEN}RPPVP"
-        [ $WORLD_REALM_ZONE == 1 ] && WORLD_REALM_ZONE_TEXT="${COLOR_RED}Development"
-        [ $WORLD_REALM_ZONE == 8 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}English"
+        [ $WORLD_GAME_TYPE == 1 ] && WORLD_GAME_TYPE_TEXT="${COLOR_RED}Player vs Player"
+        [ $WORLD_GAME_TYPE == 6 ] && WORLD_GAME_TYPE_TEXT="${COLOR_GREEN}Role Playing"
+        [ $WORLD_GAME_TYPE == 8 ] && WORLD_GAME_TYPE_TEXT="${COLOR_RED}Role Playing plus Player vs Player"
+        [ $WORLD_REALM_ZONE == 1 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}Development"
+        [ $WORLD_REALM_ZONE == 2 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}United States"
+        [ $WORLD_REALM_ZONE == 6 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}Korea"
+        [ $WORLD_REALM_ZONE == 9 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}German"
+        [ $WORLD_REALM_ZONE == 10 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}French"
+        [ $WORLD_REALM_ZONE == 11 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}Spanish"
+        [ $WORLD_REALM_ZONE == 12 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}Russian"
+        [ $WORLD_REALM_ZONE == 14 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}Taiwan"
+        [ $WORLD_REALM_ZONE == 16 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}China"
+        [ $WORLD_REALM_ZONE == 26 ] && WORLD_REALM_ZONE_TEXT="${COLOR_GREEN}Test Server"
 
         printf "${COLOR_PURPLE}Manage the server options - Page 1 of 5${COLOR_END}\n"
         printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Location of the source code: ${COLOR_GREEN}${CORE_DIRECTORY}${COLOR_END}\n"
@@ -203,8 +211,58 @@ function configuration_menu
         read -s -n 1 s
 
         case $s in
+            1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_DIRECTORY}" i; if [ ! -z $i ]; then CORE_DIRECTORY=$i; fi; generate_settings; configuration_menu 2;;
+            2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_REQUIRED_CLIENT_DATA}" i; if [ ! -z $i ]; then CORE_REQUIRED_CLIENT_DATA=$i; fi; generate_settings; configuration_menu 2;;
+            3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_NAME}" i; if [ ! -z $i ]; then WORLD_NAME=$i; fi; generate_settings; configuration_menu 2;;
+            4) clear; printf "${COLOR_PURPLE}Message of the day${COLOR_END}\n${COLOR_ORANGE}There are issues caused by the limitations of the terminal.\nTherefore, this option can only be modified by editing the XML-file\nPress any key to continue...${COLOR_END}";read -s -n 1; configuration_menu 2;;
+            5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_ID}" i; if [ ! -z $i ]; then WORLD_ID=$i; fi; generate_settings; configuration_menu 2;;
+            6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_IP}" i; if [ ! -z $i ]; then WORLD_IP=$i; fi; generate_settings; configuration_menu 2;;
+            7) configuration_menu 31;;
+            8) configuration_menu 32;;
             9) configuration_menu 3;;
             0) configuration_menu;;
+            *) configuration_menu 2;;
+        esac
+    elif [ $1 == 31 ]; then
+        printf "${COLOR_PURPLE}Game type${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Normal${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Player vs Player${COLOR_END}\n"
+        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Role Playing${COLOR_END}\n"
+        printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Role Playing plus Player vs Player${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+        case $s in
+            1) WORLD_GAME_TYPE=0; generate_settings; configuration_menu 2;;
+            2) WORLD_GAME_TYPE=1; generate_settings; configuration_menu 2;;
+            3) WORLD_GAME_TYPE=6; generate_settings; configuration_menu 2;;
+            4) WORLD_GAME_TYPE=8; generate_settings; configuration_menu 2;;
+            *) configuration_menu 2;;
+        esac
+    elif [ $1 == 32 ]; then
+        printf "${COLOR_PURPLE}Realm zone${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Development${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}United States${COLOR_END}\n"
+        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Korea${COLOR_END}\n"
+        printf "${COLOR_CYAN}4) ${COLOR_ORANGE}German${COLOR_END}\n"
+        printf "${COLOR_CYAN}5) ${COLOR_ORANGE}French${COLOR_END}\n"
+        printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Spanish${COLOR_END}\n"
+        printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Russian${COLOR_END}\n"
+        printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Taiwan${COLOR_END}\n"
+        printf "${COLOR_CYAN}9) ${COLOR_ORANGE}China${COLOR_END}\n"
+        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Test Server${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+        case $s in
+            1) WORLD_REALM_ZONE=1; generate_settings; configuration_menu 2;;
+            2) WORLD_REALM_ZONE=2; generate_settings; configuration_menu 2;;
+            3) WORLD_REALM_ZONE=6; generate_settings; configuration_menu 2;;
+            4) WORLD_REALM_ZONE=9; generate_settings; configuration_menu 2;;
+            5) WORLD_REALM_ZONE=10; generate_settings; configuration_menu 2;;
+            6) WORLD_REALM_ZONE=11; generate_settings; configuration_menu 2;;
+            7) WORLD_REALM_ZONE=12; generate_settings; configuration_menu 2;;
+            8) WORLD_REALM_ZONE=14; generate_settings; configuration_menu 2;;
+            9) WORLD_REALM_ZONE=16; generate_settings; configuration_menu 2;;
+            0) WORLD_REALM_ZONE=26; generate_settings; configuration_menu 2;;
             *) configuration_menu 2;;
         esac
     elif [ $1 == 3 ]; then
