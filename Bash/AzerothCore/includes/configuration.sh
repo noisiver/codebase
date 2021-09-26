@@ -9,69 +9,119 @@ function export_settings
     echo "<?xml version=\"1.0\"?>
     <config>
         <mysql>
+            <!-- The ip-address or hostname used to connect to the database server -->
             <hostname>${1:-127.0.0.1}</hostname>
+            <!-- The port used to connect to the database server -->
             <port>${2:-3306}</port>
+            <!-- The username used to connect to the database server -->
             <username>${3:-acore}</username>
+            <!-- The password used to connect to the database server -->
             <password>${4:-acore}</password>
             <database>
+                <!-- The name of the auth database -->
                 <auth>${5:-acore_auth}</auth>
+                <!-- The name of the characters database -->
                 <characters>${6:-acore_characters}</characters>
+                <!-- The name of the world database -->
                 <world>${7:-acore_world}</world>
             </database>
         </mysql>
         <core>
+            <!-- The location where the source is located -->
             <directory>${8:-/opt/azerothcore}</directory>
-            <required_client_data>${9:-11}</required_client_data>
+            <!-- The required client data version -->
+            <required_client_data>${9:-12}</required_client_data>
+            <!-- The installed client data version -->
             <installed_client_data>${10:-0}</installed_client_data>
         </core>
         <world>
+            <!-- The name of the realm as seen in the list in-game -->
             <name>${11:-AzerothCore}</name>
+            <!-- Message of the Day, displayed at login. Use '@' for a newline and be sure to escape special characters -->
             <motd>${12:-Welcome to AzerothCore.}</motd>
+            <!-- The id of the realm -->
             <id>${13:-1}</id>
+            <!-- The ip used to connect to the world server. Use external ip if required -->
             <ip>${14:-127.0.0.1}</ip>
+            <!-- Server realm type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
             <game_type>${15:-0}</game_type>
+            <!-- Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 8 = english -->
             <realm_zone>${16:-0}</realm_zone>
+            <!-- Allow server to use content from expansions. Checks for expansion-related map files, client compatibility and class/race character creation. 0 = none, 1 = tbc, 2 = wotlk -->
             <expansion>${17:-2}</expansion>
+            <!-- Maximum number of players in the world. Excluding Mods, GMs and Admins -->
             <player_limit>${18:-1000}</player_limit>
+            <!-- Disable cinematic intro at first login after character creation. Prevents buggy intros in case of custom start location coordinates. 0 = Show intro for each new character, 1 = Show intro only for first character of selected race, 2 = Disable intro for all classes -->
             <skip_cinematics>${19:-0}</skip_cinematics>
+            <!-- Maximum level that can be reached by players. Levels beyond 100 are not recommended at all -->
             <max_level>${20:-80}</max_level>
+            <!-- Starting level for characters after creation -->
             <start_level>${21:-1}</start_level>
+            <!-- Amount of money (in Copper) that a character has after creation -->
             <start_money>${22:-0}</start_money>
+            <!-- Players will automatically gain max skill level when logging in or leveling up. 0 = disabled, 1 = enabled -->
             <always_max_skill>${23:-0}</always_max_skill>
+            <!-- Character knows all flight paths (of both factions) after creation. 0 = disabled, 1 = enabled -->
             <all_flight_paths>${24:-0}</all_flight_paths>
+            <!-- Characters start with all maps explored. 0 = disabled, 1 = enabled -->
             <maps_explored>${25:-0}</maps_explored>
+            <!-- Allow players to use commands. 0 = disabled, 1 = enabled -->
             <allow_commands>${26:-1}</allow_commands>
+            <!-- Allow non-raid quests to be completed while in a raid group. 0 = disabled, 1 = enabled -->
             <quest_ignore_raid>${27:-0}</quest_ignore_raid>
+            <!-- Prevent players AFK from being logged out. 0 = disabled, 1 = enabled -->
             <prevent_afk_logout>${28:-0}</prevent_afk_logout>
+            <!-- Highest level up to which a character can benefit from the Recruit-A-Friend experience multiplier -->
             <raf_max_level>${29:-60}</raf_max_level>
+            <!-- Preload all grids on all non-instanced maps. This will take a great amount of additional RAM (ca. 9 GB) and causes the server to take longer to start, but can increase performance if used on a server with a high amount of players. It will also activate all creatures which are set active (e.g. the Fel Reavers in Hellfire Peninsula) on server start. 0 = disabled, 1 = enabled -->
             <preload_map_grids>${30:-0}</preload_map_grids>
+            <!-- Set all creatures with waypoint movement active. This means that they will start movement once they are loaded (which happens on grid load) and keep moving even when no player is near. This will increase CPU usage significantly and can be used with enabled preload_map_grids to start waypoint movement on server startup. 0 = disabled, 1 = enabled -->
             <set_all_waypoints_active>${31:-0}</set_all_waypoints_active>
+            <!-- Enable/Disable Minigob Manabonk in Dalaran. 0 = disabled, 1 = enabled -->
             <enable_minigob_manabonk>${32:-1}</enable_minigob_manabonk>
             <rates>
+                <!-- Experience rates (outside battleground) -->
                 <experience>${33:-1}</experience>
+                <!-- Resting points grow rates -->
                 <rested_exp>${34:-1}</rested_exp>
+                <!-- Reputation gain rate -->
                 <reputation>${35:-1}</reputation>
+                <!-- Drop rates for money -->
                 <money>${36:-1}</money>
+                <!-- Crafting skills gain rate -->
                 <crafting>${37:-1}</crafting>
+                <!-- Gathering skills gain rate -->
                 <gathering>${38:-1}</gathering>
+                <!-- Weapon skills gain rate -->
                 <weapon_skill>${39:-1}</weapon_skill>
+                <!-- Defense skills gain rate -->
                 <defense_skill>${40:-1}</defense_skill>
             </rates>
             <gm>
+                <!-- Set GM state when a GM character enters the world. 0 = disabled, 1 = enabled, 2 = last save state -->
                 <login_state>${41:-1}</login_state>
+                <!-- GM visibility at login. 0 = disabled, 1 = enabled, 2 = last save state -->
                 <visible>${42:-0}</visible>
+                <!-- GM chat mode at login. 0 = disabled, 1 = enabled, 2 = last save state -->
                 <chat>${43:-0}</chat>
+                <!-- Is GM accepting whispers from player by default or not. 0 = disabled, 1 = enabled, 2 = last save state -->
                 <whisper>${44:-0}</whisper>
+                <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only playters, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
                 <gm_list>${45:-0}</gm_list>
+                <!-- Max GM level showed in who list (if visible). 0 = only playters, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
                 <who_list>${46:-0}</who_list>
+                <!-- Allow players to add GM characters to their friends list. 0 = disabled, 1 = enabled -->
                 <allow_friend>${47:-0}</allow_friend>
+                <!-- Allow players to invite GM characters. 0 = disabled, 1 = enabled -->
                 <allow_invite>${48:-0}</allow_invite>
+                <!-- Allow lower security levels to use commands on higher security level characters. 0 = disabled, 1 = enabled -->
                 <lower_security>${49:-0}</lower_security>
             </gm>
         </world>
         <module>
             <eluna>
-                <enabled>${50:-true}</enabled>
+                <!-- Enable the use of the Eluna LUA engine module -->
+                <enabled>${50:-false}</enabled>
             </eluna>
         </module>
     </config>" | xmllint --format - > $ROOT/$CONFIG_FILE
