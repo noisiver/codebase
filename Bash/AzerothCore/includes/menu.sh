@@ -278,6 +278,48 @@ function source_menu
 function database_menu
 {
     clear
+
+    if [ -z $1 ]; then
+        printf "${COLOR_PURPLE}Manage the databases${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the auth database${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the characters database${COLOR_END}\n"
+        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Manage the world database${COLOR_END}\n"
+        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+
+        case $s in
+            1) database_menu 1;;
+            2) database_menu 2;;
+            3) database_menu 3;;
+            0) main_menu;;
+            *) database_menu;;
+        esac
+    else
+        [ $1 == 1 ] && DB="auth"
+        [ $1 == 2 ] && DB="characters"
+        [ $1 == 3 ] && DB="world"
+
+        printf "${COLOR_PURPLE}Manage the ${DB} database${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Import all tables and data${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Import all available updates${COLOR_END}\n"
+        if [ $1 == 3 ]; then
+            printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Import all custom content${COLOR_END}\n"
+            printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Set the realm list${COLOR_END}\n"
+        fi
+        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+        read -s -n 1 s
+
+        case $s in
+            1) import_database $1 1; database_menu $1;;
+            2) update_database $1 2; database_menu $1;;
+            3) update_database $1 3; database_menu $1;;
+            4) update_database $1 4; database_menu $1;;
+            0) database_menu;;
+            *) database_menu $1;;
+        esac
+    fi
 }
 
 function configuration_menu

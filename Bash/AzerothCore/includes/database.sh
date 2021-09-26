@@ -135,7 +135,7 @@ function update_database
         fi
     fi
 
-    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 2 ]]; then
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 3 ]]; then
         if [[ -d $ROOT/sql/world ]]; then
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
                 for f in $ROOT/sql/world/*; do
@@ -163,7 +163,7 @@ function update_database
         fi
     fi
 
-    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 3 ]]; then
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 4 ]]; then
         printf "${COLOR_ORANGE}Updating realmlist (id: $WORLD_ID, name: $WORLD_NAME, address: $WORLD_IP)${COLOR_END}\n"
         mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_AUTH -e "DELETE FROM realmlist WHERE id='$WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$WORLD_ID', '$WORLD_NAME', '$WORLD_IP', '$WORLD_IP', '255.255.255.0', '8085')"
         if [ $? -ne 0 ]; then
