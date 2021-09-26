@@ -135,6 +135,51 @@ function update_database
         fi
     fi
 
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 2 ]]; then
+        printf "${COLOR_ORANGE}Updating realmlist (id: $WORLD_ID, name: $WORLD_NAME, address: $WORLD_IP)${COLOR_END}\n"
+        mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_AUTH -e "DELETE FROM realmlist WHERE id='$WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$WORLD_ID', '$WORLD_NAME', '$WORLD_IP', '$WORLD_IP', '255.255.255.0', '8085')"
+        if [ $? -ne 0 ]; then
+            rm -rf $MYSQL_CONFIG
+            exit $?
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 2 ]]; then
+        if [ $MODULE_AHBOT_ENABLED == "true" ]; then
+            if [[ -d $CORE_DIRECTORY/modules/mod-ah-bot/sql/world/base ]]; then
+                for f in $CORE_DIRECTORY/modules/mod-ah-bot/sql/world/base/*; do
+                    if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names $MYSQL_DATABASE_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
+                    if [ $? -ne 0 ]; then
+                        rm -rf $MYSQL_CONFIG
+                        exit $?
+                    fi
+                done
+            fi
+        else
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names $MYSQL_DATABASE_WORLD -e "SHOW TABLES LIKE 'mod_auctionhousebot'"` ]; then
+                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD -e "DROP TABLE mod_auctionhousebot"
+                if [ $? -ne 0 ]; then
+                    rm -rf $MYSQL_CONFIG
+                    exit $?
+                fi
+            fi
+
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names $MYSQL_DATABASE_WORLD -e "SHOW TABLES LIKE 'mod_auctionhousebot_disabled_items'"` ]; then
+                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD -e "DROP TABLE mod_auctionhousebot_disabled_items"
+                if [ $? -ne 0 ]; then
+                    rm -rf $MYSQL_CONFIG
+                    exit $?
+                fi
+            fi
+        fi
+    fi
+
     if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 3 ]]; then
         if [[ -d $ROOT/sql/world ]]; then
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
@@ -160,15 +205,6 @@ function update_database
                     fi
                 done
             fi
-        fi
-    fi
-
-    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 4 ]]; then
-        printf "${COLOR_ORANGE}Updating realmlist (id: $WORLD_ID, name: $WORLD_NAME, address: $WORLD_IP)${COLOR_END}\n"
-        mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_AUTH -e "DELETE FROM realmlist WHERE id='$WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$WORLD_ID', '$WORLD_NAME', '$WORLD_IP', '$WORLD_IP', '255.255.255.0', '8085')"
-        if [ $? -ne 0 ]; then
-            rm -rf $MYSQL_CONFIG
-            exit $?
         fi
     fi
 

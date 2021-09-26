@@ -119,9 +119,25 @@ function export_settings
             </gm>
         </world>
         <module>
-            <eluna>
-                <!-- Enable the use of the Eluna LUA engine module -->
+            <ahbot>
+                <!-- Enable/Disable the use of the AHBot module -->
                 <enabled>${50:-false}</enabled>
+                <!-- Enable/Disable the part of AHBot that buys items from players -->
+                <enable_buyer>${51:-false}</enable_buyer>
+                <!-- Enable/Disable the part of AHBot that puts items up for auction -->
+                <enable_seller>${52:-false}</enable_seller>
+                <!-- Account id is the account number (auth->account) of the player you want to run as the auction bot -->
+                <account_id>${53:-0}</account_id>
+                <!-- Character guid is the GUID (characters->characters table) of the player you want to run as the auction bot -->
+                <character_guid>${54:-0}</character_guid>
+                <!-- Minimum amount of items the bot will keep on the auction house -->
+                <min_items>${55:-0}</min_items>
+                <!-- Maximum amount of items the bot will keep on the auction house -->
+                <max_items>${56:-0}</max_items>
+            </ahbot>
+            <eluna>
+                <!-- Enable/Disable the use of the Eluna LUA engine module -->
+                <enabled>${57:-false}</enabled>
             </eluna>
         </module>
     </config>" | xmllint --format - > $ROOT/$CONFIG_FILE
@@ -179,6 +195,13 @@ function generate_settings
     $WORLD_GM_ALLOW_FRIEND \
     $WORLD_GM_ALLOW_INVITE \
     $WORLD_GM_LOWER_SECURITY \
+    $MODULE_AHBOT_ENABLED \
+    $MODULE_AHBOT_ENABLE_BUYER \
+    $MODULE_AHBOT_ENABLE_SELLER \
+    $MODULE_AHBOT_ACCOUNT_ID \
+    $MODULE_AHBOT_CHARACTER_GUID \
+    $MODULE_AHBOT_MIN_ITEMS \
+    $MODULE_AHBOT_MAX_ITEMS \
     $MODULE_ELUNA_ENABLED
 }
 
@@ -241,6 +264,14 @@ WORLD_GM_ALLOW_FRIEND="$(echo "cat /config/world/gm/allow_friend/text()" | xmlli
 WORLD_GM_ALLOW_INVITE="$(echo "cat /config/world/gm/allow_invite/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
 WORLD_GM_LOWER_SECURITY="$(echo "cat /config/world/gm/lower_security/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
 
+MODULE_AHBOT_ENABLED="$(echo "cat /config/module/ahbot/enabled/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_ENABLE_BUYER="$(echo "cat /config/module/ahbot/enable_buyer/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_ENABLE_SELLER="$(echo "cat /config/module/ahbot/enable_seller/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_ACCOUNT_ID="$(echo "cat /config/module/ahbot/account_id/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_CHARACTER_GUID="$(echo "cat /config/module/ahbot/character_guid/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_MIN_ITEMS="$(echo "cat /config/module/ahbot/min_items/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_MAX_ITEMS="$(echo "cat /config/module/ahbot/max_items/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+
 MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
 
 if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]] || 
@@ -292,6 +323,13 @@ if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]] ||
    [[ -z $WORLD_GM_ALLOW_FRIEND ]] || [[ $WORLD_GM_ALLOW_FRIEND == "" ]] || 
    [[ -z $WORLD_GM_ALLOW_INVITE ]] || [[ $WORLD_GM_ALLOW_INVITE == "" ]] || 
    [[ -z $WORLD_GM_LOWER_SECURITY ]] || [[ $WORLD_GM_LOWER_SECURITY == "" ]] || 
+   [[ -z $MODULE_AHBOT_ENABLED ]] || [[ $MODULE_AHBOT_ENABLED == "" ]] || 
+   [[ -z $MODULE_AHBOT_ENABLE_BUYER ]] || [[ $MODULE_AHBOT_ENABLE_BUYER == "" ]] || 
+   [[ -z $MODULE_AHBOT_ENABLE_SELLER ]] || [[ $MODULE_AHBOT_ENABLE_SELLER == "" ]] || 
+   [[ -z $MODULE_AHBOT_ACCOUNT_ID ]] || [[ $MODULE_AHBOT_ACCOUNT_ID == "" ]] || 
+   [[ -z $MODULE_AHBOT_CHARACTER_GUID ]] || [[ $MODULE_AHBOT_CHARACTER_GUID == "" ]] || 
+   [[ -z $MODULE_AHBOT_MIN_ITEMS ]] || [[ $MODULE_AHBOT_MIN_ITEMS == "" ]] || 
+   [[ -z $MODULE_AHBOT_MAX_ITEMS ]] || [[ $MODULE_AHBOT_MAX_ITEMS == "" ]] || 
    [[ -z $MODULE_ELUNA_ENABLED ]] || [[ $MODULE_ELUNA_ENABLED == "" ]]; then
     clear
     printf "${COLOR_RED}Atleast one of the configuration options is missing or invalid${COLOR_END}\n"
@@ -385,10 +423,46 @@ function update_configuration
     fi
 
     if [ $1 == 0 ] || [ $1 == 2 ]; then
-        if [ -f $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist ]; then
-            printf "${COLOR_ORANGE}Updating mod_LuaEngine.conf${COLOR_END}\n"
+        if [ $MODULE_AHBOT_ENABLED == "true" ]; then
+            if [ -f $CORE_DIRECTORY/etc/modules/mod_ahbot.conf.dist ]; then
+                printf "${COLOR_ORANGE}Updating mod_ahbot.conf${COLOR_END}\n"
 
-            cp $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf
+                cp $CORE_DIRECTORY/etc/modules/mod_ahbot.conf.dist $CORE_DIRECTORY/etc/modules/mod_ahbot.conf
+
+                [ $MODULE_AHBOT_ENABLE_BUYER == "true" ] && ENABLE_BUYER=1 || ENABLE_BUYER=0
+                [ $MODULE_AHBOT_ENABLE_SELLER == "true" ] && ENABLE_SELLER=1 || ENABLE_SELLER=0
+
+                sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = '$ENABLE_BUYER'/g' $CORE_DIRECTORY/etc/modules/mod_ahbot.conf
+                sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = '$ENABLE_SELLER'/g' $CORE_DIRECTORY/etc/modules/mod_ahbot.conf
+                sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = '$MODULE_AHBOT_ACCOUNT_ID'/g' $CORE_DIRECTORY/etc/modules/mod_ahbot.conf
+                sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = '$MODULE_AHBOT_CHARACTER_GUID'/g' $CORE_DIRECTORY/etc/modules/mod_ahbot.conf
+            fi
+        else
+            if [ -f $CORE_DIRECTORY/etc/modules/mod_ahbot.conf ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/mod_ahbot.conf
+            fi
+
+            if [ -f $CORE_DIRECTORY/etc/modules/mod_ahbot.conf.dist ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/mod_ahbot.conf.dist
+            fi
+        fi
+    fi
+
+    if [ $1 == 0 ] || [ $1 == 2 ]; then
+        if [ $MODULE_ELUNA_ENABLED == "true" ]; then
+            if [ -f $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist ]; then
+                printf "${COLOR_ORANGE}Updating mod_LuaEngine.conf${COLOR_END}\n"
+
+                cp $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf
+            fi
+        else
+            if [ -f $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf
+            fi
+
+            if [ -f $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist
+            fi
         fi
     fi
 }

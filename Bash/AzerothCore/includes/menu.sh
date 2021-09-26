@@ -239,14 +239,17 @@ function source_menu
         esac
     elif [ $1 == 1 ]; then
         printf "${COLOR_PURPLE}Manage the available modules${COLOR_END}\n"
-        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END}"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Auction House Bot: ${COLOR_END}"
+        [ $MODULE_AHBOT_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END}"
         [ $MODULE_ELUNA_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
         printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
         printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
         read -s -n 1 s
 
         case $s in
-            1) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; generate_settings; source_menu 1;;
+            1) if [ $MODULE_AHBOT_ENABLED == "true" ]; then MODULE_AHBOT_ENABLED="false"; else MODULE_AHBOT_ENABLED="true"; fi; generate_settings; source_menu 1;;
+            2) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; generate_settings; source_menu 1;;
             0) source_menu;;
             *) source_menu 1;;
         esac
@@ -303,19 +306,17 @@ function database_menu
         printf "${COLOR_PURPLE}Manage the ${DB} database${COLOR_END}\n"
         printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Import all tables and data${COLOR_END}\n"
         printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Import all available updates${COLOR_END}\n"
-        if [ $1 == 3 ]; then
+        if [[ $1 == 3 ]] && [[ -d $ROOT/sql/world ]] && [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
             printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Import all custom content${COLOR_END}\n"
-            printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Set the realm list${COLOR_END}\n"
         fi
         printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
         printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
         read -s -n 1 s
 
         case $s in
-            1) import_database $1 1; database_menu $1;;
-            2) update_database $1 2; database_menu $1;;
-            3) update_database $1 3; database_menu $1;;
-            4) update_database $1 4; database_menu $1;;
+            1) import_database $1 $s; database_menu $1;;
+            2) update_database $1 $s; database_menu $1;;
+            3) update_database $1 $s; database_menu $1;;
             0) database_menu;;
             *) database_menu $1;;
         esac
