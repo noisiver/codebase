@@ -45,7 +45,7 @@ function export_settings
             <ip>${14:-127.0.0.1}</ip>
             <!-- Server realm type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
             <game_type>${15:-0}</game_type>
-            <!-- Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 8 = english -->
+            <!-- Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 2 = united states -->
             <realm_zone>${16:-0}</realm_zone>
             <!-- Allow server to use content from expansions. Checks for expansion-related map files, client compatibility and class/race character creation. 0 = none, 1 = tbc, 2 = wotlk -->
             <expansion>${17:-2}</expansion>
@@ -103,7 +103,7 @@ function export_settings
                 <!-- GM visibility at login. 0 = disabled, 1 = enabled, 2 = last save state -->
                 <visible>${42:-0}</visible>
                 <!-- GM chat mode at login. 0 = disabled, 1 = enabled, 2 = last save state -->
-                <chat>${43:-0}</chat>
+                <chat>${43:-1}</chat>
                 <!-- Is GM accepting whispers from player by default or not. 0 = disabled, 1 = enabled, 2 = last save state -->
                 <whisper>${44:-0}</whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
