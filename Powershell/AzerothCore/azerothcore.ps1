@@ -1,6 +1,6 @@
 Clear-Host
 
-$includes = @("configuration", "menu")
+$includes = @("packages", "configuration", "menu")
 foreach ($include in $includes)
 {
     if (Test-Path -Path includes\$include.ps1)
@@ -13,6 +13,8 @@ foreach ($include in $includes)
         exit
     }
 }
+
+Check-Packages
 
 if ($args.Count -gt 0)
 {
@@ -27,7 +29,7 @@ if ($args.Count -gt 0)
         else
         {
             Write-Host -ForegroundColor Green "Invalid arguments"
-            Write-Host -ForegroundColor Yellow "The supplied arguments are invalid."
+            Write-Host -ForegroundColor Yellow "The supplied arguments are invalid"
         }
     }
     elseif ($args.Count -eq 2)
@@ -49,13 +51,13 @@ if ($args.Count -gt 0)
             else
             {
                 Write-Host -ForegroundColor Green "Invalid arguments"
-                Write-Host -ForegroundColor Yellow "The supplied arguments are invalid."
+                Write-Host -ForegroundColor Yellow "The supplied arguments are invalid"
             }
         }
         else
         {
             Write-Host -ForegroundColor Green "Invalid arguments"
-            Write-Host -ForegroundColor Yellow "The supplied arguments are invalid."
+            Write-Host -ForegroundColor Yellow "The supplied arguments are invalid"
         }
     }
 }
