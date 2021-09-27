@@ -22,7 +22,7 @@ function Main-Menu
         2 { Write-Host "Manage the databases" }
         3 { Write-Host "Manage the configuration options" }
         4 { Write-Host "Manage the compiled binaries" }
-        0 { Exit-Menu }
+        0 { Print-Quote }
         default { Main-Menu }
 
     }
@@ -52,9 +52,4 @@ function Source-Menu
         default { Source-Menu }
 
     }
-}
-
-function Exit-Menu
-{
-    Print-Quote
 }

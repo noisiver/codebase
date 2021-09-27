@@ -22,7 +22,7 @@ function main_menu
         2) database_menu;;
         3) configuration_menu;;
         4) binary_menu;;
-        0) exit_menu;;
+        0) print_quote;;
         *) main_menu;;
     esac
 }
@@ -377,9 +377,4 @@ function configuration_menu
 function binary_menu
 {
     clear
-}
-
-function exit_menu
-{
-    print_quote
 }
