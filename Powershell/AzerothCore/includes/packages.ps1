@@ -2,7 +2,7 @@ $packages = @(
     ('cmake', 'CMake 3.20'),
     ('git', 'Git'),
     ('mysql', 'MySQL'),
-    ('vs', 'Visual Studio Community 2019')
+    ('visual studio', 'Visual Studio Community 2019')
 )
 
 function Check-Packages
@@ -16,7 +16,11 @@ function Check-Packages
 
         Write-Host -NoNewLine -ForegroundColor Yellow "Checking $long : "
 
-        if (-Not (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where { $_.DisplayName -eq $short }) -ne $null)
+        if ((Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where { $_.DisplayName -like "*$short*" }) -Or (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where { $_.DisplayName -like "*$short*" }))
+        {
+            Write-Host -ForegroundColor Green "Found"
+        }
+        else
         {
             Write-Host -ForegroundColor Red "Not found"
             $error = $true
