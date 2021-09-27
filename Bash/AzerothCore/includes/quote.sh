@@ -190,6 +190,6 @@ QUOTES=("A chain is only as strong as its weakest link." \
 function print_quote
 {
     clear
-    printf "${COLOR_PURPLE}Have a amazingly wonderful day!${COLOR_END}\n"
+    printf "${COLOR_PURPLE}Have an amazingly wonderful day!${COLOR_END}\n"
     printf "${COLOR_ORANGE}${QUOTES[$(( RANDOM % ${#QUOTES[@]} ))]}${COLOR_END}\n"
 }
