@@ -45,8 +45,8 @@ function export_settings
             <ip>${14:-127.0.0.1}</ip>
             <!-- Server realm type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
             <game_type>${15:-0}</game_type>
-            <!-- Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 2 = united states -->
-            <realm_zone>${16:-0}</realm_zone>
+            <!-- Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 2 = united states, 6 = korea, 9 = german, 10 = french, 11 = spanish, 12 = russian, 14 = taiwan, 16 = china, 26 = test server -->
+            <realm_zone>${16:-1}</realm_zone>
             <!-- Allow server to use content from expansions. Checks for expansion-related map files, client compatibility and class/race character creation. 0 = none, 1 = tbc, 2 = wotlk -->
             <expansion>${17:-2}</expansion>
             <!-- Maximum number of players in the world. Excluding Mods, GMs and Admins -->
