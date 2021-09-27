@@ -194,6 +194,6 @@ function fetch_client_data
         fi
 
         CORE_INSTALLED_CLIENT_DATA=$CORE_REQUIRED_CLIENT_DATA
-        generate_settings
+        export_settings
     fi
 }

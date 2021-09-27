@@ -1,10 +1,10 @@
 #!/bin/bash
 ROOT=$(pwd)
 
-CONFIG_FILE="azerothcore.xml"
+CONFIG_FILE="$ROOT/azerothcore.xml"
 MYSQL_CONFIG="$ROOT/mysql.cnf"
 
-function export_settings
+function generate_settings
 {
     echo "<?xml version=\"1.0\"?>
     <config>
@@ -41,8 +41,8 @@ function export_settings
             <motd>${12:-Welcome to AzerothCore.}</motd>
             <!-- The id of the realm -->
             <id>${13:-1}</id>
-            <!-- The ip used to connect to the world server. Use external ip if required -->
-            <ip>${14:-127.0.0.1}</ip>
+            <!-- The ip or hostname used to connect to the world server. Use external ip if required -->
+            <address>${14:-127.0.0.1}</address>
             <!-- Server realm type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
             <game_type>${15:-0}</game_type>
             <!-- Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 2 = united states, 6 = korea, 9 = german, 10 = french, 11 = spanish, 12 = russian, 14 = taiwan, 16 = china, 26 = test server -->
@@ -140,12 +140,12 @@ function export_settings
                 <enabled>${57:-false}</enabled>
             </eluna>
         </module>
-    </config>" | xmllint --format - > $ROOT/$CONFIG_FILE
+    </config>" | xmllint --format - > $CONFIG_FILE
 }
 
-function generate_settings
+function export_settings
 {
-    export_settings \
+    generate_settings \
     $MYSQL_HOSTNAME \
     $MYSQL_PORT \
     $MYSQL_USERNAME \
@@ -159,7 +159,7 @@ function generate_settings
     "$WORLD_NAME" \
     "$WORLD_MOTD" \
     $WORLD_ID \
-    $WORLD_IP \
+    $WORLD_ADDRESS \
     $WORLD_GAME_TYPE \
     $WORLD_REALM_ZONE \
     $WORLD_EXPANSION \
@@ -205,135 +205,371 @@ function generate_settings
     $MODULE_ELUNA_ENABLED
 }
 
-if [ ! -f $ROOT/$CONFIG_FILE ]; then
+if [ ! -f $CONFIG_FILE ]; then
     clear
     printf "${COLOR_ORANGE}Generating default configuration${COLOR_END}\n"
-    export_settings
+    generate_settings
     exit $?
 fi
 
-MYSQL_HOSTNAME="$(echo "cat /config/mysql/hostname/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MYSQL_PORT="$(echo "cat /config/mysql/port/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MYSQL_USERNAME="$(echo "cat /config/mysql/username/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MYSQL_PASSWORD="$(echo "cat /config/mysql/password/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MYSQL_DATABASE_AUTH="$(echo "cat /config/mysql/database/auth/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MYSQL_DATABASE_CHARACTERS="$(echo "cat /config/mysql/database/characters/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MYSQL_DATABASE_WORLD="$(echo "cat /config/mysql/database/world/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+clear
 
-CORE_DIRECTORY="$(echo "cat /config/core/directory/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-CORE_REQUIRED_CLIENT_DATA="$(echo "cat /config/core/required_client_data/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-CORE_INSTALLED_CLIENT_DATA="$(echo "cat /config/core/installed_client_data/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+printf "${COLOR_GREEN}Loading configuration${COLOR_END}\n"
 
-WORLD_NAME="$(echo "cat /config/world/name/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_MOTD="$(echo "cat /config/world/motd/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_ID="$(echo "cat /config/world/id/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_IP="$(echo "cat /config/world/ip/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GAME_TYPE="$(echo "cat /config/world/game_type/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_REALM_ZONE="$(echo "cat /config/world/realm_zone/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_EXPANSION="$(echo "cat /config/world/expansion/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_PLAYER_LIMIT="$(echo "cat /config/world/player_limit/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_SKIP_CINEMATICS="$(echo "cat /config/world/skip_cinematics/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_MAX_LEVEL="$(echo "cat /config/world/max_level/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_START_LEVEL="$(echo "cat /config/world/start_level/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_START_MONEY="$(echo "cat /config/world/start_money/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_ALWAYS_MAX_SKILL="$(echo "cat /config/world/always_max_skill/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_ALL_FLIGHT_PATHS="$(echo "cat /config/world/all_flight_paths/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_MAPS_EXPLORED="$(echo "cat /config/world/maps_explored/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_ALLOW_COMMANDS="$(echo "cat /config/world/allow_commands/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_QUEST_IGNORE_RAID="$(echo "cat /config/world/quest_ignore_raid/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_PREVENT_AFK_LOGOUT="$(echo "cat /config/world/prevent_afk_logout/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RAF_MAX_LEVEL="$(echo "cat /config/world/raf_max_level/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_PRELOAD_MAP_GRIDS="$(echo "cat /config/world/preload_map_grids/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_SET_WAYPOINTS_ACTIVE="$(echo "cat /config/world/set_all_waypoints_active/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_ENABLE_MINIGOB_MANABONK="$(echo "cat /config/world/enable_minigob_manabonk/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RATE_EXPERIENCE="$(echo "cat /config/world/rates/experience/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RATE_RESTED_EXP="$(echo "cat /config/world/rates/rested_exp/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RATE_REPUTATION="$(echo "cat /config/world/rates/reputation/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RATE_MONEY="$(echo "cat /config/world/rates/money/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RATE_CRAFTING="$(echo "cat /config/world/rates/crafting/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RATE_GATHERING="$(echo "cat /config/world/rates/gathering/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RATE_WEAPON_SKILL="$(echo "cat /config/world/rates/weapon_skill/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_RATE_DEFENSE_SKILL="$(echo "cat /config/world/rates/defense_skill/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_LOGIN_STATE="$(echo "cat /config/world/gm/login_state/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_VISIBLE="$(echo "cat /config/world/gm/visible/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_CHAT="$(echo "cat /config/world/gm/chat/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_WHISPER="$(echo "cat /config/world/gm/whisper/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_GM_LIST="$(echo "cat /config/world/gm/gm_list/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_WHO_LIST="$(echo "cat /config/world/gm/who_list/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_ALLOW_FRIEND="$(echo "cat /config/world/gm/allow_friend/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_ALLOW_INVITE="$(echo "cat /config/world/gm/allow_invite/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_LOWER_SECURITY="$(echo "cat /config/world/gm/lower_security/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+MYSQL_HOSTNAME="$(echo "cat /config/mysql/hostname/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MYSQL_PORT="$(echo "cat /config/mysql/port/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MYSQL_USERNAME="$(echo "cat /config/mysql/username/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MYSQL_PASSWORD="$(echo "cat /config/mysql/password/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MYSQL_DATABASE_AUTH="$(echo "cat /config/mysql/database/auth/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MYSQL_DATABASE_CHARACTERS="$(echo "cat /config/mysql/database/characters/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MYSQL_DATABASE_WORLD="$(echo "cat /config/mysql/database/world/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
-MODULE_AHBOT_ENABLED="$(echo "cat /config/module/ahbot/enabled/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MODULE_AHBOT_ENABLE_BUYER="$(echo "cat /config/module/ahbot/enable_buyer/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MODULE_AHBOT_ENABLE_SELLER="$(echo "cat /config/module/ahbot/enable_seller/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MODULE_AHBOT_ACCOUNT_ID="$(echo "cat /config/module/ahbot/account_id/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MODULE_AHBOT_CHARACTER_GUID="$(echo "cat /config/module/ahbot/character_guid/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MODULE_AHBOT_MIN_ITEMS="$(echo "cat /config/module/ahbot/min_items/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
-MODULE_AHBOT_MAX_ITEMS="$(echo "cat /config/module/ahbot/max_items/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+CORE_DIRECTORY="$(echo "cat /config/core/directory/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+CORE_REQUIRED_CLIENT_DATA="$(echo "cat /config/core/required_client_data/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+CORE_INSTALLED_CLIENT_DATA="$(echo "cat /config/core/installed_client_data/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
-MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $ROOT/$CONFIG_FILE | sed '1d;$d')"
+WORLD_NAME="$(echo "cat /config/world/name/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_MOTD="$(echo "cat /config/world/motd/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_ID="$(echo "cat /config/world/id/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_ADDRESS="$(echo "cat /config/world/address/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GAME_TYPE="$(echo "cat /config/world/game_type/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_REALM_ZONE="$(echo "cat /config/world/realm_zone/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_EXPANSION="$(echo "cat /config/world/expansion/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_PLAYER_LIMIT="$(echo "cat /config/world/player_limit/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_SKIP_CINEMATICS="$(echo "cat /config/world/skip_cinematics/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_MAX_LEVEL="$(echo "cat /config/world/max_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_START_LEVEL="$(echo "cat /config/world/start_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_START_MONEY="$(echo "cat /config/world/start_money/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_ALWAYS_MAX_SKILL="$(echo "cat /config/world/always_max_skill/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_ALL_FLIGHT_PATHS="$(echo "cat /config/world/all_flight_paths/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_MAPS_EXPLORED="$(echo "cat /config/world/maps_explored/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_ALLOW_COMMANDS="$(echo "cat /config/world/allow_commands/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_QUEST_IGNORE_RAID="$(echo "cat /config/world/quest_ignore_raid/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_PREVENT_AFK_LOGOUT="$(echo "cat /config/world/prevent_afk_logout/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_RAF_MAX_LEVEL="$(echo "cat /config/world/raf_max_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_PRELOAD_MAP_GRIDS="$(echo "cat /config/world/preload_map_grids/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_SET_WAYPOINTS_ACTIVE="$(echo "cat /config/world/set_all_waypoints_active/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_ENABLE_MINIGOB_MANABONK="$(echo "cat /config/world/enable_minigob_manabonk/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
-if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]] || 
-   [[ -z $MYSQL_PORT ]] || [[ $MYSQL_PORT == "" ]] || 
-   [[ -z $MYSQL_USERNAME ]] || [[ $MYSQL_USERNAME == "" ]] || 
-   [[ -z $MYSQL_PASSWORD ]] || [[ $MYSQL_PASSWORD == "" ]] || 
-   [[ -z $MYSQL_DATABASE_AUTH ]] || [[ $MYSQL_DATABASE_AUTH == "" ]] || 
-   [[ -z $MYSQL_DATABASE_CHARACTERS ]] || [[ $MYSQL_DATABASE_CHARACTERS == "" ]] || 
-   [[ -z $MYSQL_DATABASE_WORLD ]] || [[ $MYSQL_DATABASE_WORLD == "" ]] || 
-   [[ -z $CORE_DIRECTORY ]] || [[ $CORE_DIRECTORY == "" ]] || 
-   [[ -z $CORE_REQUIRED_CLIENT_DATA ]] || [[ $CORE_REQUIRED_CLIENT_DATA == "" ]] || 
-   [[ -z $CORE_INSTALLED_CLIENT_DATA ]] || [[ $CORE_INSTALLED_CLIENT_DATA == "" ]] || 
-   [[ -z $WORLD_NAME ]] || [[ $WORLD_NAME == "" ]] || 
-   [[ -z $WORLD_MOTD ]] || [[ $WORLD_MOTD == "" ]] || 
-   [[ -z $WORLD_ID ]] || [[ $WORLD_ID == "" ]] || 
-   [[ -z $WORLD_IP ]] || [[ $WORLD_IP == "" ]] || 
-   [[ -z $WORLD_GAME_TYPE ]] || [[ $WORLD_GAME_TYPE == "" ]] || 
-   [[ -z $WORLD_REALM_ZONE ]] || [[ $WORLD_REALM_ZONE == "" ]] || 
-   [[ -z $WORLD_EXPANSION ]] || [[ $WORLD_EXPANSION == "" ]] || 
-   [[ -z $WORLD_PLAYER_LIMIT ]] || [[ $WORLD_PLAYER_LIMIT == "" ]] || 
-   [[ -z $WORLD_SKIP_CINEMATICS ]] || [[ $WORLD_SKIP_CINEMATICS == "" ]] || 
-   [[ -z $WORLD_MAX_LEVEL ]] || [[ $WORLD_MAX_LEVEL == "" ]] || 
-   [[ -z $WORLD_START_LEVEL ]] || [[ $WORLD_START_LEVEL == "" ]] || 
-   [[ -z $WORLD_START_MONEY ]] || [[ $WORLD_START_MONEY == "" ]] || 
-   [[ -z $WORLD_ALWAYS_MAX_SKILL ]] || [[ $WORLD_ALWAYS_MAX_SKILL == "" ]] || 
-   [[ -z $WORLD_ALL_FLIGHT_PATHS ]] || [[ $WORLD_ALL_FLIGHT_PATHS == "" ]] || 
-   [[ -z $WORLD_MAPS_EXPLORED ]] || [[ $WORLD_MAPS_EXPLORED == "" ]] || 
-   [[ -z $WORLD_ALLOW_COMMANDS ]] || [[ $WORLD_ALLOW_COMMANDS == "" ]] || 
-   [[ -z $WORLD_QUEST_IGNORE_RAID ]] || [[ $WORLD_QUEST_IGNORE_RAID == "" ]] || 
-   [[ -z $WORLD_PREVENT_AFK_LOGOUT ]] || [[ $WORLD_PREVENT_AFK_LOGOUT == "" ]] || 
-   [[ -z $WORLD_RAF_MAX_LEVEL ]] || [[ $WORLD_RAF_MAX_LEVEL == "" ]] || 
-   [[ -z $WORLD_PRELOAD_MAP_GRIDS ]] || [[ $WORLD_PRELOAD_MAP_GRIDS == "" ]] || 
-   [[ -z $WORLD_SET_WAYPOINTS_ACTIVE ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE == "" ]] || 
-   [[ -z $WORLD_ENABLE_MINIGOB_MANABONK ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK == "" ]] || 
-   [[ -z $WORLD_RATE_EXPERIENCE ]] || [[ $WORLD_RATE_EXPERIENCE == "" ]] || 
-   [[ -z $WORLD_RATE_RESTED_EXP ]] || [[ $WORLD_RATE_RESTED_EXP == "" ]] || 
-   [[ -z $WORLD_RATE_REPUTATION ]] || [[ $WORLD_RATE_REPUTATION == "" ]] || 
-   [[ -z $WORLD_RATE_MONEY ]] || [[ $WORLD_RATE_MONEY == "" ]] || 
-   [[ -z $WORLD_RATE_CRAFTING ]] || [[ $WORLD_RATE_CRAFTING == "" ]] || 
-   [[ -z $WORLD_RATE_GATHERING ]] || [[ $WORLD_RATE_GATHERING == "" ]] || 
-   [[ -z $WORLD_RATE_WEAPON_SKILL ]] || [[ $WORLD_RATE_WEAPON_SKILL == "" ]] || 
-   [[ -z $WORLD_RATE_DEFENSE_SKILL ]] || [[ $WORLD_RATE_DEFENSE_SKILL == "" ]] || 
-   [[ -z $WORLD_GM_LOGIN_STATE ]] || [[ $WORLD_GM_LOGIN_STATE == "" ]] || 
-   [[ -z $WORLD_GM_VISIBLE ]] || [[ $WORLD_GM_VISIBLE == "" ]] || 
-   [[ -z $WORLD_GM_CHAT ]] || [[ $WORLD_GM_CHAT == "" ]] || 
-   [[ -z $WORLD_GM_WHISPER ]] || [[ $WORLD_GM_WHISPER == "" ]] || 
-   [[ -z $WORLD_GM_GM_LIST ]] || [[ $WORLD_GM_GM_LIST == "" ]] || 
-   [[ -z $WORLD_GM_WHO_LIST ]] || [[ $WORLD_GM_WHO_LIST == "" ]] || 
-   [[ -z $WORLD_GM_ALLOW_FRIEND ]] || [[ $WORLD_GM_ALLOW_FRIEND == "" ]] || 
-   [[ -z $WORLD_GM_ALLOW_INVITE ]] || [[ $WORLD_GM_ALLOW_INVITE == "" ]] || 
-   [[ -z $WORLD_GM_LOWER_SECURITY ]] || [[ $WORLD_GM_LOWER_SECURITY == "" ]] || 
-   [[ -z $MODULE_AHBOT_ENABLED ]] || [[ $MODULE_AHBOT_ENABLED == "" ]] || 
-   [[ -z $MODULE_AHBOT_ENABLE_BUYER ]] || [[ $MODULE_AHBOT_ENABLE_BUYER == "" ]] || 
-   [[ -z $MODULE_AHBOT_ENABLE_SELLER ]] || [[ $MODULE_AHBOT_ENABLE_SELLER == "" ]] || 
-   [[ -z $MODULE_AHBOT_ACCOUNT_ID ]] || [[ $MODULE_AHBOT_ACCOUNT_ID == "" ]] || 
-   [[ -z $MODULE_AHBOT_CHARACTER_GUID ]] || [[ $MODULE_AHBOT_CHARACTER_GUID == "" ]] || 
-   [[ -z $MODULE_AHBOT_MIN_ITEMS ]] || [[ $MODULE_AHBOT_MIN_ITEMS == "" ]] || 
-   [[ -z $MODULE_AHBOT_MAX_ITEMS ]] || [[ $MODULE_AHBOT_MAX_ITEMS == "" ]] || 
-   [[ -z $MODULE_ELUNA_ENABLED ]] || [[ $MODULE_ELUNA_ENABLED == "" ]]; then
-    clear
-    printf "${COLOR_RED}Atleast one of the configuration options is missing or invalid${COLOR_END}\n"
-    exit $?
+WORLD_RATE_EXPERIENCE="$(echo "cat /config/world/rates/experience/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_RATE_RESTED_EXP="$(echo "cat /config/world/rates/rested_exp/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_RATE_REPUTATION="$(echo "cat /config/world/rates/reputation/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_RATE_MONEY="$(echo "cat /config/world/rates/money/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_RATE_CRAFTING="$(echo "cat /config/world/rates/crafting/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_RATE_GATHERING="$(echo "cat /config/world/rates/gathering/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_RATE_WEAPON_SKILL="$(echo "cat /config/world/rates/weapon_skill/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_RATE_DEFENSE_SKILL="$(echo "cat /config/world/rates/defense_skill/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+WORLD_GM_LOGIN_STATE="$(echo "cat /config/world/gm/login_state/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_VISIBLE="$(echo "cat /config/world/gm/visible/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_CHAT="$(echo "cat /config/world/gm/chat/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_WHISPER="$(echo "cat /config/world/gm/whisper/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_GM_LIST="$(echo "cat /config/world/gm/gm_list/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_WHO_LIST="$(echo "cat /config/world/gm/who_list/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_ALLOW_FRIEND="$(echo "cat /config/world/gm/allow_friend/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_ALLOW_INVITE="$(echo "cat /config/world/gm/allow_invite/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_LOWER_SECURITY="$(echo "cat /config/world/gm/lower_security/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+MODULE_AHBOT_ENABLED="$(echo "cat /config/module/ahbot/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_ENABLE_BUYER="$(echo "cat /config/module/ahbot/enable_buyer/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_ENABLE_SELLER="$(echo "cat /config/module/ahbot/enable_seller/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_ACCOUNT_ID="$(echo "cat /config/module/ahbot/account_id/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_CHARACTER_GUID="$(echo "cat /config/module/ahbot/character_guid/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_MIN_ITEMS="$(echo "cat /config/module/ahbot/min_items/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_AHBOT_MAX_ITEMS="$(echo "cat /config/module/ahbot/max_items/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]]; then
+    MYSQL_HOSTNAME="127.0.0.1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_PORT ]] || [[ $MYSQL_PORT == "" ]] || [[ ! $MYSQL_PORT =~ ^[0-9]+$ ]]; then
+    MYSQL_PORT="3306"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_USERNAME ]] || [[ $MYSQL_USERNAME == "" ]]; then
+    MYSQL_USERNAME="acore"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_PASSWORD ]] || [[ $MYSQL_PASSWORD == "" ]]; then
+    MYSQL_PASSWORD="acore"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_DATABASE_AUTH ]] || [[ $MYSQL_DATABASE_AUTH == "" ]]; then
+    MYSQL_DATABASE_AUTH="acore_auth"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_DATABASE_CHARACTERS ]] || [[ $MYSQL_DATABASE_CHARACTERS == "" ]]; then
+    MYSQL_DATABASE_CHARACTERS="acore_auth"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_DATABASE_WORLD ]] || [[ $MYSQL_DATABASE_WORLD == "" ]]; then
+    MYSQL_DATABASE_WORLD="acore_auth"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $CORE_DIRECTORY ]] || [[ $CORE_DIRECTORY == "" ]]; then
+    CORE_DIRECTORY="/opt/azerothcore"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $CORE_REQUIRED_CLIENT_DATA ]] || [[ $CORE_REQUIRED_CLIENT_DATA == "" ]]; then
+    CORE_REQUIRED_CLIENT_DATA="12"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $CORE_INSTALLED_CLIENT_DATA ]] || [[ $CORE_INSTALLED_CLIENT_DATA == "" ]]; then
+    CORE_INSTALLED_CLIENT_DATA="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_NAME ]] || [[ $WORLD_NAME == "" ]]; then
+    WORLD_NAME="AzerothCore"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_MOTD ]] || [[ $WORLD_MOTD == "" ]]; then
+    WORLD_MOTD="Welcome to AzerothCore."
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_ID ]] || [[ $WORLD_ID == "" ]] || [[ ! $WORLD_ID =~ ^[0-9]+$ ]]; then
+    WORLD_ID="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_ADDRESS ]] || [[ $WORLD_ADDRESS == "" ]]; then
+    WORLD_ADDRESS="127.0.0.1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GAME_TYPE ]] || [[ $WORLD_GAME_TYPE == "" ]] || [[ ! $WORLD_GAME_TYPE =~ ^[0-9]+$ ]] || [[ $WORLD_GAME_TYPE != 0 && $WORLD_GAME_TYPE != 1 && $WORLD_GAME_TYPE != 6 && $WORLD_GAME_TYPE != 8 ]]; then
+    WORLD_GAME_TYPE="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_REALM_ZONE ]] || [[ $WORLD_REALM_ZONE == "" ]] || [[ ! $WORLD_REALM_ZONE =~ ^[0-9]+$ ]] || [[ $WORLD_REALM_ZONE != 1 && $WORLD_REALM_ZONE != 2 && $WORLD_REALM_ZONE != 6 && $WORLD_REALM_ZONE != 9 && $WORLD_REALM_ZONE != 10 && $WORLD_REALM_ZONE != 11 && $WORLD_REALM_ZONE != 12 && $WORLD_REALM_ZONE != 14 && $WORLD_REALM_ZONE != 16 && $WORLD_REALM_ZONE != 26 ]]; then
+    WORLD_REALM_ZONE="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_EXPANSION ]] || [[ $WORLD_EXPANSION == "" ]] || [[ ! $WORLD_EXPANSION =~ ^[0-9]+$ ]] || [[ $WORLD_EXPANSION != 0 && $WORLD_EXPANSION != 1 && $WORLD_EXPANSION != 2 ]]; then
+    WORLD_EXPANSION="2"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_PLAYER_LIMIT ]] || [[ $WORLD_PLAYER_LIMIT == "" ]] || [[ ! $WORLD_PLAYER_LIMIT =~ ^[0-9]+$ ]]; then
+    WORLD_PLAYER_LIMIT="1000"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_SKIP_CINEMATICS ]] || [[ $WORLD_SKIP_CINEMATICS == "" ]] || [[ ! $WORLD_SKIP_CINEMATICS =~ ^[0-9]+$ ]] || [[ $WORLD_SKIP_CINEMATICS != 0 && $WORLD_SKIP_CINEMATICS != 1 && $WORLD_SKIP_CINEMATICS != 2 ]]; then
+    WORLD_SKIP_CINEMATICS="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_MAX_LEVEL ]] || [[ $WORLD_MAX_LEVEL == "" ]] || [[ ! $WORLD_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_MAX_LEVEL < 1 || $WORLD_MAX_LEVEL > 80 ]]; then
+    WORLD_MAX_LEVEL="80"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_START_LEVEL ]] || [[ $WORLD_START_LEVEL == "" ]] || [[ ! $WORLD_START_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_START_LEVEL < 1 || $WORLD_START_LEVEL > 80 ]]; then
+    WORLD_START_LEVEL="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_START_MONEY ]] || [[ $WORLD_START_MONEY == "" ]] || [[ ! $WORLD_START_MONEY =~ ^[0-9]+$ ]]; then
+    WORLD_START_MONEY="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_ALWAYS_MAX_SKILL ]] || [[ $WORLD_ALWAYS_MAX_SKILL == "" ]] || [[ ! $WORLD_ALWAYS_MAX_SKILL =~ ^[0-9]+$ ]] || [[ $WORLD_ALWAYS_MAX_SKILL != 0 && $WORLD_ALWAYS_MAX_SKILL != 1 ]]; then
+    WORLD_ALWAYS_MAX_SKILL="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_ALL_FLIGHT_PATHS ]] || [[ $WORLD_ALL_FLIGHT_PATHS == "" ]] || [[ ! $WORLD_ALL_FLIGHT_PATHS =~ ^[0-9]+$ ]] || [[ $WORLD_ALL_FLIGHT_PATHS != 0 && $WORLD_ALL_FLIGHT_PATHS != 1 ]]; then
+    WORLD_ALL_FLIGHT_PATHS="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_MAPS_EXPLORED ]] || [[ $WORLD_MAPS_EXPLORED == "" ]] || [[ ! $WORLD_MAPS_EXPLORED =~ ^[0-9]+$ ]] || [[ $WORLD_MAPS_EXPLORED != 0 && $WORLD_MAPS_EXPLORED != 1 ]]; then
+    WORLD_MAPS_EXPLORED="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_ALLOW_COMMANDS ]] || [[ $WORLD_ALLOW_COMMANDS == "" ]] || [[ ! $WORLD_ALLOW_COMMANDS =~ ^[0-9]+$ ]] || [[ $WORLD_ALLOW_COMMANDS != 0 && $WORLD_ALLOW_COMMANDS != 1 ]]; then
+    WORLD_ALLOW_COMMANDS="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_QUEST_IGNORE_RAID ]] || [[ $WORLD_QUEST_IGNORE_RAID == "" ]] || [[ ! $WORLD_QUEST_IGNORE_RAID =~ ^[0-9]+$ ]] || [[ $WORLD_QUEST_IGNORE_RAID != 0 && $WORLD_QUEST_IGNORE_RAID != 1 ]]; then
+    WORLD_QUEST_IGNORE_RAID="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_PREVENT_AFK_LOGOUT ]] || [[ $WORLD_PREVENT_AFK_LOGOUT == "" ]] || [[ ! $WORLD_PREVENT_AFK_LOGOUT =~ ^[0-9]+$ ]] || [[ $WORLD_PREVENT_AFK_LOGOUT != 0 && $WORLD_PREVENT_AFK_LOGOUT != 1 ]]; then
+    WORLD_PREVENT_AFK_LOGOUT="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RAF_MAX_LEVEL ]] || [[ $WORLD_RAF_MAX_LEVEL == "" ]] || [[ ! $WORLD_RAF_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_RAF_MAX_LEVEL < 1 || $WORLD_RAF_MAX_LEVEL > 80 ]]; then
+    WORLD_RAF_MAX_LEVEL="60"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_PRELOAD_MAP_GRIDS ]] || [[ $WORLD_PRELOAD_MAP_GRIDS == "" ]] || [[ ! $WORLD_PRELOAD_MAP_GRIDS =~ ^[0-9]+$ ]] || [[ $WORLD_PRELOAD_MAP_GRIDS != 0 && $WORLD_PRELOAD_MAP_GRIDS != 1 ]]; then
+    WORLD_PRELOAD_MAP_GRIDS="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_SET_WAYPOINTS_ACTIVE ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE == "" ]] || [[ ! $WORLD_SET_WAYPOINTS_ACTIVE =~ ^[0-9]+$ ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE != 0 && $WORLD_SET_WAYPOINTS_ACTIVE != 1 ]]; then
+    WORLD_SET_WAYPOINTS_ACTIVE="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_ENABLE_MINIGOB_MANABONK ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK == "" ]] || [[ ! $WORLD_ENABLE_MINIGOB_MANABONK =~ ^[0-9]+$ ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK != 0 && $WORLD_ENABLE_MINIGOB_MANABONK != 1 ]]; then
+    WORLD_ENABLE_MINIGOB_MANABONK="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RATE_EXPERIENCE ]] || [[ $WORLD_RATE_EXPERIENCE == "" ]] || [[ ! $WORLD_RATE_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_EXPERIENCE < 1 ]]; then
+    WORLD_RATE_EXPERIENCE="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RATE_RESTED_EXP ]] || [[ $WORLD_RATE_RESTED_EXP == "" ]] || [[ ! $WORLD_RATE_RESTED_EXP =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_RESTED_EXP < 1 ]]; then
+    WORLD_RATE_RESTED_EXP="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RATE_REPUTATION ]] || [[ $WORLD_RATE_REPUTATION == "" ]] || [[ ! $WORLD_RATE_REPUTATION =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_REPUTATION < 1 ]]; then
+    WORLD_RATE_REPUTATION="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RATE_MONEY ]] || [[ $WORLD_RATE_MONEY == "" ]] || [[ ! $WORLD_RATE_MONEY =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_MONEY < 1 ]]; then
+    WORLD_RATE_MONEY="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RATE_CRAFTING ]] || [[ $WORLD_RATE_CRAFTING == "" ]] || [[ ! $WORLD_RATE_CRAFTING =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_CRAFTING < 1 ]]; then
+    WORLD_RATE_CRAFTING="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RATE_GATHERING ]] || [[ $WORLD_RATE_GATHERING == "" ]] || [[ ! $WORLD_RATE_GATHERING =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_GATHERING < 1 ]]; then
+    WORLD_RATE_GATHERING="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RATE_WEAPON_SKILL ]] || [[ $WORLD_RATE_WEAPON_SKILL == "" ]] || [[ ! $WORLD_RATE_WEAPON_SKILL =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_WEAPON_SKILL < 1 ]]; then
+    WORLD_RATE_WEAPON_SKILL="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_RATE_DEFENSE_SKILL ]] || [[ $WORLD_RATE_DEFENSE_SKILL == "" ]] || [[ ! $WORLD_RATE_DEFENSE_SKILL =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_DEFENSE_SKILL < 1 ]]; then
+    WORLD_RATE_DEFENSE_SKILL="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_LOGIN_STATE ]] || [[ $WORLD_GM_LOGIN_STATE == "" ]] || [[ ! $WORLD_GM_LOGIN_STATE =~ ^[0-9]+$ ]] || [[ $WORLD_GM_LOGIN_STATE != 0 && $WORLD_GM_LOGIN_STATE != 1 && $WORLD_GM_LOGIN_STATE != 2 ]]; then
+    WORLD_GM_LOGIN_STATE="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_VISIBLE ]] || [[ $WORLD_GM_VISIBLE == "" ]] || [[ ! $WORLD_GM_VISIBLE =~ ^[0-9]+$ ]] || [[ $WORLD_GM_VISIBLE != 0 && $WORLD_GM_VISIBLE != 1 && $WORLD_GM_VISIBLE != 2 ]]; then
+    WORLD_GM_VISIBLE="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_CHAT ]] || [[ $WORLD_GM_CHAT == "" ]] || [[ ! $WORLD_GM_CHAT =~ ^[0-9]+$ ]] || [[ $WORLD_GM_CHAT != 0 && $WORLD_GM_CHAT != 1 && $WORLD_GM_CHAT != 2 ]]; then
+    WORLD_GM_CHAT="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_WHISPER ]] || [[ $WORLD_GM_WHISPER == "" ]] || [[ ! $WORLD_GM_WHISPER =~ ^[0-9]+$ ]] || [[ $WORLD_GM_WHISPER != 0 && $WORLD_GM_WHISPER != 1 && $WORLD_GM_WHISPER != 2 ]]; then
+    WORLD_GM_WHISPER="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_GM_LIST ]] || [[ $WORLD_GM_GM_LIST == "" ]] || [[ ! $WORLD_GM_GM_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_GM_LIST != 0 && $WORLD_GM_GM_LIST != 1 && $WORLD_GM_GM_LIST != 2 && $WORLD_GM_GM_LIST != 3 ]]; then
+    WORLD_GM_GM_LIST="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_WHO_LIST ]] || [[ $WORLD_GM_WHO_LIST == "" ]] || [[ ! $WORLD_GM_WHO_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_WHO_LIST != 0 && $WORLD_GM_WHO_LIST != 1 && $WORLD_GM_WHO_LIST != 2 && $WORLD_GM_WHO_LIST != 3 ]]; then
+    WORLD_GM_WHO_LIST="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_ALLOW_FRIEND ]] || [[ $WORLD_GM_ALLOW_FRIEND == "" ]] || [[ ! $WORLD_GM_ALLOW_FRIEND =~ ^[0-9]+$ ]] || [[ $WORLD_GM_ALLOW_FRIEND != 0 && $WORLD_GM_ALLOW_FRIEND != 1 ]]; then
+    WORLD_GM_ALLOW_FRIEND="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_ALLOW_INVITE ]] || [[ $WORLD_GM_ALLOW_INVITE == "" ]] || [[ ! $WORLD_GM_ALLOW_INVITE =~ ^[0-9]+$ ]] || [[ $WORLD_GM_ALLOW_INVITE != 0 && $WORLD_GM_ALLOW_INVITE != 1 ]]; then
+    WORLD_GM_ALLOW_INVITE="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $WORLD_GM_LOWER_SECURITY ]] || [[ $WORLD_GM_LOWER_SECURITY == "" ]] || [[ ! $WORLD_GM_LOWER_SECURITY =~ ^[0-9]+$ ]] || [[ $WORLD_GM_LOWER_SECURITY != 0 && $WORLD_GM_LOWER_SECURITY != 1 ]]; then
+    WORLD_GM_LOWER_SECURITY="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MODULE_AHBOT_ENABLED ]] || [[ $MODULE_AHBOT_ENABLED == "" ]] || [[ $MODULE_AHBOT_ENABLED != "true" && $MODULE_AHBOT_ENABLED != "false" ]]; then
+    MODULE_AHBOT_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MODULE_AHBOT_ENABLE_BUYER ]] || [[ $MODULE_AHBOT_ENABLE_BUYER == "" ]] || [[ $MODULE_AHBOT_ENABLE_BUYER != "true" && $MODULE_AHBOT_ENABLE_BUYER != "false" ]]; then
+    MODULE_AHBOT_ENABLE_BUYER="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MODULE_AHBOT_ENABLE_SELLER ]] || [[ $MODULE_AHBOT_ENABLE_SELLER == "" ]] || [[ $MODULE_AHBOT_ENABLE_SELLER != "true" && $MODULE_AHBOT_ENABLE_SELLER != "false" ]]; then
+    MODULE_AHBOT_ENABLE_SELLER="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MODULE_AHBOT_ACCOUNT_ID ]] || [[ $MODULE_AHBOT_ACCOUNT_ID == "" ]] || [[ ! $MODULE_AHBOT_ACCOUNT_ID =~ ^[0-9]+$ ]]; then
+    MODULE_AHBOT_ACCOUNT_ID="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MODULE_AHBOT_CHARACTER_GUID ]] || [[ $MODULE_AHBOT_CHARACTER_GUID == "" ]] || [[ ! $MODULE_AHBOT_CHARACTER_GUID =~ ^[0-9]+$ ]]; then
+    MODULE_AHBOT_CHARACTER_GUID="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MODULE_AHBOT_MIN_ITEMS ]] || [[ $MODULE_AHBOT_MIN_ITEMS == "" ]] || [[ ! $MODULE_AHBOT_MIN_ITEMS =~ ^[0-9]+$ ]]; then
+    MODULE_AHBOT_MIN_ITEMS="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MODULE_AHBOT_MAX_ITEMS ]] || [[ $MODULE_AHBOT_MAX_ITEMS == "" ]] || [[ ! $MODULE_AHBOT_MAX_ITEMS =~ ^[0-9]+$ ]]; then
+    MODULE_AHBOT_MAX_ITEMS="0"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MODULE_ELUNA_ENABLED ]] || [[ $MODULE_ELUNA_ENABLED == "" ]] || [[ $MODULE_ELUNA_ENABLED != "true" && $MODULE_ELUNA_ENABLED != "false" ]]; then
+    MODULE_ELUNA_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [ $REQUIRE_EXPORT ]; then
+    printf "${COLOR_ORANGE}Invalid settings have been reset to their default values${COLOR_END}\n"
+    export_settings
+else
+    printf "${COLOR_ORANGE}Successfully loaded all settings${COLOR_END}\n"
 fi
 
 function update_configuration

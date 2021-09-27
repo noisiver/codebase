@@ -62,8 +62,8 @@ function source_menu
         read -s -n 1 s
 
         case $s in
-            1) if [ $MODULE_AHBOT_ENABLED == "true" ]; then MODULE_AHBOT_ENABLED="false"; else MODULE_AHBOT_ENABLED="true"; fi; generate_settings; source_menu 1;;
-            2) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; generate_settings; source_menu 1;;
+            1) if [ $MODULE_AHBOT_ENABLED == "true" ]; then MODULE_AHBOT_ENABLED="false"; else MODULE_AHBOT_ENABLED="true"; fi; export_settings; source_menu 1;;
+            2) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; export_settings; source_menu 1;;
             0) source_menu;;
             *) source_menu 1;;
         esac
@@ -170,13 +170,13 @@ function configuration_menu
         read -s -n 1 s
 
         case $s in
-            1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_HOSTNAME}" i; if [ ! -z $i ]; then MYSQL_HOSTNAME=$i; fi; generate_settings; configuration_menu 1;;
-            2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PORT}" i; if [ ! -z $i ]; then MYSQL_PORT=$i; fi; generate_settings; configuration_menu 1;;
-            3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_USERNAME}" i; if [ ! -z $i ]; then MYSQL_USERNAME=$i; fi; generate_settings; configuration_menu 1;;
-            4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PASSWORD}" i; if [ ! -z $i ]; then MYSQL_PASSWORD=$i; fi; generate_settings; configuration_menu 1;;
-            5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_AUTH}" i; if [ ! -z $i ]; then MYSQL_DATABASE_AUTH=$i; fi; generate_settings; configuration_menu 1;;
-            6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_CHARACTERS}" i; if [ ! -z $i ]; then MYSQL_DATABASE_CHARACTERS=$i; fi; generate_settings; configuration_menu 1;;
-            7) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_WORLD}" i; if [ ! -z $i ]; then MYSQL_DATABASE_WORLD=$i; fi; generate_settings; configuration_menu 1;;
+            1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_HOSTNAME}" i; if [ ! -z $i ]; then MYSQL_HOSTNAME=$i; fi; export_settings; configuration_menu 1;;
+            2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PORT}" i; if [ ! -z $i ]; then MYSQL_PORT=$i; fi; export_settings; configuration_menu 1;;
+            3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_USERNAME}" i; if [ ! -z $i ]; then MYSQL_USERNAME=$i; fi; export_settings; configuration_menu 1;;
+            4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PASSWORD}" i; if [ ! -z $i ]; then MYSQL_PASSWORD=$i; fi; export_settings; configuration_menu 1;;
+            5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_AUTH}" i; if [ ! -z $i ]; then MYSQL_DATABASE_AUTH=$i; fi; export_settings; configuration_menu 1;;
+            6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_CHARACTERS}" i; if [ ! -z $i ]; then MYSQL_DATABASE_CHARACTERS=$i; fi; export_settings; configuration_menu 1;;
+            7) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_WORLD}" i; if [ ! -z $i ]; then MYSQL_DATABASE_WORLD=$i; fi; export_settings; configuration_menu 1;;
             0) configuration_menu;;
             *) configuration_menu 1;;
         esac
@@ -202,7 +202,7 @@ function configuration_menu
         printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Name of the realm: ${COLOR_GREEN}${WORLD_NAME}${COLOR_END}\n"
         printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Message of the day: ${COLOR_GREEN}${WORLD_MOTD}${COLOR_END}\n"
         printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Realm id: ${COLOR_GREEN}${WORLD_ID}${COLOR_END}\n"
-        printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Realm address: ${COLOR_GREEN}${WORLD_IP}${COLOR_END}\n"
+        printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Realm address: ${COLOR_GREEN}${WORLD_ADDRESS}${COLOR_END}\n"
         printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Game type: ${WORLD_GAME_TYPE_TEXT}${COLOR_END}\n"
         printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Realm zone: ${WORLD_REALM_ZONE_TEXT}${COLOR_END}\n"
         printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Go to the next page${COLOR_END}\n"
@@ -211,12 +211,12 @@ function configuration_menu
         read -s -n 1 s
 
         case $s in
-            1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_DIRECTORY}" i; if [ ! -z $i ]; then CORE_DIRECTORY=$i; fi; generate_settings; configuration_menu 2;;
-            2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_REQUIRED_CLIENT_DATA}" i; if [ ! -z $i ]; then CORE_REQUIRED_CLIENT_DATA=$i; fi; generate_settings; configuration_menu 2;;
-            3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_NAME}" i; if [ ! -z $i ]; then WORLD_NAME=$i; fi; generate_settings; configuration_menu 2;;
+            1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_DIRECTORY}" i; if [ ! -z $i ]; then CORE_DIRECTORY=$i; fi; export_settings; configuration_menu 2;;
+            2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_REQUIRED_CLIENT_DATA}" i; if [ ! -z $i ]; then CORE_REQUIRED_CLIENT_DATA=$i; fi; export_settings; configuration_menu 2;;
+            3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_NAME}" i; if [ ! -z $i ]; then WORLD_NAME=$i; fi; export_settings; configuration_menu 2;;
             4) clear; printf "${COLOR_PURPLE}Message of the day${COLOR_END}\n${COLOR_ORANGE}There are issues caused by the limitations of the terminal.\nTherefore, this option can only be modified by editing the XML-file\nPress any key to continue...${COLOR_END}";read -s -n 1; configuration_menu 2;;
-            5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_ID}" i; if [ ! -z $i ]; then WORLD_ID=$i; fi; generate_settings; configuration_menu 2;;
-            6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_IP}" i; if [ ! -z $i ]; then WORLD_IP=$i; fi; generate_settings; configuration_menu 2;;
+            5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_ID}" i; if [ ! -z $i ]; then WORLD_ID=$i; fi; export_settings; configuration_menu 2;;
+            6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_ADDRESS}" i; if [ ! -z $i ]; then WORLD_ADDRESS=$i; fi; export_settings; configuration_menu 2;;
             7) configuration_menu 31;;
             8) configuration_menu 32;;
             9) configuration_menu 3;;
@@ -232,10 +232,10 @@ function configuration_menu
         printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
         read -s -n 1 s
         case $s in
-            1) WORLD_GAME_TYPE=0; generate_settings; configuration_menu 2;;
-            2) WORLD_GAME_TYPE=1; generate_settings; configuration_menu 2;;
-            3) WORLD_GAME_TYPE=6; generate_settings; configuration_menu 2;;
-            4) WORLD_GAME_TYPE=8; generate_settings; configuration_menu 2;;
+            1) WORLD_GAME_TYPE=0; export_settings; configuration_menu 2;;
+            2) WORLD_GAME_TYPE=1; export_settings; configuration_menu 2;;
+            3) WORLD_GAME_TYPE=6; export_settings; configuration_menu 2;;
+            4) WORLD_GAME_TYPE=8; export_settings; configuration_menu 2;;
             *) configuration_menu 2;;
         esac
     elif [ $1 == 32 ]; then
@@ -253,16 +253,16 @@ function configuration_menu
         printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
         read -s -n 1 s
         case $s in
-            1) WORLD_REALM_ZONE=1; generate_settings; configuration_menu 2;;
-            2) WORLD_REALM_ZONE=2; generate_settings; configuration_menu 2;;
-            3) WORLD_REALM_ZONE=6; generate_settings; configuration_menu 2;;
-            4) WORLD_REALM_ZONE=9; generate_settings; configuration_menu 2;;
-            5) WORLD_REALM_ZONE=10; generate_settings; configuration_menu 2;;
-            6) WORLD_REALM_ZONE=11; generate_settings; configuration_menu 2;;
-            7) WORLD_REALM_ZONE=12; generate_settings; configuration_menu 2;;
-            8) WORLD_REALM_ZONE=14; generate_settings; configuration_menu 2;;
-            9) WORLD_REALM_ZONE=16; generate_settings; configuration_menu 2;;
-            0) WORLD_REALM_ZONE=26; generate_settings; configuration_menu 2;;
+            1) WORLD_REALM_ZONE=1; export_settings; configuration_menu 2;;
+            2) WORLD_REALM_ZONE=2; export_settings; configuration_menu 2;;
+            3) WORLD_REALM_ZONE=6; export_settings; configuration_menu 2;;
+            4) WORLD_REALM_ZONE=9; export_settings; configuration_menu 2;;
+            5) WORLD_REALM_ZONE=10; export_settings; configuration_menu 2;;
+            6) WORLD_REALM_ZONE=11; export_settings; configuration_menu 2;;
+            7) WORLD_REALM_ZONE=12; export_settings; configuration_menu 2;;
+            8) WORLD_REALM_ZONE=14; export_settings; configuration_menu 2;;
+            9) WORLD_REALM_ZONE=16; export_settings; configuration_menu 2;;
+            0) WORLD_REALM_ZONE=26; export_settings; configuration_menu 2;;
             *) configuration_menu 2;;
         esac
     elif [ $1 == 3 ]; then
