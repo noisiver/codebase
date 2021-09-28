@@ -14,8 +14,8 @@ foreach ($include in $includes)
     }
 }
 
-Load-Packages
-Load-Configuration
+Check-Packages
+Check-Configuration
 
 if ($args.Count -gt 0)
 {

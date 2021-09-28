@@ -74,8 +74,8 @@ function Source-Menu([int]$page)
 
         switch ($s)
         {
-            1 { if ($xml.config.world.module.ahbot.enabled -eq "true") { $xml.config.world.module.ahbot.enabled = "false" } else { $xml.config.world.module.ahbot.enabled = "true" }; $xml.Save($configFile); exit; Source-Menu 1 }
-            2 { if ($xml.config.world.module.eluna.enabled -eq "true") { $xml.config.world.module.eluna.enabled = "false" } else { $xml.config.world.module.eluna.enabled = "true" }; $xml.Save($configFile); exit; Source-Menu 1 }
+            1 { if ($xml.config.world.module.ahbot.enabled -eq "true") { $xml.config.world.module.ahbot.enabled = "false" } else { $xml.config.world.module.ahbot.enabled = "true" }; $xml.Save($configFile); Source-Menu 1 }
+            2 { if ($xml.config.world.module.eluna.enabled -eq "true") { $xml.config.world.module.eluna.enabled = "false" } else { $xml.config.world.module.eluna.enabled = "true" }; $xml.Save($configFile); Source-Menu 1 }
             0 { Source-Menu 0 }
             default { Source-Menu 1 }
 
@@ -83,6 +83,6 @@ function Source-Menu([int]$page)
     }
     elseif ($page -eq 2)
     {
-        Write-Host "Clone"
+        Source-Menu 0
     }
 }

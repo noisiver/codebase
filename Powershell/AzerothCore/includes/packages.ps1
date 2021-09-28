@@ -5,7 +5,7 @@ $packages = @(
     ('visual studio', 'Visual Studio Community 2019')
 )
 
-function Load-Packages
+function Check-Packages
 {
     Clear-Host
 
