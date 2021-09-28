@@ -212,18 +212,18 @@ function configuration_menu
 
         case $s in
             1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_DIRECTORY}" i; if [ ! -z $i ]; then CORE_DIRECTORY=$i; fi; export_settings; configuration_menu 2;;
-            2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_REQUIRED_CLIENT_DATA}" i; if [ ! -z $i ]; then CORE_REQUIRED_CLIENT_DATA=$i; fi; export_settings; configuration_menu 2;;
+            2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_REQUIRED_CLIENT_DATA}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]]; then CORE_REQUIRED_CLIENT_DATA=$i; fi; export_settings; configuration_menu 2;;
             3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_NAME}" i; if [ ! -z $i ]; then WORLD_NAME=$i; fi; export_settings; configuration_menu 2;;
             4) clear; printf "${COLOR_PURPLE}Message of the day${COLOR_END}\n${COLOR_ORANGE}There are issues caused by the limitations of the terminal.\nTherefore, this option can only be modified by editing the XML-file\nPress any key to continue...${COLOR_END}";read -s -n 1; configuration_menu 2;;
-            5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_ID}" i; if [ ! -z $i ]; then WORLD_ID=$i; fi; export_settings; configuration_menu 2;;
+            5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_ID}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]]; then WORLD_ID=$i; fi; export_settings; configuration_menu 2;;
             6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_ADDRESS}" i; if [ ! -z $i ]; then WORLD_ADDRESS=$i; fi; export_settings; configuration_menu 2;;
-            7) configuration_menu 31;;
-            8) configuration_menu 32;;
+            7) configuration_menu 21;;
+            8) configuration_menu 22;;
             9) configuration_menu 3;;
             0) configuration_menu;;
             *) configuration_menu 2;;
         esac
-    elif [ $1 == 31 ]; then
+    elif [ $1 == 21 ]; then
         printf "${COLOR_PURPLE}Game type${COLOR_END}\n"
         printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Normal${COLOR_END}\n"
         printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Player vs Player${COLOR_END}\n"
@@ -238,7 +238,7 @@ function configuration_menu
             4) WORLD_GAME_TYPE=8; export_settings; configuration_menu 2;;
             *) configuration_menu 2;;
         esac
-    elif [ $1 == 32 ]; then
+    elif [ $1 == 22 ]; then
         printf "${COLOR_PURPLE}Realm zone${COLOR_END}\n"
         printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Development${COLOR_END}\n"
         printf "${COLOR_CYAN}2) ${COLOR_ORANGE}United States${COLOR_END}\n"
