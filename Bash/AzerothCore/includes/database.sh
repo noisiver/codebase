@@ -73,23 +73,6 @@ function import_database
         fi
     fi
 
-    rm -rf $MYSQL_CONFIG
-}
-
-function update_database
-{
-    install_database_packages
-
-    clear
-
-    printf "${COLOR_GREEN}Importing database files${COLOR_END}\n"
-
-    echo "[client]" > $MYSQL_CONFIG
-    echo "host=\"$MYSQL_HOSTNAME\"" >> $MYSQL_CONFIG
-    echo "port=\"$MYSQL_PORT\"" >> $MYSQL_CONFIG
-    echo "user=\"$MYSQL_USERNAME\"" >> $MYSQL_CONFIG
-    echo "password=\"$MYSQL_PASSWORD\"" >> $MYSQL_CONFIG
-
     if [[ $1 == 0 || $1 == 1 && -z $2 ]] || [[ $1 == 1 && $2 == 2 ]]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_AUTH'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_auth ]; then

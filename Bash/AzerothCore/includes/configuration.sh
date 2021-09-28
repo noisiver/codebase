@@ -53,32 +53,32 @@ function generate_settings
             <player_limit>${18:-1000}</player_limit>
             <!-- Disable cinematic intro at first login after character creation. Prevents buggy intros in case of custom start location coordinates. 0 = Show intro for each new character, 1 = Show intro only for first character of selected race, 2 = Disable intro for all classes -->
             <skip_cinematics>${19:-0}</skip_cinematics>
-            <!-- Maximum level that can be reached by players. Levels beyond 100 are not recommended at all -->
+            <!-- Maximum level that can be reached by players. Levels below 1 and above 80 will reset to 80 -->
             <max_level>${20:-80}</max_level>
-            <!-- Starting level for characters after creation -->
+            <!-- Starting level for characters after creation. Levels below 1 and above 80 will reset to 1 -->
             <start_level>${21:-1}</start_level>
             <!-- Amount of money (in Copper) that a character has after creation -->
             <start_money>${22:-0}</start_money>
-            <!-- Players will automatically gain max skill level when logging in or leveling up. 0 = disabled, 1 = enabled -->
-            <always_max_skill>${23:-0}</always_max_skill>
-            <!-- Character knows all flight paths (of both factions) after creation. 0 = disabled, 1 = enabled -->
-            <all_flight_paths>${24:-0}</all_flight_paths>
-            <!-- Characters start with all maps explored. 0 = disabled, 1 = enabled -->
-            <maps_explored>${25:-0}</maps_explored>
-            <!-- Allow players to use commands. 0 = disabled, 1 = enabled -->
-            <allow_commands>${26:-1}</allow_commands>
-            <!-- Allow non-raid quests to be completed while in a raid group. 0 = disabled, 1 = enabled -->
-            <quest_ignore_raid>${27:-0}</quest_ignore_raid>
-            <!-- Prevent players AFK from being logged out. 0 = disabled, 1 = enabled -->
-            <prevent_afk_logout>${28:-0}</prevent_afk_logout>
+            <!-- Players will automatically gain max skill level when logging in or leveling up. false = disabled, true = enabled -->
+            <always_max_skill>${23:-false}</always_max_skill>
+            <!-- Character knows all flight paths (of both factions) after creation. false = disabled, true = enabled -->
+            <all_flight_paths>${24:-false}</all_flight_paths>
+            <!-- Characters start with all maps explored. false = disabled, true = enabled -->
+            <maps_explored>${25:-false}</maps_explored>
+            <!-- Allow players to use commands. false = disabled, true = enabled -->
+            <allow_commands>${26:-true}</allow_commands>
+            <!-- Allow non-raid quests to be completed while in a raid group. false = disabled, true = enabled -->
+            <quest_ignore_raid>${27:-false}</quest_ignore_raid>
+            <!-- Prevent players AFK from being logged out. false = disabled, true = enabled -->
+            <prevent_afk_logout>${28:-false}</prevent_afk_logout>
             <!-- Highest level up to which a character can benefit from the Recruit-A-Friend experience multiplier -->
             <raf_max_level>${29:-60}</raf_max_level>
-            <!-- Preload all grids on all non-instanced maps. This will take a great amount of additional RAM (ca. 9 GB) and causes the server to take longer to start, but can increase performance if used on a server with a high amount of players. It will also activate all creatures which are set active (e.g. the Fel Reavers in Hellfire Peninsula) on server start. 0 = disabled, 1 = enabled -->
-            <preload_map_grids>${30:-0}</preload_map_grids>
-            <!-- Set all creatures with waypoint movement active. This means that they will start movement once they are loaded (which happens on grid load) and keep moving even when no player is near. This will increase CPU usage significantly and can be used with enabled preload_map_grids to start waypoint movement on server startup. 0 = disabled, 1 = enabled -->
-            <set_all_waypoints_active>${31:-0}</set_all_waypoints_active>
-            <!-- Enable/Disable Minigob Manabonk in Dalaran. 0 = disabled, 1 = enabled -->
-            <enable_minigob_manabonk>${32:-1}</enable_minigob_manabonk>
+            <!-- Preload all grids on all non-instanced maps. This will take a great amount of additional RAM (ca. 9 GB) and causes the server to take longer to start, but can increase performance if used on a server with a high amount of players. It will also activate all creatures which are set active (e.g. the Fel Reavers in Hellfire Peninsula) on server start. false = disabled, true = enabled -->
+            <preload_map_grids>${30:-false}</preload_map_grids>
+            <!-- Set all creatures with waypoint movement active. This means that they will start movement once they are loaded (which happens on grid load) and keep moving even when no player is near. This will increase CPU usage significantly and can be used with enabled preload_map_grids to start waypoint movement on server startup. false = disabled, true = enabled -->
+            <set_all_waypoints_active>${31:-false}</set_all_waypoints_active>
+            <!-- Enable/Disable Minigob Manabonk in Dalaran. false = disabled, true = enabled -->
+            <enable_minigob_manabonk>${32:-true}</enable_minigob_manabonk>
             <rates>
                 <!-- Experience rates (outside battleground) -->
                 <experience>${33:-1}</experience>
@@ -98,24 +98,24 @@ function generate_settings
                 <defense_skill>${40:-1}</defense_skill>
             </rates>
             <gm>
-                <!-- Set GM state when a GM character enters the world. 0 = disabled, 1 = enabled, 2 = last save state -->
-                <login_state>${41:-1}</login_state>
-                <!-- GM visibility at login. 0 = disabled, 1 = enabled, 2 = last save state -->
-                <visible>${42:-0}</visible>
-                <!-- GM chat mode at login. 0 = disabled, 1 = enabled, 2 = last save state -->
-                <chat>${43:-1}</chat>
-                <!-- Is GM accepting whispers from player by default or not. 0 = disabled, 1 = enabled, 2 = last save state -->
-                <whisper>${44:-0}</whisper>
+                <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
+                <login_state>${41:-true}</login_state>
+                <!-- GM visibility at login. false = disabled, true = enabled -->
+                <enable_visibility>${42:-false}</enable_visibility>
+                <!-- GM chat mode at login. false = disabled, true = enabled -->
+                <enable_chat>${43:-true}</enable_chat>
+                <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
+                <enable_whisper>${44:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <gm_list>${45:-0}</gm_list>
+                <show_gm_list>${45:-0}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <who_list>${46:-0}</who_list>
-                <!-- Allow players to add GM characters to their friends list. 0 = disabled, 1 = enabled -->
-                <allow_friend>${47:-0}</allow_friend>
-                <!-- Allow players to invite GM characters. 0 = disabled, 1 = enabled -->
-                <allow_invite>${48:-0}</allow_invite>
-                <!-- Allow lower security levels to use commands on higher security level characters. 0 = disabled, 1 = enabled -->
-                <lower_security>${49:-0}</lower_security>
+                <show_who_list>${46:-0}</show_who_list>
+                <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
+                <allow_friend>${47:-false}</allow_friend>
+                <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
+                <allow_invite>${48:-false}</allow_invite>
+                <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
+                <allow_lower_security>${49:-false}</allow_lower_security>
             </gm>
         </world>
         <module>
@@ -187,14 +187,14 @@ function export_settings
     $WORLD_RATE_WEAPON_SKILL \
     $WORLD_RATE_DEFENSE_SKILL \
     $WORLD_GM_LOGIN_STATE \
-    $WORLD_GM_VISIBLE \
-    $WORLD_GM_CHAT \
-    $WORLD_GM_WHISPER \
-    $WORLD_GM_GM_LIST \
-    $WORLD_GM_WHO_LIST \
+    $WORLD_GM_ENABLE_VISIBILITY \
+    $WORLD_GM_ENABLE_CHAT \
+    $WORLD_GM_ENABLE_WHISPER \
+    $WORLD_GM_SHOW_GM_LIST \
+    $WORLD_GM_SHOW_WHO_LIST \
     $WORLD_GM_ALLOW_FRIEND \
     $WORLD_GM_ALLOW_INVITE \
-    $WORLD_GM_LOWER_SECURITY \
+    $WORLD_GM_ALLOW_LOWER_SECURITY \
     $MODULE_AHBOT_ENABLED \
     $MODULE_AHBOT_ENABLE_BUYER \
     $MODULE_AHBOT_ENABLE_SELLER \
@@ -261,14 +261,14 @@ WORLD_RATE_WEAPON_SKILL="$(echo "cat /config/world/rates/weapon_skill/text()" | 
 WORLD_RATE_DEFENSE_SKILL="$(echo "cat /config/world/rates/defense_skill/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 WORLD_GM_LOGIN_STATE="$(echo "cat /config/world/gm/login_state/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_VISIBLE="$(echo "cat /config/world/gm/visible/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_CHAT="$(echo "cat /config/world/gm/chat/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_WHISPER="$(echo "cat /config/world/gm/whisper/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_GM_LIST="$(echo "cat /config/world/gm/gm_list/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_WHO_LIST="$(echo "cat /config/world/gm/who_list/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_ENABLE_VISIBILITY="$(echo "cat /config/world/gm/enable_visibility/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_ENABLE_CHAT="$(echo "cat /config/world/gm/enable_chat/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_ENABLE_WHISPER="$(echo "cat /config/world/gm/enable_whisper/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_SHOW_GM_LIST="$(echo "cat /config/world/gm/show_gm_list/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_SHOW_WHO_LIST="$(echo "cat /config/world/gm/show_who_list/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 WORLD_GM_ALLOW_FRIEND="$(echo "cat /config/world/gm/allow_friend/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 WORLD_GM_ALLOW_INVITE="$(echo "cat /config/world/gm/allow_invite/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-WORLD_GM_LOWER_SECURITY="$(echo "cat /config/world/gm/lower_security/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_GM_ALLOW_LOWER_SECURITY="$(echo "cat /config/world/gm/allow_lower_security/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_AHBOT_ENABLED="$(echo "cat /config/module/ahbot/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_AHBOT_ENABLE_BUYER="$(echo "cat /config/module/ahbot/enable_buyer/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
@@ -390,33 +390,33 @@ if [[ -z $WORLD_START_MONEY ]] || [[ $WORLD_START_MONEY == "" ]] || [[ ! $WORLD_
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ALWAYS_MAX_SKILL ]] || [[ $WORLD_ALWAYS_MAX_SKILL == "" ]] || [[ ! $WORLD_ALWAYS_MAX_SKILL =~ ^[0-9]+$ ]] || [[ $WORLD_ALWAYS_MAX_SKILL != 0 && $WORLD_ALWAYS_MAX_SKILL != 1 ]]; then
-    WORLD_ALWAYS_MAX_SKILL="0"
+if [[ -z $WORLD_ALWAYS_MAX_SKILL ]] || [[ $WORLD_ALWAYS_MAX_SKILL == "" ]] || [[ $WORLD_ALWAYS_MAX_SKILL != "true" && $WORLD_ALWAYS_MAX_SKILL != "false" ]]; then
+    WORLD_ALWAYS_MAX_SKILL="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ALL_FLIGHT_PATHS ]] || [[ $WORLD_ALL_FLIGHT_PATHS == "" ]] || [[ ! $WORLD_ALL_FLIGHT_PATHS =~ ^[0-9]+$ ]] || [[ $WORLD_ALL_FLIGHT_PATHS != 0 && $WORLD_ALL_FLIGHT_PATHS != 1 ]]; then
-    WORLD_ALL_FLIGHT_PATHS="0"
+if [[ -z $WORLD_ALL_FLIGHT_PATHS ]] || [[ $WORLD_ALL_FLIGHT_PATHS == "" ]] || [[ $WORLD_ALL_FLIGHT_PATHS != "true" && $WORLD_ALL_FLIGHT_PATHS != "false" ]]; then
+    WORLD_ALL_FLIGHT_PATHS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_MAPS_EXPLORED ]] || [[ $WORLD_MAPS_EXPLORED == "" ]] || [[ ! $WORLD_MAPS_EXPLORED =~ ^[0-9]+$ ]] || [[ $WORLD_MAPS_EXPLORED != 0 && $WORLD_MAPS_EXPLORED != 1 ]]; then
-    WORLD_MAPS_EXPLORED="0"
+if [[ -z $WORLD_MAPS_EXPLORED ]] || [[ $WORLD_MAPS_EXPLORED == "" ]] || [[ $WORLD_MAPS_EXPLORED != "true" && $WORLD_MAPS_EXPLORED != "false" ]]; then
+    WORLD_MAPS_EXPLORED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ALLOW_COMMANDS ]] || [[ $WORLD_ALLOW_COMMANDS == "" ]] || [[ ! $WORLD_ALLOW_COMMANDS =~ ^[0-9]+$ ]] || [[ $WORLD_ALLOW_COMMANDS != 0 && $WORLD_ALLOW_COMMANDS != 1 ]]; then
-    WORLD_ALLOW_COMMANDS="1"
+if [[ -z $WORLD_ALLOW_COMMANDS ]] || [[ $WORLD_ALLOW_COMMANDS == "" ]] || [[ $WORLD_ALLOW_COMMANDS != "true" && $WORLD_ALLOW_COMMANDS != "false" ]]; then
+    WORLD_ALLOW_COMMANDS="true"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_QUEST_IGNORE_RAID ]] || [[ $WORLD_QUEST_IGNORE_RAID == "" ]] || [[ ! $WORLD_QUEST_IGNORE_RAID =~ ^[0-9]+$ ]] || [[ $WORLD_QUEST_IGNORE_RAID != 0 && $WORLD_QUEST_IGNORE_RAID != 1 ]]; then
-    WORLD_QUEST_IGNORE_RAID="0"
+if [[ -z $WORLD_QUEST_IGNORE_RAID ]] || [[ $WORLD_QUEST_IGNORE_RAID == "" ]] || [[ $WORLD_QUEST_IGNORE_RAID != "true" && $WORLD_QUEST_IGNORE_RAID != "false" ]]; then
+    WORLD_QUEST_IGNORE_RAID="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_PREVENT_AFK_LOGOUT ]] || [[ $WORLD_PREVENT_AFK_LOGOUT == "" ]] || [[ ! $WORLD_PREVENT_AFK_LOGOUT =~ ^[0-9]+$ ]] || [[ $WORLD_PREVENT_AFK_LOGOUT != 0 && $WORLD_PREVENT_AFK_LOGOUT != 1 ]]; then
-    WORLD_PREVENT_AFK_LOGOUT="0"
+if [[ -z $WORLD_PREVENT_AFK_LOGOUT ]] || [[ $WORLD_PREVENT_AFK_LOGOUT == "" ]] || [[ $WORLD_PREVENT_AFK_LOGOUT != "true" && $WORLD_PREVENT_AFK_LOGOUT != "false" ]]; then
+    WORLD_PREVENT_AFK_LOGOUT="false"
     REQUIRE_EXPORT=true
 fi
 
@@ -425,18 +425,18 @@ if [[ -z $WORLD_RAF_MAX_LEVEL ]] || [[ $WORLD_RAF_MAX_LEVEL == "" ]] || [[ ! $WO
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_PRELOAD_MAP_GRIDS ]] || [[ $WORLD_PRELOAD_MAP_GRIDS == "" ]] || [[ ! $WORLD_PRELOAD_MAP_GRIDS =~ ^[0-9]+$ ]] || [[ $WORLD_PRELOAD_MAP_GRIDS != 0 && $WORLD_PRELOAD_MAP_GRIDS != 1 ]]; then
-    WORLD_PRELOAD_MAP_GRIDS="0"
+if [[ -z $WORLD_PRELOAD_MAP_GRIDS ]] || [[ $WORLD_PRELOAD_MAP_GRIDS == "" ]] || [[ $WORLD_PRELOAD_MAP_GRIDS != "true" && $WORLD_PRELOAD_MAP_GRIDS != "false" ]]; then
+    WORLD_PRELOAD_MAP_GRIDS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_SET_WAYPOINTS_ACTIVE ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE == "" ]] || [[ ! $WORLD_SET_WAYPOINTS_ACTIVE =~ ^[0-9]+$ ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE != 0 && $WORLD_SET_WAYPOINTS_ACTIVE != 1 ]]; then
-    WORLD_SET_WAYPOINTS_ACTIVE="0"
+if [[ -z $WORLD_SET_WAYPOINTS_ACTIVE ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE == "" ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE != "true" && $WORLD_SET_WAYPOINTS_ACTIVE != "false" ]]; then
+    WORLD_SET_WAYPOINTS_ACTIVE="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ENABLE_MINIGOB_MANABONK ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK == "" ]] || [[ ! $WORLD_ENABLE_MINIGOB_MANABONK =~ ^[0-9]+$ ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK != 0 && $WORLD_ENABLE_MINIGOB_MANABONK != 1 ]]; then
-    WORLD_ENABLE_MINIGOB_MANABONK="1"
+if [[ -z $WORLD_ENABLE_MINIGOB_MANABONK ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK == "" ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK != "true" && $WORLD_ENABLE_MINIGOB_MANABONK != "false" ]]; then
+    WORLD_ENABLE_MINIGOB_MANABONK="true"
     REQUIRE_EXPORT=true
 fi
 
@@ -480,48 +480,48 @@ if [[ -z $WORLD_RATE_DEFENSE_SKILL ]] || [[ $WORLD_RATE_DEFENSE_SKILL == "" ]] |
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_LOGIN_STATE ]] || [[ $WORLD_GM_LOGIN_STATE == "" ]] || [[ ! $WORLD_GM_LOGIN_STATE =~ ^[0-9]+$ ]] || [[ $WORLD_GM_LOGIN_STATE != 0 && $WORLD_GM_LOGIN_STATE != 1 && $WORLD_GM_LOGIN_STATE != 2 ]]; then
-    WORLD_GM_LOGIN_STATE="1"
+if [[ -z $WORLD_GM_LOGIN_STATE ]] || [[ $WORLD_GM_LOGIN_STATE == "" ]] || [[ $WORLD_GM_LOGIN_STATE != "true" && $WORLD_GM_LOGIN_STATE != "false" ]]; then
+    WORLD_GM_LOGIN_STATE="true"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_VISIBLE ]] || [[ $WORLD_GM_VISIBLE == "" ]] || [[ ! $WORLD_GM_VISIBLE =~ ^[0-9]+$ ]] || [[ $WORLD_GM_VISIBLE != 0 && $WORLD_GM_VISIBLE != 1 && $WORLD_GM_VISIBLE != 2 ]]; then
-    WORLD_GM_VISIBLE="0"
+if [[ -z $WORLD_GM_ENABLE_VISIBILITY ]] || [[ $WORLD_GM_ENABLE_VISIBILITY == "" ]] || [[ $WORLD_GM_ENABLE_VISIBILITY != "true" && $WORLD_GM_ENABLE_VISIBILITY != "false" ]]; then
+    WORLD_GM_ENABLE_VISIBILITY="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_CHAT ]] || [[ $WORLD_GM_CHAT == "" ]] || [[ ! $WORLD_GM_CHAT =~ ^[0-9]+$ ]] || [[ $WORLD_GM_CHAT != 0 && $WORLD_GM_CHAT != 1 && $WORLD_GM_CHAT != 2 ]]; then
-    WORLD_GM_CHAT="1"
+if [[ -z $WORLD_GM_ENABLE_CHAT ]] || [[ $WORLD_GM_ENABLE_CHAT == "" ]] || [[ $WORLD_GM_ENABLE_CHAT != "true" && $WORLD_GM_ENABLE_CHAT != "false" ]]; then
+    WORLD_GM_ENABLE_CHAT="true"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_WHISPER ]] || [[ $WORLD_GM_WHISPER == "" ]] || [[ ! $WORLD_GM_WHISPER =~ ^[0-9]+$ ]] || [[ $WORLD_GM_WHISPER != 0 && $WORLD_GM_WHISPER != 1 && $WORLD_GM_WHISPER != 2 ]]; then
-    WORLD_GM_WHISPER="0"
+if [[ -z $WORLD_GM_ENABLE_WHISPER ]] || [[ $WORLD_GM_ENABLE_WHISPER == "" ]] || [[ $WORLD_GM_ENABLE_WHISPER != "true" && $WORLD_GM_ENABLE_WHISPER != "false" ]]; then
+    WORLD_GM_ENABLE_WHISPER="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_GM_LIST ]] || [[ $WORLD_GM_GM_LIST == "" ]] || [[ ! $WORLD_GM_GM_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_GM_LIST != 0 && $WORLD_GM_GM_LIST != 1 && $WORLD_GM_GM_LIST != 2 && $WORLD_GM_GM_LIST != 3 ]]; then
-    WORLD_GM_GM_LIST="0"
+if [[ -z $WORLD_GM_SHOW_GM_LIST ]] || [[ $WORLD_GM_SHOW_GM_LIST == "" ]] || [[ ! $WORLD_GM_SHOW_GM_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_SHOW_GM_LIST != 0 && $WORLD_GM_SHOW_GM_LIST != 1 && $WORLD_GM_SHOW_GM_LIST != 2 && $WORLD_GM_SHOW_GM_LIST != 3 ]]; then
+    WORLD_GM_SHOW_GM_LIST="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_WHO_LIST ]] || [[ $WORLD_GM_WHO_LIST == "" ]] || [[ ! $WORLD_GM_WHO_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_WHO_LIST != 0 && $WORLD_GM_WHO_LIST != 1 && $WORLD_GM_WHO_LIST != 2 && $WORLD_GM_WHO_LIST != 3 ]]; then
-    WORLD_GM_WHO_LIST="0"
+if [[ -z $WORLD_GM_SHOW_WHO_LIST ]] || [[ $WORLD_GM_SHOW_WHO_LIST == "" ]] || [[ ! $WORLD_GM_SHOW_WHO_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_SHOW_WHO_LIST != 0 && $WORLD_GM_SHOW_WHO_LIST != 1 && $WORLD_GM_SHOW_WHO_LIST != 2 && $WORLD_GM_SHOW_WHO_LIST != 3 ]]; then
+    WORLD_GM_SHOW_WHO_LIST="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_ALLOW_FRIEND ]] || [[ $WORLD_GM_ALLOW_FRIEND == "" ]] || [[ ! $WORLD_GM_ALLOW_FRIEND =~ ^[0-9]+$ ]] || [[ $WORLD_GM_ALLOW_FRIEND != 0 && $WORLD_GM_ALLOW_FRIEND != 1 ]]; then
-    WORLD_GM_ALLOW_FRIEND="0"
+if [[ -z $WORLD_GM_ALLOW_FRIEND ]] || [[ $WORLD_GM_ALLOW_FRIEND == "" ]] || [[ $WORLD_GM_ALLOW_FRIEND != "true" && $WORLD_GM_ALLOW_FRIEND != "false" ]]; then
+    WORLD_GM_ALLOW_FRIEND="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_ALLOW_INVITE ]] || [[ $WORLD_GM_ALLOW_INVITE == "" ]] || [[ ! $WORLD_GM_ALLOW_INVITE =~ ^[0-9]+$ ]] || [[ $WORLD_GM_ALLOW_INVITE != 0 && $WORLD_GM_ALLOW_INVITE != 1 ]]; then
-    WORLD_GM_ALLOW_INVITE="0"
+if [[ -z $WORLD_GM_ALLOW_INVITE ]] || [[ $WORLD_GM_ALLOW_INVITE == "" ]] || [[ $WORLD_GM_ALLOW_INVITE != "true" && $WORLD_GM_ALLOW_INVITE != "false" ]]; then
+    WORLD_GM_ALLOW_INVITE="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_LOWER_SECURITY ]] || [[ $WORLD_GM_LOWER_SECURITY == "" ]] || [[ ! $WORLD_GM_LOWER_SECURITY =~ ^[0-9]+$ ]] || [[ $WORLD_GM_LOWER_SECURITY != 0 && $WORLD_GM_LOWER_SECURITY != 1 ]]; then
-    WORLD_GM_LOWER_SECURITY="0"
+if [[ -z $WORLD_GM_ALLOW_LOWER_SECURITY ]] || [[ $WORLD_GM_ALLOW_LOWER_SECURITY == "" ]] || [[ $WORLD_GM_ALLOW_LOWER_SECURITY != "true" && $WORLD_GM_ALLOW_LOWER_SECURITY != "false" ]]; then
+    WORLD_GM_ALLOW_LOWER_SECURITY="false"
     REQUIRE_EXPORT=true
 fi
 
@@ -593,6 +593,23 @@ function update_configuration
         if [ -f $CORE_DIRECTORY/etc/worldserver.conf.dist ]; then
             printf "${COLOR_ORANGE}Updating worldserver.conf${COLOR_END}\n"
 
+            [ $WORLD_ALWAYS_MAX_SKILL == "true" ] && WORLD_MAX_SKILL_INT=1 || WORLD_MAX_SKILL_INT=0
+            [ $WORLD_ALL_FLIGHT_PATHS == "true" ] && WORLD_ALL_FLIGHT_PATHS_INT=1 || WORLD_ALL_FLIGHT_PATHS_INT=0
+            [ $WORLD_MAPS_EXPLORED == "true" ] && WORLD_MAPS_EXPLORED_INT=1 || WORLD_MAPS_EXPLORED_INT=0
+            [ $WORLD_ALLOW_COMMANDS == "true" ] && WORLD_ALLOW_COMMANDS_INT=1 || WORLD_ALLOW_COMMANDS_INT=0
+            [ $WORLD_QUEST_IGNORE_RAID == "true" ] && WORLD_QUEST_IGNORE_RAID_INT=1 || WORLD_QUEST_IGNORE_RAID_INT=0
+            [ $WORLD_PREVENT_AFK_LOGOUT == "true" ] && WORLD_PREVENT_AFK_LOGOUT_INT=1 || WORLD_PREVENT_AFK_LOGOUT_INT=0
+            [ $WORLD_PRELOAD_MAP_GRIDS == "true" ] && WORLD_PRELOAD_MAP_GRIDS_INT=1 || WORLD_PRELOAD_MAP_GRIDS_INT=0
+            [ $WORLD_SET_WAYPOINTS_ACTIVE == "true" ] && WORLD_SET_WAYPOINTS_ACTIVE_INT=1 || WORLD_SET_WAYPOINTS_ACTIVE_INT=0
+            [ $WORLD_ENABLE_MINIGOB_MANABONK == "true" ] && WORLD_ENABLE_MINIGOB_MANABONK_INT=1 || WORLD_ENABLE_MINIGOB_MANABONK_INT=0
+            [ $WORLD_GM_LOGIN_STATE == "true" ] && WORLD_GM_LOGIN_STATE_INT=1 || WORLD_GM_LOGIN_STATE_INT=0
+            [ $WORLD_GM_ENABLE_VISIBILITY == "true" ] && WORLD_GM_ENABLE_VISIBILITY_INT=1 || WORLD_GM_ENABLE_VISIBILITY_INT=0
+            [ $WORLD_GM_ENABLE_CHAT == "true" ] && WORLD_GM_ENABLE_CHAT_INT=1 || WORLD_GM_ENABLE_CHAT_INT=0
+            [ $WORLD_GM_ENABLE_WHISPER == "true" ] && WORLD_GM_ENABLE_WHISPER_INT=1 || WORLD_GM_ENABLE_WHISPER_INT=0
+            [ $WORLD_GM_ALLOW_INVITE == "true" ] && WORLD_GM_ALLOW_INVITE_INT=1 || WORLD_GM_ALLOW_INVITE_INT=0
+            [ $WORLD_GM_ALLOW_FRIEND == "true" ] && WORLD_GM_ALLOW_FRIEND_INT=1 || WORLD_GM_ALLOW_FRIEND_INT=0
+            [ $WORLD_GM_ALLOW_LOWER_SECURITY == "true" ] && WORLD_GM_ALLOW_LOWER_SECURITY_INT=1 || WORLD_GM_ALLOW_LOWER_SECURITY_INT=0
+
             cp $CORE_DIRECTORY/etc/worldserver.conf.dist $CORE_DIRECTORY/etc/worldserver.conf
             sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASE_AUTH'"/g' $CORE_DIRECTORY/etc/worldserver.conf
             sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASE_WORLD'"/g' $CORE_DIRECTORY/etc/worldserver.conf
@@ -615,18 +632,18 @@ function update_configuration
                 sed -i 's/StartHeroicPlayerLevel =.*/StartHeroicPlayerLevel = '$WORLD_START_LEVEL'/g' $CORE_DIRECTORY/etc/worldserver.conf
             fi
             sed -i 's/StartPlayerMoney =.*/StartPlayerMoney = '$WORLD_START_MONEY'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/AllFlightPaths =.*/AllFlightPaths = '$WORLD_ALL_FLIGHT_PATHS'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/AlwaysMaxSkillForLevel =.*/AlwaysMaxSkillForLevel = '$WORLD_ALWAYS_MAX_SKILL'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/PlayerStart.MapsExplored =.*/PlayerStart.MapsExplored = '$WORLD_MAPS_EXPLORED'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = '$WORLD_ALLOW_COMMANDS'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = '$WORLD_QUEST_IGNORE_RAID'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/PreventAFKLogout =.*/PreventAFKLogout = '$WORLD_PREVENT_AFK_LOGOUT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/AllFlightPaths =.*/AllFlightPaths = '$WORLD_ALL_FLIGHT_PATHS_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/AlwaysMaxSkillForLevel =.*/AlwaysMaxSkillForLevel = '$WORLD_MAX_SKILL_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/PlayerStart.MapsExplored =.*/PlayerStart.MapsExplored = '$WORLD_MAPS_EXPLORED_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = '$WORLD_ALLOW_COMMANDS_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = '$WORLD_QUEST_IGNORE_RAID_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/PreventAFKLogout =.*/PreventAFKLogout = '$WORLD_PREVENT_AFK_LOGOUT_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
             sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = '$WORLD_RAF_MAX_LEVEL'/g' $CORE_DIRECTORY/etc/worldserver.conf
 
-            sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$WORLD_PRELOAD_MAP_GRIDS'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$WORLD_SET_WAYPOINTS_ACTIVE'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$WORLD_PRELOAD_MAP_GRIDS_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$WORLD_SET_WAYPOINTS_ACTIVE_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
 
-            sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = '$WORLD_ENABLE_MINIGOB_MANABONK'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = '$WORLD_ENABLE_MINIGOB_MANABONK_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
 
             sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = '$WORLD_RATE_MONEY'/g' $CORE_DIRECTORY/etc/worldserver.conf
             sed -i 's/Rate.XP.Kill    =.*/Rate.XP.Kill    = '$WORLD_RATE_EXPERIENCE'/g' $CORE_DIRECTORY/etc/worldserver.conf
@@ -643,16 +660,16 @@ function update_configuration
             sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = '$WORLD_RATE_RESTED_EXP'/g' $CORE_DIRECTORY/etc/worldserver.conf
             sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = '$WORLD_RATE_RESTED_EXP'/g' $CORE_DIRECTORY/etc/worldserver.conf
 
-            sed -i 's/GM.LoginState =.*/GM.LoginState = '$WORLD_GM_LOGIN_STATE'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/GM.Visible =.*/GM.Visible = '$WORLD_GM_VISIBLE'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/GM.Chat =.*/GM.Chat = '$WORLD_GM_CHAT'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = '$WORLD_GM_WHISPER'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = '$WORLD_GM_GM_LIST'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = '$WORLD_GM_WHO_LIST'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.LoginState =.*/GM.LoginState = '$WORLD_GM_LOGIN_STATE_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.Visible =.*/GM.Visible = '$WORLD_GM_ENABLE_VISIBILITY_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.Chat =.*/GM.Chat = '$WORLD_GM_ENABLE_CHAT_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = '$WORLD_GM_ENABLE_WHISPER_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = '$WORLD_GM_SHOW_GM_LIST'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = '$WORLD_GM_SHOW_WHO_LIST'/g' $CORE_DIRECTORY/etc/worldserver.conf
             sed -i 's/GM.StartLevel = .*/GM.StartLevel = '$WORLD_START_LEVEL'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = '$WORLD_GM_ALLOW_INVITE'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = '$WORLD_GM_ALLOW_FRIEND'/g' $CORE_DIRECTORY/etc/worldserver.conf
-            sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = '$WORLD_GM_LOWER_SECURITY'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = '$WORLD_GM_ALLOW_INVITE_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = '$WORLD_GM_ALLOW_FRIEND_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
+            sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = '$WORLD_GM_ALLOW_LOWER_SECURITY_INT'/g' $CORE_DIRECTORY/etc/worldserver.conf
 
             sed -i 's/Warden.Enabled =.*/Warden.Enabled = 0/g' $CORE_DIRECTORY/etc/worldserver.conf
         fi
