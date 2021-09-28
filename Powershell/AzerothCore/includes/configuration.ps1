@@ -42,7 +42,7 @@ function Load-Configuration
 
         $XmlObjectWriter.WriteStartElement("core")
         $XmlObjectWriter.WriteComment("The location where the source is located")
-        $XmlObjectWriter.WriteElementString("directory","C:\Topaz")
+        $XmlObjectWriter.WriteElementString("directory","C:\AzerothCore")
         $XmlObjectWriter.WriteComment("The required client data version")
         $XmlObjectWriter.WriteElementString("required_client_data","12")
         $XmlObjectWriter.WriteComment("The installed client data version")
@@ -56,8 +56,8 @@ function Load-Configuration
         $XmlObjectWriter.WriteElementString("motd","Welcome to AzerothCore.")
         $XmlObjectWriter.WriteComment("The id of the realm")
         $XmlObjectWriter.WriteElementString("id","1")
-        $XmlObjectWriter.WriteComment("The ip used to connect to the world server. Use external ip if required")
-        $XmlObjectWriter.WriteElementString("ip","127.0.0.1")
+        $XmlObjectWriter.WriteComment("The ip or hostname used to connect to the world server. Use external ip if required")
+        $XmlObjectWriter.WriteElementString("address","127.0.0.1")
         $XmlObjectWriter.WriteComment("Server realm type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp")
         $XmlObjectWriter.WriteElementString("game_type","0")
         $XmlObjectWriter.WriteComment("Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 2 = united states, 6 = korea, 9 = german, 10 = french, 11 = spanish, 12 = russian, 14 = taiwan, 16 = china, 26 = test server")
@@ -169,63 +169,77 @@ function Load-Configuration
 
     $error_occured = $false
 
-    if ($xml.config.mysql.hostname -eq "") { $error_occured = $true }
-    if (-not ($xml.config.mysql.port -match "^[\d\.]+$")) { $error_occured = $true }
-    if ($xml.config.mysql.username -eq "") { $error_occured = $true }
-    if ($xml.config.mysql.password -eq "") { $error_occured = $true }
-    if ($xml.config.mysql.database.auth -eq "") { $error_occured = $true }
-    if ($xml.config.mysql.database.characters -eq "") { $error_occured = $true }
-    if ($xml.config.mysql.database.world -eq "") { $error_occured = $true }
+    if ($xml.config.mysql.hostname -eq "") { $xml.config.mysql.hostname = "127.0.0.1"; $error_occured = $true }
+    if (-not ($xml.config.mysql.port -match "^[\d\.]+$")) { $xml.config.mysql.port = "3306"; $error_occured = $true }
+    if ($xml.config.mysql.username -eq "") { $xml.config.mysql.username = "acore"; $error_occured = $true }
+    if ($xml.config.mysql.password -eq "") { $xml.config.mysql.password = "acore"; $error_occured = $true }
+    if ($xml.config.mysql.database.auth -eq "") { $xml.config.mysql.database.auth = "acore_auth"; $error_occured = $true }
+    if ($xml.config.mysql.database.characters -eq "") { $xml.config.mysql.database.characters = "acore_characters"; $error_occured = $true }
+    if ($xml.config.mysql.database.world -eq "") { $xml.config.mysql.database.world = "acore_world"; $error_occured = $true }
 
-    if ($xml.config.core.directory -eq "") { $error_occured = $true }
-    if (-not ($xml.config.core.required_client_data -match "^[\d\.]+$")) { $error_occured = $true }
-    if (-not ($xml.config.core.installed_client_data -match "^[\d\.]+$")) { $error_occured = $true }
+    if ($xml.config.core.directory -eq "") { $xml.config.core.directory = "C:\AzerothCore"; $error_occured = $true }
+    if (-not ($xml.config.core.required_client_data -match "^[\d\.]+$")) { $xml.config.core.required_client_data = "12"; $error_occured = $true }
+    if (-not ($xml.config.core.installed_client_data -match "^[\d\.]+$")) { $xml.config.core.installed_client_data = "0"; $error_occured = $true }
 
-    if ($xml.config.world.name -eq "") { $error_occured = $true }
-    if ($xml.config.world.motd -eq "") { $error_occured = $true }
-    if (-not ($xml.config.world.id -match "^[\d\.]+$")) { $error_occured = $true }
-    if ($xml.config.world.ip -eq "") { $error_occured = $true }
-    if ($xml.config.world.game_type -notin 0, 1, 6, 8) { $error_occured = $true }
-    if ($xml.config.world.realm_zone -notin 1, 2, 6, 9, 10, 11, 12, 14,16, 26) { $error_occured = $true }
-    if ($xml.config.world.expansion -notin 0..2) { $error_occured = $true }
-    if (-not ($xml.config.world.player_limit -match "^[\d\.]+$")) { $error_occured = $true }
-    if ($xml.config.world.skip_cinematics -notin 0..2) { $error_occured = $true }
-    if ($xml.config.world.max_level -notin 1..80) { $error_occured = $true }
-    if ($xml.config.world.start_level -notin 1..80) { $error_occured = $true }
-    if (-not ($xml.config.world.start_money -match "^[\d\.]+$")) { $error_occured = $true }
-    if ($xml.config.world.always_max_skill -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.all_flight_paths -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.maps_explored -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.allow_commands -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.quest_ignore_raids -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.prevent_afk_logout -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.raf_max_level -notin 1..80) { $error_occured = $true }
-    if ($xml.config.world.preload_map_grids -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.set_all_waypoints_active -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.enable_minigob_manabonk -notin 0, 1) { $error_occured = $true }
+    if ($xml.config.world.name -eq "") { $xml.config.world.name = "AzerothCore"; $error_occured = $true }
+    if ($xml.config.world.motd -eq "") { $xml.config.world.motd = "Welcome to AzerothCore."; $error_occured = $true }
+    if (-not ($xml.config.world.id -match "^[\d\.]+$")) { $xml.config.world.id = "1"; $error_occured = $true }
+    if ($xml.config.world.address -eq "") { $xml.config.world.address = "127.0.0.1"; $error_occured = $true }
+    if ($xml.config.world.game_type -notin 0, 1, 6, 8) { $xml.config.world.game_type = "0"; $error_occured = $true }
+    if ($xml.config.world.realm_zone -notin 1, 2, 6, 9, 10, 11, 12, 14,16, 26) { $xml.config.world.realm_zone = "1"; $error_occured = $true }
+    if ($xml.config.world.expansion -notin 0..2) { $xml.config.world.expansion = "2"; $error_occured = $true }
+    if (-not ($xml.config.world.player_limit -match "^[\d\.]+$")) { $xml.config.world.player_limit = "1000"; $error_occured = $true }
+    if ($xml.config.world.skip_cinematics -notin 0..2) { $xml.config.world.skip_cinematics = "0"; $error_occured = $true }
+    if ($xml.config.world.max_level -notin 1..80) { $xml.config.world.max_level = "80"; $error_occured = $true }
+    if ($xml.config.world.start_level -notin 1..80) { $xml.config.world.start_level = "1"; $error_occured = $true }
+    if (-not ($xml.config.world.start_money -match "^[\d\.]+$")) { $xml.config.world.start_money = "0"; $error_occured = $true }
+    if ($xml.config.world.always_max_skill -notin 0, 1) { $xml.config.world.always_max_skill = "0"; $error_occured = $true }
+    if ($xml.config.world.all_flight_paths -notin 0, 1) { $xml.config.world.all_flight_paths = "0"; $error_occured = $true }
+    if ($xml.config.world.maps_explored -notin 0, 1) { $xml.config.world.maps_explored = "0"; $error_occured = $true }
+    if ($xml.config.world.allow_commands -notin 0, 1) { $xml.config.world.allow_commands = "1"; $error_occured = $true }
+    if ($xml.config.world.quest_ignore_raids -notin 0, 1) { $xml.config.world.quest_ignore_raids = "0"; $error_occured = $true }
+    if ($xml.config.world.prevent_afk_logout -notin 0, 1) { $xml.config.world.prevent_afk_logout = "0"; $error_occured = $true }
+    if ($xml.config.world.raf_max_level -notin 1..80) { $xml.config.world.raf_max_level = "60"; $error_occured = $true }
+    if ($xml.config.world.preload_map_grids -notin 0, 1) { $xml.config.world.preload_map_grids = "0"; $error_occured = $true }
+    if ($xml.config.world.set_all_waypoints_active -notin 0, 1) { $xml.config.world.set_all_waypoints_active = "0"; $error_occured = $true }
+    if ($xml.config.world.enable_minigob_manabonk -notin 0, 1) { $xml.config.world.enable_minigob_manabonk = "1"; $error_occured = $true }
 
-    if (-not ($xml.config.world.rates.experience -match "^[\d\.]+$")) { $error_occured = $true }
-    if (-not ($xml.config.world.rates.rested_exp -match "^[\d\.]+$")) { $error_occured = $true }
-    if (-not ($xml.config.world.rates.reputation -match "^[\d\.]+$")) { $error_occured = $true }
-    if (-not ($xml.config.world.rates.money -match "^[\d\.]+$")) { $error_occured = $true }
-    if (-not ($xml.config.world.rates.crafting -match "^[\d\.]+$")) { $error_occured = $true }
-    if (-not ($xml.config.world.rates.gathering -match "^[\d\.]+$")) { $error_occured = $true }
-    if (-not ($xml.config.world.rates.weapon_skill -match "^[\d\.]+$")) { $error_occured = $true }
-    if (-not ($xml.config.world.rates.defense_skill -match "^[\d\.]+$")) { $error_occured = $true }
+    if (-not ($xml.config.world.rates.experience -match "^[\d\.]+$")) { $xml.config.world.rates.experience = "1"; $error_occured = $true }
+    if (-not ($xml.config.world.rates.rested_exp -match "^[\d\.]+$")) { $xml.config.world.rates.rested_exp = "1"; $error_occured = $true }
+    if (-not ($xml.config.world.rates.reputation -match "^[\d\.]+$")) { $xml.config.world.rates.reputation = "1"; $error_occured = $true }
+    if (-not ($xml.config.world.rates.money -match "^[\d\.]+$")) { $xml.config.world.rates.money = "1"; $error_occured = $true }
+    if (-not ($xml.config.world.rates.crafting -match "^[\d\.]+$")) { $xml.config.world.rates.crafting = "1"; $error_occured = $true }
+    if (-not ($xml.config.world.rates.gathering -match "^[\d\.]+$")) { $xml.config.world.rates.gathering = "1"; $error_occured = $true }
+    if (-not ($xml.config.world.rates.weapon_skill -match "^[\d\.]+$")) { $xml.config.world.rates.weapon_skill = "1"; $error_occured = $true }
+    if (-not ($xml.config.world.rates.defense_skill -match "^[\d\.]+$")) { $xml.config.world.rates.defense_skill = "1"; $error_occured = $true }
 
-    if ($xml.config.world.gm.login_state -notin 0..2) { $error_occured = $true }
-    if ($xml.config.world.gm.visible -notin 0..2) { $error_occured = $true }
-    if ($xml.config.world.gm.chat -notin 0..2) { $error_occured = $true }
-    if ($xml.config.world.gm.whisper -notin 0..2) { $error_occured = $true }
-    if ($xml.config.world.gm.gm_list -notin 0..3) { $error_occured = $true }
-    if ($xml.config.world.gm.who_list -notin 0..3) { $error_occured = $true }
-    if ($xml.config.world.gm.allow_friend -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.gm.allow_invite -notin 0, 1) { $error_occured = $true }
-    if ($xml.config.world.gm.lower_security -notin 0, 1) { $error_occured = $true }
+    if ($xml.config.world.gm.login_state -notin 0..2) { $xml.config.world.gm.login_state = "1"; $error_occured = $true }
+    if ($xml.config.world.gm.visible -notin 0..2) { $xml.config.world.gm.visible = "0"; $error_occured = $true }
+    if ($xml.config.world.gm.chat -notin 0..2) { $xml.config.world.gm.chat = "1"; $error_occured = $true }
+    if ($xml.config.world.gm.whisper -notin 0..2) { $xml.config.world.gm.whisper = "0"; $error_occured = $true }
+    if ($xml.config.world.gm.gm_list -notin 0..3) { $xml.config.world.gm.gm_list = "0"; $error_occured = $true }
+    if ($xml.config.world.gm.who_list -notin 0..3) { $xml.config.world.gm.who_list = "0"; $error_occured = $true }
+    if ($xml.config.world.gm.allow_friend -notin 0, 1) { $xml.config.world.gm.allow_friend = "0"; $error_occured = $true }
+    if ($xml.config.world.gm.allow_invite -notin 0, 1) { $xml.config.world.gm.allow_invite = "0"; $error_occured = $true }
+    if ($xml.config.world.gm.lower_security -notin 0, 1) { $xml.config.world.gm.lower_security = "0"; $error_occured = $true }
+
+    if ($xml.config.world.module.ahbot.enabled -notin "true", "false") { $xml.config.world.module.ahbot.enabled = "false"; $error_occured = $true }
+    if ($xml.config.world.module.ahbot.enable_buyer -notin "true", "false") { $xml.config.world.module.ahbot.enable_buyer = "false"; $error_occured = $true }
+    if ($xml.config.world.module.ahbot.enable_seller -notin "true", "false") { $xml.config.world.module.ahbot.enable_seller = "false"; $error_occured = $true }
+    if (-not ($xml.config.world.module.ahbot.account_id -match "^[\d\.]+$")) { $xml.config.world.module.ahbot.account_id = "0"; $error_occured = $true }
+    if (-not ($xml.config.world.module.ahbot.character_guid -match "^[\d\.]+$")) { $xml.config.world.module.ahbot.character_guid = "0"; $error_occured = $true }
+    if (-not ($xml.config.world.module.ahbot.min_items -match "^[\d\.]+$")) { $xml.config.world.module.ahbot.min_items = "0"; $error_occured = $true }
+    if (-not ($xml.config.world.module.ahbot.max_items -match "^[\d\.]+$")) { $xml.config.world.module.ahbot.max_items = "0"; $error_occured = $true }
+
+    if ($xml.config.world.module.eluna.enabled -notin "true", "false") { $xml.config.world.module.eluna.enabled = "false"; $error_occured = $true }
 
     if ($error_occured)
     {
-        Write-Host "Error occured"
-        exit
+        Write-Host -ForegroundColor Yellow "Invalid settings have been reset to their default values"
+        $xml.Save($configFile)
+    }
+    else
+    {
+        Write-Host -ForegroundColor Yellow "Successfully loaded all settings"
     }
 }
