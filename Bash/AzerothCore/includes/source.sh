@@ -171,11 +171,10 @@ function fetch_client_data
         CORE_INSTALLED_CLIENT_DATA=0
     fi
 
+    clear
+    printf "${COLOR_GREEN}Downloading client data files${COLOR_END}\n"
+
     if [ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]; then
-        clear
-
-        printf "${COLOR_GREEN}Downloading client data files${COLOR_END}\n"
-
         if [ -d $CORE_DIRECTORY/bin/Cameras ] || [ -d $CORE_DIRECTORY/bin/dbc ] || [ -d $CORE_DIRECTORY/bin/maps ] || [ -d $CORE_DIRECTORY/bin/mmaps ] || [ -d $CORE_DIRECTORY/bin/vmaps ]; then
             rm -rf $CORE_DIRECTORY/bin/Cameras $CORE_DIRECTORY/bin/dbc $CORE_DIRECTORY/bin/maps $CORE_DIRECTORY/bin/mmaps $CORE_DIRECTORY/bin/vmaps
         fi
@@ -197,5 +196,29 @@ function fetch_client_data
 
         CORE_INSTALLED_CLIENT_DATA=$CORE_REQUIRED_CLIENT_DATA
         export_settings
+    else
+        printf "${COLOR_ORANGE}The required client data files are already installed${COLOR_END}\n"
+    fi
+}
+
+function update_client_data
+{
+    install_clone_packages
+
+    clear
+
+    printf "${COLOR_GREEN}Updating client data version${COLOR_END}\n"
+
+    CORE_AVAILABLE_CLIENT_DATA=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
+    if [ $? -ne 0 ]; then
+        exit $?
+    fi
+
+    if [[ $CORE_REQUIRED_CLIENT_DATA != $CORE_AVAILABLE_CLIENT_DATA ]]; then
+        printf "${COLOR_ORANGE}A new version is available, updating required client data to ${CORE_AVAILABLE_CLIENT_DATA}${COLOR_END}\n"
+        CORE_REQUIRED_CLIENT_DATA=$CORE_AVAILABLE_CLIENT_DATA
+        export_settings
+    else
+        printf "${COLOR_ORANGE}There's no new version available${COLOR_END}\n"
     fi
 }

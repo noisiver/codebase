@@ -18,6 +18,8 @@ if [ $# -gt 0 ]; then
             start_process
         elif [ $1 == "stop" ]; then
             stop_process
+        elif [ $1 == "client" ]; then
+            update_client_data
         else
             printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
             printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
