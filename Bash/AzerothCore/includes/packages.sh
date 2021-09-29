@@ -2,11 +2,6 @@
 if [ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
     clear
 
-    if [ $(id -u) -ne 0 ]; then
-        printf "${COLOR_RED}This script needs to be run as root or using sudo${COLOR_END}\n"
-        exit 1
-    fi
-
     apt-get update -y
     if [ $? -ne 0 ]; then
         exit $?
@@ -22,11 +17,6 @@ function install_clone_packages
 {
     if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
         clear
-
-        if [ $(id -u) -ne 0 ]; then
-            printf "${COLOR_RED}This script needs to be run as root or using sudo${COLOR_END}\n"
-            exit 1
-        fi
 
         apt-get update -y
         if [ $? -ne 0 ]; then
@@ -57,11 +47,6 @@ function install_compile_packages
     if [ ${#INSTALL[@]} -gt 0 ]; then
         clear
 
-        if [ $(id -u) -ne 0 ]; then
-            printf "${COLOR_RED}This script needs to be run as root or using sudo${COLOR_END}\n"
-            exit 1
-        fi
-
         apt-get update -y
         if [ $? -ne 0 ]; then
             exit $?
@@ -78,11 +63,6 @@ function install_database_packages
 {
     if [ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
         clear
-
-        if [ $(id -u) -ne 0 ]; then
-            printf "${COLOR_RED}This script needs to be run as root or using sudo${COLOR_END}\n"
-            exit 1
-        fi
 
         apt-get update -y
         if [ $? -ne 0 ]; then
