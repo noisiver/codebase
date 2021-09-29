@@ -22,3 +22,5 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=28513;
 UPDATE `item_template` SET `Flags`=2112 WHERE `entry`=30425;
 -- Shredder Operating Manual
 UPDATE `item_template` SET `Flags`=3136 WHERE `entry` IN (16645, 16646, 16647, 16648, 16649, 16650, 16651, 16652, 16653, 16654, 16655, 16656);
+-- Icetip Venom Sac
+UPDATE `item_template` SET `Flags`=67840 WHERE `entry`=40944;
