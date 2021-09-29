@@ -323,9 +323,12 @@ fi
 if [[ -z $CORE_REQUIRED_CLIENT_DATA ]] || [[ $CORE_REQUIRED_CLIENT_DATA == "" ]]; then
     CORE_REQUIRED_CLIENT_DATA="12"
     REQUIRE_EXPORT=true
+elif [[ $CORE_REQUIRED_CLIENT_DATA == 0 ]]; then
+    install_clone_packages
+    CORE_REQUIRED_CLIENT_DATA=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
 fi
 
-if [[ -z $CORE_INSTALLED_CLIENT_DATA ]] || [[ $CORE_INSTALLED_CLIENT_DATA == "" ]]; then
+if [[ -z $CORE_INSTALLED_CLIENT_DATA ]] || [[ $CORE_INSTALLED_CLIENT_DATA == "" ]] || [[ $CORE_INSTALLED_CLIENT_DATA -gt $CORE_REQUIRED_CLIENT_DATA ]]; then
     CORE_INSTALLED_CLIENT_DATA="0"
     REQUIRE_EXPORT=true
 fi
