@@ -28,7 +28,7 @@ function show_menu
             printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the available modules${COLOR_END}\n"
             printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Download the latest version of the repository${COLOR_END}\n"
             printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Compile the source code into binaries${COLOR_END}\n"
-            if [[ -d $CORE_DIRECTORY/bin ]] && [[ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]]; then
+            if [[ -f $CORE_DIRECTORY/bin/authserver && -f $CORE_DIRECTORY/bin/worldserver ]] && [[ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]]; then
                 printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Download the client data files${COLOR_END}\n"
             fi
             printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
@@ -36,7 +36,8 @@ function show_menu
             read -s -n 1 s
 
             case $s in
-                [1-4]) show_menu $1 $s;;
+                [1-3]) show_menu $1 $s;;
+                4) fetch_client_data; show_menu $1;;
                 0) show_menu;;
                 *) show_menu $1;;
             esac
