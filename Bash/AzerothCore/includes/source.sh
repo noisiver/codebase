@@ -1,7 +1,7 @@
 #!/bin/bash
 function clone_source
 {
-    install_build_packages
+    install_clone_packages
 
     clear
 
@@ -102,6 +102,8 @@ function clone_source
 
 function compile_source
 {
+    install_compile_packages
+
     clear
 
     printf "${COLOR_GREEN}Compiling the source code${COLOR_END}\n"

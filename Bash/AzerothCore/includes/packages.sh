@@ -18,9 +18,31 @@ if [ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok inst
     fi
 fi
 
-function install_build_packages
+function install_clone_packages
 {
-    PACKAGES=("git" "cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-6.*" "libace-dev" "libboost1.71-all-dev" "libmariadb-dev-compat" "mariadb-client")
+    if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+        clear
+
+        if [ $(id -u) -ne 0 ]; then
+            printf "${COLOR_RED}This script needs to be run as root or using sudo${COLOR_END}\n"
+            exit 1
+        fi
+
+        apt-get update -y
+        if [ $? -ne 0 ]; then
+            exit $?
+        fi
+
+        apt-get install -y git
+        if [ $? -ne 0 ]; then
+            exit $?
+        fi
+    fi
+}
+
+function install_compile_packages
+{
+    PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-6.*" "libace-dev" "libboost1.71-all-dev" "libmariadb-dev-compat" "mariadb-client")
 
     if [ $VERSION != "21.04" ]; then
         PACKAGES="${PACKAGES} libmariadbclient-dev"
