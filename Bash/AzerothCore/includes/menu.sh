@@ -127,7 +127,7 @@ function show_menu
             read -s -n 1 s
 
             case $s in
-                [1-3]) import_database $2 $s;;
+                [1-3]) import_database $2 $s; show_menu $1 $2;;
                 0) show_menu $1;;
                 *) show_menu $1 $2;;
             esac

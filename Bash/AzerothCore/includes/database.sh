@@ -30,6 +30,11 @@ function import_database
                     fi
                 done
             fi
+        else
+            if [ $? -ne 0 ]; then
+                rm -rf $MYSQL_CONFIG
+                exit $?
+            fi
         fi
     fi
 
@@ -49,6 +54,11 @@ function import_database
                         exit $?
                     fi
                 done
+            fi
+        else
+            if [ $? -ne 0 ]; then
+                rm -rf $MYSQL_CONFIG
+                exit $?
             fi
         fi
     fi
@@ -70,6 +80,11 @@ function import_database
                     fi
                 done
             fi
+        else
+            if [ $? -ne 0 ]; then
+                rm -rf $MYSQL_CONFIG
+                exit $?
+            fi
         fi
     fi
 
@@ -84,6 +99,11 @@ function import_database
                         exit $?
                     fi
                 done
+            fi
+        else
+            if [ $? -ne 0 ]; then
+                rm -rf $MYSQL_CONFIG
+                exit $?
             fi
         fi
     fi
@@ -100,6 +120,11 @@ function import_database
                     fi
                 done
             fi
+        else
+            if [ $? -ne 0 ]; then
+                rm -rf $MYSQL_CONFIG
+                exit $?
+            fi
         fi
     fi
 
@@ -114,6 +139,11 @@ function import_database
                         exit $?
                     fi
                 done
+            fi
+        else
+            if [ $? -ne 0 ]; then
+                rm -rf $MYSQL_CONFIG
+                exit $?
             fi
         fi
     fi
@@ -175,27 +205,34 @@ function import_database
     if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 3 ]]; then
         if [[ -d $ROOT/sql/world ]]; then
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
-                for f in $ROOT/sql/world/*; do
-                    if [ -d "$f" ]; then
-                        if [[ ! -z "$(ls -A $f)" ]]; then
-                            for d in $f/*.sql; do
-                                printf "${COLOR_ORANGE}Importing "$(basename $d)"${COLOR_END}\n"
-                                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $d
-                                if [ $? -ne 0 ]; then
-                                    rm -rf $MYSQL_CONFIG
-                                    exit $?
-                                fi
-                            done
+                if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
+                    for f in $ROOT/sql/world/*; do
+                        if [ -d "$f" ]; then
+                            if [[ ! -z "$(ls -A $f)" ]]; then
+                                for d in $f/*.sql; do
+                                    printf "${COLOR_ORANGE}Importing "$(basename $d)"${COLOR_END}\n"
+                                    mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $d
+                                    if [ $? -ne 0 ]; then
+                                        rm -rf $MYSQL_CONFIG
+                                        exit $?
+                                    fi
+                                done
+                            fi
+                        else
+                            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                            mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
+                            if [ $? -ne 0 ]; then
+                                rm -rf $MYSQL_CONFIG
+                                exit $?
+                            fi
                         fi
-                    else
-                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-                        mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
-                        if [ $? -ne 0 ]; then
-                            rm -rf $MYSQL_CONFIG
-                            exit $?
-                        fi
+                    done
+                else
+                    if [ $? -ne 0 ]; then
+                        rm -rf $MYSQL_CONFIG
+                        exit $?
                     fi
-                done
+                fi
             fi
         fi
     fi
