@@ -581,7 +581,7 @@ function update_configuration
 
     printf "${COLOR_GREEN}Updating configuration files${COLOR_END}\n"
 
-    if [ $1 == 0 ] || [ $1 == 1 ]; then
+    if [[ $1 == 0 || $1 == 1 && -z $2 ]] || [[ $1 == 1 && $2 == 1 ]]; then
         if [ -f $CORE_DIRECTORY/etc/authserver.conf.dist ]; then
             printf "${COLOR_ORANGE}Updating authserver.conf${COLOR_END}\n"
 
@@ -592,7 +592,7 @@ function update_configuration
         fi
     fi
 
-    if [ $1 == 0 ] || [ $1 == 2 ]; then
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 2 && $2 == 1 ]]; then
         if [ -f $CORE_DIRECTORY/etc/worldserver.conf.dist ]; then
             printf "${COLOR_ORANGE}Updating worldserver.conf${COLOR_END}\n"
 
@@ -678,7 +678,7 @@ function update_configuration
         fi
     fi
 
-    if [ $1 == 0 ] || [ $1 == 2 ]; then
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 2 && $2 == 2 ]]; then
         if [ $MODULE_AHBOT_ENABLED == "true" ]; then
             if [ -f $CORE_DIRECTORY/etc/modules/mod_ahbot.conf.dist ]; then
                 printf "${COLOR_ORANGE}Updating mod_ahbot.conf${COLOR_END}\n"
@@ -704,7 +704,7 @@ function update_configuration
         fi
     fi
 
-    if [ $1 == 0 ] || [ $1 == 2 ]; then
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 2 && $2 == 3 ]]; then
         if [ $MODULE_ELUNA_ENABLED == "true" ]; then
             if [ -f $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist ]; then
                 printf "${COLOR_ORANGE}Updating mod_LuaEngine.conf${COLOR_END}\n"
