@@ -146,6 +146,19 @@ function show_menu
             esac
         fi
     elif [[ $1 == 3 ]]; then
-        echo "Manage the configuration options"
+        if [[ -z $2 ]]; then
+            printf "${COLOR_PURPLE}Manage the configuration options${COLOR_END}\n"
+            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the database options${COLOR_END}\n"
+            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the server options${COLOR_END}\n"
+            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+            read -s -n 1 s
+
+            case $s in
+                [1-2]) show_menu $1;;
+                0) show_menu;;
+                *) show_menu $1;;
+            esac
+        fi
     fi
 }
