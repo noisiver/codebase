@@ -34,40 +34,23 @@ function show_menu
     elif [[ $1 == 1 ]]; then
         if [[ -z $2 ]]; then
             printf "${COLOR_PURPLE}Manage the source code${COLOR_END}\n"
-            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the available modules${COLOR_END}\n"
-            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Download the latest version of the repository${COLOR_END}\n"
+            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Download the latest version of the repository${COLOR_END}\n"
             printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Compile the source code into binaries${COLOR_END}\n"
-            if [[ -f $CORE_DIRECTORY/bin/authserver && -f $CORE_DIRECTORY/bin/worldserver ]] && [[ -f $CORE_DIRECTORY/bin/world.sh ]]; then
-                printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Download the client data files${COLOR_END}\n"
+            if [[ -f $CORE_DIRECTORY/bin/authserver && -f $CORE_DIRECTORY/bin/worldserver ]] && [[ -f $CORE_DIRECTORY/bin/world.sh ]] && [[ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]]; then
+                printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Download the client data files${COLOR_END}\n"
             fi
             printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
             printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
             read -s -n 1 s
 
             case $s in
-                1) show_menu $1 $s;;
-                2) stop_process; clone_source; show_menu $1;;
-                [3-4]) show_menu $1 $s;;
+                1) stop_process; clone_source; show_menu $1;;
+                2) show_menu $1 $s;;
+                3) fetch_client_data; show_menu $1 $2;;
                 0) show_menu;;
                 *) show_menu $1;;
             esac
-        elif [[ $2 == 1 ]]; then
-            printf "${COLOR_PURPLE}Manage the available modules${COLOR_END}\n"
-            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Auction House Bot: ${COLOR_END}"
-            [ $MODULE_AHBOT_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
-            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END}"
-            [ $MODULE_ELUNA_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
-            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
-            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-            read -s -n 1 s
-
-            case $s in
-                1) if [ $MODULE_AHBOT_ENABLED == "true" ]; then MODULE_AHBOT_ENABLED="false"; else MODULE_AHBOT_ENABLED="true"; fi; export_settings; show_menu $1 $2;;
-                2) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; export_settings; show_menu $1 $2;;
-                0) show_menu $1;;
-                *) show_menu $1 $2;;
-            esac
-        elif [[ $2 == 3 ]]; then
+        elif [[ $2 == 2 ]]; then
             if [ -d $CORE_DIRECTORY ]; then
                 printf "${COLOR_PURPLE}Compile the source code into binaries${COLOR_END}\n"
                 printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Authserver: ${COLOR_END}"
@@ -94,20 +77,6 @@ function show_menu
                 read -s -n 1
                 show_menu $1
             fi
-        elif [[ $2 == 4 ]]; then
-            printf "${COLOR_PURPLE}Download the client data files${COLOR_END}\n"
-            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Check for a new version${COLOR_END}\n"
-            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Download the required files${COLOR_END}\n"
-            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
-            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-            read -s -n 1 s
-
-            case $s in
-                1) update_client_data; sleep 1; show_menu $1 $2;;
-                2) fetch_client_data; sleep 1; show_menu $1 $2;;
-                0) show_menu $1;;
-                *) show_menu $1 $2;;
-            esac
         fi
     elif [[ $1 == 2 ]]; then
         if [[ -z $2 ]]; then
@@ -149,13 +118,15 @@ function show_menu
         if [[ -z $2 ]]; then
             printf "${COLOR_PURPLE}Manage the configuration options${COLOR_END}\n"
             printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the database options${COLOR_END}\n"
-            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the server options${COLOR_END}\n"
+            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the core options${COLOR_END}\n"
+            printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Manage the world options${COLOR_END}\n"
+            printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Manage the available modules${COLOR_END}\n"
             printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
             printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
             read -s -n 1 s
 
             case $s in
-                [1-2]) show_menu $1 $s;;
+                [1-4]) show_menu $1 $s;;
                 0) show_menu;;
                 *) show_menu $1;;
             esac
@@ -174,7 +145,7 @@ function show_menu
 
             case $s in
                 1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_HOSTNAME}" i; if [ ! -z $i ]; then MYSQL_HOSTNAME=$i; fi; export_settings; show_menu $1 $2;;
-                2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PORT}" i; if [ ! -z $i ]; then MYSQL_PORT=$i; fi; export_settings; show_menu $1 $2;;
+                2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PORT}" i; if [[ ! -z $i && $i =~ ^[0-9]+$ ]]; then MYSQL_PORT=$i; fi; export_settings; show_menu $1 $2;;
                 3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_USERNAME}" i; if [ ! -z $i ]; then MYSQL_USERNAME=$i; fi; export_settings; show_menu $1 $2;;
                 4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_PASSWORD}" i; if [ ! -z $i ]; then MYSQL_PASSWORD=$i; fi; export_settings; show_menu $1 $2;;
                 5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MYSQL_DATABASE_AUTH}" i; if [ ! -z $i ]; then MYSQL_DATABASE_AUTH=$i; fi; export_settings; show_menu $1 $2;;
@@ -184,7 +155,47 @@ function show_menu
                 *) show_menu $1 $2;;
             esac
         elif [ $2 == 2 ]; then
-            printf "${COLOR_ORANGE}Manage the server options${COLOR_END}\n"
+            printf "${COLOR_PURPLE}Manage the core options${COLOR_END}\n"
+            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Location of the source code: ${COLOR_GREEN}${CORE_DIRECTORY}${COLOR_END}\n"
+            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Required client data version: ${COLOR_GREEN}${CORE_REQUIRED_CLIENT_DATA}${COLOR_END}\n"
+            printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Check for a new version of the client data files${COLOR_END}\n"
+            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+            read -s -n 1 s
+
+            case $s in
+                1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_DIRECTORY}" i; if [ ! -z $i ]; then CORE_DIRECTORY=$i; fi; export_settings; show_menu $1 $2;;
+                2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${CORE_REQUIRED_CLIENT_DATA}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]]; then CORE_REQUIRED_CLIENT_DATA=$i; fi; export_settings; show_menu $1 $2;;
+                3) update_client_data; sleep 1; show_menu $1 $2;;
+                0) show_menu $1;;
+                *) show_menu $1 $2;;
+            esac
+        elif [ $2 == 3 ]; then
+            printf "${COLOR_PURPLE}Manage the world options${COLOR_END}\n"
+            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+            read -s -n 1 s
+
+            case $s in
+                0) show_menu $1;;
+                *) show_menu $1 $2;;
+            esac
+        elif [ $2 == 4 ]; then
+            printf "${COLOR_PURPLE}Manage the available modules${COLOR_END}\n"
+            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Auction House Bot: ${COLOR_END}"
+            [ $MODULE_AHBOT_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END}"
+            [ $MODULE_ELUNA_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+            read -s -n 1 s
+
+            case $s in
+                1) if [ $MODULE_AHBOT_ENABLED == "true" ]; then MODULE_AHBOT_ENABLED="false"; else MODULE_AHBOT_ENABLED="true"; fi; export_settings; show_menu $1 $2;;
+                2) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; export_settings; show_menu $1 $2;;
+                0) show_menu $1;;
+                *) show_menu $1 $2;;
+            esac
         fi
     fi
 }
