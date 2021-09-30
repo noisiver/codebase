@@ -204,12 +204,14 @@ function show_menu
             printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Modify the database options${COLOR_END}\n"
             printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Modify the core options${COLOR_END}\n"
             printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Modify the world options${COLOR_END}\n"
+            printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Write to configuration files${COLOR_END}\n"
             printf "${COLOR_GREEN}Choose an option:${COLOR_END} "
             read -e s
 
             if [ ${#s} -gt 0 ]; then
                 case $s in
                     [1-3]) show_menu $1 $s;;
+                    4) if [[ $ENABLE_AUTHSERVER == 1 && $ENABLE_WORLDSERVER == 1 ]]; then update_configuration 0; elif [[ $ENABLE_AUTHSERVER == 1 && $ENABLE_WORLDSERVER == 0 ]]; then update_configuration 1; elif [[ $ENABLE_AUTHSERVER == 0 && $ENABLE_WORLDSERVER == 1 ]]; then update_configuration 2; fi; sleep 1; show_menu $1;;
                     *) show_menu $1;;
                 esac
             else
