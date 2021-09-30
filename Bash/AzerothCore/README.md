@@ -10,7 +10,7 @@ I never run the script as anything other than root so I unfortunately will not b
 I should note that everything is tested on Containers (LXC) and might not work properly on a regular installation. If something causes a problem, I'll look into fixing it.
 
 # Commands
-Using the script and passing it either auth, world or all will install either or all of the systems.
+Using the script and passing it either auth, world or all will install either or all of the systems. Using client instead of any of these will trigger a check for a new version of the client data files.
 
 After the selected first parameter, use either install/setup/update, database/db, configuration/config/conf/cfg or all to perform specific actions.
 
@@ -21,7 +21,7 @@ You can use the parameter all instead to perform all of the actions.
 
 Using the script without any parameters will trigger a terminal menu that can perform the same actions as listed above.
 
-Example: ./azerothcore.sh [auth/world/all/start/stop] [setup/database/config/all]
+Example: ./azerothcore.sh [auth/world/all/start/stop/client] [setup/database/config/all]
 
 # First time
 Running the script for the first time will generate a default configuration file called ac.xml that you edit. Make sure to edit it or the script will fail at some point.
