@@ -35,7 +35,7 @@ function show_menu
         if [[ -z $2 ]]; then
             printf "${COLOR_PURPLE}Manage the source code${COLOR_END}\n"
             printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Download the latest version of the repository${COLOR_END}\n"
-            printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Compile the source code into binaries${COLOR_END}\n"
+            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Compile the source code into binaries${COLOR_END}\n"
             if [[ -f $CORE_DIRECTORY/bin/authserver && -f $CORE_DIRECTORY/bin/worldserver ]] && [[ -f $CORE_DIRECTORY/bin/world.sh ]] && [[ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]]; then
                 printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Download the client data files${COLOR_END}\n"
             fi
@@ -101,7 +101,9 @@ function show_menu
             printf "${COLOR_PURPLE}Manage the ${DB} database${COLOR_END}\n"
             printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Import all tables and data${COLOR_END}\n"
             printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Import all available updates${COLOR_END}\n"
-            if [ $2 == 3 ]; then
+            if [ $2 == 1 ]; then
+                printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Update the realm list${COLOR_END}\n"
+            elif [ $2 == 3 ] && [ -d $ROOT/sql/world ] && [ ! -z "$(ls -A $ROOT/sql/world/)" ]; then
                 printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Import any custom content${COLOR_END}\n"
             fi
             printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
@@ -109,7 +111,8 @@ function show_menu
             read -s -n 1 s
 
             case $s in
-                [1-3]) import_database $2 $s; show_menu $1 $2;;
+                [1-2]) import_database $2 $s; show_menu $1 $2;;
+                3) if [ $2 == 1 ]; then import_database $2 $s; sleep 1; else import_database $2 $s; fi; show_menu $1 $2;;
                 0) show_menu $1;;
                 *) show_menu $1 $2;;
             esac
@@ -121,12 +124,16 @@ function show_menu
             printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the core options${COLOR_END}\n"
             printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Manage the world options${COLOR_END}\n"
             printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Manage the available modules${COLOR_END}\n"
+            if [ -f $CORE_DIRECTORY/etc/authserver.conf.dist ] && [ -f $CORE_DIRECTORY/etc/worldserver.conf.dist ]; then
+                printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Write to configuration files${COLOR_END}\n"
+            fi
             printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
             printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
             read -s -n 1 s
 
             case $s in
                 [1-4]) show_menu $1 $s;;
+                5) if [[ $ENABLE_AUTHSERVER == 1 && $ENABLE_WORLDSERVER == 1 ]]; then update_configuration 0; elif [[ $ENABLE_AUTHSERVER == 1 && $ENABLE_WORLDSERVER == 0 ]]; then update_configuration 1; elif [[ $ENABLE_AUTHSERVER == 0 && $ENABLE_WORLDSERVER == 1 ]]; then update_configuration 2; fi; sleep 1; show_menu $1;;
                 0) show_menu;;
                 *) show_menu $1;;
             esac
