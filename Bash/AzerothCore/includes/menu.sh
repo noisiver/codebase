@@ -359,21 +359,60 @@ function show_menu
                 esac
             fi
         elif [ $2 == 4 ]; then
-            printf "${COLOR_PURPLE}Manage the available modules${COLOR_END}\n"
-            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Auction House Bot: ${COLOR_END}"
-            [ $MODULE_AHBOT_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
-            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Eluna LUA Engine: ${COLOR_END}"
-            [ $MODULE_ELUNA_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
-            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
-            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-            read -s -n 1 s
+            if [ -z $3 ]; then
+                printf "${COLOR_PURPLE}Manage the available modules${COLOR_END}\n"
+                printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the auction house bot${COLOR_END}\n"
+                printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the eluna lua engine${COLOR_END}\n"
+                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+                printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+                read -s -n 1 s
 
-            case $s in
-                1) if [ $MODULE_AHBOT_ENABLED == "true" ]; then MODULE_AHBOT_ENABLED="false"; else MODULE_AHBOT_ENABLED="true"; fi; export_settings; show_menu $1 $2;;
-                2) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; export_settings; show_menu $1 $2;;
-                0) show_menu $1;;
-                *) show_menu $1 $2 $3;;
-            esac
+                case $s in
+                    [1-2]) show_menu $1 $2 $s;;
+                    0) show_menu $1;;
+                    *) show_menu $1 $2;;
+                esac
+            elif [ $3 == 1 ]; then
+                printf "${COLOR_PURPLE}Manage the auction house bot${COLOR_END}\n"
+                printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Enable the module: ${COLOR_END}"
+                [ $MODULE_AHBOT_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+                printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Enable buying items: ${COLOR_END}"
+                [ $MODULE_AHBOT_ENABLE_BUYER == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+                printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Enable selling items: ${COLOR_END}"
+                [ $MODULE_AHBOT_ENABLE_SELLER == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+                printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Account id: ${COLOR_GREEN}${MODULE_AHBOT_ACCOUNT_ID}${COLOR_END}\n"
+                printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Character id: ${COLOR_GREEN}${MODULE_AHBOT_CHARACTER_GUID}${COLOR_END}\n"
+                printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Minimum amount of items to sell: ${COLOR_GREEN}${MODULE_AHBOT_MIN_ITEMS}${COLOR_END}\n"
+                printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Maximum amount of items to sell: ${COLOR_GREEN}${MODULE_AHBOT_MAX_ITEMS}${COLOR_END}\n"
+                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+                printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+                read -s -n 1 s
+
+                case $s in
+                    1) if [ $MODULE_AHBOT_ENABLED == "true" ]; then MODULE_AHBOT_ENABLED="false"; else MODULE_AHBOT_ENABLED="true"; fi; export_settings; show_menu $1 $2 $3;;
+                    2) if [ $MODULE_AHBOT_ENABLE_BUYER == "true" ]; then MODULE_AHBOT_ENABLE_BUYER="false"; else MODULE_AHBOT_ENABLE_BUYER="true"; fi; export_settings; show_menu $1 $2 $3;;
+                    3) if [ $MODULE_AHBOT_ENABLE_SELLER == "true" ]; then MODULE_AHBOT_ENABLE_SELLER="false"; else MODULE_AHBOT_ENABLE_SELLER="true"; fi; export_settings; show_menu $1 $2 $3;;
+                    4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MODULE_AHBOT_ACCOUNT_ID}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then MODULE_AHBOT_ACCOUNT_ID=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MODULE_AHBOT_CHARACTER_GUID}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then MODULE_AHBOT_CHARACTER_GUID=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MODULE_AHBOT_MIN_ITEMS}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then MODULE_AHBOT_MIN_ITEMS=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    7) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${MODULE_AHBOT_MAX_ITEMS}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then MODULE_AHBOT_MAX_ITEMS=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    0) show_menu $1 $2;;
+                    *) show_menu $1 $2 $3;;
+                esac
+            elif [ $3 == 2 ]; then
+                printf "${COLOR_PURPLE}Manage the Eluna LUA Engine${COLOR_END}\n"
+                printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Enable the module: ${COLOR_END}"
+                [ $MODULE_ELUNA_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+                printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
+                read -s -n 1 s
+
+                case $s in
+                    1) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; export_settings; show_menu $1 $2 $3;;
+                    0) show_menu $1 $2;;
+                    *) show_menu $1 $2 $3;;
+                esac
+            fi
         fi
     fi
 }
