@@ -242,9 +242,9 @@ function show_menu
 
                 case $s in
                     1) if [[ $WORLD_SKIP_CINEMATICS == 2 ]]; then WORLD_SKIP_CINEMATICS=0; else WORLD_SKIP_CINEMATICS=$(($WORLD_SKIP_CINEMATICS+1)); fi; export_settings; show_menu $1 $2 $3;;
-                    2) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_MAX_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
-                    3) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_START_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
-                    4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]]; then WORLD_START_MONEY=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    2) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e -i "${WORLD_MAX_LEVEL}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ ${#i} -lt 3 ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_MAX_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    3) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e -i "${WORLD_START_LEVEL}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ ${#i} -lt 3 ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_START_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e -i "${WORLD_START_MONEY}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]]; then WORLD_START_MONEY=$i; fi; export_settings; show_menu $1 $2 $3;;
                     5) if [[ $WORLD_ALWAYS_MAX_SKILL == "false" ]]; then WORLD_ALWAYS_MAX_SKILL="true"; else WORLD_ALWAYS_MAX_SKILL="false"; fi; export_settings; show_menu $1 $2 $3;;
                     6) if [[ $WORLD_ALL_FLIGHT_PATHS == "false" ]]; then WORLD_ALL_FLIGHT_PATHS="true"; else WORLD_ALL_FLIGHT_PATHS="false"; fi; export_settings; show_menu $1 $2 $3;;
                     7) if [[ $WORLD_MAPS_EXPLORED == "false" ]]; then WORLD_MAPS_EXPLORED="true"; else WORLD_MAPS_EXPLORED="false"; fi; export_settings; show_menu $1 $2 $3;;
@@ -277,7 +277,7 @@ function show_menu
                 case $s in
                     1) if [[ $WORLD_QUEST_IGNORE_RAID == "false" ]]; then WORLD_QUEST_IGNORE_RAID="true"; else WORLD_QUEST_IGNORE_RAID="false"; fi; export_settings; show_menu $1 $2 $3;;
                     2) if [[ $WORLD_PREVENT_AFK_LOGOUT == "false" ]]; then WORLD_PREVENT_AFK_LOGOUT="true"; else WORLD_PREVENT_AFK_LOGOUT="false"; fi; export_settings; show_menu $1 $2 $3;;
-                    3) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_RAF_MAX_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    3) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e -i "${WORLD_RAF_MAX_LEVEL}" i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ ${#i} -lt 3 ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_RAF_MAX_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
                     4) if [[ $WORLD_PRELOAD_MAP_GRIDS == "false" ]]; then WORLD_PRELOAD_MAP_GRIDS="true"; else WORLD_PRELOAD_MAP_GRIDS="false"; fi; export_settings; show_menu $1 $2 $3;;
                     5) if [[ $WORLD_SET_WAYPOINTS_ACTIVE == "false" ]]; then WORLD_SET_WAYPOINTS_ACTIVE="true"; else WORLD_SET_WAYPOINTS_ACTIVE="false"; fi; export_settings; show_menu $1 $2 $3;;
                     6) if [[ $WORLD_ENABLE_MINIGOB_MANABONK == "false" ]]; then WORLD_ENABLE_MINIGOB_MANABONK="true"; else WORLD_ENABLE_MINIGOB_MANABONK="false"; fi; export_settings; show_menu $1 $2 $3;;
