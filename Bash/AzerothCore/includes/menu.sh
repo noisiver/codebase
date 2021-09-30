@@ -241,6 +241,14 @@ function show_menu
                 read -s -n 1 s
 
                 case $s in
+                    1) if [[ $WORLD_SKIP_CINEMATICS == 2 ]]; then WORLD_SKIP_CINEMATICS=0; else WORLD_SKIP_CINEMATICS=$(($WORLD_SKIP_CINEMATICS+1)); fi; export_settings; show_menu $1 $2 $3;;
+                    2) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_MAX_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    3) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_START_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]]; then WORLD_START_MONEY=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    5) if [[ $WORLD_ALWAYS_MAX_SKILL == "false" ]]; then WORLD_ALWAYS_MAX_SKILL="true"; else WORLD_ALWAYS_MAX_SKILL="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    6) if [[ $WORLD_ALL_FLIGHT_PATHS == "false" ]]; then WORLD_ALL_FLIGHT_PATHS="true"; else WORLD_ALL_FLIGHT_PATHS="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    7) if [[ $WORLD_MAPS_EXPLORED == "false" ]]; then WORLD_MAPS_EXPLORED="true"; else WORLD_MAPS_EXPLORED="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    8) if [[ $WORLD_ALLOW_COMMANDS == "false" ]]; then WORLD_ALLOW_COMMANDS="true"; else WORLD_ALLOW_COMMANDS="false"; fi; export_settings; show_menu $1 $2 $3;;
                     0) show_menu $1 $2;;
                     9) show_menu $1 $2 $(($3+1));;
                     *) show_menu $1 $2 $3;;
@@ -267,6 +275,14 @@ function show_menu
                 read -s -n 1 s
 
                 case $s in
+                    1) if [[ $WORLD_QUEST_IGNORE_RAID == "false" ]]; then WORLD_QUEST_IGNORE_RAID="true"; else WORLD_QUEST_IGNORE_RAID="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    2) if [[ $WORLD_PREVENT_AFK_LOGOUT == "false" ]]; then WORLD_PREVENT_AFK_LOGOUT="true"; else WORLD_PREVENT_AFK_LOGOUT="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    3) printf "\r${COLOR_GREEN}Enter the new value [1-80]:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]] && [[ $i < 81 ]]; then WORLD_RAF_MAX_LEVEL=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    4) if [[ $WORLD_PRELOAD_MAP_GRIDS == "false" ]]; then WORLD_PRELOAD_MAP_GRIDS="true"; else WORLD_PRELOAD_MAP_GRIDS="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    5) if [[ $WORLD_SET_WAYPOINTS_ACTIVE == "false" ]]; then WORLD_SET_WAYPOINTS_ACTIVE="true"; else WORLD_SET_WAYPOINTS_ACTIVE="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    6) if [[ $WORLD_ENABLE_MINIGOB_MANABONK == "false" ]]; then WORLD_ENABLE_MINIGOB_MANABONK="true"; else WORLD_ENABLE_MINIGOB_MANABONK="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    7) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then WORLD_RATE_EXPERIENCE=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    8) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then WORLD_RATE_RESTED_EXP=$i; fi; export_settings; show_menu $1 $2 $3;;
                     0) show_menu $1 $2 $(($3-1));;
                     9) show_menu $1 $2 $(($3+1));;
                     *) show_menu $1 $2 $3;;
@@ -290,6 +306,14 @@ function show_menu
                 read -s -n 1 s
 
                 case $s in
+                    1) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then WORLD_RATE_REPUTATION=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    2) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then WORLD_RATE_MONEY=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    3) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then WORLD_RATE_CRAFTING=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    4) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then WORLD_RATE_GATHERING=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    5) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then WORLD_RATE_WEAPON_SKILL=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    6) printf "\r${COLOR_GREEN}Enter the new value:${COLOR_END} "; read -e i; if [[ ! -z $i ]] && [[ $i =~ ^[0-9]+$ ]] && [[ $i > 0 ]]; then WORLD_RATE_DEFENSE_SKILL=$i; fi; export_settings; show_menu $1 $2 $3;;
+                    7) if [[ $WORLD_GM_LOGIN_STATE == "false" ]]; then WORLD_GM_LOGIN_STATE="true"; else WORLD_GM_LOGIN_STATE="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    8) if [[ $WORLD_GM_ENABLE_VISIBILITY == "false" ]]; then WORLD_GM_ENABLE_VISIBILITY="true"; else WORLD_GM_ENABLE_VISIBILITY="false"; fi; export_settings; show_menu $1 $2 $3;;
                     0) show_menu $1 $2 $(($3-1));;
                     9) show_menu $1 $2 $(($3+1));;
                     *) show_menu $1 $2 $3;;
@@ -316,6 +340,13 @@ function show_menu
                 read -s -n 1 s
 
                 case $s in
+                    1) if [[ $WORLD_GM_ENABLE_CHAT == "false" ]]; then WORLD_GM_ENABLE_CHAT="true"; else WORLD_GM_ENABLE_CHAT="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    2) if [[ $WORLD_GM_ENABLE_WHISPER == "false" ]]; then WORLD_GM_ENABLE_WHISPER="true"; else WORLD_GM_ENABLE_WHISPER="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    3) if [[ $WORLD_GM_SHOW_GM_LIST == 0 ]]; then WORLD_GM_SHOW_GM_LIST=3; else WORLD_GM_SHOW_GM_LIST=0; fi; export_settings; show_menu $1 $2 $3;;
+                    4) if [[ $WORLD_GM_SHOW_WHO_LIST == 0 ]]; then WORLD_GM_SHOW_WHO_LIST=3; else WORLD_GM_SHOW_WHO_LIST=0; fi; export_settings; show_menu $1 $2 $3;;
+                    5) if [[ $WORLD_GM_ALLOW_FRIEND == "false" ]]; then WORLD_GM_ALLOW_FRIEND="true"; else WORLD_GM_ALLOW_FRIEND="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    6) if [[ $WORLD_GM_ALLOW_INVITE == "false" ]]; then WORLD_GM_ALLOW_INVITE="true"; else WORLD_GM_ALLOW_INVITE="false"; fi; export_settings; show_menu $1 $2 $3;;
+                    7) if [[ $WORLD_GM_ALLOW_LOWER_SECURITY == "false" ]]; then WORLD_GM_ALLOW_LOWER_SECURITY="true"; else WORLD_GM_ALLOW_LOWER_SECURITY="false"; fi; export_settings; show_menu $1 $2 $3;;
                     0) show_menu $1 $2 $(($3-1));;
                     *) show_menu $1 $2 $3;;
                 esac
