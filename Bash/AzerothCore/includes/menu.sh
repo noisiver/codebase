@@ -236,7 +236,7 @@ function show_menu
                 printf "${COLOR_CYAN}7) ${COLOR_ORANGE}All maps explored: ${WORLD_MAPS_EXPLORED_TEXT}${COLOR_END}\n"
                 printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Allow player commands: ${WORLD_ALLOW_COMMANDS_TEXT}${COLOR_END}\n"
                 printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Go to the next page${COLOR_END}\n"
-                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous page${COLOR_END}\n"
                 printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
                 read -s -n 1 s
 
@@ -262,7 +262,7 @@ function show_menu
                 printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Rate of experience gain: ${COLOR_GREEN}${WORLD_RATE_EXPERIENCE}x${COLOR_END}\n"
                 printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Rate of rested experience gain: ${COLOR_GREEN}${WORLD_RATE_RESTED_EXP}x${COLOR_END}\n"
                 printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Go to the next page${COLOR_END}\n"
-                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous page${COLOR_END}\n"
                 printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
                 read -s -n 1 s
 
@@ -285,7 +285,7 @@ function show_menu
                 printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Set GM state when entering the world: ${WORLD_GM_LOGIN_STATE_TEXT}${COLOR_END}\n"
                 printf "${COLOR_CYAN}8) ${COLOR_ORANGE}Set GM visibility when entering the world: ${WORLD_GM_VISIBLE_TEXT}${COLOR_END}\n"
                 printf "${COLOR_CYAN}9) ${COLOR_ORANGE}Go to the next page${COLOR_END}\n"
-                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous page${COLOR_END}\n"
                 printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
                 read -s -n 1 s
 
@@ -311,7 +311,7 @@ function show_menu
                 printf "${COLOR_CYAN}5) ${COLOR_ORANGE}Allow players to add a GM to the list of friends: ${WORLD_GM_ALLOW_FRIEND_TEXT}${COLOR_END}\n"
                 printf "${COLOR_CYAN}6) ${COLOR_ORANGE}Allow players to invite a GM: ${WORLD_GM_ALLOW_INVITE_TEXT}${COLOR_END}\n"
                 printf "${COLOR_CYAN}7) ${COLOR_ORANGE}Allow lower security GM to interact with higher security: ${WORLD_GM_LOWER_SECURITY_TEXT}${COLOR_END}\n"
-                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
+                printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous page${COLOR_END}\n"
                 printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
                 read -s -n 1 s
 
