@@ -24,7 +24,7 @@ Using the script without any parameters will trigger a terminal menu that can pe
 Example: ./azerothcore.sh [auth/world/all/start/stop/client] [setup/database/config/all]
 
 # First time
-Running the script for the first time will generate a default configuration file called ac.xml that you edit. Make sure to edit it or the script will fail at some point.
+Running the script for the first time will generate a default configuration file called azerthcore.xml that you edit. Make sure to edit it or the script will fail at some point. There's no need to modify the file if the options are changed via the menu.
 
 # Credit
 All respect goes to the amazing people developing the core for us to use.
