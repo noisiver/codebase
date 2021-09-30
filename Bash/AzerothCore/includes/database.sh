@@ -157,7 +157,7 @@ function import_database
         fi
     fi
 
-    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 2 ]]; then
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 3 ]]; then
         if [ $MODULE_AHBOT_ENABLED == "true" ]; then
             if [[ -d $CORE_DIRECTORY/modules/mod-ah-bot/sql/world/base ]]; then
                 for f in $CORE_DIRECTORY/modules/mod-ah-bot/sql/world/base/*; do
@@ -202,7 +202,7 @@ function import_database
         fi
     fi
 
-    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 3 ]]; then
+    if [[ $1 == 0 || $1 == 2 && -z $2 ]] || [[ $1 == 3 && $2 == 4 ]]; then
         if [[ -d $ROOT/sql/world ]]; then
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
                 if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
