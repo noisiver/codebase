@@ -449,11 +449,15 @@ function show_menu
         fi
     elif [[ $1 == 5 ]]; then
         printf "${COLOR_PURPLE}Managing the core processes${COLOR_END}\n"
+        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Start the server processes${COLOR_END}\n"
+        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Stop the server processes${COLOR_END}\n"
         printf "${COLOR_GREEN}Choose an option:${COLOR_END} "
         read -e s
 
         if [ ${#s} -gt 0 ]; then
             case $s in
+                1) start_process; sleep 1; show_menu $1;;
+                2) stop_process; sleep 1; show_menu $1;;
                 *) show_menu $1;;
             esac
         else

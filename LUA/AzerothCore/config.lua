@@ -97,8 +97,8 @@ ENABLE_WEEKEND_MULTIPLIER               = true -- Changes the multiplier on frid
 WEEKEND_MULTIPLIER                      = 2 -- Multiplier for all rates on weekends
 RATE_MULTIPLIER                         = {
 --    Min level  Max level  Multiplier
-    { 1,         59,        4 },
-    { 60,        69,        3 },
-    { 70,        79,        2 },
+    { 1,         59,        1 },
+    { 60,        69,        1 },
+    { 70,        79,        1 },
     { 80,        80,        1 },
 }
