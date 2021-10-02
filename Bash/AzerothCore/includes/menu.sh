@@ -112,12 +112,14 @@ function show_menu
             printf "${COLOR_PURPLE}Managing the Eluna module${COLOR_END}\n"
             printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Enable the module: ${COLOR_END}"
             [ $MODULE_ELUNA_ENABLED == "true" ] && printf "${COLOR_GREEN}Enabled${COLOR_END}\n" || printf "${COLOR_RED}Disabled${COLOR_END}\n"
+            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Copy lua scripts to the module folder${COLOR_END}\n"
             printf "${COLOR_GREEN}Choose an option:${COLOR_END} "
             read -e s
 
             if [ ${#s} -gt 0 ]; then
                 case $s in
                     1) if [ $MODULE_ELUNA_ENABLED == "true" ]; then MODULE_ELUNA_ENABLED="false"; else MODULE_ELUNA_ENABLED="true"; fi; export_settings; show_menu $1 $2;;
+                    2) transfer_lua_scripts; sleep 1; show_menu $1 $2;;
                     *) show_menu $1 $2;;
                 esac
             else
