@@ -1,11 +1,71 @@
 -- Requires
-require("config")
 require("ids")
 require("events")
 require("equipment")
 require("flags")
 require("gossip")
 require("proficiencies")
+
+-- Configuration
+ENABLE_ASSISTANT                        = true -- Enable the assistant. If this is set to false, all variables related to the assistant are obsolete
+ENABLE_ASSISTANT_EQUIPMENT              = false -- Enable obtaining a full set of green, quest equivalent, equipment for a specific specalization using the .assistant command
+ENABLE_ASSISTANT_EQUIPMENT_LEVEL_UP     = false -- If ENABLE_EQUIPMENT is set to true, this lets the player level up to 80 before accessing equipment
+ENABLE_ASSISTANT_EQUIPMENT_MAX_SKILL    = false -- If ENABLE_EQUIPMENT is set to true, this sets skills that are gained through the equipment feature to their max value
+ENABLE_ASSISTANT_HEIRLOOMS              = true -- Enable obtaining heirlooms using the .assistant command
+ENABLE_ASSISTANT_GLYPHS                 = true -- Enable obtaining glyphs using the .assistant command
+ENABLE_ASSISTANT_GEMS                   = true -- Enable obtaining gems using the .assistant command
+ENABLE_ASSISTANT_CONTAINERS             = true -- Enable obtaining containers using the .assistant command
+ASSISTANT_CONTAINER_BAG                 = 23162 -- The container that a player obtains via the assistant
+ENABLE_ASSISTANT_UTILITIES              = true -- Enable obtaining utilities from the .assistant command. The utilities are rename, customize, faction change and race change
+ASSISTANT_UTILITIES_COST_RENAME         = 10 -- Utilities: Money required in gold to perform a name change
+ASSISTANT_UTILITIES_COST_CUSTOMIZE      = 50 -- Utilities: Money required in gold to perform a customization
+ASSISTANT_UTILITIES_COST_FACTION_CHANGE = 1000 -- Utilities: Money required in gold to perform a faction change
+ASSISTANT_UTILITIES_COST_RACE_CHANGE    = 500 -- Utilities: Money required in gold to perform a race change
+ENABLE_ASSISTANT_MISCELLANEOUS          = true -- Enable obtaining miscellaneous features from the .assistant command.
+ENABLE_MISCELLANOUS_TOTEMS              = true -- Enable obtaining shaman totems from the miscellaneous option
+ENABLE_MISCELLANOUS_UNBIND_INSTANCES    = true -- Enable unbinding 5-man dungeon instances using the .assistant command
+INSTANCE_MAP_ID                         = {
+--    Map ID, Difficulty, Name,                                  Allow unbind
+    { 574,    1,          "Utgarde Keep",                        true },
+    { 575,    1,          "Utgarde Pinnacle",                    true },
+    { 576,    1,          "The Nexus",                           true },
+    { 578,    1,          "The Oculus",                          true },
+    { 595,    1,          "The Culling of Stratholme",           true },
+    { 599,    1,          "Halls of Stone",                      true },
+    { 600,    1,          "Drak'Tharon Keep",                    true },
+    { 601,    1,          "Azjol-Nerub",                         true },
+    { 602,    1,          "Halls of Lightning",                  true },
+    { 604,    1,          "Gundrak",                             true },
+    { 608,    1,          "Violet Hold",                         true },
+    { 619,    1,          "Ahn'kahet: The Old Kingdom",          true },
+    { 632,    1,          "The Forge of Souls",                  true },
+    { 650,    1,          "Trial of the Champion",               true },
+    { 658,    1,          "Pit of Saron",                        true },
+    { 668,    1,          "Halls of Reflection",                 true },
+
+    { 533,    0,          "Naxxramas 10-Man",                    true },
+    { 533,    1,          "Naxxramas 25-Man",                    true },
+    { 603,    0,          "Ulduar 10-Man",                       true },
+    { 603,    1,          "Ulduar 25-Man",                       true },
+    { 615,    0,          "The Obsidian Sanctum 10-Man",         true },
+    { 615,    1,          "The Obsidian Sanctum 25-Man",         true },
+    { 616,    0,          "The Eye of Eternity 10-Man",          true },
+    { 616,    1,          "The Eye of Eternity 25-Man",          true },
+    { 624,    0,          "Vault of Archavon 10-Man",            true },
+    { 624,    1,          "Vault of Archavon 25-Man",            true },
+    { 631,    0,          "Icecrown Citadel 10-Man",             true },
+    { 631,    1,          "Icecrown Citadel 25-Man",             true },
+    { 631,    2,          "Icecrown Citadel Heroic 10-Man",      true },
+    { 631,    3,          "Icecrown Citadel Heroic 25-Man",      true },
+    { 649,    0,          "Trial of the Crusader 10-Man",        true },
+    { 649,    1,          "Trial of the Crusader 25-Man",        true },
+    { 649,    2,          "Trial of the Crusader Heroic 10-Man", true },
+    { 649,    3,          "Trial of the Crusader Heroic 25-Man", true },
+    { 724,    0,          "The Ruby Sanctum 10-Man",             true },
+    { 724,    1,          "The Ruby Sanctum 25-Man",             true },
+    { 724,    2,          "The Ruby Sanctum Heroic 10-Man",      true },
+    { 724,    3,          "The Ruby Sanctum Heroic 25-Man",      true }
+}
 
 -- Ids for gossip selects
 local INT_EQUIPMENT                  = 100

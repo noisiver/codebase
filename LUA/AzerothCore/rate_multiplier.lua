@@ -1,6 +1,20 @@
 -- Requires
-require("config")
 require("events")
+
+-- Configuration
+ENABLE_EXPERIENCE_MULTIPLIER            = true -- Enable the experience multiplier
+ENABLE_REPUTATION_MULTIPLIER            = true -- Enable the reputation multiplier
+ENABLE_ANNOUNCE_ON_LOGIN                = true -- Enable to print a message to a player when entering the world
+MULTIPLIER_ANNOUNCE_MAX_LEVEL           = 79 -- Max level a player will receive the printed values when entering the world
+ENABLE_WEEKEND_MULTIPLIER               = true -- Changes the multiplier on friday, saturday and sunday
+WEEKEND_MULTIPLIER                      = 2 -- Multiplier for all rates on weekends
+RATE_MULTIPLIER                         = {
+--    Min level  Max level  Multiplier
+    { 1,         59,        1 },
+    { 60,        69,        1 },
+    { 70,        79,        1 },
+    { 80,        80,        1 },
+}
 
 -- Check the day
 function isWeekend()
