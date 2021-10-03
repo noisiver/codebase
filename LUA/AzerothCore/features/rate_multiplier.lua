@@ -2,6 +2,15 @@
 require("config")
 require("events")
 
+-- Check the day
+function isWeekend()
+    if (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 8) then
+        return true
+    end
+
+    return false
+end
+
 -- Calculate multiplier
 function rateMultiplier(player)
     local multiplier = 1
@@ -16,29 +25,39 @@ function rateMultiplier(player)
         end
     end
 
-    if (ENABLE_WEEKEND_MULTIPLIER) then
-        if (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 8) then
-            multiplier = multiplier * WEEKEND_MULTIPLIER
-        end
-    end
-
     return multiplier
 end
 
 -- Character gains experience
 function multiplierOnGiveXP(event, player, amount, victim)
+    local multiplier = 1
+
     if (ENABLE_EXPERIENCE_MULTIPLIER) then
-        return amount * rateMultiplier(player)
+        multiplier = rateMultiplier(player)
     end
+
+    if (ENABLE_WEEKEND_MULTIPLIER and isWeekend) then
+        multiplier = multiplier * WEEKEND_MULTIPLIER
+    end
+
+    return amount * multiplier
 end
 
 RegisterPlayerEvent(EVENT_ON_GIVE_XP, multiplierOnGiveXP)
 
 -- Character gains reputation
 function multiplierOnReputationChange(event, player, factionId, standing, incremenetal)
+    local multiplier = 1
+
     if (ENABLE_REPUTATION_MULTIPLIER) then
-        return standing * rateMultiplier(player)
+        multiplier = rateMultiplier(player)
     end
+
+    if (ENABLE_WEEKEND_MULTIPLIER and isWeekend) then
+        multiplier = multiplier * WEEKEND_MULTIPLIER
+    end
+
+    return standing * multiplier
 end
 
 RegisterPlayerEvent(EVENT_ON_REPUTATION_CHANGE, multiplierOnReputationChange)
@@ -54,10 +73,8 @@ function multiplierOnCommand(event, player, command)
             player:SendBroadcastMessage("The reputation you receive is "..(100 * rateMultiplier(player)).."% of the normal value.")
         end
 
-        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER)) then
-            if (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 1) then
-                player:SendBroadcastMessage("The weekend multiplier is currently active, increasing the above values.")
-            end
+        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER) and isWeekend) then
+            player:SendBroadcastMessage("The weekend bonus is active, giving you a bonus of "..(100 * WEEKEND_MULTIPLIER).."%.")
         end
 
         return false
@@ -77,10 +94,8 @@ function multiplierOnLogin(event, player)
             player:SendBroadcastMessage("The reputation you receive is "..(100 * rateMultiplier(player)).."% of the normal value.")
         end
 
-        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER)) then
-            if (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 1) then
-                player:SendBroadcastMessage("The weekend multiplier is currently active, increasing the above values.")
-            end
+        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER) and isWeekend) then
+            player:SendBroadcastMessage("The weekend bonus is active, giving you a bonus of "..(100 * WEEKEND_MULTIPLIER).."%.")
         end
     end
 end
