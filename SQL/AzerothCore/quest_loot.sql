@@ -26,3 +26,9 @@ UPDATE `item_template` SET `Flags`=3136 WHERE `entry` IN (16645, 16646, 16647, 1
 UPDATE `item_template` SET `Flags`=67840 WHERE `entry`=40944;
 -- Sunscale Feather
 UPDATE `item_template` SET `Flags`=2112 WHERE `entry`=5165;
+-- Charred Razormane Wand
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5092;
+-- Razormane Backstabber
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5093;
+-- Razormane War Shield
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
