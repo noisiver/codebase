@@ -1,20 +1,9 @@
 -- Requires
+require("config")
 require("ids")
 require("spells")
 require("events")
 require("proficiencies")
-
--- Configuration
-ENABLE_SPELLS_ON_LEVEL_UP               = true -- Automatically learn new spells when leveling up
-ENABLE_TALENTS_ON_LEVEL_UP              = true -- Automatically learn new ranks of talents when leveling up
-ENABLE_PROFICIENCY_ON_LEVEL_UP          = true -- Automatically learn new weapon and armor skills when leveling up
-ENABLE_APPRENTICE_MOUNT_ON_LEVEL_UP     = true -- Automatically learn 60% riding skill and mount
-ENABLE_JOURNEYMAN_MOUNT_ON_LEVEL_UP     = true -- Automatically learn 100% riding skill and mount
-ENABLE_EXPERT_MOUNT_ON_LEVEL_UP         = true -- Automatically learn 150% riding skill and mount
-ENABLE_ARTISAN_MOUNT_ON_LEVEL_UP        = false -- Automatically learn 300% riding skill and mount
-ENABLE_COLD_WEATHER_FLYING_ON_LEVEL_UP  = false -- Automatically learn cold weather flying
-ENABLE_MAX_SKILL_ON_LEVEL               = true -- Set weapon skills to thier maximum value when leveling up
-MAX_SKILL_MAX_LEVEL                     = 70 -- Last level when a players skills will be set to their maximum value
 
 -- Learn class spells
 function classSpells(player)
