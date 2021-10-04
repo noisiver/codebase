@@ -35,3 +35,43 @@ function Check-Packages
         exit
     }
 }
+
+$commands = @(
+    ("CMake", "cmake"),
+    ("Git", "git"),
+    ("MySQL", "mysql"),
+    ("MSBuild", "msbuild")
+)
+
+function Check-Commands
+{
+    Clear-Host
+
+    Write-Host -ForegroundColor Green "Checking required commands"
+    $error_occured = $false
+
+    foreach($cmd in $commands)
+    {
+        $name = $cmd[0]
+        $c = $cmd[1]
+
+        Write-Host -NoNewLine -ForegroundColor Yellow "Checking $name : "
+
+        if (Get-Command $c -errorAction SilentlyContinue)
+        {
+            Write-Host -ForegroundColor Green "Found"
+        }
+        else
+        {
+            Write-Host -ForegroundColor Red "Not found"
+            $error_occured = $true
+        }
+    }
+
+    if ($error_occured)
+    {
+        Write-Host -ForegroundColor Red "`nThe script is unable to continue due to missing commands"
+        Write-Host -ForegroundColor Red "Make sure that the required software paths are defined in the system"
+        exit
+    }
+}

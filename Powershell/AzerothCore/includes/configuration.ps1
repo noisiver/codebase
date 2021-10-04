@@ -41,8 +41,6 @@ function Check-Configuration
         $XmlObjectWriter.WriteEndElement()
 
         $XmlObjectWriter.WriteStartElement("core")
-        $XmlObjectWriter.WriteComment("The location where the source is located")
-        $XmlObjectWriter.WriteElementString("directory","C:\AzerothCore")
         $XmlObjectWriter.WriteComment("The required client data version")
         $XmlObjectWriter.WriteElementString("required_client_data","12")
         $XmlObjectWriter.WriteComment("The installed client data version")
@@ -178,7 +176,6 @@ if ($xml.config.mysql.database.auth -eq "") { $xml.config.mysql.database.auth = 
 if ($xml.config.mysql.database.characters -eq "") { $xml.config.mysql.database.characters = "acore_characters"; $error_occured = $true }
 if ($xml.config.mysql.database.world -eq "") { $xml.config.mysql.database.world = "acore_world"; $error_occured = $true }
 
-if ($xml.config.core.directory -eq "") { $xml.config.core.directory = "C:\AzerothCore"; $error_occured = $true }
 if (-not ($xml.config.core.required_client_data -match "^[\d\.]+$")) { $xml.config.core.required_client_data = "12"; $error_occured = $true }
 if (-not ($xml.config.core.installed_client_data -match "^[\d\.]+$")) { $xml.config.core.installed_client_data = "0"; $error_occured = $true }
 

@@ -1,6 +1,6 @@
 Clear-Host
 
-$includes = @("packages", "configuration", "quote", "menu")
+$includes = @("packages", "configuration", "source", "quote", "menu")
 foreach ($include in $includes)
 {
     if (Test-Path -Path includes\$include.ps1)
@@ -14,8 +14,9 @@ foreach ($include in $includes)
     }
 }
 
-Check-Packages
 Check-Configuration
+Check-Packages
+Check-Commands
 
 if ($args.Count -gt 0)
 {
