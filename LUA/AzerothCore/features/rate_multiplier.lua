@@ -2,15 +2,6 @@
 require("config")
 require("events")
 
--- Check the day
-function isWeekend()
-    if (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 8) then
-        return true
-    end
-
-    return false
-end
-
 -- Calculate multiplier
 function rateMultiplier(player)
     local multiplier = 1
@@ -36,7 +27,7 @@ function multiplierOnGiveXP(event, player, amount, victim)
         multiplier = rateMultiplier(player)
     end
 
-    if (ENABLE_WEEKEND_MULTIPLIER and isWeekend) then
+    if (ENABLE_WEEKEND_MULTIPLIER and (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 8)) then
         multiplier = multiplier * WEEKEND_MULTIPLIER
     end
 
@@ -53,7 +44,7 @@ function multiplierOnReputationChange(event, player, factionId, standing, increm
         multiplier = rateMultiplier(player)
     end
 
-    if (ENABLE_WEEKEND_MULTIPLIER and isWeekend) then
+    if (ENABLE_WEEKEND_MULTIPLIER and (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 8)) then
         multiplier = multiplier * WEEKEND_MULTIPLIER
     end
 
@@ -73,7 +64,7 @@ function multiplierOnCommand(event, player, command)
             player:SendBroadcastMessage("The reputation you receive is "..(100 * rateMultiplier(player)).."% of the normal value.")
         end
 
-        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER) and isWeekend) then
+        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER) and (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 8)) then
             player:SendBroadcastMessage("The weekend bonus is active, giving you a bonus of "..(100 * WEEKEND_MULTIPLIER).."%.")
         end
 
@@ -94,7 +85,7 @@ function multiplierOnLogin(event, player)
             player:SendBroadcastMessage("The reputation you receive is "..(100 * rateMultiplier(player)).."% of the normal value.")
         end
 
-        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER) and isWeekend) then
+        if (ENABLE_WEEKEND_MULTIPLIER and (ENABLE_EXPERIENCE_MULTIPLIER or ENABLE_REPUTATION_MULTIPLIER) and (os.date("*t").wday == 6 or os.date("*t").wday == 7 or os.date("*t").wday == 8)) then
             player:SendBroadcastMessage("The weekend bonus is active, giving you a bonus of "..(100 * WEEKEND_MULTIPLIER).."%.")
         end
     end
