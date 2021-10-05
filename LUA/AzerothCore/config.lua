@@ -102,3 +102,5 @@ RATE_MULTIPLIER                         = {
     { 70,        79,        1 },
     { 80,        80,        1 },
 }
+
+ENABLE_DAZE_IMMUNITY                    = true
