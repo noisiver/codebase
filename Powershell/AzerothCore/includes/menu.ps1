@@ -18,7 +18,7 @@ function Main-Menu
 
     switch($s)
     {
-        1 { Source-Menu; Compile-Source }
+        1 { Source-Menu }
         2 { Write-Host "Manage the modules" }
         3 { Write-Host "Manage the databases" }
         4 { Write-Host "Manage the configuration options" }
@@ -44,7 +44,7 @@ function Source-Menu
     switch($s)
     {
         1 { Clone-Source }
-        2 { Write-Host "Compile the source code into binaries" }
+        2 { Compile-Source }
         3 { Write-Host "Download the client data files" }
         default { Main-Menu }
     }

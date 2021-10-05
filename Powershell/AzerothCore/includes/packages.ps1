@@ -18,14 +18,29 @@ function Check-Packages
 
         Write-Host -NoNewLine -ForegroundColor Yellow "Checking $long : "
 
-        if ((Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where { $_.DisplayName -like "*$short*" }) -or (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where { $_.DisplayName -like "*$short*" }))
+        if ($short -eq "boost")
         {
-            Write-Host -ForegroundColor Green "Found"
+            if (Test-Path 'env:BOOST_ROOT')
+            {
+                Write-Host -ForegroundColor Green "Found"
+            }
+            else
+            {
+                Write-Host -ForegroundColor Red "Not found"
+                $error_occured = $true
+            }
         }
         else
         {
-            Write-Host -ForegroundColor Red "Not found"
-            $error_occured = $true
+            if ((Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where { $_.DisplayName -like "*$short*" }) -or (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where { $_.DisplayName -like "*$short*" }))
+            {
+                Write-Host -ForegroundColor Green "Found"
+            }
+            else
+            {
+                Write-Host -ForegroundColor Red "Not found"
+                $error_occured = $true
+            }
         }
     }
 

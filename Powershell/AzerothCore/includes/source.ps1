@@ -177,5 +177,19 @@ function Compile-Source
         Write-Host -ForegroundColor Red "An error has occured"
     }
 
+    MSBuild.exe AzerothCore.sln /t:Clean
+    if (-not $?)
+    {
+        cd $root
+        Write-Host -ForegroundColor Red "An error has occured"
+    }
+
+    MSBuild.exe AzerothCore.sln /p:Configuration=Release
+    if (-not $?)
+    {
+        cd $root
+        Write-Host -ForegroundColor Red "An error has occured"
+    }
+
     cd $root
 }
