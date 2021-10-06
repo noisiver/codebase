@@ -43,8 +43,8 @@ function Source-Menu
 
     switch($s)
     {
-        1 { Clone-Source }
-        2 { Compile-Source }
+        1 { Clone-Source; Source-Menu }
+        2 { Compile-Source; Source-Menu }
         3 { Write-Host "Download the client data files" }
         default { Main-Menu }
     }
