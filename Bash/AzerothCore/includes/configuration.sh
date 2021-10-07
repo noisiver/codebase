@@ -190,10 +190,14 @@ function generate_settings
                     <!-- Enable/Disable changing the spawn point of death knight too -->
                     <death_knight>${79:-false}</death_knight>
                 </spawn_point>
+                <weekend_rate>
+                    <enabled>${80:-false}</enabled>
+                    <multiplier>${81:-false}</multiplier>
+                </weekend_rate>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${80:-false}</enabled>
+                <enabled>${82:-false}</enabled>
             </eluna>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -281,6 +285,8 @@ function export_settings
     $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY \
     $MODULE_ASSISTANT_SPAWN_POINT_ENABLED \
     $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT \
+    $MODULE_ASSISTANT_WEEKEND_RATE_ENABLED \
+    $MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER \
     $MODULE_ELUNA_ENABLED
 }
 
@@ -380,6 +386,8 @@ MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING="$(echo "cat /config/module/a
 MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY="$(echo "cat /config/module/assistant/learn_spells/daze_immunity/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPAWN_POINT_ENABLED="$(echo "cat /config/module/assistant/spawn_point/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT="$(echo "cat /config/module/assistant/spawn_point/death_knight/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_WEEKEND_RATE_ENABLED="$(echo "cat /config/module/assistant/weekend_rate/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER="$(echo "cat /config/module/assistant/weekend_rate/multiplier/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
@@ -388,7 +396,7 @@ if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]]; then
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MYSQL_PORT ]] || [[ $MYSQL_PORT == "" ]] || [[ ! $MYSQL_PORT =~ ^[0-9]+$ ]]; then
+if [[ ! $MYSQL_PORT =~ ^[0-9]+$ ]]; then
     MYSQL_PORT="3306"
     REQUIRE_EXPORT=true
 fi
@@ -409,12 +417,12 @@ if [[ -z $MYSQL_DATABASE_AUTH ]] || [[ $MYSQL_DATABASE_AUTH == "" ]]; then
 fi
 
 if [[ -z $MYSQL_DATABASE_CHARACTERS ]] || [[ $MYSQL_DATABASE_CHARACTERS == "" ]]; then
-    MYSQL_DATABASE_CHARACTERS="acore_auth"
+    MYSQL_DATABASE_CHARACTERS="acore_characters"
     REQUIRE_EXPORT=true
 fi
 
 if [[ -z $MYSQL_DATABASE_WORLD ]] || [[ $MYSQL_DATABASE_WORLD == "" ]]; then
-    MYSQL_DATABASE_WORLD="acore_auth"
+    MYSQL_DATABASE_WORLD="acore_world"
     REQUIRE_EXPORT=true
 fi
 
@@ -423,12 +431,12 @@ if [[ -z $CORE_DIRECTORY ]] || [[ $CORE_DIRECTORY == "" ]]; then
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $CORE_REQUIRED_CLIENT_DATA ]] || [[ $CORE_REQUIRED_CLIENT_DATA == "" ]]; then
+if [[ ! $CORE_REQUIRED_CLIENT_DATA =~ ^[0-9]+$ ]]; then
     CORE_REQUIRED_CLIENT_DATA="12"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $CORE_INSTALLED_CLIENT_DATA ]] || [[ $CORE_INSTALLED_CLIENT_DATA == "" ]] || [[ $CORE_INSTALLED_CLIENT_DATA -gt $CORE_REQUIRED_CLIENT_DATA ]]; then
+if [[ ! $CORE_INSTALLED_CLIENT_DATA =~ ^[0-9]+$ ]] || [[ $CORE_INSTALLED_CLIENT_DATA -gt $CORE_REQUIRED_CLIENT_DATA ]]; then
     CORE_INSTALLED_CLIENT_DATA="0"
     REQUIRE_EXPORT=true
 fi
@@ -443,7 +451,7 @@ if [[ -z $WORLD_MOTD ]] || [[ $WORLD_MOTD == "" ]]; then
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ID ]] || [[ $WORLD_ID == "" ]] || [[ ! $WORLD_ID =~ ^[0-9]+$ ]]; then
+if [[ ! $WORLD_ID =~ ^[0-9]+$ ]] || [[ $WORLD_ID < 1 ]]; then
     WORLD_ID="1"
     REQUIRE_EXPORT=true
 fi
@@ -453,332 +461,342 @@ if [[ -z $WORLD_ADDRESS ]] || [[ $WORLD_ADDRESS == "" ]]; then
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GAME_TYPE ]] || [[ $WORLD_GAME_TYPE == "" ]] || [[ ! $WORLD_GAME_TYPE =~ ^[0-9]+$ ]] || [[ $WORLD_GAME_TYPE != 0 && $WORLD_GAME_TYPE != 1 && $WORLD_GAME_TYPE != 6 && $WORLD_GAME_TYPE != 8 ]]; then
+if [[ ! $WORLD_GAME_TYPE =~ ^[0-9]+$ ]] || [[ $WORLD_GAME_TYPE != 0 && $WORLD_GAME_TYPE != 1 && $WORLD_GAME_TYPE != 6 && $WORLD_GAME_TYPE != 8 ]]; then
     WORLD_GAME_TYPE="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_REALM_ZONE ]] || [[ $WORLD_REALM_ZONE == "" ]] || [[ ! $WORLD_REALM_ZONE =~ ^[0-9]+$ ]] || [[ $WORLD_REALM_ZONE != 1 && $WORLD_REALM_ZONE != 2 && $WORLD_REALM_ZONE != 6 && $WORLD_REALM_ZONE != 9 && $WORLD_REALM_ZONE != 10 && $WORLD_REALM_ZONE != 11 && $WORLD_REALM_ZONE != 12 && $WORLD_REALM_ZONE != 14 && $WORLD_REALM_ZONE != 16 && $WORLD_REALM_ZONE != 26 ]]; then
+if [[ ! $WORLD_REALM_ZONE =~ ^[0-9]+$ ]] || [[ $WORLD_REALM_ZONE != 1 && $WORLD_REALM_ZONE != 2 && $WORLD_REALM_ZONE != 6 && $WORLD_REALM_ZONE != 9 && $WORLD_REALM_ZONE != 10 && $WORLD_REALM_ZONE != 11 && $WORLD_REALM_ZONE != 12 && $WORLD_REALM_ZONE != 14 && $WORLD_REALM_ZONE != 16 && $WORLD_REALM_ZONE != 26 ]]; then
     WORLD_REALM_ZONE="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_EXPANSION ]] || [[ $WORLD_EXPANSION == "" ]] || [[ ! $WORLD_EXPANSION =~ ^[0-9]+$ ]] || [[ $WORLD_EXPANSION != 0 && $WORLD_EXPANSION != 1 && $WORLD_EXPANSION != 2 ]]; then
+if [[ ! $WORLD_EXPANSION =~ ^[0-9]+$ ]] || [[ $WORLD_EXPANSION != 0 && $WORLD_EXPANSION != 1 && $WORLD_EXPANSION != 2 ]]; then
     WORLD_EXPANSION="2"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_PLAYER_LIMIT ]] || [[ $WORLD_PLAYER_LIMIT == "" ]] || [[ ! $WORLD_PLAYER_LIMIT =~ ^[0-9]+$ ]]; then
+if [[ ! $WORLD_PLAYER_LIMIT =~ ^[0-9]+$ ]]; then
     WORLD_PLAYER_LIMIT="1000"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_SKIP_CINEMATICS ]] || [[ $WORLD_SKIP_CINEMATICS == "" ]] || [[ ! $WORLD_SKIP_CINEMATICS =~ ^[0-9]+$ ]] || [[ $WORLD_SKIP_CINEMATICS != 0 && $WORLD_SKIP_CINEMATICS != 1 && $WORLD_SKIP_CINEMATICS != 2 ]]; then
+if [[ ! $WORLD_SKIP_CINEMATICS =~ ^[0-9]+$ ]] || [[ $WORLD_SKIP_CINEMATICS != 0 && $WORLD_SKIP_CINEMATICS != 1 && $WORLD_SKIP_CINEMATICS != 2 ]]; then
     WORLD_SKIP_CINEMATICS="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_MAX_LEVEL ]] || [[ $WORLD_MAX_LEVEL == "" ]] || [[ ! $WORLD_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_MAX_LEVEL < 1 || $WORLD_MAX_LEVEL > 80 ]]; then
+if [[ ! $WORLD_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_MAX_LEVEL < 1 || $WORLD_MAX_LEVEL > 80 ]]; then
     WORLD_MAX_LEVEL="80"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_START_LEVEL ]] || [[ $WORLD_START_LEVEL == "" ]] || [[ ! $WORLD_START_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_START_LEVEL < 1 || $WORLD_START_LEVEL > 80 ]]; then
+if [[ ! $WORLD_START_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_START_LEVEL < 1 || $WORLD_START_LEVEL > 80 ]]; then
     WORLD_START_LEVEL="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_START_MONEY ]] || [[ $WORLD_START_MONEY == "" ]] || [[ ! $WORLD_START_MONEY =~ ^[0-9]+$ ]]; then
+if [[ ! $WORLD_START_MONEY =~ ^[0-9]+$ ]]; then
     WORLD_START_MONEY="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ALWAYS_MAX_SKILL ]] || [[ $WORLD_ALWAYS_MAX_SKILL == "" ]] || [[ $WORLD_ALWAYS_MAX_SKILL != "true" && $WORLD_ALWAYS_MAX_SKILL != "false" ]]; then
+if [[ $WORLD_ALWAYS_MAX_SKILL != "true" && $WORLD_ALWAYS_MAX_SKILL != "false" ]]; then
     WORLD_ALWAYS_MAX_SKILL="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ALL_FLIGHT_PATHS ]] || [[ $WORLD_ALL_FLIGHT_PATHS == "" ]] || [[ $WORLD_ALL_FLIGHT_PATHS != "true" && $WORLD_ALL_FLIGHT_PATHS != "false" ]]; then
+if [[ $WORLD_ALL_FLIGHT_PATHS != "true" && $WORLD_ALL_FLIGHT_PATHS != "false" ]]; then
     WORLD_ALL_FLIGHT_PATHS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_MAPS_EXPLORED ]] || [[ $WORLD_MAPS_EXPLORED == "" ]] || [[ $WORLD_MAPS_EXPLORED != "true" && $WORLD_MAPS_EXPLORED != "false" ]]; then
+if [[ $WORLD_MAPS_EXPLORED != "true" && $WORLD_MAPS_EXPLORED != "false" ]]; then
     WORLD_MAPS_EXPLORED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ALLOW_COMMANDS ]] || [[ $WORLD_ALLOW_COMMANDS == "" ]] || [[ $WORLD_ALLOW_COMMANDS != "true" && $WORLD_ALLOW_COMMANDS != "false" ]]; then
+if [[ $WORLD_ALLOW_COMMANDS != "true" && $WORLD_ALLOW_COMMANDS != "false" ]]; then
     WORLD_ALLOW_COMMANDS="true"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_QUEST_IGNORE_RAID ]] || [[ $WORLD_QUEST_IGNORE_RAID == "" ]] || [[ $WORLD_QUEST_IGNORE_RAID != "true" && $WORLD_QUEST_IGNORE_RAID != "false" ]]; then
+if [[ $WORLD_QUEST_IGNORE_RAID != "true" && $WORLD_QUEST_IGNORE_RAID != "false" ]]; then
     WORLD_QUEST_IGNORE_RAID="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_PREVENT_AFK_LOGOUT ]] || [[ $WORLD_PREVENT_AFK_LOGOUT == "" ]] || [[ $WORLD_PREVENT_AFK_LOGOUT != "true" && $WORLD_PREVENT_AFK_LOGOUT != "false" ]]; then
+if [[ $WORLD_PREVENT_AFK_LOGOUT != "true" && $WORLD_PREVENT_AFK_LOGOUT != "false" ]]; then
     WORLD_PREVENT_AFK_LOGOUT="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RAF_MAX_LEVEL ]] || [[ $WORLD_RAF_MAX_LEVEL == "" ]] || [[ ! $WORLD_RAF_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_RAF_MAX_LEVEL < 1 || $WORLD_RAF_MAX_LEVEL > 80 ]]; then
+if [[ ! $WORLD_RAF_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $WORLD_RAF_MAX_LEVEL < 1 || $WORLD_RAF_MAX_LEVEL > 80 ]]; then
     WORLD_RAF_MAX_LEVEL="60"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_PRELOAD_MAP_GRIDS ]] || [[ $WORLD_PRELOAD_MAP_GRIDS == "" ]] || [[ $WORLD_PRELOAD_MAP_GRIDS != "true" && $WORLD_PRELOAD_MAP_GRIDS != "false" ]]; then
+if [[ $WORLD_PRELOAD_MAP_GRIDS != "true" && $WORLD_PRELOAD_MAP_GRIDS != "false" ]]; then
     WORLD_PRELOAD_MAP_GRIDS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_SET_WAYPOINTS_ACTIVE ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE == "" ]] || [[ $WORLD_SET_WAYPOINTS_ACTIVE != "true" && $WORLD_SET_WAYPOINTS_ACTIVE != "false" ]]; then
+if [[ $WORLD_SET_WAYPOINTS_ACTIVE != "true" && $WORLD_SET_WAYPOINTS_ACTIVE != "false" ]]; then
     WORLD_SET_WAYPOINTS_ACTIVE="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_ENABLE_MINIGOB_MANABONK ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK == "" ]] || [[ $WORLD_ENABLE_MINIGOB_MANABONK != "true" && $WORLD_ENABLE_MINIGOB_MANABONK != "false" ]]; then
+if [[ $WORLD_ENABLE_MINIGOB_MANABONK != "true" && $WORLD_ENABLE_MINIGOB_MANABONK != "false" ]]; then
     WORLD_ENABLE_MINIGOB_MANABONK="true"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RATE_EXPERIENCE ]] || [[ $WORLD_RATE_EXPERIENCE == "" ]] || [[ ! $WORLD_RATE_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_EXPERIENCE < 1 ]]; then
+if [[ ! $WORLD_RATE_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_EXPERIENCE < 1 ]]; then
     WORLD_RATE_EXPERIENCE="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RATE_RESTED_EXP ]] || [[ $WORLD_RATE_RESTED_EXP == "" ]] || [[ ! $WORLD_RATE_RESTED_EXP =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_RESTED_EXP < 1 ]]; then
+if [[ ! $WORLD_RATE_RESTED_EXP =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_RESTED_EXP < 1 ]]; then
     WORLD_RATE_RESTED_EXP="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RATE_REPUTATION ]] || [[ $WORLD_RATE_REPUTATION == "" ]] || [[ ! $WORLD_RATE_REPUTATION =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_REPUTATION < 1 ]]; then
+if [[ ! $WORLD_RATE_REPUTATION =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_REPUTATION < 1 ]]; then
     WORLD_RATE_REPUTATION="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RATE_MONEY ]] || [[ $WORLD_RATE_MONEY == "" ]] || [[ ! $WORLD_RATE_MONEY =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_MONEY < 1 ]]; then
+if [[ ! $WORLD_RATE_MONEY =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_MONEY < 1 ]]; then
     WORLD_RATE_MONEY="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RATE_CRAFTING ]] || [[ $WORLD_RATE_CRAFTING == "" ]] || [[ ! $WORLD_RATE_CRAFTING =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_CRAFTING < 1 ]]; then
+if [[ ! $WORLD_RATE_CRAFTING =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_CRAFTING < 1 ]]; then
     WORLD_RATE_CRAFTING="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RATE_GATHERING ]] || [[ $WORLD_RATE_GATHERING == "" ]] || [[ ! $WORLD_RATE_GATHERING =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_GATHERING < 1 ]]; then
+if [[ ! $WORLD_RATE_GATHERING =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_GATHERING < 1 ]]; then
     WORLD_RATE_GATHERING="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RATE_WEAPON_SKILL ]] || [[ $WORLD_RATE_WEAPON_SKILL == "" ]] || [[ ! $WORLD_RATE_WEAPON_SKILL =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_WEAPON_SKILL < 1 ]]; then
+if [[ ! $WORLD_RATE_WEAPON_SKILL =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_WEAPON_SKILL < 1 ]]; then
     WORLD_RATE_WEAPON_SKILL="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_RATE_DEFENSE_SKILL ]] || [[ $WORLD_RATE_DEFENSE_SKILL == "" ]] || [[ ! $WORLD_RATE_DEFENSE_SKILL =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_DEFENSE_SKILL < 1 ]]; then
+if [[ ! $WORLD_RATE_DEFENSE_SKILL =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_DEFENSE_SKILL < 1 ]]; then
     WORLD_RATE_DEFENSE_SKILL="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_LOGIN_STATE ]] || [[ $WORLD_GM_LOGIN_STATE == "" ]] || [[ $WORLD_GM_LOGIN_STATE != "true" && $WORLD_GM_LOGIN_STATE != "false" ]]; then
+if [[ $WORLD_GM_LOGIN_STATE != "true" && $WORLD_GM_LOGIN_STATE != "false" ]]; then
     WORLD_GM_LOGIN_STATE="true"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_ENABLE_VISIBILITY ]] || [[ $WORLD_GM_ENABLE_VISIBILITY == "" ]] || [[ $WORLD_GM_ENABLE_VISIBILITY != "true" && $WORLD_GM_ENABLE_VISIBILITY != "false" ]]; then
+if [[ $WORLD_GM_ENABLE_VISIBILITY != "true" && $WORLD_GM_ENABLE_VISIBILITY != "false" ]]; then
     WORLD_GM_ENABLE_VISIBILITY="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_ENABLE_CHAT ]] || [[ $WORLD_GM_ENABLE_CHAT == "" ]] || [[ $WORLD_GM_ENABLE_CHAT != "true" && $WORLD_GM_ENABLE_CHAT != "false" ]]; then
+if [[ $WORLD_GM_ENABLE_CHAT != "true" && $WORLD_GM_ENABLE_CHAT != "false" ]]; then
     WORLD_GM_ENABLE_CHAT="true"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_ENABLE_WHISPER ]] || [[ $WORLD_GM_ENABLE_WHISPER == "" ]] || [[ $WORLD_GM_ENABLE_WHISPER != "true" && $WORLD_GM_ENABLE_WHISPER != "false" ]]; then
+if [[ $WORLD_GM_ENABLE_WHISPER != "true" && $WORLD_GM_ENABLE_WHISPER != "false" ]]; then
     WORLD_GM_ENABLE_WHISPER="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_SHOW_GM_LIST ]] || [[ $WORLD_GM_SHOW_GM_LIST == "" ]] || [[ ! $WORLD_GM_SHOW_GM_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_SHOW_GM_LIST != 0 && $WORLD_GM_SHOW_GM_LIST != 1 && $WORLD_GM_SHOW_GM_LIST != 2 && $WORLD_GM_SHOW_GM_LIST != 3 ]]; then
+if [[ ! $WORLD_GM_SHOW_GM_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_SHOW_GM_LIST != 0 && $WORLD_GM_SHOW_GM_LIST != 1 && $WORLD_GM_SHOW_GM_LIST != 2 && $WORLD_GM_SHOW_GM_LIST != 3 ]]; then
     WORLD_GM_SHOW_GM_LIST="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_SHOW_WHO_LIST ]] || [[ $WORLD_GM_SHOW_WHO_LIST == "" ]] || [[ ! $WORLD_GM_SHOW_WHO_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_SHOW_WHO_LIST != 0 && $WORLD_GM_SHOW_WHO_LIST != 1 && $WORLD_GM_SHOW_WHO_LIST != 2 && $WORLD_GM_SHOW_WHO_LIST != 3 ]]; then
+if [[ ! $WORLD_GM_SHOW_WHO_LIST =~ ^[0-9]+$ ]] || [[ $WORLD_GM_SHOW_WHO_LIST != 0 && $WORLD_GM_SHOW_WHO_LIST != 1 && $WORLD_GM_SHOW_WHO_LIST != 2 && $WORLD_GM_SHOW_WHO_LIST != 3 ]]; then
     WORLD_GM_SHOW_WHO_LIST="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_ALLOW_FRIEND ]] || [[ $WORLD_GM_ALLOW_FRIEND == "" ]] || [[ $WORLD_GM_ALLOW_FRIEND != "true" && $WORLD_GM_ALLOW_FRIEND != "false" ]]; then
+if [[ $WORLD_GM_ALLOW_FRIEND != "true" && $WORLD_GM_ALLOW_FRIEND != "false" ]]; then
     WORLD_GM_ALLOW_FRIEND="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_ALLOW_INVITE ]] || [[ $WORLD_GM_ALLOW_INVITE == "" ]] || [[ $WORLD_GM_ALLOW_INVITE != "true" && $WORLD_GM_ALLOW_INVITE != "false" ]]; then
+if [[ $WORLD_GM_ALLOW_INVITE != "true" && $WORLD_GM_ALLOW_INVITE != "false" ]]; then
     WORLD_GM_ALLOW_INVITE="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $WORLD_GM_ALLOW_LOWER_SECURITY ]] || [[ $WORLD_GM_ALLOW_LOWER_SECURITY == "" ]] || [[ $WORLD_GM_ALLOW_LOWER_SECURITY != "true" && $WORLD_GM_ALLOW_LOWER_SECURITY != "false" ]]; then
+if [[ $WORLD_GM_ALLOW_LOWER_SECURITY != "true" && $WORLD_GM_ALLOW_LOWER_SECURITY != "false" ]]; then
     WORLD_GM_ALLOW_LOWER_SECURITY="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_AHBOT_ENABLED ]] || [[ $MODULE_AHBOT_ENABLED == "" ]] || [[ $MODULE_AHBOT_ENABLED != "true" && $MODULE_AHBOT_ENABLED != "false" ]]; then
+if [[ $MODULE_AHBOT_ENABLED != "true" && $MODULE_AHBOT_ENABLED != "false" ]]; then
     MODULE_AHBOT_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_AHBOT_ENABLE_BUYER ]] || [[ $MODULE_AHBOT_ENABLE_BUYER == "" ]] || [[ $MODULE_AHBOT_ENABLE_BUYER != "true" && $MODULE_AHBOT_ENABLE_BUYER != "false" ]]; then
+if [[ $MODULE_AHBOT_ENABLE_BUYER != "true" && $MODULE_AHBOT_ENABLE_BUYER != "false" ]]; then
     MODULE_AHBOT_ENABLE_BUYER="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_AHBOT_ENABLE_SELLER ]] || [[ $MODULE_AHBOT_ENABLE_SELLER == "" ]] || [[ $MODULE_AHBOT_ENABLE_SELLER != "true" && $MODULE_AHBOT_ENABLE_SELLER != "false" ]]; then
+if [[ $MODULE_AHBOT_ENABLE_SELLER != "true" && $MODULE_AHBOT_ENABLE_SELLER != "false" ]]; then
     MODULE_AHBOT_ENABLE_SELLER="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_AHBOT_ACCOUNT_ID ]] || [[ $MODULE_AHBOT_ACCOUNT_ID == "" ]] || [[ ! $MODULE_AHBOT_ACCOUNT_ID =~ ^[0-9]+$ ]]; then
+if [[ ! $MODULE_AHBOT_ACCOUNT_ID =~ ^[0-9]+$ ]]; then
     MODULE_AHBOT_ACCOUNT_ID="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_AHBOT_CHARACTER_GUID ]] || [[ $MODULE_AHBOT_CHARACTER_GUID == "" ]] || [[ ! $MODULE_AHBOT_CHARACTER_GUID =~ ^[0-9]+$ ]]; then
+if [[ ! $MODULE_AHBOT_CHARACTER_GUID =~ ^[0-9]+$ ]]; then
     MODULE_AHBOT_CHARACTER_GUID="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_AHBOT_MIN_ITEMS ]] || [[ $MODULE_AHBOT_MIN_ITEMS == "" ]] || [[ ! $MODULE_AHBOT_MIN_ITEMS =~ ^[0-9]+$ ]]; then
+if [[ ! $MODULE_AHBOT_MIN_ITEMS =~ ^[0-9]+$ ]]; then
     MODULE_AHBOT_MIN_ITEMS="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_AHBOT_MAX_ITEMS ]] || [[ $MODULE_AHBOT_MAX_ITEMS == "" ]] || [[ ! $MODULE_AHBOT_MAX_ITEMS =~ ^[0-9]+$ ]]; then
+if [[ ! $MODULE_AHBOT_MAX_ITEMS =~ ^[0-9]+$ ]]; then
     MODULE_AHBOT_MAX_ITEMS="0"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_ENABLED ]] || [[ $MODULE_ASSISTANT_ENABLED != "true" && $MODULE_ASSISTANT_ENABLED != "false" ]]; then
+if [[ $MODULE_ASSISTANT_ENABLED != "true" && $MODULE_ASSISTANT_ENABLED != "false" ]]; then
     MODULE_ASSISTANT_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS ]] || [[ $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS != "true" && $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS != "false" ]]; then
+if [[ $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS != "true" && $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS != "false" ]]; then
     MODULE_ASSISTANT_GOSSIP_HEIRLOOMS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_GOSSIP_GLYPHS ]] || [[ $MODULE_ASSISTANT_GOSSIP_GLYPHS != "true" && $MODULE_ASSISTANT_GOSSIP_GLYPHS != "false" ]]; then
+if [[ $MODULE_ASSISTANT_GOSSIP_GLYPHS != "true" && $MODULE_ASSISTANT_GOSSIP_GLYPHS != "false" ]]; then
     MODULE_ASSISTANT_GOSSIP_GLYPHS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_GOSSIP_GEMS ]] || [[ $MODULE_ASSISTANT_GOSSIP_GEMS != "true" && $MODULE_ASSISTANT_GOSSIP_GEMS != "false" ]]; then
+if [[ $MODULE_ASSISTANT_GOSSIP_GEMS != "true" && $MODULE_ASSISTANT_GOSSIP_GEMS != "false" ]]; then
     MODULE_ASSISTANT_GOSSIP_GEMS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_GOSSIP_CONTAINERS ]] || [[ $MODULE_ASSISTANT_GOSSIP_CONTAINERS != "true" && $MODULE_ASSISTANT_GOSSIP_CONTAINERS != "false" ]]; then
+if [[ $MODULE_ASSISTANT_GOSSIP_CONTAINERS != "true" && $MODULE_ASSISTANT_GOSSIP_CONTAINERS != "false" ]]; then
     MODULE_ASSISTANT_GOSSIP_CONTAINERS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_GOSSIP_UTILITIES ]] || [[ $MODULE_ASSISTANT_GOSSIP_UTILITIES != "true" && $MODULE_ASSISTANT_GOSSIP_UTILITIES != "false" ]]; then
+if [[ $MODULE_ASSISTANT_GOSSIP_UTILITIES != "true" && $MODULE_ASSISTANT_GOSSIP_UTILITIES != "false" ]]; then
     MODULE_ASSISTANT_GOSSIP_UTILITIES="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_ENABLED ]] || [[ $MODULE_ASSISTANT_SPELLS_ENABLED != "true" && $MODULE_ASSISTANT_SPELLS_ENABLED != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_ENABLED != "true" && $MODULE_ASSISTANT_SPELLS_ENABLED != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_ON_LOGIN ]] || [[ $MODULE_ASSISTANT_SPELLS_ON_LOGIN != "true" && $MODULE_ASSISTANT_SPELLS_ON_LOGIN != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_ON_LOGIN != "true" && $MODULE_ASSISTANT_SPELLS_ON_LOGIN != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_ON_LOGIN="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_ON_LEVEL_UP ]] || [[ $MODULE_ASSISTANT_SPELLS_ON_LEVEL_UP != "true" && $MODULE_ASSISTANT_SPELLS_ON_LEVEL_UP != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_ON_LEVEL_UP != "true" && $MODULE_ASSISTANT_SPELLS_ON_LEVEL_UP != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_ON_LEVEL_UP="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_CLASS ]] || [[ $MODULE_ASSISTANT_SPELLS_CLASS != "true" && $MODULE_ASSISTANT_SPELLS_CLASS != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_CLASS != "true" && $MODULE_ASSISTANT_SPELLS_CLASS != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_CLASS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_TALENTS ]] || [[ $MODULE_ASSISTANT_SPELLS_TALENTS != "true" && $MODULE_ASSISTANT_SPELLS_TALENTS != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_TALENTS != "true" && $MODULE_ASSISTANT_SPELLS_TALENTS != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_TALENTS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_PROFICIENCIES ]] || [[ $MODULE_ASSISTANT_SPELLS_PROFICIENCIES != "true" && $MODULE_ASSISTANT_SPELLS_PROFICIENCIES != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_PROFICIENCIES != "true" && $MODULE_ASSISTANT_SPELLS_PROFICIENCIES != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_PROFICIENCIES="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_MAX_SKILL ]] || [[ $MODULE_ASSISTANT_SPELLS_MAX_SKILL != "true" && $MODULE_ASSISTANT_SPELLS_MAX_SKILL != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_MAX_SKILL != "true" && $MODULE_ASSISTANT_SPELLS_MAX_SKILL != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_MAX_SKILL="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL ]] || [[ $MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL == "" ]] || [[ ! $MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL < 1 || $MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL > 80 ]]; then
+if [[ ! $MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL < 1 || $MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL > 80 ]]; then
     MODULE_ASSISTANT_SPELLS_MAX_SKILL_LEVEL="1"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED ]] || [[ $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_RIDING_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE ]] || [[ $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN ]] || [[ $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT ]] || [[ $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_RIDING_EXPERT="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN ]] || [[ $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING ]] || [[ $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY ]] || [[ $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY != "true" && $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY != "true" && $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY != "false" ]]; then
     MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPAWN_POINT_ENABLED ]] || [[ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED != "true" && $MODULE_ASSISTANT_SPAWN_POINT_ENABLED != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED != "true" && $MODULE_ASSISTANT_SPAWN_POINT_ENABLED != "false" ]]; then
     MODULE_ASSISTANT_SPAWN_POINT_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT ]] || [[ $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT != "true" && $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT != "false" ]]; then
+if [[ $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT != "true" && $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT != "false" ]]; then
     MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ -z $MODULE_ELUNA_ENABLED ]] || [[ $MODULE_ELUNA_ENABLED == "" ]] || [[ $MODULE_ELUNA_ENABLED != "true" && $MODULE_ELUNA_ENABLED != "false" ]]; then
+if [[ $MODULE_ASSISTANT_WEEKEND_RATE_ENABLED != "true" && $MODULE_ASSISTANT_WEEKEND_RATE_ENABLED != "false" ]]; then
+    MODULE_ASSISTANT_WEEKEND_RATE_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER < 1 ]]; then
+    MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER=1
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_ELUNA_ENABLED != "true" && $MODULE_ELUNA_ENABLED != "false" ]]; then
     MODULE_ELUNA_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
@@ -966,6 +984,7 @@ function update_configuration
                 [ $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY == "true" ] && ASSISTANT_SPELLS_DAZE_IMMUNITY=1 || ASSISTANT_SPELLS_DAZE_IMMUNITY=0
                 [ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED == "true" ] && ASSISTANT_SPAWN_POINT_ENABLED=1 || ASSISTANT_SPAWN_POINT_ENABLED=0
                 [ $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT == "true" ] && ASSISTANT_SPAWN_POINT_DEATH_KNIGHT=1 || ASSISTANT_SPAWN_POINT_DEATH_KNIGHT=0
+                [ $MODULE_ASSISTANT_WEEKEND_RATE_ENABLED == "true" ] && ASSISTANT_WEEKEND_RATE_ENABLED=1 || ASSISTANT_WEEKEND_RATE_ENABLED=0
 
                 sed -i 's/Assistant.Gossip.Heirlooms =.*/Assistant.Gossip.Heirlooms = '$ASSISTANT_GOSSIP_HEIRLOOMS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Gossip.Glyphs =.*/Assistant.Gossip.Glyphs = '$ASSISTANT_GOSSIP_GLYPHS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
@@ -989,6 +1008,8 @@ function update_configuration
                 sed -i 's/Assistant.Spells.Immunity.Daze =.*/Assistant.Spells.Immunity.Daze = '$ASSISTANT_SPELLS_DAZE_IMMUNITY'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.SpawnPoint.Enabled =.*/Assistant.SpawnPoint.Enabled = '$ASSISTANT_SPAWN_POINT_ENABLED'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.SpawnPoint.DeathKnight =.*/Assistant.SpawnPoint.DeathKnight = '$ASSISTANT_SPAWN_POINT_DEATH_KNIGHT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Rate.Weekend.Enabled =.*/Assistant.Rate.Weekend.Enabled = '$ASSISTANT_WEEKEND_RATE_ENABLED'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Rate.Weekend.Multiplier =.*/Assistant.Rate.Weekend.Multiplier = '$MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
             fi
         else
             if [ -f $CORE_DIRECTORY/etc/modules/mod_assistant.conf ]; then
