@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("color" "distribution" "packages" "configuration" "quote" "menu" "source" "database" "module" "process")
+INCLUDES=("color" "distribution" "packages" "configuration" "quote" "source" "database" "module" "process")
 
 clear
 
@@ -12,6 +12,14 @@ for i in "${INCLUDES[@]}"; do
     fi
 done
 
+function invalid_arguments
+{
+    clear
+    printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
+    printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
+    exit 1
+}
+
 if [ $# -gt 0 ]; then
     if [ $# -eq 1 ]; then
         if [ $1 == "start" ]; then
@@ -21,8 +29,7 @@ if [ $# -gt 0 ]; then
         elif [ $1 == "client" ]; then
             update_client_data
         else
-            printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
-            printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
+            invalid_arguments
         fi
 
         print_quote
@@ -54,19 +61,16 @@ if [ $# -gt 0 ]; then
             elif [[ $2 == "modules" ]]; then
                 transfer_lua_scripts
             else
-                printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
-                printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
+                invalid_arguments
             fi
 
             print_quote
         else
-            printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
-            printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
+            invalid_arguments
         fi
     else
-        printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
-        printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
+        invalid_arguments
     fi
 else
-    show_menu
+    invalid_arguments
 fi
