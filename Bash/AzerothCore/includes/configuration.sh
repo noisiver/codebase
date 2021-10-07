@@ -190,14 +190,11 @@ function generate_settings
                     <!-- Enable/Disable changing the spawn point of death knight too -->
                     <death_knight>${79:-false}</death_knight>
                 </spawn_point>
-                <weekend_rate>
-                    <enabled>${80:-false}</enabled>
-                    <multiplier>${81:-false}</multiplier>
-                </weekend_rate>
+                <weekend_rate>${80:-false}</weekend_rate>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${82:-false}</enabled>
+                <enabled>${81:-false}</enabled>
             </eluna>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -285,8 +282,7 @@ function export_settings
     $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY \
     $MODULE_ASSISTANT_SPAWN_POINT_ENABLED \
     $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT \
-    $MODULE_ASSISTANT_WEEKEND_RATE_ENABLED \
-    $MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER \
+    $MODULE_ASSISTANT_WEEKEND_RATE \
     $MODULE_ELUNA_ENABLED
 }
 
@@ -386,8 +382,7 @@ MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING="$(echo "cat /config/module/a
 MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY="$(echo "cat /config/module/assistant/learn_spells/daze_immunity/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPAWN_POINT_ENABLED="$(echo "cat /config/module/assistant/spawn_point/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT="$(echo "cat /config/module/assistant/spawn_point/death_knight/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_WEEKEND_RATE_ENABLED="$(echo "cat /config/module/assistant/weekend_rate/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER="$(echo "cat /config/module/assistant/weekend_rate/multiplier/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_WEEKEND_RATE="$(echo "cat /config/module/assistant/weekend_rate/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
@@ -786,13 +781,8 @@ if [[ $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT != "true" && $MODULE_ASSISTANT_
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_ASSISTANT_WEEKEND_RATE_ENABLED != "true" && $MODULE_ASSISTANT_WEEKEND_RATE_ENABLED != "false" ]]; then
+if [[ $MODULE_ASSISTANT_WEEKEND_RATE != "true" && $MODULE_ASSISTANT_WEEKEND_RATE != "false" ]]; then
     MODULE_ASSISTANT_WEEKEND_RATE_ENABLED="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ ! $MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER < 1 ]]; then
-    MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER=1
     REQUIRE_EXPORT=true
 fi
 
@@ -984,7 +974,7 @@ function update_configuration
                 [ $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY == "true" ] && ASSISTANT_SPELLS_DAZE_IMMUNITY=1 || ASSISTANT_SPELLS_DAZE_IMMUNITY=0
                 [ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED == "true" ] && ASSISTANT_SPAWN_POINT_ENABLED=1 || ASSISTANT_SPAWN_POINT_ENABLED=0
                 [ $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT == "true" ] && ASSISTANT_SPAWN_POINT_DEATH_KNIGHT=1 || ASSISTANT_SPAWN_POINT_DEATH_KNIGHT=0
-                [ $MODULE_ASSISTANT_WEEKEND_RATE_ENABLED == "true" ] && ASSISTANT_WEEKEND_RATE_ENABLED=1 || ASSISTANT_WEEKEND_RATE_ENABLED=0
+                [ $MODULE_ASSISTANT_WEEKEND_RATE == "true" ] && ASSISTANT_WEEKEND_RATE=1 || ASSISTANT_WEEKEND_RATE=0
 
                 sed -i 's/Assistant.Gossip.Heirlooms =.*/Assistant.Gossip.Heirlooms = '$ASSISTANT_GOSSIP_HEIRLOOMS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Gossip.Glyphs =.*/Assistant.Gossip.Glyphs = '$ASSISTANT_GOSSIP_GLYPHS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
@@ -1008,8 +998,7 @@ function update_configuration
                 sed -i 's/Assistant.Spells.Immunity.Daze =.*/Assistant.Spells.Immunity.Daze = '$ASSISTANT_SPELLS_DAZE_IMMUNITY'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.SpawnPoint.Enabled =.*/Assistant.SpawnPoint.Enabled = '$ASSISTANT_SPAWN_POINT_ENABLED'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.SpawnPoint.DeathKnight =.*/Assistant.SpawnPoint.DeathKnight = '$ASSISTANT_SPAWN_POINT_DEATH_KNIGHT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Rate.Weekend.Enabled =.*/Assistant.Rate.Weekend.Enabled = '$ASSISTANT_WEEKEND_RATE_ENABLED'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Rate.Weekend.Multiplier =.*/Assistant.Rate.Weekend.Multiplier = '$MODULE_ASSISTANT_WEEKEND_RATE_MULTIPLIER'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Rate.Weekend.Enabled =.*/Assistant.Rate.Weekend.Enabled = '$ASSISTANT_WEEKEND_RATE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
             fi
         else
             if [ -f $CORE_DIRECTORY/etc/modules/mod_assistant.conf ]; then
