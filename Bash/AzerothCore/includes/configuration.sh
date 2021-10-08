@@ -181,20 +181,18 @@ function generate_settings
                         <!-- Enable/Disable learning cold weather flying -->
                         <cold_weather_flying>${76:-false}</cold_weather_flying>
                     </riding>
-                    <!-- Enable/Disable adding an immunity to daze to players when logging in -->
-                    <daze_immunity>${77:-false}</daze_immunity>
                 </learn_spells>
                 <spawn_point>
                     <!-- Enable/Disable changing the spawn point of new characters to Stormwind/Orgrimmar -->
-                    <enabled>${78:-false}</enabled>
+                    <enabled>${77:-false}</enabled>
                     <!-- Enable/Disable changing the spawn point of death knight too -->
-                    <death_knight>${79:-false}</death_knight>
+                    <death_knight>${78:-false}</death_knight>
                 </spawn_point>
-                <weekend_rate>${80:-false}</weekend_rate>
+                <weekend_rate>${79:-false}</weekend_rate>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${81:-false}</enabled>
+                <enabled>${80:-false}</enabled>
             </eluna>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -279,7 +277,6 @@ function export_settings
     $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT \
     $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN \
     $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING \
-    $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY \
     $MODULE_ASSISTANT_SPAWN_POINT_ENABLED \
     $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT \
     $MODULE_ASSISTANT_WEEKEND_RATE \
@@ -379,7 +376,6 @@ MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN="$(echo "cat /config/module/assistant/
 MODULE_ASSISTANT_SPELLS_RIDING_EXPERT="$(echo "cat /config/module/assistant/learn_spells/riding/expert/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN="$(echo "cat /config/module/assistant/learn_spells/riding/artisan/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING="$(echo "cat /config/module/assistant/learn_spells/riding/cold_weather_flying/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY="$(echo "cat /config/module/assistant/learn_spells/daze_immunity/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPAWN_POINT_ENABLED="$(echo "cat /config/module/assistant/spawn_point/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT="$(echo "cat /config/module/assistant/spawn_point/death_knight/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_WEEKEND_RATE="$(echo "cat /config/module/assistant/weekend_rate/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
@@ -766,11 +762,6 @@ if [[ $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING != "true" && $MODULE_A
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY != "true" && $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY="false"
-    REQUIRE_EXPORT=true
-fi
-
 if [[ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED != "true" && $MODULE_ASSISTANT_SPAWN_POINT_ENABLED != "false" ]]; then
     MODULE_ASSISTANT_SPAWN_POINT_ENABLED="false"
     REQUIRE_EXPORT=true
@@ -971,7 +962,6 @@ function update_configuration
                 [ $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT == "true" ] && ASSISTANT_SPELLS_RIDING_EXPERT=1 || ASSISTANT_SPELLS_RIDING_EXPERT=0
                 [ $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN == "true" ] && ASSISTANT_SPELLS_RIDING_ARTISAN=1 || ASSISTANT_SPELLS_RIDING_ARTISAN=0
                 [ $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING == "true" ] && ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING=1 || ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING=0
-                [ $MODULE_ASSISTANT_SPELLS_DAZE_IMMUNITY == "true" ] && ASSISTANT_SPELLS_DAZE_IMMUNITY=1 || ASSISTANT_SPELLS_DAZE_IMMUNITY=0
                 [ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED == "true" ] && ASSISTANT_SPAWN_POINT_ENABLED=1 || ASSISTANT_SPAWN_POINT_ENABLED=0
                 [ $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT == "true" ] && ASSISTANT_SPAWN_POINT_DEATH_KNIGHT=1 || ASSISTANT_SPAWN_POINT_DEATH_KNIGHT=0
                 [ $MODULE_ASSISTANT_WEEKEND_RATE == "true" ] && ASSISTANT_WEEKEND_RATE=1 || ASSISTANT_WEEKEND_RATE=0
@@ -995,7 +985,6 @@ function update_configuration
                 sed -i 's/Assistant.Spells.Riding.Expert =.*/Assistant.Spells.Riding.Expert = '$ASSISTANT_SPELLS_RIDING_EXPERT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Spells.Riding.Artisan =.*/Assistant.Spells.Riding.Artisan = '$ASSISTANT_SPELLS_RIDING_ARTISAN'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Spells.Riding.ColdWeather =.*/Assistant.Spells.Riding.ColdWeather = '$ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Immunity.Daze =.*/Assistant.Spells.Immunity.Daze = '$ASSISTANT_SPELLS_DAZE_IMMUNITY'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.SpawnPoint.Enabled =.*/Assistant.SpawnPoint.Enabled = '$ASSISTANT_SPAWN_POINT_ENABLED'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.SpawnPoint.DeathKnight =.*/Assistant.SpawnPoint.DeathKnight = '$ASSISTANT_SPAWN_POINT_DEATH_KNIGHT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Rate.Weekend.Enabled =.*/Assistant.Rate.Weekend.Enabled = '$ASSISTANT_WEEKEND_RATE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
