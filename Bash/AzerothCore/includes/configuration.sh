@@ -189,10 +189,20 @@ function generate_settings
                     <death_knight>${78:-false}</death_knight>
                 </spawn_point>
                 <weekend_rate>${79:-false}</weekend_rate>
+                <utilities>
+                    <!-- The cost in gold to perform a name change -->
+                    <name_change>${80:-10}</name_change>
+                    <!-- The cost in gold to perform a appearance change -->
+                    <appearance_change>${81:-50}</appearance_change>
+                    <!-- The cost in gold to perform a race change -->
+                    <race_change>${82:-500}</race_change>
+                    <!-- The cost in gold to perform a faction change -->
+                    <faction_change>${83:-1000}</faction_change>
+                </utilities>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${80:-false}</enabled>
+                <enabled>${84:-false}</enabled>
             </eluna>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -280,6 +290,10 @@ function export_settings
     $MODULE_ASSISTANT_SPAWN_POINT_ENABLED \
     $MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT \
     $MODULE_ASSISTANT_WEEKEND_RATE \
+    $MODULE_ASSISTANT_UTILITIES_NAME_CHANGE \
+    $MODULE_ASSISTANT_UTILITIES_APPEARANCE_CHANGE \
+    $MODULE_ASSISTANT_UTILITIES_RACE_CHANGE \
+    $MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE \
     $MODULE_ELUNA_ENABLED
 }
 
@@ -379,6 +393,10 @@ MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER_FLYING="$(echo "cat /config/module/a
 MODULE_ASSISTANT_SPAWN_POINT_ENABLED="$(echo "cat /config/module/assistant/spawn_point/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPAWN_POINT_DEATH_KNIGHT="$(echo "cat /config/module/assistant/spawn_point/death_knight/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_WEEKEND_RATE="$(echo "cat /config/module/assistant/weekend_rate/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_NAME_CHANGE="$(echo "cat /config/module/assistant/utilities/name_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_APPEARANCE_CHANGE="$(echo "cat /config/module/assistant/utilities/appearance_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_RACE_CHANGE="$(echo "cat /config/module/assistant/utilities/race_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE="$(echo "cat /config/module/assistant/utilities/faction_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
@@ -782,6 +800,26 @@ if [[ $MODULE_ELUNA_ENABLED != "true" && $MODULE_ELUNA_ENABLED != "false" ]]; th
     REQUIRE_EXPORT=true
 fi
 
+if [[ ! $MODULE_ASSISTANT_UTILITIES_NAME_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_UTILITIES_NAME_CHANGE < 1 ]]; then
+    MODULE_ASSISTANT_UTILITIES_NAME_CHANGE="10"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_ASSISTANT_UTILITIES_APPEARANCE_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_UTILITIES_APPEARANCE_CHANGE < 1 ]]; then
+    MODULE_ASSISTANT_UTILITIES_APPEARANCE_CHANGE="50"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_ASSISTANT_UTILITIES_RACE_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_UTILITIES_RACE_CHANGE < 1 ]]; then
+    MODULE_ASSISTANT_UTILITIES_RACE_CHANGE="500"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE < 1 ]]; then
+    MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE="1000"
+    REQUIRE_EXPORT=true
+fi
+
 if [ $REQUIRE_EXPORT ]; then
     printf "${COLOR_ORANGE}Invalid settings have been reset to their default values${COLOR_END}\n"
     export_settings
@@ -988,6 +1026,11 @@ function update_configuration
                 sed -i 's/Assistant.SpawnPoint.Enabled =.*/Assistant.SpawnPoint.Enabled = '$ASSISTANT_SPAWN_POINT_ENABLED'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.SpawnPoint.DeathKnight =.*/Assistant.SpawnPoint.DeathKnight = '$ASSISTANT_SPAWN_POINT_DEATH_KNIGHT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Rate.Weekend.Enabled =.*/Assistant.Rate.Weekend.Enabled = '$ASSISTANT_WEEKEND_RATE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+
+                sed -i 's/Assistant.Gossip.Utilities.NameChange =.*/Assistant.Gossip.Utilities.NameChange = '$MODULE_ASSISTANT_UTILITIES_NAME_CHANGE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Gossip.Utilities.Customization =.*/Assistant.Gossip.Utilities.Customization = '$MODULE_ASSISTANT_UTILITIES_APPEARANCE_CHANGE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Gossip.Utilities.RaceChange =.*/Assistant.Gossip.Utilities.RaceChange = '$MODULE_ASSISTANT_UTILITIES_RACE_CHANGE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Gossip.Utilities.FactionChange =.*/Assistant.Gossip.Utilities.FactionChange = '$MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
             fi
         else
             if [ -f $CORE_DIRECTORY/etc/modules/mod_assistant.conf ]; then
