@@ -14,7 +14,7 @@ end
 
 -- Character gains experience
 function bonusOnGiveXP(event, player, amount, victim)
-    if (isWeekend) then
+    if (isWeekend()) then
         return amount * 2
     end
 end
@@ -23,7 +23,7 @@ RegisterPlayerEvent(EVENT_ON_GIVE_XP, bonusOnGiveXP)
 
 -- Character gains reputation
 function bonusOnReputationChange(event, player, factionId, standing, incremenetal)
-    if (isWeekend) then
+    if (isWeekend()) then
         return standing * 2
     end
 end
@@ -32,7 +32,7 @@ RegisterPlayerEvent(EVENT_ON_REPUTATION_CHANGE, bonusOnReputationChange)
 
 -- Character enters the world
 function bonusOnLogin(event, player)
-    if (isWeekend) then
+    if (isWeekend()) then
         player:SendBroadcastMessage("The weekend bonus is active, doubling the experience and reputation you receive!")
     end
 end
