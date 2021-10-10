@@ -35,8 +35,6 @@ function bonusOnLogin(event, player)
     if (isWeekend) then
         player:SendBroadcastMessage("The weekend bonus is active, doubling the experience and reputation you receive!")
     end
-
-    player:SendBroadcastMessage(os.date("*t").wday)
 end
 
 RegisterPlayerEvent(EVENT_ON_LOGIN, bonusOnLogin)

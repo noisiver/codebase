@@ -367,7 +367,7 @@ function spellsLearnAll(player)
     end
 end
 
--- Character enters the world
+-- Player enters the world
 function spellsOnLogin(event, player)
     spellsLearnAll(player)
 end
