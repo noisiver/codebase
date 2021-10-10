@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("color" "distribution" "packages" "configuration" "quote" "source" "database" "module" "process")
+INCLUDES=("color" "distribution" "packages" "configuration" "quote" "source" "database" "process")
 
 clear
 
@@ -44,7 +44,6 @@ if [ $# -gt 0 ]; then
                 clone_source
                 compile_source $TYPE
                 fetch_client_data
-                transfer_lua_scripts
             elif [ $2 == "database" ] || [ $2 == "db" ]; then
                 import_database $TYPE
             elif [ $2 == "cfg" ] || [ $2 == "conf" ] || [ $2 == "config" ] || [ $2 == "configuration" ]; then
@@ -56,10 +55,7 @@ if [ $# -gt 0 ]; then
                 fetch_client_data
                 import_database $TYPE
                 update_configuration $TYPE
-                transfer_lua_scripts
                 start_process
-            elif [[ $2 == "modules" ]]; then
-                transfer_lua_scripts
             else
                 invalid_arguments
             fi

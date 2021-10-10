@@ -198,19 +198,6 @@ function import_database
     fi
 
     if [[ $1 == 0 || $1 == 2 ]]; then
-        if [ $MODULE_ASSISTANT_ENABLED == "true" ]; then
-            if [[ -d $CORE_DIRECTORY/modules/mod-assistant/sql/world/base ]] && [[ -f $CORE_DIRECTORY/modules/mod-assistant/sql/world/base/mod_assistant.sql ]]; then
-                printf "${COLOR_ORANGE}Importing mod_assistant.sql${COLOR_END}\n"
-                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $CORE_DIRECTORY/modules/mod-assistant/sql/world/base/mod_assistant.sql
-                if [ $? -ne 0 ]; then
-                    rm -rf $MYSQL_CONFIG
-                    exit $?
-                fi
-            fi
-        fi
-    fi
-
-    if [[ $1 == 0 || $1 == 2 ]]; then
         if [[ -d $ROOT/sql/world ]]; then
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
                 if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
