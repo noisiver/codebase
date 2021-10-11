@@ -106,7 +106,7 @@ function assistantOnGossipHello(event, player, object)
     if (ENABLE_ASSISTANT_UTILITIES) then
         player:GossipMenuAddItem(GOSSIP_ICON_TALK, "I want utilities", 1, INT_UTILITIES)
     end
-    if (ENABLE_ASSISTANT_MISCELLANEOUS and ENABLE_MISCELLANOUS_TOTEMS and player:GetClass() == CLASS_SHAMAN) then
+    if (ENABLE_ASSISTANT_MISCELLANEOUS and ENABLE_ASSISTANT_MISCELLANOUS_TOTEMS and player:GetClass() == CLASS_SHAMAN) then
         player:GossipMenuAddItem(GOSSIP_ICON_TALK, "What else can I get?", 1, INT_MISCELLANEOUS)
     end
 
@@ -1609,7 +1609,7 @@ function assistantOnGossipSelect(event, player, object, sender, intid, code)
     elseif (intid == INT_MISCELLANEOUS) then
         player:GossipClearMenu()
 
-        if (ENABLE_MISCELLANOUS_TOTEMS and player:GetClass() == CLASS_SHAMAN) then
+        if (ENABLE_ASSISTANT_MISCELLANOUS_TOTEMS and player:GetClass() == CLASS_SHAMAN) then
             player:GossipMenuAddItem(GOSSIP_ICON_TALK, "I want totems", 1, INT_MISCELLANEOUS+2)
         end
 
