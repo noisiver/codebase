@@ -139,6 +139,12 @@ function generate_settings
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
                 <enabled>${57:-false}</enabled>
             </eluna>
+            <skip_dk_starting_area>
+                <!-- Enable/Disable the user of the Skip DK Starting Area module -->
+                <enabled>${58:-false}</enabled>
+                <!-- The level that death knight starts at -->
+                <starting_level>${59:-58}</starting_level>
+            </skip_dk_starting_area>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
 }
@@ -202,7 +208,9 @@ function export_settings
     $MODULE_AHBOT_CHARACTER_GUID \
     $MODULE_AHBOT_MIN_ITEMS \
     $MODULE_AHBOT_MAX_ITEMS \
-    $MODULE_ELUNA_ENABLED
+    $MODULE_ELUNA_ENABLED \
+    $MODULE_SKIP_DK_STARTING_AREA_ENABLED \
+    $MODULE_SKIP_DK_STARTING_AREA_LEVEL
 }
 
 if [ ! -f $CONFIG_FILE ]; then
@@ -279,6 +287,9 @@ MODULE_AHBOT_MIN_ITEMS="$(echo "cat /config/module/ahbot/min_items/text()" | xml
 MODULE_AHBOT_MAX_ITEMS="$(echo "cat /config/module/ahbot/max_items/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+MODULE_SKIP_DK_STARTING_AREA_ENABLED="$(echo "cat /config/module/skip_dk_starting_area/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_SKIP_DK_STARTING_AREA_LEVEL="$(echo "cat /config/module/skip_dk_starting_area/starting_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]]; then
     MYSQL_HOSTNAME="127.0.0.1"
@@ -565,6 +576,16 @@ if [[ $MODULE_ELUNA_ENABLED != "true" && $MODULE_ELUNA_ENABLED != "false" ]]; th
     REQUIRE_EXPORT=true
 fi
 
+if [[ $MODULE_SKIP_DK_STARTING_AREA_ENABLED != "true" && $MODULE_SKIP_DK_STARTING_AREA_ENABLED != "false" ]]; then
+    MODULE_SKIP_DK_STARTING_AREA_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_SKIP_DK_STARTING_AREA_LEVEL =~ ^[0-9]+$ ]] || [[ $MODULE_SKIP_DK_STARTING_AREA_LEVEL < 1 || $MODULE_SKIP_DK_STARTING_AREA_LEVEL > 80 ]]; then
+    MODULE_SKIP_DK_STARTING_AREA_LEVEL="58"
+    REQUIRE_EXPORT=true
+fi
+
 if [ $REQUIRE_EXPORT ]; then
     printf "${COLOR_ORANGE}Invalid settings have been reset to their default values${COLOR_END}\n"
     export_settings
@@ -716,6 +737,28 @@ function update_configuration
 
             if [ -f $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist ]; then
                 rm -rf $CORE_DIRECTORY/etc/modules/mod_LuaEngine.conf.dist
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ $MODULE_SKIP_DK_STARTING_AREA_ENABLED == "true" ]; then
+            if [ -f $CORE_DIRECTORY/etc/modules/SkipDKModule.conf.dist ]; then
+                printf "${COLOR_ORANGE}Updating mod_ahbot.conf${COLOR_END}\n"
+
+                cp $CORE_DIRECTORY/etc/modules/SkipDKModule.conf.dist $CORE_DIRECTORY/etc/modules/SkipDKModule.conf
+
+                sed -i 's/Skip.Deathknight.Starter.Enable =.*/Skip.Deathknight.Starter.Enable = 1/g' $CORE_DIRECTORY/etc/modules/SkipDKModule.conf
+                sed -i 's/GM.Skip.Deathknight.Starter.Enable =.*/GM.Skip.Deathknight.Starter.Enable = 1/g' $CORE_DIRECTORY/etc/modules/SkipDKModule.conf
+                sed -i 's/Skip.Deathknight.Start.Level =.*/Skip.Deathknight.Start.Level = '$MODULE_SKIP_DK_STARTING_AREA_LEVEL'/g' $CORE_DIRECTORY/etc/modules/SkipDKModule.conf
+            fi
+        else
+            if [ -f $CORE_DIRECTORY/etc/modules/SkipDKModule.conf ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/SkipDKModule.conf
+            fi
+
+            if [ -f $CORE_DIRECTORY/etc/modules/SkipDKModule.conf.dist ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/SkipDKModule.conf.dist
             fi
         fi
     fi

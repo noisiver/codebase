@@ -66,13 +66,13 @@ function clone_source
     fi
 
     if [ $MODULE_ELUNA_ENABLED == "true" ]; then
-        if [ ! -d $CORE_DIRECTORY/modules/eluna ]; then
-            git clone --recursive --branch master https://github.com/azerothcore/mod-eluna-lua-engine.git $CORE_DIRECTORY/modules/eluna
+        if [ ! -d $CORE_DIRECTORY/modules/mod-eluna-lua-engine ]; then
+            git clone --recursive --branch master https://github.com/azerothcore/mod-eluna-lua-engine.git $CORE_DIRECTORY/modules/mod-eluna-lua-engine
             if [ $? -ne 0 ]; then
                 exit $?
             fi
         else
-            cd $CORE_DIRECTORY/modules/eluna
+            cd $CORE_DIRECTORY/modules/mod-eluna-lua-engine
 
             git fetch --all
             if [ $? -ne 0 ]; then
@@ -90,8 +90,42 @@ function clone_source
             fi
         fi
     else
-        if [ -d $CORE_DIRECTORY/modules/eluna ]; then
-            rm -rf $CORE_DIRECTORY/modules/eluna
+        if [ -d $CORE_DIRECTORY/modules/mod-eluna-lua-engine ]; then
+            rm -rf $CORE_DIRECTORY/modules/mod-eluna-lua-engine
+
+            if [ -d $CORE_DIRECTORY/build ]; then
+                rm -rf $CORE_DIRECTORY/build
+            fi
+        fi
+    fi
+
+    if [ $MODULE_SKIP_DK_STARTING_AREA_ENABLED == "true" ]; then
+        if [ ! -d $CORE_DIRECTORY/modules/mod-skip-dk-starting-area ]; then
+            git clone --recursive --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+        else
+            cd $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
+
+            git fetch --all
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            git submodule update
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+        fi
+    else
+        if [ -d $CORE_DIRECTORY/modules/mod-skip-dk-starting-area ]; then
+            rm -rf $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
 
             if [ -d $CORE_DIRECTORY/build ]; then
                 rm -rf $CORE_DIRECTORY/build
