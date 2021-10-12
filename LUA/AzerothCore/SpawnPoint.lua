@@ -1,5 +1,5 @@
 -- Config
-local ENABLE_SPAWN_POINT_DEATH_KNIGHT = false
+local ENABLE_SPAWN_POINT_DEATH_KNIGHT = true
 
 -- Events
 local EVENT_ON_FIRST_LOGIN = 30

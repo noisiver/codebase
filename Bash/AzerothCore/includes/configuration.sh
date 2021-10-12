@@ -140,7 +140,7 @@ function generate_settings
                 <enabled>${57:-false}</enabled>
             </eluna>
             <skip_dk_starting_area>
-                <!-- Enable/Disable the user of the Skip DK Starting Area module -->
+                <!-- Enable/Disable the use of the Skip DK Starting Area module -->
                 <enabled>${58:-false}</enabled>
                 <!-- The level that death knight starts at -->
                 <starting_level>${59:-58}</starting_level>
