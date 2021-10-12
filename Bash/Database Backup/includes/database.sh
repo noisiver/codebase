@@ -38,8 +38,6 @@ function backup_database
     rm -rf $1/tmp
     rm -rf $MYSQL_CONFIG
 
-    if [[ $MAX_FILES -gt 0 ]]; then
-        MAX_FILES="$((MAX_FILES + 1))"
-        ls -tp $1/* | grep -v '/$' | tail -n +$MAX_FILES | xargs -d '\n' -r rm --
-    fi
+    MAX_FILES=$((BACKUP_MAX_FILES + 1))
+    ls -tp $1/* | grep -v '/$' | tail -n +$MAX_FILES | xargs -d '\n' -r rm --
 }

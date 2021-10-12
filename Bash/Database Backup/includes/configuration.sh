@@ -5,7 +5,7 @@ BACKUP_DATE=$(date +"%Y-%m-%d_%H-%M")
 CONFIG_FILE="$ROOT/backup.xml"
 MYSQL_CONFIG="$ROOT/mysql.cnf"
 
-function export_settings
+function generate_settings
 {
     echo "<?xml version=\"1.0\"?>
     <config>
@@ -28,7 +28,7 @@ function export_settings
     </config>" | xmllint --format - > $CONFIG_FILE
 }
 
-function generate_settings
+function export_settings
 {
     export_settings \
     $MYSQL_HOSTNAME \
@@ -41,8 +41,8 @@ function generate_settings
 
 if [ ! -f $CONFIG_FILE ]; then
     clear
-    echo -e "\e[0;33mGenerating default configuration\e[0m"
-    export_settings
+    printf "${COLOR_ORANGE}Generating default configuration${COLOR_END}\n"
+    generate_settings
     exit $?
 fi
 
@@ -54,13 +54,40 @@ MYSQL_PASSWORD="$(echo "cat /config/mysql/password/text()" | xmllint --nocdata -
 BACKUP_TYPE="$(echo "cat /config/backup/type/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 BACKUP_MAX_FILES="$(echo "cat /config/backup/max_files/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
-if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]] || 
-   [[ -z $MYSQL_PORT ]] || [[ $MYSQL_PORT == "" ]] || 
-   [[ -z $MYSQL_USERNAME ]] || [[ $MYSQL_USERNAME == "" ]] || 
-   [[ -z $MYSQL_PASSWORD ]] || [[ $MYSQL_PASSWORD == "" ]] || 
-   [[ -z $BACKUP_TYPE ]] || [[ $BACKUP_TYPE == "" ]] || 
-   [[ -z $BACKUP_MAX_FILES ]] || [[ $BACKUP_MAX_FILES == "" ]]; then
-    clear
-    echo -e "\e[0;31mAtleast one of the configuration options is missing or invalid\e[0m"
-    exit $?
+if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]]; then
+    MYSQL_HOSTNAME="127.0.0.1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_PORT ]] || [[ $MYSQL_PORT == "" ]]; then
+    MYSQL_PORT="3306"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_USERNAME ]] || [[ $MYSQL_USERNAME == "" ]]; then
+    MYSQL_USERNAME="backup"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $MYSQL_PASSWORD ]] || [[ $MYSQL_PASSWORD == "" ]]; then
+    MYSQL_PASSWORD="backup"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ -z $BACKUP_TYPE ]] || [[ $BACKUP_TYPE == "" ]]; then
+    BACKUP_TYPE="local"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $BACKUP_MAX_FILES =~ ^[0-9]+$ ]] || [[ $BACKUP_MAX_FILES < 1 ]]; then
+    BACKUP_MAX_FILES=24
+    REQUIRE_EXPORT=true
+fi
+
+if [ $REQUIRE_EXPORT ]; then
+    printf "${COLOR_ORANGE}Invalid settings have been reset to their default values${COLOR_END}\n"
+    export_settings
+    exit 1
+else
+    printf "${COLOR_ORANGE}Successfully loaded all settings${COLOR_END}\n"
 fi
