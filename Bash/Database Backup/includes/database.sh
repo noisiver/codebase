@@ -40,6 +40,6 @@ function backup_database
 
     if [[ $MAX_FILES -gt 0 ]]; then
         MAX_FILES="$((MAX_FILES + 1))"
-        ls -tp $1/*.tar.gz | grep -v '/$' | tail -n +$MAX_FILES | xargs -d '\n' -r rm --
+        ls -tp $1/* | grep -v '/$' | tail -n +$MAX_FILES | xargs -d '\n' -r rm --
     fi
 }
