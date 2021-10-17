@@ -199,9 +199,9 @@ function import_database
 
     if [[ $1 == 0 || $1 == 2 ]]; then
         if [ $MODULE_ASSISTANT_ENABLED == "true" ]; then
-            if [[ -d $CORE_DIRECTORY/modules/mod_assistant/sql/world/base ]]; then
+            if [[ -d $CORE_DIRECTORY/modules/mod-assistant/sql/world/base ]]; then
                 printf "${COLOR_ORANGE}Importing mod_assistant.sql${COLOR_END}\n"
-                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $CORE_DIRECTORY/modules/mod_assistant/sql/world/base/mod_assistant.sql
+                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $CORE_DIRECTORY/modules/mod-assistant/sql/world/base/mod_assistant.sql
                 if [ $? -ne 0 ]; then
                     rm -rf $MYSQL_CONFIG
                     exit $?
