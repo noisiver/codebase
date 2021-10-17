@@ -32,3 +32,5 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5092;
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5093;
 -- Razormane War Shield
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
+-- Ruuan'ok Claw
+UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=30704;
