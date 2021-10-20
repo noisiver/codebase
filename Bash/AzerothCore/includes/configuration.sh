@@ -204,16 +204,18 @@ function generate_settings
                 </spawn_point>
                 <!-- Enable/Disable doubling the experience and reputation a player earns on weekends -->
                 <weekend_bonus>${84:-false}</weekend_bonus>
+                <!-- Enable/Disable setting creatures within zones that has players to active -->
+                <set_zones_active>${85:-false}</set_zones_active>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${85:-false}</enabled>
+                <enabled>${86:-false}</enabled>
             </eluna>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${86:-false}</enabled>
+                <enabled>${87:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${87:-58}</starting_level>
+                <starting_level>${88:-58}</starting_level>
             </skip_dk_starting_area>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -306,6 +308,7 @@ function export_settings
     $MODULE_ASSISTANT_SPAWN_POINT_ENABLED \
     $MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT \
     $MODULE_ASSISTANT_WEEKEND_BONUS \
+    $MODULE_ASSISTANT_SET_ZONES_ACTIVE \
     $MODULE_ELUNA_ENABLED \
     $MODULE_SKIP_DK_STARTING_AREA_ENABLED \
     $MODULE_SKIP_DK_STARTING_AREA_LEVEL
@@ -412,6 +415,7 @@ MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER="$(echo "cat /config/module/assistan
 MODULE_ASSISTANT_SPAWN_POINT_ENABLED="$(echo "cat /config/module/assistant/spawn_point/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT="$(echo "cat /config/module/assistant/spawn_point/enable_death_knight/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_ASSISTANT_WEEKEND_BONUS="$(echo "cat /config/module/assistant/weekend_bonus/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_SET_ZONES_ACTIVE="$(echo "cat /config/module/assistant/set_zones_active/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
@@ -838,6 +842,11 @@ if [[ $MODULE_ASSISTANT_WEEKEND_BONUS != "true" && $MODULE_ASSISTANT_WEEKEND_BON
     REQUIRE_EXPORT=true
 fi
 
+if [[ $MODULE_ASSISTANT_SET_ZONES_ACTIVE != "true" && $MODULE_ASSISTANT_SET_ZONES_ACTIVE != "false" ]]; then
+    MODULE_ASSISTANT_SET_ZONES_ACTIVE="false"
+    REQUIRE_EXPORT=true
+fi
+
 if [[ $MODULE_ELUNA_ENABLED != "true" && $MODULE_ELUNA_ENABLED != "false" ]]; then
     MODULE_ELUNA_ENABLED="false"
     REQUIRE_EXPORT=true
@@ -1019,6 +1028,7 @@ function update_configuration
                 [ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED == "true" ] && ENABLE_SPAWN_POINT=1 || ENABLE_SPAWN_POINT=0
                 [ $MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT == "true" ] && ENABLE_DK_SPAWN_POINT=1 || ENABLE_DK_SPAWN_POINT=0
                 [ $MODULE_ASSISTANT_WEEKEND_BONUS == "true" ] && ENABLE_WEEKEND_BONUS=1 || ENABLE_WEEKEND_BONUS=0
+                [ $MODULE_ASSISTANT_SET_ZONES_ACTIVE == "true" ] && ENABLE_SET_ZONES_ACTIVE=1 || ENABLE_SET_ZONES_ACTIVE=0
 
                 sed -i 's/Assistant.Gossip.Heirlooms =.*/Assistant.Gossip.Heirlooms = '$ENABLE_GOSSIP_HEIRLOOM'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Gossip.Glyphs =.*/Assistant.Gossip.Glyphs = '$ENABLE_GOSSIP_GLYPHS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
@@ -1047,6 +1057,7 @@ function update_configuration
                 sed -i 's/Assistant.SpawnPoint.Enabled =.*/Assistant.SpawnPoint.Enabled = '$ENABLE_SPAWN_POINT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.SpawnPoint.DeathKnight =.*/Assistant.SpawnPoint.DeathKnight = '$ENABLE_DK_SPAWN_POINT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Rate.Weekend.Enabled =.*/Assistant.Rate.Weekend.Enabled = '$ENABLE_WEEKEND_BONUS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Creature.SetActive =.*/Assistant.Creature.SetActive = '$ENABLE_SET_ZONES_ACTIVE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
             fi
         else
             if [ -f $CORE_DIRECTORY/etc/modules/mod_assistant.conf ]; then
