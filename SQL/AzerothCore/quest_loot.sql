@@ -32,3 +32,20 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5092;
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5093;
 -- Razormane War Shield
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
+
+-- Warsong Munitions
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=24566 AND `Item`=34709;
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25294 AND `Item`=34709;
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25445 AND `Item`=34709;
+
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=24566 AND `ItemId`=34709;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (24566, 0, 34709);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25294 AND `ItemId`=34709;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25294, 1, 34709);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25445 AND `ItemId`=34709;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25445, 1, 34709);
+
+-- Super Strong Metal Plate
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25496 AND `Item`=34786;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25496 AND `ItemId`=34786;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25496, 2, 34786);
