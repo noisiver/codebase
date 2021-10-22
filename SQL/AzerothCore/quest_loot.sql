@@ -72,6 +72,18 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2575
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25814 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25814, 0, 34972);
 
+-- Scourged Earth
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=26202 AND `Item`=34774;
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25700 AND `Item`=34774;
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25701 AND `Item`=34774;
+
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26202 AND `ItemId`=34774;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26202, 1, 34774);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25700 AND `ItemId`=34774;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25700, 1, 34774);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25701 AND `ItemId`=34774;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25701, 1, 34774);
+
 -- Upper Horn Half
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `guid`=61171 AND `id`=187886;
 -- Lower Horn Half
