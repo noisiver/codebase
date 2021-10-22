@@ -49,3 +49,23 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2544
 UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25496 AND `Item`=34786;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25496 AND `ItemId`=34786;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25496, 2, 34786);
+
+-- Bloodspore Carpel
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25468 AND `Item`=34974;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25468 AND `ItemId`=34974;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25468, 0, 34974);
+
+-- Fizzcrank Spare Parts
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25752 AND `Item`=34972;
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25753 AND `Item`=34972;
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25758 AND `Item`=34972;
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25814 AND `Item`=34972;
+
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25752 AND `ItemId`=34972;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25752, 0, 34972);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25753 AND `ItemId`=34972;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25753, 0, 34972);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25758 AND `ItemId`=34972;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25758, 0, 34972);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25814 AND `ItemId`=34972;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25814, 0, 34972);
