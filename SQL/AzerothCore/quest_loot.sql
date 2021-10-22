@@ -36,9 +36,9 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
 UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=35288;
 
 -- Warsong Munitions
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=24566 AND `Item`=34709;
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25294 AND `Item`=34709;
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25445 AND `Item`=34709;
+UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=24566 AND `Item`=34709;
+UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25294 AND `Item`=34709;
+UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25445 AND `Item`=34709;
 
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=24566 AND `ItemId`=34709;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (24566, 0, 34709);
@@ -48,20 +48,20 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25445 AND `ItemId`=34709;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25445, 1, 34709);
 
 -- Super Strong Metal Plate
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25496 AND `Item`=34786;
+UPDATE `creature_loot_template` SET `Chance`=35 WHERE `Entry`=25496 AND `Item`=34786;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25496 AND `ItemId`=34786;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25496, 2, 34786);
 
 -- Bloodspore Carpel
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25468 AND `Item`=34974;
+UPDATE `creature_loot_template` SET `Chance`=36 WHERE `Entry`=25468 AND `Item`=34974;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25468 AND `ItemId`=34974;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25468, 0, 34974);
 
 -- Fizzcrank Spare Parts
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25752 AND `Item`=34972;
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25753 AND `Item`=34972;
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25758 AND `Item`=34972;
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25814 AND `Item`=34972;
+UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25752 AND `Item`=34972;
+UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25753 AND `Item`=34972;
+UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25758 AND `Item`=34972;
+UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25814 AND `Item`=34972;
 
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25752 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25752, 0, 34972);
@@ -73,9 +73,9 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25814 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25814, 0, 34972);
 
 -- Scourged Earth
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=26202 AND `Item`=34774;
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25700 AND `Item`=34774;
-UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=25701 AND `Item`=34774;
+UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=26202 AND `Item`=34774;
+UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=25700 AND `Item`=34774;
+UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=25701 AND `Item`=34774;
 
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26202 AND `ItemId`=34774;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26202, 1, 34774);
