@@ -32,6 +32,8 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5092;
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5093;
 -- Razormane War Shield
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
+-- Uncured Caribou Hide
+UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=35288;
 
 -- Warsong Munitions
 UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=24566 AND `Item`=34709;
@@ -69,3 +71,8 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25758 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25758, 0, 34972);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25814 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25814, 0, 34972);
+
+-- Upper Horn Half
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `guid`=61171 AND `id`=187886;
+-- Lower Horn Half
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `guid`=61151 AND `id`=187885;
