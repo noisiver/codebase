@@ -41,7 +41,6 @@ UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=36725;
 UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=24566 AND `Item`=34709;
 UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25294 AND `Item`=34709;
 UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25445 AND `Item`=34709;
-
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=24566 AND `ItemId`=34709;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (24566, 0, 34709);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25294 AND `ItemId`=34709;
@@ -64,7 +63,6 @@ UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25752 AND `Item`=3
 UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25753 AND `Item`=34972;
 UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25758 AND `Item`=34972;
 UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25814 AND `Item`=34972;
-
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25752 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25752, 0, 34972);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25753 AND `ItemId`=34972;
@@ -78,7 +76,6 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2581
 UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=26202 AND `Item`=34774;
 UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=25700 AND `Item`=34774;
 UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=25701 AND `Item`=34774;
-
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26202 AND `ItemId`=34774;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26202, 1, 34774);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25700 AND `ItemId`=34774;
@@ -86,17 +83,16 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2570
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25701 AND `ItemId`=34774;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25701, 1, 34774);
 
--- Upper Horn Half
-UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `guid`=61171 AND `id`=187886;
--- Lower Horn Half
-UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `guid`=61151 AND `id`=187885;
+-- Gurgleboggle's Bauble
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187885;
+-- Burblegobble's Bauble
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187886;
 
 -- Frostberry
 UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25707 AND `Item`=35492;
 UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25717 AND `Item`=35492;
 UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25722 AND `Item`=35492;
 UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25728 AND `Item`=35492;
-
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25707 AND `ItemId`=35492;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25707, 2, 35492);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25717 AND `ItemId`=35492;
@@ -109,6 +105,5 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2572
 -- Black Blood of Yogg-Saron Sample
 DELETE FROM `creature_loot_template` WHERE `Entry`=26605 AND `Item`=36725;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26605, 36725, 40, 'Anub\'ar Underlord - Black Blood of Yogg-Saron Sample');
-
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26605 AND `ItemId`=36725;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26605, 2, 36725);
