@@ -107,3 +107,6 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=26605 AND `Item`=36725;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26605, 36725, 40, 'Anub\'ar Underlord - Black Blood of Yogg-Saron Sample');
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26605 AND `ItemId`=36725;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26605, 2, 36725);
+
+-- Ruby Lilac
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=188489;
