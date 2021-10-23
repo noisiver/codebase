@@ -34,6 +34,8 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5093;
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
 -- Uncured Caribou Hide
 UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=35288;
+-- Black Blood of Yogg-Saron Sample
+UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=36725;
 
 -- Warsong Munitions
 UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=24566 AND `Item`=34709;
@@ -103,3 +105,10 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25722 AND `ItemId`=35492;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25722, 0, 35492);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25728 AND `ItemId`=35492;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25728, 1, 35492);
+
+-- Black Blood of Yogg-Saron Sample
+DELETE FROM `creature_loot_template` WHERE `Entry`=26605 AND `Item`=36725;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26605, 36725, 40, 'Anub\'ar Underlord - Black Blood of Yogg-Saron Sample');
+
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26605 AND `ItemId`=36725;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26605, 2, 36725);
