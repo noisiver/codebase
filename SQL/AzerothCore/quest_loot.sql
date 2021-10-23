@@ -88,3 +88,18 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2570
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `guid`=61171 AND `id`=187886;
 -- Lower Horn Half
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `guid`=61151 AND `id`=187885;
+
+-- Frostberry
+UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25707 AND `Item`=35492;
+UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25717 AND `Item`=35492;
+UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25722 AND `Item`=35492;
+UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25728 AND `Item`=35492;
+
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25707 AND `ItemId`=35492;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25707, 2, 35492);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25717 AND `ItemId`=35492;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25717, 0, 35492);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25722 AND `ItemId`=35492;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25722, 0, 35492);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25728 AND `ItemId`=35492;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25728, 1, 35492);
