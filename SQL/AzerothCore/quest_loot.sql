@@ -37,6 +37,14 @@ UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=35288;
 -- Black Blood of Yogg-Saron Sample
 UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=36725;
 
+-- Ruby Lilac
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=188489;
+
+-- Gurgleboggle's Bauble
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187885;
+-- Burblegobble's Bauble
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187886;
+
 -- Warsong Munitions
 UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=24566 AND `Item`=34709;
 UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25294 AND `Item`=34709;
@@ -83,11 +91,6 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2570
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25701 AND `ItemId`=34774;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25701, 1, 34774);
 
--- Gurgleboggle's Bauble
-UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187885;
--- Burblegobble's Bauble
-UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187886;
-
 -- Frostberry
 UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25707 AND `Item`=35492;
 UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25717 AND `Item`=35492;
@@ -108,5 +111,28 @@ INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALU
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26605 AND `ItemId`=36725;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26605, 2, 36725);
 
--- Ruby Lilac
-UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=188489;
+-- Scarlet Onslaught Weapon
+UPDATE `creature_loot_template` SET `Chance`=54 WHERE `Entry`=27207 AND `Item`=37137;
+UPDATE `creature_loot_template` SET `Chance`=54 WHERE `Entry`=27234 AND `Item`=37137;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27207 AND `ItemId`=37137;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27207, 0, 37137);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27234 AND `ItemId`=37137;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27234, 0, 37137);
+
+-- Scarlet Onslaught Armor
+UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=27203 AND `Item`=37136;
+UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=27206 AND `Item`=37136;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27203 AND `ItemId`=37136;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27203, 0, 37136);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27206 AND `ItemId`=37136;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27206, 1, 37136);
+
+-- Forgotten Treasure
+UPDATE `creature_loot_template` SET `Chance`=49 WHERE `Entry`=27226 AND `Item`=37580;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27226 AND `ItemId`=37580;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27226, 2, 37580);
+
+-- Emerald Dragon Tier
+UPDATE `creature_loot_template` SET `Chance`=46 WHERE `Entry`=27254 AND `Item`=37124;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27254 AND `ItemId`=37124;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27254, 2, 37124);
