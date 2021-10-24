@@ -1,5 +1,5 @@
 #!/bin/bash
-if [[ $OS == "ubuntu" ]]; then
+if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
     if [ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
         clear
 
@@ -17,7 +17,7 @@ fi
 
 function install_clone_packages
 {
-    if [[ $OS == "ubuntu" ]]; then
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
             clear
 
@@ -36,12 +36,16 @@ function install_clone_packages
 
 function install_compile_packages
 {
-    if [[ $OS == "ubuntu" ]]; then
-        PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-6.*" "libace-dev" "libboost1.71-all-dev" "libmariadb-dev-compat" "mariadb-client")
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
+        PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-6.*" "libace-dev" "libmariadb-dev-compat" "mariadb-client")
 
         if [[ $OS == "ubuntu" ]]; then
             if [[ $VERSION == "20.04" ]] || [[ $VERSION == "20.10" ]]; then
-                PACKAGES="${PACKAGES} libmariadbclient-dev"
+                PACKAGES="${PACKAGES} libboost1.71-all-dev libmariadbclient-dev"
+            fi
+        elif [[ $OS == "debian" ]]; then
+            if [[ $VERSION == "11" ]]; then
+                PACKAGES="${PACKAGES} libboost1.74-all-dev"
             fi
         fi
 
@@ -69,7 +73,7 @@ function install_compile_packages
 
 function install_database_packages
 {
-    if [[ $OS == "ubuntu" ]]; then
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         if [ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
             clear
 

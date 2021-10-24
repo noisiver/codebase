@@ -1,7 +1,7 @@
 #!/bin/bash
 function start_process
 {
-    if [[ $OS == "ubuntu" ]]; then
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
             clear
 
@@ -26,7 +26,7 @@ function start_process
 
 function stop_process
 {
-    if [[ $OS == "ubuntu" ]]; then
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
             clear
 
