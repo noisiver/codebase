@@ -40,13 +40,13 @@ function install_compile_packages
         PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-6.*" "libace-dev" "libmariadb-dev-compat" "mariadb-client")
 
         if [[ $OS == "ubuntu" ]]; then
+            PACKAGES="${PACKAGES} libboost1.71-all-dev"
+
             if [[ $VERSION == "20.04" ]] || [[ $VERSION == "20.10" ]]; then
-                PACKAGES="${PACKAGES} libboost1.71-all-dev libmariadbclient-dev"
+                PACKAGES="${PACKAGES} libmariadbclient-dev"
             fi
         elif [[ $OS == "debian" ]]; then
-            if [[ $VERSION == "11" ]]; then
-                PACKAGES="${PACKAGES} libboost1.74-all-dev"
-            fi
+            PACKAGES="${PACKAGES} libboost1.74-all-dev"
         fi
 
         for p in "${PACKAGES[@]}"; do
