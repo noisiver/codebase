@@ -31,6 +31,10 @@ function clone_source
         fi
     fi
 
+    if [[ $WORLD_ENABLE_SCRIPT_OVERRIDES == "true" ]]; then
+        add_overrides
+    fi
+
     if [ $MODULE_AHBOT_ENABLED == "true" ]; then
         if [ ! -d $CORE_DIRECTORY/modules/mod-ah-bot ]; then
             git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $CORE_DIRECTORY/modules/mod-ah-bot
@@ -171,6 +175,8 @@ function clone_source
 function compile_source
 {
     install_compile_packages
+
+    stop_process
 
     clear
 

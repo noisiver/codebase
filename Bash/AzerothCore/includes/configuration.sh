@@ -79,143 +79,145 @@ function generate_settings
             <set_all_waypoints_active>${31:-false}</set_all_waypoints_active>
             <!-- Enable/Disable Minigob Manabonk in Dalaran. false = disabled, true = enabled -->
             <enable_minigob_manabonk>${32:-true}</enable_minigob_manabonk>
+            <!-- Enable/Disable the use of script overrides to allow them to trigger for members of a groups -->
+            <enable_script_overrides>${33:-false}</enable_script_overrides>
             <rates>
                 <!-- Experience rates (outside battleground) -->
-                <experience>${33:-1}</experience>
+                <experience>${34:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_exp>${34:-1}</rested_exp>
+                <rested_exp>${35:-1}</rested_exp>
                 <!-- Reputation gain rate -->
-                <reputation>${35:-1}</reputation>
+                <reputation>${36:-1}</reputation>
                 <!-- Drop rates for money -->
-                <money>${36:-1}</money>
+                <money>${37:-1}</money>
                 <!-- Crafting skills gain rate -->
-                <crafting>${37:-1}</crafting>
+                <crafting>${38:-1}</crafting>
                 <!-- Gathering skills gain rate -->
-                <gathering>${38:-1}</gathering>
+                <gathering>${39:-1}</gathering>
                 <!-- Weapon skills gain rate -->
-                <weapon_skill>${39:-1}</weapon_skill>
+                <weapon_skill>${40:-1}</weapon_skill>
                 <!-- Defense skills gain rate -->
-                <defense_skill>${40:-1}</defense_skill>
+                <defense_skill>${41:-1}</defense_skill>
             </rates>
             <gm>
                 <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
-                <login_state>${41:-true}</login_state>
+                <login_state>${42:-true}</login_state>
                 <!-- GM visibility at login. false = disabled, true = enabled -->
-                <enable_visibility>${42:-false}</enable_visibility>
+                <enable_visibility>${43:-false}</enable_visibility>
                 <!-- GM chat mode at login. false = disabled, true = enabled -->
-                <enable_chat>${43:-true}</enable_chat>
+                <enable_chat>${44:-true}</enable_chat>
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
-                <enable_whisper>${44:-false}</enable_whisper>
+                <enable_whisper>${45:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${45:-0}</show_gm_list>
+                <show_gm_list>${46:-0}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_who_list>${46:-0}</show_who_list>
+                <show_who_list>${47:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
-                <allow_friend>${47:-false}</allow_friend>
+                <allow_friend>${48:-false}</allow_friend>
                 <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
-                <allow_invite>${48:-false}</allow_invite>
+                <allow_invite>${49:-false}</allow_invite>
                 <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
-                <allow_lower_security>${49:-false}</allow_lower_security>
+                <allow_lower_security>${50:-false}</allow_lower_security>
             </gm>
         </world>
         <module>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${50:-false}</enabled>
+                <enabled>${51:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${51:-false}</enable_buyer>
+                <enable_buyer>${52:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${52:-false}</enable_seller>
+                <enable_seller>${53:-false}</enable_seller>
                 <!-- Account id is the account number (auth->account) of the player you want to run as the auction bot -->
-                <account_id>${53:-0}</account_id>
+                <account_id>${54:-0}</account_id>
                 <!-- Character guid is the GUID (characters->characters table) of the player you want to run as the auction bot -->
-                <character_guid>${54:-0}</character_guid>
+                <character_guid>${55:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house -->
-                <min_items>${55:-0}</min_items>
+                <min_items>${56:-0}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${56:-0}</max_items>
+                <max_items>${57:-0}</max_items>
             </ahbot>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module -->
-                <enabled>${57:-false}</enabled>
+                <enabled>${58:-false}</enabled>
                 <gossip>
                     <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${58:-false}</heirlooms>
+                    <heirlooms>${59:-false}</heirlooms>
                     <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${59:-false}</glyphs>
+                    <glyphs>${60:-false}</glyphs>
                     <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${60:-false}</gems>
+                    <gems>${61:-false}</gems>
                     <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${61:-false}</containers>
+                    <containers>${62:-false}</containers>
                     <utilities>
                         <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${62:-false}</enabled>
+                        <enabled>${63:-false}</enabled>
                         <!-- Cost in gold required to perform a name change -->
-                        <name_change>${63:-10}</name_change>
+                        <name_change>${64:-10}</name_change>
                         <!-- Cost in gold required to perform a customization -->
-                        <customization>${64:-50}</customization>
+                        <customization>${65:-50}</customization>
                         <!-- Cost in gold to perform a race change -->
-                        <race_change>${65:-500}</race_change>
+                        <race_change>${66:-500}</race_change>
                         <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${66:-1000}</faction_change>
+                        <faction_change>${67:-1000}</faction_change>
                     </utilities>
                 </gossip>
                 <spells>
                     <!-- Enable/Disable obtaining spells when leveling up or entering the world -->
-                    <enabled>${67:-false}</enabled>
+                    <enabled>${68:-false}</enabled>
                     <!-- Enable/Disable obtaining spells when entering the world -->
-                    <on_login>${68:-false}</on_login>
+                    <on_login>${69:-false}</on_login>
                     <!-- Enable/Disable obtaining spells when leveling up -->
-                    <on_levelup>${69:-false}</on_levelup>
+                    <on_levelup>${70:-false}</on_levelup>
                     <!-- Enable/Disable obtaining class-specific spells when leveling up or entering the world -->
-                    <class_spells>${70:-false}</class_spells>
+                    <class_spells>${71:-false}</class_spells>
                     <!-- Enable/Disable obtaining new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${71:-false}</talent_ranks>
+                    <talent_ranks>${72:-false}</talent_ranks>
                     <!-- Enable/Disable obtaining new weapon and armor skills when leveling up -->
-                    <proficiencies>${72:-false}</proficiencies>
+                    <proficiencies>${73:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${73:-false}</from_quests>
+                    <from_quests>${74:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${74:-false}</enabled>
+                        <enabled>${75:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${75:-60}</max_level>
+                        <max_level>${76:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable obtaining riding skills when leveling up or entering the world -->
-                        <enabled>${76:-false}</enabled>
+                        <enabled>${77:-false}</enabled>
                         <!-- Enable/Disable obtaining the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${77:-false}</apprentice>
+                        <apprentice>${78:-false}</apprentice>
                         <!-- Enable/Disable obtaining the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${78:-false}</journeyman>
+                        <journeyman>${79:-false}</journeyman>
                         <!-- Enable/Disable obtaining the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${79:-false}</expert>
+                        <expert>${80:-false}</expert>
                         <!-- Enable/Disable obtaining the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${80:-false}</artisan>
+                        <artisan>${81:-false}</artisan>
                         <!-- Enable/Disable obtaining the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${81:-false}</cold_weather>
+                        <cold_weather>${82:-false}</cold_weather>
                     </riding>
                 </spells>
                 <spawn_point>
                     <!-- Enable/Disable teleporting new players to specified locations on first log in -->
-                    <enabled>${82:-false}</enabled>
+                    <enabled>${83:-false}</enabled>
                     <!-- Enable/Disable teleporting death knight to specified locations on first log in -->
-                    <enable_death_knight>${83:-false}</enable_death_knight>
+                    <enable_death_knight>${84:-false}</enable_death_knight>
                 </spawn_point>
                 <!-- Enable/Disable doubling the experience and reputation a player earns on weekends -->
-                <weekend_bonus>${84:-false}</weekend_bonus>
+                <weekend_bonus>${85:-false}</weekend_bonus>
                 <!-- Enable/Disable setting creatures within zones that has players to active -->
-                <activate_zone>${85:-false}</activate_zone>
+                <activate_zone>${86:-false}</activate_zone>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${86:-false}</enabled>
+                <enabled>${87:-false}</enabled>
             </eluna>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${87:-false}</enabled>
+                <enabled>${88:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${88:-58}</starting_level>
+                <starting_level>${89:-58}</starting_level>
             </skip_dk_starting_area>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -256,6 +258,7 @@ function export_settings
     $WORLD_PRELOAD_MAP_GRIDS \
     $WORLD_SET_WAYPOINTS_ACTIVE \
     $WORLD_ENABLE_MINIGOB_MANABONK \
+    $WORLD_ENABLE_SCRIPT_OVERRIDES \
     $WORLD_RATE_EXPERIENCE \
     $WORLD_RATE_RESTED_EXP \
     $WORLD_RATE_REPUTATION \
@@ -359,6 +362,7 @@ WORLD_RAF_MAX_LEVEL="$(echo "cat /config/world/raf_max_level/text()" | xmllint -
 WORLD_PRELOAD_MAP_GRIDS="$(echo "cat /config/world/preload_map_grids/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 WORLD_SET_WAYPOINTS_ACTIVE="$(echo "cat /config/world/set_all_waypoints_active/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 WORLD_ENABLE_MINIGOB_MANABONK="$(echo "cat /config/world/enable_minigob_manabonk/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+WORLD_ENABLE_SCRIPT_OVERRIDES="$(echo "cat /config/world/enable_script_overrides/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 WORLD_RATE_EXPERIENCE="$(echo "cat /config/world/rates/experience/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 WORLD_RATE_RESTED_EXP="$(echo "cat /config/world/rates/rested_exp/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
@@ -579,6 +583,11 @@ fi
 
 if [[ $WORLD_ENABLE_MINIGOB_MANABONK != "true" && $WORLD_ENABLE_MINIGOB_MANABONK != "false" ]]; then
     WORLD_ENABLE_MINIGOB_MANABONK="true"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $WORLD_ENABLE_SCRIPT_OVERRIDES != "true" && $WORLD_ENABLE_SCRIPT_OVERRIDES != "false" ]]; then
+    WORLD_ENABLE_SCRIPT_OVERRIDES="false"
     REQUIRE_EXPORT=true
 fi
 
