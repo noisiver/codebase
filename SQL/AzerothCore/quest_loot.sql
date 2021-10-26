@@ -173,3 +173,14 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=26268 AND `Item`=35737;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26268, 35737, 39, 'Rune Reaver - Missing Journal Page');
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26268 AND `ItemId`=35737;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26268, 2, 35737);
+
+-- War Golem Part
+UPDATE `creature_loot_template` SET `Chance`=37 WHERE `Entry`=26347 AND `Item`=36852;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26347 AND `ItemId`=36852;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26347, 2, 36852);
+UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=26408 AND `Item`=36852;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26408 AND `ItemId`=36852;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26408, 4, 36852);
+UPDATE `creature_loot_template` SET `Chance`=36 WHERE `Entry`=26409 AND `Item`=36852;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26409 AND `ItemId`=36852;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26409, 3, 36852);
