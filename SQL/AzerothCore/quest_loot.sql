@@ -40,6 +40,8 @@ UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=36725;
 UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=37087;
 -- Vordrassil's Seed
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=37302;
+-- Missing Journal Page
+UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=35737;
 
 -- Ruby Lilac
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=188489;
@@ -51,12 +53,12 @@ UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187886;
 
 -- Warsong Munitions
 UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=24566 AND `Item`=34709;
-UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25294 AND `Item`=34709;
-UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25445 AND `Item`=34709;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=24566 AND `ItemId`=34709;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (24566, 0, 34709);
+UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25294 AND `Item`=34709;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25294 AND `ItemId`=34709;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25294, 1, 34709);
+UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=25445 AND `Item`=34709;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25445 AND `ItemId`=34709;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25445, 1, 34709);
 
@@ -72,40 +74,40 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2546
 
 -- Fizzcrank Spare Parts
 UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25752 AND `Item`=34972;
-UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25753 AND `Item`=34972;
-UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25758 AND `Item`=34972;
-UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25814 AND `Item`=34972;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25752 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25752, 0, 34972);
+UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25753 AND `Item`=34972;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25753 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25753, 0, 34972);
+UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25758 AND `Item`=34972;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25758 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25758, 0, 34972);
+UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=25814 AND `Item`=34972;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25814 AND `ItemId`=34972;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25814, 0, 34972);
 
 -- Scourged Earth
 UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=26202 AND `Item`=34774;
-UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=25700 AND `Item`=34774;
-UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=25701 AND `Item`=34774;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26202 AND `ItemId`=34774;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26202, 1, 34774);
+UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=25700 AND `Item`=34774;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25700 AND `ItemId`=34774;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25700, 1, 34774);
+UPDATE `creature_loot_template` SET `Chance`=48 WHERE `Entry`=25701 AND `Item`=34774;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25701 AND `ItemId`=34774;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25701, 1, 34774);
 
 -- Frostberry
 UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25707 AND `Item`=35492;
-UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25717 AND `Item`=35492;
-UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25722 AND `Item`=35492;
-UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25728 AND `Item`=35492;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25707 AND `ItemId`=35492;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25707, 2, 35492);
+UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25717 AND `Item`=35492;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25717 AND `ItemId`=35492;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25717, 0, 35492);
+UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25722 AND `Item`=35492;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25722 AND `ItemId`=35492;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25722, 0, 35492);
+UPDATE `creature_loot_template` SET `Chance`=44 WHERE `Entry`=25728 AND `Item`=35492;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=25728 AND `ItemId`=35492;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (25728, 1, 35492);
 
@@ -117,17 +119,17 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2660
 
 -- Scarlet Onslaught Weapon
 UPDATE `creature_loot_template` SET `Chance`=54 WHERE `Entry`=27207 AND `Item`=37137;
-UPDATE `creature_loot_template` SET `Chance`=54 WHERE `Entry`=27234 AND `Item`=37137;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27207 AND `ItemId`=37137;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27207, 0, 37137);
+UPDATE `creature_loot_template` SET `Chance`=54 WHERE `Entry`=27234 AND `Item`=37137;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27234 AND `ItemId`=37137;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27234, 0, 37137);
 
 -- Scarlet Onslaught Armor
 UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=27203 AND `Item`=37136;
-UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=27206 AND `Item`=37136;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27203 AND `ItemId`=37136;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27203, 0, 37136);
+UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=27206 AND `Item`=37136;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27206 AND `ItemId`=37136;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27206, 1, 37136);
 
@@ -144,10 +146,10 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2725
 -- Vordrassil's Seed
 DELETE FROM `creature_loot_template` WHERE `Entry`=26605 AND `Item`=37302;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26605, 37302, 38, 'Redfang Hunter - Vordrassil\'s Seed');
-DELETE FROM `creature_loot_template` WHERE `Entry`=26357 AND `Item`=37302;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26357, 37302, 38, 'Frostpaw Warrior - Vordrassil\'s Seed');
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26605 AND `ItemId`=37302;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26605, 4, 37302);
+DELETE FROM `creature_loot_template` WHERE `Entry`=26357 AND `Item`=37302;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26357, 37302, 38, 'Frostpaw Warrior - Vordrassil\'s Seed');
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26357 AND `ItemId`=37302;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26357, 1, 37302);
 
@@ -161,3 +163,13 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2645
 UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=26446 AND `Item`=35782;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26446 AND `ItemId`=35782;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26446, 1, 35782);
+
+-- Missing Journal Page
+DELETE FROM `creature_loot_template` WHERE `Entry`=26284 AND `Item`=35737;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26284, 35737, 38, 'Runic Battle Golem - Missing Journal Page');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26284 AND `ItemId`=35737;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26284, 1, 35737);
+DELETE FROM `creature_loot_template` WHERE `Entry`=26268 AND `Item`=35737;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26268, 35737, 38, 'Rune Reaver - Missing Journal Page');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26268 AND `ItemId`=35737;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26268, 2, 35737);
