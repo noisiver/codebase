@@ -146,3 +146,14 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26605 AND `ItemId`=37302;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26605, 4, 37302);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26357 AND `ItemId`=37302;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26357, 1, 37302);
+
+-- Sweetroot
+DELETE FROM `creature_loot_template` WHERE `Entry`=26457 AND `Item`=37087;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26457, 37087, 36, 'Diseased Drakkari - Sweetroot');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26457 AND `ItemId`=37087;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26457, 1, 37087);
+
+-- Shimmering Snowcap
+UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=26446 AND `Item`=35782;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26446 AND `ItemId`=35782;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26446, 1, 35782);
