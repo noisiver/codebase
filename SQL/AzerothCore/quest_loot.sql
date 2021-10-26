@@ -170,6 +170,6 @@ INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALU
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26284 AND `ItemId`=35737;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26284, 1, 35737);
 DELETE FROM `creature_loot_template` WHERE `Entry`=26268 AND `Item`=35737;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26268, 35737, 38, 'Rune Reaver - Missing Journal Page');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26268, 35737, 39, 'Rune Reaver - Missing Journal Page');
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26268 AND `ItemId`=35737;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26268, 2, 35737);
