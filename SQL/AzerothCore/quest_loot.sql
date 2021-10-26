@@ -136,3 +136,13 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2722
 UPDATE `creature_loot_template` SET `Chance`=46 WHERE `Entry`=27254 AND `Item`=37124;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27254 AND `ItemId`=37124;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27254, 2, 37124);
+
+-- Vordrassil's Seed
+DELETE FROM `creature_loot_template` WHERE `Entry`=26605 AND `Item`=37302;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26605, 37302, 38, 'Redfang Hunter - Vordrassil\'s Seed');
+DELETE FROM `creature_loot_template` WHERE `Entry`=26357 AND `Item`=37302;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (26357, 37302, 38, 'Frostpaw Warrior - Vordrassil\'s Seed');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26605 AND `ItemId`=37302;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26605, 4, 37302);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26357 AND `ItemId`=37302;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26357, 1, 37302);
