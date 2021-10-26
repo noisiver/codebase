@@ -36,6 +36,10 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
 UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=35288;
 -- Black Blood of Yogg-Saron Sample
 UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=36725;
+-- Sweetroot
+UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=37087;
+-- Vordrassil's Seed
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=37302;
 
 -- Ruby Lilac
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=188489;
