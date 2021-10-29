@@ -1,0 +1,8 @@
+<Bindings>
+    <Binding name="SETUIPOINTS" header="INTERFACED">
+        Interfaced_SetUIPoints();
+    </Binding>
+    <Binding name="TOGGLEBARTENDER" header="INTERFACED">
+        Interfaced_ToggleBartenderVisibility();
+    </Binding>
+</Bindings>

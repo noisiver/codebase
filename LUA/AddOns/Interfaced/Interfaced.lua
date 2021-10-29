@@ -1,37 +1,10 @@
-local waitTable = {};
-local waitFrame = nil;
+local INTERFACED, Interfaced = ...
 
-function Interfaced_Wait(delay, func, ...)
-    if (type(delay)~="number" or type(func)~="function") then
-        return false;
-    end
+BINDING_HEADER_INTERFACED = "Interfaced"
+BINDING_NAME_SETUIPOINTS = "Set UI Points"
+BINDING_NAME_TOGGLEBARTENDER = "Toggle Bartender Visibility"
 
-    if (waitFrame == nil) then
-        waitFrame = CreateFrame("Frame","WaitFrame", UIParent);
-        waitFrame:SetScript("onUpdate",function (self,elapse)
-            local count = #waitTable;
-            local i = 1;
-            while (i<=count) do
-                local waitRecord = tremove(waitTable,i);
-                local d = tremove(waitRecord,1);
-                local f = tremove(waitRecord,1);
-                local p = tremove(waitRecord,1);
-                if (d>elapse) then
-                    tinsert(waitTable,i,{d-elapse,f,p});
-                    i = i + 1;
-                else
-                    count = count - 1;
-                    f(unpack(p));
-                end
-            end
-        end);
-    end
-
-    tinsert(waitTable,{delay,func,{...}});
-    return true;
-end
-
-local function main()
+function Interfaced_SetUIPoints()
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("CENTER", -350, 100)
 
@@ -53,32 +26,33 @@ local function main()
         TotemFrame:SetPoint("CENTER", PlayerFrame, "CENTER", 45, 48)
     end
 
-    --CastingBarFrame:SetScale(0.65)
     CastingBarFrameBorder:SetTexture(nil)
     CastingBarFrameFlash:SetTexture(nil)
-    --CastingBarFrame:ClearAllPoints()
-    --if select(2, UnitClass("player")) == "DEATHKNIGHT" then
-        --CastingBarFrame:SetPoint("CENTER", PlayerFrame, "CENTER", 75, 60)
-    --else
-        --CastingBarFrame:SetPoint("CENTER", PlayerFrame, "CENTER", 75, -40)
-    --end
-    --CastingBarFrame.SetPoint = function() end
+end
+
+function Interfaced_ToggleBartenderVisibility()
+    Bartender4.Bar.barregistry["1"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["1"]:GetVisibilityOption("always"))
+    Bartender4.Bar.barregistry["2"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["2"]:GetVisibilityOption("always"))
+    Bartender4.Bar.barregistry["3"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["3"]:GetVisibilityOption("always"))
+    Bartender4.Bar.barregistry["4"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["4"]:GetVisibilityOption("always"))
+    Bartender4.Bar.barregistry["MicroMenu"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["MicroMenu"]:GetVisibilityOption("always"))
+    Bartender4.Bar.barregistry["BagBar"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["BagBar"]:GetVisibilityOption("always"))
+
+    if select(2, UnitClass("player")) == "PALADIN" or select(2, UnitClass("player")) == "WARRIOR" or select(2, UnitClass("player")) == "DRUID" or select(2, UnitClass("player")) == "DEATHKNIGHT" then
+        Bartender4.Bar.barregistry["StanceBar"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["StanceBar"]:GetVisibilityOption("always"))
+    end
+
+    Bartender4.Bar.barregistry["PetBar"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["PetBar"]:GetVisibilityOption("always"))
+
+    if select(2, UnitClass("player")) == "SHAMAN" then
+        Bartender4.Bar.barregistry["MultiCast"]:SetVisibilityOption("always",not Bartender4.Bar.barregistry["MultiCast"]:GetVisibilityOption("always"))
+    end
 end
 
 local ef = CreateFrame("FRAME")
     ef:RegisterEvent("PLAYER_ENTERING_WORLD")
     ef:SetScript("OnEvent", function(self)
-    main()
+    Interfaced_SetUIPoints()
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     self:SetScript("OnEvent", nil)
 end)
-
-local uf = CreateFrame("FRAME")
-    uf:RegisterEvent("UNIT_ENTERED_VEHICLE")
-    uf:RegisterEvent("UNIT_EXITED_VEHICLE")
-    uf:SetScript("OnEvent", function(self)
-    Interfaced_Wait(0.5, main);
-end)
-
-SLASH_UPDATEUI1 = "/updateui"
-SlashCmdList["UPDATEUI"] = main
