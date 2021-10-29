@@ -44,6 +44,14 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=37302;
 UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=35737;
 -- Haze Leaf
 UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=37085;
+-- Banana Bunch
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=38653;
+-- Papaya
+UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=38655;
+-- Orange
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=38656;
+-- Venture Co. Spare Parts
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=38349;
 
 -- Ruby Lilac
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=188489;
@@ -52,6 +60,9 @@ UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=188489;
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187885;
 -- Burblegobble's Bauble
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=187886;
+
+-- Flying Machine Engine
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=190447;
 
 -- Warsong Munitions
 UPDATE `creature_loot_template` SET `Chance`=38 WHERE `Entry`=24566 AND `Item`=34709;
@@ -197,3 +208,27 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=27617 AND `Item`=37085;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (27617, 37085, 41, 'River Thresher - Haze Leaf');
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27617 AND `ItemId`=37085;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27617, 1, 37085);
+
+-- Banana Bunch
+DELETE FROM `creature_loot_template` WHERE `Entry`=28011 AND `Item`=38653;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (28011, 38653, 26, 'Emperor Cobra - Banana Bunch');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=28011 AND `ItemId`=38653;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (28011, 2, 38653);
+
+-- Papaya
+DELETE FROM `creature_loot_template` WHERE `Entry`=28011 AND `Item`=38655;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (28011, 38655, 22, 'Emperor Cobra - Papaya');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=28011 AND `ItemId`=38655;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (28011, 3, 38655);
+
+-- Orange
+DELETE FROM `creature_loot_template` WHERE `Entry`=28011 AND `Item`=38656;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (28011, 38656, 22, 'Emperor Cobra - Orange');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=28011 AND `ItemId`=38656;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (28011, 3, 38656);
+
+-- Venture Co. Spare Parts
+DELETE FROM `creature_loot_template` WHERE `Entry`=28123 AND `Item`=38349;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (28123, 38349, 43, 'Venture Co. Excavator - Venture Co. Spare Parts');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=28123 AND `ItemId`=38349;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (28123, 2, 38349);
