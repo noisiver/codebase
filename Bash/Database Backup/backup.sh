@@ -17,6 +17,7 @@ done
 if [ $BACKUP_TYPE == "local" ]; then
     backup_database "$root/database"
 elif [ $BACKUP_TYPE == "gdrive" ]; then
+    pull_drive "$HOME/gdrive"
     backup_database "$HOME/gdrive/database"
     push_drive "$HOME/gdrive"
 else
