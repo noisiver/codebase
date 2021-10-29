@@ -29,10 +29,12 @@ local function Interfaced_SetUIPoints()
         TargetFrame:SetPoint("CENTER", targetPositionX, targetPositionY)
     end
 
-    --for i = 1, 4 do
-        --local frame = _G["PartyMemberFrame"..i]
-        --frame:SetScript("OnShow", frame.Hide)
-    --end
+    for i = 1, 4 do
+        local frame = _G["PartyMemberFrame"..i]
+        if (frame:IsVisible()) then
+            frame:Hide()
+        end
+    end
 
     if (PetFrame) then
         local point, relativeTo, relativePoint, xOfs, yOfs = PetFrame:GetPoint()
