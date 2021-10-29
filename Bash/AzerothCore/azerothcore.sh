@@ -41,18 +41,18 @@ if [ $# -gt 0 ]; then
 
             if [ $2 == "setup" ] || [ $2 == "install" ] || [ $2 == "update" ]; then
                 stop_process
-                clone_source
+                clone_source $TYPE
                 compile_source $TYPE
-                fetch_client_data
+                fetch_client_data $TYPE
             elif [ $2 == "database" ] || [ $2 == "db" ]; then
                 import_database $TYPE
             elif [ $2 == "cfg" ] || [ $2 == "conf" ] || [ $2 == "config" ] || [ $2 == "configuration" ]; then
                 update_configuration $TYPE
             elif [ $2 == "all" ]; then
                 stop_process
-                clone_source
+                clone_source $TYPE
                 compile_source $TYPE
-                fetch_client_data
+                fetch_client_data $TYPE
                 import_database $TYPE
                 update_configuration $TYPE
                 start_process

@@ -1,4 +1,1 @@
-
-Bash/AzerothCore/azerothcore.xml
-Bash/Database Backup/backup.xml
-Powershell/AzerothCore/azerothcore.xml
+*.xml

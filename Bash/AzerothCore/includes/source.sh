@@ -31,142 +31,144 @@ function clone_source
         fi
     fi
 
-    if [[ $WORLD_ENABLE_SCRIPT_OVERRIDES == "true" ]]; then
-        add_overrides
-    fi
+    if [ $1 == 0 ] || [ $1 == 2 ]; then
+        if [[ $WORLD_ENABLE_SCRIPT_OVERRIDES == "true" ]]; then
+            add_overrides
+        fi
 
-    if [ $MODULE_AHBOT_ENABLED == "true" ]; then
-        if [ ! -d $CORE_DIRECTORY/modules/mod-ah-bot ]; then
-            git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $CORE_DIRECTORY/modules/mod-ah-bot
-            if [ $? -ne 0 ]; then
-                exit $?
+        if [ $MODULE_AHBOT_ENABLED == "true" ]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-ah-bot ]; then
+                git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $CORE_DIRECTORY/modules/mod-ah-bot
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-ah-bot
+
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
             fi
         else
-            cd $CORE_DIRECTORY/modules/mod-ah-bot
+            if [ -d $CORE_DIRECTORY/modules/mod-ah-bot ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-ah-bot
 
-            git fetch --all
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git reset --hard origin/master
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git submodule update
-            if [ $? -ne 0 ]; then
-                exit $?
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
             fi
         fi
-    else
-        if [ -d $CORE_DIRECTORY/modules/mod-ah-bot ]; then
-            rm -rf $CORE_DIRECTORY/modules/mod-ah-bot
 
-            if [ -d $CORE_DIRECTORY/build ]; then
-                rm -rf $CORE_DIRECTORY/build
-            fi
-        fi
-    fi
+        if [ $MODULE_ASSISTANT_ENABLED == "true" ]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-assistant ]; then
+                git clone --branch master https://github.com/tkn963/mod-assistant.git $CORE_DIRECTORY/modules/mod-assistant
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-assistant
 
-    if [ $MODULE_ASSISTANT_ENABLED == "true" ]; then
-        if [ ! -d $CORE_DIRECTORY/modules/mod-assistant ]; then
-            git clone --branch master https://github.com/tkn963/mod-assistant.git $CORE_DIRECTORY/modules/mod-assistant
-            if [ $? -ne 0 ]; then
-                exit $?
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
             fi
         else
-            cd $CORE_DIRECTORY/modules/mod-assistant
+            if [ -d $CORE_DIRECTORY/modules/mod-assistant ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-assistant
 
-            git fetch --all
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git reset --hard origin/master
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git submodule update
-            if [ $? -ne 0 ]; then
-                exit $?
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
             fi
         fi
-    else
-        if [ -d $CORE_DIRECTORY/modules/mod-assistant ]; then
-            rm -rf $CORE_DIRECTORY/modules/mod-assistant
 
-            if [ -d $CORE_DIRECTORY/build ]; then
-                rm -rf $CORE_DIRECTORY/build
-            fi
-        fi
-    fi
+        if [ $MODULE_ELUNA_ENABLED == "true" ]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-eluna-lua-engine ]; then
+                git clone --recursive --branch master https://github.com/azerothcore/mod-eluna-lua-engine.git $CORE_DIRECTORY/modules/mod-eluna-lua-engine
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-eluna-lua-engine
 
-    if [ $MODULE_ELUNA_ENABLED == "true" ]; then
-        if [ ! -d $CORE_DIRECTORY/modules/mod-eluna-lua-engine ]; then
-            git clone --recursive --branch master https://github.com/azerothcore/mod-eluna-lua-engine.git $CORE_DIRECTORY/modules/mod-eluna-lua-engine
-            if [ $? -ne 0 ]; then
-                exit $?
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
             fi
         else
-            cd $CORE_DIRECTORY/modules/mod-eluna-lua-engine
+            if [ -d $CORE_DIRECTORY/modules/mod-eluna-lua-engine ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-eluna-lua-engine
 
-            git fetch --all
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git reset --hard origin/master
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git submodule update
-            if [ $? -ne 0 ]; then
-                exit $?
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
             fi
         fi
-    else
-        if [ -d $CORE_DIRECTORY/modules/mod-eluna-lua-engine ]; then
-            rm -rf $CORE_DIRECTORY/modules/mod-eluna-lua-engine
 
-            if [ -d $CORE_DIRECTORY/build ]; then
-                rm -rf $CORE_DIRECTORY/build
-            fi
-        fi
-    fi
+        if [ $MODULE_SKIP_DK_STARTING_AREA_ENABLED == "true" ]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-skip-dk-starting-area ]; then
+                git clone --recursive --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
 
-    if [ $MODULE_SKIP_DK_STARTING_AREA_ENABLED == "true" ]; then
-        if [ ! -d $CORE_DIRECTORY/modules/mod-skip-dk-starting-area ]; then
-            git clone --recursive --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
-            if [ $? -ne 0 ]; then
-                exit $?
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
             fi
         else
-            cd $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
+            if [ -d $CORE_DIRECTORY/modules/mod-skip-dk-starting-area ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
 
-            git fetch --all
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git reset --hard origin/master
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git submodule update
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-        fi
-    else
-        if [ -d $CORE_DIRECTORY/modules/mod-skip-dk-starting-area ]; then
-            rm -rf $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
-
-            if [ -d $CORE_DIRECTORY/build ]; then
-                rm -rf $CORE_DIRECTORY/build
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
             fi
         fi
     fi
@@ -241,37 +243,39 @@ function compile_source
 
 function fetch_client_data
 {
-    if [ ! -d $CORE_DIRECTORY/bin/Cameras ] || [ ! -d $CORE_DIRECTORY/bin/dbc ] || [ ! -d $CORE_DIRECTORY/bin/maps ] || [ ! -d $CORE_DIRECTORY/bin/mmaps ] || [ ! -d $CORE_DIRECTORY/bin/vmaps ]; then
-        CORE_INSTALLED_CLIENT_DATA=0
-    fi
-
-    clear
-    printf "${COLOR_GREEN}Downloading client data files${COLOR_END}\n"
-
-    if [ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]; then
-        if [ -d $CORE_DIRECTORY/bin/Cameras ] || [ -d $CORE_DIRECTORY/bin/dbc ] || [ -d $CORE_DIRECTORY/bin/maps ] || [ -d $CORE_DIRECTORY/bin/mmaps ] || [ -d $CORE_DIRECTORY/bin/vmaps ]; then
-            rm -rf $CORE_DIRECTORY/bin/Cameras $CORE_DIRECTORY/bin/dbc $CORE_DIRECTORY/bin/maps $CORE_DIRECTORY/bin/mmaps $CORE_DIRECTORY/bin/vmaps
+    if [ $1 == 0 ] || [ $1 == 2 ]; then
+        if [ ! -d $CORE_DIRECTORY/bin/Cameras ] || [ ! -d $CORE_DIRECTORY/bin/dbc ] || [ ! -d $CORE_DIRECTORY/bin/maps ] || [ ! -d $CORE_DIRECTORY/bin/mmaps ] || [ ! -d $CORE_DIRECTORY/bin/vmaps ]; then
+            CORE_INSTALLED_CLIENT_DATA=0
         fi
 
-        curl -L https://github.com/wowgaming/client-data/releases/download/v${CORE_REQUIRED_CLIENT_DATA}/data.zip > $CORE_DIRECTORY/bin/data.zip
-        if [ $? -ne 0 ]; then
-            exit $?
-        fi
+        clear
+        printf "${COLOR_GREEN}Downloading client data files${COLOR_END}\n"
 
-        unzip -o "$CORE_DIRECTORY/bin/data.zip" -d "$CORE_DIRECTORY/bin/"
-        if [ $? -ne 0 ]; then
-            exit $?
-        fi
+        if [ $CORE_INSTALLED_CLIENT_DATA != $CORE_REQUIRED_CLIENT_DATA ]; then
+            if [ -d $CORE_DIRECTORY/bin/Cameras ] || [ -d $CORE_DIRECTORY/bin/dbc ] || [ -d $CORE_DIRECTORY/bin/maps ] || [ -d $CORE_DIRECTORY/bin/mmaps ] || [ -d $CORE_DIRECTORY/bin/vmaps ]; then
+                rm -rf $CORE_DIRECTORY/bin/Cameras $CORE_DIRECTORY/bin/dbc $CORE_DIRECTORY/bin/maps $CORE_DIRECTORY/bin/mmaps $CORE_DIRECTORY/bin/vmaps
+            fi
 
-        rm -rf $CORE_DIRECTORY/bin/data.zip
-        if [ $? -ne 0 ]; then
-            exit $?
-        fi
+            curl -L https://github.com/wowgaming/client-data/releases/download/v${CORE_REQUIRED_CLIENT_DATA}/data.zip > $CORE_DIRECTORY/bin/data.zip
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
 
-        CORE_INSTALLED_CLIENT_DATA=$CORE_REQUIRED_CLIENT_DATA
-        export_settings
-    else
-        printf "${COLOR_ORANGE}The required client data files are already installed${COLOR_END}\n"
+            unzip -o "$CORE_DIRECTORY/bin/data.zip" -d "$CORE_DIRECTORY/bin/"
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            rm -rf $CORE_DIRECTORY/bin/data.zip
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            CORE_INSTALLED_CLIENT_DATA=$CORE_REQUIRED_CLIENT_DATA
+            export_settings
+        else
+            printf "${COLOR_ORANGE}The required client data files are already installed${COLOR_END}\n"
+        fi
     fi
 }
 
