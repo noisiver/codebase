@@ -42,6 +42,8 @@ UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=37087;
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=37302;
 -- Missing Journal Page
 UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=35737;
+-- Haze Leaf
+UPDATE `item_template` SET `Flags`=67584 WHERE `entry`=37085;
 
 -- Ruby Lilac
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=188489;
@@ -184,3 +186,14 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2640
 UPDATE `creature_loot_template` SET `Chance`=36 WHERE `Entry`=26409 AND `Item`=36852;
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=26409 AND `ItemId`=36852;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (26409, 3, 36852);
+
+-- Waterweed Frond
+UPDATE `creature_loot_template` SET `Chance`=46 WHERE `Entry`=27617 AND `Item`=35795;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27617 AND `ItemId`=35795;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27617, 0, 35795);
+
+-- Haze Leaf
+DELETE FROM `creature_loot_template` WHERE `Entry`=27617 AND `Item`=37085;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (27617, 37085, 41, 'River Thresher - Haze Leaf');
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=27617 AND `ItemId`=37085;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (27617, 1, 37085);
