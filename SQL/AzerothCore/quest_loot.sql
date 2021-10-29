@@ -225,7 +225,7 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2801
 DELETE FROM `creature_loot_template` WHERE `Entry`=28011 AND `Item`=38656;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (28011, 38656, 22, 'Emperor Cobra - Orange');
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=28011 AND `ItemId`=38656;
-INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (28011, 3, 38656);
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (28011, 4, 38656);
 
 -- Venture Co. Spare Parts
 DELETE FROM `creature_loot_template` WHERE `Entry`=28123 AND `Item`=38349;
