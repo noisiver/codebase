@@ -70,7 +70,7 @@ function Interfaced_ToggleBartenderVisibility()
     Bartender4.Bar.barregistry["3"]:SetVisibilityOption("always", not visibility)
     Bartender4.Bar.barregistry["4"]:SetVisibilityOption("always", not visibility)
     Bartender4.Bar.barregistry["MicroMenu"]:SetVisibilityOption("always", not visibility)
-    Bartender4.Bar.barregistry["BagBar"]:SetVisibilityOption("always", not visibility)
+    -- Bartender4.Bar.barregistry["BagBar"]:SetVisibilityOption("always", not visibility)
 
     if select(2, UnitClass("player")) == "PALADIN" or select(2, UnitClass("player")) == "WARRIOR" or select(2, UnitClass("player")) == "DRUID" or select(2, UnitClass("player")) == "DEATHKNIGHT" then
         Bartender4.Bar.barregistry["StanceBar"]:SetVisibilityOption("always", not visibility)
