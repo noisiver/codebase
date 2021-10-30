@@ -31,6 +31,40 @@ function clone_source
         fi
     fi
 
+    if [[ $CORE_PULL_REQUEST > 0 ]]; then
+        cd $CORE_DIRECTORY
+
+        if [ $(git branch --show-current) != "pr-$CORE_PULL_REQUEST" ]; then
+            rm -rf $CORE_DIRECTORY/build
+
+            git checkout -b pr-$CORE_PULL_REQUEST
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            git pull origin pull/$CORE_PULL_REQUEST/head
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+        fi
+    else
+        if [ $(git branch --show-current) != "master" ]; then
+            rm -rf $CORE_DIRECTORY/build
+
+            cd $CORE_DIRECTORY
+
+            git switch -C master origin/master
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+        fi
+    fi
+
     if [ $1 == 0 ] || [ $1 == 2 ]; then
         if [[ $WORLD_ENABLE_SCRIPT_OVERRIDES == "true" ]]; then
             add_overrides
