@@ -38,7 +38,6 @@ local function Interfaced_SetUIPoints()
         local frame = _G["PartyMemberFrame"..i]
         if (frame:IsVisible()) then
             frame:Hide()
-            print("Frame "..frame:GetName().." is hidden")
         end
     end
 
