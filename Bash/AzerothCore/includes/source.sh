@@ -13,21 +13,32 @@ function clone_source
             exit $?
         fi
     else
-        cd $CORE_DIRECTORY
+        if [[ $CORE_PULL_REQUEST == 0 ]]; then
+            cd $CORE_DIRECTORY
 
-        git fetch --all
-        if [ $? -ne 0 ]; then
-            exit $?
-        fi
+            if [ $(git branch --show-current) != "master" ]; then
+                rm -rf $CORE_DIRECTORY/build
 
-        git reset --hard origin/master
-        if [ $? -ne 0 ]; then
-            exit $?
-        fi
+                git switch -C master origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            fi
 
-        git submodule update
-        if [ $? -ne 0 ]; then
-            exit $?
+            git fetch --all
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            git submodule update
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
         fi
     fi
 
@@ -41,27 +52,16 @@ function clone_source
             if [ $? -ne 0 ]; then
                 exit $?
             fi
-
-            git pull origin pull/$CORE_PULL_REQUEST/head
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
         fi
-    else
-        if [ $(git branch --show-current) != "master" ]; then
-            rm -rf $CORE_DIRECTORY/build
 
-            cd $CORE_DIRECTORY
+        git pull origin pull/$CORE_PULL_REQUEST/head
+        if [ $? -ne 0 ]; then
+            exit $?
+        fi
 
-            git switch -C master origin/master
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            git reset --hard origin/master
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
+        git reset --hard pr-$CORE_PULL_REQUEST
+        if [ $? -ne 0 ]; then
+            exit $?
         fi
     fi
 

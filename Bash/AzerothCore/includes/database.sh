@@ -109,6 +109,30 @@ function import_database
     fi
 
     if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ -d $CORE_DIRECTORY/data/sql/updates/pending_db_auth ]; then
+            if [[ ! -z "$(ls -A $CORE_DIRECTORY/data/sql/updates/pending_db_auth/)" ]]; then
+                if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_AUTH'"` ]; then
+                    for f in $CORE_DIRECTORY/data/sql/updates/pending_db_auth/*.sql; do
+                        if [ -f $f ]; then
+                            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                            mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_AUTH < $f
+                            if [ $? -ne 0 ]; then
+                                rm -rf $MYSQL_CONFIG
+                                exit $?
+                            fi
+                        fi
+                    done
+                else
+                    if [ $? -ne 0 ]; then
+                        rm -rf $MYSQL_CONFIG
+                        exit $?
+                    fi
+                fi
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_CHARACTERS'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_characters ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_characters/*.sql; do
@@ -129,6 +153,30 @@ function import_database
     fi
 
     if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ -d $CORE_DIRECTORY/data/sql/updates/pending_db_characters ]; then
+            if [[ ! -z "$(ls -A $CORE_DIRECTORY/data/sql/updates/pending_db_characters/)" ]]; then
+                if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_CHARACTERS'"` ]; then
+                    for f in $CORE_DIRECTORY/data/sql/updates/pending_db_characters/*.sql; do
+                        if [ -f $f ]; then
+                            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                            mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_CHARACTERS < $f
+                            if [ $? -ne 0 ]; then
+                                rm -rf $MYSQL_CONFIG
+                                exit $?
+                            fi
+                        fi
+                    done
+                else
+                    if [ $? -ne 0 ]; then
+                        rm -rf $MYSQL_CONFIG
+                        exit $?
+                    fi
+                fi
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
         if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
             if [ -d $CORE_DIRECTORY/data/sql/updates/db_world ]; then
                 for f in $CORE_DIRECTORY/data/sql/updates/db_world/*.sql; do
@@ -144,6 +192,30 @@ function import_database
             if [ $? -ne 0 ]; then
                 rm -rf $MYSQL_CONFIG
                 exit $?
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ -d $CORE_DIRECTORY/data/sql/updates/pending_db_world ]; then
+            if [[ ! -z "$(ls -A $CORE_DIRECTORY/data/sql/updates/pending_db_world/)" ]]; then
+                if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
+                    for f in $CORE_DIRECTORY/data/sql/updates/pending_db_world/*.sql; do
+                        if [ -f $f ]; then
+                            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                            mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
+                            if [ $? -ne 0 ]; then
+                                rm -rf $MYSQL_CONFIG
+                                exit $?
+                            fi
+                        fi
+                    done
+                else
+                    if [ $? -ne 0 ]; then
+                        rm -rf $MYSQL_CONFIG
+                        exit $?
+                    fi
+                fi
             fi
         fi
     fi
