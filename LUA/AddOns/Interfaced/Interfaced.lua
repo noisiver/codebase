@@ -88,21 +88,76 @@ end
 function Interfaced_ToggleBartenderVisibility()
     local visibility = Bartender4.Bar.barregistry["1"]:GetVisibilityOption("always")
 
-    Bartender4.Bar.barregistry["1"]:SetVisibilityOption("always", not visibility)
-    Bartender4.Bar.barregistry["2"]:SetVisibilityOption("always", not visibility)
-    Bartender4.Bar.barregistry["3"]:SetVisibilityOption("always", not visibility)
-    Bartender4.Bar.barregistry["4"]:SetVisibilityOption("always", not visibility)
-    Bartender4.Bar.barregistry["MicroMenu"]:SetVisibilityOption("always", not visibility)
-    -- Bartender4.Bar.barregistry["BagBar"]:SetVisibilityOption("always", not visibility)
+    if (Bartender4.Bar.barregistry["1"]) then
+        Bartender4.Bar.barregistry["1"]:SetVisibilityOption("always", not visibility)
+    end
 
-    if select(2, UnitClass("player")) == "PALADIN" or select(2, UnitClass("player")) == "WARRIOR" or select(2, UnitClass("player")) == "DRUID" or select(2, UnitClass("player")) == "DEATHKNIGHT" then
+    if (Bartender4.Bar.barregistry["2"]) then
+        Bartender4.Bar.barregistry["2"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["3"]) then
+        Bartender4.Bar.barregistry["3"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["4"]) then
+        Bartender4.Bar.barregistry["4"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["5"]) then
+        Bartender4.Bar.barregistry["5"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["6"]) then
+        Bartender4.Bar.barregistry["6"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["7"]) then
+        Bartender4.Bar.barregistry["7"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["8"]) then
+        Bartender4.Bar.barregistry["8"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["9"]) then
+        Bartender4.Bar.barregistry["9"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["10"]) then
+        Bartender4.Bar.barregistry["10"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["BagBar"]) then
+        Bartender4.Bar.barregistry["BagBar"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["MicroMenu"]) then
+        Bartender4.Bar.barregistry["MicroMenu"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["PetBar"]) then
+        Bartender4.Bar.barregistry["PetBar"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["StanceBar"]) then
         Bartender4.Bar.barregistry["StanceBar"]:SetVisibilityOption("always", not visibility)
     end
 
-    Bartender4.Bar.barregistry["PetBar"]:SetVisibilityOption("always", not visibility)
-
-    if select(2, UnitClass("player")) == "SHAMAN" then
+    if (Bartender4.Bar.barregistry["MultiCast"]) then
         Bartender4.Bar.barregistry["MultiCast"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["VehicleBar"]) then
+        Bartender4.Bar.barregistry["VehicleBar"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["Rep"]) then
+        Bartender4.Bar.barregistry["Rep"]:SetVisibilityOption("always", not visibility)
+    end
+
+    if (Bartender4.Bar.barregistry["XP"]) then
+        Bartender4.Bar.barregistry["XP"]:SetVisibilityOption("always", not visibility)
     end
 end
 
