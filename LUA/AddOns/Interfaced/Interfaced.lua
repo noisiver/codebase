@@ -16,6 +16,11 @@ local function round(num)
     return num + (2^52 + 2^51) - (2^52 + 2^51)
 end
 
+local function round2(num, dec)
+    local power = 10^dec
+    return math.floor(num * power) / power
+end
+
 local function Interfaced_SetUIPoints()
     local point, relativeTo, relativePoint, xOfs, yOfs = PlayerFrame:GetPoint()
     if ((not (round(xOfs) == playerPositionX)) or (not (round(yOfs) == playerPositionY))) then
@@ -50,6 +55,25 @@ local function Interfaced_SetUIPoints()
         if ((not (round(xOfs) == totemPositionX)) or (not (round(yOfs) == totemPositionY))) then
             TotemFrame:ClearAllPoints()
             TotemFrame:SetPoint("CENTER", PlayerFrame, "CENTER", totemPositionX, totemPositionY)
+        end
+    end
+
+    if (round2(CastingBarFrame:GetScale(), 2) ~= 0.64) then
+        CastingBarFrame:SetScale(0.65)
+    end
+
+    local point, relativeTo, relativePoint, xOfs, yOfs = CastingBarFrame:GetPoint()
+    if select(2, UnitClass("player")) == "DEATHKNIGHT" then
+        if ((not (round(xOfs) == 75)) or (not (round(yOfs) == 60))) then
+            CastingBarFrame:ClearAllPoints()
+            CastingBarFrame:SetPoint("CENTER", PlayerFrame, "CENTER", 75, 60)
+            CastingBarFrame.SetPoint = function() end
+        end
+    else
+        if ((not (round(xOfs) == 75)) or (not (round(yOfs) == -40))) then
+            CastingBarFrame:ClearAllPoints()
+            CastingBarFrame:SetPoint("CENTER", PlayerFrame, "CENTER", 75, -40)
+            CastingBarFrame.SetPoint = function() end
         end
     end
 
