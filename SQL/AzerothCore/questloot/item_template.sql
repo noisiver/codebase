@@ -11,3 +11,6 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry` IN (732, 2732, 2740, 2748,
 
 -- Taillasher Egg (Quest: Break a Few Eggs (Id: 815))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=4890;
+
+-- Sack of Supplies (Quest: Winds in the Desert (Id: 834))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=4918;
