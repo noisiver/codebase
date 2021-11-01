@@ -14,3 +14,6 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=4890;
 
 -- Sack of Supplies (Quest: Winds in the Desert (Id: 834))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=4918;
+
+-- Fungal Spores (Quest: Fungal Spores (Id: 848))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5012;
