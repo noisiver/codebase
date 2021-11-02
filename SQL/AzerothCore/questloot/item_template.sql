@@ -17,3 +17,6 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=4918;
 
 -- Fungal Spores (Quest: Fungal Spores (Id: 848))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5012;
+
+-- Nugget Slug (Quest: Nugget Slugs (Id: 3922))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=11143
