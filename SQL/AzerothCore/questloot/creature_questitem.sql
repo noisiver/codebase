@@ -17,3 +17,11 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3282 AND `ItemId`=11143;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3282, 0, 11143);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3284 AND `ItemId`=11143;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3284, 0, 11143);
+
+-- Gaea Seed (Quest: Cycle of Rebirth (Id: 6301))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4012 AND `ItemId`=16205;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4012, 1, 16205);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4014 AND `ItemId`=16205;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4014, 1, 16205);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=6141 AND `ItemId`=16205;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (6141, 1, 16205);

@@ -19,4 +19,7 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=4918;
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5012;
 
 -- Nugget Slug (Quest: Nugget Slugs (Id: 3922))
-UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=11143
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=11143;
+
+-- Gaea Seed (Quest: Cycle of Rebirth (Id: 6301))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=16205;

@@ -17,3 +17,11 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=3282 AND `Item`=11143;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3282, 11143, 41, 'Venture Co. Mercenary - Nugget Slug');
 DELETE FROM `creature_loot_template` WHERE `Entry`=3284 AND `Item`=11143;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3284, 11143, 42, 'Venture Co. Drudger - Nugget Slug');
+
+-- Gaea Seed (Quest: Cycle of Rebirth (Id: 6301))
+DELETE FROM `creature_loot_template` WHERE `Entry`=4012 AND `Item`=16205;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4012, 16205, 42, 'Pridewing Wyvern - Gaea Seed');
+DELETE FROM `creature_loot_template` WHERE `Entry`=4014 AND `Item`=16205;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4014, 16205, 43, 'Pridewing Consort - Gaea Seed');
+DELETE FROM `creature_loot_template` WHERE `Entry`=6141 AND `Item`=16205;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (6141, 16205, 44, 'Pridewing Soarer - Gaea Seed');
