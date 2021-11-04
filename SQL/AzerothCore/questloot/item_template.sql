@@ -23,3 +23,6 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=11143;
 
 -- Gaea Seed (Quest: Cycle of Rebirth (Id: 6301))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=16205;
+
+-- Troll Charm (Quest: Troll Charm (Id: 6462))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=16602;

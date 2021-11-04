@@ -25,3 +25,11 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4014 AND `ItemId`=16205;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4014, 1, 16205);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=6141 AND `ItemId`=16205;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (6141, 1, 16205);
+
+-- Troll Charm (Quest: Troll Charm (Id: 6462))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3921 AND `ItemId`=16602;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3921, 1, 16602);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3922 AND `ItemId`=16602;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3922, 1, 16602);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3923 AND `ItemId`=16602;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3923, 1, 16602);

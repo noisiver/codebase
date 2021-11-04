@@ -25,3 +25,11 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=4014 AND `Item`=16205;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4014, 16205, 43, 'Pridewing Consort - Gaea Seed');
 DELETE FROM `creature_loot_template` WHERE `Entry`=6141 AND `Item`=16205;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (6141, 16205, 44, 'Pridewing Soarer - Gaea Seed');
+
+-- Troll Charm (Quest: Troll Charm (Id: 6462))
+DELETE FROM `creature_loot_template` WHERE `Entry`=3921 AND `Item`=16602;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3921, 16602, 39, 'Thistlefur Ursa - Troll Charm');
+DELETE FROM `creature_loot_template` WHERE `Entry`=3922 AND `Item`=16602;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3922, 16602, 40, 'Thistlefur Totemic - Troll Charm');
+DELETE FROM `creature_loot_template` WHERE `Entry`=3923 AND `Item`=16602;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3923, 16602, 38, 'Thistlefur Den Watcher - Troll Charm');
