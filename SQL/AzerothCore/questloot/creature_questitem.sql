@@ -33,3 +33,17 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3922 AND `ItemId`=16602;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3922, 1, 16602);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3923 AND `ItemId`=16602;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3923, 1, 16602);
+
+-- Charred Razormane Wand (Quest: Weapons of Choice (Id: 893))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3458 AND `ItemId`=5092;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3458, 1, 5092);
+
+-- Razormane Backstabber (Quest: Weapons of Choice (Id: 893))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3456 AND `ItemId`=5093;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3456, 0, 5093);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3457 AND `ItemId`=5093;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3457, 0, 5093);
+
+-- Razormane War Shield (Quest: Weapons of Choice (Id: 893))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3459 AND `ItemId`=5094;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3459, 0, 5094);

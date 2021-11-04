@@ -26,3 +26,12 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=16205;
 
 -- Troll Charm (Quest: Troll Charm (Id: 6462))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=16602;
+
+-- Charred Razormane Wand (Quest: Weapons of Choice (Id: 893))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5092;
+
+-- Razormane Backstabber (Quest: Weapons of Choice (Id: 893))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5093;
+
+-- Razormane War Shield (Quest: Weapons of Choice (Id: 893))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
