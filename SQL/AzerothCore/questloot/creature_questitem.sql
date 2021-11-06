@@ -47,3 +47,9 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3457
 -- Razormane War Shield (Quest: Weapons of Choice (Id: 893))
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=3459 AND `ItemId`=5094;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (3459, 0, 5094);
+
+-- Mudsnout Blossoms (Quest: Elixir of Agony (Id: 509))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=2372 AND `ItemId`=3502;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2372, 0, 3502);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=2373 AND `ItemId`=3502;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2373, 0, 3502);

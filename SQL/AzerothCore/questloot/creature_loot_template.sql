@@ -33,3 +33,9 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=3922 AND `Item`=16602;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3922, 16602, 40, 'Thistlefur Totemic - Troll Charm');
 DELETE FROM `creature_loot_template` WHERE `Entry`=3923 AND `Item`=16602;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3923, 16602, 38, 'Thistlefur Den Watcher - Troll Charm');
+
+-- Mudsnout Blossoms (Quest: Elixir of Agony (Id: 509))
+DELETE FROM `creature_loot_template` WHERE `Entry`=2372 AND `Item`=3502;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (2372, 3502, 46, 'Mudsnout Gnoll - Mudsnout Blossoms');
+DELETE FROM `creature_loot_template` WHERE `Entry`=2373 AND `Item`=3502;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (2373, 3502, 48, 'Mudsnout Shaman - Mudsnout Blossoms');

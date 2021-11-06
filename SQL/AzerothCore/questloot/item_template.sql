@@ -35,3 +35,6 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5093;
 
 -- Razormane War Shield (Quest: Weapons of Choice (Id: 893))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
+
+-- Mudsnout Blossoms (Quest: Elixir of Agony (Id: 509))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=3502;
