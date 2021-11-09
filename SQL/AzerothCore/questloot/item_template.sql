@@ -38,3 +38,6 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=5094;
 
 -- Mudsnout Blossoms (Quest: Elixir of Agony (Id: 509))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=3502;
+
+-- Highperch Wyvern Egg (Quest: Wind Rider (Id: 4767))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=12356;

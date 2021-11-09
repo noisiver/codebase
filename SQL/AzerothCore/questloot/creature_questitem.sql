@@ -53,3 +53,11 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=2372 AND `ItemId`=3502;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2372, 0, 3502);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=2373 AND `ItemId`=3502;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (2373, 0, 3502);
+
+-- Highperch Wyvern Egg (Quest: Wind Rider (Id: 4767))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4107 AND `ItemId`=12356;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4107, 1, 12356);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4109 AND `ItemId`=12356;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4109, 1, 12356);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4110 AND `ItemId`=12356;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4110, 1, 12356);

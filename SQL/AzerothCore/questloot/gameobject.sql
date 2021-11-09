@@ -5,3 +5,6 @@ UPDATE `gameobject` SET `spawntimesecs`=10 WHERE `id`=171938;
 -- Gnomish Toolbox (Quest: From The Wreckage.... (Id: 825))
 -- Change respawn time from 900 to 10 seconds
 UPDATE `gameobject` SET `spawntimesecs`=10 WHERE `id`=3236;
+
+-- Alien Egg (Quest: Alien Egg (Id: 4821))
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=175565;

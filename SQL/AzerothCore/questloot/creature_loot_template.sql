@@ -39,3 +39,11 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=2372 AND `Item`=3502;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (2372, 3502, 46, 'Mudsnout Gnoll - Mudsnout Blossoms');
 DELETE FROM `creature_loot_template` WHERE `Entry`=2373 AND `Item`=3502;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (2373, 3502, 48, 'Mudsnout Shaman - Mudsnout Blossoms');
+
+-- Highperch Wyvern Egg (Quest: Wind Rider (Id: 4767))
+DELETE FROM `creature_loot_template` WHERE `Entry`=4107 AND `Item`=12356;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4107, 12356, 41, 'Highperch Wyvern - Highperch Wyvern Egg');
+DELETE FROM `creature_loot_template` WHERE `Entry`=4109 AND `Item`=12356;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4109, 12356, 43, 'Highperch Consort - Highperch Wyvern Egg');
+DELETE FROM `creature_loot_template` WHERE `Entry`=4110 AND `Item`=12356;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4110, 12356, 44, 'Highperch Patriarch - Highperch Wyvern Egg');
