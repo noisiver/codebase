@@ -41,3 +41,6 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=3502;
 
 -- Highperch Wyvern Egg (Quest: Wind Rider (Id: 4767))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=12356;
+
+-- Incendia Agave (Quest: Sacred Fire (Id: 5062))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=12732;

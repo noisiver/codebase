@@ -61,3 +61,9 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4109 AND `ItemId`=12356;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4109, 1, 12356);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4110 AND `ItemId`=12356;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4110, 1, 12356);
+
+-- Incendia Agave (Quest: Sacred Fire (Id: 5062))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=10756 AND `ItemId`=12732;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (10756, 0, 12732);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=10757 AND `ItemId`=12732;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (10757, 0, 12732);

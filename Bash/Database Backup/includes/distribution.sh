@@ -1,5 +1,5 @@
 #!/bin/bash
-DISTRIBUTION=("ubuntu20.04" "ubuntu20.10" "ubuntu21.04")
+DISTRIBUTION=("debian11" "ubuntu20.04" "ubuntu20.10" "ubuntu21.04")
 
 if [ -f /etc/os-release ]; then
     . /etc/os-release

@@ -47,3 +47,9 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=4109 AND `Item`=12356;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4109, 12356, 43, 'Highperch Consort - Highperch Wyvern Egg');
 DELETE FROM `creature_loot_template` WHERE `Entry`=4110 AND `Item`=12356;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4110, 12356, 44, 'Highperch Patriarch - Highperch Wyvern Egg');
+
+-- Incendia Agave (Quest: Sacred Fire (Id: 5062))
+DELETE FROM `creature_loot_template` WHERE `Entry`=10756 AND `Item`=12732;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (10756, 12732, 42, 'Scalding Elemental - Incendia Agave');
+DELETE FROM `creature_loot_template` WHERE `Entry`=10757 AND `Item`=12732;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (10757, 12732, 44, 'Boiling Elemental - Incendia Agave');
