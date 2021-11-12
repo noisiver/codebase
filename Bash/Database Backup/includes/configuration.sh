@@ -88,6 +88,4 @@ if [ $REQUIRE_EXPORT ]; then
     printf "${COLOR_ORANGE}Invalid settings have been reset to their default values${COLOR_END}\n"
     export_settings
     exit 1
-else
-    printf "${COLOR_ORANGE}Successfully loaded all settings${COLOR_END}\n"
 fi

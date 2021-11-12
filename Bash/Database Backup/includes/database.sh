@@ -18,7 +18,7 @@ function backup_database
         exit 1
     fi
 
-    DATABASE="$(mysql --defaults-extra-file=$MYSQL_CONFIG -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'phpmyadmin'") AND SCHEMA_NAME NOT LIKE "'%world%'" AND SCHEMA_NAME NOT LIKE "'%logs%'" AND SCHEMA_NAME NOT LIKE "'%hotfixes%'" AND SCHEMA_NAME NOT LIKE "'%aowow%'"')"
+    DATABASE="$(mysql --defaults-extra-file=$MYSQL_CONFIG -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'phpmyadmin'") AND SCHEMA_NAME NOT LIKE "'%world%'" AND SCHEMA_NAME NOT LIKE "'%aowow%'"')"
 
     echo -e "\e[0;32mInitializing\e[0m"
     echo -e "\e[0;33mBacking up databases\e[0m"
