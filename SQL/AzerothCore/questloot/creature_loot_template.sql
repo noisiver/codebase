@@ -53,3 +53,7 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=10756 AND `Item`=12732;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (10756, 12732, 42, 'Scalding Elemental - Incendia Agave');
 DELETE FROM `creature_loot_template` WHERE `Entry`=10757 AND `Item`=12732;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (10757, 12732, 44, 'Boiling Elemental - Incendia Agave');
+
+-- Witchbane (Quest: The Witch's Bane (11181))
+UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=23554 AND `Item`=33112;
+UPDATE `creature_loot_template` SET `Chance`=46 WHERE `Entry`=23555 AND `Item`=33112;

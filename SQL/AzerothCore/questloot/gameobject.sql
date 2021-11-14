@@ -12,3 +12,6 @@ UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=175565;
 -- Gri'lek the Wanderer (Quest: The Vile Reef (Id: 629))
 -- Change respawn time from 60 to 1 seconds
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=58;
+
+-- Warped Crates (Quest: Twilight of the Dawn Runner (Id: 9437))
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=181626
