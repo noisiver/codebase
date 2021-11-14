@@ -69,7 +69,7 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=10757 AND `ItemId`=12732;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (10757, 0, 12732);
 
 -- Witchbane (Quest: The Witch's Bane (11181))
-DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23554 AND `ItemId`=12732;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23554 AND `ItemId`=33112;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23554, 0, 33112);
-DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23555 AND `ItemId`=12732;
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23555 AND `ItemId`=33112;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23555, 0, 33112);
