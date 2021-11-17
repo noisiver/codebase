@@ -57,3 +57,11 @@ INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALU
 -- Witchbane (Quest: The Witch's Bane (11181))
 UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=23554 AND `Item`=33112;
 UPDATE `creature_loot_template` SET `Chance`=46 WHERE `Entry`=23555 AND `Item`=33112;
+
+-- Wyrmtail (Quest: Catch a Dragon by the Tail (Id: 11217))
+UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=4345 AND `Item`=33175;
+
+-- Blackhoof Armaments (Quest: More than Coincidence (11200))
+UPDATE `creature_loot_template` SET `Chance`=41 WHERE `Entry`=23592 AND `Item`=33071;
+UPDATE `creature_loot_template` SET `Chance`=40 WHERE `Entry`=23593 AND `Item`=33071;
+UPDATE `creature_loot_template` SET `Chance`=39 WHERE `Entry`=23714 AND `Item`=33071;

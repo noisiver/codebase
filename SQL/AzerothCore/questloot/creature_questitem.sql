@@ -73,3 +73,15 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23554 AND `ItemId`=33112;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23554, 0, 33112);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23555 AND `ItemId`=33112;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23555, 0, 33112);
+
+-- Wyrmtail (Quest: Catch a Dragon by the Tail (Id: 11217))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=4345 AND `ItemId`=33175;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (4345, 0, 33175);
+
+-- Blackhoof Armaments (Quest: More than Coincidence (11200))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23592 AND `ItemId`=33071;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23592, 1, 33071);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23593 AND `ItemId`=33071;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23593, 1, 33071);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23714 AND `ItemId`=33071;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23714, 1, 33071);

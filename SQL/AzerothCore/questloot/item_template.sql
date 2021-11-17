@@ -44,3 +44,6 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=12356;
 
 -- Incendia Agave (Quest: Sacred Fire (Id: 5062))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=12732;
+
+-- Grimtotem Note (Quest: The Grimtotem Plot (Id: 11201))
+UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=33050;
