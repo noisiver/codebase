@@ -108,7 +108,7 @@ function import_database
         fi
     fi
 
-    if [[ $1 == 0 || $1 == 2 ]]; then
+    if [[ $1 == 0 || $1 == 1 ]]; then
         if [ -d $CORE_DIRECTORY/data/sql/updates/pending_db_auth ]; then
             if [[ ! -z "$(ls -A $CORE_DIRECTORY/data/sql/updates/pending_db_auth/)" ]]; then
                 if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_AUTH'"` ]; then
