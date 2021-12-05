@@ -79,3 +79,11 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=16879 AND `Item`=23205;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16879, 23205, 37, 'Starving Helboar - Hellfire Spineleaf');
 DELETE FROM `creature_loot_template` WHERE `Entry`=16972 AND `Item`=23205;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16972, 23205, 36, 'Bonestripper Buzzard - Hellfire Spineleaf');
+
+-- Zeppelin Debris (Quest: In Case of Emergency... (Id: 10161))
+DELETE FROM `creature_loot_template` WHERE `Entry`=16863 AND `Item`=28116;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16863, 28116, 45, 'Deranged Helboar - Zeppelin Debris');
+DELETE FROM `creature_loot_template` WHERE `Entry`=16879 AND `Item`=28116;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16879, 28116, 46, 'Starving Helboar - Zeppelin Debris');
+DELETE FROM `creature_loot_template` WHERE `Entry`=16972 AND `Item`=28116;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16972, 28116, 44, 'Bonestripper Buzzard - Zeppelin Debris');

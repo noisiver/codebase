@@ -99,3 +99,11 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16879 AND `ItemId`=23205;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16879, 1, 23205);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16972 AND `ItemId`=23205;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16972, 1, 23205);
+
+-- Zeppelin Debris (Quest: In Case of Emergency... (Id: 10161))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16863 AND `ItemId`=28116;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16863, 0, 28116);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16879 AND `ItemId`=28116;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16879, 2, 28116);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16972 AND `ItemId`=28116;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16972, 2, 28116);
