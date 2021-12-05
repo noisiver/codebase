@@ -1,58 +1,58 @@
 -- Taillasher Egg (Quest: Break a Few Eggs (Id: 815))
 DELETE FROM `creature_loot_template` WHERE `Entry`=3122 AND `Item`=4890;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3122, 4890, 48, 'Bloodtalon Taillasher - Taillasher Egg');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3122, 4890, 48, 1, 'Bloodtalon Taillasher - Taillasher Egg');
 
 -- Sack of Supplies (Quest: Winds in the Desert (Id: 834))
 DELETE FROM `creature_loot_template` WHERE `Entry`=3115 AND `Item`=4918;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3115, 4918, 36, 'Dustwind Harpy - Sack of Supplies');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3115, 4918, 36, 1, 'Dustwind Harpy - Sack of Supplies');
 DELETE FROM `creature_loot_template` WHERE `Entry`=3116 AND `Item`=4918;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3116, 4918, 35, 'Dustwind Pillager - Sack of Supplies');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3116, 4918, 35, 1, 'Dustwind Pillager - Sack of Supplies');
 
 -- Fungal Spores (Quest: Fungal Spores (Id: 848))
 DELETE FROM `creature_loot_template` WHERE `Entry`=3461 AND `Item`=5012;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3461, 5012, 39, 'Oasis Snapjaw - Fungal Spores');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3461, 5012, 39, 1, 'Oasis Snapjaw - Fungal Spores');
 
 -- Nugget Slug (Quest: Nugget Slugs (Id: 3922))
 DELETE FROM `creature_loot_template` WHERE `Entry`=3282 AND `Item`=11143;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3282, 11143, 41, 'Venture Co. Mercenary - Nugget Slug');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3282, 11143, 41, 1, 'Venture Co. Mercenary - Nugget Slug');
 DELETE FROM `creature_loot_template` WHERE `Entry`=3284 AND `Item`=11143;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3284, 11143, 42, 'Venture Co. Drudger - Nugget Slug');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3284, 11143, 42, 1, 'Venture Co. Drudger - Nugget Slug');
 
 -- Gaea Seed (Quest: Cycle of Rebirth (Id: 6301))
 DELETE FROM `creature_loot_template` WHERE `Entry`=4012 AND `Item`=16205;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4012, 16205, 42, 'Pridewing Wyvern - Gaea Seed');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (4012, 16205, 42, 1, 'Pridewing Wyvern - Gaea Seed');
 DELETE FROM `creature_loot_template` WHERE `Entry`=4014 AND `Item`=16205;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4014, 16205, 43, 'Pridewing Consort - Gaea Seed');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (4014, 16205, 43, 1, 'Pridewing Consort - Gaea Seed');
 DELETE FROM `creature_loot_template` WHERE `Entry`=6141 AND `Item`=16205;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (6141, 16205, 44, 'Pridewing Soarer - Gaea Seed');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (6141, 16205, 44, 1, 'Pridewing Soarer - Gaea Seed');
 
 -- Troll Charm (Quest: Troll Charm (Id: 6462))
 DELETE FROM `creature_loot_template` WHERE `Entry`=3921 AND `Item`=16602;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3921, 16602, 39, 'Thistlefur Ursa - Troll Charm');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3921, 16602, 39, 1, 'Thistlefur Ursa - Troll Charm');
 DELETE FROM `creature_loot_template` WHERE `Entry`=3922 AND `Item`=16602;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3922, 16602, 40, 'Thistlefur Totemic - Troll Charm');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3922, 16602, 40, 1, 'Thistlefur Totemic - Troll Charm');
 DELETE FROM `creature_loot_template` WHERE `Entry`=3923 AND `Item`=16602;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (3923, 16602, 38, 'Thistlefur Den Watcher - Troll Charm');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (3923, 16602, 38, 1, 'Thistlefur Den Watcher - Troll Charm');
 
 -- Mudsnout Blossoms (Quest: Elixir of Agony (Id: 509))
 DELETE FROM `creature_loot_template` WHERE `Entry`=2372 AND `Item`=3502;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (2372, 3502, 46, 'Mudsnout Gnoll - Mudsnout Blossoms');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (2372, 3502, 46, 1, 'Mudsnout Gnoll - Mudsnout Blossoms');
 DELETE FROM `creature_loot_template` WHERE `Entry`=2373 AND `Item`=3502;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (2373, 3502, 48, 'Mudsnout Shaman - Mudsnout Blossoms');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (2373, 3502, 48, 1, 'Mudsnout Shaman - Mudsnout Blossoms');
 
 -- Highperch Wyvern Egg (Quest: Wind Rider (Id: 4767))
 DELETE FROM `creature_loot_template` WHERE `Entry`=4107 AND `Item`=12356;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4107, 12356, 41, 'Highperch Wyvern - Highperch Wyvern Egg');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (4107, 12356, 41, 1, 'Highperch Wyvern - Highperch Wyvern Egg');
 DELETE FROM `creature_loot_template` WHERE `Entry`=4109 AND `Item`=12356;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4109, 12356, 43, 'Highperch Consort - Highperch Wyvern Egg');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (4109, 12356, 43, 1, 'Highperch Consort - Highperch Wyvern Egg');
 DELETE FROM `creature_loot_template` WHERE `Entry`=4110 AND `Item`=12356;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (4110, 12356, 44, 'Highperch Patriarch - Highperch Wyvern Egg');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (4110, 12356, 44, 1, 'Highperch Patriarch - Highperch Wyvern Egg');
 
 -- Incendia Agave (Quest: Sacred Fire (Id: 5062))
 DELETE FROM `creature_loot_template` WHERE `Entry`=10756 AND `Item`=12732;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (10756, 12732, 42, 'Scalding Elemental - Incendia Agave');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (10756, 12732, 42, 1, 'Scalding Elemental - Incendia Agave');
 DELETE FROM `creature_loot_template` WHERE `Entry`=10757 AND `Item`=12732;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (10757, 12732, 44, 'Boiling Elemental - Incendia Agave');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (10757, 12732, 44, 1, 'Boiling Elemental - Incendia Agave');
 
 -- Witchbane (Quest: The Witch's Bane (11181))
 UPDATE `creature_loot_template` SET `Chance`=43 WHERE `Entry`=23554 AND `Item`=33112;
@@ -68,22 +68,22 @@ UPDATE `creature_loot_template` SET `Chance`=39 WHERE `Entry`=23714 AND `Item`=3
 
 -- Salvaged Wood (Quest: Sacred Fire (Id: 5062))
 DELETE FROM `creature_loot_template` WHERE `Entry`=18952 AND `Item`=25911;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (18952, 25911, 44, 'Bonechewer Scavenger - Salvaged Wood');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (18952, 25911, 44, 1, 'Bonechewer Scavenger - Salvaged Wood');
 
 -- Salvaged Metal (Quest: Sacred Fire (Id: 5062))
 DELETE FROM `creature_loot_template` WHERE `Entry`=18952 AND `Item`=25912;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (18952, 25912, 44, 'Bonechewer Scavenger - Salvaged Metal');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (18952, 25912, 44, 1, 'Bonechewer Scavenger - Salvaged Metal');
 
 -- Hellfire Spineleaf (Quest: Preparing the Salve (Id: 9345))
 DELETE FROM `creature_loot_template` WHERE `Entry`=16879 AND `Item`=23205;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16879, 23205, 37, 'Starving Helboar - Hellfire Spineleaf');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (16879, 23205, 37, 1, 'Starving Helboar - Hellfire Spineleaf');
 DELETE FROM `creature_loot_template` WHERE `Entry`=16972 AND `Item`=23205;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16972, 23205, 36, 'Bonestripper Buzzard - Hellfire Spineleaf');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (16972, 23205, 36, 1, 'Bonestripper Buzzard - Hellfire Spineleaf');
 
 -- Zeppelin Debris (Quest: In Case of Emergency... (Id: 10161))
 DELETE FROM `creature_loot_template` WHERE `Entry`=16863 AND `Item`=28116;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16863, 28116, 45, 'Deranged Helboar - Zeppelin Debris');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (16863, 28116, 45, 1, 'Deranged Helboar - Zeppelin Debris');
 DELETE FROM `creature_loot_template` WHERE `Entry`=16879 AND `Item`=28116;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16879, 28116, 46, 'Starving Helboar - Zeppelin Debris');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (16879, 28116, 46, 1, 'Starving Helboar - Zeppelin Debris');
 DELETE FROM `creature_loot_template` WHERE `Entry`=16972 AND `Item`=28116;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16972, 28116, 44, 'Bonestripper Buzzard - Zeppelin Debris');
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (16972, 28116, 44, 1, 'Bonestripper Buzzard - Zeppelin Debris');
