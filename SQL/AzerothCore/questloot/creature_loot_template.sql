@@ -73,3 +73,9 @@ INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALU
 -- Salvaged Metal (Quest: Sacred Fire (Id: 5062))
 DELETE FROM `creature_loot_template` WHERE `Entry`=18952 AND `Item`=25912;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (18952, 25912, 44, 'Bonechewer Scavenger - Salvaged Metal');
+
+-- Hellfire Spineleaf (Quest: Preparing the Salve (Id: 9345))
+DELETE FROM `creature_loot_template` WHERE `Entry`=16879 AND `Item`=23205;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16879, 23205, 37, 'Starving Helboar - Hellfire Spineleaf');
+DELETE FROM `creature_loot_template` WHERE `Entry`=16972 AND `Item`=23205;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (16972, 23205, 36, 'Bonestripper Buzzard - Hellfire Spineleaf');

@@ -93,3 +93,9 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (1895
 -- Salvaged Metal (Quest: Sacred Fire (Id: 5062))
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=18952 AND `ItemId`=25912;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (18952, 2, 25912);
+
+-- Hellfire Spineleaf (Quest: Preparing the Salve (Id: 9345))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16879 AND `ItemId`=23205;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16879, 1, 23205);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16972 AND `ItemId`=23205;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16972, 1, 23205);
