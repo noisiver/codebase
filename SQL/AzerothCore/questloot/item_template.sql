@@ -47,3 +47,9 @@ UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=12732;
 
 -- Grimtotem Note (Quest: The Grimtotem Plot (Id: 11201))
 UPDATE `item_template` SET `Flags`=3136 WHERE `entry`=33050;
+
+-- Salvaged Wood (Quest: I Work... For the Horde! (Id: 10086))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=25911;
+
+-- Salvaged Metal (Quest: I Work... For the Horde! (Id: 10086))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=25912;

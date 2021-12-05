@@ -65,3 +65,11 @@ UPDATE `creature_loot_template` SET `Chance`=42 WHERE `Entry`=4345 AND `Item`=33
 UPDATE `creature_loot_template` SET `Chance`=41 WHERE `Entry`=23592 AND `Item`=33071;
 UPDATE `creature_loot_template` SET `Chance`=40 WHERE `Entry`=23593 AND `Item`=33071;
 UPDATE `creature_loot_template` SET `Chance`=39 WHERE `Entry`=23714 AND `Item`=33071;
+
+-- Salvaged Wood (Quest: Sacred Fire (Id: 5062))
+DELETE FROM `creature_loot_template` WHERE `Entry`=18952 AND `Item`=25911;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (18952, 25911, 44, 'Bonechewer Scavenger - Salvaged Wood');
+
+-- Salvaged Metal (Quest: Sacred Fire (Id: 5062))
+DELETE FROM `creature_loot_template` WHERE `Entry`=18952 AND `Item`=25912;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `Comment`) VALUES (18952, 25912, 44, 'Bonechewer Scavenger - Salvaged Metal');

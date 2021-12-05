@@ -85,3 +85,11 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23593 AND `ItemId`=33071;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23593, 1, 33071);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=23714 AND `ItemId`=33071;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (23714, 1, 33071);
+
+-- Salvaged Wood (Quest: Sacred Fire (Id: 5062))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=18952 AND `ItemId`=25911;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (18952, 1, 25911);
+
+-- Salvaged Metal (Quest: Sacred Fire (Id: 5062))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=18952 AND `ItemId`=25912;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (18952, 2, 25912);
