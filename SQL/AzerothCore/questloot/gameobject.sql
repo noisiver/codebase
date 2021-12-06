@@ -17,4 +17,4 @@ UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=58;
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=181626;
 
 -- Arelion's Knapsack (Quest: Arelion's Journal (Id: 9374))
-UPDATE `gameobject` SET `spawntimesecs` WHERE `id`=184115;
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=184115;
