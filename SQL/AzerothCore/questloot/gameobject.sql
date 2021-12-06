@@ -21,3 +21,6 @@ UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=184115;
 
 -- Torn Pilgrim's Pack (Quest: A Pilgrim's Plight (Id: 9376))
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=184478;
+
+-- Metal Coffer (Quest: A Traitor Among Us (Id: 10367))
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=184466;
