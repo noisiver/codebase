@@ -14,4 +14,7 @@ UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=175565;
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=58;
 
 -- Warped Crates (Quest: Twilight of the Dawn Runner (Id: 9437))
-UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=181626
+UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=181626;
+
+-- Arelion's Knapsack (Quest: Arelion's Journal (Id: 9374))
+UPDATE `gameobject` SET `spawntimesecs` WHERE `id`=184115;
