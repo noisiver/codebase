@@ -24,3 +24,6 @@ UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=184478;
 
 -- Metal Coffer (Quest: A Traitor Among Us (Id: 10367))
 UPDATE `gameobject` SET `spawntimesecs`=1 WHERE `id`=184466;
+
+-- Burstcap Mushroom (Quest: Burstcap Mushrooms, Mon! (Id: 9814))
+UPDATE `gameobject` SET `spawntimesecs`=10 WHERE `id`=182095;
