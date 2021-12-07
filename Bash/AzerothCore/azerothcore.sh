@@ -26,6 +26,9 @@ if [ $# -gt 0 ]; then
             start_process
         elif [ $1 == "stop" ]; then
             stop_process
+        elif [ $1 == "restart" ]; then
+            stop_process
+            start_process
         elif [ $1 == "client" ]; then
             update_client_data
         else
