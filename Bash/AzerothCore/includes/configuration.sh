@@ -214,8 +214,8 @@ function generate_settings
                 <enabled>${86:-false}</enabled>
                 <!-- The amount of days that recruit a friend stays active. 0 = never expires -->
                 <duration>${87:-90}</duration>
-                <!-- Allow the same account to be referred again after it has expired -->
-                <reusable>${88:-false}</reusable>
+                <!-- Allow renewal of referred account after it has expired -->
+                <renewable>${88:-false}</renewable>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
@@ -329,7 +329,7 @@ function export_settings
     $MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER \
     $MODULE_RECRUIT_A_FRIEND_ENABLED \
     $MODULE_RECRUIT_A_FRIEND_DURATION \
-    $MODULE_RECRUIT_A_FRIEND_REUSABLE \
+    $MODULE_RECRUIT_A_FRIEND_RENEWABLE \
     $MODULE_SKIP_DK_STARTING_AREA_ENABLED \
     $MODULE_SKIP_DK_STARTING_AREA_LEVEL \
     $MODULE_SPAWN_POINTS_ENABLED \
@@ -446,7 +446,7 @@ MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER="$(echo "cat /config/module/learn_spells
 
 MODULE_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /config/module/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_RECRUIT_A_FRIEND_DURATION="$(echo "cat /config/module/recruit_a_friend/duration/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_RECRUIT_A_FRIEND_REUSABLE="$(echo "cat /config/module/recruit_a_friend/reusable/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_RECRUIT_A_FRIEND_RENEWABLE="$(echo "cat /config/module/recruit_a_friend/renewable/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_SKIP_DK_STARTING_AREA_ENABLED="$(echo "cat /config/module/skip_dk_starting_area/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_SKIP_DK_STARTING_AREA_LEVEL="$(echo "cat /config/module/skip_dk_starting_area/starting_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
@@ -892,8 +892,8 @@ if [[ ! $MODULE_RECRUIT_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_RECRUIT_A_FRIEND_REUSABLE != "true" && $MODULE_RECRUIT_A_FRIEND_REUSABLE != "false" ]]; then
-    MODULE_RECRUIT_A_FRIEND_REUSABLE="false"
+if [[ $MODULE_RECRUIT_A_FRIEND_RENEWABLE != "true" && $MODULE_RECRUIT_A_FRIEND_RENEWABLE != "false" ]]; then
+    MODULE_RECRUIT_A_FRIEND_RENEWABLE="false"
     REQUIRE_EXPORT=true
 fi
 
@@ -1172,10 +1172,10 @@ function update_configuration
 
                 cp $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf.dist $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
 
-                [ $MODULE_RECRUIT_A_FRIEND_REUSABLE == "true" ] && ENABLE_REUSABLE=1 || ENABLE_REUSABLE=0
+                [ $MODULE_RECRUIT_A_FRIEND_RENEWABLE == "true" ] && ENABLE_RENEWABLE=1 || ENABLE_RENEWABLE=0
 
                 sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$MODULE_RECRUIT_A_FRIEND_DURATION'/g' $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
-                sed -i 's/RecruitAFriend.Reusable =.*/RecruitAFriend.Reusable = '$ENABLE_REUSABLE'/g' $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
+                sed -i 's/RecruitAFriend.Renewable =.*/RecruitAFriend.Renewable = '$ENABLE_RENEWABLE'/g' $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
             fi
         else
             if [ -f $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf ]; then
