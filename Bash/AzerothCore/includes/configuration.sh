@@ -214,26 +214,24 @@ function generate_settings
                 <enabled>${86:-false}</enabled>
                 <!-- The amount of days that recruit a friend stays active. 0 = never expires -->
                 <duration>${87:-90}</duration>
-                <!-- Allow renewal of referred account after it has expired -->
-                <renewable>${88:-false}</renewable>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${89:-false}</enabled>
+                <enabled>${88:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${90:-58}</starting_level>
+                <starting_level>${89:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module -->
-                <enabled>${91:-false}</enabled>
+                <enabled>${90:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module -->
-                <enabled>${92:-false}</enabled>
+                <enabled>${91:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${93:-1}</experience_multiplier>
+                <experience_multiplier>${92:-1}</experience_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${94:-1}</reputation_multiplier>
+                <reputation_multiplier>${93:-1}</reputation_multiplier>
             </weekend_bonus>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -329,7 +327,6 @@ function export_settings
     $MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER \
     $MODULE_RECRUIT_A_FRIEND_ENABLED \
     $MODULE_RECRUIT_A_FRIEND_DURATION \
-    $MODULE_RECRUIT_A_FRIEND_RENEWABLE \
     $MODULE_SKIP_DK_STARTING_AREA_ENABLED \
     $MODULE_SKIP_DK_STARTING_AREA_LEVEL \
     $MODULE_SPAWN_POINTS_ENABLED \
@@ -446,7 +443,6 @@ MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER="$(echo "cat /config/module/learn_spells
 
 MODULE_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /config/module/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_RECRUIT_A_FRIEND_DURATION="$(echo "cat /config/module/recruit_a_friend/duration/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_RECRUIT_A_FRIEND_RENEWABLE="$(echo "cat /config/module/recruit_a_friend/renewable/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_SKIP_DK_STARTING_AREA_ENABLED="$(echo "cat /config/module/skip_dk_starting_area/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_SKIP_DK_STARTING_AREA_LEVEL="$(echo "cat /config/module/skip_dk_starting_area/starting_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
@@ -892,11 +888,6 @@ if [[ ! $MODULE_RECRUIT_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_RECRUIT_A_FRIEND_RENEWABLE != "true" && $MODULE_RECRUIT_A_FRIEND_RENEWABLE != "false" ]]; then
-    MODULE_RECRUIT_A_FRIEND_RENEWABLE="false"
-    REQUIRE_EXPORT=true
-fi
-
 if [[ $MODULE_SKIP_DK_STARTING_AREA_ENABLED != "true" && $MODULE_SKIP_DK_STARTING_AREA_ENABLED != "false" ]]; then
     MODULE_SKIP_DK_STARTING_AREA_ENABLED="false"
     REQUIRE_EXPORT=true
@@ -1172,10 +1163,7 @@ function update_configuration
 
                 cp $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf.dist $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
 
-                [ $MODULE_RECRUIT_A_FRIEND_RENEWABLE == "true" ] && ENABLE_RENEWABLE=1 || ENABLE_RENEWABLE=0
-
                 sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$MODULE_RECRUIT_A_FRIEND_DURATION'/g' $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
-                sed -i 's/RecruitAFriend.Renewable =.*/RecruitAFriend.Renewable = '$ENABLE_RENEWABLE'/g' $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
             fi
         else
             if [ -f $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf ]; then
