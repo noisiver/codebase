@@ -1,5 +1,5 @@
 #!/bin/bash
-INCLUDES=("color" "distribution" "packages" "configuration" "quote" "source" "database" "overrides" "process")
+INCLUDES=("color" "distribution" "packages" "configuration" "quote" "source" "database" "process")
 
 clear
 

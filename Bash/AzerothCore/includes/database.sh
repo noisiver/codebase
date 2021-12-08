@@ -283,6 +283,45 @@ function import_database
     fi
 
     if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ $MODULE_LEARN_SPELLS_ENABLED == "true" ]; then
+            if [[ -d $CORE_DIRECTORY/modules/mod-learnspells/sql/world/base ]]; then
+                printf "${COLOR_ORANGE}Importing mod_learnspells.sql${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $CORE_DIRECTORY/modules/mod-learnspells/sql/world/base/mod_learnspells.sql
+                if [ $? -ne 0 ]; then
+                    rm -rf $MYSQL_CONFIG
+                    exit $?
+                fi
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ $MODULE_RECRUIT_A_FRIEND_ENABLED == "true" ]; then
+            if [[ -d $CORE_DIRECTORY/modules/mod-recruitafriend/sql/auth/base ]]; then
+                printf "${COLOR_ORANGE}Importing mod_recruitafriend.sql${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_AUTH < $CORE_DIRECTORY/modules/mod-recruitafriend/sql/auth/base/mod_recruitafriend.sql
+                if [ $? -ne 0 ]; then
+                    rm -rf $MYSQL_CONFIG
+                    exit $?
+                fi
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ $MODULE_SPAWN_POINTS_ENABLED == "true" ]; then
+            if [[ -d $CORE_DIRECTORY/modules/mod-spawnpoints/sql/world/base ]]; then
+                printf "${COLOR_ORANGE}Importing mod_spawnpoints.sql${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $CORE_DIRECTORY/modules/mod-spawnpoints/sql/world/base/mod_spawnpoints.sql
+                if [ $? -ne 0 ]; then
+                    rm -rf $MYSQL_CONFIG
+                    exit $?
+                fi
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
         if [[ -d $ROOT/sql/world ]]; then
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
                 if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then

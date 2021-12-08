@@ -66,11 +66,7 @@ function clone_source
     fi
 
     if [ $1 == 0 ] || [ $1 == 2 ]; then
-        if [[ $WORLD_ENABLE_SCRIPT_OVERRIDES == "true" ]]; then
-            add_overrides
-        fi
-
-        if [ $MODULE_AHBOT_ENABLED == "true" ]; then
+        if [[ $MODULE_AHBOT_ENABLED == "true" ]]; then
             if [ ! -d $CORE_DIRECTORY/modules/mod-ah-bot ]; then
                 git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $CORE_DIRECTORY/modules/mod-ah-bot
                 if [ $? -ne 0 ]; then
@@ -104,7 +100,41 @@ function clone_source
             fi
         fi
 
-        if [ $MODULE_ASSISTANT_ENABLED == "true" ]; then
+        if [[ $MODULE_ACTIVATE_ZONES_ENABLED == "true" ]]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-activatezones ]; then
+                git clone --branch master https://github.com/tkn963/mod-activatezones.git $CORE_DIRECTORY/modules/mod-activatezones
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-activatezones
+
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d $CORE_DIRECTORY/modules/mod-activatezones ]]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-activatezones
+
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
+            fi
+        fi
+
+        if [[ $MODULE_ASSISTANT_ENABLED == "true" ]]; then
             if [ ! -d $CORE_DIRECTORY/modules/mod-assistant ]; then
                 git clone --branch master https://github.com/tkn963/mod-assistant.git $CORE_DIRECTORY/modules/mod-assistant
                 if [ $? -ne 0 ]; then
@@ -138,7 +168,7 @@ function clone_source
             fi
         fi
 
-        if [ $MODULE_ELUNA_ENABLED == "true" ]; then
+        if [[ $MODULE_ELUNA_ENABLED == "true" ]]; then
             if [ ! -d $CORE_DIRECTORY/modules/mod-eluna-lua-engine ]; then
                 git clone --recursive --branch master https://github.com/azerothcore/mod-eluna-lua-engine.git $CORE_DIRECTORY/modules/mod-eluna-lua-engine
                 if [ $? -ne 0 ]; then
@@ -172,7 +202,75 @@ function clone_source
             fi
         fi
 
-        if [ $MODULE_SKIP_DK_STARTING_AREA_ENABLED == "true" ]; then
+        if [[ $MODULE_LEARN_SPELLS_ENABLED == "true" ]]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-learnspells ]; then
+                git clone --branch master https://github.com/tkn963/mod-learnspells.git $CORE_DIRECTORY/modules/mod-learnspells
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-learnspells
+
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            fi
+        else
+            if [ -d $CORE_DIRECTORY/modules/mod-learnspells ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-learnspells
+
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
+            fi
+        fi
+
+        if [[ $MODULE_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-recruitafriend ]; then
+                git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $CORE_DIRECTORY/modules/mod-recruitafriend
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-recruitafriend
+
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            fi
+        else
+            if [ -d $CORE_DIRECTORY/modules/mod-recruitafriend ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-recruitafriend
+
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
+            fi
+        fi
+
+        if [[ $MODULE_SKIP_DK_STARTING_AREA_ENABLED == "true" ]]; then
             if [ ! -d $CORE_DIRECTORY/modules/mod-skip-dk-starting-area ]; then
                 git clone --recursive --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
                 if [ $? -ne 0 ]; then
@@ -199,6 +297,74 @@ function clone_source
         else
             if [ -d $CORE_DIRECTORY/modules/mod-skip-dk-starting-area ]; then
                 rm -rf $CORE_DIRECTORY/modules/mod-skip-dk-starting-area
+
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
+            fi
+        fi
+
+        if [[ $MODULE_SPAWN_POINTS_ENABLED == "true" ]]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-spawnpoints ]; then
+                git clone --branch master https://github.com/tkn963/mod-spawnpoints.git $CORE_DIRECTORY/modules/mod-spawnpoints
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-spawnpoints
+
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            fi
+        else
+            if [ -d $CORE_DIRECTORY/modules/mod-spawnpoints ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-spawnpoints
+
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
+            fi
+        fi
+
+        if [[ $MODULE_WEEKEND_BONUS_ENABLED == "true" ]]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-weekendbonus ]; then
+                git clone --branch master https://github.com/tkn963/mod-weekendbonus.git $CORE_DIRECTORY/modules/mod-weekendbonus
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-weekendbonus
+
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            fi
+        else
+            if [ -d $CORE_DIRECTORY/modules/mod-weekendbonus ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-weekendbonus
 
                 if [ -d $CORE_DIRECTORY/build ]; then
                     rm -rf $CORE_DIRECTORY/build

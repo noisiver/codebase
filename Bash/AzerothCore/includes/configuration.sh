@@ -81,146 +81,160 @@ function generate_settings
             <set_all_waypoints_active>${32:-false}</set_all_waypoints_active>
             <!-- Enable/Disable Minigob Manabonk in Dalaran. false = disabled, true = enabled -->
             <enable_minigob_manabonk>${33:-true}</enable_minigob_manabonk>
-            <!-- Enable/Disable the use of script overrides to allow them to trigger for members of a groups -->
-            <enable_script_overrides>${34:-false}</enable_script_overrides>
             <rates>
                 <!-- Experience rates (outside battleground) -->
-                <experience>${35:-1}</experience>
+                <experience>${34:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_exp>${36:-1}</rested_exp>
+                <rested_exp>${35:-1}</rested_exp>
                 <!-- Reputation gain rate -->
-                <reputation>${37:-1}</reputation>
+                <reputation>${36:-1}</reputation>
                 <!-- Drop rates for money -->
-                <money>${38:-1}</money>
+                <money>${37:-1}</money>
                 <!-- Crafting skills gain rate -->
-                <crafting>${39:-1}</crafting>
+                <crafting>${38:-1}</crafting>
                 <!-- Gathering skills gain rate -->
-                <gathering>${40:-1}</gathering>
+                <gathering>${39:-1}</gathering>
                 <!-- Weapon skills gain rate -->
-                <weapon_skill>${41:-1}</weapon_skill>
+                <weapon_skill>${40:-1}</weapon_skill>
                 <!-- Defense skills gain rate -->
-                <defense_skill>${42:-1}</defense_skill>
+                <defense_skill>${41:-1}</defense_skill>
             </rates>
             <gm>
                 <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
-                <login_state>${43:-true}</login_state>
+                <login_state>${42:-true}</login_state>
                 <!-- GM visibility at login. false = disabled, true = enabled -->
-                <enable_visibility>${44:-false}</enable_visibility>
+                <enable_visibility>${43:-false}</enable_visibility>
                 <!-- GM chat mode at login. false = disabled, true = enabled -->
-                <enable_chat>${45:-true}</enable_chat>
+                <enable_chat>${44:-true}</enable_chat>
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
-                <enable_whisper>${46:-false}</enable_whisper>
+                <enable_whisper>${45:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${47:-0}</show_gm_list>
+                <show_gm_list>${46:-0}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_who_list>${48:-0}</show_who_list>
+                <show_who_list>${47:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
-                <allow_friend>${49:-false}</allow_friend>
+                <allow_friend>${48:-false}</allow_friend>
                 <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
-                <allow_invite>${50:-false}</allow_invite>
+                <allow_invite>${49:-false}</allow_invite>
                 <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
-                <allow_lower_security>${51:-false}</allow_lower_security>
+                <allow_lower_security>${50:-false}</allow_lower_security>
             </gm>
         </world>
         <module>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${52:-false}</enabled>
+                <enabled>${51:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${53:-false}</enable_buyer>
+                <enable_buyer>${52:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${54:-false}</enable_seller>
+                <enable_seller>${53:-false}</enable_seller>
                 <!-- Account id is the account number (auth->account) of the player you want to run as the auction bot -->
-                <account_id>${55:-0}</account_id>
+                <account_id>${54:-0}</account_id>
                 <!-- Character guid is the GUID (characters->characters table) of the player you want to run as the auction bot -->
-                <character_guid>${56:-0}</character_guid>
+                <character_guid>${55:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house -->
-                <min_items>${57:-0}</min_items>
+                <min_items>${56:-0}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${58:-0}</max_items>
+                <max_items>${57:-0}</max_items>
             </ahbot>
+            <activate_zones>
+                <!-- Enable/Disable the use of the Activate Zones module -->
+                <enabled>${58:-false}</enabled>
+            </activate_zones>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module -->
                 <enabled>${59:-false}</enabled>
-                <gossip>
-                    <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${60:-false}</heirlooms>
-                    <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${61:-false}</glyphs>
-                    <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${62:-false}</gems>
-                    <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${63:-false}</containers>
-                    <utilities>
-                        <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${64:-false}</enabled>
-                        <!-- Cost in gold required to perform a name change -->
-                        <name_change>${65:-10}</name_change>
-                        <!-- Cost in gold required to perform a customization -->
-                        <customization>${66:-50}</customization>
-                        <!-- Cost in gold to perform a race change -->
-                        <race_change>${67:-500}</race_change>
-                        <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${68:-1000}</faction_change>
-                    </utilities>
-                </gossip>
-                <spells>
-                    <!-- Enable/Disable obtaining spells when leveling up or entering the world -->
-                    <enabled>${69:-false}</enabled>
-                    <!-- Enable/Disable obtaining spells when entering the world -->
-                    <on_login>${70:-false}</on_login>
-                    <!-- Enable/Disable obtaining spells when leveling up -->
-                    <on_levelup>${71:-false}</on_levelup>
-                    <!-- Enable/Disable obtaining class-specific spells when leveling up or entering the world -->
-                    <class_spells>${72:-false}</class_spells>
-                    <!-- Enable/Disable obtaining new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${73:-false}</talent_ranks>
-                    <!-- Enable/Disable obtaining new weapon and armor skills when leveling up -->
-                    <proficiencies>${74:-false}</proficiencies>
-                    <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${75:-false}</from_quests>
-                    <max_skill>
-                        <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${76:-false}</enabled>
-                        <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${77:-60}</max_level>
-                    </max_skill>
-                    <riding>
-                        <!-- Enable/Disable obtaining riding skills when leveling up or entering the world -->
-                        <enabled>${78:-false}</enabled>
-                        <!-- Enable/Disable obtaining the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${79:-false}</apprentice>
-                        <!-- Enable/Disable obtaining the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${80:-false}</journeyman>
-                        <!-- Enable/Disable obtaining the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${81:-false}</expert>
-                        <!-- Enable/Disable obtaining the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${82:-false}</artisan>
-                        <!-- Enable/Disable obtaining the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${83:-false}</cold_weather>
-                    </riding>
-                </spells>
-                <spawn_point>
-                    <!-- Enable/Disable teleporting new players to specified locations on first log in -->
-                    <enabled>${84:-false}</enabled>
-                    <!-- Enable/Disable teleporting death knight to specified locations on first log in -->
-                    <enable_death_knight>${85:-false}</enable_death_knight>
-                </spawn_point>
-                <!-- Enable/Disable doubling the experience and reputation a player earns on weekends -->
-                <weekend_bonus>${86:-false}</weekend_bonus>
-                <!-- Enable/Disable setting creatures within zones that has players to active -->
-                <activate_zone>${87:-false}</activate_zone>
+                <!-- Enable/Disable obtaining heirlooms from the assistant -->
+                <heirlooms>${60:-false}</heirlooms>
+                <!-- Enable/Disable obtaining glyphs from the assistant -->
+                <glyphs>${61:-false}</glyphs>
+                <!-- Enable/Disable obtaining gems from the assistant -->
+                <gems>${62:-false}</gems>
+                <!-- Enable/Disable obtaining containers from the assistant -->
+                <containers>${63:-false}</containers>
+                <utilities>
+                    <!-- Enable/Disable obtaining utilities from the assistant -->
+                    <enabled>${64:-false}</enabled>
+                    <!-- Cost in gold required to perform a name change -->
+                    <name_change>${65:-10}</name_change>
+                    <!-- Cost in gold required to perform a customization -->
+                    <customization>${66:-50}</customization>
+                    <!-- Cost in gold to perform a race change -->
+                    <race_change>${67:-500}</race_change>
+                    <!-- Cost in gold to perform a faction change -->
+                    <faction_change>${68:-1000}</faction_change>
+                </utilities>
+                <!-- Enable/Disable obtaining shaman totems from the assistant -->
+                <totems>${69:-false}</totems>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${88:-false}</enabled>
+                <enabled>${70:-false}</enabled>
             </eluna>
+            <learn_spells>
+                <!-- Enable/Disable the use of the Learn Spells module -->
+                <enabled>${71:-false}</enabled>
+                <spells>
+                    <!-- Enable/Disable obtaining spells when entering the world -->
+                    <on_login>${72:-false}</on_login>
+                    <!-- Enable/Disable obtaining spells when leveling up -->
+                    <on_levelup>${73:-false}</on_levelup>
+                    <!-- Enable/Disable obtaining class-specific spells when leveling up or entering the world -->
+                    <class_spells>${74:-false}</class_spells>
+                    <!-- Enable/Disable obtaining new talent ranks when leveling up or entering the world -->
+                    <talent_ranks>${75:-false}</talent_ranks>
+                    <!-- Enable/Disable obtaining new weapon and armor skills when leveling up -->
+                    <proficiencies>${76:-false}</proficiencies>
+                    <!-- Enable/Disable spells that are normally obtained through quests -->
+                    <from_quests>${77:-false}</from_quests>
+                    <max_skill>
+                        <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
+                        <enabled>${78:-false}</enabled>
+                        <!-- The max level where weapon skills will be set to their max value -->
+                        <max_level>${79:-60}</max_level>
+                    </max_skill>
+                    <riding>
+                        <!-- Enable/Disable obtaining riding skills when leveling up or entering the world -->
+                        <enabled>${80:-false}</enabled>
+                        <!-- Enable/Disable obtaining the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
+                        <apprentice>${81:-false}</apprentice>
+                        <!-- Enable/Disable obtaining the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
+                        <journeyman>${82:-false}</journeyman>
+                        <!-- Enable/Disable obtaining the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
+                        <expert>${83:-false}</expert>
+                        <!-- Enable/Disable obtaining the artisan (300%) riding skill and mounts when leveling up or entering the world -->
+                        <artisan>${84:-false}</artisan>
+                        <!-- Enable/Disable obtaining the cold weather flying skill (level 77) when leveling up or entering the world -->
+                        <cold_weather>${85:-false}</cold_weather>
+                    </riding>
+                </spells>
+            </learn_spells>
+            <recruit_a_friend>
+                <!-- Enable/Disable the use of the Recruit A Friend module -->
+                <enabled>${86:-false}</enabled>
+                <!-- The amount of days that recruit a friend stays active. 0 = never expires -->
+                <duration>${87:-90}</duration>
+                <!-- Allow the same account to be referred again after it has expired -->
+                <reusable>${88:-false}</reusable>
+            </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
                 <enabled>${89:-false}</enabled>
                 <!-- The level that death knight starts at -->
                 <starting_level>${90:-58}</starting_level>
             </skip_dk_starting_area>
+            <spawn_points>
+                <!-- Enable/Disable the use of the Spawn Points module -->
+                <enabled>${91:-false}</enabled>
+            </spawn_points>
+            <weekend_bonus>
+                <!-- Enable/Disable the use of the Weekend Bonus module -->
+                <enabled>${92:-false}</enabled>
+                <!-- The multiplier for experience on weekends -->
+                <experience_multiplier>${93:-1}</experience_multiplier>
+                <!-- The multiplier for reputation on weekends -->
+                <reputation_multiplier>${94:-1}</reputation_multiplier>
+            </weekend_bonus>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
 }
@@ -261,7 +275,6 @@ function export_settings
     $WORLD_PRELOAD_MAP_GRIDS \
     $WORLD_SET_WAYPOINTS_ACTIVE \
     $WORLD_ENABLE_MINIGOB_MANABONK \
-    $WORLD_ENABLE_SCRIPT_OVERRIDES \
     $WORLD_RATE_EXPERIENCE \
     $WORLD_RATE_RESTED_EXP \
     $WORLD_RATE_REPUTATION \
@@ -286,38 +299,43 @@ function export_settings
     $MODULE_AHBOT_CHARACTER_GUID \
     $MODULE_AHBOT_MIN_ITEMS \
     $MODULE_AHBOT_MAX_ITEMS \
+    $MODULE_ACTIVATE_ZONES_ENABLED \
     $MODULE_ASSISTANT_ENABLED \
-    $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS \
-    $MODULE_ASSISTANT_GOSSIP_GLYPHS \
-    $MODULE_ASSISTANT_GOSSIP_GEMS \
-    $MODULE_ASSISTANT_GOSSIP_CONTAINERS \
-    $MODULE_ASSISTANT_GOSSIP_UTILITIES_ENABLED \
-    $MODULE_ASSISTANT_GOSSIP_UTILITIES_NAME_CHANGE \
-    $MODULE_ASSISTANT_GOSSIP_UTILITIES_CUSTOMIZATION \
-    $MODULE_ASSISTANT_GOSSIP_UTILITIES_RACE_CHANGE \
-    $MODULE_ASSISTANT_GOSSIP_UTILITIES_FACTION_CHANGE \
-    $MODULE_ASSISTANT_SPELLS_ENABLED \
-    $MODULE_ASSISTANT_SPELLS_ON_LOGIN \
-    $MODULE_ASSISTANT_SPELLS_ON_LEVELUP \
-    $MODULE_ASSISTANT_SPELLS_CLASS_SPELLS \
-    $MODULE_ASSISTANT_SPELLS_TALENT_RANKS \
-    $MODULE_ASSISTANT_SPELLS_PROFICIENCIES \
-    $MODULE_ASSISTANT_SPELLS_FROM_QUESTS \
-    $MODULE_ASSISTANT_SPELLS_MAX_SKILL_ENABLED \
-    $MODULE_ASSISTANT_SPELLS_MAX_SKILL_MAX_LEVEL \
-    $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED \
-    $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE \
-    $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN \
-    $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT \
-    $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN \
-    $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER \
-    $MODULE_ASSISTANT_SPAWN_POINT_ENABLED \
-    $MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT \
-    $MODULE_ASSISTANT_WEEKEND_BONUS \
-    $MODULE_ASSISTANT_ACTIVATE_ZONE \
+    $MODULE_ASSISTANT_HEIRLOOMS \
+    $MODULE_ASSISTANT_GLYPHS \
+    $MODULE_ASSISTANT_GEMS \
+    $MODULE_ASSISTANT_CONTAINERS \
+    $MODULE_ASSISTANT_UTILITIES_ENABLED \
+    $MODULE_ASSISTANT_UTILITIES_NAME_CHANGE \
+    $MODULE_ASSISTANT_UTILITIES_CUSTOMIZATION \
+    $MODULE_ASSISTANT_UTILITIES_RACE_CHANGE \
+    $MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE \
+    $MODULE_ASSISTANT_TOTEMS \
     $MODULE_ELUNA_ENABLED \
+    $MODULE_LEARN_SPELLS_ENABLED \
+    $MODULE_LEARN_SPELLS_ON_LOGIN \
+    $MODULE_LEARN_SPELLS_ON_LEVELUP \
+    $MODULE_LEARN_SPELLS_CLASS_SPELLS \
+    $MODULE_LEARN_SPELLS_TALENT_RANKS \
+    $MODULE_LEARN_SPELLS_PROFICIENCIES \
+    $MODULE_LEARN_SPELLS_FROM_QUESTS \
+    $MODULE_LEARN_SPELLS_MAX_SKILL_ENABLED \
+    $MODULE_LEARN_SPELLS_MAX_SKILL_MAX_LEVEL \
+    $MODULE_LEARN_SPELLS_RIDING_ENABLED \
+    $MODULE_LEARN_SPELLS_RIDING_APPRENTICE \
+    $MODULE_LEARN_SPELLS_RIDING_JOURNEYMAN \
+    $MODULE_LEARN_SPELLS_RIDING_EXPERT \
+    $MODULE_LEARN_SPELLS_RIDING_ARTISAN \
+    $MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER \
+    $MODULE_RECRUIT_A_FRIEND_ENABLED \
+    $MODULE_RECRUIT_A_FRIEND_DURATION \
+    $MODULE_RECRUIT_A_FRIEND_REUSABLE \
     $MODULE_SKIP_DK_STARTING_AREA_ENABLED \
-    $MODULE_SKIP_DK_STARTING_AREA_LEVEL
+    $MODULE_SKIP_DK_STARTING_AREA_LEVEL \
+    $MODULE_SPAWN_POINTS_ENABLED \
+    $MODULE_WEEKEND_BONUS_ENABLED \
+    $MODULE_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER \
+    $MODULE_WEEKEND_BONUS_REPUTATION_MULTIPLIER
 }
 
 if [ ! -f $CONFIG_FILE ]; then
@@ -366,7 +384,6 @@ WORLD_RAF_MAX_LEVEL="$(echo "cat /config/world/raf_max_level/text()" | xmllint -
 WORLD_PRELOAD_MAP_GRIDS="$(echo "cat /config/world/preload_map_grids/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 WORLD_SET_WAYPOINTS_ACTIVE="$(echo "cat /config/world/set_all_waypoints_active/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 WORLD_ENABLE_MINIGOB_MANABONK="$(echo "cat /config/world/enable_minigob_manabonk/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-WORLD_ENABLE_SCRIPT_OVERRIDES="$(echo "cat /config/world/enable_script_overrides/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 WORLD_RATE_EXPERIENCE="$(echo "cat /config/world/rates/experience/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 WORLD_RATE_RESTED_EXP="$(echo "cat /config/world/rates/rested_exp/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
@@ -395,40 +412,50 @@ MODULE_AHBOT_CHARACTER_GUID="$(echo "cat /config/module/ahbot/character_guid/tex
 MODULE_AHBOT_MIN_ITEMS="$(echo "cat /config/module/ahbot/min_items/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_AHBOT_MAX_ITEMS="$(echo "cat /config/module/ahbot/max_items/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
+MODULE_ACTIVATE_ZONES_ENABLED="$(echo "cat /config/module/activate_zones/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
 MODULE_ASSISTANT_ENABLED="$(echo "cat /config/module/assistant/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_HEIRLOOMS="$(echo "cat /config/module/assistant/gossip/heirlooms/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_GLYPHS="$(echo "cat /config/module/assistant/gossip/glyphs/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_GEMS="$(echo "cat /config/module/assistant/gossip/gems/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_CONTAINERS="$(echo "cat /config/module/assistant/gossip/containers/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_UTILITIES_ENABLED="$(echo "cat /config/module/assistant/gossip/utilities/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_UTILITIES_NAME_CHANGE="$(echo "cat /config/module/assistant/gossip/utilities/name_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_UTILITIES_CUSTOMIZATION="$(echo "cat /config/module/assistant/gossip/utilities/customization/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_UTILITIES_RACE_CHANGE="$(echo "cat /config/module/assistant/gossip/utilities/race_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_GOSSIP_UTILITIES_FACTION_CHANGE="$(echo "cat /config/module/assistant/gossip/utilities/faction_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_ENABLED="$(echo "cat /config/module/assistant/spells/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_ON_LOGIN="$(echo "cat /config/module/assistant/spells/on_login/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_ON_LEVELUP="$(echo "cat /config/module/assistant/spells/on_levelup/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_CLASS_SPELLS="$(echo "cat /config/module/assistant/spells/class_spells/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_TALENT_RANKS="$(echo "cat /config/module/assistant/spells/talent_ranks/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_PROFICIENCIES="$(echo "cat /config/module/assistant/spells/proficiencies/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_FROM_QUESTS="$(echo "cat /config/module/assistant/spells/from_quests/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_MAX_SKILL_ENABLED="$(echo "cat /config/module/assistant/spells/max_skill/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_MAX_SKILL_MAX_LEVEL="$(echo "cat /config/module/assistant/spells/max_skill/max_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_RIDING_ENABLED="$(echo "cat /config/module/assistant/spells/riding/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE="$(echo "cat /config/module/assistant/spells/riding/apprentice/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN="$(echo "cat /config/module/assistant/spells/riding/journeyman/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_RIDING_EXPERT="$(echo "cat /config/module/assistant/spells/riding/expert/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN="$(echo "cat /config/module/assistant/spells/riding/artisan/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER="$(echo "cat /config/module/assistant/spells/riding/cold_weather/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPAWN_POINT_ENABLED="$(echo "cat /config/module/assistant/spawn_point/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT="$(echo "cat /config/module/assistant/spawn_point/enable_death_knight/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_WEEKEND_BONUS="$(echo "cat /config/module/assistant/weekend_bonus/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
-MODULE_ASSISTANT_ACTIVATE_ZONE="$(echo "cat /config/module/assistant/activate_zone/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_HEIRLOOMS="$(echo "cat /config/module/assistant/heirlooms/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_GLYPHS="$(echo "cat /config/module/assistant/glyphs/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_GEMS="$(echo "cat /config/module/assistant/gems/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_CONTAINERS="$(echo "cat /config/module/assistant/containers/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_ENABLED="$(echo "cat /config/module/assistant/utilities/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_NAME_CHANGE="$(echo "cat /config/module/assistant/utilities/name_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_CUSTOMIZATION="$(echo "cat /config/module/assistant/utilities/customization/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_RACE_CHANGE="$(echo "cat /config/module/assistant/utilities/race_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE="$(echo "cat /config/module/assistant/utilities/faction_change/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_ASSISTANT_TOTEMS="$(echo "cat /config/module/assistant/totems/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
+MODULE_LEARN_SPELLS_ENABLED="$(echo "cat /config/module/learn_spells/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_ON_LOGIN="$(echo "cat /config/module/learn_spells/spells/on_login/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_ON_LEVELUP="$(echo "cat /config/module/learn_spells/spells/on_levelup/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_CLASS_SPELLS="$(echo "cat /config/module/learn_spells/spells/class_spells/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_TALENT_RANKS="$(echo "cat /config/module/learn_spells/spells/talent_ranks/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_PROFICIENCIES="$(echo "cat /config/module/learn_spells/spells/proficiencies/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_FROM_QUESTS="$(echo "cat /config/module/learn_spells/spells/from_quests/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_MAX_SKILL_ENABLED="$(echo "cat /config/module/learn_spells/spells/max_skill/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_MAX_SKILL_MAX_LEVEL="$(echo "cat /config/module/learn_spells/spells/max_skill/max_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_RIDING_ENABLED="$(echo "cat /config/module/learn_spells/spells/riding/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_RIDING_APPRENTICE="$(echo "cat /config/module/learn_spells/spells/riding/apprentice/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_RIDING_JOURNEYMAN="$(echo "cat /config/module/learn_spells/spells/riding/journeyman/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_RIDING_EXPERT="$(echo "cat /config/module/learn_spells/spells/riding/expert/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_RIDING_ARTISAN="$(echo "cat /config/module/learn_spells/spells/riding/artisan/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER="$(echo "cat /config/module/learn_spells/spells/riding/cold_weather/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+MODULE_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /config/module/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_RECRUIT_A_FRIEND_DURATION="$(echo "cat /config/module/recruit_a_friend/duration/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_RECRUIT_A_FRIEND_REUSABLE="$(echo "cat /config/module/recruit_a_friend/reusable/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
 MODULE_SKIP_DK_STARTING_AREA_ENABLED="$(echo "cat /config/module/skip_dk_starting_area/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_SKIP_DK_STARTING_AREA_LEVEL="$(echo "cat /config/module/skip_dk_starting_area/starting_level/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+MODULE_SPAWN_POINTS_ENABLED="$(echo "cat /config/module/spawn_points/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+MODULE_WEEKEND_BONUS_ENABLED="$(echo "cat /config/module/weekend_bonus/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="$(echo "cat /config/module/weekend_bonus/experience_multiplier/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_WEEKEND_BONUS_REPUTATION_MULTIPLIER="$(echo "cat /config/module/weekend_bonus/reputation_multiplier/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 if [[ -z $MYSQL_HOSTNAME ]] || [[ $MYSQL_HOSTNAME == "" ]]; then
     MYSQL_HOSTNAME="127.0.0.1"
@@ -595,11 +622,6 @@ if [[ $WORLD_ENABLE_MINIGOB_MANABONK != "true" && $WORLD_ENABLE_MINIGOB_MANABONK
     REQUIRE_EXPORT=true
 fi
 
-if [[ $WORLD_ENABLE_SCRIPT_OVERRIDES != "true" && $WORLD_ENABLE_SCRIPT_OVERRIDES != "false" ]]; then
-    WORLD_ENABLE_SCRIPT_OVERRIDES="false"
-    REQUIRE_EXPORT=true
-fi
-
 if [[ ! $WORLD_RATE_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $WORLD_RATE_EXPERIENCE < 1 ]]; then
     WORLD_RATE_EXPERIENCE="1"
     REQUIRE_EXPORT=true
@@ -720,153 +742,158 @@ if [[ ! $MODULE_AHBOT_MAX_ITEMS =~ ^[0-9]+$ ]]; then
     REQUIRE_EXPORT=true
 fi
 
+if [[ $MODULE_ACTIVATE_ZONES_ENABLED != "true" && $MODULE_ACTIVATE_ZONES_ENABLED != "false" ]]; then
+    MODULE_ACTIVATE_ZONES_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
 if [[ $MODULE_ASSISTANT_ENABLED != "true" && $MODULE_ASSISTANT_ENABLED != "false" ]]; then
     MODULE_ASSISTANT_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS != "true" && $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS != "false" ]]; then
-    MODULE_ASSISTANT_GOSSIP_HEIRLOOMS="false"
+if [[ $MODULE_ASSISTANT_HEIRLOOMS != "true" && $MODULE_ASSISTANT_HEIRLOOMS != "false" ]]; then
+    MODULE_ASSISTANT_HEIRLOOMS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_ASSISTANT_GOSSIP_GLYPHS != "true" && $MODULE_ASSISTANT_GOSSIP_GLYPHS != "false" ]]; then
-    MODULE_ASSISTANT_GOSSIP_GLYPHS="false"
+if [[ $MODULE_ASSISTANT_GLYPHS != "true" && $MODULE_ASSISTANT_GLYPHS != "false" ]]; then
+    MODULE_ASSISTANT_GLYPHS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_ASSISTANT_GOSSIP_GEMS != "true" && $MODULE_ASSISTANT_GOSSIP_GEMS != "false" ]]; then
-    MODULE_ASSISTANT_GOSSIP_GEMS="false"
+if [[ $MODULE_ASSISTANT_GEMS != "true" && $MODULE_ASSISTANT_GEMS != "false" ]]; then
+    MODULE_ASSISTANT_GEMS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_ASSISTANT_GOSSIP_CONTAINERS != "true" && $MODULE_ASSISTANT_GOSSIP_CONTAINERS != "false" ]]; then
-    MODULE_ASSISTANT_GOSSIP_CONTAINERS="false"
+if [[ $MODULE_ASSISTANT_CONTAINERS != "true" && $MODULE_ASSISTANT_CONTAINERS != "false" ]]; then
+    MODULE_ASSISTANT_CONTAINERS="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_ASSISTANT_GOSSIP_UTILITIES_ENABLED != "true" && $MODULE_ASSISTANT_GOSSIP_UTILITIES_ENABLED != "false" ]]; then
-    MODULE_ASSISTANT_GOSSIP_UTILITIES_ENABLED="false"
+if [[ $MODULE_ASSISTANT_UTILITIES_ENABLED != "true" && $MODULE_ASSISTANT_UTILITIES_ENABLED != "false" ]]; then
+    MODULE_ASSISTANT_UTILITIES_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
 
-if [[ ! $MODULE_ASSISTANT_GOSSIP_UTILITIES_NAME_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_GOSSIP_UTILITIES_NAME_CHANGE < 1 ]]; then
-    MODULE_ASSISTANT_GOSSIP_UTILITIES_NAME_CHANGE="10"
+if [[ ! $MODULE_ASSISTANT_UTILITIES_NAME_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_UTILITIES_NAME_CHANGE < 1 ]]; then
+    MODULE_ASSISTANT_UTILITIES_NAME_CHANGE="10"
     REQUIRE_EXPORT=true
 fi
 
-if [[ ! $MODULE_ASSISTANT_GOSSIP_UTILITIES_CUSTOMIZATION =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_GOSSIP_UTILITIES_CUSTOMIZATION < 1 ]]; then
-    MODULE_ASSISTANT_GOSSIP_UTILITIES_CUSTOMIZATION="10"
+if [[ ! $MODULE_ASSISTANT_UTILITIES_CUSTOMIZATION =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_UTILITIES_CUSTOMIZATION < 1 ]]; then
+    MODULE_ASSISTANT_UTILITIES_CUSTOMIZATION="10"
     REQUIRE_EXPORT=true
 fi
 
-if [[ ! $MODULE_ASSISTANT_GOSSIP_UTILITIES_RACE_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_GOSSIP_UTILITIES_RACE_CHANGE < 1 ]]; then
-    MODULE_ASSISTANT_GOSSIP_UTILITIES_RACE_CHANGE="10"
+if [[ ! $MODULE_ASSISTANT_UTILITIES_RACE_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_UTILITIES_RACE_CHANGE < 1 ]]; then
+    MODULE_ASSISTANT_UTILITIES_RACE_CHANGE="10"
     REQUIRE_EXPORT=true
 fi
 
-if [[ ! $MODULE_ASSISTANT_GOSSIP_UTILITIES_FACTION_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_GOSSIP_UTILITIES_FACTION_CHANGE < 1 ]]; then
-    MODULE_ASSISTANT_GOSSIP_UTILITIES_FACTION_CHANGE="10"
+if [[ ! $MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE < 1 ]]; then
+    MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE="10"
     REQUIRE_EXPORT=true
 fi
 
-if [[ $MODULE_ASSISTANT_SPELLS_ENABLED != "true" && $MODULE_ASSISTANT_SPELLS_ENABLED != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_ENABLED="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_ON_LOGIN != "true" && $MODULE_ASSISTANT_SPELLS_ON_LOGIN != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_ON_LOGIN="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_ON_LEVELUP != "true" && $MODULE_ASSISTANT_SPELLS_ON_LEVELUP != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_ON_LEVELUP="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_CLASS_SPELLS != "true" && $MODULE_ASSISTANT_SPELLS_CLASS_SPELLS != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_CLASS_SPELLS="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_TALENT_RANKS != "true" && $MODULE_ASSISTANT_SPELLS_TALENT_RANKS != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_TALENT_RANKS="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_PROFICIENCIES != "true" && $MODULE_ASSISTANT_SPELLS_PROFICIENCIES != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_PROFICIENCIES="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_FROM_QUESTS != "true" && $MODULE_ASSISTANT_SPELLS_FROM_QUESTS != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_FROM_QUESTS="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_MAX_SKILL_ENABLED != "true" && $MODULE_ASSISTANT_SPELLS_MAX_SKILL_ENABLED != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_MAX_SKILL_ENABLED="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ ! $MODULE_ASSISTANT_SPELLS_MAX_SKILL_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $MODULE_ASSISTANT_SPELLS_MAX_SKILL_MAX_LEVEL < 1 || $MODULE_ASSISTANT_SPELLS_MAX_SKILL_MAX_LEVEL > 80 ]]; then
-    MODULE_ASSISTANT_SPELLS_MAX_SKILL_MAX_LEVEL="60"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_RIDING_ENABLED="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_RIDING_EXPERT="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER != "true" && $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER != "false" ]]; then
-    MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED != "true" && $MODULE_ASSISTANT_SPAWN_POINT_ENABLED != "false" ]]; then
-    MODULE_ASSISTANT_SPAWN_POINT_ENABLED="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT != "true" && $MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT != "false" ]]; then
-    MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_WEEKEND_BONUS != "true" && $MODULE_ASSISTANT_WEEKEND_BONUS != "false" ]]; then
-    MODULE_ASSISTANT_WEEKEND_BONUS="false"
-    REQUIRE_EXPORT=true
-fi
-
-if [[ $MODULE_ASSISTANT_ACTIVATE_ZONE != "true" && $MODULE_ASSISTANT_ACTIVATE_ZONE != "false" ]]; then
-    MODULE_ASSISTANT_ACTIVATE_ZONE="false"
+if [[ $MODULE_ASSISTANT_TOTEMS != "true" && $MODULE_ASSISTANT_TOTEMS != "false" ]]; then
+    MODULE_ASSISTANT_TOTEMS="false"
     REQUIRE_EXPORT=true
 fi
 
 if [[ $MODULE_ELUNA_ENABLED != "true" && $MODULE_ELUNA_ENABLED != "false" ]]; then
     MODULE_ELUNA_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_ENABLED != "true" && $MODULE_LEARN_SPELLS_ENABLED != "false" ]]; then
+    MODULE_LEARN_SPELLS_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_ON_LOGIN != "true" && $MODULE_LEARN_SPELLS_ON_LOGIN != "false" ]]; then
+    MODULE_LEARN_SPELLS_ON_LOGIN="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_ON_LEVELUP != "true" && $MODULE_LEARN_SPELLS_ON_LEVELUP != "false" ]]; then
+    MODULE_LEARN_SPELLS_ON_LEVELUP="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_CLASS_SPELLS != "true" && $MODULE_LEARN_SPELLS_CLASS_SPELLS != "false" ]]; then
+    MODULE_LEARN_SPELLS_CLASS_SPELLS="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_TALENT_RANKS != "true" && $MODULE_LEARN_SPELLS_TALENT_RANKS != "false" ]]; then
+    MODULE_LEARN_SPELLS_TALENT_RANKS="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_PROFICIENCIES != "true" && $MODULE_LEARN_SPELLS_PROFICIENCIES != "false" ]]; then
+    MODULE_LEARN_SPELLS_PROFICIENCIES="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_FROM_QUESTS != "true" && $MODULE_LEARN_SPELLS_FROM_QUESTS != "false" ]]; then
+    MODULE_LEARN_SPELLS_FROM_QUESTS="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_MAX_SKILL_ENABLED != "true" && $MODULE_LEARN_SPELLS_MAX_SKILL_ENABLED != "false" ]]; then
+    MODULE_LEARN_SPELLS_MAX_SKILL_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEARN_SPELLS_MAX_SKILL_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $MODULE_LEARN_SPELLS_MAX_SKILL_MAX_LEVEL < 1 || $MODULE_LEARN_SPELLS_MAX_SKILL_MAX_LEVEL > 80 ]]; then
+    MODULE_LEARN_SPELLS_MAX_SKILL_MAX_LEVEL="60"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_RIDING_ENABLED != "true" && $MODULE_LEARN_SPELLS_RIDING_ENABLED != "false" ]]; then
+    MODULE_LEARN_SPELLS_RIDING_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_RIDING_APPRENTICE != "true" && $MODULE_LEARN_SPELLS_RIDING_APPRENTICE != "false" ]]; then
+    MODULE_LEARN_SPELLS_RIDING_APPRENTICE="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_RIDING_JOURNEYMAN != "true" && $MODULE_LEARN_SPELLS_RIDING_JOURNEYMAN != "false" ]]; then
+    MODULE_LEARN_SPELLS_RIDING_JOURNEYMAN="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_RIDING_EXPERT != "true" && $MODULE_LEARN_SPELLS_RIDING_EXPERT != "false" ]]; then
+    MODULE_LEARN_SPELLS_RIDING_EXPERT="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_RIDING_ARTISAN != "true" && $MODULE_LEARN_SPELLS_RIDING_ARTISAN != "false" ]]; then
+    MODULE_LEARN_SPELLS_RIDING_ARTISAN="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER != "true" && $MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER != "false" ]]; then
+    MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_RECRUIT_A_FRIEND_ENABLED != "true" && $MODULE_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
+    MODULE_RECRUIT_A_FRIEND_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_RECRUIT_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
+    MODULE_RECRUIT_A_FRIEND_DURATION="90"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_RECRUIT_A_FRIEND_REUSABLE != "true" && $MODULE_RECRUIT_A_FRIEND_REUSABLE != "false" ]]; then
+    MODULE_RECRUIT_A_FRIEND_REUSABLE="false"
     REQUIRE_EXPORT=true
 fi
 
@@ -877,6 +904,26 @@ fi
 
 if [[ ! $MODULE_SKIP_DK_STARTING_AREA_LEVEL =~ ^[0-9]+$ ]] || [[ $MODULE_SKIP_DK_STARTING_AREA_LEVEL < 1 || $MODULE_SKIP_DK_STARTING_AREA_LEVEL > 80 ]]; then
     MODULE_SKIP_DK_STARTING_AREA_LEVEL="58"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_SPAWN_POINTS_ENABLED != "true" && $MODULE_SPAWN_POINTS_ENABLED != "false" ]]; then
+    MODULE_SPAWN_POINTS_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_WEEKEND_BONUS_ENABLED != "true" && $MODULE_WEEKEND_BONUS_ENABLED != "false" ]]; then
+    MODULE_WEEKEND_BONUS_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $MODULE_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER < 1 ]]; then
+    MODULE_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="1"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_WEEKEND_BONUS_REPUTATION_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $MODULE_WEEKEND_BONUS_REPUTATION_MULTIPLIER < 1 ]]; then
+    MODULE_WEEKEND_BONUS_REPUTATION_MULTIPLIER="1"
     REQUIRE_EXPORT=true
 fi
 
@@ -1019,71 +1066,36 @@ function update_configuration
 
     if [[ $1 == 0 || $1 == 2 ]]; then
         if [ $MODULE_ASSISTANT_ENABLED == "true" ]; then
-            if [ -f $CORE_DIRECTORY/etc/modules/mod_assistant.conf.dist ]; then
-                printf "${COLOR_ORANGE}Updating mod_assistant.conf${COLOR_END}\n"
+            if [ -f $CORE_DIRECTORY/etc/modules/Assistant.conf.dist ]; then
+                printf "${COLOR_ORANGE}Updating Assistant.conf${COLOR_END}\n"
 
-                cp $CORE_DIRECTORY/etc/modules/mod_assistant.conf.dist $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                cp $CORE_DIRECTORY/etc/modules/Assistant.conf.dist $CORE_DIRECTORY/etc/modules/Assistant.conf
 
-                [ $MODULE_ASSISTANT_GOSSIP_HEIRLOOMS == "true" ] && ENABLE_GOSSIP_HEIRLOOM=1 || ENABLE_GOSSIP_HEIRLOOM=0
-                [ $MODULE_ASSISTANT_GOSSIP_GLYPHS == "true" ] && ENABLE_GOSSIP_GLYPHS=1 || ENABLE_GOSSIP_GLYPHS=0
-                [ $MODULE_ASSISTANT_GOSSIP_GEMS == "true" ] && ENABLE_GOSSIP_GEMS=1 || ENABLE_GOSSIP_GEMS=0
-                [ $MODULE_ASSISTANT_GOSSIP_CONTAINERS == "true" ] && ENABLE_GOSSIP_CONTAINERS=1 || ENABLE_GOSSIP_CONTAINERS=0
-                [ $MODULE_ASSISTANT_GOSSIP_UTILITIES_ENABLED == "true" ] && ENABLE_GOSSIP_UTILITIES=1 || ENABLE_GOSSIP_UTILITIES=0
-                [ $MODULE_ASSISTANT_SPELLS_ENABLED == "true" ] && ENABLE_SPELLS=1 || ENABLE_SPELLS=0
-                [ $MODULE_ASSISTANT_SPELLS_ON_LOGIN == "true" ] && ENABLE_SPELLS_ON_LOGIN=1 || ENABLE_SPELLS_ON_LOGIN=0
-                [ $MODULE_ASSISTANT_SPELLS_ON_LEVELUP == "true" ] && ENABLE_SPELLS_ON_LEVELUP=1 || ENABLE_SPELLS_ON_LEVELUP=0
-                [ $MODULE_ASSISTANT_SPELLS_CLASS_SPELLS == "true" ] && ENABLE_CLASS_SPELLS=1 || ENABLE_CLASS_SPELLS=0
-                [ $MODULE_ASSISTANT_SPELLS_TALENT_RANKS == "true" ] && ENABLE_TALENT_RANKS=1 || ENABLE_TALENT_RANKS=0
-                [ $MODULE_ASSISTANT_SPELLS_PROFICIENCIES == "true" ] && ENABLE_PROFICIENCIES=1 || ENABLE_PROFICIENCIES=0
-                [ $MODULE_ASSISTANT_SPELLS_FROM_QUESTS == "true" ] && ENABLE_SPELLS_FROM_QUESTS=1 || ENABLE_SPELLS_FROM_QUESTS=0
-                [ $MODULE_ASSISTANT_SPELLS_MAX_SKILL_ENABLED == "true" ] && ENABLE_MAX_SKILL=1 || ENABLE_MAX_SKILL=0
-                [ $MODULE_ASSISTANT_SPELLS_RIDING_ENABLED == "true" ] && ENABLE_RIDING=1 || ENABLE_RIDING=0
-                [ $MODULE_ASSISTANT_SPELLS_RIDING_APPRENTICE == "true" ] && ENABLE_APPRENTICE_RIDING=1 || ENABLE_APPRENTICE_RIDING=0
-                [ $MODULE_ASSISTANT_SPELLS_RIDING_JOURNEYMAN == "true" ] && ENABLE_JOURNEYMAN_RIDING=1 || ENABLE_JOURNEYMAN_RIDING=0
-                [ $MODULE_ASSISTANT_SPELLS_RIDING_EXPERT == "true" ] && ENABLE_EXPERT_RIDING=1 || ENABLE_EXPERT_RIDING=0
-                [ $MODULE_ASSISTANT_SPELLS_RIDING_ARTISAN == "true" ] && ENABLE_ARTISAN_RIDING=1 || ENABLE_ARTISAN_RIDING=0
-                [ $MODULE_ASSISTANT_SPELLS_RIDING_COLD_WEATHER == "true" ] && ENABLE_COLD_WEATHER_FLYING=1 || ENABLE_COLD_WEATHER_FLYING=0
-                [ $MODULE_ASSISTANT_SPAWN_POINT_ENABLED == "true" ] && ENABLE_SPAWN_POINT=1 || ENABLE_SPAWN_POINT=0
-                [ $MODULE_ASSISTANT_SPAWN_POINT_ENABLE_DEATH_KNIGHT == "true" ] && ENABLE_DK_SPAWN_POINT=1 || ENABLE_DK_SPAWN_POINT=0
-                [ $MODULE_ASSISTANT_WEEKEND_BONUS == "true" ] && ENABLE_WEEKEND_BONUS=1 || ENABLE_WEEKEND_BONUS=0
-                [ $MODULE_ASSISTANT_ACTIVATE_ZONE == "true" ] && ENABLE_ACTIVATE_ZONE=1 || ENABLE_ACTIVATE_ZONE=0
+                [ $MODULE_ASSISTANT_HEIRLOOMS == "true" ] && ENABLE_HEIRLOOM=1 || ENABLE_HEIRLOOM=0
+                [ $MODULE_ASSISTANT_GLYPHS == "true" ] && ENABLE_GLYPHS=1 || ENABLE_GLYPHS=0
+                [ $MODULE_ASSISTANT_GEMS == "true" ] && ENABLE_GEMS=1 || ENABLE_GEMS=0
+                [ $MODULE_ASSISTANT_CONTAINERS == "true" ] && ENABLE_CONTAINERS=1 || ENABLE_CONTAINERS=0
+                [ $MODULE_ASSISTANT_UTILITIES_ENABLED == "true" ] && ENABLE_UTILITIES=1 || ENABLE_UTILITIES=0
+                [ $MODULE_ASSISTANT_TOTEMS == "true" ] && ENABLE_TOTEMS=1 || ENABLE_TOTEMS=0
 
-                sed -i 's/Assistant.Gossip.Heirlooms =.*/Assistant.Gossip.Heirlooms = '$ENABLE_GOSSIP_HEIRLOOM'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Gossip.Glyphs =.*/Assistant.Gossip.Glyphs = '$ENABLE_GOSSIP_GLYPHS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Gossip.Gems =.*/Assistant.Gossip.Gems = '$ENABLE_GOSSIP_GEMS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Gossip.Containers =.*/Assistant.Gossip.Containers = '$ENABLE_GOSSIP_CONTAINERS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Gossip.Utilities =.*/Assistant.Gossip.Utilities = '$ENABLE_GOSSIP_UTILITIES'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Gossip.Utilities.NameChange =.*/Assistant.Gossip.Utilities.NameChange = '$MODULE_ASSISTANT_GOSSIP_UTILITIES_NAME_CHANGE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Gossip.Utilities.Customization =.*/Assistant.Gossip.Utilities.Customization = '$MODULE_ASSISTANT_GOSSIP_UTILITIES_CUSTOMIZATION'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Gossip.Utilities.RaceChange =.*/Assistant.Gossip.Utilities.RaceChange = '$MODULE_ASSISTANT_GOSSIP_UTILITIES_RACE_CHANGE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Gossip.Utilities.FactionChange =.*/Assistant.Gossip.Utilities.FactionChange = '$MODULE_ASSISTANT_GOSSIP_UTILITIES_FACTION_CHANGE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Enabled =.*/Assistant.Spells.Enabled = '$ENABLE_SPELLS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.OnLogin =.*/Assistant.Spells.OnLogin = '$ENABLE_SPELLS_ON_LOGIN'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.OnLevelUp =.*/Assistant.Spells.OnLevelUp = '$ENABLE_SPELLS_ON_LEVELUP'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Class =.*/Assistant.Spells.Class = '$ENABLE_CLASS_SPELLS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Talent =.*/Assistant.Spells.Talent = '$ENABLE_TALENT_RANKS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Proficiency =.*/Assistant.Spells.Proficiency = '$ENABLE_PROFICIENCIES'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Quest =.*/Assistant.Spells.Quest = '$ENABLE_SPELLS_FROM_QUESTS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.MaxSkill.Enabled =.*/Assistant.Spells.MaxSkill.Enabled = '$ENABLE_MAX_SKILL'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.MaxSkill.MaxLevel =.*/Assistant.Spells.MaxSkill.MaxLevel = '$MODULE_ASSISTANT_SPELLS_MAX_SKILL_MAX_LEVEL'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Riding.Enabled =.*/Assistant.Spells.Riding.Enabled = '$ENABLE_RIDING'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Riding.Apprentice =.*/Assistant.Spells.Riding.Apprentice = '$ENABLE_APPRENTICE_RIDING'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Riding.Journeyman =.*/Assistant.Spells.Riding.Journeyman = '$ENABLE_JOURNEYMAN_RIDING'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Riding.Expert =.*/Assistant.Spells.Riding.Expert = '$ENABLE_EXPERT_RIDING'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Riding.Artisan =.*/Assistant.Spells.Riding.Artisan = '$ENABLE_ARTISAN_RIDING'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Spells.Riding.ColdWeather =.*/Assistant.Spells.Riding.ColdWeather = '$ENABLE_COLD_WEATHER_FLYING'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.SpawnPoint.Enabled =.*/Assistant.SpawnPoint.Enabled = '$ENABLE_SPAWN_POINT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.SpawnPoint.DeathKnight =.*/Assistant.SpawnPoint.DeathKnight = '$ENABLE_DK_SPAWN_POINT'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Rate.Weekend.Enabled =.*/Assistant.Rate.Weekend.Enabled = '$ENABLE_WEEKEND_BONUS'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
-                sed -i 's/Assistant.Zone.Activate =.*/Assistant.Zone.Activate = '$ENABLE_ACTIVATE_ZONE'/g' $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Heirlooms =.*/Assistant.Heirlooms = '$ENABLE_HEIRLOOM'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Glyphs =.*/Assistant.Glyphs = '$ENABLE_GLYPHS'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Gems =.*/Assistant.Gems = '$ENABLE_GEMS'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Containers =.*/Assistant.Containers = '$ENABLE_CONTAINERS'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Utilities =.*/Assistant.Utilities = '$ENABLE_UTILITIES'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Utilities.NameChange =.*/Assistant.Utilities.NameChange = '$MODULE_ASSISTANT_UTILITIES_NAME_CHANGE'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Utilities.Customization =.*/Assistant.Utilities.Customization = '$MODULE_ASSISTANT_UTILITIES_CUSTOMIZATION'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Utilities.RaceChange =.*/Assistant.Utilities.RaceChange = '$MODULE_ASSISTANT_UTILITIES_RACE_CHANGE'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Utilities.FactionChange =.*/Assistant.Utilities.FactionChange = '$MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
+                sed -i 's/Assistant.Totems =.*/Assistant.Totems = '$ENABLE_TOTEMS'/g' $CORE_DIRECTORY/etc/modules/Assistant.conf
             fi
         else
-            if [ -f $CORE_DIRECTORY/etc/modules/mod_assistant.conf ]; then
-                rm -rf $CORE_DIRECTORY/etc/modules/mod_assistant.conf
+            if [ -f $CORE_DIRECTORY/etc/modules/Assistant.conf ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/Assistant.conf
             fi
 
-            if [ -f $CORE_DIRECTORY/etc/modules/mod_assistant.conf.dist ]; then
-                rm -rf $CORE_DIRECTORY/etc/modules/mod_assistant.conf.dist
+            if [ -f $CORE_DIRECTORY/etc/modules/Assistant.conf.dist ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/Assistant.conf.dist
             fi
         fi
     fi
@@ -1107,6 +1119,76 @@ function update_configuration
     fi
 
     if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ $MODULE_LEARN_SPELLS_ENABLED == "true" ]; then
+            if [ -f $CORE_DIRECTORY/etc/modules/LearnSpells.conf.dist ]; then
+                printf "${COLOR_ORANGE}Updating LearnSpells.conf${COLOR_END}\n"
+
+                cp $CORE_DIRECTORY/etc/modules/LearnSpells.conf.dist $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+
+                [ $MODULE_LEARN_SPELLS_ON_LOGIN == "true" ] && ENABLE_ON_LOGIN=1 || ENABLE_ON_LOGIN=0
+                [ $MODULE_LEARN_SPELLS_ON_LEVELUP == "true" ] && ENABLE_ON_LEVELUP=1 || ENABLE_ON_LEVELUP=0
+                [ $MODULE_LEARN_SPELLS_CLASS_SPELLS == "true" ] && ENABLE_CLASS_SPELLS=1 || ENABLE_CLASS_SPELLS=0
+                [ $MODULE_LEARN_SPELLS_TALENT_RANKS == "true" ] && ENABLE_TALENT_RANKS=1 || ENABLE_TALENT_RANKS=0
+                [ $MODULE_LEARN_SPELLS_PROFICIENCIES == "true" ] && ENABLE_PROFICIENCIES=1 || ENABLE_PROFICIENCIES=0
+                [ $MODULE_LEARN_SPELLS_FROM_QUESTS == "true" ] && ENABLE_FROM_QUESTS=1 || ENABLE_FROM_QUESTS=0
+                [ $MODULE_LEARN_SPELLS_MAX_SKILL_ENABLED == "true" ] && ENABLE_MAX_SKILL=1 || ENABLE_MAX_SKILL=0
+                [ $MODULE_LEARN_SPELLS_RIDING_ENABLED == "true" ] && ENABLE_RIDING=1 || ENABLE_RIDING=0
+                [ $MODULE_LEARN_SPELLS_RIDING_APPRENTICE == "true" ] && ENABLE_APPRENTICE_RIDING=1 || ENABLE_APPRENTICE_RIDING=0
+                [ $MODULE_LEARN_SPELLS_RIDING_JOURNEYMAN == "true" ] && ENABLE_JOURNEYMAN_RIDING=1 || ENABLE_JOURNEYMAN_RIDING=0
+                [ $MODULE_LEARN_SPELLS_RIDING_EXPERT == "true" ] && ENABLE_EXPERT_RIDING=1 || ENABLE_EXPERT_RIDING=0
+                [ $MODULE_LEARN_SPELLS_RIDING_ARTISAN == "true" ] && ENABLE_ARTISAN_RIDING=1 || ENABLE_ARTISAN_RIDING=0
+                [ $MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER == "true" ] && ENABLE_COLD_WEATHER_RIDING=1 || ENABLE_COLD_WEATHER_RIDING=0
+
+                sed -i 's/OnLogin.Enabled =.*/OnLogin.Enabled = '$ENABLE_ON_LOGIN'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/OnLevelUp.Enabled =.*/OnLevelUp.Enabled = '$ENABLE_ON_LEVELUP'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/ClassSpells.Enabled =.*/ClassSpells.Enabled = '$ENABLE_CLASS_SPELLS'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/TalentRanks.Enabled =.*/TalentRanks.Enabled = '$ENABLE_TALENT_RANKS'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/Proficiencies.Enabled =.*/Proficiencies.Enabled = '$ENABLE_PROFICIENCIES'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/SpellsFromQuests.Enabled =.*/SpellsFromQuests.Enabled = '$ENABLE_FROM_QUESTS'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/MaxSkill.Enabled =.*/MaxSkill.Enabled = '$ENABLE_MAX_SKILL'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/MaxSkill.MaxLevel =.*/MaxSkill.MaxLevel = '$MODULE_LEARN_SPELLS_MAX_SKILL_MAX_LEVEL'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/Riding.Enabled =.*/Riding.Enabled = '$ENABLE_RIDING'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/Riding.Apprentice.Enabled =.*/Riding.Apprentice.Enabled = '$ENABLE_APPRENTICE_RIDING'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/Riding.Journeyman.Enabled =.*/Riding.Journeyman.Enabled = '$ENABLE_JOURNEYMAN_RIDING'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/Riding.Expert.Enabled =.*/Riding.Expert.Enabled = '$ENABLE_EXPERT_RIDING'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/Riding.Artisan.Enabled =.*/Riding.Artisan.Enabled = '$ENABLE_ARTISAN_RIDING'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+                sed -i 's/Riding.ColdWeather.Enabled =.*/Riding.ColdWeather.Enabled = '$ENABLE_COLD_WEATHER_RIDING'/g' $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+            fi
+        else
+            if [ -f $CORE_DIRECTORY/etc/modules/LearnSpells.conf ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/LearnSpells.conf
+            fi
+
+            if [ -f $CORE_DIRECTORY/etc/modules/LearnSpells.conf.dist ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/LearnSpells.conf.dist
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ $MODULE_RECRUIT_A_FRIEND_ENABLED == "true" ]; then
+            if [ -f $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf.dist ]; then
+                printf "${COLOR_ORANGE}Updating RecruitAFriend.conf${COLOR_END}\n"
+
+                cp $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf.dist $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
+
+                [ $MODULE_RECRUIT_A_FRIEND_REUSABLE == "true" ] && ENABLE_REUSABLE=1 || ENABLE_REUSABLE=0
+
+                sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$MODULE_RECRUIT_A_FRIEND_DURATION'/g' $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
+                sed -i 's/RecruitAFriend.Reusable =.*/RecruitAFriend.Reusable = '$ENABLE_REUSABLE'/g' $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
+            fi
+        else
+            if [ -f $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf
+            fi
+
+            if [ -f $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf.dist ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/RecruitAFriend.conf.dist
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
         if [ $MODULE_SKIP_DK_STARTING_AREA_ENABLED == "true" ]; then
             if [ -f $CORE_DIRECTORY/etc/modules/SkipDKModule.conf.dist ]; then
                 printf "${COLOR_ORANGE}Updating mod_ahbot.conf${COLOR_END}\n"
@@ -1124,6 +1206,27 @@ function update_configuration
 
             if [ -f $CORE_DIRECTORY/etc/modules/SkipDKModule.conf.dist ]; then
                 rm -rf $CORE_DIRECTORY/etc/modules/SkipDKModule.conf.dist
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ $MODULE_WEEKEND_BONUS_ENABLED == "true" ]; then
+            if [ -f $CORE_DIRECTORY/etc/modules/WeekendBonus.conf.dist ]; then
+                printf "${COLOR_ORANGE}Updating WeekendBonus.conf${COLOR_END}\n"
+
+                cp $CORE_DIRECTORY/etc/modules/WeekendBonus.conf.dist $CORE_DIRECTORY/etc/modules/WeekendBonus.conf
+
+                sed -i 's/Multiplier.Experience =.*/Multiplier.Experience = '$MODULE_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER'/g' $CORE_DIRECTORY/etc/modules/WeekendBonus.conf
+                sed -i 's/Multiplier.Reputation =.*/Multiplier.Reputation = '$MODULE_WEEKEND_BONUS_REPUTATION_MULTIPLIER'/g' $CORE_DIRECTORY/etc/modules/WeekendBonus.conf
+            fi
+        else
+            if [ -f $CORE_DIRECTORY/etc/modules/WeekendBonus.conf ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/WeekendBonus.conf
+            fi
+
+            if [ -f $CORE_DIRECTORY/etc/modules/WeekendBonus.conf.dist ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/WeekendBonus.conf.dist
             fi
         fi
     fi
