@@ -87,3 +87,8 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=16879 AND `Item`=28116;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (16879, 28116, 46, 1, 'Starving Helboar - Zeppelin Debris');
 DELETE FROM `creature_loot_template` WHERE `Entry`=16972 AND `Item`=28116;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (16972, 28116, 44, 1, 'Bonestripper Buzzard - Zeppelin Debris');
+
+-- Feralfen Protection Totem (Quest: Spirits of the Feralfen (Id: 9846))
+UPDATE `creature_loot_template` SET `Chance`=25 WHERE `Entry`=18113 AND `Item`=24497;
+UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=18114 AND `Item`=24497;
+UPDATE `creature_loot_template` SET `Chance`=35 WHERE `Entry`=20270 AND `Item`=24497;
