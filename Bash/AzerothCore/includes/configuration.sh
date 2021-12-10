@@ -227,7 +227,7 @@ function generate_settings
                 <!-- The amount of gold given at level 70 -->
                 <level_70>${93:-125}</level_70>
                 <!-- The amount of gold given at level 80 -->
-                <80>${94:-250}</80>
+                <level_80>${94:-250}</level_80>
             </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit A Friend module -->
