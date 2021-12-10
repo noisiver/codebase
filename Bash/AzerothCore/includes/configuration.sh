@@ -209,29 +209,49 @@ function generate_settings
                     </riding>
                 </spells>
             </learn_spells>
+            <level_reward>
+                <!-- Enable/Disable the use of the Level Reward module -->
+                <enabled>${86:-false}</enabled>
+                <!-- The amount of gold given at level 10 -->
+                <10>${87:-5}</10>
+                <!-- The amount of gold given at level 20 -->
+                <20>${88:-15}</20>
+                <!-- The amount of gold given at level 30 -->
+                <30>${89:-30}</30>
+                <!-- The amount of gold given at level 40 -->
+                <40>${90:-45}</40>
+                <!-- The amount of gold given at level 50 -->
+                <50>${91:-60}</50>
+                <!-- The amount of gold given at level 60 -->
+                <60>${92:-80}</60>
+                <!-- The amount of gold given at level 70 -->
+                <70>${93:-125}</70>
+                <!-- The amount of gold given at level 80 -->
+                <80>${94:-250}</80>
+            </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit A Friend module -->
-                <enabled>${86:-false}</enabled>
+                <enabled>${95:-false}</enabled>
                 <!-- The amount of days that recruit a friend stays active. 0 = never expires -->
-                <duration>${87:-90}</duration>
+                <duration>${96:-90}</duration>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${88:-false}</enabled>
+                <enabled>${97:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${89:-58}</starting_level>
+                <starting_level>${98:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module -->
-                <enabled>${90:-false}</enabled>
+                <enabled>${99:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module -->
-                <enabled>${91:-false}</enabled>
+                <enabled>${100:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${92:-1}</experience_multiplier>
+                <experience_multiplier>${101:-1}</experience_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${93:-1}</reputation_multiplier>
+                <reputation_multiplier>${102:-1}</reputation_multiplier>
             </weekend_bonus>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -325,6 +345,15 @@ function export_settings
     $MODULE_LEARN_SPELLS_RIDING_EXPERT \
     $MODULE_LEARN_SPELLS_RIDING_ARTISAN \
     $MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER \
+    $MODULE_LEVEL_REWARD_ENABLED \
+    $MODULE_LEVEL_REWARD_LEVEL_10 \
+    $MODULE_LEVEL_REWARD_LEVEL_20 \
+    $MODULE_LEVEL_REWARD_LEVEL_30 \
+    $MODULE_LEVEL_REWARD_LEVEL_40 \
+    $MODULE_LEVEL_REWARD_LEVEL_50 \
+    $MODULE_LEVEL_REWARD_LEVEL_60 \
+    $MODULE_LEVEL_REWARD_LEVEL_70 \
+    $MODULE_LEVEL_REWARD_LEVEL_80 \
     $MODULE_RECRUIT_A_FRIEND_ENABLED \
     $MODULE_RECRUIT_A_FRIEND_DURATION \
     $MODULE_SKIP_DK_STARTING_AREA_ENABLED \
@@ -440,6 +469,16 @@ MODULE_LEARN_SPELLS_RIDING_JOURNEYMAN="$(echo "cat /config/module/learn_spells/s
 MODULE_LEARN_SPELLS_RIDING_EXPERT="$(echo "cat /config/module/learn_spells/spells/riding/expert/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_LEARN_SPELLS_RIDING_ARTISAN="$(echo "cat /config/module/learn_spells/spells/riding/artisan/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER="$(echo "cat /config/module/learn_spells/spells/riding/cold_weather/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+MODULE_LEVEL_REWARD_ENABLED="$(echo "cat /config/module/level_reward/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEVEL_REWARD_LEVEL_10="$(echo "cat /config/module/level_reward/level_10/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEVEL_REWARD_LEVEL_20="$(echo "cat /config/module/level_reward/level_20/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEVEL_REWARD_LEVEL_30="$(echo "cat /config/module/level_reward/level_30/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEVEL_REWARD_LEVEL_40="$(echo "cat /config/module/level_reward/level_40/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEVEL_REWARD_LEVEL_50="$(echo "cat /config/module/level_reward/level_50/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEVEL_REWARD_LEVEL_60="$(echo "cat /config/module/level_reward/level_60/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEVEL_REWARD_LEVEL_70="$(echo "cat /config/module/level_reward/level_70/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+MODULE_LEVEL_REWARD_LEVEL_80="$(echo "cat /config/module/level_reward/level_80/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /config/module/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_RECRUIT_A_FRIEND_DURATION="$(echo "cat /config/module/recruit_a_friend/duration/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
@@ -878,6 +917,51 @@ if [[ $MODULE_LEARN_SPELLS_RIDING_COLD_WEATHER != "true" && $MODULE_LEARN_SPELLS
     REQUIRE_EXPORT=true
 fi
 
+if [[ $MODULE_LEVEL_REWARD_ENABLED != "true" && $MODULE_LEVEL_REWARD_ENABLED != "false" ]]; then
+    MODULE_LEVEL_REWARD_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEVEL_REWARD_LEVEL_10 =~ ^[0-9]+$ ]] || [[ $MODULE_LEVEL_REWARD_LEVEL_10 < 1 ]]; then
+    MODULE_LEVEL_REWARD_LEVEL_10="5"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEVEL_REWARD_LEVEL_20 =~ ^[0-9]+$ ]] || [[ $MODULE_LEVEL_REWARD_LEVEL_20 < 1 ]]; then
+    MODULE_LEVEL_REWARD_LEVEL_20="15"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEVEL_REWARD_LEVEL_30 =~ ^[0-9]+$ ]] || [[ $MODULE_LEVEL_REWARD_LEVEL_30 < 1 ]]; then
+    MODULE_LEVEL_REWARD_LEVEL_30="30"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEVEL_REWARD_LEVEL_40 =~ ^[0-9]+$ ]] || [[ $MODULE_LEVEL_REWARD_LEVEL_40 < 1 ]]; then
+    MODULE_LEVEL_REWARD_LEVEL_40="45"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEVEL_REWARD_LEVEL_50 =~ ^[0-9]+$ ]] || [[ $MODULE_LEVEL_REWARD_LEVEL_50 < 1 ]]; then
+    MODULE_LEVEL_REWARD_LEVEL_50="60"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEVEL_REWARD_LEVEL_60 =~ ^[0-9]+$ ]] || [[ $MODULE_LEVEL_REWARD_LEVEL_60 < 1 ]]; then
+    MODULE_LEVEL_REWARD_LEVEL_60="80"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEVEL_REWARD_LEVEL_70 =~ ^[0-9]+$ ]] || [[ $MODULE_LEVEL_REWARD_LEVEL_70 < 1 ]]; then
+    MODULE_LEVEL_REWARD_LEVEL_70="125"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ ! $MODULE_LEVEL_REWARD_LEVEL_80 =~ ^[0-9]+$ ]] || [[ $MODULE_LEVEL_REWARD_LEVEL_80 < 1 ]]; then
+    MODULE_LEVEL_REWARD_LEVEL_80="250"
+    REQUIRE_EXPORT=true
+fi
+
 if [[ $MODULE_RECRUIT_A_FRIEND_ENABLED != "true" && $MODULE_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
     MODULE_RECRUIT_A_FRIEND_ENABLED="false"
     REQUIRE_EXPORT=true
@@ -1152,6 +1236,33 @@ function update_configuration
 
             if [ -f $CORE_DIRECTORY/etc/modules/LearnSpells.conf.dist ]; then
                 rm -rf $CORE_DIRECTORY/etc/modules/LearnSpells.conf.dist
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ $MODULE_LEVEL_REWARD_ENABLED == "true" ]; then
+            if [ -f $CORE_DIRECTORY/etc/modules/LevelReward.conf.dist ]; then
+                printf "${COLOR_ORANGE}Updating LevelReward.conf${COLOR_END}\n"
+
+                cp $CORE_DIRECTORY/etc/modules/LevelReward.conf.dist $CORE_DIRECTORY/etc/modules/LevelReward.conf
+
+                sed -i 's/Reward.Gold.Level.10 =.*/Reward.Gold.Level.10 = '$MODULE_LEVEL_REWARD_LEVEL_10'/g' $CORE_DIRECTORY/etc/modules/LevelReward.conf
+                sed -i 's/Reward.Gold.Level.20 =.*/Reward.Gold.Level.20 = '$MODULE_LEVEL_REWARD_LEVEL_20'/g' $CORE_DIRECTORY/etc/modules/LevelReward.conf
+                sed -i 's/Reward.Gold.Level.30 =.*/Reward.Gold.Level.30 = '$MODULE_LEVEL_REWARD_LEVEL_30'/g' $CORE_DIRECTORY/etc/modules/LevelReward.conf
+                sed -i 's/Reward.Gold.Level.40 =.*/Reward.Gold.Level.40 = '$MODULE_LEVEL_REWARD_LEVEL_40'/g' $CORE_DIRECTORY/etc/modules/LevelReward.conf
+                sed -i 's/Reward.Gold.Level.50 =.*/Reward.Gold.Level.50 = '$MODULE_LEVEL_REWARD_LEVEL_50'/g' $CORE_DIRECTORY/etc/modules/LevelReward.conf
+                sed -i 's/Reward.Gold.Level.60 =.*/Reward.Gold.Level.60 = '$MODULE_LEVEL_REWARD_LEVEL_60'/g' $CORE_DIRECTORY/etc/modules/LevelReward.conf
+                sed -i 's/Reward.Gold.Level.70 =.*/Reward.Gold.Level.70 = '$MODULE_LEVEL_REWARD_LEVEL_70'/g' $CORE_DIRECTORY/etc/modules/LevelReward.conf
+                sed -i 's/Reward.Gold.Level.80 =.*/Reward.Gold.Level.80 = '$MODULE_LEVEL_REWARD_LEVEL_80'/g' $CORE_DIRECTORY/etc/modules/LevelReward.conf
+            fi
+        else
+            if [ -f $CORE_DIRECTORY/etc/modules/LevelReward.conf ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/LevelReward.conf
+            fi
+
+            if [ -f $CORE_DIRECTORY/etc/modules/LevelReward.conf.dist ]; then
+                rm -rf $CORE_DIRECTORY/etc/modules/LevelReward.conf.dist
             fi
         fi
     fi

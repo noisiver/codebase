@@ -236,6 +236,40 @@ function clone_source
             fi
         fi
 
+        if [[ $MODULE_LEVEL_REWARD_ENABLED == "true" ]]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-levelreward ]; then
+                git clone --branch master https://github.com/tkn963/mod-levelreward.git $CORE_DIRECTORY/modules/mod-levelreward
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-levelreward
+
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            fi
+        else
+            if [ -d $CORE_DIRECTORY/modules/mod-levelreward ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-levelreward
+
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
+            fi
+        fi
+
         if [[ $MODULE_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             if [ ! -d $CORE_DIRECTORY/modules/mod-recruitafriend ]; then
                 git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $CORE_DIRECTORY/modules/mod-recruitafriend
