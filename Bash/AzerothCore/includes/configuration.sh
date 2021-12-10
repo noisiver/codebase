@@ -213,19 +213,19 @@ function generate_settings
                 <!-- Enable/Disable the use of the Level Reward module -->
                 <enabled>${86:-false}</enabled>
                 <!-- The amount of gold given at level 10 -->
-                <10>${87:-5}</10>
+                <level_10>${87:-5}</level_10>
                 <!-- The amount of gold given at level 20 -->
-                <20>${88:-15}</20>
+                <level_20>${88:-15}</level_20>
                 <!-- The amount of gold given at level 30 -->
-                <30>${89:-30}</30>
+                <level_30>${89:-30}</level_30>
                 <!-- The amount of gold given at level 40 -->
-                <40>${90:-45}</40>
+                <level_40>${90:-45}</level_40>
                 <!-- The amount of gold given at level 50 -->
-                <50>${91:-60}</50>
+                <level_50>${91:-60}</level_50>
                 <!-- The amount of gold given at level 60 -->
-                <60>${92:-80}</60>
+                <level_60>${92:-80}</level_60>
                 <!-- The amount of gold given at level 70 -->
-                <70>${93:-125}</70>
+                <level_70>${93:-125}</level_70>
                 <!-- The amount of gold given at level 80 -->
                 <80>${94:-250}</80>
             </level_reward>
