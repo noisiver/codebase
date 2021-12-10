@@ -90,3 +90,7 @@ INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`
 UPDATE `creature_loot_template` SET `Chance`=25 WHERE `Entry`=18113 AND `Item`=24497;
 UPDATE `creature_loot_template` SET `Chance`=50 WHERE `Entry`=18114 AND `Item`=24497;
 UPDATE `creature_loot_template` SET `Chance`=35 WHERE `Entry`=20270 AND `Item`=24497;
+
+-- Digested Caracoli (Quest: A Rare Bean (Id: 9800))
+DELETE FROM `creature_loot_template` WHERE `Entry`=17131 AND `Item`=24419;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (17131, 24419, 39, 1, 'Talbuk Thorngrazer - Digested Caracoli');

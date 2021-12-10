@@ -107,3 +107,7 @@ DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16879 AND `ItemId`=28116;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16879, 2, 28116);
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=16972 AND `ItemId`=28116;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (16972, 2, 28116);
+
+-- Digested Caracoli (Quest: A Rare Bean (Id: 9800))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=17131 AND `ItemId`=24419;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (17131, 0, 24419);

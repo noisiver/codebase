@@ -62,3 +62,6 @@ UPDATE `item_template` SET `Flags`=2112 WHERE `entry`=30425;
 
 -- Zeppelin Debris (Quest: In Case of Emergency... (Id: 10161))
 UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=28116;
+
+-- Digested Caracoli (Quest: A Rare Bean (Id: 9800))
+UPDATE `item_template` SET `Flags`=2048 WHERE `entry`=24419;
