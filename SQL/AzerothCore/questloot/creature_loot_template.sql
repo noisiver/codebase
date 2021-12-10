@@ -23,8 +23,6 @@ DELETE FROM `creature_loot_template` WHERE `Entry`=4012 AND `Item`=16205;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (4012, 16205, 42, 1, 'Pridewing Wyvern - Gaea Seed');
 DELETE FROM `creature_loot_template` WHERE `Entry`=4014 AND `Item`=16205;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (4014, 16205, 43, 1, 'Pridewing Consort - Gaea Seed');
-DELETE FROM `creature_loot_template` WHERE `Entry`=6141 AND `Item`=16205;
-INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (6141, 16205, 44, 1, 'Pridewing Soarer - Gaea Seed');
 
 -- Troll Charm (Quest: Troll Charm (Id: 6462))
 DELETE FROM `creature_loot_template` WHERE `Entry`=3921 AND `Item`=16602;
