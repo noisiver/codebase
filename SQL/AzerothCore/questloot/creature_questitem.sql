@@ -111,3 +111,9 @@ INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (1697
 -- Digested Caracoli (Quest: A Rare Bean (Id: 9800))
 DELETE FROM `creature_questitem` WHERE `CreatureEntry`=17131 AND `ItemId`=24419;
 INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (17131, 0, 24419);
+
+-- Ever-burning Ash (Quest: A Haunted History (Horde) / A Ghost in the Machine (Alliance) (Id: 10624 (Horde), 10642 (Alliance)))
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=21408 AND `ItemId`=30716;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (21408, 3, 30716);
+DELETE FROM `creature_questitem` WHERE `CreatureEntry`=21878 AND `ItemId`=30716;
+INSERT INTO `creature_questitem` (`CreatureEntry`, `Idx`, `ItemId`) VALUES (21878, 1, 30716);

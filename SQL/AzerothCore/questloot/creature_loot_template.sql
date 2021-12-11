@@ -94,3 +94,9 @@ UPDATE `creature_loot_template` SET `Chance`=35 WHERE `Entry`=20270 AND `Item`=2
 -- Digested Caracoli (Quest: A Rare Bean (Id: 9800))
 DELETE FROM `creature_loot_template` WHERE `Entry`=17131 AND `Item`=24419;
 INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (17131, 24419, 39, 1, 'Talbuk Thorngrazer - Digested Caracoli');
+
+-- Ever-burning Ash (Quest: A Haunted History (Horde) / A Ghost in the Machine (Alliance) (Id: 10624 (Horde), 10642 (Alliance)))
+DELETE FROM `creature_loot_template` WHERE `Entry`=21408 AND `Item`=30716;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (21408, 30716, 31, 1, 'Felfire Diemetradon - Ever-burning Ash');
+DELETE FROM `creature_loot_template` WHERE `Entry`=21878 AND `Item`=30716;
+INSERT INTO `creature_loot_template` (`Entry`, `Item`, `Chance`, `QuestRequired`, `Comment`) VALUES (21878, 30716, 35, 1, 'Felboar - Ever-burning Ash');
