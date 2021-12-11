@@ -171,87 +171,91 @@ function generate_settings
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
                 <enabled>${70:-false}</enabled>
             </eluna>
+            <group_quests>
+                <!-- Enable/Disable the use of the Group Quests module -->
+                <enabled>${71:-false}</enabled>
+            </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${71:-false}</enabled>
+                <enabled>${72:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable obtaining spells when entering the world -->
-                    <on_login>${72:-false}</on_login>
+                    <on_login>${73:-false}</on_login>
                     <!-- Enable/Disable obtaining spells when leveling up -->
-                    <on_levelup>${73:-false}</on_levelup>
+                    <on_levelup>${74:-false}</on_levelup>
                     <!-- Enable/Disable obtaining class-specific spells when leveling up or entering the world -->
-                    <class_spells>${74:-false}</class_spells>
+                    <class_spells>${75:-false}</class_spells>
                     <!-- Enable/Disable obtaining new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${75:-false}</talent_ranks>
+                    <talent_ranks>${76:-false}</talent_ranks>
                     <!-- Enable/Disable obtaining new weapon and armor skills when leveling up -->
-                    <proficiencies>${76:-false}</proficiencies>
+                    <proficiencies>${77:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${77:-false}</from_quests>
+                    <from_quests>${78:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${78:-false}</enabled>
+                        <enabled>${79:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${79:-60}</max_level>
+                        <max_level>${80:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable obtaining riding skills when leveling up or entering the world -->
-                        <enabled>${80:-false}</enabled>
+                        <enabled>${81:-false}</enabled>
                         <!-- Enable/Disable obtaining the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${81:-false}</apprentice>
+                        <apprentice>${82:-false}</apprentice>
                         <!-- Enable/Disable obtaining the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${82:-false}</journeyman>
+                        <journeyman>${83:-false}</journeyman>
                         <!-- Enable/Disable obtaining the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${83:-false}</expert>
+                        <expert>${84:-false}</expert>
                         <!-- Enable/Disable obtaining the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${84:-false}</artisan>
+                        <artisan>${85:-false}</artisan>
                         <!-- Enable/Disable obtaining the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${85:-false}</cold_weather>
+                        <cold_weather>${86:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module -->
-                <enabled>${86:-false}</enabled>
+                <enabled>${87:-false}</enabled>
                 <!-- The amount of gold given at level 10 -->
-                <level_10>${87:-5}</level_10>
+                <level_10>${88:-5}</level_10>
                 <!-- The amount of gold given at level 20 -->
-                <level_20>${88:-15}</level_20>
+                <level_20>${89:-15}</level_20>
                 <!-- The amount of gold given at level 30 -->
-                <level_30>${89:-30}</level_30>
+                <level_30>${90:-30}</level_30>
                 <!-- The amount of gold given at level 40 -->
-                <level_40>${90:-45}</level_40>
+                <level_40>${91:-45}</level_40>
                 <!-- The amount of gold given at level 50 -->
-                <level_50>${91:-60}</level_50>
+                <level_50>${92:-60}</level_50>
                 <!-- The amount of gold given at level 60 -->
-                <level_60>${92:-80}</level_60>
+                <level_60>${93:-80}</level_60>
                 <!-- The amount of gold given at level 70 -->
-                <level_70>${93:-125}</level_70>
+                <level_70>${94:-125}</level_70>
                 <!-- The amount of gold given at level 80 -->
-                <level_80>${94:-250}</level_80>
+                <level_80>${95:-250}</level_80>
             </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit A Friend module -->
-                <enabled>${95:-false}</enabled>
+                <enabled>${96:-false}</enabled>
                 <!-- The amount of days that recruit a friend stays active. 0 = never expires -->
-                <duration>${96:-90}</duration>
+                <duration>${97:-90}</duration>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${97:-false}</enabled>
+                <enabled>${98:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${98:-58}</starting_level>
+                <starting_level>${99:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module -->
-                <enabled>${99:-false}</enabled>
+                <enabled>${100:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${101:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${101:-1}</experience_multiplier>
+                <experience_multiplier>${102:-1}</experience_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${102:-1}</reputation_multiplier>
+                <reputation_multiplier>${103:-1}</reputation_multiplier>
             </weekend_bonus>
         </module>
     </config>" | xmllint --format - > $CONFIG_FILE
@@ -330,6 +334,7 @@ function export_settings
     $MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE \
     $MODULE_ASSISTANT_TOTEMS \
     $MODULE_ELUNA_ENABLED \
+    $MODULE_GROUP_QUESTS_ENABLED \
     $MODULE_LEARN_SPELLS_ENABLED \
     $MODULE_LEARN_SPELLS_ON_LOGIN \
     $MODULE_LEARN_SPELLS_ON_LEVELUP \
@@ -453,6 +458,8 @@ MODULE_ASSISTANT_UTILITIES_FACTION_CHANGE="$(echo "cat /config/module/assistant/
 MODULE_ASSISTANT_TOTEMS="$(echo "cat /config/module/assistant/totems/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_ELUNA_ENABLED="$(echo "cat /config/module/eluna/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
+
+MODULE_GROUP_QUESTS_ENABLED="$(echo "cat /config/module/group_quests/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 
 MODULE_LEARN_SPELLS_ENABLED="$(echo "cat /config/module/learn_spells/enabled/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
 MODULE_LEARN_SPELLS_ON_LOGIN="$(echo "cat /config/module/learn_spells/spells/on_login/text()" | xmllint --nocdata --shell $CONFIG_FILE | sed '1d;$d')"
@@ -839,6 +846,11 @@ fi
 
 if [[ $MODULE_ELUNA_ENABLED != "true" && $MODULE_ELUNA_ENABLED != "false" ]]; then
     MODULE_ELUNA_ENABLED="false"
+    REQUIRE_EXPORT=true
+fi
+
+if [[ $MODULE_GROUP_QUESTS_ENABLED != "true" && $MODULE_GROUP_QUESTS_ENABLED != "false" ]]; then
+    MODULE_GROUP_QUESTS_ENABLED="false"
     REQUIRE_EXPORT=true
 fi
 

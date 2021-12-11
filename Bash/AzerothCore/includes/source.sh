@@ -202,6 +202,40 @@ function clone_source
             fi
         fi
 
+        if [[ $MODULE_GROUP_QUESTS_ENABLED == "true" ]]; then
+            if [ ! -d $CORE_DIRECTORY/modules/mod-groupquests ]; then
+                git clone --recursive --branch master https://github.com/tkn963/mod-groupquests.git $CORE_DIRECTORY/modules/mod-groupquests
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            else
+                cd $CORE_DIRECTORY/modules/mod-groupquests
+
+                git fetch --all
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                git submodule update
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            fi
+        else
+            if [ -d $CORE_DIRECTORY/modules/mod-groupquests ]; then
+                rm -rf $CORE_DIRECTORY/modules/mod-groupquests
+
+                if [ -d $CORE_DIRECTORY/build ]; then
+                    rm -rf $CORE_DIRECTORY/build
+                fi
+            fi
+        fi
+
         if [[ $MODULE_LEARN_SPELLS_ENABLED == "true" ]]; then
             if [ ! -d $CORE_DIRECTORY/modules/mod-learnspells ]; then
                 git clone --branch master https://github.com/tkn963/mod-learnspells.git $CORE_DIRECTORY/modules/mod-learnspells

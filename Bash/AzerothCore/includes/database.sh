@@ -283,6 +283,30 @@ function import_database
     fi
 
     if [[ $1 == 0 || $1 == 2 ]]; then
+        if [ -d $CORE_DIRECTORY/modules/mod-groupquests/sql/world/base ]; then
+            if [[ ! -z "$(ls -A $CORE_DIRECTORY/modules/mod-groupquests/sql/world/base/)" ]]; then
+                if [ ! -z `mysql --defaults-extra-file=$MYSQL_CONFIG --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASE_WORLD'"` ]; then
+                    for f in $CORE_DIRECTORY/modules/mod-groupquests/sql/world/base/*.sql; do
+                        if [ -f $f ]; then
+                            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                            mysql --defaults-extra-file=$MYSQL_CONFIG $MYSQL_DATABASE_WORLD < $f
+                            if [ $? -ne 0 ]; then
+                                rm -rf $MYSQL_CONFIG
+                                exit $?
+                            fi
+                        fi
+                    done
+                else
+                    if [ $? -ne 0 ]; then
+                        rm -rf $MYSQL_CONFIG
+                        exit $?
+                    fi
+                fi
+            fi
+        fi
+    fi
+
+    if [[ $1 == 0 || $1 == 2 ]]; then
         if [ $MODULE_LEARN_SPELLS_ENABLED == "true" ]; then
             if [[ -d $CORE_DIRECTORY/modules/mod-learnspells/sql/world/base ]]; then
                 printf "${COLOR_ORANGE}Importing mod_learnspells.sql${COLOR_END}\n"
