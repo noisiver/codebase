@@ -151,7 +151,7 @@ function store_options
         <world>
             <!-- The name of the realm as seen in the list -->
             <name>${11:-AzerothCore}</name>
-            <!-- Message of the Day, displayed at login. Use '@' for a newline and be sure to escape special characters -->
+            <!-- Message of the Day, displayed at login. Use '@' for a newline and make sure to escape special characters -->
             <motd>${12:-Welcome to AzerothCore.}</motd>
             <!-- The id of the realm -->
             <id>${13:-1}</id>
@@ -492,7 +492,7 @@ function load_options
     options_package
 
     # The file where all options are stored
-    OPTIONS="options.xml"
+    OPTIONS="$(pwd)/options.xml"
 
     # Check if the file is missing
     if [ ! -f $OPTIONS ]; then
@@ -505,7 +505,7 @@ function load_options
 
     # Load the /options/mysql/hostname option
     OPTION_MYSQL_HOSTNAME="$(echo "cat /options/mysql/hostname/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_HOSTNAME ] || [ $OPTION_MYSQL_HOSTNAME == "" ]; then
+    if [ -z $OPTION_MYSQL_HOSTNAME ] || [[ $OPTION_MYSQL_HOSTNAME == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/hostname is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_HOSTNAME="127.0.0.1"
@@ -523,7 +523,7 @@ function load_options
 
     # Load the /options/mysql/username option
     OPTION_MYSQL_USERNAME="$(echo "cat /options/mysql/username/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_USERNAME ] || [ $OPTION_MYSQL_USERNAME == "" ]; then
+    if [ -z $OPTION_MYSQL_USERNAME ] || [[ $OPTION_MYSQL_USERNAME == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/username is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_USERNAME="acore"
@@ -532,7 +532,7 @@ function load_options
 
     # Load the /options/mysql/password option
     OPTION_MYSQL_PASSWORD="$(echo "cat /options/mysql/password/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_PASSWORD ] || [ $OPTION_MYSQL_PASSWORD == "" ]; then
+    if [ -z $OPTION_MYSQL_PASSWORD ] || [[ $OPTION_MYSQL_PASSWORD == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/password is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_PASSWORD="acore"
@@ -541,7 +541,7 @@ function load_options
 
     # Load the /options/mysql/databases/auth option
     OPTION_MYSQL_DATABASE_AUTH="$(echo "cat /options/mysql/databases/auth/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASE_AUTH ] || [ $OPTION_MYSQL_DATABASE_AUTH == "" ]; then
+    if [ -z $OPTION_MYSQL_DATABASE_AUTH ] || [[ $OPTION_MYSQL_DATABASE_AUTH == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/databases/auth is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_DATABASE_AUTH="acore_auth"
@@ -550,7 +550,7 @@ function load_options
 
     # Load the /options/mysql/databases/characters option
     OPTION_MYSQL_DATABASE_CHARACTERS="$(echo "cat /options/mysql/databases/characters/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASE_CHARACTERS ] || [ $OPTION_MYSQL_DATABASE_CHARACTERS == "" ]; then
+    if [ -z $OPTION_MYSQL_DATABASE_CHARACTERS ] || [[ $OPTION_MYSQL_DATABASE_CHARACTERS == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/databases/characters is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_DATABASE_CHARACTERS="acore_characters"
@@ -559,7 +559,7 @@ function load_options
 
     # Load the /options/mysql/databases/world option
     OPTION_MYSQL_DATABASE_WORLD="$(echo "cat /options/mysql/databases/world/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASE_WORLD ] || [ $OPTION_MYSQL_DATABASE_WORLD == "" ]; then
+    if [ -z $OPTION_MYSQL_DATABASE_WORLD ] || [[ $OPTION_MYSQL_DATABASE_WORLD == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/databases/world is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_DATABASE_WORLD="acore_world"
@@ -568,7 +568,7 @@ function load_options
 
     # Load the /options/source/location option
     OPTION_SOURCE_LOCATION="$(echo "cat /options/source/location/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_SOURCE_LOCATION ] || [ $OPTION_SOURCE_LOCATION == "" ]; then
+    if [ -z $OPTION_SOURCE_LOCATION ] || [[ $OPTION_SOURCE_LOCATION == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/source/location is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_SOURCE_LOCATION="/opt/azerothcore"
@@ -595,7 +595,7 @@ function load_options
 
     # Load the /options/world/name option
     OPTION_WORLD_NAME="$(echo "cat /options/world/name/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_WORLD_NAME ] || [ $OPTION_WORLD_NAME == "" ]; then
+    if [[ -z $OPTION_WORLD_NAME ]] || [[ $OPTION_WORLD_NAME == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/world/name is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_NAME="AzerothCore"
@@ -1430,6 +1430,762 @@ function load_options
     fi
 }
 
+# A function that downloads the latest version of the source code
+function get_source
+{
+    # Make sure all required packages are installed
+    git_package
+
+    printf "\e[0;33mDownloading the source code...\e[0m\n"
+
+    # Check if the source is already downloaded
+    if [ ! -d $OPTION_SOURCE_LOCATION ]; then
+        # Download the source code
+        git clone --recursive --branch master https://github.com/azerothcore/azerothcore-wotlk.git $OPTION_SOURCE_LOCATION
+
+        # Check to make sure there weren't any errors
+        if [ $? -ne 0 ]; then
+            # Terminate script on errors
+            exit $?
+        fi
+    else
+        # Go into the source folder to update it
+        cd $OPTION_SOURCE_LOCATION
+
+        # Fetch all available updates
+        git fetch --all
+
+        # Check to make sure there weren't any errors
+        if [ $? -ne 0 ]; then
+            # Terminate script on errors
+            exit $?
+        fi
+
+        # Reset the source code, removing all local changes
+        git reset --hard origin/master
+
+        # Check to make sure there weren't any errors
+        if [ $? -ne 0 ]; then
+            # Terminate script on errors
+            exit $?
+        fi
+
+        # Update any submodule
+        git submodule update
+
+        # Check to make sure there weren't any errors
+        if [ $? -ne 0 ]; then
+            # Terminate script on errors
+            exit $?
+        fi
+    fi
+
+    # Check if either both or world is used as the first parameter
+    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        # Check if the ahbot module should be installed
+        if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
+                # Download the source code
+                git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the activate zones module should be installed
+        if [[ $OPTION_MODULES_ACTIVATE_ZONES_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-activatezones ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-activatezones.git $OPTION_SOURCE_LOCATION/modules/mod-activatezones
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-activatezones
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-activatezones ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-activatezones
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the assistant module should be installed
+        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-assistant.git $OPTION_SOURCE_LOCATION/modules/mod-assistant
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-assistant
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-assistant
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the eluna module should be installed
+        if [[ $OPTION_MODULES_ELUNA_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine ]; then
+                # Download the source code
+                git clone --recursive --branch master https://github.com/azerothcore/mod-eluna-lua-engine.git $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Update any submodule
+                git submodule update
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the group quests module should be installed
+        if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-groupquests.git $OPTION_SOURCE_LOCATION/modules/mod-groupquests
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-groupquests
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-groupquests
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the level reward module should be installed
+        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-learnspells.git $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the level reward module should be installed
+        if [[ $OPTION_MODULES_LEVEL_REWARD_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-levelreward ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-levelreward.git $OPTION_SOURCE_LOCATION/modules/mod-levelreward
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-levelreward
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-levelreward ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-levelreward
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the recruit a friend module should be installed
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the skip dk starting area module should be installed
+        if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]; then
+                # Download the source code
+                git clone --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the spawn points module should be installed
+        if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-spawnpoints.git $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the weekend bonus module should be installed
+        if [[ $OPTION_MODULES_WEEKEND_BONUS_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-weekendbonus.git $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+    fi
+}
+
+function compile_source
+{
+    # Make sure all required packages are installed
+    source_packages
+
+    printf "\e[0;33mCompiling the source code...\e[0m\n"
+
+    # Create the build folder and cd into it
+    mkdir -p $OPTION_SOURCE_LOCATION/build && cd $_
+
+    # Generate the build files
+    cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=0 -DTOOLS=0 -DSCRIPTS=static
+
+    # Check to make sure there weren't any errors
+    if [ $? -ne 0 ]; then
+        # Terminate script on errors
+        exit $?
+    fi
+
+    # Build the source code
+    make -j $(nproc)
+
+    # Check to make sure there weren't any errors
+    if [ $? -ne 0 ]; then
+        # Terminate script on errors
+        exit $?
+    fi
+
+    # Copy the binaries and other required files to their designated directories
+    make install
+
+    # Check to make sure there weren't any errors
+    if [ $? -ne 0 ]; then
+        # Terminate script on errors
+        exit $?
+    fi
+
+    # Create the scripts used to start and stop the server
+    echo "#!/bin/bash" > $OPTION_SOURCE_LOCATION/bin/start.sh
+    echo "#!/bin/bash" > $OPTION_SOURCE_LOCATION/bin/stop.sh
+
+    # Check if the authserver should be enabled
+    if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
+        # Add authserver to the start and stop scripts
+        echo "screen -AmdS auth ./auth.sh" >> $OPTION_SOURCE_LOCATION/bin/start.sh
+        echo "screen -X -S \"auth\" quit" >> $OPTION_SOURCE_LOCATION/bin/stop.sh
+
+        # Create the script used to start and stop the authserver
+        echo "#!/bin/sh" > $OPTION_SOURCE_LOCATION/bin/auth.sh
+        echo "while :; do" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
+        echo "./authserver" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
+        echo "sleep 20" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
+        echo "done" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
+
+        # Make the script runnable
+        chmod +x $OPTION_SOURCE_LOCATION/bin/auth.sh
+    else
+        # Check if the script for authserver already exists
+        if [ -f $OPTION_SOURCE_LOCATION/bin/auth.sh ]; then
+            # Remove the script if authserver is not used
+            rm -rf $OPTION_SOURCE_LOCATION/bin/auth.sh
+        fi
+    fi
+
+    # Check if the worldserver should be enabled
+    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        # Add worldserver to the start and stop scripts
+        echo "screen -AmdS world ./world.sh" >> $OPTION_SOURCE_LOCATION/bin/start.sh
+        echo "screen -X -S \"world\" quit" >> $OPTION_SOURCE_LOCATION/bin/stop.sh
+
+        # Create the script used to start and stop the authserver
+        echo "#!/bin/sh" > $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "while :; do" >> $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "./worldserver" >> $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "sleep 20" >> $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "done" >> $OPTION_SOURCE_LOCATION/bin/world.sh
+
+        # Make the script runnable
+        chmod +x $OPTION_SOURCE_LOCATION/bin/world.sh
+    else
+        # Check if the script for authserver already exists
+        if [ -f $OPTION_SOURCE_LOCATION/bin/world.sh ]; then
+            # Remove the script if authserver is not used
+            rm -rf $OPTION_SOURCE_LOCATION/bin/world.sh
+        fi
+    fi
+
+    # Make the start and stop scripts runnable
+    chmod +x $OPTION_SOURCE_LOCATION/bin/start.sh
+    chmod +x $OPTION_SOURCE_LOCATION/bin/stop.sh
+}
+
+function get_client_files
+{
+    # Make sure this is only used with the both or world subparameters
+    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        # Check if any of the folders are missing
+        if [ ! -d $OPTION_SOURCE_LOCATION/bin/Cameras ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/dbc ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/maps ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/mmaps ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/vmaps ]; then
+            # Set installed client data to 0 if any folder is missing
+            OPTION_SOURCE_INSTALLED_CLIENT_DATA=0
+        fi
+
+        # Grab the latest version available on github
+        AVAILABLE_VERSION=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
+
+        # Check if the latest version differ from the required version
+        if [ $OPTION_SOURCE_REQUIRED_CLIENT_DATA != $AVAILABLE_VERSION ]; then
+            # Update the required version with this version
+            OPTION_SOURCE_REQUIRED_CLIENT_DATA=$AVAILABLE_VERSION
+
+            # Save the required version to the options file
+            save_options
+        fi
+
+        # Check if the installed version differ from the required version
+        if [ $OPTION_SOURCE_INSTALLED_CLIENT_DATA != $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]; then
+            printf "\e[0;33mDownloading the client data files...\e[0m\n"
+
+            # Check all folders included in the data files and remove them
+            if [ -d $OPTION_SOURCE_LOCATION/bin/Cameras ]; then
+                rm -rf $OPTION_SOURCE_LOCATION/bin/Cameras
+            fi
+            if [ -d $OPTION_SOURCE_LOCATION/bin/dbc ]; then
+                rm -rf $OPTION_SOURCE_LOCATION/bin/dbc
+            fi
+            if [ -d $OPTION_SOURCE_LOCATION/bin/maps ]; then
+                rm -rf $OPTION_SOURCE_LOCATION/bin/maps
+            fi
+            if [ -d $OPTION_SOURCE_LOCATION/bin/mmaps ]; then
+                rm -rf $OPTION_SOURCE_LOCATION/bin/mmaps
+            fi
+            if [ -d $OPTION_SOURCE_LOCATION/bin/vmaps ]; then
+                rm -rf $OPTION_SOURCE_LOCATION/bin/vmaps
+            fi
+
+            # Download the client data files archive
+            curl -L https://github.com/wowgaming/client-data/releases/download/v${OPTION_SOURCE_REQUIRED_CLIENT_DATA}/data.zip > $OPTION_SOURCE_LOCATION/bin/data.zip
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Terminate script on errors
+                exit $?
+            fi
+
+            # Unzip the archive into the proper folders
+            unzip -o "$OPTION_SOURCE_LOCATION/bin/data.zip" -d "$OPTION_SOURCE_LOCATION/bin/"
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Terminate script on errors
+                exit $?
+            fi
+
+            # Remove the archive since it's no longer needed
+            rm -rf $OPTION_SOURCE_LOCATION/bin/data.zip
+
+            # Set the installed version to the same as the required version
+            OPTION_SOURCE_INSTALLED_CLIENT_DATA=$OPTION_SOURCE_REQUIRED_CLIENT_DATA
+
+            # Save the version to the options file
+            save_options
+        fi
+    fi
+}
+
 # A function that prints available parameters and subparameters when none are supplied or if they are invalid
 function parameters
 {
@@ -1455,91 +2211,25 @@ load_options
 
 # Check for provided parameters
 if [ $# -gt 0 ]; then
-    # Check the first parameter
-    case $1 in
-        # The first parameter is both
-        "both")
-            # Check the second parameters
-            case $2 in
-                # The second parameter is install or update
-                "install"|"update")
-                    echo "both - install/update"
-                    ;;
-                # The second parameter is database or db
-                "database"|"db")
-                    echo "both - database/db"
-                    ;;
-                # The second parameter is config or conf
-                "config"|"conf")
-                    echo "both - config/conf"
-                    ;;
-                # The second parameter is all
-                "all")
-                    echo "both - all"
-                    ;;
-                # The second parameter is invalid
-                *)
-                    parameters
-                    ;;
-            esac
-        ;;
-        # The first parameter is auth
-        "auth")
-            # Check the second parameters
-            case $2 in
-                # The second parameter is install or update
-                "install"|"update")
-                    echo "auth - install/update"
-                    ;;
-                # The second parameter is database or db
-                "database"|"db")
-                    echo "auth - database/db"
-                    ;;
-                # The second parameter is config or conf
-                "config"|"conf")
-                    echo "auth - config/conf"
-                    ;;
-                # The second parameter is all
-                "all")
-                    echo "auth - all"
-                    ;;
-                # The second parameter is invalid
-                *)
-                    parameters
-                    ;;
-            esac
-        ;;
-        # The first parameter is world
-        "world")
-            # Check the second parameters
-            case $2 in
-                # The second parameter is install or update
-                "install"|"update")
-                    echo "world - install/update"
-                    ;;
-                # The second parameter is database or db
-                "database"|"db")
-                    echo "world - database/db"
-                    ;;
-                # The second parameter is config or conf
-                "config"|"conf")
-                    echo "world - config/conf"
-                    ;;
-                # The second parameter is all
-                "all")
-                    echo "world - all"
-                    ;;
-                # The second parameter is invalid
-                *)
-                    parameters
-                    ;;
-            esac
-        ;;
-        # The first parameter is invalid
-        *)
+    # Check the parameter
+    if [[ $1 == "both" ]] || [[ $1 == "auth" ]] || [[ $1 == "world" ]]; then
+        # Check the subparameter
+        if [[ $2 == "install" ]] || [[ $2 == "update" ]]; then
+            get_source $1
+            compile_source $1
+            get_client_files $1
+        elif [[ $2 == "all" ]]; then
+            get_source $1
+            compile_source $1
+            get_client_files $1        
+        else
+            # The provided subparameter is invalid
             parameters
-            ;;
-    esac
+        fi
+    else
+        # The provided parameter is invalid
+        parameters
+    fi
 else
     # No parameters provided
     parameters
