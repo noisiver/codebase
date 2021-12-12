@@ -385,9 +385,9 @@ function save_options
     $OPTION_MYSQL_PORT \
     $OPTION_MYSQL_USERNAME \
     $OPTION_MYSQL_PASSWORD \
-    $OPTION_MYSQL_DATABASE_AUTH \
-    $OPTION_MYSQL_DATABASE_CHARACTERS \
-    $OPTION_MYSQL_DATABASE_WORLD \
+    $OPTION_MYSQL_DATABASES_AUTH \
+    $OPTION_MYSQL_DATABASES_CHARACTERS \
+    $OPTION_MYSQL_DATABASES_WORLD \
     "$OPTION_SOURCE_LOCATION" \
     $OPTION_SOURCE_REQUIRED_CLIENT_DATA \
     $OPTION_SOURCE_INSTALLED_CLIENT_DATA \
@@ -540,29 +540,29 @@ function load_options
     fi
 
     # Load the /options/mysql/databases/auth option
-    OPTION_MYSQL_DATABASE_AUTH="$(echo "cat /options/mysql/databases/auth/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASE_AUTH ] || [[ $OPTION_MYSQL_DATABASE_AUTH == "" ]]; then
+    OPTION_MYSQL_DATABASES_AUTH="$(echo "cat /options/mysql/databases/auth/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_DATABASES_AUTH ] || [[ $OPTION_MYSQL_DATABASES_AUTH == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/databases/auth is invalid. It has been reset to the default value.\e[0m\n"
-        OPTION_MYSQL_DATABASE_AUTH="acore_auth"
+        OPTION_MYSQL_DATABASES_AUTH="acore_auth"
         RESET=true
     fi
 
     # Load the /options/mysql/databases/characters option
-    OPTION_MYSQL_DATABASE_CHARACTERS="$(echo "cat /options/mysql/databases/characters/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASE_CHARACTERS ] || [[ $OPTION_MYSQL_DATABASE_CHARACTERS == "" ]]; then
+    OPTION_MYSQL_DATABASES_CHARACTERS="$(echo "cat /options/mysql/databases/characters/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_DATABASES_CHARACTERS ] || [[ $OPTION_MYSQL_DATABASES_CHARACTERS == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/databases/characters is invalid. It has been reset to the default value.\e[0m\n"
-        OPTION_MYSQL_DATABASE_CHARACTERS="acore_characters"
+        OPTION_MYSQL_DATABASES_CHARACTERS="acore_characters"
         RESET=true
     fi
 
     # Load the /options/mysql/databases/world option
-    OPTION_MYSQL_DATABASE_WORLD="$(echo "cat /options/mysql/databases/world/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASE_WORLD ] || [[ $OPTION_MYSQL_DATABASE_WORLD == "" ]]; then
+    OPTION_MYSQL_DATABASES_WORLD="$(echo "cat /options/mysql/databases/world/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_DATABASES_WORLD ] || [[ $OPTION_MYSQL_DATABASES_WORLD == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/mysql/databases/world is invalid. It has been reset to the default value.\e[0m\n"
-        OPTION_MYSQL_DATABASE_WORLD="acore_world"
+        OPTION_MYSQL_DATABASES_WORLD="acore_world"
         RESET=true
     fi
 
@@ -2019,8 +2019,11 @@ function get_source
             fi
         fi
     fi
+
+    printf "\e[0;33mFinished downloading the source code...\e[0m\n"
 }
 
+# A function that compiles the source code into binaries
 function compile_source
 {
     # Make sure all required packages are installed
@@ -2111,8 +2114,11 @@ function compile_source
     # Make the start and stop scripts runnable
     chmod +x $OPTION_SOURCE_LOCATION/bin/start.sh
     chmod +x $OPTION_SOURCE_LOCATION/bin/stop.sh
+
+    printf "\e[0;33mFinished compiling the source code...\e[0m\n"
 }
 
+# A function that downloads the client data files
 function get_client_files
 {
     # Make sure this is only used with the both or world subparameters
@@ -2182,8 +2188,251 @@ function get_client_files
 
             # Save the version to the options file
             save_options
+
+            printf "\e[0;33mFinished downloading the client data files...\e[0m\n"
         fi
     fi
+}
+
+# A function that imports all database files
+function import_database
+{
+    # Create the mysql.cnf file to prevent warnings during import
+    MYSQL_CNF="$(pwd)/mysql.cnf"
+    echo "[client]" > $MYSQL_CNF
+    echo "host=\"$OPTION_MYSQL_HOSTNAME\"" >> $MYSQL_CNF
+    echo "port=\"$OPTION_MYSQL_PORT\"" >> $MYSQL_CNF
+    echo "user=\"$OPTION_MYSQL_USERNAME\"" >> $MYSQL_CNF
+    echo "password=\"$OPTION_MYSQL_PASSWORD\"" >> $MYSQL_CNF
+
+    # Check if either both or auth is used as the first parameter
+    if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
+        # Make sure the auth database exists and is accessible
+        if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_AUTH'"` ]; then
+            # We can't access the required database, so terminate the script
+            printf "\e[0;31mThe database named $OPTION_MYSQL_DATABASES_AUTH is inaccessible by the user named $OPTION_MYSQL_USERNAME.\e[0m\n"
+
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
+
+        # Make sure the database folders exists
+        if [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_auth ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth ]; then
+            # The files are missing, so terminate the script
+            printf "\e[0;31mThere are no database files where there should be.\e[0m\n"
+            printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
+    fi
+
+    # Check if either both or world is used as the first parameter
+    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        # Make sure the characters database exists and is accessible
+        if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_CHARACTERS'"` ]; then
+            # We can't access the required database, so terminate the script
+            printf "\e[0;31mThe database named $OPTION_MYSQL_DATABASES_CHARACTERS is inaccessible by the user named $OPTION_MYSQL_USERNAME.\e[0m\n"
+
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
+
+        # Make sure the world database exists and is accessible
+        if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_WORLD'"` ]; then
+            # We can't access the required database, so terminate the script
+            printf "\e[0;31mThe database named $OPTION_MYSQL_DATABASES_WORLD is inaccessible by the user named $OPTION_MYSQL_USERNAME.\e[0m\n"
+
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
+
+        # Make sure the database folders exists
+        if [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_characters ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_world ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_world ]; then
+            # The files are missing, so terminate the script
+            printf "\e[0;31mThere are no database files where there should be.\e[0m\n"
+            printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
+    fi
+
+    # No errors occured so we can proceed
+    printf "\e[0;33mImporting the database files...\e[0m\n"
+
+    # Check if either both or auth is used as the first parameter
+    if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
+        # Loop through all sql files inside the auth base folder
+        for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_auth/*.sql; do
+            # Check if the table already exists
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+                printf "Skipping "$(basename $f)"\n"
+
+                # Skip the file since it's already imported
+                continue;
+            fi
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            # Import the sql file
+            printf "Importing "$(basename $f)"\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        done
+
+        # Loop through all sql files inside the auth updates folder
+        for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth/*.sql; do
+            printf "Importing "$(basename $f)"\n"
+
+            # Import the sql file
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        done
+    fi
+
+    # Check if either both or world is used as the first parameter
+    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        # Loop through all sql files inside the characters base folder
+        for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_characters/*.sql; do
+            # Check if the table already exists
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+                printf "Skipping "$(basename $f)"\n"
+
+                # Skip the file since it's already imported
+                continue;
+            fi
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            # Import the sql file
+            printf "Importing "$(basename $f)"\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        done
+
+        # Loop through all sql files inside the characters updates folder
+        for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters/*.sql; do
+            printf "Importing "$(basename $f)"\n"
+
+            # Import the sql file
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        done
+
+        # Loop through all sql files inside the world base folder
+        for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_world/*.sql; do
+            # Check if the table already exists
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+                printf "Skipping "$(basename $f)"\n"
+
+                # Skip the file since it's already imported
+                continue;
+            fi
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            # Import the sql file
+            printf "Importing "$(basename $f)"\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        done
+
+        # Loop through all sql files inside the world updates folder
+        for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_world/*.sql; do
+            printf "Importing "$(basename $f)"\n"
+
+            # Import the sql file
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+            # Check to make sure there weren't any errors
+            if [ $? -ne 0 ]; then
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        done
+    fi
+
+    printf "\e[0;33mFinished importing the database files...\e[0m\n"
 }
 
 # A function that prints available parameters and subparameters when none are supplied or if they are invalid
@@ -2215,17 +2464,45 @@ if [ $# -gt 0 ]; then
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]] || [[ $1 == "world" ]]; then
         # Check the subparameter
         if [[ $2 == "install" ]] || [[ $2 == "update" ]]; then
+            # Download the source code
             get_source $1
+
+            # Compile the source code
             compile_source $1
+
+            # Download the client data files
             get_client_files $1
+        elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
+            # Import the database files
+            import_database $1
+        elif [[ $2 == "config" ]] || [[ $2 == "conf" ]]; then
+            echo "NYI"
         elif [[ $2 == "all" ]]; then
+            # Download the source code
             get_source $1
+
+            # Compile the source code
             compile_source $1
-            get_client_files $1        
+
+            # Download the client data files
+            get_client_files $1
+
+            # Import the database files
+            import_database $1
         else
             # The provided subparameter is invalid
             parameters
         fi
+    elif [[ $1 == "start" ]]; then
+        # Start the enabled processes
+        echo "NYI"
+    elif [[ $1 == "stop" ]]; then
+        # Stop the enabled processes
+        echo "NYI"
+    elif [[ $1 == "restart" ]]; then
+        # Start the enabled processes
+        # Stop the enabled processes
+        echo "NYI"
     else
         # The provided parameter is invalid
         parameters
