@@ -13,7 +13,7 @@ I should note that everything is tested on Containers (LXC) and might not work p
 Using the script with no parameters, or invalid parameters, will print some information about available parameters and subparameters.
 
 # First time
-Running the script for the first time will generate a default options file named options.xml that you have to edit. Make sure to edit it or the script will fail at some point.
+Running the script for the first time will generate a default options file named options.xml that you can edit. Make sure to edit it or the script will fail at some point.
 
 # Important information
 **Do not** download the files inside the core folder. Download only the file named azerothcore.sh and run it.

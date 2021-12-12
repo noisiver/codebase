@@ -157,9 +157,9 @@ function store_options
             <id>${13:-1}</id>
             <!-- The ip or hostname used to connect to the world server. Use external ip if required -->
             <address>${14:-127.0.0.1}</address>
-            <!-- Server realm type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
+            <!-- Server game type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
             <game_type>${15:-0}</game_type>
-            <!-- Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 2 = united states, 6 = korea, 9 = german, 10 = french, 11 = spanish, 12 = russian, 14 = taiwan, 16 = china, 26 = test server -->
+            <!-- Server realm zone. Set allowed alphabet in character names etc. 1 = development, 2 = united states, 6 = korea, 9 = german, 10 = french, 11 = spanish, 12 = russian, 14 = taiwan, 16 = china, 26 = test server -->
             <realm_zone>${16:-1}</realm_zone>
             <!-- Allow server to use content from expansions. Checks for expansion-related map files, client compatibility and class/race character creation. 0 = none, 1 = tbc, 2 = wotlk -->
             <expansion>${17:-2}</expansion>
@@ -232,6 +232,148 @@ function store_options
                 <allow_lower_security>${49:-false}</allow_lower_security>
             </gm>
         </world>
+        <modules>
+            <ahbot>
+                <!-- Enable/Disable the use of the AHBot module -->
+                <enabled>${50:-false}</enabled>
+                <!-- Enable/Disable the part of AHBot that buys items from players -->
+                <enable_buyer>${51:-false}</enable_buyer>
+                <!-- Enable/Disable the part of AHBot that puts items up for auction -->
+                <enable_seller>${52:-false}</enable_seller>
+                <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
+                <account_id>${53:-0}</account_id>
+                <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
+                <character_guid>${54:-0}</character_guid>
+                <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
+                <min_items>${55:-250}</min_items>
+                <!-- Maximum amount of items the bot will keep on the auction house -->
+                <max_items>${56:-250}</max_items>
+            </ahbot>
+            <activate_zones>
+                <!-- Enable/Disable the use of the Activate Zones module. If a zone has players in it, this module will set all creatures in that zone as active -->
+                <enabled>${57:-false}</enabled>
+            </activate_zones>
+            <assistant>
+                <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
+                <enabled>${58:-false}</enabled>
+                <features>
+                    <!-- Enable/Disable obtaining heirlooms from the assistant -->
+                    <heirlooms>${59:-false}</heirlooms>
+                    <!-- Enable/Disable obtaining glyphs from the assistant -->
+                    <glyphs>${60:-false}</glyphs>
+                    <!-- Enable/Disable obtaining gems from the assistant -->
+                    <gems>${61:-false}</gems>
+                    <!-- Enable/Disable obtaining containers from the assistant -->
+                    <containers>${62:-false}</containers>
+                    <utilities>
+                        <!-- Enable/Disable obtaining utilities from the assistant -->
+                        <enabled>${63:-false}</enabled>
+                        <!-- Cost in gold required to perform a name change -->
+                        <name_change>${64:-10}</name_change>
+                        <!-- Cost in gold required to perform a customization -->
+                        <customization>${65:-50}</customization>
+                        <!-- Cost in gold to perform a race change -->
+                        <race_change>${66:-500}</race_change>
+                        <!-- Cost in gold to perform a faction change -->
+                        <faction_change>${67:-1000}</faction_change>
+                    </utilities>
+                    <!-- Enable/Disable obtaining shaman totems from the assistant -->
+                    <totems>${68:-false}</totems>
+                </features>
+            </assistant>
+            <eluna>
+                <!-- Enable/Disable the use of the Eluna LUA engine module -->
+                <enabled>${69:-false}</enabled>
+            </eluna>
+            <group_quests>
+                <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
+                <enabled>${70:-false}</enabled>
+            </group_quests>
+            <learn_spells>
+                <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
+                <enabled>${71:-false}</enabled>
+                <spells>
+                    <!-- Enable/Disable learning spells when entering the world -->
+                    <on_login>${72:-false}</on_login>
+                    <!-- Enable/Disable learning spells when leveling up -->
+                    <on_levelup>${73:-false}</on_levelup>
+                    <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
+                    <class_spells>${74:-false}</class_spells>
+                    <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
+                    <talent_ranks>${75:-false}</talent_ranks>
+                    <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
+                    <proficiencies>${76:-false}</proficiencies>
+                    <!-- Enable/Disable spells that are normally obtained through quests -->
+                    <from_quests>${77:-false}</from_quests>
+                    <max_skill>
+                        <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
+                        <enabled>${78:-false}</enabled>
+                        <!-- The max level where weapon skills will be set to their max value -->
+                        <max_level>${79:-60}</max_level>
+                    </max_skill>
+                    <riding>
+                        <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
+                        <enabled>${80:-false}</enabled>
+                        <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
+                        <apprentice>${81:-false}</apprentice>
+                        <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
+                        <journeyman>${82:-false}</journeyman>
+                        <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
+                        <expert>${83:-false}</expert>
+                        <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
+                        <artisan>${84:-false}</artisan>
+                        <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
+                        <cold_weather>${85:-false}</cold_weather>
+                    </riding>
+                </spells>
+            </learn_spells>
+            <level_reward>
+                <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
+                <enabled>${86:-false}</enabled>
+                <gold>
+                    <!-- The amount of gold given at level 10 -->
+                    <level_10>${87:-5}</level_10>
+                    <!-- The amount of gold given at level 20 -->
+                    <level_20>${88:-15}</level_20>
+                    <!-- The amount of gold given at level 30 -->
+                    <level_30>${89:-30}</level_30>
+                    <!-- The amount of gold given at level 40 -->
+                    <level_40>${90:-45}</level_40>
+                    <!-- The amount of gold given at level 50 -->
+                    <level_50>${91:-60}</level_50>
+                    <!-- The amount of gold given at level 60 -->
+                    <level_60>${92:-80}</level_60>
+                    <!-- The amount of gold given at level 70 -->
+                    <level_70>${93:-125}</level_70>
+                    <!-- The amount of gold given at level 80 -->
+                    <level_80>${94:-250}</level_80>
+                </gold>
+            </level_reward>
+            <recruit_a_friend>
+                <!-- Enable/Disable the use of the Recruit A Friend module. Players can recruit other players by using a simple in-game command -->
+                <enabled>${95:-false}</enabled>
+                <!-- The amount of days that recruit a friend stays active. 0 = never expires -->
+                <duration>${96:-90}</duration>
+            </recruit_a_friend>
+            <skip_dk_starting_area>
+                <!-- Enable/Disable the use of the Skip DK Starting Area module -->
+                <enabled>${97:-false}</enabled>
+                <!-- The level that death knight starts at -->
+                <starting_level>${98:-58}</starting_level>
+            </skip_dk_starting_area>
+            <spawn_points>
+                <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
+                <enabled>${99:-false}</enabled>
+            </spawn_points>
+            <weekend_bonus>
+                <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
+                <enabled>${100:-false}</enabled>
+                <!-- The multiplier for experience on weekends -->
+                <experience_multiplier>${101:-2}</experience_multiplier>
+                <!-- The multiplier for reputation on weekends -->
+                <reputation_multiplier>${102:-2}</reputation_multiplier>
+            </weekend_bonus>
+        </modules>
     </options>" | xmllint --format - > $OPTIONS
 }
 
@@ -287,7 +429,60 @@ function save_options
     $OPTION_WORLD_GM_SHOW_WHO_LIST \
     $OPTION_WORLD_GM_ALLOW_FRIEND \
     $OPTION_WORLD_GM_ALLOW_INVITE \
-    $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY
+    $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
+    $OPTION_MODULES_AHBOT_ENABLED \
+    $OPTION_MODULES_AHBOT_ENABLE_BUYER \
+    $OPTION_MODULES_AHBOT_ENABLE_SELLER \
+    $OPTION_MODULES_AHBOT_ACCOUNT_ID \
+    $OPTION_MODULES_AHBOT_CHARACTER_GUID \
+    $OPTION_MODULES_AHBOT_MIN_ITEMS \
+    $OPTION_MODULES_AHBOT_MAX_ITEMS \
+    $OPTION_MODULES_ACTIVATE_ZONES_ENABLED \
+    $OPTION_MODULES_ASSISTANT_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS \
+    $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS \
+    $OPTION_MODULES_ASSISTANT_FEATURES_GEMS \
+    $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE \
+    $OPTION_MODULES_ASSISTANT_FEATURES_TOTEMS \
+    $OPTION_MODULES_ELUNA_ENABLED \
+    $OPTION_MODULES_GROUP_QUESTS_ENABLED \
+    $OPTION_MODULES_LEARN_SPELLS_ENABLED \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN \
+    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER \
+    $OPTION_MODULES_LEVEL_REWARD_ENABLED \
+    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10 \
+    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20 \
+    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30 \
+    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40 \
+    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50 \
+    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60 \
+    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70 \
+    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION \
+    $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
+    $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
+    $OPTION_MODULES_SPAWN_POINTS_ENABLED \
+    $OPTION_MODULES_WEEKEND_BONUS_ENABLED \
+    $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER \
+    $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER
 }
 
 # A function that loads options from the file
@@ -308,444 +503,921 @@ function load_options
         exit $?
     fi
 
-    # Load the mysql hostname option
+    # Load the /options/mysql/hostname option
     OPTION_MYSQL_HOSTNAME="$(echo "cat /options/mysql/hostname/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [ -z $OPTION_MYSQL_HOSTNAME ] || [ $OPTION_MYSQL_HOSTNAME == "" ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe mysql hostname option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/mysql/hostname is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_HOSTNAME="127.0.0.1"
         RESET=true
     fi
 
-    # Load the mysql port option
+    # Load the /options/mysql/port option
     OPTION_MYSQL_PORT="$(echo "cat /options/mysql/port/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_MYSQL_PORT =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe mysql port option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/mysql/port is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_PORT="3306"
         RESET=true
     fi
 
-    # Load the mysql username option
+    # Load the /options/mysql/username option
     OPTION_MYSQL_USERNAME="$(echo "cat /options/mysql/username/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [ -z $OPTION_MYSQL_USERNAME ] || [ $OPTION_MYSQL_USERNAME == "" ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe mysql username option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/mysql/username is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_USERNAME="acore"
         RESET=true
     fi
 
-    # Load the mysql password option
+    # Load the /options/mysql/password option
     OPTION_MYSQL_PASSWORD="$(echo "cat /options/mysql/password/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [ -z $OPTION_MYSQL_PASSWORD ] || [ $OPTION_MYSQL_PASSWORD == "" ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe mysql password option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/mysql/password is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_PASSWORD="acore"
         RESET=true
     fi
 
-    # Load the auth database option
+    # Load the /options/mysql/databases/auth option
     OPTION_MYSQL_DATABASE_AUTH="$(echo "cat /options/mysql/databases/auth/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [ -z $OPTION_MYSQL_DATABASE_AUTH ] || [ $OPTION_MYSQL_DATABASE_AUTH == "" ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe auth database option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/mysql/databases/auth is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_DATABASE_AUTH="acore_auth"
         RESET=true
     fi
 
-    # Load the characters database option
+    # Load the /options/mysql/databases/characters option
     OPTION_MYSQL_DATABASE_CHARACTERS="$(echo "cat /options/mysql/databases/characters/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [ -z $OPTION_MYSQL_DATABASE_CHARACTERS ] || [ $OPTION_MYSQL_DATABASE_CHARACTERS == "" ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe characters database option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/mysql/databases/characters is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_DATABASE_CHARACTERS="acore_characters"
         RESET=true
     fi
 
-    # Load the world database option
+    # Load the /options/mysql/databases/world option
     OPTION_MYSQL_DATABASE_WORLD="$(echo "cat /options/mysql/databases/world/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [ -z $OPTION_MYSQL_DATABASE_WORLD ] || [ $OPTION_MYSQL_DATABASE_WORLD == "" ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe world database option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/mysql/databases/world is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MYSQL_DATABASE_WORLD="acore_world"
         RESET=true
     fi
 
-    # Load the core location option
+    # Load the /options/source/location option
     OPTION_SOURCE_LOCATION="$(echo "cat /options/source/location/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [ -z $OPTION_SOURCE_LOCATION ] || [ $OPTION_SOURCE_LOCATION == "" ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe core location option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/source/location is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_SOURCE_LOCATION="/opt/azerothcore"
         RESET=true
     fi
 
-    # Load the required client data option
+    # Load the /options/source/required_client_data option
     OPTION_SOURCE_REQUIRED_CLIENT_DATA="$(echo "cat /options/source/required_client_data/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_SOURCE_REQUIRED_CLIENT_DATA =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe required client data option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/source/required_client_data is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_SOURCE_REQUIRED_CLIENT_DATA="12"
         RESET=true
     fi
 
-    # Load the installed client data option
+    # Load the /options/source/installed_client_data option
     OPTION_SOURCE_INSTALLED_CLIENT_DATA="$(echo "cat /options/source/installed_client_data/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_SOURCE_INSTALLED_CLIENT_DATA =~ ^[0-9]+$ ]] || [ $OPTION_SOURCE_INSTALLED_CLIENT_DATA -gt $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe installed client data option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/source/installed_client_data is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_SOURCE_INSTALLED_CLIENT_DATA="0"
         RESET=true
     fi
 
-    # Load the world name option
+    # Load the /options/world/name option
     OPTION_WORLD_NAME="$(echo "cat /options/world/name/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [ -z $OPTION_WORLD_NAME ] || [ $OPTION_WORLD_NAME == "" ]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe world name option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/name is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_NAME="AzerothCore"
         RESET=true
     fi
 
-    # Load the world motd option
+    # Load the /options/world/motd option
     OPTION_WORLD_MOTD="$(echo "cat /options/world/motd/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ -z $OPTION_WORLD_MOTD ]] || [[ $OPTION_WORLD_MOTD == "" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe world name option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/motd is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_MOTD="Welcome to AzerothCore."
         RESET=true
     fi
 
-    # Load the world id option
+    # Load the /options/world/id option
     OPTION_WORLD_ID="$(echo "cat /options/world/id/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_ID =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe world id option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/id is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_ID="1"
         RESET=true
     fi
 
-    # Load the world address option
+    # Load the /options/world/address option
     OPTION_WORLD_ADDRESS="$(echo "cat /options/world/address/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ -z $OPTION_WORLD_ADDRESS ]] || [[ $OPTION_WORLD_ADDRESS == "" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe world address option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/address is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_ADDRESS="127.0.0.1"
         RESET=true
     fi
 
-    # Load the game type option
+    # Load the /options/world/game_type option
     OPTION_WORLD_GAME_TYPE="$(echo "cat /options/world/game_type/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_GAME_TYPE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_GAME_TYPE != 0 && $OPTION_WORLD_GAME_TYPE != 1 && $OPTION_WORLD_GAME_TYPE != 6 && $OPTION_WORLD_GAME_TYPE != 8 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe game type option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/game_type is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GAME_TYPE="0"
         RESET=true
     fi
 
-    # Load the realm zone option
+    # Load the /options/world/realm_zone option
     OPTION_WORLD_REALM_ZONE="$(echo "cat /options/world/realm_zone/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_REALM_ZONE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_REALM_ZONE != 1 && $OPTION_WORLD_REALM_ZONE != 2 && $OPTION_WORLD_REALM_ZONE != 6 && $OPTION_WORLD_REALM_ZONE != 9 && $OPTION_WORLD_REALM_ZONE != 10 && $OPTION_WORLD_REALM_ZONE != 11 && $OPTION_WORLD_REALM_ZONE != 12 && $OPTION_WORLD_REALM_ZONE != 14 && $OPTION_WORLD_REALM_ZONE != 16 && $OPTION_WORLD_REALM_ZONE != 26 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe realm zone option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/realm_zone is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_REALM_ZONE="1"
         RESET=true
     fi
 
-    # Load the expansion option
+    # Load the /options/world/expansion option
     OPTION_WORLD_EXPANSION="$(echo "cat /options/world/expansion/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_EXPANSION =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_EXPANSION != 0 && $OPTION_WORLD_EXPANSION != 1 && $OPTION_WORLD_EXPANSION != 2 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe expansion option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/expansion is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_EXPANSION="1"
         RESET=true
     fi
 
-    # Load the player limit option
+    # Load the /options/world/player_limit option
     OPTION_WORLD_PLAYER_LIMIT="$(echo "cat /options/world/player_limit/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_PLAYER_LIMIT =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe player limit option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/player_limit is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_PLAYER_LIMIT="1"
         RESET=true
     fi
 
-    # Load the skip cinematics option
+    # Load the /options/world/skip_cinematics option
     OPTION_WORLD_SKIP_CINEMATICS="$(echo "cat /options/world/skip_cinematics/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_SKIP_CINEMATICS =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_SKIP_CINEMATICS != 0 && $OPTION_WORLD_SKIP_CINEMATICS != 1 && $OPTION_WORLD_SKIP_CINEMATICS != 2 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe skip cinematics option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/skip_cinematics is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_SKIP_CINEMATICS="1"
         RESET=true
     fi
 
-    # Load the max level option
+    # Load the /options/world/max_level option
     OPTION_WORLD_MAX_LEVEL="$(echo "cat /options/world/max_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_MAX_LEVEL < 1 || $OPTION_WORLD_MAX_LEVEL > 80 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe max level option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/max_level is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_MAX_LEVEL="1"
         RESET=true
     fi
 
-    # Load the start level option
+    # Load the /options/world/start_level option
     OPTION_WORLD_START_LEVEL="$(echo "cat /options/world/start_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_START_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_START_LEVEL < 1 || $OPTION_WORLD_START_LEVEL > 80 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe start level option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/start_level is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_START_LEVEL="1"
         RESET=true
     fi
 
-    # Load the start money option
+    # Load the /options/world/start_money option
     OPTION_WORLD_START_MONEY="$(echo "cat /options/world/start_money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_START_MONEY =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe start money option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/start_money is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_START_MONEY="0"
         RESET=true
     fi
 
-    # Load the always max skill option
+    # Load the /options/world/always_max_skill option
     OPTION_WORLD_ALWAYS_MAX_SKILL="$(echo "cat /options/world/always_max_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_ALWAYS_MAX_SKILL != "true" && $OPTION_WORLD_ALWAYS_MAX_SKILL != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe always max skill option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/always_max_skill is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_ALWAYS_MAX_SKILL="false"
         RESET=true
     fi
 
-    # Load the all flight paths option
+    # Load the /options/world/all_flight_paths option
     OPTION_WORLD_ALL_FLIGHT_PATHS="$(echo "cat /options/world/all_flight_paths/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_ALL_FLIGHT_PATHS != "true" && $OPTION_WORLD_ALL_FLIGHT_PATHS != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe all flight paths option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/all_flight_paths is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_ALL_FLIGHT_PATHS="false"
         RESET=true
     fi
 
-    # Load the maps explored option
+    # Load the /options/world/maps_explored option
     OPTION_WORLD_MAPS_EXPLORED="$(echo "cat /options/world/maps_explored/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_MAPS_EXPLORED != "true" && $OPTION_WORLD_MAPS_EXPLORED != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe maps explored option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/maps_explored is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_MAPS_EXPLORED="false"
         RESET=true
     fi
 
-    # Load the allow commands option
+    # Load the /options/world/allow_commands option
     OPTION_WORLD_ALLOW_COMMANDS="$(echo "cat /options/world/allow_commands/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_ALLOW_COMMANDS != "true" && $OPTION_WORLD_ALLOW_COMMANDS != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe allow commands option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/allow_commands is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_ALLOW_COMMANDS="false"
         RESET=true
     fi
 
-    # Load the allow commands option
+    # Load the /options/world/quest_ignore_raid option
     OPTION_WORLD_QUEST_IGNORE_RAID="$(echo "cat /options/world/quest_ignore_raid/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_QUEST_IGNORE_RAID != "true" && $OPTION_WORLD_QUEST_IGNORE_RAID != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe quest ignore raid option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/quest_ignore_raid is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_QUEST_IGNORE_RAID="false"
         RESET=true
     fi
 
-    # Load the prevent afk logout option
+    # Load the /options/world/prevent_afk_logout option
     OPTION_WORLD_PREVENT_AFK_LOGOUT="$(echo "cat /options/world/prevent_afk_logout/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_PREVENT_AFK_LOGOUT != "true" && $OPTION_WORLD_PREVENT_AFK_LOGOUT != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe prevent afk logout option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/prevent_afk_logout is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_PREVENT_AFK_LOGOUT="false"
         RESET=true
     fi
 
-    # Load the prevent afk logout option
+    # Load the /options/world/raf_max_level option
     OPTION_WORLD_RAF_MAX_LEVEL="$(echo "cat /options/world/raf_max_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RAF_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RAF_MAX_LEVEL < 1 || $OPTION_WORLD_RAF_MAX_LEVEL > 80 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe raf max level option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/raf_max_level is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RAF_MAX_LEVEL="false"
         RESET=true
     fi
 
-    # Load the preload map grids option
+    # Load the /options/world/preload_map_grids option
     OPTION_WORLD_PRELOAD_MAP_GRIDS="$(echo "cat /options/world/preload_map_grids/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_PRELOAD_MAP_GRIDS != "true" && $OPTION_WORLD_PRELOAD_MAP_GRIDS != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe preload map grids option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/preload_map_grids is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_PRELOAD_MAP_GRIDS="false"
         RESET=true
     fi
 
-    # Load the set all waypoints active option
+    # Load the /options/world/set_all_waypoints_active option
     OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE="$(echo "cat /options/world/set_all_waypoints_active/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE != "true" && $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe set all waypoints active option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/set_all_waypoints_active is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE="false"
         RESET=true
     fi
 
-    # Load the enable minigob manabonk option
+    # Load the /options/world/enable_minigob_manabonk option
     OPTION_WORLD_ENABLE_MINIGOB_MANABONK="$(echo "cat /options/world/enable_minigob_manabonk/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_ENABLE_MINIGOB_MANABONK != "true" && $OPTION_WORLD_ENABLE_MINIGOB_MANABONK != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe enable minigob manabonk option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/enable_minigob_manabonk is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_ENABLE_MINIGOB_MANABONK="false"
         RESET=true
     fi
 
-    # Load the experience rate option
+    # Load the /options/world/rates/experience option
     OPTION_WORLD_RATES_EXPERIENCE="$(echo "cat /options/world/rates/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_EXPERIENCE < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe experience rate option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/rates/experience is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RATES_EXPERIENCE="1"
         RESET=true
     fi
 
-    # Load the rested experience rate option
+    # Load the /options/world/rates/rested_experience option
     OPTION_WORLD_RATES_RESTED_EXPERIENCE="$(echo "cat /options/world/rates/rested_experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_RESTED_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_RESTED_EXPERIENCE < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe rested experience rate option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/rates/rested_experience is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RATES_RESTED_EXPERIENCE="1"
         RESET=true
     fi
 
-    # Load the reputation rate option
+    # Load the /options/world/rates/reputation option
     OPTION_WORLD_RATES_REPUTATION="$(echo "cat /options/world/rates/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_REPUTATION =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_REPUTATION < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe reputation rate option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/rates/reputation is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RATES_REPUTATION="1"
         RESET=true
     fi
 
-    # Load the money rate option
+    # Load the /options/world/rates/money option
     OPTION_WORLD_RATES_MONEY="$(echo "cat /options/world/rates/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_MONEY =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_MONEY < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe money rate option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/rates/money is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RATES_MONEY="1"
         RESET=true
     fi
 
-    # Load the crafting rate option
+    # Load the /options/world/rates/crafting option
     OPTION_WORLD_RATES_CRAFTING="$(echo "cat /options/world/rates/crafting/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_CRAFTING =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_CRAFTING < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe crafting rate option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/rates/crafting is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RATES_CRAFTING="1"
         RESET=true
     fi
 
-    # Load the gathering rate option
+    # Load the /options/world/rates/gathering option
     OPTION_WORLD_RATES_GATHERING="$(echo "cat /options/world/rates/gathering/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_GATHERING =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_GATHERING < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe gathering rate option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/rates/gathering is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RATES_GATHERING="1"
         RESET=true
     fi
 
-    # Load the weapon skill rate option
+    # Load the /options/world/rates/weapon_skill option
     OPTION_WORLD_RATES_WEAPON_SKILL="$(echo "cat /options/world/rates/weapon_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_WEAPON_SKILL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_WEAPON_SKILL < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe weapon skill rate option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/rates/weapon_skill is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RATES_WEAPON_SKILL="1"
         RESET=true
     fi
 
-    # Load the defense skill rate option
+    # Load the /options/world/rates/defense_skill option
     OPTION_WORLD_RATES_DEFENSE_SKILL="$(echo "cat /options/world/rates/defense_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_DEFENSE_SKILL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_DEFENSE_SKILL < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe defense skill rate option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/rates/defense_skill is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_RATES_DEFENSE_SKILL="1"
         RESET=true
     fi
 
-    # Load the gm login state option
+    # Load the /options/world/gm/login_state option
     OPTION_WORLD_GM_LOGIN_STATE="$(echo "cat /options/world/gm/login_state/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_GM_LOGIN_STATE != "true" && $OPTION_WORLD_GM_LOGIN_STATE != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe gm login state option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/login_state is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_LOGIN_STATE="true"
         RESET=true
     fi
 
-    # Load the gm enable visibility option
+    # Load the /options/world/gm/enable_visibility option
     OPTION_WORLD_GM_ENABLE_VISIBILITY="$(echo "cat /options/world/gm/enable_visibility/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_GM_ENABLE_VISIBILITY != "true" && $OPTION_WORLD_GM_ENABLE_VISIBILITY != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe gm enable visibility option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/enable_visibility is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_ENABLE_VISIBILITY="false"
         RESET=true
     fi
 
-    # Load the gm enable chat option
+    # Load the /options/world/gm/enable_chat option
     OPTION_WORLD_GM_ENABLE_CHAT="$(echo "cat /options/world/gm/enable_chat/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_GM_ENABLE_CHAT != "true" && $OPTION_WORLD_GM_ENABLE_CHAT != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe gm enable chat option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/enable_chat is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_ENABLE_CHAT="true"
         RESET=true
     fi
 
-    # Load the gm enable whispers option
+    # Load the /options/world/gm/enable_whisper option
     OPTION_WORLD_GM_ENABLE_WHISPER="$(echo "cat /options/world/gm/enable_whisper/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_GM_ENABLE_WHISPER != "true" && $OPTION_WORLD_GM_ENABLE_WHISPER != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe gm enable whisper option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/enable_whisper is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_ENABLE_WHISPER="false"
         RESET=true
     fi
 
-    # Load the show gm list option
+    # Load the /options/world/gm/show_gm_list option
     OPTION_WORLD_GM_SHOW_GM_LIST="$(echo "cat /options/world/gm/show_gm_list/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_GM_SHOW_GM_LIST =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_GM_SHOW_GM_LIST != 0 && $OPTION_WORLD_GM_SHOW_GM_LIST != 1 && $OPTION_WORLD_GM_SHOW_GM_LIST != 2 && $OPTION_WORLD_GM_SHOW_GM_LIST != 3 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe show gm list option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/show_gm_list is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_SHOW_GM_LIST="1"
         RESET=true
     fi
 
-    # Load the show who list option
+    # Load the /options/world/gm/show_who_list option
     OPTION_WORLD_GM_SHOW_WHO_LIST="$(echo "cat /options/world/gm/show_who_list/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_GM_SHOW_WHO_LIST =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_GM_SHOW_WHO_LIST != 0 && $OPTION_WORLD_GM_SHOW_WHO_LIST != 1 && $OPTION_WORLD_GM_SHOW_WHO_LIST != 2 && $OPTION_WORLD_GM_SHOW_WHO_LIST != 3 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe show who list option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/show_who_list is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_SHOW_WHO_LIST="0"
         RESET=true
     fi
 
-    # Load the gm allow friend option
+    # Load the /options/world/gm/allow_friend option
     OPTION_WORLD_GM_ALLOW_FRIEND="$(echo "cat /options/world/gm/allow_friend/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_GM_ALLOW_FRIEND != "true" && $OPTION_WORLD_GM_ALLOW_FRIEND != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe gm allow friend option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/allow_friend is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_ALLOW_FRIEND="false"
         RESET=true
     fi
 
-    # Load the gm allow invite option
+    # Load the /options/world/gm/allow_invite option
     OPTION_WORLD_GM_ALLOW_INVITE="$(echo "cat /options/world/gm/allow_invite/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_GM_ALLOW_INVITE != "true" && $OPTION_WORLD_GM_ALLOW_INVITE != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe gm allow invite option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/allow_invite is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_ALLOW_INVITE="false"
         RESET=true
     fi
 
-    # Load the gm allow lower security option
+    # Load the /options/world/gm/allow_lower_security option
     OPTION_WORLD_GM_ALLOW_LOWER_SECURITY="$(echo "cat /options/world/gm/allow_lower_security/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY != "true" && $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe gm allow lower security option is invalid. It has been reset to the default value.\e[0m\n"
+        printf "\e[0;31mThe option at /options/world/gm/allow_lower_security is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_WORLD_GM_ALLOW_LOWER_SECURITY="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/ahbot/enabled option
+    OPTION_MODULES_AHBOT_ENABLED="$(echo "cat /options/modules/ahbot/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_AHBOT_ENABLED != "true" && $OPTION_MODULES_AHBOT_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/ahbot/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_AHBOT_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/ahbot/enable_buyer option
+    OPTION_MODULES_AHBOT_ENABLE_BUYER="$(echo "cat /options/modules/ahbot/enable_buyer/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_AHBOT_ENABLE_BUYER != "true" && $OPTION_MODULES_AHBOT_ENABLE_BUYER != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/ahbot/enable_buyer is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_AHBOT_ENABLE_BUYER="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/ahbot/enable_seller option
+    OPTION_MODULES_AHBOT_ENABLE_SELLER="$(echo "cat /options/modules/ahbot/enable_seller/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_AHBOT_ENABLE_SELLER != "true" && $OPTION_MODULES_AHBOT_ENABLE_SELLER != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/ahbot/enable_seller is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_AHBOT_ENABLE_SELLER="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/ahbot/account_id option
+    OPTION_MODULES_AHBOT_ACCOUNT_ID="$(echo "cat /options/modules/ahbot/account_id/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_AHBOT_ACCOUNT_ID =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/ahbot/account_id is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_AHBOT_ACCOUNT_ID="0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/ahbot/character_guid option
+    OPTION_MODULES_AHBOT_CHARACTER_GUID="$(echo "cat /options/modules/ahbot/character_guid/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_AHBOT_CHARACTER_GUID =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/ahbot/character_guid is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_AHBOT_CHARACTER_GUID="0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/ahbot/min_items option
+    OPTION_MODULES_AHBOT_MIN_ITEMS="$(echo "cat /options/modules/ahbot/min_items/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_AHBOT_MIN_ITEMS =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/ahbot/min_items is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_AHBOT_MIN_ITEMS="250"
+        RESET=true
+    fi
+
+    # Load the /options/modules/ahbot/max_items option
+    OPTION_MODULES_AHBOT_MAX_ITEMS="$(echo "cat /options/modules/ahbot/max_items/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_AHBOT_MAX_ITEMS =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/ahbot/max_items is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_AHBOT_MAX_ITEMS="250"
+        RESET=true
+    fi
+
+    # Load the /options/modules/activate_zones/enabled option
+    OPTION_MODULES_ACTIVATE_ZONES_ENABLED="$(echo "cat /options/modules/activate_zones/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACTIVATE_ZONES_ENABLED != "true" && $OPTION_MODULES_ACTIVATE_ZONES_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/activate_zones/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ACTIVATE_ZONES_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/enabled option
+    OPTION_MODULES_ASSISTANT_ENABLED="$(echo "cat /options/modules/assistant/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/heirlooms option
+    OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS="$(echo "cat /options/modules/assistant/features/heirlooms/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/heirlooms is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/glyphs option
+    OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS="$(echo "cat /options/modules/assistant/features/glyphs/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/glyphs is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/gems option
+    OPTION_MODULES_ASSISTANT_FEATURES_GEMS="$(echo "cat /options/modules/assistant/features/gems/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_GEMS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_GEMS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/gems is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_GEMS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/containers option
+    OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS="$(echo "cat /options/modules/assistant/features/containers/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/containers is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED="$(echo "cat /options/modules/assistant/features/utilities/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/utilities/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/name_change option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE="$(echo "cat /options/modules/assistant/features/utilities/name_change/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/utilities/name_change is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE="10"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/customization option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION="$(echo "cat /options/modules/assistant/features/utilities/customization/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/utilities/customization is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION="50"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/race_change option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE="$(echo "cat /options/modules/assistant/features/utilities/race_change/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/utilities/race_change is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE="500"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/faction_change option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE="$(echo "cat /options/modules/assistant/features/utilities/faction_change/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/utilities/faction_change is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE="1000"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/totems option
+    OPTION_MODULES_ASSISTANT_FEATURES_TOTEMS="$(echo "cat /options/modules/assistant/features/totems/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_TOTEMS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_TOTEMS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/assistant/features/totems is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_TOTEMS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/eluna/enabled option
+    OPTION_MODULES_ELUNA_ENABLED="$(echo "cat /options/modules/eluna/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ELUNA_ENABLED != "true" && $OPTION_MODULES_ELUNA_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/eluna/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ELUNA_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/group_quests/enabled option
+    OPTION_MODULES_GROUP_QUESTS_ENABLED="$(echo "cat /options/modules/group_quests/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED != "true" && $OPTION_MODULES_GROUP_QUESTS_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/group_quests/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_GROUP_QUESTS_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/enabled option
+    OPTION_MODULES_LEARN_SPELLS_ENABLED="$(echo "cat /options/modules/learn_spells/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED != "true" && $OPTION_MODULES_LEARN_SPELLS_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/on_login option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN="$(echo "cat /options/modules/learn_spells/spells/on_login/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/on_login is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/on_levelup option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP="$(echo "cat /options/modules/learn_spells/spells/on_levelup/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/on_levelup is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/class_spells option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS="$(echo "cat /options/modules/learn_spells/spells/class_spells/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/class_spells is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/talent_ranks option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS="$(echo "cat /options/modules/learn_spells/spells/talent_ranks/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/talent_ranks is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/proficiencies option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES="$(echo "cat /options/modules/learn_spells/spells/proficiencies/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/proficiencies is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/from_quests option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS="$(echo "cat /options/modules/learn_spells/spells/from_quests/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/from_quests is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/max_skill/enabled option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED="$(echo "cat /options/modules/learn_spells/spells/max_skill/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/max_skill/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/max_skill/max_level option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL="$(echo "cat /options/modules/learn_spells/spells/max_skill/max_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL < 1 || $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL > 80 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/max_skill/max_level is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL="60"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/riding/enabled option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED="$(echo "cat /options/modules/learn_spells/spells/riding/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/riding/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/riding/apprentice option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE="$(echo "cat /options/modules/learn_spells/spells/riding/apprentice/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/riding/apprentice is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/riding/journeyman option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN="$(echo "cat /options/modules/learn_spells/spells/riding/journeyman/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/riding/journeyman is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/riding/expert option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT="$(echo "cat /options/modules/learn_spells/spells/riding/expert/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/riding/expert is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/riding/artisan option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN="$(echo "cat /options/modules/learn_spells/spells/riding/artisan/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/riding/artisan is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/spells/riding/cold_weather option
+    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER="$(echo "cat /options/modules/learn_spells/spells/riding/cold_weather/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/learn_spells/spells/riding/cold_weather is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/enabled option
+    OPTION_MODULES_LEVEL_REWARD_ENABLED="$(echo "cat /options/modules/level_reward/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEVEL_REWARD_ENABLED != "true" && $OPTION_MODULES_LEVEL_REWARD_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/gold/level_10 option
+    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10="$(echo "cat /options/modules/level_reward/gold/level_10/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10 < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/gold/level_10 is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10="5"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/gold/level_20 option
+    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20="$(echo "cat /options/modules/level_reward/gold/level_20/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20 < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/gold/level_20 is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20="15"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/gold/level_30 option
+    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30="$(echo "cat /options/modules/level_reward/gold/level_30/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30 < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/gold/level_30 is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30="30"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/gold/level_40 option
+    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40="$(echo "cat /options/modules/level_reward/gold/level_40/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40 < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/gold/level_40 is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40="45"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/gold/level_50 option
+    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50="$(echo "cat /options/modules/level_reward/gold/level_50/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50 < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/gold/level_50 is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50="60"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/gold/level_60 option
+    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60="$(echo "cat /options/modules/level_reward/gold/level_60/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60 < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/gold/level_60 is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60="80"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/gold/level_70 option
+    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70="$(echo "cat /options/modules/level_reward/gold/level_70/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70 < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/gold/level_70 is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70="125"
+        RESET=true
+    fi
+
+    # Load the /options/modules/level_reward/gold/level_80 option
+    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80="$(echo "cat /options/modules/level_reward/gold/level_80/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/level_reward/gold/level_80 is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80="250"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/enabled option
+    OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /options/modules/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/recruit_a_friend/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/duration option
+    OPTION_MODULES_RECRUIT_A_FRIEND_DURATION="$(echo "cat /options/modules/recruit_a_friend/duration/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/recruit_a_friend/duration is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_DURATION="90"
+        RESET=true
+    fi
+
+    # Load the /options/modules/skip_dk_starting_area/enabled option
+    OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED="$(echo "cat /options/modules/skip_dk_starting_area/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED != "true" && $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/skip_dk_starting_area/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/skip_dk_starting_area/starting_level option
+    OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL="$(echo "cat /options/modules/skip_dk_starting_area/starting_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL < 1 || $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL > 80 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/skip_dk_starting_area/starting_level is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED="58"
+        RESET=true
+    fi
+
+    # Load the /options/modules/spawn_points/enabled option
+    OPTION_MODULES_SPAWN_POINTS_ENABLED="$(echo "cat /options/modules/spawn_points/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED != "true" && $OPTION_MODULES_SPAWN_POINTS_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/spawn_points/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_SPAWN_POINTS_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/weekend_bonus/enabled option
+    OPTION_MODULES_WEEKEND_BONUS_ENABLED="$(echo "cat /options/modules/weekend_bonus/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_WEEKEND_BONUS_ENABLED != "true" && $OPTION_MODULES_WEEKEND_BONUS_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/weekend_bonus/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_WEEKEND_BONUS_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/weekend_bonus/experience_multiplier option
+    OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/experience_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/weekend_bonus/experience_multiplier is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="2"
+        RESET=true
+    fi
+
+    # Load the /options/modules/weekend_bonus/reputation_multiplier option
+    OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/reputation_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/weekend_bonus/reputation_multiplier is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="2"
         RESET=true
     fi
 
