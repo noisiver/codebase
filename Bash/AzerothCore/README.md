@@ -18,7 +18,7 @@ Running the script for the first time will generate a default options file named
 # Important information
 **Do not** download the files inside the core folder. Download only the file named azerothcore.sh and run it.
 
-The script will download the files inside of the core folder automatically. I decided on this approach to easier update the script across all my VMs so I don't have to upload the updated script to each system.
+The script will download the files inside the core folder automatically. I decided on this approach to easier update the script across all my virtual machines so I don't have to upload the script to each system whenever I change it.
 
 The file named source is what actually runs on the system. The file named version is what tells the main script when there's an update to the source file available.
 
