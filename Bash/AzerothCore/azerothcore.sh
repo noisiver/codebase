@@ -1,75 +1,60 @@
 #!/bin/bash
-INCLUDES=("color" "distribution" "packages" "configuration" "quote" "source" "database" "process")
+# Supported distributions
+DISTRIBUTION=("debian11" "ubuntu20.04" "ubuntu20.10" "ubuntu21.04" "ubuntu21.10")
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS=$ID
+    VERSION=$VERSION_ID
 
-clear
-
-for i in "${INCLUDES[@]}"; do
-    if [ -f "includes/$i.sh" ]; then
-        source "includes/$i.sh"
-    else
-        printf "${COLOR_ORANGE}Unable to access includes/$i.sh${COLOR_END}\n"
-        exit 1
+    if [[ ! " ${DISTRIBUTION[@]} " =~ " ${OS}${VERSION} " ]]; then
+        printf "\e[0;31mThis distribution is currently not supported.\e[0m\n"
+        exit $?
     fi
-done
-
-function invalid_arguments
-{
-    clear
-    printf "${COLOR_GREEN}Invalid arguments${COLOR_END}\n"
-    printf "${COLOR_ORANGE}The supplied arguments are invalid.${COLOR_END}\n"
-    exit 1
-}
-
-if [ $# -gt 0 ]; then
-    if [ $# -eq 1 ]; then
-        if [ $1 == "start" ]; then
-            start_process
-        elif [ $1 == "stop" ]; then
-            stop_process
-        elif [ $1 == "restart" ]; then
-            stop_process
-            start_process
-        elif [ $1 == "client" ]; then
-            update_client_data
-        else
-            invalid_arguments
-        fi
-
-        print_quote
-    elif [ $# -eq 2 ]; then
-        if [ $1 == "auth" ] || [ $1 == "world" ] || [ $1 == "all" ]; then
-            [ $1 == "all" ] && TYPE=0
-            [ $1 == "auth" ] && TYPE=1
-            [ $1 == "world" ] && TYPE=2
-
-            if [ $2 == "setup" ] || [ $2 == "install" ] || [ $2 == "update" ]; then
-                stop_process
-                clone_source $TYPE
-                compile_source $TYPE
-                fetch_client_data $TYPE
-            elif [ $2 == "database" ] || [ $2 == "db" ]; then
-                import_database $TYPE
-            elif [ $2 == "cfg" ] || [ $2 == "conf" ] || [ $2 == "config" ] || [ $2 == "configuration" ]; then
-                update_configuration $TYPE
-            elif [ $2 == "all" ]; then
-                stop_process
-                clone_source $TYPE
-                compile_source $TYPE
-                fetch_client_data $TYPE
-                import_database $TYPE
-                update_configuration $TYPE
-                start_process
-            else
-                invalid_arguments
-            fi
-
-            print_quote
-        else
-            invalid_arguments
-        fi
-    else
-        invalid_arguments
-    fi
-else
-    invalid_arguments
 fi
+
+# Remote url where files are stored
+REMOTE_URL="https://github.com/tkn963/codebase/tree/master/Bash/AzerothCore/core"
+
+# The file that stores the version number
+VERSION_FILE="version"
+
+# The source script
+SOURCE_FILE="source"
+
+# Set local version
+LOCAL_VERSION=0
+if [ -f $VERSION_FILE ]; then
+    LOCAL_VERSION=$(<$VERSION_FILE)
+fi
+
+# Download the version number from the server
+VERSION=$(curl --fail --max-time 0.1 "$REMOTE_URL/$VERSION_FILE" 2>/dev/null)
+if [ ! -z $VERSION ]; then
+    # Set remote version
+    REMOTE_VERSION=$VERSION
+else
+    # Something went wrong...
+    if [ $LOCAL_VERSION == 0 ] || [ ! -f $SOURCE_FILE ]; then
+        # If version is 0 or the source file is missing, stop
+        printf "\e[0;31mWe were unable to reach the remote server or the requested file is missing.\e[0m\n"
+        printf "\e[0;31mCheck your internet connection and try again, otherwise contact the administrator.\e[0m\n"
+        exit $?
+    fi
+fi
+
+# Download the source file if the file is missing or the local version is different from the remote
+if [ ! -f $SOURCE_FILE ] || [[ $LOCAL_VERSION != $REMOTE_VERSION ]] || [ $LOCAL_VERSION == 0 ]; then
+    curl --fail --max-time 0.5 --output $SOURCE_FILE $REMOTE_URL/$SOURCE_FILE 2>/dev/null
+    if [ $? -ne 0 ]; then
+        # Something went wrong...
+        printf "\e[0;31mWe were unable to reach the remote server or the requested file is missing.\e[0m\n"
+        printf "\e[0;31mCheck your internet connection and try again, otherwise contact the administrator.\e[0m\n"
+        exit $?
+    else
+        # Update local version
+        echo $REMOTE_VERSION > $VERSION_FILE
+    fi
+fi
+
+# Include the source file
+source $SOURCE_FILE

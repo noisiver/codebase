@@ -1,0 +1,720 @@
+#!/bin/bash
+# A function to install the options package
+function options_package
+{
+    # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
+        # Check if the package is installed
+        if [ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+            clear
+
+            # Perform an update to make sure nothing is missing
+            apt-get --yes update
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            # Install the package that is missing
+            apt-get --yes install libxml2-utils
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+        fi
+    fi
+}
+
+# A function to install the git package
+function git_package
+{
+    # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
+        # Check if the package is installed
+        if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+            clear
+
+            # Perform an update to make sure nothing is missing
+            apt-get --yes update
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            # Install the package that is missing
+            apt-get --yes install git
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+        fi
+    fi
+}
+
+# A function to install all required packages for compilation of and to run the core
+function source_packages
+{
+    # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
+        # An array of all required packages
+        PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-6.*" "libace-dev" "libmariadb-dev-compat" "mariadb-client")
+
+        # Handle each distribution properly as some require different packages
+        if [[ $OS == "ubuntu" ]]; then
+            PACKAGES="${PACKAGES} libboost1.71-all-dev"
+
+            if [[ $VERSION == "20.04" ]] || [[ $VERSION == "20.10" ]]; then
+                PACKAGES="${PACKAGES} libmariadbclient-dev"
+            fi
+        elif [[ $OS == "debian" ]]; then
+            PACKAGES="${PACKAGES} libboost1.74-all-dev"
+        fi
+
+        # Loop through each member of the array and add them to the list of packages to be installed
+        for p in "${PACKAGES[@]}"; do
+            # Check if the package is installed
+            if [ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+                INSTALL+=($p)
+            fi
+        done
+
+        # Check if there actually are packages to install
+        if [ ${#INSTALL[@]} -gt 0 ]; then
+            clear
+
+            # Perform an update to make sure nothing is missing
+            apt-get --yes update
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            # Install all packages that are missing
+            apt-get --yes install ${INSTALL[*]}
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+        fi
+    fi
+}
+
+# A function to install the mariadb client package
+function database_package
+{
+    # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
+    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
+        # Check if the package is installed
+        if [ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+            clear
+
+            # Perform an update to make sure nothing is missing
+            apt-get --yes update
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+            # Install the package that is missing
+            apt-get --yes install mariadb-client
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+        fi
+    fi
+}
+
+# A function to save all options to the file
+function store_options
+{
+    echo "<?xml version=\"1.0\"?>
+    <options>
+        <mysql>
+            <!-- The ip-address or hostname used to connect to the database server -->
+            <hostname>${1:-127.0.0.1}</hostname>
+            <!-- The port used to connect to the database server -->
+            <port>${2:-3306}</port>
+            <!-- The username used to connect to the database server -->
+            <username>${3:-acore}</username>
+            <!-- The password used to connect to the database server -->
+            <password>${4:-acore}</password>
+            <databases>
+                <!-- The name of the auth database -->
+                <auth>${5:-acore_auth}</auth>
+                <!-- The name of the characters database -->
+                <characters>${6:-acore_characters}</characters>
+                <!-- The name of the world database -->
+                <world>${7:-acore_world}</world>
+            </databases>
+        </mysql>
+        <source>
+            <!-- The location where the source is located -->
+            <location>${8:-/opt/azerothcore}</location>
+            <!-- The required client data version -->
+            <required_client_data>${9:-12}</required_client_data>
+            <!-- The installed client data version. WARNING: DO NOT EDIT -->
+            <installed_client_data>${10:-0}</installed_client_data>
+        </source>
+        <world>
+            <!-- The name of the realm as seen in the list -->
+            <name>${11:-AzerothCore}</name>
+            <!-- Message of the Day, displayed at login. Use '@' for a newline and be sure to escape special characters -->
+            <motd>${12:-Welcome to AzerothCore.}</motd>
+            <!-- The id of the realm -->
+            <id>${13:-1}</id>
+            <!-- The ip or hostname used to connect to the world server. Use external ip if required -->
+            <address>${14:-127.0.0.1}</address>
+            <!-- Server realm type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
+            <game_type>${15:-0}</game_type>
+            <!-- Server realm zone. Set allowed alphabet in character, etc. names. 1 = development, 2 = united states, 6 = korea, 9 = german, 10 = french, 11 = spanish, 12 = russian, 14 = taiwan, 16 = china, 26 = test server -->
+            <realm_zone>${16:-1}</realm_zone>
+            <!-- Allow server to use content from expansions. Checks for expansion-related map files, client compatibility and class/race character creation. 0 = none, 1 = tbc, 2 = wotlk -->
+            <expansion>${17:-2}</expansion>
+            <!-- Maximum number of players in the world. Excluding Mods, GMs and Admins -->
+            <player_limit>${18:-1000}</player_limit>
+            <!-- Disable cinematic intro at first login after character creation. Prevents buggy intros in case of custom start location coordinates. 0 = Show intro for each new character, 1 = Show intro only for first character of selected race, 2 = Disable intro for all classes -->
+            <skip_cinematics>${19:-0}</skip_cinematics>
+            <!-- Maximum level that can be reached by players. Levels below 1 and above 80 will reset to 80 -->
+            <max_level>${20:-80}</max_level>
+            <!-- Starting level for characters after creation. Levels below 1 and above 80 will reset to 1 -->
+            <start_level>${21:-1}</start_level>
+            <!-- Amount of money (in Copper) that a character has after creation -->
+            <start_money>${22:-0}</start_money>
+            <!-- Players will automatically gain max skill level when logging in or leveling up. false = disabled, true = enabled -->
+            <always_max_skill>${23:-false}</always_max_skill>
+            <!-- Character knows all flight paths (of both factions) after creation. false = disabled, true = enabled -->
+            <all_flight_paths>${24:-false}</all_flight_paths>
+            <!-- Characters start with all maps explored. false = disabled, true = enabled -->
+            <maps_explored>${25:-false}</maps_explored>
+            <!-- Allow players to use commands. false = disabled, true = enabled -->
+            <allow_commands>${26:-true}</allow_commands>
+            <!-- Allow non-raid quests to be completed while in a raid group. false = disabled, true = enabled -->
+            <quest_ignore_raid>${27:-false}</quest_ignore_raid>
+            <!-- Prevent players AFK from being logged out. false = disabled, true = enabled -->
+            <prevent_afk_logout>${28:-false}</prevent_afk_logout>
+            <!-- Highest level up to which a character can benefit from the Recruit-A-Friend experience multiplier -->
+            <raf_max_level>${29:-60}</raf_max_level>
+            <!-- Preload all grids on all non-instanced maps. This will take a great amount of additional RAM (ca. 9 GB) and causes the server to take longer to start, but can increase performance if used on a server with a high amount of players. It will also activate all creatures which are set active (e.g. the Fel Reavers in Hellfire Peninsula) on server start. false = disabled, true = enabled -->
+            <preload_map_grids>${30:-false}</preload_map_grids>
+            <!-- Set all creatures with waypoint movement active. This means that they will start movement once they are loaded (which happens on grid load) and keep moving even when no player is near. This will increase CPU usage significantly and can be used with enabled preload_map_grids to start waypoint movement on server startup. false = disabled, true = enabled -->
+            <set_all_waypoints_active>${31:-false}</set_all_waypoints_active>
+            <!-- Enable/Disable Minigob Manabonk in Dalaran. false = disabled, true = enabled -->
+            <enable_minigob_manabonk>${32:-true}</enable_minigob_manabonk>
+            <rates>
+                <!-- Experience rates (outside battleground) -->
+                <experience>${33:-1}</experience>
+                <!-- Resting points grow rates -->
+                <rested_exp>${34:-1}</rested_exp>
+                <!-- Reputation gain rate -->
+                <reputation>${35:-1}</reputation>
+                <!-- Drop rates for money -->
+                <money>${36:-1}</money>
+                <!-- Crafting skills gain rate -->
+                <crafting>${37:-1}</crafting>
+                <!-- Gathering skills gain rate -->
+                <gathering>${38:-1}</gathering>
+                <!-- Weapon skills gain rate -->
+                <weapon_skill>${39:-1}</weapon_skill>
+                <!-- Defense skills gain rate -->
+                <defense_skill>${40:-1}</defense_skill>
+            </rates>
+            <gm>
+                <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
+                <login_state>${41:-true}</login_state>
+                <!-- GM visibility at login. false = disabled, true = enabled -->
+                <enable_visibility>${42:-false}</enable_visibility>
+                <!-- GM chat mode at login. false = disabled, true = enabled -->
+                <enable_chat>${43:-true}</enable_chat>
+                <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
+                <enable_whisper>${44:-false}</enable_whisper>
+                <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
+                <show_gm_list>${45:-0}</show_gm_list>
+                <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
+                <show_who_list>${46:-0}</show_who_list>
+                <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
+                <allow_friend>${47:-false}</allow_friend>
+                <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
+                <allow_invite>${48:-false}</allow_invite>
+                <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
+                <allow_lower_security>${49:-false}</allow_lower_security>
+            </gm>
+        </world>
+    </options>" | xmllint --format - > $OPTIONS
+}
+
+# A function that sends all variables to the store_options function
+function save_options
+{
+    store_options \
+    $OPTION_MYSQL_HOSTNAME \
+    $OPTION_MYSQL_PORT \
+    $OPTION_MYSQL_USERNAME \
+    $OPTION_MYSQL_PASSWORD \
+    $OPTION_MYSQL_DATABASE_AUTH \
+    $OPTION_MYSQL_DATABASE_CHARACTERS \
+    $OPTION_MYSQL_DATABASE_WORLD \
+    "$OPTION_SOURCE_LOCATION" \
+    $OPTION_SOURCE_REQUIRED_CLIENT_DATA \
+    $OPTION_SOURCE_INSTALLED_CLIENT_DATA \
+    "$OPTION_WORLD_NAME" \
+    "$OPTION_WORLD_MOTD" \
+    $OPTION_WORLD_ID \
+    $OPTION_WORLD_ADDRESS \
+    $OPTION_WORLD_GAME_TYPE \
+    $OPTION_WORLD_REALM_ZONE \
+    $OPTION_WORLD_EXPANSION \
+    $OPTION_WORLD_PLAYER_LIMIT \
+    $OPTION_WORLD_SKIP_CINEMATICS \
+    $OPTION_WORLD_MAX_LEVEL \
+    $OPTION_WORLD_START_LEVEL \
+    $OPTION_WORLD_START_MONEY \
+    $OPTION_WORLD_ALWAYS_MAX_SKILL \
+    $OPTION_WORLD_ALL_FLIGHT_PATHS \
+    $OPTION_WORLD_MAPS_EXPLORED \
+    $OPTION_WORLD_ALLOW_COMMANDS \
+    $OPTION_WORLD_QUEST_IGNORE_RAID \
+    $OPTION_WORLD_PREVENT_AFK_LOGOUT \
+    $OPTION_WORLD_RAF_MAX_LEVEL \
+    $OPTION_WORLD_PRELOAD_MAP_GRIDS \
+    $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE \
+    $OPTION_WORLD_ENABLE_MINIGOB_MANABONK \
+    $OPTION_WORLD_RATE_EXPERIENCE \
+    $OPTION_WORLD_RATE_RESTED_EXP \
+    $OPTION_WORLD_RATE_REPUTATION \
+    $OPTION_WORLD_RATE_MONEY \
+    $OPTION_WORLD_RATE_CRAFTING \
+    $OPTION_WORLD_RATE_GATHERING \
+    $OPTION_WORLD_RATE_WEAPON_SKILL \
+    $OPTION_WORLD_RATE_DEFENSE_SKILL \
+    $OPTION_WORLD_GM_LOGIN_STATE \
+    $OPTION_WORLD_GM_ENABLE_VISIBILITY \
+    $OPTION_WORLD_GM_ENABLE_CHAT \
+    $OPTION_WORLD_GM_ENABLE_WHISPER \
+    $OPTION_WORLD_GM_SHOW_GM_LIST \
+    $OPTION_WORLD_GM_SHOW_WHO_LIST \
+    $OPTION_WORLD_GM_ALLOW_FRIEND \
+    $OPTION_WORLD_GM_ALLOW_INVITE \
+    $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY
+}
+
+# A function that loads options from the file
+function load_options
+{
+    # Install required package
+    options_package
+
+    # The file where all options are stored
+    OPTIONS="options.xml"
+
+    # Check if the file is missing
+    if [ ! -f $OPTIONS ]; then
+        # Create the file with the default options
+        printf "\e[0;31mThe options file is missing. Creating one with the default options.\e[0m\n"
+        printf "\e[0;31mMake sure to edit it to prevent issues that might occur otherwise.\e[0m\n"
+        store_options
+        exit $?
+    fi
+
+    # Load the mysql hostname option
+    OPTION_MYSQL_HOSTNAME="$(echo "cat /options/mysql/hostname/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_HOSTNAME ] || [ $OPTION_MYSQL_HOSTNAME == "" ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe mysql hostname option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MYSQL_HOSTNAME="127.0.0.1"
+        RESET=true
+    fi
+
+    # Load the mysql port option
+    OPTION_MYSQL_PORT="$(echo "cat /options/mysql/port/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MYSQL_PORT =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe mysql port option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MYSQL_PORT="3306"
+        RESET=true
+    fi
+
+    # Load the mysql username option
+    OPTION_MYSQL_USERNAME="$(echo "cat /options/mysql/username/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_USERNAME ] || [ $OPTION_MYSQL_USERNAME == "" ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe mysql username option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MYSQL_USERNAME="acore"
+        RESET=true
+    fi
+
+    # Load the mysql password option
+    OPTION_MYSQL_PASSWORD="$(echo "cat /options/mysql/password/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_PASSWORD ] || [ $OPTION_MYSQL_PASSWORD == "" ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe mysql password option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MYSQL_PASSWORD="acore"
+        RESET=true
+    fi
+
+    # Load the auth database option
+    OPTION_MYSQL_DATABASE_AUTH="$(echo "cat /options/mysql/databases/auth/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_DATABASE_AUTH ] || [ $OPTION_MYSQL_DATABASE_AUTH == "" ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe auth database option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MYSQL_DATABASE_AUTH="acore_auth"
+        RESET=true
+    fi
+
+    # Load the characters database option
+    OPTION_MYSQL_DATABASE_CHARACTERS="$(echo "cat /options/mysql/databases/characters/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_DATABASE_CHARACTERS ] || [ $OPTION_MYSQL_DATABASE_CHARACTERS == "" ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe characters database option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MYSQL_DATABASE_CHARACTERS="acore_characters"
+        RESET=true
+    fi
+
+    # Load the world database option
+    OPTION_MYSQL_DATABASE_WORLD="$(echo "cat /options/mysql/databases/world/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_MYSQL_DATABASE_WORLD ] || [ $OPTION_MYSQL_DATABASE_WORLD == "" ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe world database option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MYSQL_DATABASE_WORLD="acore_world"
+        RESET=true
+    fi
+
+    # Load the core location option
+    OPTION_SOURCE_LOCATION="$(echo "cat /options/source/location/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_SOURCE_LOCATION ] || [ $OPTION_SOURCE_LOCATION == "" ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe core location option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_SOURCE_LOCATION="/opt/azerothcore"
+        RESET=true
+    fi
+
+    # Load the required client data option
+    OPTION_SOURCE_REQUIRED_CLIENT_DATA="$(echo "cat /options/source/required_client_data/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_SOURCE_REQUIRED_CLIENT_DATA =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe required client data option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_SOURCE_REQUIRED_CLIENT_DATA="12"
+        RESET=true
+    fi
+
+    # Load the installed client data option
+    OPTION_SOURCE_INSTALLED_CLIENT_DATA="$(echo "cat /options/source/installed_client_data/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_SOURCE_INSTALLED_CLIENT_DATA =~ ^[0-9]+$ ]] || [ $OPTION_SOURCE_INSTALLED_CLIENT_DATA -gt $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe installed client data option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_SOURCE_INSTALLED_CLIENT_DATA="0"
+        RESET=true
+    fi
+
+    # Load the world name option
+    OPTION_WORLD_NAME="$(echo "cat /options/world/name/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_WORLD_NAME ] || [ $OPTION_WORLD_NAME == "" ]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe world name option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_NAME="AzerothCore"
+        RESET=true
+    fi
+
+    # Load the world motd option
+    OPTION_WORLD_MOTD="$(echo "cat /options/world/motd/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ -z $OPTION_WORLD_MOTD ]] || [[ $OPTION_WORLD_MOTD == "" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe world name option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_MOTD="Welcome to AzerothCore."
+        RESET=true
+    fi
+
+    # Load the world id option
+    OPTION_WORLD_ID="$(echo "cat /options/world/id/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_ID =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe world id option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_ID="1"
+        RESET=true
+    fi
+
+    # Load the world address option
+    OPTION_WORLD_ADDRESS="$(echo "cat /options/world/address/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ -z $OPTION_WORLD_ADDRESS ]] || [[ $OPTION_WORLD_ADDRESS == "" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe world address option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_ADDRESS="127.0.0.1"
+        RESET=true
+    fi
+
+    # Load the game type option
+    OPTION_WORLD_GAME_TYPE="$(echo "cat /options/world/game_type/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_GAME_TYPE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_GAME_TYPE != 0 && $OPTION_WORLD_GAME_TYPE != 1 && $OPTION_WORLD_GAME_TYPE != 6 && $OPTION_WORLD_GAME_TYPE != 8 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe game type option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GAME_TYPE="0"
+        RESET=true
+    fi
+
+    # Load the realm zone option
+    OPTION_WORLD_REALM_ZONE="$(echo "cat /options/world/realm_zone/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_REALM_ZONE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_REALM_ZONE != 1 && $OPTION_WORLD_REALM_ZONE != 2 && $OPTION_WORLD_REALM_ZONE != 6 && $OPTION_WORLD_REALM_ZONE != 9 && $OPTION_WORLD_REALM_ZONE != 10 && $OPTION_WORLD_REALM_ZONE != 11 && $OPTION_WORLD_REALM_ZONE != 12 && $OPTION_WORLD_REALM_ZONE != 14 && $OPTION_WORLD_REALM_ZONE != 16 && $OPTION_WORLD_REALM_ZONE != 26 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe realm zone option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_REALM_ZONE="1"
+        RESET=true
+    fi
+
+    # Load the expansion option
+    OPTION_WORLD_EXPANSION="$(echo "cat /options/world/expansion/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_EXPANSION =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_EXPANSION != 0 && $OPTION_WORLD_EXPANSION != 1 && $OPTION_WORLD_EXPANSION != 2 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe expansion option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_EXPANSION="1"
+        RESET=true
+    fi
+
+    # Load the player limit option
+    OPTION_WORLD_PLAYER_LIMIT="$(echo "cat /options/world/player_limit/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_PLAYER_LIMIT =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe player limit option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_PLAYER_LIMIT="1"
+        RESET=true
+    fi
+
+    # Load the skip cinematics option
+    OPTION_WORLD_SKIP_CINEMATICS="$(echo "cat /options/world/skip_cinematics/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_SKIP_CINEMATICS =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_SKIP_CINEMATICS != 0 && $OPTION_WORLD_SKIP_CINEMATICS != 1 && $OPTION_WORLD_SKIP_CINEMATICS != 2 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe skip cinematics option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_SKIP_CINEMATICS="1"
+        RESET=true
+    fi
+
+    # Load the max level option
+    OPTION_WORLD_MAX_LEVEL="$(echo "cat /options/world/max_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_MAX_LEVEL < 1 || $OPTION_WORLD_MAX_LEVEL > 80 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe max level option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_MAX_LEVEL="1"
+        RESET=true
+    fi
+
+    # Load the start level option
+    OPTION_WORLD_START_LEVEL="$(echo "cat /options/world/start_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_START_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_START_LEVEL < 1 || $OPTION_WORLD_START_LEVEL > 80 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe start level option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_START_LEVEL="1"
+        RESET=true
+    fi
+
+    # Load the start money option
+    OPTION_WORLD_START_MONEY="$(echo "cat /options/world/start_money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_START_MONEY =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe start money option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_START_MONEY="0"
+        RESET=true
+    fi
+
+    # Load the always max skill option
+    OPTION_WORLD_ALWAYS_MAX_SKILL="$(echo "cat /options/world/always_max_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALWAYS_MAX_SKILL != "true" && $OPTION_WORLD_ALWAYS_MAX_SKILL != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe always max skill option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_ALWAYS_MAX_SKILL="false"
+        RESET=true
+    fi
+
+    # Load the all flight paths option
+    OPTION_WORLD_ALL_FLIGHT_PATHS="$(echo "cat /options/world/all_flight_paths/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALL_FLIGHT_PATHS != "true" && $OPTION_WORLD_ALL_FLIGHT_PATHS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe all flight paths option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_ALL_FLIGHT_PATHS="false"
+        RESET=true
+    fi
+
+    # Load the maps explored option
+    OPTION_WORLD_MAPS_EXPLORED="$(echo "cat /options/world/maps_explored/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_MAPS_EXPLORED != "true" && $OPTION_WORLD_MAPS_EXPLORED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe maps explored option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_MAPS_EXPLORED="false"
+        RESET=true
+    fi
+
+    # Load the allow commands option
+    OPTION_WORLD_ALLOW_COMMANDS="$(echo "cat /options/world/allow_commands/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_COMMANDS != "true" && $OPTION_WORLD_ALLOW_COMMANDS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe allow commands option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_ALLOW_COMMANDS="false"
+        RESET=true
+    fi
+
+    # Load the allow commands option
+    OPTION_WORLD_QUEST_IGNORE_RAID="$(echo "cat /options/world/quest_ignore_raid/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_QUEST_IGNORE_RAID != "true" && $OPTION_WORLD_QUEST_IGNORE_RAID != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe quest ignore raid option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_QUEST_IGNORE_RAID="false"
+        RESET=true
+    fi
+
+    # Load the prevent afk logout option
+    OPTION_WORLD_PREVENT_AFK_LOGOUT="$(echo "cat /options/world/prevent_afk_logout/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_PREVENT_AFK_LOGOUT != "true" && $OPTION_WORLD_PREVENT_AFK_LOGOUT != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe prevent afk logout option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_PREVENT_AFK_LOGOUT="false"
+        RESET=true
+    fi
+
+    # Load the prevent afk logout option
+    OPTION_WORLD_RAF_MAX_LEVEL="$(echo "cat /options/world/raf_max_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RAF_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RAF_MAX_LEVEL < 1 || $OPTION_WORLD_RAF_MAX_LEVEL > 80 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe raf max level option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RAF_MAX_LEVEL="false"
+        RESET=true
+    fi
+
+    # Load the preload map grids option
+    OPTION_WORLD_PRELOAD_MAP_GRIDS="$(echo "cat /options/world/preload_map_grids/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_PRELOAD_MAP_GRIDS != "true" && $OPTION_WORLD_PRELOAD_MAP_GRIDS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe preload map grids option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_PRELOAD_MAP_GRIDS="false"
+        RESET=true
+    fi
+
+    # Load the set all waypoints active option
+    OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE="$(echo "cat /options/world/set_all_waypoints_active/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE != "true" && $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe set all waypoints active option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE="false"
+        RESET=true
+    fi
+
+    # Load the enable minigob manabonk option
+    OPTION_WORLD_ENABLE_MINIGOB_MANABONK="$(echo "cat /options/world/enable_minigob_manabonk/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ENABLE_MINIGOB_MANABONK != "true" && $OPTION_WORLD_ENABLE_MINIGOB_MANABONK != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe enable minigob manabonk option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_ENABLE_MINIGOB_MANABONK="false"
+        RESET=true
+    fi
+
+    # Check if any option calls for a reset
+    if [ $RESET ]; then
+        # Tell the user that the invalid options should be changed, then terminate the script
+        printf "\e[0;31mMake sure to change the options listed above to prevent any unwanted issues.\e[0m\n"
+        save_options
+        exit $?
+    fi
+}
+
+# A function that prints available parameters and subparameters when none are supplied or if they are invalid
+function parameters
+{
+    printf "\e[0;32mAvailable parameters\e[0m\n"
+    printf "\e[0;33mboth           \e[1;37m| \e[0;34mUse chosen subparameters for the auth and worldserver\e[0m\n"
+    printf "\e[0;33mauth           \e[1;37m| \e[0;34mUse chosen subparameters only for the authserver\e[0m\n"
+    printf "\e[0;33mworld          \e[1;37m| \e[0;34mUse chosen subparameters only for the worldserver\e[0m\n"
+    printf "\e[0;33mstart          \e[1;37m| \e[0;34mStarts the compiled processes, based off of the choice for compilation\e[0m\n"
+    printf "\e[0;33mstop           \e[1;37m| \e[0;34mStops the compiled processes, based off of the choice for compilation\e[0m\n"
+    printf "\e[0;33mrestart        \e[1;37m| \e[0;34mStops and then starts the compiled processes, based off of the choice for compilation\e[0m\n\n"
+
+    printf "\e[0;32mAvailable subparameters\e[0m\n"
+    printf "\e[0;33minstall/update \e[1;37m| \e[0;34mDownloads the source code, with enabled modules, and compiles it. Also downloads client files\e[0m\n"
+    printf "\e[0;33mdatabase/db    \e[1;37m| \e[0;34mImports all database files, including enabled modules, to the specified server\e[0m\n"
+    printf "\e[0;33mconfig/conf    \e[1;37m| \e[0;34mUpdates all config files, including enabled modules, with options specified\e[0m\n"
+    printf "\e[0;33mall            \e[1;37m| \e[0;34mRun all subparameters listed above, including stop and start\e[0m\n"
+
+    exit $?
+}
+
+# Load all options from the file
+load_options
+
+# Check for provided parameters
+if [ $# -gt 0 ]; then
+    # Check the first parameter
+    case $1 in
+        # The first parameter is both
+        "both")
+            # Check the second parameters
+            case $2 in
+                # The second parameter is install or update
+                "install"|"update")
+                    echo "both - install/update"
+                    ;;
+                # The second parameter is database or db
+                "database"|"db")
+                    echo "both - database/db"
+                    ;;
+                # The second parameter is config or conf
+                "config"|"conf")
+                    echo "both - config/conf"
+                    ;;
+                # The second parameter is all
+                "all")
+                    echo "both - all"
+                    ;;
+                # The second parameter is invalid
+                *)
+                    parameters
+                    ;;
+            esac
+        ;;
+        # The first parameter is auth
+        "auth")
+            # Check the second parameters
+            case $2 in
+                # The second parameter is install or update
+                "install"|"update")
+                    echo "auth - install/update"
+                    ;;
+                # The second parameter is database or db
+                "database"|"db")
+                    echo "auth - database/db"
+                    ;;
+                # The second parameter is config or conf
+                "config"|"conf")
+                    echo "auth - config/conf"
+                    ;;
+                # The second parameter is all
+                "all")
+                    echo "auth - all"
+                    ;;
+                # The second parameter is invalid
+                *)
+                    parameters
+                    ;;
+            esac
+        ;;
+        # The first parameter is world
+        "world")
+            # Check the second parameters
+            case $2 in
+                # The second parameter is install or update
+                "install"|"update")
+                    echo "world - install/update"
+                    ;;
+                # The second parameter is database or db
+                "database"|"db")
+                    echo "world - database/db"
+                    ;;
+                # The second parameter is config or conf
+                "config"|"conf")
+                    echo "world - config/conf"
+                    ;;
+                # The second parameter is all
+                "all")
+                    echo "world - all"
+                    ;;
+                # The second parameter is invalid
+                *)
+                    parameters
+                    ;;
+            esac
+        ;;
+        # The first parameter is invalid
+        *)
+            parameters
+            ;;
+    esac
+else
+    parameters
+fi
