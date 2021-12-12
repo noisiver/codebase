@@ -2443,6 +2443,241 @@ function import_database
             # Terminate script on error
             exit $?
         fi
+
+        # Check if the ahbot module is enabled
+        if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base ]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base/*.sql; do
+                    printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [ $? -ne 0 ]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+
+                # Update the mod_auctionhousebot table with specified values
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$OPTION_MODULES_AHBOT_MIN_ITEMS', maxitems='$OPTION_MODULES_AHBOT_MAX_ITEMS'"
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the mod_auctionhousebot table exists when the module is not enabled
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_auctionhousebot'"` ]; then
+                # Drop the table
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_auctionhousebot"
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            fi
+
+            # Check if the mod_auctionhousebot_disabled_items table exists when the module is not enabled
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_auctionhousebot_disabled_items'"` ]; then
+                # Drop the table
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_auctionhousebot_disabled_items"
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            fi
+        fi
+
+        # Check if the assistant module is enabled
+        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base ]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base/*.sql; do
+                    printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [ $? -ne 0 ]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
+        # Check if the group quests module is enabled
+        if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base ]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base/*.sql; do
+                    printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [ $? -ne 0 ]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
+        # Check if the learn spells module is enabled
+        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base ]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base/*.sql; do
+                    printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [ $? -ne 0 ]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        else
+            # Check if the mod_learnspells table exists when the module is not enabled
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_learnspells'"` ]; then
+                # Drop the table
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_learnspells"
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            fi
+        fi
+
+        # Check if the recruit a friend module is enabled
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base ]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base/*.sql; do
+                    if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+                        printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
+
+                        # Check to make sure there weren't any errors
+                        if [ $? -ne 0 ]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    fi
+                done
+            fi
+        fi
+
+        # Check if the spawn points module is enabled
+        if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base ]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base/*.sql; do
+                    printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [ $? -ne 0 ]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        else
+            # Check if the mod_learnspells table exists when the module is not enabled
+            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_spawnpoints'"` ]; then
+                # Drop the table
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_spawnpoints"
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            fi
+        fi
+
+        # Check if there is a folder for custom content
+        if [ -d $(pwd)/sql/world ]; then
+            # Check if the folder is empty
+            if [[ ! -z "$(ls -A $(pwd)/sql/world/)" ]]; then
+                # Loop through all sql files inside the folder
+                for f in $(pwd)/sql/world/*.sql; do
+                    printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [ $? -ne 0 ]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        fi
     fi
 
     printf "\e[0;32mFinished importing the database files...\e[0m\n"
