@@ -2430,6 +2430,19 @@ function import_database
                 exit $?
             fi
         done
+
+        printf "Updating realm list\n"
+        # Update the realmlist with the id, name and address specified
+        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$OPTION_WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$OPTION_WORLD_ID', '$OPTION_WORLD_NAME', '$OPTION_WORLD_ADDRESS', '$OPTION_WORLD_ADDRESS', '255.255.255.0', '8085')"
+
+        # Check to make sure there weren't any errors
+        if [ $? -ne 0 ]; then
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
     fi
 
     printf "\e[0;33mFinished importing the database files...\e[0m\n"
