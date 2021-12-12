@@ -2728,7 +2728,6 @@ function set_config
             exit $?
         fi
 
-        # Update worldserver.conf with values specified in the options
         printf "\e[0;33mUpdating worldserver.conf\e[0m\n"
 
         # Convert boolean values to integers
@@ -2819,6 +2818,21 @@ function set_config
                 # Terminate script on error
                 exit $?
             fi
+
+            printf "\e[0;33mUpdating mod_ahbot.conf\e[0m\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_AHBOT_ENABLE_BUYER == "true" ] && MODULES_AHBOT_ENABLE_BUYER=1 || MODULES_AHBOT_ENABLE_BUYER=0
+            [ $OPTION_MODULES_AHBOT_ENABLE_SELLER == "true" ] && MODULES_AHBOT_ENABLE_SELLER=1 || MODULES_AHBOT_ENABLE_SELLER=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+
+            # Update mod_ahbot.conf with values specified in the options
+            sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = '$MODULES_AHBOT_ENABLE_BUYER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+            sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = '$MODULES_AHBOT_ENABLE_SELLER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+            sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = '$OPTION_MODULES_AHBOT_ACCOUNT_ID'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+            sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = '$OPTION_MODULES_AHBOT_CHARACTER_GUID'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]; then
@@ -2847,6 +2861,31 @@ function set_config
                 # Terminate script on error
                 exit $?
             fi
+
+            printf "\e[0;33mUpdating mod_assistant.conf\e[0m\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS == "true" ] && MODULES_ASSISTANT_FEATURES_HEIRLOOMS=1 || MODULES_ASSISTANT_FEATURES_HEIRLOOMS=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS == "true" ] && MODULES_ASSISTANT_FEATURES_GLYPHS=1 || MODULES_ASSISTANT_FEATURES_GLYPHS=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_GEMS == "true" ] && MODULES_ASSISTANT_FEATURES_GEMS=1 || MODULES_ASSISTANT_FEATURES_GEMS=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS == "true" ] && MODULES_ASSISTANT_FEATURES_CONTAINERS=1 || MODULES_ASSISTANT_FEATURES_CONTAINERS=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED=1 || MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_TOTEMS == "true" ] && MODULES_ASSISTANT_FEATURES_TOTEMS=1 || MODULES_ASSISTANT_FEATURES_TOTEMS=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+
+            # Update mod_assistant.conf with values specified in the options
+            sed -i 's/Assistant.Heirlooms =.*/Assistant.Heirlooms = '$MODULES_ASSISTANT_FEATURES_HEIRLOOMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Glyphs =.*/Assistant.Glyphs = '$MODULES_ASSISTANT_FEATURES_GLYPHS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems =.*/Assistant.Gems = '$MODULES_ASSISTANT_FEATURES_GEMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Containers =.*/Assistant.Containers = '$MODULES_ASSISTANT_FEATURES_CONTAINERS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities =.*/Assistant.Utilities = '$MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.NameChange =.*/Assistant.Utilities.NameChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.Customization =.*/Assistant.Utilities.Customization = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.RaceChange =.*/Assistant.Utilities.RaceChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.FactionChange =.*/Assistant.Utilities.FactionChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Totems =.*/Assistant.Totems = '$MODULES_ASSISTANT_FEATURES_TOTEMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]; then
@@ -2875,6 +2914,42 @@ function set_config
                 # Terminate script on error
                 exit $?
             fi
+
+            printf "\e[0;33mUpdating mod_learnspells.conf\e[0m\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN == "true" ] && MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN=1 || MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP == "true" ] && MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP=1 || MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS == "true" ] && MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS=1 || MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS == "true" ] && MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS=1 || MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES == "true" ] && MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES=1 || MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS == "true" ] && MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS=1 || MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED == "true" ] && MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED=1 || MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN=0
+            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+
+            # Update mod_learnspells.conf with values specified in the options
+            sed -i 's/OnLogin.Enabled =.*/OnLogin.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/OnLevelUp.Enabled =.*/OnLevelUp.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/ClassSpells.Enabled =.*/ClassSpells.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/TalentRanks.Enabled =.*/TalentRanks.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/Proficiencies.Enabled =.*/Proficiencies.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/SpellsFromQuests.Enabled =.*/SpellsFromQuests.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/MaxSkill.Enabled =.*/MaxSkill.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/MaxSkill.MaxLevel =.*/MaxSkill.MaxLevel = '$OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/Riding.Enabled =.*/Riding.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/Riding.Apprentice.Enabled =.*/Riding.Apprentice.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/Riding.Journeyman.Enabled =.*/Riding.Journeyman.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/Riding.Expert.Enabled =.*/Riding.Expert.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/Riding.Artisan.Enabled =.*/Riding.Artisan.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/Riding.ColdWeather.Enabled =.*/Riding.ColdWeather.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]; then
@@ -2903,6 +2978,21 @@ function set_config
                 # Terminate script on error
                 exit $?
             fi
+
+            printf "\e[0;33mUpdating mod_levelreward.conf\e[0m\n"
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+
+            # Update mod_levelreward.conf with values specified in the options
+            sed -i 's/Reward.Gold.Level.10 =.*/Reward.Gold.Level.10 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/Reward.Gold.Level.20 =.*/Reward.Gold.Level.20 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/Reward.Gold.Level.30 =.*/Reward.Gold.Level.30 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/Reward.Gold.Level.40 =.*/Reward.Gold.Level.40 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/Reward.Gold.Level.50 =.*/Reward.Gold.Level.50 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/Reward.Gold.Level.60 =.*/Reward.Gold.Level.60 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/Reward.Gold.Level.70 =.*/Reward.Gold.Level.70 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/Reward.Gold.Level.80 =.*/Reward.Gold.Level.80 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]; then
@@ -2931,6 +3021,14 @@ function set_config
                 # Terminate script on error
                 exit $?
             fi
+
+            printf "\e[0;33mUpdating mod_recruitafriend.conf\e[0m\n"
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+
+            # Update mod_recruitafriend.conf with values specified in the options
+            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
@@ -2959,6 +3057,16 @@ function set_config
                 # Terminate script on error
                 exit $?
             fi
+
+            printf "\e[0;33mUpdating SkipDKModule.conf\e[0m\n"
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
+
+            # Update SkipDKModule.conf with values specified in the options
+            sed -i 's/Skip.Deathknight.Starter.Enable =.*/Skip.Deathknight.Starter.Enable = 1/g' $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
+            sed -i 's/GM.Skip.Deathknight.Starter.Enable =.*/GM.Skip.Deathknight.Starter.Enable = 1/g' $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
+            sed -i 's/Skip.Deathknight.Start.Level =.*/Skip.Deathknight.Start.Level = '$OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]; then
@@ -2987,6 +3095,15 @@ function set_config
                 # Terminate script on error
                 exit $?
             fi
+
+            printf "\e[0;33mUpdating mod_weekendbonus.conf\e[0m\n"
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+
+            # Update mod_weekendbonus.conf with values specified in the options
+            sed -i 's/Multiplier.Experience =.*/Multiplier.Experience = '$OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/Multiplier.Reputation =.*/Multiplier.Reputation = '$OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]; then
