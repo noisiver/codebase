@@ -197,7 +197,7 @@ function store_options
                 <!-- Experience rates (outside battleground) -->
                 <experience>${33:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_exp>${34:-1}</rested_exp>
+                <rested_experience>${34:-1}</rested_experience>
                 <!-- Reputation gain rate -->
                 <reputation>${35:-1}</reputation>
                 <!-- Drop rates for money -->
@@ -221,7 +221,7 @@ function store_options
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
                 <enable_whisper>${44:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${45:-0}</show_gm_list>
+                <show_gm_list>${45:-1}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
                 <show_who_list>${46:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
@@ -271,14 +271,14 @@ function save_options
     $OPTION_WORLD_PRELOAD_MAP_GRIDS \
     $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE \
     $OPTION_WORLD_ENABLE_MINIGOB_MANABONK \
-    $OPTION_WORLD_RATE_EXPERIENCE \
-    $OPTION_WORLD_RATE_RESTED_EXP \
-    $OPTION_WORLD_RATE_REPUTATION \
-    $OPTION_WORLD_RATE_MONEY \
-    $OPTION_WORLD_RATE_CRAFTING \
-    $OPTION_WORLD_RATE_GATHERING \
-    $OPTION_WORLD_RATE_WEAPON_SKILL \
-    $OPTION_WORLD_RATE_DEFENSE_SKILL \
+    $OPTION_WORLD_RATES_EXPERIENCE \
+    $OPTION_WORLD_RATES_RESTED_EXPERIENCE \
+    $OPTION_WORLD_RATES_REPUTATION \
+    $OPTION_WORLD_RATES_MONEY \
+    $OPTION_WORLD_RATES_CRAFTING \
+    $OPTION_WORLD_RATES_GATHERING \
+    $OPTION_WORLD_RATES_WEAPON_SKILL \
+    $OPTION_WORLD_RATES_DEFENSE_SKILL \
     $OPTION_WORLD_GM_LOGIN_STATE \
     $OPTION_WORLD_GM_ENABLE_VISIBILITY \
     $OPTION_WORLD_GM_ENABLE_CHAT \
@@ -596,6 +596,159 @@ function load_options
         RESET=true
     fi
 
+    # Load the experience rate option
+    OPTION_WORLD_RATES_EXPERIENCE="$(echo "cat /options/world/rates/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RATES_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_EXPERIENCE < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe experience rate option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RATES_EXPERIENCE="1"
+        RESET=true
+    fi
+
+    # Load the rested experience rate option
+    OPTION_WORLD_RATES_RESTED_EXPERIENCE="$(echo "cat /options/world/rates/rested_experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RATES_RESTED_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_RESTED_EXPERIENCE < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe rested experience rate option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RATES_RESTED_EXPERIENCE="1"
+        RESET=true
+    fi
+
+    # Load the reputation rate option
+    OPTION_WORLD_RATES_REPUTATION="$(echo "cat /options/world/rates/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RATES_REPUTATION =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_REPUTATION < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe reputation rate option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RATES_REPUTATION="1"
+        RESET=true
+    fi
+
+    # Load the money rate option
+    OPTION_WORLD_RATES_MONEY="$(echo "cat /options/world/rates/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RATES_MONEY =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_MONEY < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe money rate option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RATES_MONEY="1"
+        RESET=true
+    fi
+
+    # Load the crafting rate option
+    OPTION_WORLD_RATES_CRAFTING="$(echo "cat /options/world/rates/crafting/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RATES_CRAFTING =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_CRAFTING < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe crafting rate option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RATES_CRAFTING="1"
+        RESET=true
+    fi
+
+    # Load the gathering rate option
+    OPTION_WORLD_RATES_GATHERING="$(echo "cat /options/world/rates/gathering/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RATES_GATHERING =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_GATHERING < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe gathering rate option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RATES_GATHERING="1"
+        RESET=true
+    fi
+
+    # Load the weapon skill rate option
+    OPTION_WORLD_RATES_WEAPON_SKILL="$(echo "cat /options/world/rates/weapon_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RATES_WEAPON_SKILL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_WEAPON_SKILL < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe weapon skill rate option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RATES_WEAPON_SKILL="1"
+        RESET=true
+    fi
+
+    # Load the defense skill rate option
+    OPTION_WORLD_RATES_DEFENSE_SKILL="$(echo "cat /options/world/rates/defense_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_RATES_DEFENSE_SKILL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_DEFENSE_SKILL < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe defense skill rate option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_RATES_DEFENSE_SKILL="1"
+        RESET=true
+    fi
+
+    # Load the gm login state option
+    OPTION_WORLD_GM_LOGIN_STATE="$(echo "cat /options/world/gm/login_state/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_GM_LOGIN_STATE != "true" && $OPTION_WORLD_GM_LOGIN_STATE != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe gm login state option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_LOGIN_STATE="true"
+        RESET=true
+    fi
+
+    # Load the gm enable visibility option
+    OPTION_WORLD_GM_ENABLE_VISIBILITY="$(echo "cat /options/world/gm/enable_visibility/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_GM_ENABLE_VISIBILITY != "true" && $OPTION_WORLD_GM_ENABLE_VISIBILITY != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe gm enable visibility option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_ENABLE_VISIBILITY="false"
+        RESET=true
+    fi
+
+    # Load the gm enable chat option
+    OPTION_WORLD_GM_ENABLE_CHAT="$(echo "cat /options/world/gm/enable_chat/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_GM_ENABLE_CHAT != "true" && $OPTION_WORLD_GM_ENABLE_CHAT != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe gm enable chat option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_ENABLE_CHAT="true"
+        RESET=true
+    fi
+
+    # Load the gm enable whispers option
+    OPTION_WORLD_GM_ENABLE_WHISPER="$(echo "cat /options/world/gm/enable_whisper/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_GM_ENABLE_WHISPER != "true" && $OPTION_WORLD_GM_ENABLE_WHISPER != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe gm enable whisper option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_ENABLE_WHISPER="false"
+        RESET=true
+    fi
+
+    # Load the show gm list option
+    OPTION_WORLD_GM_SHOW_GM_LIST="$(echo "cat /options/world/gm/show_gm_list/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_GM_SHOW_GM_LIST =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_GM_SHOW_GM_LIST != 0 && $OPTION_WORLD_GM_SHOW_GM_LIST != 1 && $OPTION_WORLD_GM_SHOW_GM_LIST != 2 && $OPTION_WORLD_GM_SHOW_GM_LIST != 3 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe show gm list option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_SHOW_GM_LIST="1"
+        RESET=true
+    fi
+
+    # Load the show who list option
+    OPTION_WORLD_GM_SHOW_WHO_LIST="$(echo "cat /options/world/gm/show_who_list/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_GM_SHOW_WHO_LIST =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_GM_SHOW_WHO_LIST != 0 && $OPTION_WORLD_GM_SHOW_WHO_LIST != 1 && $OPTION_WORLD_GM_SHOW_WHO_LIST != 2 && $OPTION_WORLD_GM_SHOW_WHO_LIST != 3 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe show who list option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_SHOW_WHO_LIST="0"
+        RESET=true
+    fi
+
+    # Load the gm allow friend option
+    OPTION_WORLD_GM_ALLOW_FRIEND="$(echo "cat /options/world/gm/allow_friend/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_GM_ALLOW_FRIEND != "true" && $OPTION_WORLD_GM_ALLOW_FRIEND != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe gm allow friend option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_ALLOW_FRIEND="false"
+        RESET=true
+    fi
+
+    # Load the gm allow invite option
+    OPTION_WORLD_GM_ALLOW_INVITE="$(echo "cat /options/world/gm/allow_invite/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_GM_ALLOW_INVITE != "true" && $OPTION_WORLD_GM_ALLOW_INVITE != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe gm allow invite option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_ALLOW_INVITE="false"
+        RESET=true
+    fi
+
+    # Load the gm allow lower security option
+    OPTION_WORLD_GM_ALLOW_LOWER_SECURITY="$(echo "cat /options/world/gm/allow_lower_security/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY != "true" && $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe gm allow lower security option is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_WORLD_GM_ALLOW_LOWER_SECURITY="false"
+        RESET=true
+    fi
+
     # Check if any option calls for a reset
     if [ $RESET ]; then
         # Tell the user that the invalid options should be changed, then terminate the script
@@ -716,5 +869,6 @@ if [ $# -gt 0 ]; then
             ;;
     esac
 else
+    # No parameters provided
     parameters
 fi
