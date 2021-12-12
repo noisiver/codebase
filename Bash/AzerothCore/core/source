@@ -3122,6 +3122,64 @@ function set_config
     printf "\e[0;32mFinished updating the config files...\e[0m\n"
 }
 
+# A function that starts the compiled server
+function start_server
+{
+    printf "\e[0;32mStarting the server...\e[0m\n"
+
+    # Check if the required binaries exist
+    if [ ! -f $OPTION_SOURCE_LOCATION/bin/start.sh ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/stop.sh ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/authserver ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/worldserver ]; then
+        printf "\e[0;31mThe required binaries are missing.\e[0m\n"
+        printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+        # Terminate the script
+        exit $?
+    fi
+
+    # Check if the process is already running
+    if [[ ! -z `screen -list | grep -E "auth"` ]] || [[ ! -z `screen -list | grep -E "world"` ]]; then
+        printf "\e[0;31mThe server is already running.\e[0m\n"
+
+        # Terminate the script
+        exit $?
+    fi
+
+    # Start the server
+    cd $OPTION_SOURCE_LOCATION/bin && ./start.sh
+
+    printf "\e[0;32mFinished starting the server...\e[0m\n"
+}
+
+# A function that stops the running server
+function stop_server
+{
+    printf "\e[0;32mStopping the server...\e[0m\n"
+
+    # Check if the process is running
+    if [[ -z `screen -list | grep -E "auth"` ]] && [[ -z `screen -list | grep -E "world"` ]]; then
+        printf "\e[0;31mThe server is not running.\e[0m\n"
+
+        # Terminate the script
+        exit $?
+    fi
+
+    # Check if the worldserver is running
+    if [[ ! -z `screen -list | grep -E "world"` ]]; then
+        printf "\e[0;33mTelling the world server to save before shutting down.\e[0m\n"
+
+        # Send the saveall command to the worldserver
+        screen -S world -p 0 -X stuff "saveall^m"
+
+        # Sleep for 3 seconds to let the server save
+        sleep 3
+    fi
+
+    # Stop the server
+    cd $OPTION_SOURCE_LOCATION/bin && ./stop.sh
+
+    printf "\e[0;32mFinished stopping the server...\e[0m\n"
+}
+
 # A function that prints available parameters and subparameters when none are supplied or if they are invalid
 function parameters
 {
@@ -3166,6 +3224,9 @@ if [ $# -gt 0 ]; then
             # Update the config files
             set_config $1
         elif [[ $2 == "all" ]]; then
+            # Stop the enabled processes
+            stop_server
+
             # Download the source code
             get_source $1
 
@@ -3180,20 +3241,25 @@ if [ $# -gt 0 ]; then
 
             # Update the config files
             set_config $1
+
+            # Start the enabled processes
+            start_server
         else
             # The provided subparameter is invalid
             parameters
         fi
     elif [[ $1 == "start" ]]; then
         # Start the enabled processes
-        echo "NYI"
+        start_server
     elif [[ $1 == "stop" ]]; then
         # Stop the enabled processes
-        echo "NYI"
+        stop_server
     elif [[ $1 == "restart" ]]; then
-        # Start the enabled processes
         # Stop the enabled processes
-        echo "NYI"
+        stop_server
+
+        # Start the enabled processes
+        start_server
     else
         # The provided parameter is invalid
         parameters
