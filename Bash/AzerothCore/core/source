@@ -2683,6 +2683,328 @@ function import_database
     printf "\e[0;32mFinished importing the database files...\e[0m\n"
 }
 
+# A function that changes config files to values specified in the options
+function set_config
+{
+    printf "\e[0;32mUpdating the config files...\e[0m\n"
+
+    # Check if either both or auth is used as the first parameter
+    if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
+        # Check to make sure the config file exists
+        if [ ! -f $OPTION_SOURCE_LOCATION/etc/authserver.conf.dist ]; then
+            # The file is missing, so terminate the script
+            printf "\e[0;31mThe config file authserver.conf.dist is missing.\e[0m\n"
+            printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
+
+        printf "\e[0;33mUpdating authserver.conf\e[0m\n"
+
+        # Copy the file before editing it
+        cp $OPTION_SOURCE_LOCATION/etc/authserver.conf.dist $OPTION_SOURCE_LOCATION/etc/authserver.conf
+
+        # Update authserver.conf with values specified in the options
+        sed -i 's/LoginDatabaseInfo =.*/LoginDatabaseInfo = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_AUTH'"/g' $OPTION_SOURCE_LOCATION/etc/authserver.conf
+        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $OPTION_SOURCE_LOCATION/etc/authserver.conf
+    fi
+
+    # Check if either both or world is used as the first parameter
+    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        # Check to make sure the config file exists
+        if [ ! -f $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist ]; then
+            # The file is missing, so terminate the script
+            printf "\e[0;31mThe config file worldserver.conf.dist is missing.\e[0m\n"
+            printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
+
+        # Update worldserver.conf with values specified in the options
+        printf "\e[0;33mUpdating worldserver.conf\e[0m\n"
+
+        # Convert boolean values to integers
+        [ $OPTION_WORLD_ALWAYS_MAX_SKILL == "true" ] && WORLD_ALWAYS_MAX_SKILL=1 || WORLD_ALWAYS_MAX_SKILL=0
+        [ $OPTION_WORLD_ALL_FLIGHT_PATHS == "true" ] && WORLD_ALL_FLIGHT_PATHS=1 || WORLD_ALL_FLIGHT_PATHS=0
+        [ $OPTION_WORLD_MAPS_EXPLORED == "true" ] && WORLD_MAPS_EXPLORED=1 || WORLD_MAPS_EXPLORED=0
+        [ $OPTION_WORLD_ALLOW_COMMANDS == "true" ] && WORLD_ALLOW_COMMANDS=1 || WORLD_ALLOW_COMMANDS=0
+        [ $OPTION_WORLD_QUEST_IGNORE_RAID == "true" ] && WORLD_QUEST_IGNORE_RAID=1 || WORLD_QUEST_IGNORE_RAID=0
+        [ $OPTION_WORLD_PREVENT_AFK_LOGOUT == "true" ] && WORLD_PREVENT_AFK_LOGOUT=1 || WORLD_PREVENT_AFK_LOGOUT=0
+        [ $OPTION_WORLD_PRELOAD_MAP_GRIDS == "true" ] && WORLD_PRELOAD_MAP_GRIDS=1 || WORLD_PRELOAD_MAP_GRIDS=0
+        [ $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE == "true" ] && WORLD_SET_ALL_WAYPOINTS_ACTIVE=1 || WORLD_SET_ALL_WAYPOINTS_ACTIVE=0
+        [ $OPTION_WORLD_ENABLE_MINIGOB_MANABONK == "true" ] && WORLD_ENABLE_MINIGOB_MANABONK=1 || WORLD_ENABLE_MINIGOB_MANABONK=0
+        [ $OPTION_WORLD_GM_LOGIN_STATE == "true" ] && WORLD_GM_LOGIN_STATE=1 || WORLD_GM_LOGIN_STATE=0
+        [ $OPTION_WORLD_GM_ENABLE_VISIBILITY == "true" ] && WORLD_GM_ENABLE_VISIBILITY=1 || WORLD_GM_ENABLE_VISIBILITY=0
+        [ $OPTION_WORLD_GM_ENABLE_CHAT == "true" ] && WORLD_GM_ENABLE_CHAT=1 || WORLD_GM_ENABLE_CHAT=0
+        [ $OPTION_WORLD_GM_ENABLE_WHISPER == "true" ] && WORLD_GM_ENABLE_WHISPER=1 || WORLD_GM_ENABLE_WHISPER=0
+        [ $OPTION_WORLD_GM_ALLOW_INVITE == "true" ] && WORLD_GM_ALLOW_INVITE=1 || WORLD_GM_ALLOW_INVITE=0
+        [ $OPTION_WORLD_GM_ALLOW_FRIEND == "true" ] && WORLD_GM_ALLOW_FRIEND=1 || WORLD_GM_ALLOW_FRIEND=0
+        [ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY == "true" ] && WORLD_GM_ALLOW_LOWER_SECURITY=1 || WORLD_GM_ALLOW_LOWER_SECURITY=0
+
+        # Copy the file before editing it
+        cp $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+
+        # Update worldserver.conf with values specified in the options
+        sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_AUTH'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_WORLD'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_CHARACTERS'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/RealmID =.*/RealmID = '$OPTION_WORLD_ID'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GameType =.*/GameType = '$OPTION_WORLD_GAME_TYPE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/RealmZone =.*/RealmZone = '$OPTION_WORLD_REALM_ZONE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Expansion =.*/Expansion = '$OPTION_WORLD_EXPANSION'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/PlayerLimit =.*/PlayerLimit = '$OPTION_WORLD_PLAYER_LIMIT'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Motd =.*/Motd = "'"$OPTION_WORLD_MOTD"'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/SkipCinematics =.*/SkipCinematics = '$OPTION_WORLD_SKIP_CINEMATICS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/MaxPlayerLevel =.*/MaxPlayerLevel = '$OPTION_WORLD_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/StartPlayerLevel =.*/StartPlayerLevel = '$OPTION_WORLD_START_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/StartPlayerMoney =.*/StartPlayerMoney = '$OPTION_WORLD_START_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllFlightPaths =.*/AllFlightPaths = '$WORLD_ALL_FLIGHT_PATHS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AlwaysMaxSkillForLevel =.*/AlwaysMaxSkillForLevel = '$WORLD_ALWAYS_MAX_SKILL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/PlayerStart.MapsExplored =.*/PlayerStart.MapsExplored = '$WORLD_MAPS_EXPLORED'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = '$WORLD_ALLOW_COMMANDS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = '$WORLD_QUEST_IGNORE_RAID'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/PreventAFKLogout =.*/PreventAFKLogout = '$WORLD_PREVENT_AFK_LOGOUT'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = '$OPTION_WORLD_RAF_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$WORLD_PRELOAD_MAP_GRIDS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$WORLD_SET_ALL_WAYPOINTS_ACTIVE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = '$WORLD_ENABLE_MINIGOB_MANABONK'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = '$OPTION_WORLD_RATES_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Kill    =.*/Rate.XP.Kill    = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Quest   =.*/Rate.XP.Quest   = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Explore =.*/Rate.XP.Explore = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Pet     =.*/Rate.XP.Pet     = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.Reputation.Gain =.*/Rate.Reputation.Gain = '$OPTION_WORLD_RATES_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/SkillGain.Crafting  =.*/SkillGain.Crafting  = '$OPTION_WORLD_RATES_CRAFTING'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/SkillGain.Defense   =.*/SkillGain.Defense   = '$OPTION_WORLD_RATES_DEFENSE_SKILL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/SkillGain.Gathering =.*/SkillGain.Gathering = '$OPTION_WORLD_RATES_GATHERING'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/SkillGain.Weapon    =.*/SkillGain.Weapon    = '$OPTION_WORLD_RATES_WEAPON_SKILL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = '$OPTION_WORLD_RATES_RESTED_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = '$OPTION_WORLD_RATES_RESTED_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = '$OPTION_WORLD_RATES_RESTED_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.LoginState =.*/GM.LoginState = '$WORLD_GM_LOGIN_STATE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.Visible =.*/GM.Visible = '$WORLD_GM_ENABLE_VISIBILITY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.Chat =.*/GM.Chat = '$WORLD_GM_ENABLE_CHAT'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = '$WORLD_GM_ENABLE_WHISPER'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = '$OPTION_WORLD_GM_SHOW_GM_LIST'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = '$OPTION_WORLD_GM_SHOW_WHO_LIST'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.StartLevel = .*/GM.StartLevel = '$OPTION_WORLD_START_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = '$WORLD_GM_ALLOW_INVITE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = '$WORLD_GM_ALLOW_FRIEND'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = '$WORLD_GM_ALLOW_LOWER_SECURITY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Warden.Enabled =.*/Warden.Enabled = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+
+        # Check if the ahbot module is enabled
+        if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]; then
+                # The file is missing, so terminate the script
+                printf "\e[0;31mThe config file mod_ahbot.conf.dist is missing.\e[0m\n"
+                printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        else
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+            fi
+        fi
+
+        # Check if the assistant module is enabled
+        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]; then
+                # The file is missing, so terminate the script
+                printf "\e[0;31mThe config file mod_assistant.conf.dist is missing.\e[0m\n"
+                printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        else
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            fi
+        fi
+
+        # Check if the learn spells module is enabled
+        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]; then
+                # The file is missing, so terminate the script
+                printf "\e[0;31mThe config file mod_learnspells.conf.dist is missing.\e[0m\n"
+                printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        else
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            fi
+        fi
+
+        # Check if the learn spells module is enabled
+        if [[ $OPTION_MODULES_LEVEL_REWARD_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]; then
+                # The file is missing, so terminate the script
+                printf "\e[0;31mThe config file mod_levelreward.conf.dist is missing.\e[0m\n"
+                printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        else
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            fi
+        fi
+
+        # Check if the recruit a friend module is enabled
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
+                # The file is missing, so terminate the script
+                printf "\e[0;31mThe config file mod_recruitafriend.conf.dist is missing.\e[0m\n"
+                printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        else
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            fi
+        fi
+
+        # Check if the skip dk starting area module is enabled
+        if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]; then
+                # The file is missing, so terminate the script
+                printf "\e[0;31mThe config file SkipDKModule.conf.dist is missing.\e[0m\n"
+                printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        else
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
+            fi
+        fi
+
+        # Check if the weekend bonus module is enabled
+        if [[ $OPTION_MODULES_WEEKEND_BONUS_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]; then
+                # The file is missing, so terminate the script
+                printf "\e[0;31mThe config file mod_weekendbonus.conf.dist is missing.\e[0m\n"
+                printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+        else
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            fi
+        fi
+    fi
+
+    printf "\e[0;32mFinished updating the config files...\e[0m\n"
+}
+
 # A function that prints available parameters and subparameters when none are supplied or if they are invalid
 function parameters
 {
@@ -2724,7 +3046,8 @@ if [ $# -gt 0 ]; then
             # Import the database files
             import_database $1
         elif [[ $2 == "config" ]] || [[ $2 == "conf" ]]; then
-            echo "NYI"
+            # Update the config files
+            set_config $1
         elif [[ $2 == "all" ]]; then
             # Download the source code
             get_source $1
@@ -2737,6 +3060,9 @@ if [ $# -gt 0 ]; then
 
             # Import the database files
             import_database $1
+
+            # Update the config files
+            set_config $1
         else
             # The provided subparameter is invalid
             parameters
