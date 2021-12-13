@@ -3161,9 +3161,6 @@ function stop_server
     # Check if the process is running
     if [[ -z `screen -list | grep -E "auth"` ]] && [[ -z `screen -list | grep -E "world"` ]]; then
         printf "\e[0;31mThe server is not running.\e[0m\n"
-
-        # Terminate the script
-        exit $?
     fi
 
     # Check if the worldserver is running
