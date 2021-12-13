@@ -3150,6 +3150,18 @@ function start_server
     # Start the server
     cd $OPTION_SOURCE_LOCATION/bin && ./start.sh
 
+    # Check of the authserver is running
+    if [[ ! -z `screen -list | grep -E "auth"` ]]; then
+        # Give some information about accessing the screen
+        printf "\e[0;33mTo access the screen of the authserver, use the command \e[0;34mscreen -r auth\e[0;33m.\e[0m\n"
+    fi
+
+    # Check of the worldserver is running
+    if [[ ! -z `screen -list | grep -E "world"` ]]; then
+        # Give some information about accessing the screen
+        printf "\e[0;33mTo access the screen of the worldserver, use the command \e[0;34mscreen -r world\e[0;33m.\e[0m\n"
+    fi
+
     printf "\e[0;32mFinished starting the server...\e[0m\n"
 }
 
@@ -3176,8 +3188,11 @@ function stop_server
 
     # Check if the file exists
     if [ -f $OPTION_SOURCE_LOCATION/bin/stop.sh ]; then
-        # Stop the server
-        cd $OPTION_SOURCE_LOCATION/bin && ./stop.sh
+        # Check if the server is running
+        if [[ ! -z `screen -list | grep -E "auth"` ]] || [[ ! -z `screen -list | grep -E "world"` ]]; then
+            # Stop the server
+            cd $OPTION_SOURCE_LOCATION/bin && ./stop.sh
+        fi
     fi
 
     printf "\e[0;32mFinished stopping the server...\e[0m\n"
