@@ -2680,6 +2680,9 @@ function import_database
         fi
     fi
 
+    # Remove the mysql conf
+    rm -rf $MYSQL_CNF
+
     printf "\e[0;32mFinished importing the database files...\e[0m\n"
 }
 
