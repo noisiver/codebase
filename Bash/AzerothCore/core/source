@@ -3174,8 +3174,11 @@ function stop_server
         sleep 3
     fi
 
-    # Stop the server
-    cd $OPTION_SOURCE_LOCATION/bin && ./stop.sh
+    # Check if the file exists
+    if [ -f $OPTION_SOURCE_LOCATION/bin/stop.sh ]; then
+        # Stop the server
+        cd $OPTION_SOURCE_LOCATION/bin && ./stop.sh
+    fi
 
     printf "\e[0;32mFinished stopping the server...\e[0m\n"
 }
