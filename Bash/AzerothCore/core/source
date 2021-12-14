@@ -3227,6 +3227,9 @@ if [ $# -gt 0 ]; then
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]] || [[ $1 == "world" ]]; then
         # Check the subparameter
         if [[ $2 == "install" ]] || [[ $2 == "update" ]]; then
+            # Stop the enabled processes
+            stop_server
+
             # Download the source code
             get_source $1
 
