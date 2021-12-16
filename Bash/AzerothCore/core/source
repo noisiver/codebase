@@ -356,24 +356,32 @@ function store_options
                 <enabled>${96:-false}</enabled>
                 <!-- The amount of days that refer a friend stays active. 0 = never expires -->
                 <duration>${97:-90}</duration>
+            <rewards>
+                <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
+                <days>${98:-30}</days>
+                <!-- Give the Swift Zhevra item as a reward -->
+                <swift_zhevra>${99:-true}</swift_zhevra>
+                <!-- Give the X-53 Touring Rocket item as a reward -->
+                <touring_rocket>${100:-true}</touring_rocket>
+            </rewards>
             </refer_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${98:-false}</enabled>
+                <enabled>${101:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${99:-58}</starting_level>
+                <starting_level>${102:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${103:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${101:-false}</enabled>
+                <enabled>${104:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${102:-2}</experience_multiplier>
+                <experience_multiplier>${105:-2}</experience_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${103:-2}</reputation_multiplier>
+                <reputation_multiplier>${106:-2}</reputation_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -480,6 +488,9 @@ function save_options
     $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 \
     $OPTION_MODULES_REFER_A_FRIEND_ENABLED \
     $OPTION_MODULES_REFER_A_FRIEND_DURATION \
+    $OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS \
+    $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA \
+    $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
     $OPTION_MODULES_SPAWN_POINTS_ENABLED \
@@ -1376,6 +1387,33 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/modules/refer_a_friend/duration is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MODULES_REFER_A_FRIEND_DURATION="90"
+        RESET=true
+    fi
+
+    # Load the /options/modules/refer_a_friend/rewards/days option
+    OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS="$(echo "cat /options/modules/refer_a_friend/rewards/days/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/refer_a_friend/rewards/days is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS="30"
+        RESET=true
+    fi
+
+    # Load the /options/modules/refer_a_friend/rewards/swift_zhevra option
+    OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA="$(echo "cat /options/modules/refer_a_friend/rewards/swift_zhevra/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA != "true" && $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/refer_a_friend/rewards/swift_zhevra is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/refer_a_friend/rewards/touring_rocket option
+    OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET="$(echo "cat /options/modules/refer_a_friend/rewards/touring_rocket/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET != "true" && $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/refer_a_friend/rewards/touring_rocket is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET="true"
         RESET=true
     fi
 
@@ -2628,6 +2666,26 @@ function import_database
                     fi
                 done
             fi
+
+            # Make sure the database folder exists
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-referafriend/sql/characters/base ]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-referafriend/sql/characters/base/*.sql; do
+                    printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
+
+                    # Check to make sure there weren't any errors
+                    if [ $? -ne 0 ]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
         fi
 
         # Check if the spawn points module is enabled
@@ -3040,11 +3098,18 @@ function set_config
 
             printf "\e[0;33mUpdating mod_referafriend.conf\e[0m\n"
 
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA == "true" ] && MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA=1 || MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA=0
+            [ $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET == "true" ] && MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET=1 || MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET=0
+
             # Copy the file before editing it
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
 
             # Update mod_referafriend.conf with values specified in the options
             sed -i 's/ReferAFriend.Duration =.*/ReferAFriend.Duration = '$OPTION_MODULES_REFER_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
+            sed -i 's/ReferAFriend.Rewards.Days =.*/ReferAFriend.Rewards.Days = '$OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
+            sed -i 's/ReferAFriend.Rewards.SwiftZhevra =.*/ReferAFriend.Rewards.SwiftZhevra = '$MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
+            sed -i 's/ReferAFriend.Rewards.TouringRocket =.*/ReferAFriend.Rewards.TouringRocket = '$MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist ]; then
