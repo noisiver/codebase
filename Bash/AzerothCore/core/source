@@ -351,12 +351,12 @@ function store_options
                     <level_80>${95:-250}</level_80>
                 </gold>
             </level_reward>
-            <recruit_a_friend>
-                <!-- Enable/Disable the use of the Recruit A Friend module. Players can recruit other players by using a simple in-game command -->
+            <refer_a_friend>
+                <!-- Enable/Disable the use of the Refer A Friend module. Players can refer other players by using a simple in-game command -->
                 <enabled>${96:-false}</enabled>
-                <!-- The amount of days that recruit a friend stays active. 0 = never expires -->
+                <!-- The amount of days that refer a friend stays active. 0 = never expires -->
                 <duration>${97:-90}</duration>
-            </recruit_a_friend>
+            </refer_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
                 <enabled>${98:-false}</enabled>
@@ -478,8 +478,8 @@ function save_options
     $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60 \
     $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70 \
     $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION \
+    $OPTION_MODULES_REFER_A_FRIEND_ENABLED \
+    $OPTION_MODULES_REFER_A_FRIEND_DURATION \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
     $OPTION_MODULES_SPAWN_POINTS_ENABLED \
@@ -1361,21 +1361,21 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/recruit_a_friend/enabled option
-    OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /options/modules/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
+    # Load the /options/modules/refer_a_friend/enabled option
+    OPTION_MODULES_REFER_A_FRIEND_ENABLED="$(echo "cat /options/modules/refer_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_REFER_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_REFER_A_FRIEND_ENABLED != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe option at /options/modules/recruit_a_friend/enabled is invalid. It has been reset to the default value.\e[0m\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="false"
+        printf "\e[0;31mThe option at /options/modules/refer_a_friend/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_REFER_A_FRIEND_ENABLED="false"
         RESET=true
     fi
 
-    # Load the /options/modules/recruit_a_friend/duration option
-    OPTION_MODULES_RECRUIT_A_FRIEND_DURATION="$(echo "cat /options/modules/recruit_a_friend/duration/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
+    # Load the /options/modules/refer_a_friend/duration option
+    OPTION_MODULES_REFER_A_FRIEND_DURATION="$(echo "cat /options/modules/refer_a_friend/duration/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_REFER_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "\e[0;31mThe option at /options/modules/recruit_a_friend/duration is invalid. It has been reset to the default value.\e[0m\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_DURATION="90"
+        printf "\e[0;31mThe option at /options/modules/refer_a_friend/duration is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_REFER_A_FRIEND_DURATION="90"
         RESET=true
     fi
 
@@ -1839,12 +1839,12 @@ function get_source
             fi
         fi
 
-        # Check if the recruit a friend module should be installed
-        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+        # Check if the refer a friend module should be installed
+        if [[ $OPTION_MODULES_REFER_A_FRIEND_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]; then
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-referafriend ]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+                git clone --branch master https://github.com/tkn963/mod-referafriend.git $OPTION_SOURCE_LOCATION/modules/mod-referafriend
 
                 # Check to make sure there weren't any errors
                 if [ $? -ne 0 ]; then
@@ -1853,7 +1853,7 @@ function get_source
                 fi
             else
                 # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+                cd $OPTION_SOURCE_LOCATION/modules/mod-referafriend
 
                 # Fetch all available updates
                 git fetch --all
@@ -1875,9 +1875,9 @@ function get_source
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]; then
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-referafriend ]; then
                 # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-referafriend
 
                 # Check if the source has been compiled
                 if [ -d $OPTION_SOURCE_LOCATION/build ]; then
@@ -2605,12 +2605,12 @@ function import_database
             fi
         fi
 
-        # Check if the recruit a friend module is enabled
-        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+        # Check if the refer a friend module is enabled
+        if [[ $OPTION_MODULES_REFER_A_FRIEND_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base ]; then
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-referafriend/sql/auth/base ]; then
                 # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base/*.sql; do
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-referafriend/sql/auth/base/*.sql; do
                     if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
                         printf "\e[0;33mImporting "$(basename $f)"\e[0m\n"
 
@@ -2952,20 +2952,20 @@ function set_config
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
 
             # Update mod_learnspells.conf with values specified in the options
-            sed -i 's/OnLogin.Enabled =.*/OnLogin.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/OnLevelUp.Enabled =.*/OnLevelUp.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/ClassSpells.Enabled =.*/ClassSpells.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/TalentRanks.Enabled =.*/TalentRanks.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/Proficiencies.Enabled =.*/Proficiencies.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/SpellsFromQuests.Enabled =.*/SpellsFromQuests.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/MaxSkill.Enabled =.*/MaxSkill.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/MaxSkill.MaxLevel =.*/MaxSkill.MaxLevel = '$OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/Riding.Enabled =.*/Riding.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/Riding.Apprentice.Enabled =.*/Riding.Apprentice.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/Riding.Journeyman.Enabled =.*/Riding.Journeyman.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/Riding.Expert.Enabled =.*/Riding.Expert.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/Riding.Artisan.Enabled =.*/Riding.Artisan.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/Riding.ColdWeather.Enabled =.*/Riding.ColdWeather.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.OnLogin.Enabled =.*/LearnSpells.OnLogin.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.OnLevelUp.Enabled =.*/LearnSpells.OnLevelUp.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.ClassSpells.Enabled =.*/LearnSpells.ClassSpells.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.TalentRanks.Enabled =.*/LearnSpells.TalentRanks.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Proficiencies.Enabled =.*/LearnSpells.Proficiencies.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.SpellsFromQuests.Enabled =.*/LearnSpells.SpellsFromQuests.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.MaxSkill.Enabled =.*/LearnSpells.MaxSkill.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.MaxSkill.MaxLevel =.*/LearnSpells.MaxSkill.MaxLevel = '$OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Enabled =.*/LearnSpells.Riding.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Apprentice.Enabled =.*/LearnSpells.Riding.Apprentice.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Journeyman.Enabled =.*/LearnSpells.Riding.Journeyman.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Expert.Enabled =.*/LearnSpells.Riding.Expert.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Artisan.Enabled =.*/LearnSpells.Riding.Artisan.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.ColdWeather.Enabled =.*/LearnSpells.Riding.ColdWeather.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]; then
@@ -3001,14 +3001,14 @@ function set_config
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
 
             # Update mod_levelreward.conf with values specified in the options
-            sed -i 's/Reward.Gold.Level.10 =.*/Reward.Gold.Level.10 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/Reward.Gold.Level.20 =.*/Reward.Gold.Level.20 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/Reward.Gold.Level.30 =.*/Reward.Gold.Level.30 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/Reward.Gold.Level.40 =.*/Reward.Gold.Level.40 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/Reward.Gold.Level.50 =.*/Reward.Gold.Level.50 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/Reward.Gold.Level.60 =.*/Reward.Gold.Level.60 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/Reward.Gold.Level.70 =.*/Reward.Gold.Level.70 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/Reward.Gold.Level.80 =.*/Reward.Gold.Level.80 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/LevelReward.Level.10 =.*/LevelReward.Level.10 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/LevelReward.Level.20 =.*/LevelReward.Level.20 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/LevelReward.Level.30 =.*/LevelReward.Level.30 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/LevelReward.Level.40 =.*/LevelReward.Level.40 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/LevelReward.Level.50 =.*/LevelReward.Level.50 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/LevelReward.Level.60 =.*/LevelReward.Level.60 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/LevelReward.Level.70 =.*/LevelReward.Level.70 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
+            sed -i 's/LevelReward.Level.80 =.*/LevelReward.Level.80 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]; then
@@ -3023,12 +3023,12 @@ function set_config
             fi
         fi
 
-        # Check if the recruit a friend module is enabled
-        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+        # Check if the refer a friend module is enabled
+        if [[ $OPTION_MODULES_REFER_A_FRIEND_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist ]; then
                 # The file is missing, so terminate the script
-                printf "\e[0;31mThe config file mod_recruitafriend.conf.dist is missing.\e[0m\n"
+                printf "\e[0;31mThe config file mod_referafriend.conf.dist is missing.\e[0m\n"
                 printf "\e[0;31mPlease make sure to install the server first.\e[0m\n"
 
                 # Remove the mysql conf
@@ -3038,24 +3038,24 @@ function set_config
                 exit $?
             fi
 
-            printf "\e[0;33mUpdating mod_recruitafriend.conf\e[0m\n"
+            printf "\e[0;33mUpdating mod_referafriend.conf\e[0m\n"
 
             # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
 
-            # Update mod_recruitafriend.conf with values specified in the options
-            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            # Update mod_referafriend.conf with values specified in the options
+            sed -i 's/ReferAFriend.Duration =.*/ReferAFriend.Duration = '$OPTION_MODULES_REFER_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist ]; then
                 # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]; then
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf ]; then
                 # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
             fi
         fi
 
@@ -3118,8 +3118,8 @@ function set_config
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
 
             # Update mod_weekendbonus.conf with values specified in the options
-            sed -i 's/Multiplier.Experience =.*/Multiplier.Experience = '$OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-            sed -i 's/Multiplier.Reputation =.*/Multiplier.Reputation = '$OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = '$OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = '$OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]; then
