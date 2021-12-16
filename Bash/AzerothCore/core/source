@@ -356,32 +356,34 @@ function store_options
                 <enabled>${96:-false}</enabled>
                 <!-- The amount of days that refer a friend stays active. 0 = never expires -->
                 <duration>${97:-90}</duration>
-            <rewards>
-                <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                <days>${98:-30}</days>
-                <!-- Give the Swift Zhevra item as a reward -->
-                <swift_zhevra>${99:-true}</swift_zhevra>
-                <!-- Give the X-53 Touring Rocket item as a reward -->
-                <touring_rocket>${100:-true}</touring_rocket>
-            </rewards>
+                <!-- The amount of days since the account was created where it can still be referred. 0 = no limit -->
+                <account_age>${98:-7}</account_age>
+                <rewards>
+                    <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
+                    <days>${99:-30}</days>
+                    <!-- Give the Swift Zhevra item as a reward -->
+                    <swift_zhevra>${100:-true}</swift_zhevra>
+                    <!-- Give the X-53 Touring Rocket item as a reward -->
+                    <touring_rocket>${101:-true}</touring_rocket>
+                </rewards>
             </refer_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${101:-false}</enabled>
+                <enabled>${102:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${102:-58}</starting_level>
+                <starting_level>${103:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${103:-false}</enabled>
+                <enabled>${104:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${104:-false}</enabled>
+                <enabled>${105:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${105:-2}</experience_multiplier>
+                <experience_multiplier>${106:-2}</experience_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${106:-2}</reputation_multiplier>
+                <reputation_multiplier>${107:-2}</reputation_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -488,6 +490,7 @@ function save_options
     $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 \
     $OPTION_MODULES_REFER_A_FRIEND_ENABLED \
     $OPTION_MODULES_REFER_A_FRIEND_DURATION \
+    $OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE \
     $OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS \
     $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA \
     $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET \
@@ -1387,6 +1390,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/modules/refer_a_friend/duration is invalid. It has been reset to the default value.\e[0m\n"
         OPTION_MODULES_REFER_A_FRIEND_DURATION="90"
+        RESET=true
+    fi
+
+    # Load the /options/modules/refer_a_friend/account_age option
+    OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE="$(echo "cat /options/modules/refer_a_friend/account_age/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/refer_a_friend/account_age is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE="30"
         RESET=true
     fi
 
@@ -3107,6 +3119,7 @@ function set_config
 
             # Update mod_referafriend.conf with values specified in the options
             sed -i 's/ReferAFriend.Duration =.*/ReferAFriend.Duration = '$OPTION_MODULES_REFER_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
+            sed -i 's/ReferAFriend.AccountAge =.*/ReferAFriend.AccountAge = '$OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
             sed -i 's/ReferAFriend.Rewards.Days =.*/ReferAFriend.Rewards.Days = '$OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
             sed -i 's/ReferAFriend.Rewards.SwiftZhevra =.*/ReferAFriend.Rewards.SwiftZhevra = '$MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
             sed -i 's/ReferAFriend.Rewards.TouringRocket =.*/ReferAFriend.Rewards.TouringRocket = '$MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
