@@ -1398,7 +1398,7 @@ function load_options
     if [[ ! $OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "\e[0;31mThe option at /options/modules/refer_a_friend/account_age is invalid. It has been reset to the default value.\e[0m\n"
-        OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE="30"
+        OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE="7"
         RESET=true
     fi
 
