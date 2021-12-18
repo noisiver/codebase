@@ -251,135 +251,139 @@ function store_options
                 <!-- Maximum amount of items the bot will keep on the auction house -->
                 <max_items>${57:-250}</max_items>
             </ahbot>
+            <activate_zones>
+                <!-- Enable/Disable the use of the Activate Zones module. If a zone has players in it, this module will set all creatures in that zone as active -->
+                <enabled>${58:-false}</enabled>
+            </activate_zones>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
-                <enabled>${58:-false}</enabled>
+                <enabled>${59:-false}</enabled>
                 <features>
                     <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${59:-false}</heirlooms>
+                    <heirlooms>${60:-false}</heirlooms>
                     <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${60:-false}</glyphs>
+                    <glyphs>${61:-false}</glyphs>
                     <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${61:-false}</gems>
+                    <gems>${62:-false}</gems>
                     <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${62:-false}</containers>
+                    <containers>${63:-false}</containers>
                     <utilities>
                         <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${63:-false}</enabled>
+                        <enabled>${64:-false}</enabled>
                         <!-- Cost in gold required to perform a name change -->
-                        <name_change>${64:-10}</name_change>
+                        <name_change>${65:-10}</name_change>
                         <!-- Cost in gold required to perform a customization -->
-                        <customization>${65:-50}</customization>
+                        <customization>${66:-50}</customization>
                         <!-- Cost in gold to perform a race change -->
-                        <race_change>${66:-500}</race_change>
+                        <race_change>${67:-500}</race_change>
                         <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${67:-1000}</faction_change>
+                        <faction_change>${68:-1000}</faction_change>
                     </utilities>
                     <!-- Enable/Disable obtaining shaman totems from the assistant -->
-                    <totems>${68:-false}</totems>
+                    <totems>${69:-false}</totems>
                 </features>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${69:-false}</enabled>
+                <enabled>${70:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${70:-false}</enabled>
+                <enabled>${71:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${71:-false}</enabled>
+                <enabled>${72:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${72:-false}</on_login>
+                    <on_login>${73:-false}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${73:-false}</on_levelup>
+                    <on_levelup>${74:-false}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${74:-false}</class_spells>
+                    <class_spells>${75:-false}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${75:-false}</talent_ranks>
+                    <talent_ranks>${76:-false}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${76:-false}</proficiencies>
+                    <proficiencies>${77:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${77:-false}</from_quests>
+                    <from_quests>${78:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${78:-false}</enabled>
+                        <enabled>${79:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${79:-60}</max_level>
+                        <max_level>${80:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${80:-false}</enabled>
+                        <enabled>${81:-false}</enabled>
                         <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${81:-false}</apprentice>
+                        <apprentice>${82:-false}</apprentice>
                         <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${82:-false}</journeyman>
+                        <journeyman>${83:-false}</journeyman>
                         <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${83:-false}</expert>
+                        <expert>${84:-false}</expert>
                         <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${84:-false}</artisan>
+                        <artisan>${85:-false}</artisan>
                         <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${85:-false}</cold_weather>
+                        <cold_weather>${86:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${86:-false}</enabled>
+                <enabled>${87:-false}</enabled>
                 <gold>
                     <!-- The amount of gold given at level 10 -->
-                    <level_10>${87:-5}</level_10>
+                    <level_10>${88:-5}</level_10>
                     <!-- The amount of gold given at level 20 -->
-                    <level_20>${88:-15}</level_20>
+                    <level_20>${89:-15}</level_20>
                     <!-- The amount of gold given at level 30 -->
-                    <level_30>${89:-30}</level_30>
+                    <level_30>${90:-30}</level_30>
                     <!-- The amount of gold given at level 40 -->
-                    <level_40>${90:-45}</level_40>
+                    <level_40>${91:-45}</level_40>
                     <!-- The amount of gold given at level 50 -->
-                    <level_50>${91:-60}</level_50>
+                    <level_50>${92:-60}</level_50>
                     <!-- The amount of gold given at level 60 -->
-                    <level_60>${92:-80}</level_60>
+                    <level_60>${93:-80}</level_60>
                     <!-- The amount of gold given at level 70 -->
-                    <level_70>${93:-125}</level_70>
+                    <level_70>${94:-125}</level_70>
                     <!-- The amount of gold given at level 80 -->
-                    <level_80>${94:-250}</level_80>
+                    <level_80>${95:-250}</level_80>
                 </gold>
             </level_reward>
             <refer_a_friend>
                 <!-- Enable/Disable the use of the Refer A Friend module. Players can refer other players by using a simple in-game command -->
-                <enabled>${95:-false}</enabled>
+                <enabled>${96:-false}</enabled>
                 <!-- The amount of days that refer a friend stays active. 0 = never expires -->
-                <duration>${96:-90}</duration>
+                <duration>${97:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be referred. 0 = no limit -->
-                <account_age>${97:-7}</account_age>
+                <account_age>${98:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${98:-30}</days>
+                    <days>${99:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${99:-true}</swift_zhevra>
+                    <swift_zhevra>${100:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${100:-true}</touring_rocket>
+                    <touring_rocket>${101:-true}</touring_rocket>
                 </rewards>
             </refer_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${101:-false}</enabled>
+                <enabled>${102:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${102:-58}</starting_level>
+                <starting_level>${103:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${103:-false}</enabled>
+                <enabled>${104:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${104:-false}</enabled>
+                <enabled>${105:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${105:-2}</experience_multiplier>
+                <experience_multiplier>${106:-2}</experience_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${106:-2}</reputation_multiplier>
+                <reputation_multiplier>${107:-2}</reputation_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -446,6 +450,7 @@ function save_options
     $OPTION_MODULES_AHBOT_CHARACTER_GUID \
     $OPTION_MODULES_AHBOT_MIN_ITEMS \
     $OPTION_MODULES_AHBOT_MAX_ITEMS \
+    $OPTION_MODULES_ACTIVATE_ZONES_ENABLED \
     $OPTION_MODULES_ASSISTANT_ENABLED \
     $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS \
     $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS \
@@ -1028,6 +1033,15 @@ function load_options
         RESET=true
     fi
 
+    # Load the /options/modules/activate_zones/enabled option
+    OPTION_MODULES_ACTIVATE_ZONES_ENABLED="$(echo "cat /options/modules/activate_zones/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACTIVATE_ZONES_ENABLED != "true" && $OPTION_MODULES_ACTIVATE_ZONES_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "\e[0;31mThe option at /options/modules/activate_zones/enabled is invalid. It has been reset to the default value.\e[0m\n"
+        OPTION_MODULES_ACTIVATE_ZONES_ENABLED="false"
+        RESET=true
+    fi
+
     # Load the /options/modules/assistant/enabled option
     OPTION_MODULES_ASSISTANT_ENABLED="$(echo "cat /options/modules/assistant/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_ASSISTANT_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_ENABLED != "false" ]]; then
@@ -1569,6 +1583,54 @@ function get_source
             if [ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the activate zones module should be installed
+        if [[ $OPTION_MODULES_ACTIVATE_ZONES_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-activatezones ]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-activatezones.git $OPTION_SOURCE_LOCATION/modules/mod-activatezones
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-activatezones
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-activatezones ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-activatezones
 
                 # Check if the source has been compiled
                 if [ -d $OPTION_SOURCE_LOCATION/build ]; then
