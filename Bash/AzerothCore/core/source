@@ -254,26 +254,26 @@ function store_options
             </gm>
         </world>
         <modules>
-            <ahbot>
-                <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${51:-false}</enabled>
-                <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${52:-false}</enable_buyer>
-                <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${53:-false}</enable_seller>
-                <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${54:-0}</account_id>
-                <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${55:-0}</character_guid>
-                <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${56:-250}</min_items>
-                <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${57:-250}</max_items>
-            </ahbot>
             <activate_zones>
                 <!-- Enable/Disable the use of the Activate Zones module. If a zone has players in it, this module will set all creatures in that zone as active -->
-                <enabled>${58:-false}</enabled>
+                <enabled>${51:-false}</enabled>
             </activate_zones>
+            <ahbot>
+                <!-- Enable/Disable the use of the AHBot module -->
+                <enabled>${52:-false}</enabled>
+                <!-- Enable/Disable the part of AHBot that buys items from players -->
+                <enable_buyer>${53:-false}</enable_buyer>
+                <!-- Enable/Disable the part of AHBot that puts items up for auction -->
+                <enable_seller>${54:-false}</enable_seller>
+                <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
+                <account_id>${55:-0}</account_id>
+                <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
+                <character_guid>${56:-0}</character_guid>
+                <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
+                <min_items>${57:-250}</min_items>
+                <!-- Maximum amount of items the bot will keep on the auction house -->
+                <max_items>${58:-250}</max_items>
+            </ahbot>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
                 <enabled>${59:-false}</enabled>
@@ -462,6 +462,7 @@ function save_options
     $OPTION_WORLD_GM_ALLOW_FRIEND \
     $OPTION_WORLD_GM_ALLOW_INVITE \
     $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
+    $OPTION_MODULES_ACTIVATE_ZONES_ENABLED \
     $OPTION_MODULES_AHBOT_ENABLED \
     $OPTION_MODULES_AHBOT_ENABLE_BUYER \
     $OPTION_MODULES_AHBOT_ENABLE_SELLER \
@@ -469,7 +470,6 @@ function save_options
     $OPTION_MODULES_AHBOT_CHARACTER_GUID \
     $OPTION_MODULES_AHBOT_MIN_ITEMS \
     $OPTION_MODULES_AHBOT_MAX_ITEMS \
-    $OPTION_MODULES_ACTIVATE_ZONES_ENABLED \
     $OPTION_MODULES_ASSISTANT_ENABLED \
     $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS \
     $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS \
@@ -989,6 +989,15 @@ function load_options
         RESET=true
     fi
 
+    # Load the /options/modules/activate_zones/enabled option
+    OPTION_MODULES_ACTIVATE_ZONES_ENABLED="$(echo "cat /options/modules/activate_zones/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACTIVATE_ZONES_ENABLED != "true" && $OPTION_MODULES_ACTIVATE_ZONES_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/activate_zones/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACTIVATE_ZONES_ENABLED="false"
+        RESET=true
+    fi
+
     # Load the /options/modules/ahbot/enabled option
     OPTION_MODULES_AHBOT_ENABLED="$(echo "cat /options/modules/ahbot/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_AHBOT_ENABLED != "true" && $OPTION_MODULES_AHBOT_ENABLED != "false" ]]; then
@@ -1049,15 +1058,6 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/ahbot/max_items is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_AHBOT_MAX_ITEMS="250"
-        RESET=true
-    fi
-
-    # Load the /options/modules/activate_zones/enabled option
-    OPTION_MODULES_ACTIVATE_ZONES_ENABLED="$(echo "cat /options/modules/activate_zones/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ACTIVATE_ZONES_ENABLED != "true" && $OPTION_MODULES_ACTIVATE_ZONES_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/activate_zones/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ACTIVATE_ZONES_ENABLED="false"
         RESET=true
     fi
 
@@ -1563,54 +1563,6 @@ function get_source
 
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
-        # Check if the ahbot module should be installed
-        if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
-                # Download the source code
-                git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
-
-                # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
-
-                # Fetch all available updates
-                git fetch --all
-
-                # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
-
-                # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
         # Check if the activate zones module should be installed
         if [[ $OPTION_MODULES_ACTIVATE_ZONES_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
@@ -1650,6 +1602,54 @@ function get_source
             if [ -d $OPTION_SOURCE_LOCATION/modules/mod-activatezones ]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-activatezones
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the ahbot module should be installed
+        if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
+                # Download the source code
+                git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
 
                 # Check if the source has been compiled
                 if [ -d $OPTION_SOURCE_LOCATION/build ]; then
