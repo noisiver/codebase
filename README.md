@@ -6,7 +6,7 @@ Whenever I decide I want to create something that helps me in automation of serv
 I am not experienced enough in a specific language to call myself a professional, most of the time I learn enough to create what I need at the time. I will rewrite parts, or an entire script, if I find a better way of doing it.
 
 # AzerothCore
-I use [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) to host my own World of Warcraft server. I'm the only one playing on it and therefore I'm changing it to fit my demands and these are the modules I created that has features I wanted.
+I use [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) to host my own World of Warcraft server. I'm the only one playing on it and therefore I'm changing it to fit my demands. These are the modules I created myself that has the additional features I wanted.
 
 [ActivateZones](https://github.com/tkn963/mod-activatezones) : Set creatures as active in zones that has players in it.
 
