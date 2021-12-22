@@ -685,7 +685,7 @@ function load_options
     if [[ ! $OPTION_WORLD_EXPANSION =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_EXPANSION != 0 && $OPTION_WORLD_EXPANSION != 1 && $OPTION_WORLD_EXPANSION != 2 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/expansion is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_EXPANSION="1"
+        OPTION_WORLD_EXPANSION="2"
         RESET=true
     fi
 
@@ -694,7 +694,7 @@ function load_options
     if [[ ! $OPTION_WORLD_PLAYER_LIMIT =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/player_limit is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_PLAYER_LIMIT="1"
+        OPTION_WORLD_PLAYER_LIMIT="1000"
         RESET=true
     fi
 
@@ -703,7 +703,7 @@ function load_options
     if [[ ! $OPTION_WORLD_SKIP_CINEMATICS =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_SKIP_CINEMATICS != 0 && $OPTION_WORLD_SKIP_CINEMATICS != 1 && $OPTION_WORLD_SKIP_CINEMATICS != 2 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/skip_cinematics is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_SKIP_CINEMATICS="1"
+        OPTION_WORLD_SKIP_CINEMATICS="0"
         RESET=true
     fi
 
@@ -766,7 +766,7 @@ function load_options
     if [[ $OPTION_WORLD_ALLOW_COMMANDS != "true" && $OPTION_WORLD_ALLOW_COMMANDS != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/allow_commands is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_COMMANDS="false"
+        OPTION_WORLD_ALLOW_COMMANDS="true"
         RESET=true
     fi
 
@@ -793,7 +793,7 @@ function load_options
     if [[ ! $OPTION_WORLD_RAF_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RAF_MAX_LEVEL < 1 || $OPTION_WORLD_RAF_MAX_LEVEL > 80 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/raf_max_level is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_RAF_MAX_LEVEL="false"
+        OPTION_WORLD_RAF_MAX_LEVEL="60"
         RESET=true
     fi
 
@@ -820,7 +820,7 @@ function load_options
     if [[ $OPTION_WORLD_ENABLE_MINIGOB_MANABONK != "true" && $OPTION_WORLD_ENABLE_MINIGOB_MANABONK != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/enable_minigob_manabonk is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ENABLE_MINIGOB_MANABONK="false"
+        OPTION_WORLD_ENABLE_MINIGOB_MANABONK="true"
         RESET=true
     fi
 
@@ -829,7 +829,7 @@ function load_options
     if [[ $OPTION_WORLD_ENABLE_WARDEN != "true" && $OPTION_WORLD_ENABLE_WARDEN != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/enable_warden is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ENABLE_WARDEN="false"
+        OPTION_WORLD_ENABLE_WARDEN="true"
         RESET=true
     fi
 
