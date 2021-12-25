@@ -3119,9 +3119,9 @@ function set_config
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
 
             # Update mod_dynamicrates.conf with values specified in the options
-            sed -i 's/DynamicRate.Experience.1-59 =.*/DynamicRate.Experience.1-59 = '$OPTION_MODULES_DYNAMIC_RATES_VANILLA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRate.Experience.60-69 =.*/DynamicRate.Experience.60-69 = '$OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRate.Experience.70-79 =.*/DynamicRate.Experience.70-79 = '$OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRate.Level.1-59 =.*/DynamicRate.Level.1-59 = '$OPTION_MODULES_DYNAMIC_RATES_VANILLA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRate.Level.60-69 =.*/DynamicRate.Level.60-69 = '$OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRate.Level.70-79 =.*/DynamicRate.Level.70-79 = '$OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist ]; then
