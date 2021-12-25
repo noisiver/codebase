@@ -303,14 +303,12 @@ function store_options
             <dynamic_rates>
                 <!-- Enable/Disable the use of the Dynamic Rates module -->
                 <enabled>${69:-false}</enabled>
-                <level>
-                    <!-- The experience and reputation multiplied for players level 1-59 -->
-                    <1_to_59>${70:-3}</1_to_59>
-                    <!-- The experience and reputation multiplied for players level 60-69 -->
-                    <60_to_69>${71:-2}</60_to_69>
-                    <!-- The experience and reputation multiplied for players level 70-79 -->
-                    <70_to_79>${72:-1}</70_to_79>
-                </level>
+                <!-- The experience and reputation multiplied for players level 1-59 -->
+                <vanilla>${70:-3}</vanilla>
+                <!-- The experience and reputation multiplied for players level 60-69 -->
+                <the_burning_crusade>${71:-2}</the_burning_crusade>
+                <!-- The experience and reputation multiplied for players level 70-79 -->
+                <wrath_of_the_lich_king>${72:-1}</wrath_of_the_lich_king>
             </dynamic_rates>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
@@ -491,9 +489,9 @@ function save_options
     $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE \
     $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE \
     $OPTION_MODULES_DYNAMIC_RATES_ENABLED \
-    $OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59 \
-    $OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69 \
-    $OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79 \
+    $OPTION_MODULES_DYNAMIC_RATES_VANILLA \
+    $OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE \
+    $OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING \
     $OPTION_MODULES_ELUNA_ENABLED \
     $OPTION_MODULES_GROUP_QUESTS_ENABLED \
     $OPTION_MODULES_LEARN_SPELLS_ENABLED \
@@ -1173,30 +1171,30 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/dynamic_rates/level/1_to_59 option
-    OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59="$(echo "cat /options/modules/dynamic_rates/level/1_to_59/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59 =~ ^[0-9]+$ ]]; then
+    # Load the /options/modules/dynamic_rates/vanilla option
+    OPTION_MODULES_DYNAMIC_RATES_VANILLA="$(echo "cat /options/modules/dynamic_rates/vanilla/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_VANILLA =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/level/1_to_59 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59="false"
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/vanilla is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_VANILLA="false"
         RESET=true
     fi
 
-    # Load the /options/modules/dynamic_rates/level/60_to_69 option
-    OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69="$(echo "cat /options/modules/dynamic_rates/level/60_to_69/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69 =~ ^[0-9]+$ ]]; then
+    # Load the /options/modules/dynamic_rates/the_burning_crusade option
+    OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE="$(echo "cat /options/modules/dynamic_rates/the_burning_crusade/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/level/60_to_69 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69="false"
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/the_burning_crusade is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE="false"
         RESET=true
     fi
 
-    # Load the /options/modules/dynamic_rates/level/70_to_79 option
-    OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79="$(echo "cat /options/modules/dynamic_rates/level/70_to_79/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79 =~ ^[0-9]+$ ]]; then
+    # Load the /options/modules/dynamic_rates/wrath_of_the_lich_king option
+    OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING="$(echo "cat /options/modules/dynamic_rates/wrath_of_the_lich_king/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/level/70_to_79 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79="false"
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/wrath_of_the_lich_king is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING="false"
         RESET=true
     fi
 
@@ -3121,9 +3119,9 @@ function set_config
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
 
             # Update mod_dynamicrates.conf with values specified in the options
-            sed -i 's/DynamicRate.Experience.1-59 =.*/DynamicRate.Experience.1-59 = '$OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRate.Experience.60-69 =.*/DynamicRate.Experience.60-69 = '$OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRate.Experience.70-79 =.*/DynamicRate.Experience.70-79 = '$OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRate.Experience.1-59 =.*/DynamicRate.Experience.1-59 = '$OPTION_MODULES_DYNAMIC_RATES_VANILLA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRate.Experience.60-69 =.*/DynamicRate.Experience.60-69 = '$OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRate.Experience.70-79 =.*/DynamicRate.Experience.70-79 = '$OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist ]; then
