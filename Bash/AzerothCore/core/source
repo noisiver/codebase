@@ -300,107 +300,119 @@ function store_options
                     </utilities>
                 </features>
             </assistant>
+            <dynamic_rates>
+                <!-- Enable/Disable the use of the Dynamic Rates module -->
+                <enabled>${69:-false}</enabled>
+                <level>
+                    <!-- The experience and reputation multiplied for players level 1-59 -->
+                    <1_to_59>${70:-3}</1_to_59>
+                    <!-- The experience and reputation multiplied for players level 60-69 -->
+                    <60_to_69>${71:-2}</60_to_69>
+                    <!-- The experience and reputation multiplied for players level 70-79 -->
+                    <70_to_79>${72:-1}</70_to_79>
+                </level>
+            </dynamic_rates>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${69:-false}</enabled>
+                <enabled>${73:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${70:-false}</enabled>
+                <enabled>${74:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${71:-false}</enabled>
+                <enabled>${75:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${72:-false}</on_login>
+                    <on_login>${76:-false}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${73:-false}</on_levelup>
+                    <on_levelup>${77:-false}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${74:-false}</class_spells>
+                    <class_spells>${78:-false}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${75:-false}</talent_ranks>
+                    <talent_ranks>${79:-false}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${76:-false}</proficiencies>
+                    <proficiencies>${80:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${77:-false}</from_quests>
+                    <from_quests>${81:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${78:-false}</enabled>
+                        <enabled>${82:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${79:-60}</max_level>
+                        <max_level>${83:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${80:-false}</enabled>
+                        <enabled>${84:-false}</enabled>
                         <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${81:-false}</apprentice>
+                        <apprentice>${85:-false}</apprentice>
                         <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${82:-false}</journeyman>
+                        <journeyman>${86:-false}</journeyman>
                         <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${83:-false}</expert>
+                        <expert>${87:-false}</expert>
                         <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${84:-false}</artisan>
+                        <artisan>${88:-false}</artisan>
                         <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${85:-false}</cold_weather>
+                        <cold_weather>${89:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${86:-false}</enabled>
+                <enabled>${90:-false}</enabled>
                 <gold>
                     <!-- The amount of gold given at level 10 -->
-                    <level_10>${87:-5}</level_10>
+                    <level_10>${91:-5}</level_10>
                     <!-- The amount of gold given at level 20 -->
-                    <level_20>${88:-15}</level_20>
+                    <level_20>${92:-15}</level_20>
                     <!-- The amount of gold given at level 30 -->
-                    <level_30>${89:-30}</level_30>
+                    <level_30>${93:-30}</level_30>
                     <!-- The amount of gold given at level 40 -->
-                    <level_40>${90:-45}</level_40>
+                    <level_40>${94:-45}</level_40>
                     <!-- The amount of gold given at level 50 -->
-                    <level_50>${91:-60}</level_50>
+                    <level_50>${95:-60}</level_50>
                     <!-- The amount of gold given at level 60 -->
-                    <level_60>${92:-80}</level_60>
+                    <level_60>${96:-80}</level_60>
                     <!-- The amount of gold given at level 70 -->
-                    <level_70>${93:-125}</level_70>
+                    <level_70>${97:-125}</level_70>
                     <!-- The amount of gold given at level 80 -->
-                    <level_80>${94:-250}</level_80>
+                    <level_80>${98:-250}</level_80>
                 </gold>
             </level_reward>
             <refer_a_friend>
                 <!-- Enable/Disable the use of the Refer A Friend module. Players can refer other players by using a simple in-game command -->
-                <enabled>${95:-false}</enabled>
+                <enabled>${99:-false}</enabled>
                 <!-- The amount of days that refer a friend stays active. 0 = never expires -->
-                <duration>${96:-90}</duration>
+                <duration>${100:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be referred. 0 = no limit -->
-                <account_age>${97:-7}</account_age>
+                <account_age>${101:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${98:-30}</days>
+                    <days>${102:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${99:-true}</swift_zhevra>
+                    <swift_zhevra>${103:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${100:-true}</touring_rocket>
+                    <touring_rocket>${104:-true}</touring_rocket>
                 </rewards>
             </refer_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${101:-false}</enabled>
+                <enabled>${105:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${102:-58}</starting_level>
+                <starting_level>${106:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${103:-false}</enabled>
+                <enabled>${107:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${104:-false}</enabled>
+                <enabled>${108:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${105:-2}</experience_multiplier>
+                <experience_multiplier>${109:-2}</experience_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${106:-2}</reputation_multiplier>
+                <reputation_multiplier>${110:-2}</reputation_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -478,6 +490,10 @@ function save_options
     $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION \
     $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE \
     $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE \
+    $OPTION_MODULES_DYNAMIC_RATES_ENABLED \
+    $OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59 \
+    $OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69 \
+    $OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79 \
     $OPTION_MODULES_ELUNA_ENABLED \
     $OPTION_MODULES_GROUP_QUESTS_ENABLED \
     $OPTION_MODULES_LEARN_SPELLS_ENABLED \
@@ -1148,6 +1164,42 @@ function load_options
         RESET=true
     fi
 
+    # Load the /options/modules/dynamic_rates/enabled option
+    OPTION_MODULES_DYNAMIC_RATES_ENABLED="$(echo "cat /options/modules/dynamic_rates/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED != "true" && $OPTION_MODULES_DYNAMIC_RATES_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/level/1_to_59 option
+    OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59="$(echo "cat /options/modules/dynamic_rates/level/1_to_59/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59 =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/level/1_to_59 is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/level/60_to_69 option
+    OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69="$(echo "cat /options/modules/dynamic_rates/level/60_to_69/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69 =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/level/60_to_69 is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/level/70_to_79 option
+    OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79="$(echo "cat /options/modules/dynamic_rates/level/70_to_79/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79 =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/level/70_to_79 is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79="false"
+        RESET=true
+    fi
+
     # Load the /options/modules/eluna/enabled option
     OPTION_MODULES_ELUNA_ENABLED="$(echo "cat /options/modules/eluna/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_ELUNA_ENABLED != "true" && $OPTION_MODULES_ELUNA_ENABLED != "false" ]]; then
@@ -1686,6 +1738,63 @@ function get_source
             if [ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-assistant
+
+                # Check if the source has been compiled
+                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the dynamic rates module should be installed
+        if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates ]; then
+                # Download the source code
+                git clone --recursive --branch master https://github.com/tkn963/mod-dynamicrates.git $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Update any submodule
+                git submodule update
+
+                # Check to make sure there weren't any errors
+                if [ $? -ne 0 ]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates ]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
 
                 # Check if the source has been compiled
                 if [ -d $OPTION_SOURCE_LOCATION/build ]; then
@@ -2988,6 +3097,44 @@ function set_config
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf ]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            fi
+        fi
+
+        # Check if the dynamic rates module is enabled
+        if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist ]; then
+                # The file is missing, so terminate the script
+                printf "${COLOR_RED}The config file mod_dynamicrates.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_dynamicrates.conf${COLOR_END}\n"
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+
+            # Update mod_dynamicrates.conf with values specified in the options
+            sed -i 's/DynamicRate.Experience.1-59 =.*/DynamicRate.Experience.1-59 = '$OPTION_MODULES_DYNAMIC_RATES_LEVEL_1_TO_59'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRate.Experience.60-69 =.*/DynamicRate.Experience.60-69 = '$OPTION_MODULES_DYNAMIC_RATES_LEVEL_60_TO_69'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRate.Experience.70-79 =.*/DynamicRate.Experience.70-79 = '$OPTION_MODULES_DYNAMIC_RATES_LEVEL_70_TO_79'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+        else
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf ]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
             fi
         fi
 
