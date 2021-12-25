@@ -1176,7 +1176,7 @@ function load_options
     if [[ ! $OPTION_MODULES_DYNAMIC_RATES_VANILLA =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/vanilla is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_VANILLA="false"
+        OPTION_MODULES_DYNAMIC_RATES_VANILLA="3"
         RESET=true
     fi
 
@@ -1185,7 +1185,7 @@ function load_options
     if [[ ! $OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/the_burning_crusade is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE="false"
+        OPTION_MODULES_DYNAMIC_RATES_THE_BURNING_CRUSADE="2"
         RESET=true
     fi
 
@@ -1194,7 +1194,7 @@ function load_options
     if [[ ! $OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/wrath_of_the_lich_king is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING="false"
+        OPTION_MODULES_DYNAMIC_RATES_WRATH_OF_THE_LICH_KING="1"
         RESET=true
     fi
 
