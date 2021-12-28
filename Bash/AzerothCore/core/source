@@ -3265,7 +3265,7 @@ function set_config
             [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=0
 
             # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
 
             # Update mod_recruitafriend.conf with values specified in the options
             sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
