@@ -378,12 +378,12 @@ function store_options
                     <level_80>${98:-250}</level_80>
                 </gold>
             </level_reward>
-            <refer_a_friend>
-                <!-- Enable/Disable the use of the Refer A Friend module. Players can refer other players by using a simple in-game command -->
+            <recruit_a_friend>
+                <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
                 <enabled>${99:-false}</enabled>
-                <!-- The amount of days that refer a friend stays active. 0 = never expires -->
+                <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
                 <duration>${100:-90}</duration>
-                <!-- The amount of days since the account was created where it can still be referred. 0 = no limit -->
+                <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
                 <account_age>${101:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
@@ -393,7 +393,7 @@ function store_options
                     <!-- Give the X-53 Touring Rocket item as a reward -->
                     <touring_rocket>${104:-true}</touring_rocket>
                 </rewards>
-            </refer_a_friend>
+            </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
                 <enabled>${105:-false}</enabled>
@@ -518,12 +518,12 @@ function save_options
     $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60 \
     $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70 \
     $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 \
-    $OPTION_MODULES_REFER_A_FRIEND_ENABLED \
-    $OPTION_MODULES_REFER_A_FRIEND_DURATION \
-    $OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE \
-    $OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS \
-    $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA \
-    $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
     $OPTION_MODULES_SPAWN_POINTS_ENABLED \
@@ -1432,57 +1432,57 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/refer_a_friend/enabled option
-    OPTION_MODULES_REFER_A_FRIEND_ENABLED="$(echo "cat /options/modules/refer_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_REFER_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_REFER_A_FRIEND_ENABLED != "false" ]]; then
+    # Load the /options/modules/recruit_a_friend/enabled option
+    OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /options/modules/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/refer_a_friend/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_REFER_A_FRIEND_ENABLED="false"
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="false"
         RESET=true
     fi
 
-    # Load the /options/modules/refer_a_friend/duration option
-    OPTION_MODULES_REFER_A_FRIEND_DURATION="$(echo "cat /options/modules/refer_a_friend/duration/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_REFER_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
+    # Load the /options/modules/recruit_a_friend/duration option
+    OPTION_MODULES_RECRUIT_A_FRIEND_DURATION="$(echo "cat /options/modules/recruit_a_friend/duration/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/refer_a_friend/duration is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_REFER_A_FRIEND_DURATION="90"
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/duration is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_DURATION="90"
         RESET=true
     fi
 
-    # Load the /options/modules/refer_a_friend/account_age option
-    OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE="$(echo "cat /options/modules/refer_a_friend/account_age/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE =~ ^[0-9]+$ ]]; then
+    # Load the /options/modules/recruit_a_friend/account_age option
+    OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE="$(echo "cat /options/modules/recruit_a_friend/account_age/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/refer_a_friend/account_age is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE="7"
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/account_age is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE="7"
         RESET=true
     fi
 
-    # Load the /options/modules/refer_a_friend/rewards/days option
-    OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS="$(echo "cat /options/modules/refer_a_friend/rewards/days/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS =~ ^[0-9]+$ ]]; then
+    # Load the /options/modules/recruit_a_friend/rewards/days option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS="$(echo "cat /options/modules/recruit_a_friend/rewards/days/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/refer_a_friend/rewards/days is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS="30"
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/days is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS="30"
         RESET=true
     fi
 
-    # Load the /options/modules/refer_a_friend/rewards/swift_zhevra option
-    OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA="$(echo "cat /options/modules/refer_a_friend/rewards/swift_zhevra/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA != "true" && $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA != "false" ]]; then
+    # Load the /options/modules/recruit_a_friend/rewards/swift_zhevra option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA="$(echo "cat /options/modules/recruit_a_friend/rewards/swift_zhevra/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/refer_a_friend/rewards/swift_zhevra is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA="true"
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/swift_zhevra is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA="true"
         RESET=true
     fi
 
-    # Load the /options/modules/refer_a_friend/rewards/touring_rocket option
-    OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET="$(echo "cat /options/modules/refer_a_friend/rewards/touring_rocket/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET != "true" && $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET != "false" ]]; then
+    # Load the /options/modules/recruit_a_friend/rewards/touring_rocket option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET="$(echo "cat /options/modules/recruit_a_friend/rewards/touring_rocket/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/refer_a_friend/rewards/touring_rocket is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET="true"
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/touring_rocket is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET="true"
         RESET=true
     fi
 
@@ -2003,12 +2003,12 @@ function get_source
             fi
         fi
 
-        # Check if the refer a friend module should be installed
-        if [[ $OPTION_MODULES_REFER_A_FRIEND_ENABLED == "true" ]]; then
+        # Check if the recruit-a-friend module should be installed
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-referafriend ]; then
+            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-referafriend.git $OPTION_SOURCE_LOCATION/modules/mod-referafriend
+                git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Check to make sure there weren't any errors
                 if [ $? -ne 0 ]; then
@@ -2017,7 +2017,7 @@ function get_source
                 fi
             else
                 # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-referafriend
+                cd $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Fetch all available updates
                 git fetch --all
@@ -2039,9 +2039,9 @@ function get_source
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-referafriend ]; then
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]; then
                 # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-referafriend
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Check if the source has been compiled
                 if [ -d $OPTION_SOURCE_LOCATION/build ]; then
@@ -2769,12 +2769,12 @@ function import_database
             fi
         fi
 
-        # Check if the refer a friend module is enabled
-        if [[ $OPTION_MODULES_REFER_A_FRIEND_ENABLED == "true" ]]; then
+        # Check if the recruit-a-friend module is enabled
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-referafriend/sql/auth/base ]; then
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base ]; then
                 # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-referafriend/sql/auth/base/*.sql; do
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base/*.sql; do
                     if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
                         printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
@@ -2794,9 +2794,9 @@ function import_database
             fi
 
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-referafriend/sql/characters/base ]; then
+            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base ]; then
                 # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-referafriend/sql/characters/base/*.sql; do
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
@@ -3243,12 +3243,12 @@ function set_config
             fi
         fi
 
-        # Check if the refer a friend module is enabled
-        if [[ $OPTION_MODULES_REFER_A_FRIEND_ENABLED == "true" ]]; then
+        # Check if the recruit-a-friend module is enabled
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist ]; then
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist ]; then
                 # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file mod_referafriend.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}The config file recruitafriend.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
 
                 # Remove the mysql conf
@@ -3258,32 +3258,32 @@ function set_config
                 exit $?
             fi
 
-            printf "${COLOR_ORANGE}Updating mod_referafriend.conf${COLOR_END}\n"
+            printf "${COLOR_ORANGE}Updating recruitafriend.conf${COLOR_END}\n"
 
             # Convert boolean values to integers
-            [ $OPTION_MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA == "true" ] && MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA=1 || MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA=0
-            [ $OPTION_MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET == "true" ] && MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET=1 || MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET=0
+            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA=0
+            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=0
 
             # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
+            cp $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
 
-            # Update mod_referafriend.conf with values specified in the options
-            sed -i 's/ReferAFriend.Duration =.*/ReferAFriend.Duration = '$OPTION_MODULES_REFER_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
-            sed -i 's/ReferAFriend.AccountAge =.*/ReferAFriend.AccountAge = '$OPTION_MODULES_REFER_A_FRIEND_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
-            sed -i 's/ReferAFriend.Rewards.Days =.*/ReferAFriend.Rewards.Days = '$OPTION_MODULES_REFER_A_FRIEND_REWARDS_DAYS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
-            sed -i 's/ReferAFriend.Rewards.SwiftZhevra =.*/ReferAFriend.Rewards.SwiftZhevra = '$MODULES_REFER_A_FRIEND_REWARDS_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
-            sed -i 's/ReferAFriend.Rewards.TouringRocket =.*/ReferAFriend.Rewards.TouringRocket = '$MODULES_REFER_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
+            # Update recruitafriend.conf with values specified in the options
+            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
+            sed -i 's/RecruitAFriend.AccountAge =.*/RecruitAFriend.AccountAge = '$OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist ]; then
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist ]; then
                 # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf.dist
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf ]; then
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf ]; then
                 # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_referafriend.conf
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
             fi
         fi
 
