@@ -3246,9 +3246,9 @@ function set_config
         # Check if the recruit-a-friend module is enabled
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist ]; then
+            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
                 # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file recruitafriend.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
 
                 # Remove the mysql conf
@@ -3258,32 +3258,32 @@ function set_config
                 exit $?
             fi
 
-            printf "${COLOR_ORANGE}Updating recruitafriend.conf${COLOR_END}\n"
+            printf "${COLOR_ORANGE}Updating mod_recruitafriend.conf${COLOR_END}\n"
 
             # Convert boolean values to integers
             [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA=0
             [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=0
 
             # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
+            cp $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
 
-            # Update recruitafriend.conf with values specified in the options
-            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
-            sed -i 's/RecruitAFriend.AccountAge =.*/RecruitAFriend.AccountAge = '$OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
-            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
-            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
-            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
+            # Update mod_recruitafriend.conf with values specified in the options
+            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.AccountAge =.*/RecruitAFriend.AccountAge = '$OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist ]; then
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
                 # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf.dist
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf ]; then
+            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]; then
                 # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/recruitafriend.conf
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             fi
         fi
 
