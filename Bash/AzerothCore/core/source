@@ -2823,10 +2823,11 @@ function set_config
         sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$WORLD_SET_ALL_WAYPOINTS_ACTIVE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = '$WORLD_ENABLE_MINIGOB_MANABONK'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = '$OPTION_WORLD_RATES_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Rate.XP.Kill    =.*/Rate.XP.Kill    = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Rate.XP.Quest   =.*/Rate.XP.Quest   = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Rate.XP.Explore =.*/Rate.XP.Explore = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Rate.XP.Pet     =.*/Rate.XP.Pet     = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.Reputation.Gain =.*/Rate.Reputation.Gain = '$OPTION_WORLD_RATES_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/SkillGain.Crafting  =.*/SkillGain.Crafting  = '$OPTION_WORLD_RATES_CRAFTING'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/SkillGain.Defense   =.*/SkillGain.Defense   = '$OPTION_WORLD_RATES_DEFENSE_SKILL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
