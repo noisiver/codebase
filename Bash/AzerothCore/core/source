@@ -397,8 +397,12 @@ function store_options
                 <experience_multiplier>${104:-2}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
                 <money_multiplier>${105:-2}</money_multiplier>
+                <!-- The multiplier for profession skill ups on weekends -->
+                <professions_multiplier>${106:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${106:-2}</reputation_multiplier>
+                <reputation_multiplier>${107:-2}</reputation_multiplier>
+                <!-- The multiplier for weapons and defense skill ups on weekends -->
+                <proficiencies_multiplier>${108:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -513,7 +517,9 @@ function save_options
     $OPTION_MODULES_WEEKEND_BONUS_ENABLED \
     $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER \
     $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER \
-    $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER
+    $OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER \
+    $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER \
+    $OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER
 }
 
 # A function that loads options from the file
@@ -1479,12 +1485,30 @@ function load_options
         RESET=true
     fi
 
+    # Load the /options/modules/weekend_bonus/professions_multiplier option
+    OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/professions_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/professions_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER="2"
+        RESET=true
+    fi
+
     # Load the /options/modules/weekend_bonus/reputation_multiplier option
     OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/reputation_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/weekend_bonus/reputation_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="2"
+        RESET=true
+    fi
+
+    # Load the /options/modules/weekend_bonus/proficiencies_multiplier option
+    OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/proficiencies_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/proficiencies_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER="2"
         RESET=true
     fi
 
@@ -3154,7 +3178,9 @@ function set_config
             # Update mod_weekendbonus.conf with values specified in the options
             sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = '$OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
             sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = '$OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = '$OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
             sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = '$OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = '$OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]; then
