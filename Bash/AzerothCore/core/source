@@ -395,8 +395,10 @@ function store_options
                 <enabled>${103:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
                 <experience_multiplier>${104:-2}</experience_multiplier>
+                <!-- The multiplier for money looted and rewarded from quests on weekends -->
+                <money_multiplier>${105:-2}</money_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${105:-2}</reputation_multiplier>
+                <reputation_multiplier>${106:-2}</reputation_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -510,6 +512,7 @@ function save_options
     $OPTION_MODULES_SPAWN_POINTS_ENABLED \
     $OPTION_MODULES_WEEKEND_BONUS_ENABLED \
     $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER \
+    $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER \
     $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER
 }
 
@@ -1464,6 +1467,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/weekend_bonus/experience_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="2"
+        RESET=true
+    fi
+
+    # Load the /options/modules/weekend_bonus/money_multiplier option
+    OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/money_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/money_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER="2"
         RESET=true
     fi
 
@@ -3140,6 +3152,7 @@ function set_config
 
             # Update mod_weekendbonus.conf with values specified in the options
             sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = '$OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = '$OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
             sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = '$OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
         else
             # Check if the config file exists
