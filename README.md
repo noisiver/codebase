@@ -8,11 +8,7 @@ I am not experienced enough in a specific language to call myself a professional
 # AzerothCore
 I use [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) to host my own World of Warcraft server. I'm the only one playing on it and therefore I'm changing it to fit my demands. These are the modules I created myself that has the additional features I wanted.
 
-[ActivateZones](https://github.com/tkn963/mod-activatezones) : Set creatures as active in zones that has players in it.
-
 [Assistant](https://github.com/tkn963/mod-assistant) : Allows players to obtain certain items and utilities from an NPC.
-
-[DynamicRates](https://github.com/tkn963/mod-dynamicrates) : Increases the gained experience and reputation based on the players current level.
 
 [GroupQuests](https://github.com/tkn963/mod-groupquests) : Makes quest items drop for all members of a group. In some cases it also help certain objectives count for all members of a group.
 
