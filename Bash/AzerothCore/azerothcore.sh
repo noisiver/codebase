@@ -12,6 +12,23 @@ if [ -f /etc/os-release ]; then
     fi
 fi
 
+# Check if the curl package is installed
+if [ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+    clear
+
+    # Perform an update to make sure nothing is missing
+    apt-get --yes update
+    if [ $? -ne 0 ]; then
+        exit $?
+    fi
+
+    # Install the package that is missing
+    apt-get --yes install curl
+    if [ $? -ne 0 ]; then
+        exit $?
+    fi
+fi
+
 # Remote url where files are stored
 REMOTE_URL="https://raw.githubusercontent.com/tkn963/codebase/master/Bash/AzerothCore/core"
 
