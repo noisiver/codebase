@@ -294,115 +294,155 @@ function store_options
                         <!-- Cost in gold to perform a faction change -->
                         <faction_change>${67:-1000}</faction_change>
                     </utilities>
+                    <professions>
+                        <!-- Enable/Disable increasing profession skills via the assistant -->
+                        <enabled>${68:-false}</enabled>
+                        <apprentice>
+                            <!-- Enable/Disable increasing apprentice profession skills via the assistant -->
+                            <enabled>${69:-false}</enabled>
+                            <!-- Cost in gold required to increase the apprentice profession skill -->
+                            <cost>${70:-10}</cost>
+                        </apprentice>
+                        <journeyman>
+                            <!-- Enable/Disable increasing journeyman profession skills via the assistant -->
+                            <enabled>${71:-false}</enabled>
+                            <!-- Cost in gold required to increase the journeyman profession skill -->
+                            <cost>${72:-25}</cost>
+                        </journeyman>
+                        <expert>
+                            <!-- Enable/Disable increasing expert profession skills via the assistant -->
+                            <enabled>${73:-false}</enabled>
+                            <!-- Cost in gold required to increase the expert profession skill -->
+                            <cost>${74:-45}</cost>
+                        </expert>
+                        <artisan>
+                            <!-- Enable/Disable increasing artisan profession skills via the assistant -->
+                            <enabled>${75:-false}</enabled>
+                            <!-- Cost in gold required to increase the artisan profession skill -->
+                            <cost>${76:-100}</cost>
+                        </artisan>
+                        <master>
+                            <!-- Enable/Disable increasing master profession skills via the assistant -->
+                            <enabled>${77:-false}</enabled>
+                            <!-- Cost in gold required to increase the master profession skill -->
+                            <cost>${78:-200}</cost>
+                        </master>
+                        <grand_master>
+                            <!-- Enable/Disable increasing grand master profession skills via the assistant -->
+                            <enabled>${79:-false}</enabled>
+                            <!-- Cost in gold required to increase the grand master profession skill -->
+                            <cost>${80:-500}</cost>
+                        </grand_master>
+                    </professions>
                 </features>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${68:-false}</enabled>
+                <enabled>${81:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${69:-false}</enabled>
+                <enabled>${82:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${70:-false}</enabled>
+                <enabled>${83:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${71:-false}</on_login>
+                    <on_login>${84:-false}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${72:-false}</on_levelup>
+                    <on_levelup>${85:-false}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${73:-false}</class_spells>
+                    <class_spells>${86:-false}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${74:-false}</talent_ranks>
+                    <talent_ranks>${87:-false}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${75:-false}</proficiencies>
+                    <proficiencies>${88:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${76:-false}</from_quests>
+                    <from_quests>${89:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${77:-false}</enabled>
+                        <enabled>${90:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${78:-60}</max_level>
+                        <max_level>${91:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${79:-false}</enabled>
+                        <enabled>${92:-false}</enabled>
                         <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${80:-false}</apprentice>
+                        <apprentice>${93:-false}</apprentice>
                         <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${81:-false}</journeyman>
+                        <journeyman>${94:-false}</journeyman>
                         <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${82:-false}</expert>
+                        <expert>${95:-false}</expert>
                         <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${83:-false}</artisan>
+                        <artisan>${96:-false}</artisan>
                         <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${84:-false}</cold_weather>
+                        <cold_weather>${97:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${85:-false}</enabled>
+                <enabled>${98:-false}</enabled>
                 <gold>
                     <!-- The amount of gold given at level 10 -->
-                    <level_10>${86:-5}</level_10>
+                    <level_10>${99:-5}</level_10>
                     <!-- The amount of gold given at level 20 -->
-                    <level_20>${87:-15}</level_20>
+                    <level_20>${100:-15}</level_20>
                     <!-- The amount of gold given at level 30 -->
-                    <level_30>${88:-30}</level_30>
+                    <level_30>${101:-30}</level_30>
                     <!-- The amount of gold given at level 40 -->
-                    <level_40>${89:-45}</level_40>
+                    <level_40>${102:-45}</level_40>
                     <!-- The amount of gold given at level 50 -->
-                    <level_50>${90:-60}</level_50>
+                    <level_50>${103:-60}</level_50>
                     <!-- The amount of gold given at level 60 -->
-                    <level_60>${91:-80}</level_60>
+                    <level_60>${104:-80}</level_60>
                     <!-- The amount of gold given at level 70 -->
-                    <level_70>${92:-125}</level_70>
+                    <level_70>${105:-125}</level_70>
                     <!-- The amount of gold given at level 80 -->
-                    <level_80>${93:-250}</level_80>
+                    <level_80>${106:-250}</level_80>
                 </gold>
             </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
-                <enabled>${94:-false}</enabled>
+                <enabled>${107:-false}</enabled>
                 <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
-                <duration>${95:-90}</duration>
+                <duration>${108:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
-                <account_age>${96:-7}</account_age>
+                <account_age>${109:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${97:-30}</days>
+                    <days>${110:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${98:-true}</swift_zhevra>
+                    <swift_zhevra>${111:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${99:-true}</touring_rocket>
+                    <touring_rocket>${112:-true}</touring_rocket>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${113:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${101:-58}</starting_level>
+                <starting_level>${114:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${102:-false}</enabled>
+                <enabled>${115:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${103:-false}</enabled>
+                <enabled>${116:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${104:-2}</experience_multiplier>
+                <experience_multiplier>${117:-2}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${105:-2}</money_multiplier>
+                <money_multiplier>${118:-2}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${106:-2}</professions_multiplier>
+                <professions_multiplier>${119:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${107:-2}</reputation_multiplier>
+                <reputation_multiplier>${120:-2}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${108:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${121:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -479,6 +519,19 @@ function save_options
     $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION \
     $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE \
     $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST \
     $OPTION_MODULES_ELUNA_ENABLED \
     $OPTION_MODULES_GROUP_QUESTS_ENABLED \
     $OPTION_MODULES_LEARN_SPELLS_ENABLED \
@@ -1140,6 +1193,123 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/faction_change is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE="1000"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED="$(echo "cat /options/modules/assistant/features/professions/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/apprentice/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED="$(echo "cat /options/modules/assistant/features/professions/apprentice/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/apprentice/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/apprentice/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST="$(echo "cat /options/modules/assistant/features/professions/apprentice/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/apprentice/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST="10"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/journeyman/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED="$(echo "cat /options/modules/assistant/features/professions/journeyman/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/journeyman/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/journeyman/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST="$(echo "cat /options/modules/assistant/features/professions/journeyman/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/journeyman/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST="25"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/expert/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED="$(echo "cat /options/modules/assistant/features/professions/expert/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/expert/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/expert/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST="$(echo "cat /options/modules/assistant/features/professions/expert/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/expert/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST="45"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/artisan/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED="$(echo "cat /options/modules/assistant/features/professions/artisan/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/artisan/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/artisan/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST="$(echo "cat /options/modules/assistant/features/professions/artisan/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/artisan/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST="100"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/master/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED="$(echo "cat /options/modules/assistant/features/professions/master/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/master/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/master/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST="$(echo "cat /options/modules/assistant/features/professions/master/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/master/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST="200"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/grand_master/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED="$(echo "cat /options/modules/assistant/features/professions/grand_master/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/grand_master/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/grand_master/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST="$(echo "cat /options/modules/assistant/features/professions/grand_master/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/grand_master/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST="500"
         RESET=true
     fi
 
@@ -2938,6 +3108,13 @@ function set_config
             [ $OPTION_MODULES_ASSISTANT_FEATURES_GEMS == "true" ] && MODULES_ASSISTANT_FEATURES_GEMS=1 || MODULES_ASSISTANT_FEATURES_GEMS=0
             [ $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS == "true" ] && MODULES_ASSISTANT_FEATURES_CONTAINERS=1 || MODULES_ASSISTANT_FEATURES_CONTAINERS=0
             [ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED=1 || MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED=0
 
             # Copy the file before editing it
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
@@ -2952,6 +3129,19 @@ function set_config
             sed -i 's/Assistant.Utilities.Customization =.*/Assistant.Utilities.Customization = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.Utilities.RaceChange =.*/Assistant.Utilities.RaceChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.Utilities.FactionChange =.*/Assistant.Utilities.FactionChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Enabled =.*/Assistant.Professions.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Apprentice.Enabled =.*/Assistant.Professions.Apprentice.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Apprentice.Cost =.*/Assistant.Professions.Apprentice.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Journeyman.Enabled =.*/Assistant.Professions.Journeyman.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Journeyman.Cost =.*/Assistant.Professions.Journeyman.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Expert.Enabled =.*/Assistant.Professions.Expert.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Expert.Cost =.*/Assistant.Professions.Expert.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Artisan.Enabled =.*/Assistant.Professions.Artisan.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Artisan.Cost =.*/Assistant.Professions.Artisan.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Master.Enabled =.*/Assistant.Professions.Master.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Master.Cost =.*/Assistant.Professions.Master.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.GrandMaster.Cost =.*/Assistant.Professions.GrandMaster.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
         else
             # Check if the config file exists
             if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]; then
