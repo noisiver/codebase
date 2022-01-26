@@ -18,6 +18,8 @@ COLOR_LIGHT_CYAN="\e[1;36m"
 COLOR_WHITE="\e[1;37m"
 COLOR_END="\e[0m"
 
+ROOT=$(pwd)
+
 # A function to install the options package
 function options_package
 {
@@ -529,7 +531,7 @@ function load_options
     options_package
 
     # The file where all options are stored
-    OPTIONS="$(pwd)/options.xml"
+    OPTIONS="$ROOT/options.xml"
 
     # Check if the file is missing
     if [ ! -f $OPTIONS ]; then
@@ -2234,6 +2236,24 @@ function get_client_files
 
             printf "${COLOR_GREEN}Finished downloading the client data files...${COLOR_END}\n"
         fi
+
+        # Allow copying custom dbc files to the dbc folder
+        if [ -d $ROOT/dbc ]; then
+            # Check if the folder is empty
+            if [[ ! -z "$(ls -A $ROOT/dbc/)" ]]; then
+                printf "${COLOR_GREEN}Copying modified dbc files...${COLOR_END}\n"
+
+                # Loop through all dbc files inside the folder
+                for f in $ROOT/dbc/*.dbc; do
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
+
+                    # Copy the file
+                    cp -r $f "$OPTION_SOURCE_LOCATION/bin/dbc/$(basename $f)"
+                done
+
+                printf "${COLOR_GREEN}Finished copying custom dbc files...${COLOR_END}\n"
+            fi
+        fi
     fi
 }
 
@@ -2241,7 +2261,7 @@ function get_client_files
 function import_database
 {
     # Create the mysql.cnf file to prevent warnings during import
-    MYSQL_CNF="$(pwd)/mysql.cnf"
+    MYSQL_CNF="$ROOT/mysql.cnf"
     echo "[client]" > $MYSQL_CNF
     echo "host=\"$OPTION_MYSQL_HOSTNAME\"" >> $MYSQL_CNF
     echo "port=\"$OPTION_MYSQL_PORT\"" >> $MYSQL_CNF
@@ -2720,11 +2740,11 @@ function import_database
         fi
 
         # Check if there is a folder for custom content
-        if [ -d $(pwd)/sql/world ]; then
+        if [ -d $ROOT/sql/world ]; then
             # Check if the folder is empty
-            if [[ ! -z "$(ls -A $(pwd)/sql/world/)" ]]; then
+            if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
                 # Loop through all sql files inside the folder
-                for f in $(pwd)/sql/world/*.sql; do
+                for f in $ROOT/sql/world/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
