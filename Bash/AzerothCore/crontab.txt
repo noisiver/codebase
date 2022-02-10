@@ -1,7 +1,9 @@
 Auth:
+@reboot sleep 300 && cd /root && ./azerothcore restart >/dev/null 2>&1
 0 6 1 * * cd /root && ./azerothcore.sh auth all >/dev/null 2>&1
 
 World 1 & 2:
+@reboot sleep 300 && cd /root && ./azerothcore restart >/dev/null 2>&1
 30 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 30 minutes^m" >/dev/null 2>&1
 45 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 15 minutes^m" >/dev/null 2>&1
 50 05 * * 0 screen -S world -p 0 -X stuff "announce Maintenance will begin in 10 minutes^m" >/dev/null 2>&1
