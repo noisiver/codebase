@@ -31,12 +31,17 @@ COLOR_LIGHT_CYAN="\e[1;36m"
 COLOR_WHITE="\e[1;37m"
 COLOR_END="\e[0m"
 
+# Define the current directory
 ROOT=$(pwd)
+
+# Define the current date and time
 BACKUP_DATE=$(date +"%Y-%m-%d_%H-%M")
 
+# Define required files
 OPTIONS="$ROOT/options.xml"
 MYSQL_CNF="$ROOT/mysql.cnf"
 
+# A function to install the options package
 function options_package
 {
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
