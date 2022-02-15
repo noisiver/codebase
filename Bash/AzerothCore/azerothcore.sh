@@ -2130,10 +2130,10 @@ function compile_source
         echo "screen -X -S \"auth\" quit" >> $OPTION_SOURCE_LOCATION/bin/stop.sh
 
         # Create the script used to start and stop the authserver
-        echo "#!/bin/sh" > $OPTION_SOURCE_LOCATION/bin/auth.sh
+        echo "#!/bin/bash" > $OPTION_SOURCE_LOCATION/bin/auth.sh
         echo "while :; do" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
         echo "./authserver" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
-        echo "sleep 20" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
+        echo "sleep 5" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
         echo "done" >> $OPTION_SOURCE_LOCATION/bin/auth.sh
 
         # Make the script runnable
@@ -2153,10 +2153,13 @@ function compile_source
         echo "screen -X -S \"world\" quit" >> $OPTION_SOURCE_LOCATION/bin/stop.sh
 
         # Create the script used to start and stop the authserver
-        echo "#!/bin/sh" > $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "#!/bin/bash" > $OPTION_SOURCE_LOCATION/bin/world.sh
         echo "while :; do" >> $OPTION_SOURCE_LOCATION/bin/world.sh
         echo "./worldserver" >> $OPTION_SOURCE_LOCATION/bin/world.sh
-        echo "sleep 20" >> $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "if [[ \$? == 0 ]]; then" >> $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "break" >> $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "fi" >> $OPTION_SOURCE_LOCATION/bin/world.sh
+        echo "sleep 5" >> $OPTION_SOURCE_LOCATION/bin/world.sh
         echo "done" >> $OPTION_SOURCE_LOCATION/bin/world.sh
 
         # Make the script runnable
