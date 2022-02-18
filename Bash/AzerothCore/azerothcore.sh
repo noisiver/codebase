@@ -2152,7 +2152,7 @@ function compile_source
         echo "screen -AmdS world ./world.sh" >> $OPTION_SOURCE_LOCATION/bin/start.sh
         echo "screen -X -S \"world\" quit" >> $OPTION_SOURCE_LOCATION/bin/stop.sh
 
-        # Create the script used to start and stop the authserver
+        # Create the script used to start and stop the worldserver
         echo "#!/bin/bash" > $OPTION_SOURCE_LOCATION/bin/world.sh
         echo "while :; do" >> $OPTION_SOURCE_LOCATION/bin/world.sh
         echo "./worldserver" >> $OPTION_SOURCE_LOCATION/bin/world.sh
@@ -2165,9 +2165,9 @@ function compile_source
         # Make the script runnable
         chmod +x $OPTION_SOURCE_LOCATION/bin/world.sh
     else
-        # Check if the script for authserver already exists
+        # Check if the script for worldserver already exists
         if [ -f $OPTION_SOURCE_LOCATION/bin/world.sh ]; then
-            # Remove the script if authserver is not used
+            # Remove the script if worldserver is not used
             rm -rf $OPTION_SOURCE_LOCATION/bin/world.sh
         fi
     fi

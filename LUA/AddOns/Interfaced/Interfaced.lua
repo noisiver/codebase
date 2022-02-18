@@ -83,6 +83,9 @@ local function Interfaced_SetUIPoints()
     if (CastingBarFrameFlash:GetTexture() ~= nil) then
         CastingBarFrameFlash:SetTexture(nil)
     end
+
+    MainMenuBarLeftEndCap:Hide()
+    MainMenuBarRightEndCap:Hide()
 end
 
 function Interfaced_ToggleBartenderVisibility()
