@@ -671,6 +671,8 @@ local function VUHDO_initHotIcon(tCnt)
 		end
 	end
 
+    tHotIcon:SetPoint("TOP", sHealthBar:GetName(), "TOP", 0, -sBarScaling["barHeight"] / 6);
+
 	tTimer  = VUHDO_getBarIconTimer(sButton, tCnt);
 	tCounter  = VUHDO_getBarIconCounter(sButton, tCnt);
 

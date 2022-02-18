@@ -359,6 +359,10 @@ local function VUHDO_customizeHotIcons(aButton, aHotName, aRest, aTimes, anIcon,
 	else
 		tChargeTexture:Hide();
 	end
+
+    tDuration = "";
+    tCounter:SetText("");
+    tTimer:SetText("");
 end
 
 

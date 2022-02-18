@@ -221,10 +221,11 @@ end
 --
 local tEmpty = { };
 local function VUHDO_isDebuffRelevant(aDebuffName, aClass)
-	return not VUHDO_IGNORE_DEBUFFS_NO_HARM[aDebuffName]
-		and not VUHDO_IGNORE_DEBUFFS_MOVEMENT[aDebuffName]
-		and not VUHDO_IGNORE_DEBUFFS_DURATION[aDebuffName]
-		and not (VUHDO_IGNORE_DEBUFFS_BY_CLASS[aClass or ""] or tEmpty)[aDebuffName];
+	--return not VUHDO_IGNORE_DEBUFFS_NO_HARM[aDebuffName]
+		--and not VUHDO_IGNORE_DEBUFFS_MOVEMENT[aDebuffName]
+		--and not VUHDO_IGNORE_DEBUFFS_DURATION[aDebuffName]
+		--and not (VUHDO_IGNORE_DEBUFFS_BY_CLASS[aClass or ""] or tEmpty)[aDebuffName];
+    return false
 end
 
 

@@ -140,7 +140,7 @@ function VUHDO_manaBarBouquetCallback(aUnit, anIsActive, anIcon, aCurrValue, aCo
 				end
 				tRegularHeight = tButton["regularHeight"];
 				if (tRegularHeight ~= nil) then
-					VUHDO_getHealthBar(tButton, 1):SetHeight(tRegularHeight - tManaBarHeight);
+					VUHDO_getHealthBar(tButton, 1):SetHeight(tRegularHeight - tManaBarHeight - 1);
 				end
 			end
 		end
@@ -170,7 +170,7 @@ function VUHDO_manaBarBouquetCallback(aUnit, anIsActive, anIcon, aCurrValue, aCo
 			tManaBar:SetHeight(tManaBarHeight);
 			tRegularHeight = tButton["regularHeight"];
 			if (tRegularHeight ~= nil) then
-				VUHDO_getHealthBar(tButton, 1):SetHeight(tRegularHeight - tManaBarHeight);
+				VUHDO_getHealthBar(tButton, 1):SetHeight(tRegularHeight - tManaBarHeight - 1);
 			end
 		end
 	end

@@ -1182,7 +1182,7 @@ end
 --
 function VUHDO_execSmartBuffPre(self)
 	if (InCombatLockdown()) then
-		UIErrorsFrame:AddMessage(VUHDO_I18N_SMARTBUFF_ERR_1, 1, 0.1, 0.1, 1);
+		-- UIErrorsFrame:AddMessage(VUHDO_I18N_SMARTBUFF_ERR_1, 1, 0.1, 0.1, 1);
 		return false;
 	end
 
@@ -1240,7 +1240,7 @@ function VUHDO_execSmartBuffPre(self)
 	end
 
 	if (tMaxLowSpell == nil) then
-		UIErrorsFrame:AddMessage(VUHDO_I18N_SMARTBUFF_ERR_4, 1, 1, 0.1, 1);
+		--UIErrorsFrame:AddMessage(VUHDO_I18N_SMARTBUFF_ERR_4, 1, 1, 0.1, 1);
 		return;
 	end
 
@@ -1256,7 +1256,7 @@ function VUHDO_execSmartBuffPre(self)
 
 	local tName = VUHDO_RAID_NAMES[tMaxLowTarget] or VUHDO_RAID[tMaxLowTarget]["name"];
 
-	UIErrorsFrame:AddMessage(VUHDO_I18N_SMARTBUFF_OKAY_1 .. tMaxLowSpell .. VUHDO_I18N_SMARTBUFF_OKAY_2 .. tName, 0.1, 1, 0.1, 1);
+	-- UIErrorsFrame:AddMessage(VUHDO_I18N_SMARTBUFF_OKAY_1 .. tMaxLowSpell .. VUHDO_I18N_SMARTBUFF_OKAY_2 .. tName, 0.1, 1, 0.1, 1);
 	VuhDoSmartCastGlassButton:SetAttribute("unit", tMaxLowTarget);
 	VuhDoSmartCastGlassButton:SetAttribute("type1", "spell");
 	VuhDoSmartCastGlassButton:SetAttribute("spell1", tMaxLowSpell);
