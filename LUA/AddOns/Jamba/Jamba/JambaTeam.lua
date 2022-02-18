@@ -1468,5 +1468,6 @@ JambaApi.GetMasterName = GetMasterName
 JambaApi.TeamList = TeamList
 JambaApi.TeamListOrdered = TeamListOrdered
 JambaApi.GetCharacterNameAtOrderPosition = GetCharacterNameAtOrderPosition
+JambaApi.GetPositionForCharacterName = GetPositionForCharacterName 
 JambaApi.GetTeamListMaximumOrder = GetTeamListMaximumOrder
 JambaApi.GetCharacterOnlineStatus = GetCharacterOnlineStatus

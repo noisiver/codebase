@@ -39,7 +39,7 @@ AJM.settings = {
 		borderStyle = L["Blizzard Tooltip"],
 		backgroundStyle = L["Blizzard Dialog Background"],
 		teamListScale = 1,
-		teamListTitleHeight = 15,
+		teamListTitleHeight = -2,
 		teamListVerticalSpacing = 4,
 		teamListHorizontalSpacing = 4,
 		barVerticalSpacing = 2,
@@ -224,7 +224,11 @@ end
 
 local function UpdateJambaTeamListDimensions()
 	local frame = JambaDisplayTeamListFrame
-	frame:SetWidth( (AJM.db.teamListHorizontalSpacing * 4) + GetCharacterWidth() )
+    if AJM.db.showExperienceStatus == true then
+        frame:SetWidth( (AJM.db.teamListHorizontalSpacing * 3) + GetCharacterWidth() )
+    else
+        frame:SetWidth( (2.5 * 4) + GetCharacterWidth() )
+    end
 	frame:SetHeight( AJM.db.teamListTitleHeight + (GetCharacterHeight() * AJM.totalMembersDisplayed) + (AJM.db.teamListVerticalSpacing * 3) )
 	frame:SetScale( AJM.db.teamListScale )
 end
@@ -264,11 +268,11 @@ local function CreateJambaTeamListFrame()
 	} )
 
 	-- Create the title for the team list frame.
-	local titleName = frame:CreateFontString( "JambaDisplayTeamListWindowFrameTitleText", "OVERLAY", "GameFontNormal" )
-	titleName:SetPoint( "TOP", frame, "TOP", 0, -5 )
-	titleName:SetTextColor( 1.00, 1.00, 1.00 )
-	titleName:SetText( L["Jamba Team"] )
-	frame.titleName = titleName
+	-- local titleName = frame:CreateFontString( "JambaDisplayTeamListWindowFrameTitleText", "OVERLAY", "GameFontNormal" )
+	-- titleName:SetPoint( "TOP", frame, "TOP", 0, -5 )
+	-- titleName:SetTextColor( 1.00, 1.00, 1.00 )
+	-- titleName:SetText( L["Jamba Team"] )
+	-- frame.titleName = titleName
 	
 	-- Set transparency of the the frame (and all its children).
 	frame:SetAlpha(AJM.db.frameAlpha)
