@@ -278,17 +278,27 @@ end
 local function CommandAll( moduleName, commandName, ... )
 	-- Get the message to send.
 	local message = CreateCommandToSend( moduleName, commandName, ... )
-	-- Send the message to all members of the current team.
 	-- Send command to all in group/raid.
 	if UnitInBattleground( "player" ) == nil then
 		AJM:SendCommMessage( 
 			AJM.COMMAND_PREFIX,
 			message,
 			AJM.COMMUNICATION_GROUP,
-			characterName,
+			nil,
 			AJM.COMMUNICATION_PRIORITY_ALERT
-		)
+		)		
 	end
+	-- If player not in a party or raid, then send to player.
+	if GetNumPartyMembers() == 0 and GetNumRaidMembers() == 0 then
+		AJM:SendCommMessage( 
+			AJM.COMMAND_PREFIX,
+			message,
+			AJM.COMMUNICATION_WHISPER,
+			UnitName( "player" ),
+			AJM.COMMUNICATION_PRIORITY_ALERT
+		)		
+	end
+	-- Send the message to all members of the current team that are not in a party / raid.	
 	for characterName, characterOrder in JambaPrivate.Team.TeamList() do
 		if IsCharacterOnline( characterName ) == true then
 			local canSend = false
