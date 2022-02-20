@@ -1022,7 +1022,7 @@ end
 
 -- Initialise the module.
 function AJM:OnInitialize()
-	AJM.currencyTotalGold = 0
+	--AJM.currencyTotalGold = 0
 	AJM.currencyListFrameCreated = false
 	AJM.currencyFrameCharacterInfo = {}
 	AJM.currentCurrencyValues = {}
@@ -1465,14 +1465,14 @@ function AJM:CreateJambaToonCurrencyListFrame()
 	left = 10
 	top = -50
 
-	local frameTotalGoldTitle = AJM.globalCurrencyFramePrefix.."TitleTotalGold"
+	--[[local frameTotalGoldTitle = AJM.globalCurrencyFramePrefix.."TitleTotalGold"
 	local frameTotalGoldTitleText = parentFrame:CreateFontString( frameTotalGoldTitle.."Text", "OVERLAY", "GameFontNormal" )
 	frameTotalGoldTitleText:SetText( L["Total"] )
 	frameTotalGoldTitleText:SetTextColor( r, g, b, a )
 	frameTotalGoldTitleText:SetPoint( "TOPLEFT", parentFrame, "TOPLEFT", left, top )
 	frameTotalGoldTitleText:SetWidth( width )
 	frameTotalGoldTitleText:SetJustifyH( "LEFT" )
-	frame.TotalGoldTitleText = frameTotalGoldTitleText
+	frame.TotalGoldTitleText = frameTotalGoldTitleText]]--
 
 	local frameTotalGoldGuildTitle = AJM.globalCurrencyFramePrefix.."TitleTotalGoldGuild"
 	local frameTotalGoldGuildTitleText = parentFrame:CreateFontString( frameTotalGoldGuildTitle.."Text", "OVERLAY", "GameFontNormal" )
@@ -1483,14 +1483,14 @@ function AJM:CreateJambaToonCurrencyListFrame()
 	frameTotalGoldGuildTitleText:SetJustifyH( "LEFT" )
 	frame.TotalGoldGuildTitleText = frameTotalGoldGuildTitleText
 	
-	local frameTotalGold = AJM.globalCurrencyFramePrefix.."TotalGold"
+	--[[local frameTotalGold = AJM.globalCurrencyFramePrefix.."TotalGold"
 	local frameTotalGoldText = parentFrame:CreateFontString( frameTotalGold.."Text", "OVERLAY", "GameFontNormal" )
 	frameTotalGoldText:SetText( "0" )
 	frameTotalGoldText:SetTextColor( r, g, b, a )
 	frameTotalGoldText:SetPoint( "TOPLEFT", parentFrame, "TOPLEFT", left, top )
 	frameTotalGoldText:SetWidth( width )
 	frameTotalGoldText:SetJustifyH( "RIGHT" )
-	frame.TotalGoldText = frameTotalGoldText
+	frame.TotalGoldText = frameTotalGoldText]]--
 
 	local frameTotalGoldGuild = AJM.globalCurrencyFramePrefix.."TotalGoldGuild"
 	local frameTotalGoldGuildText = parentFrame:CreateFontString( frameTotalGoldGuild.."Text", "OVERLAY", "GameFontNormal" )
@@ -1563,9 +1563,9 @@ function AJM:CurrencyListSetHeight()
 	local addHeight = 0
 	if AJM.db.currGold == true then
 		if AJM.db.currGoldInGuildBank == true then
-			additionalLines = 2
+			--[[additionalLines = 2
 			addHeight = 7
-		else
+		else]]--
 			additionalLines = 1
 			addHeight = 5
 		end
@@ -1780,15 +1780,15 @@ function AJM:CurrencyListSetColumnWidth()
 			parentFrame.TotalGoldGuildTitleText:Hide()
 			parentFrame.TotalGoldGuildText:Hide()			
 		end
-		parentFrame.TotalGoldTitleText:SetWidth( nameWidth )
+		--[[parentFrame.TotalGoldTitleText:SetWidth( nameWidth )
 		parentFrame.TotalGoldTitleText:SetPoint( "TOPLEFT", parentFrame, "TOPLEFT", nameLeft, goldTop )
 		parentFrame.TotalGoldTitleText:Show()
 		parentFrame.TotalGoldText:SetWidth( goldWidth )
 		parentFrame.TotalGoldText:SetPoint( "TOPLEFT", parentFrame, "TOPLEFT", goldLeft, goldTop )
-		parentFrame.TotalGoldText:Show()
+		parentFrame.TotalGoldText:Show()]]--
 	else
-		parentFrame.TotalGoldTitleText:Hide()
-		parentFrame.TotalGoldText:Hide()
+		-- parentFrame.TotalGoldTitleText:Hide()
+		-- parentFrame.TotalGoldText:Hide()
 		parentFrame.TotalGoldGuildTitleText:Hide()
 		parentFrame.TotalGoldGuildText:Hide()	
 	end
@@ -1913,12 +1913,12 @@ function AJM:JambaToonRequestCurrency()
         currencyFrameCharacterInfo.HonorPointsText:SetTextColor( r, g, b, a )
         currencyFrameCharacterInfo.ArenaPointsText:SetTextColor( r, g, b, a )
 	end
-	AJM.currencyTotalGold = 0
+	--[[AJM.currencyTotalGold = 0
 	if AJM.db.currGoldInGuildBank == true then
 		if IsInGuild() == 1 then
 			AJM.currencyTotalGold = GetGuildBankMoney()
 		end
-	end
+	end]]--
 	AJM:JambaSendCommandToTeam( AJM.COMMAND_REQUEST_CURRENCY, "" )
 end
 
@@ -1988,8 +1988,8 @@ function AJM:DoShowToonsCurrency( characterName, currencyValues )
     currencyFrameCharacterInfo.HonorPointsText:SetText( currencyValues.currHonorPoints )
     currencyFrameCharacterInfo.ArenaPointsText:SetText( currencyValues.currArenaPoints )
 	-- Total gold.
-	AJM.currencyTotalGold = AJM.currencyTotalGold + currencyValues.currGold
-	parentFrame.TotalGoldText:SetText( JambaUtilities:FormatMoneyString( AJM.currencyTotalGold ) )
+	--[[AJM.currencyTotalGold = AJM.currencyTotalGold + currencyValues.currGold
+	parentFrame.TotalGoldText:SetText( JambaUtilities:FormatMoneyString( AJM.currencyTotalGold ) )--]]
 	if IsInGuild() == 1 then
 		parentFrame.TotalGoldGuildText:SetText( JambaUtilities:FormatMoneyString( GetGuildBankMoney() ) )
 	end
