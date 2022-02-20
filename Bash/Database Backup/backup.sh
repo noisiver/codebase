@@ -252,7 +252,7 @@ function backup_database
 
     clear
 
-    printf "${COLOR_GREEN}Exporting the databases...${COLOR_END}\n"
+    printf "${COLOR_GREEN}Backing up the databases...${COLOR_END}\n"
 
     # Create the mysql.cnf file to prevent warnings during import
     echo "[client]" > $MYSQL_CNF
@@ -295,14 +295,26 @@ function backup_database
             for TABLE in `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW TABLES FROM $DATABASE"`; do
                 # Export the table data
                 mysqldump --defaults-extra-file=$MYSQL_CNF --hex-blob $DATABASE $TABLE > $ROOT/tmp/$BACKUP_DATE/$DATABASE/$TABLE.sql
+
+                # Stop the script on error
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
             done
         done
 
         # Switch to the temporary folder
         cd $ROOT/tmp/$BACKUP_DATE
 
+        printf "${COLOR_ORANGE}Creating the compressed archive${COLOR_END}\n"
+
         # Create the compressed archive
         tar -czvf $ROOT/tmp/$BACKUP_DATE.tar.gz * > /dev/null 2>&1
+
+        # Stop the script on error
+        if [ $? -ne 0 ]; then
+            exit $?
+        fi
 
         # Check if the local storage is enabled
         if [ $OPTION_LOCAL_BACKUPS_ENABLED == "true" ]; then
@@ -311,6 +323,8 @@ function backup_database
                 # Create the folder
                 mkdir -p $OPTION_LOCAL_BACKUPS_LOCATION
             fi
+
+            printf "${COLOR_ORANGE}Copying the archive to the local storage${COLOR_END}\n"
 
             # Copy the archive to the local storage
             cp -r $ROOT/tmp/$BACKUP_DATE.tar.gz $OPTION_LOCAL_BACKUPS_LOCATION/$BACKUP_DATE.tar.gz
@@ -321,11 +335,18 @@ function backup_database
 
         # Check if the local storage is enabled
         if [ $OPTION_GDRIVE_BACKUPS_ENABLED == "true" ]; then
+            printf "${COLOR_ORANGE}Uploading the archive to google drive${COLOR_END}\n"
+
             # Switch to the google drive folder
             cd $HOME/gdrive
 
             # Download any changes from google drive
             drive pull -no-prompt > /dev/null 2>&1
+
+            # Stop the script on error
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
 
             # Check if the local storage folder exists
             if [[ ! -d $HOME/gdrive/database ]]; then
@@ -342,8 +363,20 @@ function backup_database
             # Upload all changes to google drive
             drive push -no-prompt > /dev/null 2>&1
 
+            # Stop the script on error
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
+
             # Empty the google drive trash
             drive emptytrash -no-prompt > /dev/null 2>&1
+
+            # Stop the script on error
+            if [ $? -ne 0 ]; then
+                exit $?
+            fi
+
         fi
 
         # Remove the temporary folder
@@ -356,10 +389,10 @@ function backup_database
         fi
     fi
 
+    printf "${COLOR_GREEN}Finished backing up the databases...${COLOR_END}\n"
+
     # Remove the mysql conf
     rm -rf $MYSQL_CNF
-
-    printf "${COLOR_GREEN}Finished exporting the databases...${COLOR_END}\n"
 }
 
 load_options
