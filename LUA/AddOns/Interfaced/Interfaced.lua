@@ -83,9 +83,6 @@ local function Interfaced_SetUIPoints()
     if (CastingBarFrameFlash:GetTexture() ~= nil) then
         CastingBarFrameFlash:SetTexture(nil)
     end
-
-    MainMenuBarLeftEndCap:Hide()
-    MainMenuBarRightEndCap:Hide()
 end
 
 function Interfaced_ToggleBartenderVisibility()
@@ -213,6 +210,8 @@ end)
 uf:RegisterEvent("PLAYER_ENTERING_WORLD")
 uf:SetScript("OnEvent", function(self)
     Interfaced_SetUIPoints()
+    MainMenuBarLeftEndCap:Hide()
+    MainMenuBarRightEndCap:Hide()
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     self:SetScript("OnEvent", nil)
 end)
