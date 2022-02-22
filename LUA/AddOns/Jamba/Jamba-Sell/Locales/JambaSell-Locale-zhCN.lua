@@ -14,15 +14,15 @@ L["Sell: Greys"] = true
 L["Push Settings"] = true
 L["Push the sell settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L["Are you sure you wish to remove the selected item from the auto sell poor items exception list?"] = true
 L["Are you sure you wish to remove the selected item from the auto sell other items list?"] = true
 L["I have sold: X"] = function( itemLink )
-	return string.format( "I have sold: %s", itemLink )
+    return string.format( "I have sold: %s", itemLink )
 end
 L["DID NOT SELL: X"] = function( itemLink )
-	return string.format( "DID NOT SELL: %s", itemLink )
+    return string.format( "DID NOT SELL: %s", itemLink )
 end
 L["Sell: Others"] = true
 L["Sell Greys"] = true

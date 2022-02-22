@@ -26,10 +26,10 @@ L["Push settings to all characters in the team list."] = true
 L["Push Settings For All The Modules"] = true
 L["Push all module settings to all characters in the team list."] = true
 L["A: Failed to deserialize command arguments for B from C."] = function( libraryName, moduleName, sender )
-	return libraryName..": Failed to deserialize command arguments for "..moduleName.." from "..sender.."."
+    return libraryName..": Failed to deserialize command arguments for "..moduleName.." from "..sender.."."
 end
 L["Settings received from A."] = function( characterName )
-	return "Settings received from "..characterName.."."
+    return "Settings received from "..characterName.."."
 end
 L["Team Online Channel"] = true
 L["Channel Name"] = true

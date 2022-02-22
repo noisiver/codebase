@@ -14,7 +14,7 @@ L["Item Use"] = true
 L["Push Settings"] = true
 L["Push the item use settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L["Blizzard Tooltip"] = true
 L["Blizzard Dialog Background"] = true
@@ -48,7 +48,7 @@ L["Item 8"] = true
 L["Item 9"] = true
 L["Item 10"] = true
 L["I do not have X."] = function( name )
-	return string.format( "I do not have %s.", name )
+    return string.format( "I do not have %s.", name )
 end
 L["Transparency"] = true
 L["Border Colour"] = true

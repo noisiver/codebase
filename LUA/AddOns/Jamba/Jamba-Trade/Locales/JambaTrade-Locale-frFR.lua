@@ -15,7 +15,7 @@ L["Trade Options"] = true
 L["Push Settings"] = "Appliquer les réglages"
 L["Push the trade settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return "Réglages reçus de "..characterName.."."
+    return "Réglages reçus de "..characterName.."."
 end
 L["Message Area"] = "Zone de message"
 L["Load Item By Name"] = true

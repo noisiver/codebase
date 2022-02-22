@@ -14,7 +14,7 @@ L["Core: Message Display"] = true
 L["Push Settings"] = true
 L["Push the message settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L["Default Chat Window"] = true
 L["Specific Chat Window"] = true
@@ -46,7 +46,7 @@ L["Mute (Default)"] = true
 L["Parrot"] = true
 L["ERROR: Parrot Missing"] = true
 L["ERROR: Could not find area: A"] = function( areaName )
-	return string.format( "ERROR: Could not find area: %s", areaName )
+    return string.format( "ERROR: Could not find area: %s", areaName )
 end
 L[": "] = true
 L[" whispers: "] = true

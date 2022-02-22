@@ -14,7 +14,7 @@ L["Display: Team"] = "Affichage : Equipe"
 L["Push Settings"] = "Transférer"
 L["Push the display team settings to all characters in the team."] = "Transférer les réglages d'affichage à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Réglages reçus de %s.", characterName )
+    return string.format( "Réglages reçus de %s.", characterName )
 end
 L[" "] = " "
 L["("] = "("

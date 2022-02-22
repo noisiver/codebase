@@ -13,7 +13,7 @@ L["Macro"] = "Macro"
 L["Push Settings"] = "Transférer"
 L["Push the macro settings to all characters in the team."] = "Transférer les réglages de macro à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L["Use"] = "Utiliser"
 L["Add"] = "Ajouter"
@@ -59,10 +59,10 @@ L["Macro Usage - press key assigned or copy /click below."] = "Utilisation de la
 L["Use Macro and Variable Set"] = "Utiliser l'ensemble de macros et de variables"
 L["Update the macros to use the specified macro and variable sets."] = "Mettre à jour les macros pour utiliser les ensemble de macros et de variables spéficiés."
 L["Can not find macro set: X"] = function( macroSetName )
-	return string.format( "Ne peut trouver l'ensemble de macros : %s", macroSetName )
+    return string.format( "Ne peut trouver l'ensemble de macros : %s", macroSetName )
 end
 L["Can not find variable set: X"] = function( variableSetName )
-	return string.format( "Ne peut trouver l'ensemble de variables : %s", variableSetName )
+    return string.format( "Ne peut trouver l'ensemble de variables : %s", variableSetName )
 end
 L["Variable names must only be made up of letters and numbers."] = "Les noms de variables ne doivent être composés que de lettres et de chiffres."
 L["Macro names must only be made up of letters and numbers."] = "Les nom de macros ne doivent être composés que de lettres et de chiffres."
@@ -70,10 +70,10 @@ L["Macro tags must only be made up of letters and numbers."] = "Les labels de ma
 L["Please choose a macro set to use."] = "Choisissez svp l'ensemble de macro à utiliser."
 L["Please choose a variable set to use."] = "Choisissez svp l'ensemble de variables à utiliser."
 L["Using macros set: X"] = function( macroSetName )
-	return string.format( "Utilisation de l'ensemble de macros : %s", macroSetName )
+    return string.format( "Utilisation de l'ensemble de macros : %s", macroSetName )
 end
 L["Using variables set: X"] = function( variableSetName )
-	return string.format( "Utilisation de l'ensemble de variables : %s", variableSetName )
+    return string.format( "Utilisation de l'ensemble de variables : %s", variableSetName )
 end
 L["In combat, waiting until after combat to update the macros."] = "Actuellement en combat ; en attente de la fin du combat pour mettre à jour les macros."
 end

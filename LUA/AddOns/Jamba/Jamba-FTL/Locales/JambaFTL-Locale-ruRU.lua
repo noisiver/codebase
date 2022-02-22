@@ -17,10 +17,10 @@ L["If this Option is checked only plain modifiers like shift,alt,ctrl are used f
 L["Push Settings"] = true
 L["Push the FTL settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return "Settings received from "..characterName.."."
+    return "Settings received from "..characterName.."."
 end
 L["I am unable to fly to A."] = function( nodename )
-	return "I am unable to fly to ."..nodename.."."
+    return "I am unable to fly to ."..nodename.."."
 end
 L[" "] = true
 L["Information"] = true

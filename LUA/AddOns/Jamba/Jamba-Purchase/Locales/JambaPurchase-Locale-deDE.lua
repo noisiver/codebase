@@ -14,7 +14,7 @@ L["Purchase"] = true
 L["Push Settings"] = true
 L["Push the purchase settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L["Purchase Items"] = true
 L["Auto Buy Items"] = true

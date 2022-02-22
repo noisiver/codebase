@@ -13,7 +13,7 @@ L["Follow"] = true
 L["Push Settings"] = true
 L["Push the follow settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L["Follow Broken!"] = true
 L["Follow After Combat"] = true

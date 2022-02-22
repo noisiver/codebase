@@ -27,10 +27,10 @@ L["Push settings to all characters in the team list."] = "Transférer les régla
 L["Push Settings For All The Modules"] = "Transférer les réglages pour tous les modules"
 L["Push all module settings to all characters in the team list."] = "Transférer les réglages pour tous les modules à tous les personnages de l'équipe"
 L["A: Failed to deserialize command arguments for B from C."] = function( libraryName, moduleName, sender )
-	return libraryName..": Echec lors de la désérialisation des arguments pour "..moduleName.." depuis "..sender.."."
+    return libraryName..": Echec lors de la désérialisation des arguments pour "..moduleName.." depuis "..sender.."."
 end
 L["Settings received from A."] = function( characterName )
-	return "Réglages reçus de "..characterName.."."
+    return "Réglages reçus de "..characterName.."."
 end
 L["Team Online Channel"] = "Canal de communication de l'équipe"
 L["Channel Name"] = "Nom du canal"

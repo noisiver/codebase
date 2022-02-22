@@ -31,7 +31,7 @@ L["Down"] = "Bas"
 L["Set Master"] = "Maître"
 L["Master Control"] = "Contrôle du maître"
 L["When Focus changes, set the Master to the Focus."] = "Quand le focus change, le choisir comme maître"
-L["When Master changes, promote Master to party"] = "Quand le maître change, le promouvoir chef"
+L["When Master changes, promote Master to party leader."] = "Quand le maître change, le promouvoir chef"
 L["leader."] = "de groupe"
 L["Party Invitations Control"] = "Contrôle des invitations de groupe"
 L["Accept from team."] = "Accepter de l'équipe"
@@ -50,10 +50,10 @@ L["(Offline)"] = "(Hors-ligne)"
 L["Enter name of character to add:"] = "Saisir le nom du personnage à ajouter :"
 L["Are you sure you wish to remove %s from the team list?"] = "Etes-vous sûr(e) de vouloir enlever %s de l'équipe ?"
 L["A is not in my team list.  I can not set them to be my master."] = function( characterName )
-	return characterName.." n'est pas dans mon équipe.  Je ne peux pas le choisir comme maître."
+    return characterName.." n'est pas dans mon équipe.  Je ne peux pas le choisir comme maître."
 end
 L["Settings received from A."] = function( characterName )
-	return "Réglages recus de "..characterName.."."
+    return "Réglages recus de "..characterName.."."
 end
 L["Jamba-Team"] ="Equipe Jamba"
 L["Invite Team To Group"] = "Inviter l'équipe dans le groupe"

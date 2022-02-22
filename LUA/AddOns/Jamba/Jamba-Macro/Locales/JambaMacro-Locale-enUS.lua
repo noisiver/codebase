@@ -12,7 +12,7 @@ L["Macro"] = true
 L["Push Settings"] = true
 L["Push the macro settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L["Use"] = true
 L["Add"] = true
@@ -58,10 +58,10 @@ L["Macro Usage - press key assigned or copy /click below."] = true
 L["Use Macro and Variable Set"] = true
 L["Update the macros to use the specified macro and variable sets."] = true
 L["Can not find macro set: X"] = function( macroSetName )
-	return string.format( "Can not find macro set: %s", macroSetName )
+    return string.format( "Can not find macro set: %s", macroSetName )
 end
 L["Can not find variable set: X"] = function( variableSetName )
-	return string.format( "Can not find variable set: %s", variableSetName )
+    return string.format( "Can not find variable set: %s", variableSetName )
 end
 L["Variable names must only be made up of letters and numbers."] = true
 L["Macro names must only be made up of letters and numbers."] = true
@@ -69,9 +69,9 @@ L["Macro tags must only be made up of letters and numbers."] = true
 L["Please choose a macro set to use."] = true
 L["Please choose a variable set to use."] = true
 L["Using macros set: X"] = function( macroSetName )
-	return string.format( "Using macros set: %s", macroSetName )
+    return string.format( "Using macros set: %s", macroSetName )
 end
 L["Using variables set: X"] = function( variableSetName )
-	return string.format( "Using variables set: %s", variableSetName )
+    return string.format( "Using variables set: %s", variableSetName )
 end
 L["In combat, waiting until after combat to update the macros."] = true

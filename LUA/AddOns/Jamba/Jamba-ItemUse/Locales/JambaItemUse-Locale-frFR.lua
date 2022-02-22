@@ -14,7 +14,7 @@ L["Item Use"] = "Barre d'objets"
 L["Push Settings"] = "Appliquer les réglages"
 L["Push the item use settings to all characters in the team."] = "Appliquer les réglages d'utilisation d'objets à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Réglages reçus de %s.", characterName )
+    return string.format( "Réglages reçus de %s.", characterName )
 end
 L["Blizzard Tooltip"] = "Bulle d'aide Blizzard"
 L["Blizzard Dialog Background"] = "Fond de dialogue BLizzard"
@@ -48,7 +48,7 @@ L["Item 8"] = "Objet 8"
 L["Item 9"] = "Objet 9"
 L["Item 10"] = "Objet 10"
 L["I do not have X."] = function( name )
-	return string.format( "Je ne possède pas %s.", name )
+    return string.format( "Je ne possède pas %s.", name )
 end
 L["Transparency"] = "Transparence"
 L["Border Colour"] = "Couleur de bordure"

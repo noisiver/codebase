@@ -31,7 +31,7 @@ Jamba Version: 0.7
 WoW Game Version: 3.3.5
 Release Date: 7th September 2010
 Modules: Core, Display-Team, Follow, FTL, ItemUse, Macro, Proc, Purchase, Quest, Sell, Talk, Taxi, Toon, Trade
-	
+    
 Jamba-Talk
 
     * Now forwards and relays Battle.Net RealID Friends whispers.
@@ -58,9 +58,9 @@ Quest: Watcher
 
 Trade (New Module)
 
-	* See other toons bags when trading - able to click on items to load into trade window or choose a classification of item to load into trade window.
-	* Two slash commands /jamba-trade loadname and loadtype - see help in addon for details.
-	* Option to automatically deposit / withdraw money from guild bank.  After visiting the guild bank a toon will be left with X amount of money.  The option will deposit money if the toon has greater than X, otherwise it will withdraw money to top the toon up to X.
+    * See other toons bags when trading - able to click on items to load into trade window or choose a classification of item to load into trade window.
+    * Two slash commands /jamba-trade loadname and loadtype - see help in addon for details.
+    * Option to automatically deposit / withdraw money from guild bank.  After visiting the guild bank a toon will be left with X amount of money.  The option will deposit money if the toon has greater than X, otherwise it will withdraw money to top the toon up to X.
 
 Toon: Warnings (PVP)
 
@@ -90,23 +90,23 @@ Jamba Version: 0.6
 WoW Game Version: 3.3.5
 Release Date: 29th June 2010
 Modules: Core, Display-Team, Follow, FTL, ItemUse, Macro, Proc, Purchase, Quest, Sell, Talk, Taxi, Toon
-	
+    
 Jamba-Quest
 
     * New Quest Watcher frame, watch quests from slaves on master.
     
 Jamba-Toon
 
-	* New AFK warning.
-	
+    * New AFK warning.
+    
 Jamba-Display-Team
 
-	* Can now change background and border colours on team display.
-	
+    * Can now change background and border colours on team display.
+    
 Jamba-Item-use
 
-	* Can now change background and border colours on the item bar display.
-	
+    * Can now change background and border colours on the item bar display.
+    
 Jamba Version: 0.5i
 WoW Game Version: 3.3.3
 Release Date: 13th June 2010
@@ -114,13 +114,13 @@ Modules: Core, Display-Team, Follow, FTL, ItemUse, Macro, Proc, Purchase, Quest,
 
 General
 
-	* Text boxes associated with sliders will now cause the slider to update its value when enter is pressed.
-	
+    * Text boxes associated with sliders will now cause the slider to update its value when enter is pressed.
+    
 Jamba-Proc
 
     * Disabling the proc module from the Proc options will now work!
     * Procs that you add using the GUI will now work!
-	* Procs no longer reappear after being deleted!
+    * Procs no longer reappear after being deleted!
 
 Jamba-Team
 
@@ -128,15 +128,15 @@ Jamba-Team
     
 Jamba-Display-Team
 
-	* Clicking on a toons portrait or bar in the display will target that toon.
-	* Team display location information is now pushed with other settings to all toons.
-	* Can now set the transparency of the team window.
-	
+    * Clicking on a toons portrait or bar in the display will target that toon.
+    * Team display location information is now pushed with other settings to all toons.
+    * Can now set the transparency of the team window.
+    
 Jamba-Item-use
 
-	* Item bar location information is now pushed with other settings to all toons.
-	* Can now set the transparency of the team window.
-	
+    * Item bar location information is now pushed with other settings to all toons.
+    * Can now set the transparency of the team window.
+    
 Jamba Version: 0.5h 
 WoW Game Version: 3.3.3
 Release Date: 2nd May 2010

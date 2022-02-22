@@ -14,7 +14,7 @@ L["Follow"] = "Suivi"
 L["Push Settings"] = "Transférer"
 L["Push the follow settings to all characters in the team."] = "Transférer les réglages de suivi à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Réglages reçus de %s.", characterName )
+    return string.format( "Réglages reçus de %s.", characterName )
 end
 L["Follow Broken!"] = "Suivi rompu !"
 L["Follow After Combat"] = "Suivre après le combat"

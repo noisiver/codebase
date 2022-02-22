@@ -31,7 +31,7 @@ L["Down"] = true
 L["Set Master"] = true
 L["Master Control"] = true
 L["When Focus changes, set the Master to the Focus."] = true
-L["When Master changes, promote Master to party"] = true
+L["When Master changes, promote Master to party leader."] = true
 L["leader."] = true
 L["Party Invitations Control"] = true
 L["Accept from team."] = true
@@ -49,10 +49,10 @@ L["(Offline)"] = true
 L["Enter name of character to add:"] = true
 L["Are you sure you wish to remove %s from the team list?"] = true
 L["A is not in my team list.  I can not set them to be my master."] = function( characterName )
-	return characterName.." is not in my team list.  I can not set them to be my master."
+    return characterName.." is not in my team list.  I can not set them to be my master."
 end
 L["Settings received from A."] = function( characterName )
-	return "Settings received from "..characterName.."."
+    return "Settings received from "..characterName.."."
 end
 L["Jamba-Team"] = true
 L["Invite Team To Group"] = true

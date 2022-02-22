@@ -17,10 +17,10 @@ L["Take the same flight as the master did (slaves's must have NPC Flight Master 
 L["Push Settings"] = true
 L["Push the taxi settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return "Settings received from "..characterName.."."
+    return "Settings received from "..characterName.."."
 end
 L["I am unable to fly to A."] = function( nodename )
-	return "I am unable to fly to ."..nodename.."."
+    return "I am unable to fly to ."..nodename.."."
 end
 L["Message Area"] = true
 end

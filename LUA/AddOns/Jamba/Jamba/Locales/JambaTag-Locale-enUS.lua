@@ -12,7 +12,7 @@ L["Team"] = true
 L["Core: Tags"] = true
 L["Add"] = true
 L["Add a tag to the this character."] = true
-L["Remove"] = true				
+L["Remove"] = true                
 L["Remove a tag from this character."] = true
 L["Push Settings"] = true
 L["Push the tag settings to all characters in the team."] = true
@@ -21,7 +21,7 @@ L["Tag List"] = true
 L["Enter a tag to add:"] = true
 L["Are you sure you wish to remove %s from the tag list for %s?"] = true
 L["Settings received from A."] = function( characterName )
-	return "Settings received from "..characterName.."."
+    return "Settings received from "..characterName.."."
 end
 L["master"] = true
 L["slave"] = true

@@ -12,7 +12,7 @@ L["Quest"] = true
 L["Push Settings"] = true
 L["Push the quest settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L[": "] = true
 L["Completion"] = true
@@ -56,31 +56,31 @@ L["Alt"] = true
 L["Override: If Toon Already Has Reward Selected,"] = true
 L["Choose That Reward"] = true
 L["Accepted Quest: A"] = function( questName )
-	return string.format( "Accepted Quest: %s", questName )
+    return string.format( "Accepted Quest: %s", questName )
 end
 L["Automatically Accepted Quest: A"] = function( questName )
-	return string.format( "Automatically Accepted Quest: %s", questName )
+    return string.format( "Automatically Accepted Quest: %s", questName )
 end
 L["Automatically Accepted Quest: A"] = function( questName )
-	return string.format( "Automatically Accepted Quest: %s", questName )
+    return string.format( "Automatically Accepted Quest: %s", questName )
 end
 L["Quest has X reward choices."] = function( choices )
-	return string.format( "Quest has %s reward choices.", choices )
+    return string.format( "Quest has %s reward choices.", choices )
 end
 L["Completed Quest: A"] = function( questName )
-	return string.format( "Completed Quest: %s", questName )
+    return string.format( "Completed Quest: %s", questName )
 end
 L["Automatically Accepted Escort Quest: A"] = function( questName )
-	return string.format( "Automatically Accepted Escort Quest: %s", questName )
+    return string.format( "Automatically Accepted Escort Quest: %s", questName )
 end
 L["I do not have the quest: A"] = function( questName )
-	return string.format( "I do not have the quest: %s", questName )
+    return string.format( "I do not have the quest: %s", questName )
 end
 L["I have abandoned the quest: A"] = function( questName )
-	return string.format( "I have abandoned the quest: %s", questName )
+    return string.format( "I have abandoned the quest: %s", questName )
 end
 L["Sharing Quest: A"] = function( questName )
-	return string.format( "Sharing Quest: %s", questName )
+    return string.format( "Sharing Quest: %s", questName )
 end
 L["Abandon"] = true
 L["Select"] = true

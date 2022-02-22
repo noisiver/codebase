@@ -17,10 +17,10 @@ L["Take the same flight as the master did (slaves's must have NPC Flight Master 
 L["Push Settings"] = "Appliquer les réglages"
 L["Push the taxi settings to all characters in the team."] = "Appliquer les réglages de Vol à tous les personnages de l'équipe."
 L["Settings received from A."] = function( characterName )
-	return "Réglages reçus de "..characterName.."."
+    return "Réglages reçus de "..characterName.."."
 end
 L["I am unable to fly to A."] = function( nodename )
-	return "Je suis incapable de voler vers "..nodename.."."
+    return "Je suis incapable de voler vers "..nodename.."."
 end
 L["Message Area"] = "Zone de message"
 end

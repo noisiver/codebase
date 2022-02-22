@@ -14,7 +14,7 @@ L["Talk"] = "Discussion"
 L["Push Settings"] = "Transférer"
 L["Push the talk settings to all characters in the team."] = "Transférer les réglages de discussion à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Réglages reçus de %s.", characterName )
+    return string.format( "Réglages reçus de %s.", characterName )
 end
 L["Talk Options"] = "Options de discussion"
 L["Forward Whispers And Relay"] = "Transférer les chuchotements"

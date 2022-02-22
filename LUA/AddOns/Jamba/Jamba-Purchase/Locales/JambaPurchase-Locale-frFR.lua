@@ -14,7 +14,7 @@ L["Purchase"] = "Achats"
 L["Push Settings"] = "Transférer"
 L["Push the purchase settings to all characters in the team."] = "Transférer les réglages d'achats à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Réglages reçus de %s.", characterName )
+    return string.format( "Réglages reçus de %s.", characterName )
 end
 L["Purchase Items"] = "Acheter des objets"
 L["Auto Buy Items"] = "Acheter en auto"

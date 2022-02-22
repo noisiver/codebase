@@ -14,15 +14,15 @@ L["Sell: Greys"] = "Vente : Objets gris"
 L["Push Settings"] = "Transférer"
 L["Push the sell settings to all characters in the team."] = "Transférer les réglages de vente à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Réglages reçus de %s.", characterName )
+    return string.format( "Réglages reçus de %s.", characterName )
 end
 L["Are you sure you wish to remove the selected item from the auto sell poor items exception list?"] = "Etes-vous sûr(e) de vouloir supprimer l'objet sélectionné de la liste des exceptions de vente automatique d'objets gris ?"
 L["Are you sure you wish to remove the selected item from the auto sell other items list?"] = "Etes-vous sûr(e) de vouloir supprimer l'objet sélectionné de la liste des de vente automatique des autres objets ?"
 L["I have sold: X"] = function( itemLink )
-	return string.format( "J'ai vendu : %s", itemLink )
+    return string.format( "J'ai vendu : %s", itemLink )
 end
 L["DID NOT SELL: X"] = function( itemLink )
-	return string.format( "JE N'AI PAS VENDU : %s", itemLink )
+    return string.format( "JE N'AI PAS VENDU : %s", itemLink )
 end
 L["Sell: Others"] = "Vendre : Autres"
 L["Sell Greys"] = "Vendre les objets gris"

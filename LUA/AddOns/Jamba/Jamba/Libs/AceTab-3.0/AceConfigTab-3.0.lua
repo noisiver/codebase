@@ -12,7 +12,7 @@ if not lib then return end
 local ac = LibStub("AceConsole-3.0")
 
 local function printf(...)
-	DEFAULT_CHAT_FRAME:AddMessage(string.format(...))
+    DEFAULT_CHAT_FRAME:AddMessage(string.format(...))
 end
 
 -- getChildren(opt, ...)
@@ -59,7 +59,7 @@ local function getLevel(opt, ...)
 end
 
 local function getChildren(opt, ...)
-	local lastChild, path
+    local lastChild, path
     opt, path, lastChild = getLevel(opt, ...)
     local args = {}
     for _, field in ipairs({"args", "plugins"}) do
@@ -80,11 +80,11 @@ local function createWordlist(t, cmdline, pos)
     local argslist = string.sub(cmdline, pos, this:GetCursorPosition())
     local opt  -- TODO: figure out options table using cmd
     opt = LibStub("AceConfigRegistry-3.0"):GetOptionsTable("ag_UnitFrames", "cmd", "AceTab-3.0")  -- hardcoded temporarily for testing
-	if not opt then return end
-	local args, path = getChildren(opt, ac:GetArgs(argslist, #argslist/2))  -- largest # of args representable by a string of length #argslist, since they must be separated by spaces
-	for _, v in ipairs(args) do
-		table.insert(t, path..v)
-	end
+    if not opt then return end
+    local args, path = getChildren(opt, ac:GetArgs(argslist, #argslist/2))  -- largest # of args representable by a string of length #argslist, since they must be separated by spaces
+    for _, v in ipairs(args) do
+        table.insert(t, path..v)
+    end
 end
 
 local function usage(t, matches, _, cmdline)
@@ -92,7 +92,7 @@ local function usage(t, matches, _, cmdline)
     local argslist = string.sub(cmdline, #cmd, this:GetCursorPosition())
     local opt  -- TODO: figure out options table using cmd
     opt = LibStub("AceConfigRegistry-3.0"):GetOptionsTable("ag_UnitFrames")("cmd", "AceTab-3.0")  -- hardcoded temporarily for testing
-	if not opt then return end
+    if not opt then return end
     local level = getLevel(opt, ac:GetArgs(argslist, #argslist/2))  -- largest # of args representable by a string of length #argslist, since they must be separated by spaces
     local option
     for _, m in pairs(matches) do

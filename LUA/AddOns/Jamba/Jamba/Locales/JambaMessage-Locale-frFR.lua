@@ -14,7 +14,7 @@ L["Core: Message Display"] = "Cœur : Messages"
 L["Push Settings"] = "Transférer"
 L["Push the message settings to all characters in the team."] = "Transférer les réglages à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Réglages reçus de %s.", characterName )
+    return string.format( "Réglages reçus de %s.", characterName )
 end
 L["Default Chat Window"] = "Fenêtre de dicussion par défaut"
 L["Specific Chat Window"] = "Fenêtre de dicussion spécifique"
@@ -46,7 +46,7 @@ L["Mute (Default)"] = "muet (défaut)"
 L["Parrot"] = "Parrot"
 L["ERROR: Parrot Missing"] = "ERREUR : addon Parrot manquant"
 L["ERROR: Could not find area: A"] = function( areaName )
-	return string.format( "ERREUR : Impossible de trouver la zone : %s", areaName )
+    return string.format( "ERREUR : Impossible de trouver la zone : %s", areaName )
 end
 L[": "] = " :"
 L[" whispers: "] = " chuchote "

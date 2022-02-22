@@ -13,7 +13,7 @@ L["Display: Team"] = true
 L["Push Settings"] = true
 L["Push the display team settings to all characters in the team."] = true
 L["Settings received from A."] = function( characterName )
-	return string.format( "Settings received from %s.", characterName )
+    return string.format( "Settings received from %s.", characterName )
 end
 L[" "] = true
 L["("] = true

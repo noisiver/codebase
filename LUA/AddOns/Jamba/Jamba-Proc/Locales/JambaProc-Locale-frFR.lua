@@ -14,7 +14,7 @@ L["Proc"] = "Proc"
 L["Push Settings"] = "Appliquer les réglages"
 L["Push the proc settings to all characters in the team."] = "Appliquer les réglages de proc à tous les personnages de l'équipe"
 L["Settings received from A."] = function( characterName )
-	return string.format( "Réglages reçus de %s.", characterName )
+    return string.format( "Réglages reçus de %s.", characterName )
 end
 L["Proc"] = "Proc"
 L["Enable Jamba-Proc"] = "Activer Jamba-proc"

@@ -10,7 +10,7 @@ local MAJOR, MINOR = "JambaModule-1.0", 1
 local JambaModule, oldMinor = LibStub:NewLibrary( MAJOR, MINOR )
 
 if not JambaModule then 
-	return 
+    return 
 end
 
 -- Load libraries.
@@ -26,22 +26,22 @@ JambaModule.embeddedModules = JambaModule.embeddedModules or {}
 
 -- These methods are the embbedable methods.
 local mixinMethods = {
-	"JambaRegisterModule", "JambaModuleInitialize",
-	"JambaSendCommandToTeam", "JambaSendCommandToMaster",
-	"JambaSendMessageToTeam", "JambaSendCommandToToon",
-	"JambaSendSettings", "JambaOnSettingsReceived",
-	"JambaChatCommand",
-	"JambaConfigurationGetSetting", "JambaConfigurationSetSetting",
+    "JambaRegisterModule", "JambaModuleInitialize",
+    "JambaSendCommandToTeam", "JambaSendCommandToMaster",
+    "JambaSendMessageToTeam", "JambaSendCommandToToon",
+    "JambaSendSettings", "JambaOnSettingsReceived",
+    "JambaChatCommand",
+    "JambaConfigurationGetSetting", "JambaConfigurationSetSetting",
 } 
 
 -- Embed all the embeddable methods into the target module.
 function JambaModule:Embed( targetModule )
-	for key, value in pairs( mixinMethods ) do
-		targetModule[value] = self[value]
-	end
-	LibStub( "AceConsole-3.0" ):Embed( targetModule )
-	self.embeddedModules[targetModule] = true
-	return targetModule
+    for key, value in pairs( mixinMethods ) do
+        targetModule[value] = self[value]
+    end
+    LibStub( "AceConsole-3.0" ):Embed( targetModule )
+    self.embeddedModules[targetModule] = true
+    return targetModule
 end
 
 -------------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ end
 
 -- Register a module with Jamba.  Jamba needs modules to be registered in order to faciliate communications.
 function JambaModule:JambaRegisterModule( moduleName )
-	JambaPrivate.Core.RegisterModule( self, moduleName )
+    JambaPrivate.Core.RegisterModule( self, moduleName )
 end
 
 -------------------------------------------------------------------------------------------------------------
@@ -59,26 +59,26 @@ end
 
 -- Send settings to all available Jamba Team characters.
 function JambaModule:JambaSendSettings()
-	JambaPrivate.Core.SendSettings( self, self.db )
+    JambaPrivate.Core.SendSettings( self, self.db )
 end
 
 -- Send a command to all available Jamba Team characters.
 function JambaModule:JambaSendCommandToTeam( commandName, ... )
-	JambaPrivate.Core.SendCommandToTeam( self, commandName, ... )
+    JambaPrivate.Core.SendCommandToTeam( self, commandName, ... )
 end
 
 -- Send a command to just the master character.
 function JambaModule:JambaSendCommandToMaster( commandName, ... )
-	JambaPrivate.Core.SendCommandToMaster( self, commandName, ... )
+    JambaPrivate.Core.SendCommandToMaster( self, commandName, ... )
 end
 
 function JambaModule:JambaSendCommandToToon( characterName, commandName, ... )
-	JambaPrivate.Core.SendCommandToToon( self, characterName, commandName, ... )
+    JambaPrivate.Core.SendCommandToToon( self, characterName, commandName, ... )
 end
 
 -- Send a message to the team.
 function JambaModule:JambaSendMessageToTeam( areaName, message )
-	JambaPrivate.Message.SendMessage( areaName, message )
+    JambaPrivate.Message.SendMessage( areaName, message )
 end
 
 -------------------------------------------------------------------------------------------------------------
@@ -88,10 +88,10 @@ end
 -- Handle the chat command.
 function JambaModule:JambaChatCommand( input )
     if not input or input:trim() == "" then
-		JambaPrivate.SettingsFrame.Widget:Show()
-		JambaPrivate.SettingsFrame.TreeGroupStatus.groups[self.parentDisplayName] = true
-		JambaPrivate.SettingsFrame.WidgetTree:SelectByPath( self.parentDisplayName, self.moduleDisplayName )
-		JambaPrivate.SettingsFrame.Tree.ButtonClick( nil, nil, self.moduleDisplayName, false)
+        JambaPrivate.SettingsFrame.Widget:Show()
+        JambaPrivate.SettingsFrame.TreeGroupStatus.groups[self.parentDisplayName] = true
+        JambaPrivate.SettingsFrame.WidgetTree:SelectByPath( self.parentDisplayName, self.moduleDisplayName )
+        JambaPrivate.SettingsFrame.Tree.ButtonClick( nil, nil, self.moduleDisplayName, false)
     else
         LibStub( "AceConfigCmd-3.0" ):HandleCommand( self.chatCommand, self.moduleName, input )
     end    
@@ -105,27 +105,27 @@ end
 function JambaModule:JambaModuleInitialize( settingsFrame )
     -- Create the settings database supplying the settings values along with defaults.
     self.completeDatabase = LibStub( "AceDB-3.0" ):New( self.settingsDatabaseName, self.settings )
-	self.db = self.completeDatabase.profile
-	-- Create the settings.
-	LibStub( "AceConfig-3.0" ):RegisterOptionsTable( self.moduleName, self:GetConfiguration() )
-	self.settingsFrame = settingsFrame
-	-- Register the chat command for this module.
-	self:RegisterChatCommand( self.chatCommand, "JambaChatCommand" )
-	-- Remember the characters name.
-	self.characterName = UnitName( "player" )
-	self.characterGUID = UnitGUID( "player" )
-	-- Register this module with Jamba.
-	self:JambaRegisterModule( self.moduleName )
+    self.db = self.completeDatabase.profile
+    -- Create the settings.
+    LibStub( "AceConfig-3.0" ):RegisterOptionsTable( self.moduleName, self:GetConfiguration() )
+    self.settingsFrame = settingsFrame
+    -- Register the chat command for this module.
+    self:RegisterChatCommand( self.chatCommand, "JambaChatCommand" )
+    -- Remember the characters name.
+    self.characterName = UnitName( "player" )
+    self.characterGUID = UnitGUID( "player" )
+    -- Register this module with Jamba.
+    self:JambaRegisterModule( self.moduleName )
 end
 
 -- Get a settings value.
 function JambaModule:JambaConfigurationGetSetting( key )
-	return self.db[key[#key]]
+    return self.db[key[#key]]
 end
 
 -- Set a settings value.
 function JambaModule:JambaConfigurationSetSetting( key, value )
-	self.db[key[#key]] = value
+    self.db[key[#key]] = value
 end
 
 -------------------------------------------------------------------------------------------------------------
@@ -134,5 +134,5 @@ end
 
 -- Upgrade all modules that are already using this library to use the newer version.
 for targetModule, value in pairs( JambaModule.embeddedModules ) do
-	JambaModule:Embed( targetModule )
+    JambaModule:Embed( targetModule )
 end
