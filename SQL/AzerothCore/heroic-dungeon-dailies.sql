@@ -1,3 +1,18 @@
+DELETE FROM `creature_questender` WHERE `id`=31439 AND `quest` IN (13245, 13246, 13247, 13248, 13249, 13250, 13251, 13252, 13253, 13254, 13255, 13256, 14199);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13245);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13246);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13247);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13248);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13249);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13250);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13251);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13252);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13253);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13254);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13255);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 13256);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (31439, 14199);
+
 DELETE FROM `creature_queststarter` WHERE `id`=31439 AND `quest` IN (13245, 13246, 13247, 13248, 13249, 13250, 13251, 13252, 13253, 13254, 13255, 13256, 14199);
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES (31439, 13245);
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES (31439, 13246);
