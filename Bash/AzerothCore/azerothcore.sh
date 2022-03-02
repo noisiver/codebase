@@ -229,235 +229,237 @@ function store_options
             <enable_minigob_manabonk>${32:-true}</enable_minigob_manabonk>
             <!-- Enable Warden anti-cheat system. false = disabled, true = enabled -->
             <enable_warden>${33:-true}</enable_warden>
+            <!-- Allow players to stay in regular groups when logging off. This only affects normal groups and not raids or dungeon finder groups. false = players will leave their group when logging off, true = players will stay in their groups -->
+            <disable_leave_group>${34:-false}</disable_leave_group>
             <rates>
                 <!-- Experience rates (outside battleground) -->
-                <experience>${34:-1}</experience>
+                <experience>${35:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_experience>${35:-1}</rested_experience>
+                <rested_experience>${36:-1}</rested_experience>
                 <!-- Reputation gain rate -->
-                <reputation>${36:-1}</reputation>
+                <reputation>${37:-1}</reputation>
                 <!-- Drop rates for money -->
-                <money>${37:-1}</money>
+                <money>${38:-1}</money>
                 <!-- Crafting skills gain rate -->
-                <crafting>${38:-1}</crafting>
+                <crafting>${39:-1}</crafting>
                 <!-- Gathering skills gain rate -->
-                <gathering>${39:-1}</gathering>
+                <gathering>${40:-1}</gathering>
                 <!-- Weapon skills gain rate -->
-                <weapon_skill>${40:-1}</weapon_skill>
+                <weapon_skill>${41:-1}</weapon_skill>
                 <!-- Defense skills gain rate -->
-                <defense_skill>${41:-1}</defense_skill>
+                <defense_skill>${42:-1}</defense_skill>
             </rates>
             <gm>
                 <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
-                <login_state>${42:-true}</login_state>
+                <login_state>${43:-true}</login_state>
                 <!-- GM visibility at login. false = disabled, true = enabled -->
-                <enable_visibility>${43:-false}</enable_visibility>
+                <enable_visibility>${44:-false}</enable_visibility>
                 <!-- GM chat mode at login. false = disabled, true = enabled -->
-                <enable_chat>${44:-true}</enable_chat>
+                <enable_chat>${45:-true}</enable_chat>
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
-                <enable_whisper>${45:-false}</enable_whisper>
+                <enable_whisper>${46:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${46:-1}</show_gm_list>
+                <show_gm_list>${47:-1}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_who_list>${47:-0}</show_who_list>
+                <show_who_list>${48:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
-                <allow_friend>${48:-false}</allow_friend>
+                <allow_friend>${49:-false}</allow_friend>
                 <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
-                <allow_invite>${49:-false}</allow_invite>
+                <allow_invite>${50:-false}</allow_invite>
                 <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
-                <allow_lower_security>${50:-false}</allow_lower_security>
+                <allow_lower_security>${51:-false}</allow_lower_security>
             </gm>
         </world>
         <modules>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${51:-false}</enabled>
+                <enabled>${52:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${52:-false}</enable_buyer>
+                <enable_buyer>${53:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${53:-false}</enable_seller>
+                <enable_seller>${54:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${54:-0}</account_id>
+                <account_id>${55:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${55:-0}</character_guid>
+                <character_guid>${56:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${56:-250}</min_items>
+                <min_items>${57:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${57:-250}</max_items>
+                <max_items>${58:-250}</max_items>
             </ahbot>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
-                <enabled>${58:-false}</enabled>
+                <enabled>${59:-false}</enabled>
                 <features>
                     <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${59:-false}</heirlooms>
+                    <heirlooms>${60:-false}</heirlooms>
                     <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${60:-false}</glyphs>
+                    <glyphs>${61:-false}</glyphs>
                     <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${61:-false}</gems>
+                    <gems>${62:-false}</gems>
                     <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${62:-false}</containers>
+                    <containers>${63:-false}</containers>
                     <utilities>
                         <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${63:-false}</enabled>
+                        <enabled>${64:-false}</enabled>
                         <!-- Cost in gold required to perform a name change -->
-                        <name_change>${64:-10}</name_change>
+                        <name_change>${65:-10}</name_change>
                         <!-- Cost in gold required to perform a customization -->
-                        <customization>${65:-50}</customization>
+                        <customization>${66:-50}</customization>
                         <!-- Cost in gold to perform a race change -->
-                        <race_change>${66:-500}</race_change>
+                        <race_change>${67:-500}</race_change>
                         <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${67:-1000}</faction_change>
+                        <faction_change>${68:-1000}</faction_change>
                     </utilities>
                     <professions>
                         <!-- Enable/Disable increasing profession skills levels at the assistant -->
-                        <enabled>${68:-false}</enabled>
+                        <enabled>${69:-false}</enabled>
                         <apprentice>
                             <!-- Enable/Disable increasing apprentice rank to level 75 -->
-                            <enabled>${69:-false}</enabled>
+                            <enabled>${70:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${70:-100}</cost>
+                            <cost>${71:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable increasing journeyman rank to level 150 -->
-                            <enabled>${71:-false}</enabled>
+                            <enabled>${72:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${72:-250}</cost>
+                            <cost>${73:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable increasing expert rank to level 225 -->
-                            <enabled>${73:-false}</enabled>
+                            <enabled>${74:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${74:-500}</cost>
+                            <cost>${75:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable increasing artisan rank to level 300 -->
-                            <enabled>${75:-false}</enabled>
+                            <enabled>${76:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${76:-750}</cost>
+                            <cost>${77:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable increasing master rank to level 375 -->
-                            <enabled>${77:-false}</enabled>
+                            <enabled>${78:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${78:-1250}</cost>
+                            <cost>${79:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable increasing grand master rank to level 450 -->
-                            <enabled>${79:-false}</enabled>
+                            <enabled>${80:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${80:-2500}</cost>
+                            <cost>${81:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${81:-false}</enabled>
+                <enabled>${82:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${82:-false}</enabled>
+                <enabled>${83:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${83:-false}</enabled>
+                <enabled>${84:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${84:-false}</on_login>
+                    <on_login>${85:-false}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${85:-false}</on_levelup>
+                    <on_levelup>${86:-false}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${86:-false}</class_spells>
+                    <class_spells>${87:-false}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${87:-false}</talent_ranks>
+                    <talent_ranks>${88:-false}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${88:-false}</proficiencies>
+                    <proficiencies>${89:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${89:-false}</from_quests>
+                    <from_quests>${90:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${90:-false}</enabled>
+                        <enabled>${91:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${91:-60}</max_level>
+                        <max_level>${92:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${92:-false}</enabled>
+                        <enabled>${93:-false}</enabled>
                         <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${93:-false}</apprentice>
+                        <apprentice>${94:-false}</apprentice>
                         <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${94:-false}</journeyman>
+                        <journeyman>${95:-false}</journeyman>
                         <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${95:-false}</expert>
+                        <expert>${96:-false}</expert>
                         <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${96:-false}</artisan>
+                        <artisan>${97:-false}</artisan>
                         <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${97:-false}</cold_weather>
+                        <cold_weather>${98:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${98:-false}</enabled>
+                <enabled>${99:-false}</enabled>
                 <gold>
                     <!-- The amount of gold given at level 10 -->
-                    <level_10>${99:-5}</level_10>
+                    <level_10>${100:-5}</level_10>
                     <!-- The amount of gold given at level 20 -->
-                    <level_20>${100:-15}</level_20>
+                    <level_20>${101:-15}</level_20>
                     <!-- The amount of gold given at level 30 -->
-                    <level_30>${101:-30}</level_30>
+                    <level_30>${102:-30}</level_30>
                     <!-- The amount of gold given at level 40 -->
-                    <level_40>${102:-45}</level_40>
+                    <level_40>${103:-45}</level_40>
                     <!-- The amount of gold given at level 50 -->
-                    <level_50>${103:-60}</level_50>
+                    <level_50>${104:-60}</level_50>
                     <!-- The amount of gold given at level 60 -->
-                    <level_60>${104:-80}</level_60>
+                    <level_60>${105:-80}</level_60>
                     <!-- The amount of gold given at level 70 -->
-                    <level_70>${105:-125}</level_70>
+                    <level_70>${106:-125}</level_70>
                     <!-- The amount of gold given at level 80 -->
-                    <level_80>${106:-250}</level_80>
+                    <level_80>${107:-250}</level_80>
                 </gold>
             </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
-                <enabled>${107:-false}</enabled>
+                <enabled>${108:-false}</enabled>
                 <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
-                <duration>${108:-90}</duration>
+                <duration>${109:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
-                <account_age>${109:-7}</account_age>
+                <account_age>${110:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${110:-30}</days>
+                    <days>${111:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${111:-true}</swift_zhevra>
+                    <swift_zhevra>${112:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${112:-true}</touring_rocket>
+                    <touring_rocket>${113:-true}</touring_rocket>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${113:-false}</enabled>
+                <enabled>${114:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${114:-58}</starting_level>
+                <starting_level>${115:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${115:-false}</enabled>
+                <enabled>${116:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${116:-false}</enabled>
+                <enabled>${117:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${117:-2}</experience_multiplier>
+                <experience_multiplier>${118:-2}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${118:-2}</money_multiplier>
+                <money_multiplier>${119:-2}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${119:-2}</professions_multiplier>
+                <professions_multiplier>${120:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${120:-2}</reputation_multiplier>
+                <reputation_multiplier>${121:-2}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${121:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${122:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -500,6 +502,7 @@ function save_options
     $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE \
     $OPTION_WORLD_ENABLE_MINIGOB_MANABONK \
     $OPTION_WORLD_ENABLE_WARDEN \
+    $OPTION_WORLD_DISABLE_LEAVE_GROUP \
     $OPTION_WORLD_RATES_EXPERIENCE \
     $OPTION_WORLD_RATES_RESTED_EXPERIENCE \
     $OPTION_WORLD_RATES_REPUTATION \
@@ -905,6 +908,15 @@ function load_options
         RESET=true
     fi
 
+    # Load the /options/world/disable_leave_group option
+    OPTION_WORLD_DISABLE_LEAVE_GROUP="$(echo "cat /options/world/disable_leave_group/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_DISABLE_LEAVE_GROUP != "true" && $OPTION_WORLD_DISABLE_LEAVE_GROUP != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/disable_leave_group is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_DISABLE_LEAVE_GROUP="false"
+        RESET=true
+    fi
+
     # Load the /options/world/rates/experience option
     OPTION_WORLD_RATES_EXPERIENCE="$(echo "cat /options/world/rates/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_RATES_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_EXPERIENCE < 1 ]]; then
@@ -916,7 +928,7 @@ function load_options
 
     # Load the /options/world/rates/rested_experience option
     OPTION_WORLD_RATES_RESTED_EXPERIENCE="$(echo "cat /options/world/rates/rested_experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_RATES_RESTED_EXPERIENCE =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_RESTED_EXPERIENCE < 1 ]]; then
+    if [[ ! $OPTION_WORLD_RATES_RESTED_EXPERIENCE =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/rates/rested_experience is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_RATES_RESTED_EXPERIENCE="1"
@@ -1754,6 +1766,12 @@ function get_source
             # Terminate script on errors
             exit $?
         fi
+    fi
+
+    if [[ $OPTION_WORLD_DISABLE_LEAVE_GROUP == "true" ]]; then
+        cp $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp.bak
+        sed -e '619,623d' -e '618s/.*/        if (!_player->GetGroup())\n            _player->UninviteFromGroup();/' $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp.bak > $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp
+        rm -rf $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp.bak
     fi
 
     # Check if either both or world is used as the first parameter
