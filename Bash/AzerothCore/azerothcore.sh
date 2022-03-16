@@ -451,13 +451,13 @@ function store_options
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
                 <enabled>${117:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${118:-2}</experience_multiplier>
+                <experience_multiplier>${118:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${119:-2}</money_multiplier>
+                <money_multiplier>${119:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
                 <professions_multiplier>${120:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${121:-2}</reputation_multiplier>
+                <reputation_multiplier>${121:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
                 <proficiencies_multiplier>${122:-2}</proficiencies_multiplier>
             </weekend_bonus>
@@ -1666,19 +1666,19 @@ function load_options
 
     # Load the /options/modules/weekend_bonus/experience_multiplier option
     OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/experience_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER < 1 ]]; then
+    if [[ $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/weekend_bonus/experience_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="2"
+        OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="2.0"
         RESET=true
     fi
 
     # Load the /options/modules/weekend_bonus/money_multiplier option
     OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/money_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER < 1 ]]; then
+    if [[ $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/weekend_bonus/money_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER="2"
+        OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER="2.0"
         RESET=true
     fi
 
@@ -1693,10 +1693,10 @@ function load_options
 
     # Load the /options/modules/weekend_bonus/reputation_multiplier option
     OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/reputation_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER < 1 ]]; then
+    if [[ $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/weekend_bonus/reputation_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="2"
+        OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="2.0"
         RESET=true
     fi
 
