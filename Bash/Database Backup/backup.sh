@@ -142,9 +142,6 @@ function load_options
     # Install required package
     options_package
 
-    # The file where all options are stored
-    OPTIONS="$ROOT/options.xml"
-
     # Check if the file is missing
     if [ ! -f $OPTIONS ]; then
         # Create the file with the default options

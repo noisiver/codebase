@@ -787,7 +787,7 @@ function load_options
     if [[ ! $OPTION_WORLD_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_MAX_LEVEL < 1 || $OPTION_WORLD_MAX_LEVEL > 80 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/max_level is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_MAX_LEVEL="1"
+        OPTION_WORLD_MAX_LEVEL="80"
         RESET=true
     fi
 
