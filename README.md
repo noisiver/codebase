@@ -8,6 +8,8 @@ I am not experienced enough in a specific language to call myself a professional
 # AzerothCore
 I use [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) to host my own World of Warcraft server. I'm the only one playing on it and therefore I'm changing it to fit my demands. These are the modules I created myself that has the additional features I wanted.
 
+[Archmage Timear](https://github.com/tkn963/mod-archmage-timear) : Gives Archmage Timear the ability to offer the player daily heroic dungeon quests
+
 [Assistant](https://github.com/tkn963/mod-assistant) : Allows players to obtain certain items and utilities from an NPC.
 
 [GroupQuests](https://github.com/tkn963/mod-groupquests) : Makes quest items drop for all members of a group. In some cases it also help certain objectives count for all members of a group.
@@ -16,7 +18,7 @@ I use [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) to host my
 
 [LevelReward](https://github.com/tkn963/mod-levelreward) : Gives players a reward of gold when reaching specific levels.
 
-[ReferAFriend](https://github.com/tkn963/mod-referafriend) : Lets players activate refer a friend with an in-game command.
+[RecruitAFriend](https://github.com/tkn963/mod-recruitafriend) : Lets players activate recruit a friend with an in-game command.
 
 [SpawnPoints](https://github.com/tkn963/mod-spawnpoints) : Makes new characters spawn in specified locations when entering the world for the first time.
 
