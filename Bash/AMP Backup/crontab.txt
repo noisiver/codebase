@@ -1,0 +1,1 @@
+0 * * * * cd /opt/amp && sudo ./backup.sh
