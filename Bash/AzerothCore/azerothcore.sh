@@ -1764,12 +1764,6 @@ function get_source
         fi
     fi
 
-    if [[ $OPTION_WORLD_DISABLE_LEAVE_GROUP == "true" ]]; then
-        cp $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp.bak
-        sed -e '619,623d' -e '618s/.*/        if (!_player->GetGroup())\n            _player->UninviteFromGroup();/' $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp.bak > $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp
-        rm -rf $OPTION_SOURCE_LOCATION/src/server/game/Server/WorldSession.cpp.bak
-    fi
-
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
         # Check if the ahbot module should be installed
@@ -3034,6 +3028,7 @@ function set_config
         [ $OPTION_WORLD_GM_ALLOW_INVITE == "true" ] && WORLD_GM_ALLOW_INVITE=1 || WORLD_GM_ALLOW_INVITE=0
         [ $OPTION_WORLD_GM_ALLOW_FRIEND == "true" ] && WORLD_GM_ALLOW_FRIEND=1 || WORLD_GM_ALLOW_FRIEND=0
         [ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY == "true" ] && WORLD_GM_ALLOW_LOWER_SECURITY=1 || WORLD_GM_ALLOW_LOWER_SECURITY=0
+        [ $OPTION_WORLD_DISABLE_LEAVE_GROUP == "true" ] && WORLD_DISABLE_LEAVE_GROUP=0 || WORLD_DISABLE_LEAVE_GROUP=1
 
         # Copy the file before editing it
         cp $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist $OPTION_SOURCE_LOCATION/etc/worldserver.conf
@@ -3091,6 +3086,7 @@ function set_config
         sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = '$WORLD_GM_ALLOW_FRIEND'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = '$WORLD_GM_ALLOW_LOWER_SECURITY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$WORLD_ENABLE_WARDEN'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
