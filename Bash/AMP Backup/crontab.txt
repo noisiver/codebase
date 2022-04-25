@@ -1,1 +1,1 @@
-0 * * * * cd /opt/amp && sudo ./backup.sh
+30 * * * * cd /opt/amp && ./backup.sh

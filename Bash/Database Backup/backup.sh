@@ -338,7 +338,7 @@ function backup_database
             cd $HOME/gdrive
 
             # Download any changes from google drive
-            drive pull -no-prompt > /dev/null 2>&1
+            /snap/bin/drive pull -no-prompt > /dev/null 2>&1
 
             # Stop the script on error
             if [ $? -ne 0 ]; then
@@ -358,7 +358,7 @@ function backup_database
             ls -tp $HOME/gdrive/database/* | grep -v '/$' | tail -n +$MAX_LOCAL_FILES | xargs -d '\n' -r rm --
 
             # Upload all changes to google drive
-            drive push -no-prompt > /dev/null 2>&1
+            /snap/bin/drive push -no-prompt > /dev/null 2>&1
 
             # Stop the script on error
             if [ $? -ne 0 ]; then
@@ -367,7 +367,7 @@ function backup_database
 
 
             # Empty the google drive trash
-            drive emptytrash -no-prompt > /dev/null 2>&1
+            /snap/bin/drive emptytrash -no-prompt > /dev/null 2>&1
 
             # Stop the script on error
             if [ $? -ne 0 ]; then

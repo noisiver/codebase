@@ -1,1 +1,1 @@
-0 * * * * cd /opt/backup && sudo ./backup.sh
+0 * * * * cd /opt/backup && ./backup.sh
