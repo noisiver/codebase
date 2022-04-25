@@ -684,7 +684,7 @@ function load_options
     if [[ ! $OPTION_SOURCE_REQUIRED_CLIENT_DATA =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/source/required_client_data is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_SOURCE_REQUIRED_CLIENT_DATA="12"
+        OPTION_SOURCE_REQUIRED_CLIENT_DATA="14"
         RESET=true
     fi
 
@@ -1098,7 +1098,7 @@ function load_options
     if [[ ! $OPTION_MODULES_AHBOT_ACCOUNT_ID =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/ahbot/account_id is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_AHBOT_ACCOUNT_ID="0"
+        OPTION_MODULES_AHBOT_ACCOUNT_ID="1"
         RESET=true
     fi
 
@@ -1107,7 +1107,7 @@ function load_options
     if [[ ! $OPTION_MODULES_AHBOT_CHARACTER_GUID =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/ahbot/character_guid is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_AHBOT_CHARACTER_GUID="0"
+        OPTION_MODULES_AHBOT_CHARACTER_GUID="1"
         RESET=true
     fi
 
