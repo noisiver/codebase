@@ -174,7 +174,7 @@ function store_options
             <!-- The location where the source is located -->
             <location>${8:-/opt/azerothcore}</location>
             <!-- The required client data version -->
-            <required_client_data>${9:-12}</required_client_data>
+            <required_client_data>${9:-14}</required_client_data>
             <!-- The installed client data version. WARNING: DO NOT EDIT -->
             <installed_client_data>${10:-0}</installed_client_data>
         </source>

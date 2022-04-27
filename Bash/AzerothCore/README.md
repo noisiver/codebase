@@ -4,7 +4,7 @@ This is the content I use with my World of Warcraft: Wrath of the Lich King (3.3
 This script does the following:
 - Download the source code and the source of any enabled module
 - Compile the source code
-- Download the client data files
+- Download the client data files. It will find the latest available version automatically
 - Import database tables and updates. It will skip already existing tables to make sure there's no loss in data
 - Update configuration files based on values set in the xml file
 - Start and stop the server
