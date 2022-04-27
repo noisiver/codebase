@@ -1,7 +1,7 @@
 #!/bin/bash
 DISTRIBUTION=("debian11" "ubuntu20.04" "ubuntu20.10" "ubuntu21.04" "ubuntu21.10")
 
-if [ -f /etc/os-release ]; then
+if [[ -f /etc/os-release ]]; then
     . /etc/os-release
     OS=$ID
     VERSION=$VERSION_ID
@@ -39,18 +39,18 @@ function options_package
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # Check if the package is installed
-        if [ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+        if [[ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
             apt-get --yes update
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
             apt-get --yes install libxml2-utils
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         fi
@@ -63,18 +63,18 @@ function git_package
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # Check if the package is installed
-        if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+        if [[ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
             apt-get --yes update
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
             apt-get --yes install git
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         fi
@@ -99,24 +99,24 @@ function source_packages
         # Loop through each member of the array and add them to the list of packages to be installed
         for p in "${PACKAGES[@]}"; do
             # Check if the package is installed
-            if [ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+            if [[ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
                 INSTALL+=($p)
             fi
         done
 
         # Check if there actually are packages to install
-        if [ ${#INSTALL[@]} -gt 0 ]; then
+        if [[ ${#INSTALL[@]} -gt 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
             apt-get --yes update
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install all packages that are missing
             apt-get --yes install ${INSTALL[*]}
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         fi
@@ -129,18 +129,18 @@ function database_package
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # Check if the package is installed
-        if [ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+        if [[ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
             apt-get --yes update
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
             apt-get --yes install mariadb-client
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         fi
@@ -333,7 +333,7 @@ function load_options
     OPTIONS="$ROOT/options-minimal.xml"
 
     # Check if the file is missing
-    if [ ! -f $OPTIONS ]; then
+    if [[ ! -f $OPTIONS ]]; then
         # Create the file with the default options
         printf "${COLOR_RED}The options file is missing. Creating one with the default options.${COLOR_END}\n"
         printf "${COLOR_RED}Make sure to edit it to prevent issues that might occur otherwise.${COLOR_END}\n"
@@ -343,7 +343,7 @@ function load_options
 
     # Load the /options/mysql/hostname option
     OPTION_MYSQL_HOSTNAME="$(echo "cat /options/mysql/hostname/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_HOSTNAME ] || [[ $OPTION_MYSQL_HOSTNAME == "" ]]; then
+    if [[ -z $OPTION_MYSQL_HOSTNAME ]] || [[ $OPTION_MYSQL_HOSTNAME == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/hostname is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_HOSTNAME="127.0.0.1"
@@ -361,7 +361,7 @@ function load_options
 
     # Load the /options/mysql/username option
     OPTION_MYSQL_USERNAME="$(echo "cat /options/mysql/username/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_USERNAME ] || [[ $OPTION_MYSQL_USERNAME == "" ]]; then
+    if [[ -z $OPTION_MYSQL_USERNAME ]] || [[ $OPTION_MYSQL_USERNAME == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/username is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_USERNAME="acore"
@@ -370,7 +370,7 @@ function load_options
 
     # Load the /options/mysql/password option
     OPTION_MYSQL_PASSWORD="$(echo "cat /options/mysql/password/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_PASSWORD ] || [[ $OPTION_MYSQL_PASSWORD == "" ]]; then
+    if [[ -z $OPTION_MYSQL_PASSWORD ]] || [[ $OPTION_MYSQL_PASSWORD == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/password is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_PASSWORD="acore"
@@ -379,7 +379,7 @@ function load_options
 
     # Load the /options/mysql/databases/auth option
     OPTION_MYSQL_DATABASES_AUTH="$(echo "cat /options/mysql/databases/auth/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASES_AUTH ] || [[ $OPTION_MYSQL_DATABASES_AUTH == "" ]]; then
+    if [[ -z $OPTION_MYSQL_DATABASES_AUTH ]] || [[ $OPTION_MYSQL_DATABASES_AUTH == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/databases/auth is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_DATABASES_AUTH="acore_auth"
@@ -388,7 +388,7 @@ function load_options
 
     # Load the /options/mysql/databases/characters option
     OPTION_MYSQL_DATABASES_CHARACTERS="$(echo "cat /options/mysql/databases/characters/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASES_CHARACTERS ] || [[ $OPTION_MYSQL_DATABASES_CHARACTERS == "" ]]; then
+    if [[ -z $OPTION_MYSQL_DATABASES_CHARACTERS ]] || [[ $OPTION_MYSQL_DATABASES_CHARACTERS == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/databases/characters is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_DATABASES_CHARACTERS="acore_characters"
@@ -397,7 +397,7 @@ function load_options
 
     # Load the /options/mysql/databases/world option
     OPTION_MYSQL_DATABASES_WORLD="$(echo "cat /options/mysql/databases/world/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASES_WORLD ] || [[ $OPTION_MYSQL_DATABASES_WORLD == "" ]]; then
+    if [[ -z $OPTION_MYSQL_DATABASES_WORLD ]] || [[ $OPTION_MYSQL_DATABASES_WORLD == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/databases/world is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_DATABASES_WORLD="acore_world"
@@ -406,7 +406,7 @@ function load_options
 
     # Load the /options/source/location option
     OPTION_SOURCE_LOCATION="$(echo "cat /options/source/location/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_SOURCE_LOCATION ] || [[ $OPTION_SOURCE_LOCATION == "" ]]; then
+    if [[ -z $OPTION_SOURCE_LOCATION ]] || [[ $OPTION_SOURCE_LOCATION == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/source/location is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_SOURCE_LOCATION="/opt/azerothcore"
@@ -418,13 +418,13 @@ function load_options
     if [[ ! $OPTION_SOURCE_REQUIRED_CLIENT_DATA =~ ^[0-9]+$ ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/source/required_client_data is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_SOURCE_REQUIRED_CLIENT_DATA="12"
+        OPTION_SOURCE_REQUIRED_CLIENT_DATA="14"
         RESET=true
     fi
 
     # Load the /options/source/installed_client_data option
     OPTION_SOURCE_INSTALLED_CLIENT_DATA="$(echo "cat /options/source/installed_client_data/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_SOURCE_INSTALLED_CLIENT_DATA =~ ^[0-9]+$ ]] || [ $OPTION_SOURCE_INSTALLED_CLIENT_DATA -gt $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]; then
+    if [[ ! $OPTION_SOURCE_INSTALLED_CLIENT_DATA =~ ^[0-9]+$ ]] || [[ $OPTION_SOURCE_INSTALLED_CLIENT_DATA -gt $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/source/installed_client_data is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_SOURCE_INSTALLED_CLIENT_DATA="0"
@@ -517,7 +517,7 @@ function load_options
     if [[ ! $OPTION_WORLD_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_MAX_LEVEL < 1 || $OPTION_WORLD_MAX_LEVEL > 80 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/max_level is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_MAX_LEVEL="1"
+        OPTION_WORLD_MAX_LEVEL="80"
         RESET=true
     fi
 
@@ -635,6 +635,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/enable_warden is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_ENABLE_WARDEN="true"
+        RESET=true
+    fi
+
+    # Load the /options/world/disable_leave_group option
+    OPTION_WORLD_DISABLE_LEAVE_GROUP="$(echo "cat /options/world/disable_leave_group/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_DISABLE_LEAVE_GROUP != "true" && $OPTION_WORLD_DISABLE_LEAVE_GROUP != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/disable_leave_group is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_DISABLE_LEAVE_GROUP="false"
         RESET=true
     fi
 
@@ -792,7 +801,7 @@ function load_options
     fi
 
     # Check if any option calls for a reset
-    if [ $RESET ]; then
+    if [[ $RESET ]]; then
         # Tell the user that the invalid options should be changed, then terminate the script
         printf "${COLOR_RED}Make sure to change the options listed above to prevent any unwanted issues.${COLOR_END}\n"
         save_options
@@ -809,12 +818,12 @@ function get_source
     printf "${COLOR_GREEN}Downloading the source code...${COLOR_END}\n"
 
     # Check if the source is already downloaded
-    if [ ! -d $OPTION_SOURCE_LOCATION ]; then
+    if [[ ! -d $OPTION_SOURCE_LOCATION ]]; then
         # Download the source code
         git clone --recursive --branch master https://github.com/azerothcore/azerothcore-wotlk.git $OPTION_SOURCE_LOCATION
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Terminate script on errors
             exit $?
         fi
@@ -826,7 +835,7 @@ function get_source
         git fetch --all
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Terminate script on errors
             exit $?
         fi
@@ -835,7 +844,7 @@ function get_source
         git reset --hard origin/master
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Terminate script on errors
             exit $?
         fi
@@ -844,7 +853,7 @@ function get_source
         git submodule update
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Terminate script on errors
             exit $?
         fi
@@ -868,7 +877,7 @@ function compile_source
     cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DTOOLS=0 -DSCRIPTS=static
 
     # Check to make sure there weren't any errors
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         # Terminate script on errors
         exit $?
     fi
@@ -877,7 +886,7 @@ function compile_source
     make -j $(nproc)
 
     # Check to make sure there weren't any errors
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         # Terminate script on errors
         exit $?
     fi
@@ -886,7 +895,7 @@ function compile_source
     make install
 
     # Check to make sure there weren't any errors
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         # Terminate script on errors
         exit $?
     fi
@@ -912,7 +921,7 @@ function compile_source
         chmod +x $OPTION_SOURCE_LOCATION/bin/auth.sh
     else
         # Check if the script for authserver already exists
-        if [ -f $OPTION_SOURCE_LOCATION/bin/auth.sh ]; then
+        if [[ -f $OPTION_SOURCE_LOCATION/bin/auth.sh ]]; then
             # Remove the script if authserver is not used
             rm -rf $OPTION_SOURCE_LOCATION/bin/auth.sh
         fi
@@ -938,7 +947,7 @@ function compile_source
         chmod +x $OPTION_SOURCE_LOCATION/bin/world.sh
     else
         # Check if the script for worldserver already exists
-        if [ -f $OPTION_SOURCE_LOCATION/bin/world.sh ]; then
+        if [[ -f $OPTION_SOURCE_LOCATION/bin/world.sh ]]; then
             # Remove the script if worldserver is not used
             rm -rf $OPTION_SOURCE_LOCATION/bin/world.sh
         fi
@@ -957,7 +966,7 @@ function get_client_files
     # Make sure this is only used with the both or world subparameters
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
         # Check if any of the folders are missing
-        if [ ! -d $OPTION_SOURCE_LOCATION/bin/Cameras ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/dbc ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/maps ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/mmaps ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/vmaps ]; then
+        if [[ ! -d $OPTION_SOURCE_LOCATION/bin/Cameras ]] || [[ ! -d $OPTION_SOURCE_LOCATION/bin/dbc ]] || [[ ! -d $OPTION_SOURCE_LOCATION/bin/maps ]] || [[ ! -d $OPTION_SOURCE_LOCATION/bin/mmaps ]] || [[ ! -d $OPTION_SOURCE_LOCATION/bin/vmaps ]]; then
             # Set installed client data to 0 if any folder is missing
             OPTION_SOURCE_INSTALLED_CLIENT_DATA=0
         fi
@@ -966,7 +975,7 @@ function get_client_files
         AVAILABLE_VERSION=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
 
         # Check if the latest version differ from the required version
-        if [ $OPTION_SOURCE_REQUIRED_CLIENT_DATA != $AVAILABLE_VERSION ]; then
+        if [[ $OPTION_SOURCE_REQUIRED_CLIENT_DATA != $AVAILABLE_VERSION ]]; then
             # Update the required version with this version
             OPTION_SOURCE_REQUIRED_CLIENT_DATA=$AVAILABLE_VERSION
 
@@ -975,23 +984,23 @@ function get_client_files
         fi
 
         # Check if the installed version differ from the required version
-        if [ $OPTION_SOURCE_INSTALLED_CLIENT_DATA != $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]; then
+        if [[ $OPTION_SOURCE_INSTALLED_CLIENT_DATA != $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]]; then
             printf "${COLOR_GREEN}Downloading the client data files...${COLOR_END}\n"
 
             # Check all folders included in the data files and remove them
-            if [ -d $OPTION_SOURCE_LOCATION/bin/Cameras ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/Cameras ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/Cameras
             fi
-            if [ -d $OPTION_SOURCE_LOCATION/bin/dbc ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/dbc ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/dbc
             fi
-            if [ -d $OPTION_SOURCE_LOCATION/bin/maps ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/maps ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/maps
             fi
-            if [ -d $OPTION_SOURCE_LOCATION/bin/mmaps ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/mmaps ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/mmaps
             fi
-            if [ -d $OPTION_SOURCE_LOCATION/bin/vmaps ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/vmaps ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/vmaps
             fi
 
@@ -999,7 +1008,7 @@ function get_client_files
             curl -L https://github.com/wowgaming/client-data/releases/download/v${OPTION_SOURCE_REQUIRED_CLIENT_DATA}/data.zip > $OPTION_SOURCE_LOCATION/bin/data.zip
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Terminate script on errors
                 exit $?
             fi
@@ -1008,7 +1017,7 @@ function get_client_files
             unzip -o "$OPTION_SOURCE_LOCATION/bin/data.zip" -d "$OPTION_SOURCE_LOCATION/bin/"
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Terminate script on errors
                 exit $?
             fi
@@ -1023,6 +1032,24 @@ function get_client_files
             save_options
 
             printf "${COLOR_GREEN}Finished downloading the client data files...${COLOR_END}\n"
+        fi
+
+        # Allow copying custom dbc files to the dbc folder
+        if [[ -d $ROOT/dbc ]]; then
+            # Check if the folder is empty
+            if [[ ! -z "$(ls -A $ROOT/dbc/)" ]]; then
+                printf "${COLOR_GREEN}Copying modified dbc files...${COLOR_END}\n"
+
+                # Loop through all dbc files inside the folder
+                for f in $ROOT/dbc/*.dbc; do
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
+
+                    # Copy the file
+                    cp -r $f "$OPTION_SOURCE_LOCATION/bin/dbc/$(basename $f)"
+                done
+
+                printf "${COLOR_GREEN}Finished copying custom dbc files...${COLOR_END}\n"
+            fi
         fi
     fi
 }
@@ -1039,7 +1066,7 @@ function import_database
     echo "password=\"$OPTION_MYSQL_PASSWORD\"" >> $MYSQL_CNF
 
     # Make sure the auth database exists and is accessible
-    if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_AUTH'"` ]; then
+    if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_AUTH'"` ]]; then
         # We can't access the required database, so terminate the script
         printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_AUTH is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
 
@@ -1053,7 +1080,7 @@ function import_database
     # Check if either both or auth is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
         # Make sure the database folders exists
-        if [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_auth ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth ]; then
+        if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_auth ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth ]]; then
             # The files are missing, so terminate the script
             printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -1069,7 +1096,7 @@ function import_database
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
         # Make sure the characters database exists and is accessible
-        if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_CHARACTERS'"` ]; then
+        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_CHARACTERS'"` ]]; then
             # We can't access the required database, so terminate the script
             printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_CHARACTERS is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
 
@@ -1081,7 +1108,7 @@ function import_database
         fi
 
         # Make sure the world database exists and is accessible
-        if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_WORLD'"` ]; then
+        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_WORLD'"` ]]; then
             # We can't access the required database, so terminate the script
             printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_WORLD is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
 
@@ -1093,7 +1120,7 @@ function import_database
         fi
 
         # Make sure the database folders exists
-        if [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_characters ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_world ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_world ]; then
+        if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_characters ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_world ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_world ]]; then
             # The files are missing, so terminate the script
             printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -1114,7 +1141,7 @@ function import_database
         # Loop through all sql files inside the auth base folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_auth/*.sql; do
             # Check if the table already exists
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
 
                 # Skip the file since it's already imported
@@ -1122,7 +1149,7 @@ function import_database
             fi
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1135,7 +1162,7 @@ function import_database
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1146,13 +1173,18 @@ function import_database
 
         # Loop through all sql files inside the auth updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth/*.sql; do
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM version_db_auth WHERE date='$(basename "$f" .sql)'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Import the sql file
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1167,7 +1199,7 @@ function import_database
         # Loop through all sql files inside the characters base folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_characters/*.sql; do
             # Check if the table already exists
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
 
                 # Skip the file since it's already imported
@@ -1175,7 +1207,7 @@ function import_database
             fi
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1188,7 +1220,7 @@ function import_database
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1199,13 +1231,18 @@ function import_database
 
         # Loop through all sql files inside the characters updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters/*.sql; do
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM version_db_characters WHERE date='$(basename "$f" .sql)'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Import the sql file
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1217,7 +1254,7 @@ function import_database
         # Loop through all sql files inside the world base folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_world/*.sql; do
             # Check if the table already exists
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
 
                 # Skip the file since it's already imported
@@ -1225,7 +1262,7 @@ function import_database
             fi
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1238,7 +1275,7 @@ function import_database
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1249,13 +1286,18 @@ function import_database
 
         # Loop through all sql files inside the world updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_world/*.sql; do
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM version_db_world WHERE date='$(basename "$f" .sql)'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Import the sql file
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -1269,7 +1311,7 @@ function import_database
         mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$OPTION_WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$OPTION_WORLD_ID', '$OPTION_WORLD_NAME', '$OPTION_WORLD_ADDRESS', '$OPTION_WORLD_ADDRESS', '255.255.255.0', '8085')"
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Remove the mysql conf
             rm -rf $MYSQL_CNF
 
@@ -1278,7 +1320,7 @@ function import_database
         fi
 
         # Check if there is a folder for custom content
-        if [ -d $ROOT/sql/world ]; then
+        if [[ -d $ROOT/sql/world ]]; then
             # Check if the folder is empty
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
                 # Loop through all sql files inside the folder
@@ -1289,7 +1331,7 @@ function import_database
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
                     # Check to make sure there weren't any errors
-                    if [ $? -ne 0 ]; then
+                    if [[ $? -ne 0 ]]; then
                         # Remove the mysql conf
                         rm -rf $MYSQL_CNF
 
@@ -1315,7 +1357,7 @@ function set_config
     # Check if either both or auth is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
         # Check to make sure the config file exists
-        if [ ! -f $OPTION_SOURCE_LOCATION/etc/authserver.conf.dist ]; then
+        if [[ ! -f $OPTION_SOURCE_LOCATION/etc/authserver.conf.dist ]]; then
             # The file is missing, so terminate the script
             printf "${COLOR_RED}The config file authserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -1340,7 +1382,7 @@ function set_config
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
         # Check to make sure the config file exists
-        if [ ! -f $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist ]; then
+        if [[ ! -f $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist ]]; then
             # The file is missing, so terminate the script
             printf "${COLOR_RED}The config file worldserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -1372,6 +1414,7 @@ function set_config
         [ $OPTION_WORLD_GM_ALLOW_INVITE == "true" ] && WORLD_GM_ALLOW_INVITE=1 || WORLD_GM_ALLOW_INVITE=0
         [ $OPTION_WORLD_GM_ALLOW_FRIEND == "true" ] && WORLD_GM_ALLOW_FRIEND=1 || WORLD_GM_ALLOW_FRIEND=0
         [ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY == "true" ] && WORLD_GM_ALLOW_LOWER_SECURITY=1 || WORLD_GM_ALLOW_LOWER_SECURITY=0
+        [ $OPTION_WORLD_DISABLE_LEAVE_GROUP == "true" ] && WORLD_DISABLE_LEAVE_GROUP=0 || WORLD_DISABLE_LEAVE_GROUP=1
 
         # Copy the file before editing it
         cp $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist $OPTION_SOURCE_LOCATION/etc/worldserver.conf
@@ -1429,6 +1472,7 @@ function set_config
         sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = '$WORLD_GM_ALLOW_FRIEND'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = '$WORLD_GM_ALLOW_LOWER_SECURITY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$WORLD_ENABLE_WARDEN'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
     fi
 
     printf "${COLOR_GREEN}Finished updating the config files...${COLOR_END}\n"
@@ -1440,7 +1484,7 @@ function start_server
     printf "${COLOR_GREEN}Starting the server...${COLOR_END}\n"
 
     # Check if the required binaries exist
-    if [ ! -f $OPTION_SOURCE_LOCATION/bin/start.sh ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/stop.sh ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/authserver ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/worldserver ]; then
+    if [[ ! -f $OPTION_SOURCE_LOCATION/bin/start.sh ]] || [[ ! -f $OPTION_SOURCE_LOCATION/bin/stop.sh ]] || [[ ! -f $OPTION_SOURCE_LOCATION/bin/authserver ]] || [[ ! -f $OPTION_SOURCE_LOCATION/bin/worldserver ]]; then
         printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
 
@@ -1496,7 +1540,7 @@ function stop_server
     fi
 
     # Check if the file exists
-    if [ -f $OPTION_SOURCE_LOCATION/bin/stop.sh ]; then
+    if [[ -f $OPTION_SOURCE_LOCATION/bin/stop.sh ]]; then
         # Check if the server is running
         if [[ ! -z `screen -list | grep -E "auth"` ]] || [[ ! -z `screen -list | grep -E "world"` ]]; then
             # Stop the server
@@ -1527,284 +1571,11 @@ function parameters
     exit $?
 }
 
-[[ -f $OPTION_SOURCE_LOCATION/bin/auth.sh && -f $OPTION_SOURCE_LOCATION/bin/authserver ]] && ENABLE_AUTHSERVER=1 || ENABLE_AUTHSERVER=0
-[[ -f $OPTION_SOURCE_LOCATION/bin/world.sh && -f $OPTION_SOURCE_LOCATION/bin/worldserver ]] && ENABLE_WORLDSERVER=1 || ENABLE_WORLDSERVER=0
-[ ! -f $OPTION_SOURCE_LOCATION/bin/start.sh ] && ENABLE_AUTHSERVER=1 ENABLE_WORLDSERVER=1
-
-QUOTES=("A chain is only as strong as its weakest link." \
-        "A fool and his money are soon parted." \
-        "A friend is someone who gives you total freedom to be yourself." \
-        "A great man is always willing to be little." \
-        "A lion doesn’t concern himself with the opinions of the sheep." \
-        "A man is but what he knows." \
-        "A mind is a terrible thing to waste." \
-        "A mind is like a parachute. It doesn’t work if it isn’t open." \
-        "A penny saved is a penny earned." \
-        "A picture is worth a thousand words." \
-        "A successful man is one who can lay a firm foundation with the bricks others have thrown at him." \
-        "Ability is of little account without opportunity." \
-        "Actions speak louder than words." \
-        "All good things must come to an end." \
-        "All limitations are self-imposed." \
-        "All our dreams can come true if we have the courage to pursue them." \
-        "All that we are is the result of what we have thought." \
-        "All that we see and seem is but a dream within a dream." \
-        "All things come to those who wait." \
-        "All's fair in love and war." \
-        "All’s well that ends well." \
-        "Always forgive your enemies; nothing annoys them so much." \
-        "Always remember that you are absolutely unique. Just like everyone else." \
-        "An ounce of action is worth a ton of theory." \
-        "Arguing with a fool proves there are two." \
-        "Be yourself; everyone else is already taken." \
-        "Beauty is in the eye of the beholder." \
-        "Beggars can’t be choosers." \
-        "Challenges are what make life interesting and overcoming them is what makes life meaningful." \
-        "Change your thoughts, and you change your world." \
-        "Do not go where the path may lead; go instead where there is no path and leave a trail." \
-        "Do what you can, with what you have, where you are." \
-        "Don't let your friends you made memories with, become the memories." \
-        "Don't put the cart before the horse." \
-        "Don’t be afraid to give up the good to go for the great." \
-        "Don’t count the days, make the days count." \
-        "Don’t count your chickens before they hatch." \
-        "Dream big and dare to fail." \
-        "Early is on time, on time is late and late is unacceptable." \
-        "Even a stopped clock is right twice a day." \
-        "Every great dream begins with a dreamer. Always remember, you have within you the strength, the patience, and the passion to reach for the stars to change the world." \
-        "Every man is guilty of all the good he did not do." \
-        "Everyone will be famous for 15 minutes." \
-        "Everything you’ve ever wanted is on the other side of fear." \
-        "Familiarity breeds contempt." \
-        "Fortune favors the bold." \
-        "Genius is eternal patience." \
-        "Get busy living or get busy dying." \
-        "Great geniuses have the shortest biographies." \
-        "Great minds discuss ideas; average minds discuss events; small minds discuss people." \
-        "Great minds think alike." \
-        "Happiness depends upon ourselves." \
-        "Happiness is a direction, not a place." \
-        "Have no fear of perfection, you'll never reach it." \
-        "He that falls in love with himself will have no rivals." \
-        "He who angers you conquers you." \
-        "Holding onto anger is like drinking poison and expecting the other person to die." \
-        "Honesty is the best policy." \
-        "Hope for the best, but prepare for the worst." \
-        "I alone cannot change the world, but I can cast a stone across the water to create many ripples." \
-        "I am, therefore I think." \
-        "I came, I saw, I conquered." \
-        "I disapprove of what you say, but I will defend to the death your right to say it." \
-        "I have no special talent. I am only passionately curious." \
-        "I think, therefore I am." \
-        "If I have seen further than others, it is by standing upon the shoulders of giants." \
-        "If it ain’t broke, don’t fix it." \
-        "If you aren’t going all the way, why go at all?" \
-        "If you don't stand for something you will fall for anything." \
-        "If you judge people, you have no time to love them." \
-        "If you tell the truth, you don’t have to remember anything." \
-        "If you want to be happy, be." \
-        "If you’re going through hell, keep going." \
-        "In order to write about life first you must live it." \
-        "In the long run, the sharpest weapon of all is a kind and gentle spirit." \
-        "In the middle of difficulty lies opportunity." \
-        "In three words I can sum up everything I’ve learned about life: It goes on." \
-        "Insanity is doing the same thing over and over again and expecting different results." \
-        "It always seems impossible until it’s done." \
-        "It is better to fail in originality than to succeed in imitation." \
-        "It is never too late to be what you might have been." \
-        "It is our choices, that show what we truly are, far more than our abilities." \
-        "It isn’t where you came from. It’s where you’re going that counts." \
-        "It’s never too late to be who you might have been." \
-        "I’m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can’t handle me at my worst, then you sure as hell don’t deserve me at my best." \
-        "Keep your face to the sunshine and you can never see the shadow." \
-        "Keep your friends close, but your enemies closer." \
-        "Knowing yourself is the beginning of all wisdom." \
-        "Knowledge is power." \
-        "Knowledge makes a man unfit to be a slave." \
-        "Leave no stone unturned." \
-        "Leave nothing for tomorrow which can be done today." \
-        "Life has no limitations, except the ones you make." \
-        "Life is like a box of chocolates. You never know what you’re going to get." \
-        "Life is not a problem to be solved, but a reality to be experienced." \
-        "Life is ten percent what happens to you and ninety percent how you respond to it." \
-        "Life is what happens when you’re busy making other plans." \
-        "Life itself is the most wonderful fairy tale." \
-        "Life would be tragic if it weren’t funny." \
-        "Look before you leap." \
-        "Love all, trust a few, do wrong to none." \
-        "Many of life’s failures are people who did not realize how close they were to success when they gave up." \
-        "May you live all the days of your life." \
-        "Necessity is the mother of invention." \
-        "Never let the fear of striking out keep you from playing the game." \
-        "No one can make you feel inferior without your consent." \
-        "No pressure, no diamonds." \
-        "Nothing is impossible, the word itself says, ‘I’m possible!’" \
-        "Once you’ve accepted your flaws, no one can use them against you." \
-        "Originality is nothing but judicious imitation." \
-        "Our greatest fear should not be of failure… but of succeeding at things in life that don’t really matter." \
-        "People are just as happy as they make up their minds to be." \
-        "Power tends to corrupt, and absolute power corrupts absolutely." \
-        "Practice makes perfect." \
-        "Remember that the happiest people are not those getting more, but those giving more." \
-        "Science is what you know. Philosophy is what you don’t know." \
-        "Shoot for the moon. Even if you miss, you’ll land among the stars." \
-        "Simplicity is the ultimate sophistication." \
-        "Sing like no one’s listening, love like you’ve never been hurt, dance like nobody’s watching, and live like it’s heaven on earth." \
-        "Stay hungry, stay foolish." \
-        "Strive not to be a success, but rather to be of value." \
-        "Success is not final, failure is not fatal: it is the courage to continue that counts." \
-        "That which does not kill us makes us stronger." \
-        "That’s one small step for a man, one giant leap for mankind." \
-        "The best way out is always through." \
-        "The big lesson in life, baby, is never be scared of anyone or anything." \
-        "The early bird catches the worm." \
-        "The end doesn’t justify the means." \
-        "The further a society drifts from the truth, the more it will hate those that speak it." \
-        "The future belongs to those who prepare for it today." \
-        "The greatest glory in living lies not in never falling, but in rising every time we fall." \
-        "The journey of a thousand miles begins with one step." \
-        "The more things change, the more they remain the same." \
-        "The only impossible journey is the one you never begin." \
-        "The only person you are destined to become is the person you decide to be." \
-        "The only thing necessary for the triumph of evil is for good men to do nothing." \
-        "The opposite of love is not hate; it’s indifference." \
-        "The pen is mightier than the sword." \
-        "The power of imagination makes us infinite." \
-        "The price of greatness is responsibility." \
-        "The purpose of our lives is to be happy." \
-        "The question isn’t who is going to let me; it’s who is going to stop me." \
-        "The secret of getting ahead is getting started." \
-        "The successful warrior is the average man, with laser-like focus." \
-        "The time is always right to do what is right." \
-        "The way to get started is to quit talking and begin doing." \
-        "There is nothing impossible to him who will try." \
-        "There’s a sucker born every minute." \
-        "This above all: to thine own self be true." \
-        "Those who cannot remember the past are condemned to repeat it." \
-        "Those who dare to fail miserably can achieve greatly." \
-        "Those who make you believe absurdities can make you commit atrocities." \
-        "Time is money." \
-        "Time you enjoy wasting is not wasted time." \
-        "Tis better to have loved and lost than to have never loved at all." \
-        "Tough times never last but tough people do." \
-        "Try to be a rainbow in someone else’s cloud." \
-        "Turn your wounds into wisdom." \
-        "Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do." \
-        "Two heads are better than one." \
-        "Two wrongs don’t make a right." \
-        "We are what we repeatedly do; excellence, then, is not an act but a habit." \
-        "We design our lives through the power of choices." \
-        "We don’t stop playing because we grow old; we grow old because we stop playing." \
-        "We have nothing to fear but fear itself." \
-        "Well done is better than well said." \
-        "What you do speaks so loudly that I cannot hear what you say." \
-        "Whatever you do, do with all your might." \
-        "When I dare to be powerful – to use my strength in the service of my vision, then it becomes less and less important whether I am afraid." \
-        "When life gives you lemons, make lemonade." \
-        "When the going gets tough, the tough get going." \
-        "When we strive to become better than we are, everything around us becomes better too." \
-        "When you reach the end of your rope, tie a knot in it and hang on." \
-        "Whether you think you can or you think you can’t, you’re right." \
-        "Yesterday is history, tomorrow is a mystery, today is a gift of God, which is why we call it the present." \
-        "You are never too old to set another goal or to dream a new dream." \
-        "You can discover more about a person in an hour of play than in a year of conversation." \
-        "You can not excel at anything you do not love." \
-        "You can please some of the people all of the time, you can please all of the people some of the time, but you can’t please all of the people all of the time." \
-        "You can’t make an omelet without breaking a few eggs." \
-        "You know you’re in love when you can’t fall asleep because reality is finally better than your dreams." \
-        "You miss 100 percent of the shots you never take." \
-        "You must be the change you wish to see in the world." \
-        "You only live once, but if you do it right, once is enough." \
-        "You will face many defeats in life, but never let yourself be defeated." \
-        "You’ll never find a rainbow if you’re looking down."
-)
-
-function print_quote
-{
-    clear
-    printf "${COLOR_PURPLE}Have an amazingly wonderful day!${COLOR_END}\n"
-    printf "${COLOR_ORANGE}${QUOTES[$(( RANDOM % ${#QUOTES[@]} ))]}${COLOR_END}\n"
-}
-
-function show_menu
-{
-    clear
-
-    if [[ -z $1 ]]; then
-        printf "${COLOR_PURPLE}AzerothCore${COLOR_END}\n"
-        printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the source code${COLOR_END}\n"
-        printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the databases${COLOR_END}\n"
-        printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Manage the configuration options${COLOR_END}\n"
-        if [[ -f $OPTION_SOURCE_LOCATION/bin/authserver && -f $OPTION_SOURCE_LOCATION/bin/worldserver ]] && [[ -f $OPTION_SOURCE_LOCATION/bin/auth.sh || -f $OPTION_SOURCE_LOCATION/bin/world.sh ]]; then
-            if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-                if [[ -z `screen -list | grep -E "auth"` ]] && [[ -z `screen -list | grep -E "world"` ]]; then
-                    printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Start the compiled binaries${COLOR_END}\n"
-                else
-                    printf "${COLOR_CYAN}4) ${COLOR_ORANGE}Stop all running processes${COLOR_END}\n"
-                fi
-            fi
-        fi
-        printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Exit${COLOR_END}\n"
-        printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-        read -s -n 1 s
-
-        case $s in
-            [1-3]) show_menu $s;;
-            4) if [[ -z `screen -list | grep -E "auth"` ]] && [[ -z `screen -list | grep -E "world"` ]]; then clear; start_server; sleep 3; else clear; stop_server; fi; show_menu;;
-            0) print_quote;;
-            *) show_menu;;
-        esac
-    elif [[ $1 == 1 ]]; then
-        if [[ -z $2 ]]; then
-            printf "${COLOR_PURPLE}Manage the source code${COLOR_END}\n"
-            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Download the latest version of the repository${COLOR_END}\n"
-            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Compile the source code into binaries${COLOR_END}\n"
-            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
-            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-            read -s -n 1 s
-
-            case $s in
-                0) show_menu;;
-                *) show_menu $1;;
-            esac
-        fi
-    elif [[ $1 == 2 ]]; then
-        if [[ -z $2 ]]; then
-            printf "${COLOR_PURPLE}Manage the databases${COLOR_END}\n"
-            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the auth database${COLOR_END}\n"
-            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the characters database${COLOR_END}\n"
-            printf "${COLOR_CYAN}3) ${COLOR_ORANGE}Manage the world database${COLOR_END}\n"
-            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
-            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-            read -s -n 1 s
-
-            case $s in
-                0) show_menu;;
-                *) show_menu $1;;
-            esac
-        fi
-    elif [[ $1 == 3 ]]; then
-        if [[ -z $2 ]]; then
-            printf "${COLOR_PURPLE}Manage the configuration options${COLOR_END}\n"
-            printf "${COLOR_CYAN}1) ${COLOR_ORANGE}Manage the database options${COLOR_END}\n"
-            printf "${COLOR_CYAN}2) ${COLOR_ORANGE}Manage the server options${COLOR_END}\n"
-            printf "${COLOR_CYAN}0) ${COLOR_ORANGE}Return to the previous menu${COLOR_END}\n"
-            printf "${COLOR_GREEN}Choose an option:${COLOR_END}"
-            read -s -n 1 s
-
-            case $s in
-                0) show_menu;;
-                *) show_menu $1;;
-            esac
-        fi
-    fi
-}
-
 # Load all options from the file
 load_options
 
 # Check for provided parameters
-if [ $# -gt 0 ]; then
+if [[ $# -gt 0 ]]; then
     # Check the parameter
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]] || [[ $1 == "world" ]]; then
         # Check the subparameter
@@ -1868,6 +1639,6 @@ if [ $# -gt 0 ]; then
         parameters
     fi
 else
-    # No parameters provided, show menu
-    show_menu
+    # No parameters provided
+    parameters
 fi

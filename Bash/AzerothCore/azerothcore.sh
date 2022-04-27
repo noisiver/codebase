@@ -1,7 +1,7 @@
 #!/bin/bash
 DISTRIBUTION=("debian11" "ubuntu20.04" "ubuntu20.10" "ubuntu21.04" "ubuntu21.10")
 
-if [ -f /etc/os-release ]; then
+if [[ -f /etc/os-release ]]; then
     . /etc/os-release
     OS=$ID
     VERSION=$VERSION_ID
@@ -39,18 +39,18 @@ function options_package
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # Check if the package is installed
-        if [ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+        if [[ $(dpkg-query -W -f='${Status}' libxml2-utils 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
             apt-get --yes update
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
             apt-get --yes install libxml2-utils
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         fi
@@ -63,18 +63,18 @@ function git_package
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # Check if the package is installed
-        if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+        if [[ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
             apt-get --yes update
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
             apt-get --yes install git
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         fi
@@ -99,24 +99,24 @@ function source_packages
         # Loop through each member of the array and add them to the list of packages to be installed
         for p in "${PACKAGES[@]}"; do
             # Check if the package is installed
-            if [ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+            if [[ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
                 INSTALL+=($p)
             fi
         done
 
         # Check if there actually are packages to install
-        if [ ${#INSTALL[@]} -gt 0 ]; then
+        if [[ ${#INSTALL[@]} -gt 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
             apt-get --yes update
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install all packages that are missing
             apt-get --yes install ${INSTALL[*]}
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         fi
@@ -129,18 +129,18 @@ function database_package
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # Check if the package is installed
-        if [ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+        if [[ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
             apt-get --yes update
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
             apt-get --yes install mariadb-client
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         fi
@@ -599,7 +599,7 @@ function load_options
     OPTIONS="$ROOT/options.xml"
 
     # Check if the file is missing
-    if [ ! -f $OPTIONS ]; then
+    if [[ ! -f $OPTIONS ]]; then
         # Create the file with the default options
         printf "${COLOR_RED}The options file is missing. Creating one with the default options.${COLOR_END}\n"
         printf "${COLOR_RED}Make sure to edit it to prevent issues that might occur otherwise.${COLOR_END}\n"
@@ -609,7 +609,7 @@ function load_options
 
     # Load the /options/mysql/hostname option
     OPTION_MYSQL_HOSTNAME="$(echo "cat /options/mysql/hostname/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_HOSTNAME ] || [[ $OPTION_MYSQL_HOSTNAME == "" ]]; then
+    if [[ -z $OPTION_MYSQL_HOSTNAME ]] || [[ $OPTION_MYSQL_HOSTNAME == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/hostname is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_HOSTNAME="127.0.0.1"
@@ -627,7 +627,7 @@ function load_options
 
     # Load the /options/mysql/username option
     OPTION_MYSQL_USERNAME="$(echo "cat /options/mysql/username/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_USERNAME ] || [[ $OPTION_MYSQL_USERNAME == "" ]]; then
+    if [[ -z $OPTION_MYSQL_USERNAME ]] || [[ $OPTION_MYSQL_USERNAME == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/username is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_USERNAME="acore"
@@ -636,7 +636,7 @@ function load_options
 
     # Load the /options/mysql/password option
     OPTION_MYSQL_PASSWORD="$(echo "cat /options/mysql/password/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_PASSWORD ] || [[ $OPTION_MYSQL_PASSWORD == "" ]]; then
+    if [[ -z $OPTION_MYSQL_PASSWORD ]] || [[ $OPTION_MYSQL_PASSWORD == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/password is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_PASSWORD="acore"
@@ -645,7 +645,7 @@ function load_options
 
     # Load the /options/mysql/databases/auth option
     OPTION_MYSQL_DATABASES_AUTH="$(echo "cat /options/mysql/databases/auth/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASES_AUTH ] || [[ $OPTION_MYSQL_DATABASES_AUTH == "" ]]; then
+    if [[ -z $OPTION_MYSQL_DATABASES_AUTH ]] || [[ $OPTION_MYSQL_DATABASES_AUTH == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/databases/auth is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_DATABASES_AUTH="acore_auth"
@@ -654,7 +654,7 @@ function load_options
 
     # Load the /options/mysql/databases/characters option
     OPTION_MYSQL_DATABASES_CHARACTERS="$(echo "cat /options/mysql/databases/characters/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASES_CHARACTERS ] || [[ $OPTION_MYSQL_DATABASES_CHARACTERS == "" ]]; then
+    if [[ -z $OPTION_MYSQL_DATABASES_CHARACTERS ]] || [[ $OPTION_MYSQL_DATABASES_CHARACTERS == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/databases/characters is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_DATABASES_CHARACTERS="acore_characters"
@@ -663,7 +663,7 @@ function load_options
 
     # Load the /options/mysql/databases/world option
     OPTION_MYSQL_DATABASES_WORLD="$(echo "cat /options/mysql/databases/world/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_DATABASES_WORLD ] || [[ $OPTION_MYSQL_DATABASES_WORLD == "" ]]; then
+    if [[ -z $OPTION_MYSQL_DATABASES_WORLD ]] || [[ $OPTION_MYSQL_DATABASES_WORLD == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/mysql/databases/world is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MYSQL_DATABASES_WORLD="acore_world"
@@ -672,7 +672,7 @@ function load_options
 
     # Load the /options/source/location option
     OPTION_SOURCE_LOCATION="$(echo "cat /options/source/location/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_SOURCE_LOCATION ] || [[ $OPTION_SOURCE_LOCATION == "" ]]; then
+    if [[ -z $OPTION_SOURCE_LOCATION ]] || [[ $OPTION_SOURCE_LOCATION == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/source/location is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_SOURCE_LOCATION="/opt/azerothcore"
@@ -690,7 +690,7 @@ function load_options
 
     # Load the /options/source/installed_client_data option
     OPTION_SOURCE_INSTALLED_CLIENT_DATA="$(echo "cat /options/source/installed_client_data/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_SOURCE_INSTALLED_CLIENT_DATA =~ ^[0-9]+$ ]] || [ $OPTION_SOURCE_INSTALLED_CLIENT_DATA -gt $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]; then
+    if [[ ! $OPTION_SOURCE_INSTALLED_CLIENT_DATA =~ ^[0-9]+$ ]] || [[ $OPTION_SOURCE_INSTALLED_CLIENT_DATA -gt $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/source/installed_client_data is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_SOURCE_INSTALLED_CLIENT_DATA="0"
@@ -1706,7 +1706,7 @@ function load_options
     fi
 
     # Check if any option calls for a reset
-    if [ $RESET ]; then
+    if [[ $RESET ]]; then
         # Tell the user that the invalid options should be changed, then terminate the script
         printf "${COLOR_RED}Make sure to change the options listed above to prevent any unwanted issues.${COLOR_END}\n"
         save_options
@@ -1723,12 +1723,12 @@ function get_source
     printf "${COLOR_GREEN}Downloading the source code...${COLOR_END}\n"
 
     # Check if the source is already downloaded
-    if [ ! -d $OPTION_SOURCE_LOCATION ]; then
+    if [[ ! -d $OPTION_SOURCE_LOCATION ]]; then
         # Download the source code
         git clone --recursive --branch master https://github.com/azerothcore/azerothcore-wotlk.git $OPTION_SOURCE_LOCATION
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Terminate script on errors
             exit $?
         fi
@@ -1740,7 +1740,7 @@ function get_source
         git fetch --all
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Terminate script on errors
             exit $?
         fi
@@ -1749,7 +1749,7 @@ function get_source
         git reset --hard origin/master
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Terminate script on errors
             exit $?
         fi
@@ -1758,7 +1758,7 @@ function get_source
         git submodule update
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Terminate script on errors
             exit $?
         fi
@@ -1769,12 +1769,12 @@ function get_source
         # Check if the ahbot module should be installed
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1786,7 +1786,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1795,19 +1795,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -1817,12 +1817,12 @@ function get_source
         # Check if the assistant module should be installed
         if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/tkn963/mod-assistant.git $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1834,7 +1834,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1843,19 +1843,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -1865,12 +1865,12 @@ function get_source
         # Check if the eluna module should be installed
         if [[ $OPTION_MODULES_ELUNA_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine ]]; then
                 # Download the source code
                 git clone --recursive --branch master https://github.com/azerothcore/mod-eluna-lua-engine.git $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1882,7 +1882,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1891,7 +1891,7 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1900,19 +1900,19 @@ function get_source
                 git submodule update
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -1922,12 +1922,12 @@ function get_source
         # Check if the group quests module should be installed
         if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/tkn963/mod-groupquests.git $OPTION_SOURCE_LOCATION/modules/mod-groupquests
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1939,7 +1939,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1948,19 +1948,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-groupquests
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -1970,12 +1970,12 @@ function get_source
         # Check if the level reward module should be installed
         if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/tkn963/mod-learnspells.git $OPTION_SOURCE_LOCATION/modules/mod-learnspells
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1987,7 +1987,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -1996,19 +1996,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-learnspells
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -2018,12 +2018,12 @@ function get_source
         # Check if the level reward module should be installed
         if [[ $OPTION_MODULES_LEVEL_REWARD_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-levelreward ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-levelreward ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/tkn963/mod-levelreward.git $OPTION_SOURCE_LOCATION/modules/mod-levelreward
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2035,7 +2035,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2044,19 +2044,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-levelreward ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-levelreward ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-levelreward
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -2066,12 +2066,12 @@ function get_source
         # Check if the recruit-a-friend module should be installed
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2083,7 +2083,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2092,19 +2092,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -2114,12 +2114,12 @@ function get_source
         # Check if the skip dk starting area module should be installed
         if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2131,7 +2131,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2140,19 +2140,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -2162,12 +2162,12 @@ function get_source
         # Check if the spawn points module should be installed
         if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/tkn963/mod-spawnpoints.git $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2179,7 +2179,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2188,19 +2188,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -2210,12 +2210,12 @@ function get_source
         # Check if the weekend bonus module should be installed
         if [[ $OPTION_MODULES_WEEKEND_BONUS_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [ ! -d $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus ]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
                 # Download the source code
                 git clone --branch master https://github.com/tkn963/mod-weekendbonus.git $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2227,7 +2227,7 @@ function get_source
                 git fetch --all
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
@@ -2236,19 +2236,19 @@ function get_source
                 git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Terminate script on errors
                     exit $?
                 fi
             fi
         else
             # Check if the source is downloaded
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
 
                 # Check if the source has been compiled
-                if [ -d $OPTION_SOURCE_LOCATION/build ]; then
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
                     # Remove the build folder to make sure there are no errors during the compile
                     rm -rf $OPTION_SOURCE_LOCATION/build
                 fi
@@ -2274,7 +2274,7 @@ function compile_source
     cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DTOOLS=0 -DSCRIPTS=static
 
     # Check to make sure there weren't any errors
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         # Terminate script on errors
         exit $?
     fi
@@ -2283,7 +2283,7 @@ function compile_source
     make -j $(nproc)
 
     # Check to make sure there weren't any errors
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         # Terminate script on errors
         exit $?
     fi
@@ -2292,7 +2292,7 @@ function compile_source
     make install
 
     # Check to make sure there weren't any errors
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         # Terminate script on errors
         exit $?
     fi
@@ -2318,7 +2318,7 @@ function compile_source
         chmod +x $OPTION_SOURCE_LOCATION/bin/auth.sh
     else
         # Check if the script for authserver already exists
-        if [ -f $OPTION_SOURCE_LOCATION/bin/auth.sh ]; then
+        if [[ -f $OPTION_SOURCE_LOCATION/bin/auth.sh ]]; then
             # Remove the script if authserver is not used
             rm -rf $OPTION_SOURCE_LOCATION/bin/auth.sh
         fi
@@ -2344,7 +2344,7 @@ function compile_source
         chmod +x $OPTION_SOURCE_LOCATION/bin/world.sh
     else
         # Check if the script for worldserver already exists
-        if [ -f $OPTION_SOURCE_LOCATION/bin/world.sh ]; then
+        if [[ -f $OPTION_SOURCE_LOCATION/bin/world.sh ]]; then
             # Remove the script if worldserver is not used
             rm -rf $OPTION_SOURCE_LOCATION/bin/world.sh
         fi
@@ -2363,7 +2363,7 @@ function get_client_files
     # Make sure this is only used with the both or world subparameters
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
         # Check if any of the folders are missing
-        if [ ! -d $OPTION_SOURCE_LOCATION/bin/Cameras ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/dbc ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/maps ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/mmaps ] || [ ! -d $OPTION_SOURCE_LOCATION/bin/vmaps ]; then
+        if [[ ! -d $OPTION_SOURCE_LOCATION/bin/Cameras ]] || [[ ! -d $OPTION_SOURCE_LOCATION/bin/dbc ]] || [[ ! -d $OPTION_SOURCE_LOCATION/bin/maps ]] || [[ ! -d $OPTION_SOURCE_LOCATION/bin/mmaps ]] || [[ ! -d $OPTION_SOURCE_LOCATION/bin/vmaps ]]; then
             # Set installed client data to 0 if any folder is missing
             OPTION_SOURCE_INSTALLED_CLIENT_DATA=0
         fi
@@ -2372,7 +2372,7 @@ function get_client_files
         AVAILABLE_VERSION=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
 
         # Check if the latest version differ from the required version
-        if [ $OPTION_SOURCE_REQUIRED_CLIENT_DATA != $AVAILABLE_VERSION ]; then
+        if [[ $OPTION_SOURCE_REQUIRED_CLIENT_DATA != $AVAILABLE_VERSION ]]; then
             # Update the required version with this version
             OPTION_SOURCE_REQUIRED_CLIENT_DATA=$AVAILABLE_VERSION
 
@@ -2381,23 +2381,23 @@ function get_client_files
         fi
 
         # Check if the installed version differ from the required version
-        if [ $OPTION_SOURCE_INSTALLED_CLIENT_DATA != $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]; then
+        if [[ $OPTION_SOURCE_INSTALLED_CLIENT_DATA != $OPTION_SOURCE_REQUIRED_CLIENT_DATA ]]; then
             printf "${COLOR_GREEN}Downloading the client data files...${COLOR_END}\n"
 
             # Check all folders included in the data files and remove them
-            if [ -d $OPTION_SOURCE_LOCATION/bin/Cameras ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/Cameras ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/Cameras
             fi
-            if [ -d $OPTION_SOURCE_LOCATION/bin/dbc ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/dbc ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/dbc
             fi
-            if [ -d $OPTION_SOURCE_LOCATION/bin/maps ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/maps ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/maps
             fi
-            if [ -d $OPTION_SOURCE_LOCATION/bin/mmaps ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/mmaps ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/mmaps
             fi
-            if [ -d $OPTION_SOURCE_LOCATION/bin/vmaps ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/bin/vmaps ]]; then
                 rm -rf $OPTION_SOURCE_LOCATION/bin/vmaps
             fi
 
@@ -2405,7 +2405,7 @@ function get_client_files
             curl -L https://github.com/wowgaming/client-data/releases/download/v${OPTION_SOURCE_REQUIRED_CLIENT_DATA}/data.zip > $OPTION_SOURCE_LOCATION/bin/data.zip
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Terminate script on errors
                 exit $?
             fi
@@ -2414,7 +2414,7 @@ function get_client_files
             unzip -o "$OPTION_SOURCE_LOCATION/bin/data.zip" -d "$OPTION_SOURCE_LOCATION/bin/"
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Terminate script on errors
                 exit $?
             fi
@@ -2432,7 +2432,7 @@ function get_client_files
         fi
 
         # Allow copying custom dbc files to the dbc folder
-        if [ -d $ROOT/dbc ]; then
+        if [[ -d $ROOT/dbc ]]; then
             # Check if the folder is empty
             if [[ ! -z "$(ls -A $ROOT/dbc/)" ]]; then
                 printf "${COLOR_GREEN}Copying modified dbc files...${COLOR_END}\n"
@@ -2463,7 +2463,7 @@ function import_database
     echo "password=\"$OPTION_MYSQL_PASSWORD\"" >> $MYSQL_CNF
 
     # Make sure the auth database exists and is accessible
-    if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_AUTH'"` ]; then
+    if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_AUTH'"` ]]; then
         # We can't access the required database, so terminate the script
         printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_AUTH is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
 
@@ -2477,7 +2477,7 @@ function import_database
     # Check if either both or auth is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
         # Make sure the database folders exists
-        if [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_auth ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth ]; then
+        if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_auth ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth ]]; then
             # The files are missing, so terminate the script
             printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -2493,7 +2493,7 @@ function import_database
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
         # Make sure the characters database exists and is accessible
-        if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_CHARACTERS'"` ]; then
+        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_CHARACTERS'"` ]]; then
             # We can't access the required database, so terminate the script
             printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_CHARACTERS is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
 
@@ -2505,7 +2505,7 @@ function import_database
         fi
 
         # Make sure the world database exists and is accessible
-        if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_WORLD'"` ]; then
+        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_WORLD'"` ]]; then
             # We can't access the required database, so terminate the script
             printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_WORLD is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
 
@@ -2517,7 +2517,7 @@ function import_database
         fi
 
         # Make sure the database folders exists
-        if [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_characters ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_world ] || [ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_world ]; then
+        if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_characters ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_world ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_world ]]; then
             # The files are missing, so terminate the script
             printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -2538,7 +2538,7 @@ function import_database
         # Loop through all sql files inside the auth base folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_auth/*.sql; do
             # Check if the table already exists
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
 
                 # Skip the file since it's already imported
@@ -2546,7 +2546,7 @@ function import_database
             fi
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2559,7 +2559,7 @@ function import_database
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2570,13 +2570,18 @@ function import_database
 
         # Loop through all sql files inside the auth updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth/*.sql; do
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM version_db_auth WHERE date='$(basename "$f" .sql)'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Import the sql file
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2591,7 +2596,7 @@ function import_database
         # Loop through all sql files inside the characters base folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_characters/*.sql; do
             # Check if the table already exists
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
 
                 # Skip the file since it's already imported
@@ -2599,7 +2604,7 @@ function import_database
             fi
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2612,7 +2617,7 @@ function import_database
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2623,13 +2628,18 @@ function import_database
 
         # Loop through all sql files inside the characters updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters/*.sql; do
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM version_db_characters WHERE date='$(basename "$f" .sql)'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Import the sql file
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2641,7 +2651,7 @@ function import_database
         # Loop through all sql files inside the world base folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_world/*.sql; do
             # Check if the table already exists
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
 
                 # Skip the file since it's already imported
@@ -2649,7 +2659,7 @@ function import_database
             fi
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2662,7 +2672,7 @@ function import_database
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2673,13 +2683,18 @@ function import_database
 
         # Loop through all sql files inside the world updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_world/*.sql; do
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM version_db_world WHERE date='$(basename "$f" .sql)'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Import the sql file
             mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
             # Check to make sure there weren't any errors
-            if [ $? -ne 0 ]; then
+            if [[ $? -ne 0 ]]; then
                 # Remove the mysql conf
                 rm -rf $MYSQL_CNF
 
@@ -2693,7 +2708,7 @@ function import_database
         mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$OPTION_WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$OPTION_WORLD_ID', '$OPTION_WORLD_NAME', '$OPTION_WORLD_ADDRESS', '$OPTION_WORLD_ADDRESS', '255.255.255.0', '8085')"
 
         # Check to make sure there weren't any errors
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             # Remove the mysql conf
             rm -rf $MYSQL_CNF
 
@@ -2704,7 +2719,7 @@ function import_database
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base ]]; then
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
@@ -2713,7 +2728,7 @@ function import_database
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
                     # Check to make sure there weren't any errors
-                    if [ $? -ne 0 ]; then
+                    if [[ $? -ne 0 ]]; then
                         # Remove the mysql conf
                         rm -rf $MYSQL_CNF
 
@@ -2726,7 +2741,7 @@ function import_database
                 mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$OPTION_MODULES_AHBOT_MIN_ITEMS', maxitems='$OPTION_MODULES_AHBOT_MAX_ITEMS'"
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Remove the mysql conf
                     rm -rf $MYSQL_CNF
 
@@ -2736,12 +2751,12 @@ function import_database
             fi
         else
             # Check if the mod_auctionhousebot table exists when the module is not enabled
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_auctionhousebot'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_auctionhousebot'"` ]]; then
                 # Drop the table
                 mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_auctionhousebot"
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Remove the mysql conf
                     rm -rf $MYSQL_CNF
 
@@ -2751,12 +2766,12 @@ function import_database
             fi
 
             # Check if the mod_auctionhousebot_disabled_items table exists when the module is not enabled
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_auctionhousebot_disabled_items'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_auctionhousebot_disabled_items'"` ]]; then
                 # Drop the table
                 mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_auctionhousebot_disabled_items"
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Remove the mysql conf
                     rm -rf $MYSQL_CNF
 
@@ -2769,7 +2784,7 @@ function import_database
         # Check if the assistant module is enabled
         if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base ]]; then
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
@@ -2778,7 +2793,7 @@ function import_database
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
                     # Check to make sure there weren't any errors
-                    if [ $? -ne 0 ]; then
+                    if [[ $? -ne 0 ]]; then
                         # Remove the mysql conf
                         rm -rf $MYSQL_CNF
 
@@ -2792,7 +2807,7 @@ function import_database
         # Check if the group quests module is enabled
         if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base ]]; then
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
@@ -2801,7 +2816,7 @@ function import_database
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
                     # Check to make sure there weren't any errors
-                    if [ $? -ne 0 ]; then
+                    if [[ $? -ne 0 ]]; then
                         # Remove the mysql conf
                         rm -rf $MYSQL_CNF
 
@@ -2815,7 +2830,7 @@ function import_database
         # Check if the learn spells module is enabled
         if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base ]]; then
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
@@ -2824,7 +2839,7 @@ function import_database
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
                     # Check to make sure there weren't any errors
-                    if [ $? -ne 0 ]; then
+                    if [[ $? -ne 0 ]]; then
                         # Remove the mysql conf
                         rm -rf $MYSQL_CNF
 
@@ -2835,12 +2850,12 @@ function import_database
             fi
         else
             # Check if the mod_learnspells table exists when the module is not enabled
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_learnspells'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_learnspells'"` ]]; then
                 # Drop the table
                 mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_learnspells"
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Remove the mysql conf
                     rm -rf $MYSQL_CNF
 
@@ -2853,17 +2868,17 @@ function import_database
         # Check if the recruit-a-friend module is enabled
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base ]]; then
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base/*.sql; do
-                    if [ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]; then
+                    if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                         printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                         # Import the sql file
                         mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
 
                         # Check to make sure there weren't any errors
-                        if [ $? -ne 0 ]; then
+                        if [[ $? -ne 0 ]]; then
                             # Remove the mysql conf
                             rm -rf $MYSQL_CNF
 
@@ -2875,7 +2890,7 @@ function import_database
             fi
 
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base ]]; then
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
@@ -2884,7 +2899,7 @@ function import_database
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
 
                     # Check to make sure there weren't any errors
-                    if [ $? -ne 0 ]; then
+                    if [[ $? -ne 0 ]]; then
                         # Remove the mysql conf
                         rm -rf $MYSQL_CNF
 
@@ -2898,7 +2913,7 @@ function import_database
         # Check if the spawn points module is enabled
         if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base ]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base ]]; then
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
@@ -2907,7 +2922,7 @@ function import_database
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
                     # Check to make sure there weren't any errors
-                    if [ $? -ne 0 ]; then
+                    if [[ $? -ne 0 ]]; then
                         # Remove the mysql conf
                         rm -rf $MYSQL_CNF
 
@@ -2918,12 +2933,12 @@ function import_database
             fi
         else
             # Check if the mod_learnspells table exists when the module is not enabled
-            if [ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_spawnpoints'"` ]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_spawnpoints'"` ]]; then
                 # Drop the table
                 mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_spawnpoints"
 
                 # Check to make sure there weren't any errors
-                if [ $? -ne 0 ]; then
+                if [[ $? -ne 0 ]]; then
                     # Remove the mysql conf
                     rm -rf $MYSQL_CNF
 
@@ -2934,7 +2949,7 @@ function import_database
         fi
 
         # Check if there is a folder for custom content
-        if [ -d $ROOT/sql/world ]; then
+        if [[ -d $ROOT/sql/world ]]; then
             # Check if the folder is empty
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
                 # Loop through all sql files inside the folder
@@ -2945,7 +2960,7 @@ function import_database
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
 
                     # Check to make sure there weren't any errors
-                    if [ $? -ne 0 ]; then
+                    if [[ $? -ne 0 ]]; then
                         # Remove the mysql conf
                         rm -rf $MYSQL_CNF
 
@@ -2971,7 +2986,7 @@ function set_config
     # Check if either both or auth is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
         # Check to make sure the config file exists
-        if [ ! -f $OPTION_SOURCE_LOCATION/etc/authserver.conf.dist ]; then
+        if [[ ! -f $OPTION_SOURCE_LOCATION/etc/authserver.conf.dist ]]; then
             # The file is missing, so terminate the script
             printf "${COLOR_RED}The config file authserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -2996,7 +3011,7 @@ function set_config
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
         # Check to make sure the config file exists
-        if [ ! -f $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist ]; then
+        if [[ ! -f $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist ]]; then
             # The file is missing, so terminate the script
             printf "${COLOR_RED}The config file worldserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -3091,7 +3106,7 @@ function set_config
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]; then
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
                 # The file is missing, so terminate the script
                 printf "${COLOR_RED}The config file mod_ahbot.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -3119,13 +3134,13 @@ function set_config
             sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = '$OPTION_MODULES_AHBOT_CHARACTER_GUID'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
             fi
@@ -3134,7 +3149,7 @@ function set_config
         # Check if the assistant module is enabled
         if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]; then
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
                 # The file is missing, so terminate the script
                 printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -3190,13 +3205,13 @@ function set_config
             sed -i 's/Assistant.Professions.GrandMaster.Cost =.*/Assistant.Professions.GrandMaster.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
             fi
@@ -3205,7 +3220,7 @@ function set_config
         # Check if the learn spells module is enabled
         if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]; then
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
                 # The file is missing, so terminate the script
                 printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -3254,13 +3269,13 @@ function set_config
             sed -i 's/LearnSpells.Riding.ColdWeather.Enabled =.*/LearnSpells.Riding.ColdWeather.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
             fi
@@ -3269,7 +3284,7 @@ function set_config
         # Check if the learn spells module is enabled
         if [[ $OPTION_MODULES_LEVEL_REWARD_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]; then
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]]; then
                 # The file is missing, so terminate the script
                 printf "${COLOR_RED}The config file mod_levelreward.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -3297,13 +3312,13 @@ function set_config
             sed -i 's/LevelReward.Level.80 =.*/LevelReward.Level.80 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
             fi
@@ -3312,7 +3327,7 @@ function set_config
         # Check if the recruit-a-friend module is enabled
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
                 # The file is missing, so terminate the script
                 printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -3341,13 +3356,13 @@ function set_config
             sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             fi
@@ -3356,7 +3371,7 @@ function set_config
         # Check if the skip dk starting area module is enabled
         if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]; then
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]]; then
                 # The file is missing, so terminate the script
                 printf "${COLOR_RED}The config file SkipDKModule.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -3379,13 +3394,13 @@ function set_config
             sed -i 's/Skip.Deathknight.Start.Level =.*/Skip.Deathknight.Start.Level = '$OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
             fi
@@ -3394,7 +3409,7 @@ function set_config
         # Check if the weekend bonus module is enabled
         if [[ $OPTION_MODULES_WEEKEND_BONUS_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
-            if [ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]; then
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
                 # The file is missing, so terminate the script
                 printf "${COLOR_RED}The config file mod_weekendbonus.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
@@ -3419,13 +3434,13 @@ function set_config
             sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = '$OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
         else
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist
             fi
 
             # Check if the config file exists
-            if [ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf ]; then
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
             fi
@@ -3441,7 +3456,7 @@ function start_server
     printf "${COLOR_GREEN}Starting the server...${COLOR_END}\n"
 
     # Check if the required binaries exist
-    if [ ! -f $OPTION_SOURCE_LOCATION/bin/start.sh ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/stop.sh ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/authserver ] || [ ! -f $OPTION_SOURCE_LOCATION/bin/worldserver ]; then
+    if [[ ! -f $OPTION_SOURCE_LOCATION/bin/start.sh ]] || [[ ! -f $OPTION_SOURCE_LOCATION/bin/stop.sh ]] || [[ ! -f $OPTION_SOURCE_LOCATION/bin/authserver ]] || [[ ! -f $OPTION_SOURCE_LOCATION/bin/worldserver ]]; then
         printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
 
@@ -3497,7 +3512,7 @@ function stop_server
     fi
 
     # Check if the file exists
-    if [ -f $OPTION_SOURCE_LOCATION/bin/stop.sh ]; then
+    if [[ -f $OPTION_SOURCE_LOCATION/bin/stop.sh ]]; then
         # Check if the server is running
         if [[ ! -z `screen -list | grep -E "auth"` ]] || [[ ! -z `screen -list | grep -E "world"` ]]; then
             # Stop the server
@@ -3532,7 +3547,7 @@ function parameters
 load_options
 
 # Check for provided parameters
-if [ $# -gt 0 ]; then
+if [[ $# -gt 0 ]]; then
     # Check the parameter
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]] || [[ $1 == "world" ]]; then
         # Check the subparameter
