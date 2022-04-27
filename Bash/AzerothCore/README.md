@@ -2,10 +2,10 @@
 This is the content I use with my World of Warcraft: Wrath of the Lich King (3.3.5a) server. The core I use is [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk).
 
 This script does the following:
-- Download the source code and any enabled modules
+- Download the source code and the source of any enabled module
 - Compile the source code
 - Download the client data files
-- Import database tables and updates. It will skip already existing tables of auth and characters so there's no loss in data
+- Import database tables and updates. It will skip already existing tables to make sure there's no loss in data
 - Update configuration files based on values set in the xml file
 - Start and stop the server
 
@@ -13,7 +13,7 @@ The script supports Debian 11, Ubuntu 20.04, Ubuntu 20.10, Ubuntu 21.04 and Ubun
 
 I never run the script as anything other than root so I unfortunately will not be adding support for non-root users.
 
-The minimal version of the script is identical to the regular one except it doesn't handle modules. That version can be used if you don't want modules or wants to manage those yourself.
+The minimal version of the script is identical to the regular one except it doesn't handle modules. That version can be used if you don't want modules or if you want to manage those yourself.
 
 # Commands
 Using the script with no parameters, or invalid parameters, will print some information about available parameters and subparameters.
