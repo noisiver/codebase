@@ -2570,10 +2570,10 @@ function import_database
 
         # Loop through all sql files inside the auth updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth/*.sql; do
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM version_db_auth WHERE date='$(basename "$f" .sql)'"` ]]; then
-                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                continue;
-            fi
+            #if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM version_db_auth WHERE date='$(basename "$f" .sql)'"` ]]; then
+                #printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                #continue;
+            #fi
 
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
@@ -2628,10 +2628,10 @@ function import_database
 
         # Loop through all sql files inside the characters updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters/*.sql; do
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM version_db_characters WHERE date='$(basename "$f" .sql)'"` ]]; then
-                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                continue;
-            fi
+            #if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM version_db_characters WHERE date='$(basename "$f" .sql)'"` ]]; then
+                #printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                #continue;
+            #fi
 
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
@@ -2683,10 +2683,10 @@ function import_database
 
         # Loop through all sql files inside the world updates folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_world/*.sql; do
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM version_db_world WHERE date='$(basename "$f" .sql)'"` ]]; then
-                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                continue;
-            fi
+            #if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM version_db_world WHERE date='$(basename "$f" .sql)'"` ]]; then
+                #printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                #continue;
+            #fi
 
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
