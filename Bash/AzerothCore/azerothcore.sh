@@ -2555,7 +2555,7 @@ function import_database
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                 continue;
             fi
@@ -2563,7 +2563,7 @@ function import_database
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Add the hash to updates
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'RELEASED')"
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'RELEASED')"
 
             # Check to make sure there weren't any errors
             if [[ $? -ne 0 ]]; then
@@ -2628,7 +2628,7 @@ function import_database
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                 continue;
             fi
@@ -2636,7 +2636,7 @@ function import_database
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Add the hash to updates
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'RELEASED')"
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'RELEASED')"
 
             # Check to make sure there weren't any errors
             if [[ $? -ne 0 ]]; then
@@ -2698,7 +2698,7 @@ function import_database
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                 continue;
             fi
@@ -2706,7 +2706,7 @@ function import_database
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
             # Add the hash to updates
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'RELEASED')"
+            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'RELEASED')"
 
             # Check to make sure there weren't any errors
             if [[ $? -ne 0 ]]; then
@@ -2752,7 +2752,7 @@ function import_database
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                         printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
@@ -2760,7 +2760,7 @@ function import_database
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'CUSTOM')"
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
@@ -2828,7 +2828,7 @@ function import_database
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                         printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
@@ -2836,7 +2836,7 @@ function import_database
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'CUSTOM')"
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
@@ -2862,7 +2862,7 @@ function import_database
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                         printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
@@ -2870,7 +2870,7 @@ function import_database
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'CUSTOM')"
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
@@ -2896,7 +2896,7 @@ function import_database
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                         printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
@@ -2904,7 +2904,7 @@ function import_database
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'CUSTOM')"
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
@@ -2945,7 +2945,7 @@ function import_database
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                         printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
@@ -2953,7 +2953,7 @@ function import_database
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'CUSTOM')"
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
@@ -2976,7 +2976,7 @@ function import_database
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                         printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
@@ -2984,7 +2984,7 @@ function import_database
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'CUSTOM')"
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
@@ -3010,7 +3010,7 @@ function import_database
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='$HASH'"` ]]; then
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
                         printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                         continue;
                     fi
@@ -3018,7 +3018,7 @@ function import_database
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '$HASH', 'CUSTOM')"
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
