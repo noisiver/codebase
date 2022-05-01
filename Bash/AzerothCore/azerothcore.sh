@@ -2430,30 +2430,14 @@ function get_client_files
 
             printf "${COLOR_GREEN}Finished downloading the client data files...${COLOR_END}\n"
         fi
-
-        # Allow copying custom dbc files to the dbc folder
-        if [[ -d $ROOT/dbc ]]; then
-            # Check if the folder is empty
-            if [[ ! -z "$(ls -A $ROOT/dbc/)" ]]; then
-                printf "${COLOR_GREEN}Copying modified dbc files...${COLOR_END}\n"
-
-                # Loop through all dbc files inside the folder
-                for f in $ROOT/dbc/*.dbc; do
-                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
-
-                    # Copy the file
-                    cp -r $f "$OPTION_SOURCE_LOCATION/bin/dbc/$(basename $f)"
-                done
-
-                printf "${COLOR_GREEN}Finished copying custom dbc files...${COLOR_END}\n"
-            fi
-        fi
     fi
 }
 
-# A function that imports all database files
-function import_database
+# A function that copies all custom database files to the correct folder
+function copy_database
 {
+    printf "${COLOR_GREEN}Copying database files...${COLOR_END}\n"
+
     # Create the mysql.cnf file to prevent warnings during import
     MYSQL_CNF="$ROOT/mysql.cnf"
     echo "[client]" > $MYSQL_CNF
@@ -2462,292 +2446,101 @@ function import_database
     echo "user=\"$OPTION_MYSQL_USERNAME\"" >> $MYSQL_CNF
     echo "password=\"$OPTION_MYSQL_PASSWORD\"" >> $MYSQL_CNF
 
-    # Make sure the auth database exists and is accessible
-    if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_AUTH'"` ]]; then
-        # We can't access the required database, so terminate the script
-        printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_AUTH is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
-
-        # Remove the mysql conf
-        rm -rf $MYSQL_CNF
-
-        # Terminate script on error
-        exit $?
-    fi
-
-    # Check if either both or auth is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
-        # Make sure the database folders exists
-        if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_auth ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth ]]; then
-            # The files are missing, so terminate the script
-            printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
-            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+        # Check if there is a folder for custom auth content
+        if [[ -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth ]]; then
+            # Loop through all objects inside the folder
+            for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/*; do
+                # Remove the object
+                rm -rf $f
+            done
+        fi
 
-            # Remove the mysql conf
-            rm -rf $MYSQL_CNF
+        # Check if there is a folder for custom auth content
+        if [[ -d $ROOT/sql/auth ]]; then
+            # Check if the folder is empty
+            if [[ ! -z "$(ls -A $ROOT/sql/auth/)" ]]; then
+                # Loop through all sql files inside the folder
+                for f in $ROOT/sql/auth/*.sql; do
+                    FILENAME="zzz$(basename $f)"
 
-            # Terminate script on error
-            exit $?
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
+
+                    # Copy the file
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/$FILENAME
+                done
+            fi
         fi
     fi
 
-    # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
-        # Make sure the characters database exists and is accessible
-        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_CHARACTERS'"` ]]; then
-            # We can't access the required database, so terminate the script
-            printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_CHARACTERS is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
-
-            # Remove the mysql conf
-            rm -rf $MYSQL_CNF
-
-            # Terminate script on error
-            exit $?
+        # Check if there is a folder for custom characters content
+        if [[ -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters ]]; then
+            # Loop through all objects inside the folder
+            for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/*; do
+                # Remove the object
+                rm -rf $f
+            done
         fi
 
-        # Make sure the world database exists and is accessible
-        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$OPTION_MYSQL_DATABASES_WORLD'"` ]]; then
-            # We can't access the required database, so terminate the script
-            printf "${COLOR_RED}The database named $OPTION_MYSQL_DATABASES_WORLD is inaccessible by the user named $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
+        # Check if there is a folder for custom characters content
+        if [[ -d $ROOT/sql/characters ]]; then
+            # Check if the folder is empty
+            if [[ ! -z "$(ls -A $ROOT/sql/characters/)" ]]; then
+                # Loop through all sql files inside the folder
+                for f in $ROOT/sql/characters/*.sql; do
+                    FILENAME="zzz$(basename $f)"
 
-            # Remove the mysql conf
-            rm -rf $MYSQL_CNF
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
-            # Terminate script on error
-            exit $?
+                    # Copy the file
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/$FILENAME
+                done
+            fi
         fi
 
-        # Make sure the database folders exists
-        if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_characters ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/base/db_world ]] || [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/updates/db_world ]]; then
-            # The files are missing, so terminate the script
-            printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
-            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-
-            # Remove the mysql conf
-            rm -rf $MYSQL_CNF
-
-            # Terminate script on error
-            exit $?
+        # Check if there is a folder for custom world content
+        if [[ -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_world ]]; then
+            # Loop through all objects inside the folder
+            for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/*; do
+                # Remove the object
+                rm -rf $f
+            done
         fi
-    fi
 
-    # No errors occured so we can proceed
-    printf "${COLOR_GREEN}Importing the database files...${COLOR_END}\n"
+        # Check if there is a folder for custom world content
+        if [[ -d $ROOT/sql/world ]]; then
+            # Check if the folder is empty
+            if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
+                # Loop through all sql files inside the folder
+                for f in $ROOT/sql/world/*; do
+                    FILENAME="zzz$(basename $f)"
 
-    # Check if either both or auth is used as the first parameter
-    if [[ $1 == "both" ]] || [[ $1 == "auth" ]]; then
-        # Loop through all sql files inside the auth base folder
-        for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_auth/*.sql; do
-            # Check if the table already exists
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
-                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
-                # Skip the file since it's already imported
-                continue;
+                    # Copy the file
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/$FILENAME
+                done
             fi
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            # Import the sql file
-            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-        done
-
-        # Loop through all sql files inside the auth updates folder
-        for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_auth/*.sql; do
-            #if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM version_db_auth WHERE date='$(basename "$f" .sql)'"` ]]; then
-                #printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                #continue;
-            #fi
-
-            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-            # Import the sql file
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-        done
-    fi
-
-    # Check if either both or world is used as the first parameter
-    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
-        # Loop through all sql files inside the characters base folder
-        for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_characters/*.sql; do
-            # Check if the table already exists
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
-                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-
-                # Skip the file since it's already imported
-                continue;
-            fi
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            # Import the sql file
-            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-        done
-
-        # Loop through all sql files inside the characters updates folder
-        for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_characters/*.sql; do
-            #if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM version_db_characters WHERE date='$(basename "$f" .sql)'"` ]]; then
-                #printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                #continue;
-            #fi
-
-            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-            # Import the sql file
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-        done
-
-        # Loop through all sql files inside the world base folder
-        for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_world/*.sql; do
-            # Check if the table already exists
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
-                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-
-                # Skip the file since it's already imported
-                continue;
-            fi
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            # Import the sql file
-            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-        done
-
-        # Loop through all sql files inside the world updates folder
-        for f in $OPTION_SOURCE_LOCATION/data/sql/updates/db_world/*.sql; do
-            #if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM version_db_world WHERE date='$(basename "$f" .sql)'"` ]]; then
-                #printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                #continue;
-            #fi
-
-            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-            # Import the sql file
-            mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-            # Check to make sure there weren't any errors
-            if [[ $? -ne 0 ]]; then
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-        done
-
-        printf "${COLOR_ORANGE}Adding to the realmlist (id: $OPTION_WORLD_ID, name: $OPTION_WORLD_NAME, address $OPTION_WORLD_ADDRESS)${COLOR_END}\n"
-        # Update the realmlist with the id, name and address specified
-        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$OPTION_WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$OPTION_WORLD_ID', '$OPTION_WORLD_NAME', '$OPTION_WORLD_ADDRESS', '$OPTION_WORLD_ADDRESS', '255.255.255.0', '8085')"
-
-        # Check to make sure there weren't any errors
-        if [[ $? -ne 0 ]]; then
-            # Remove the mysql conf
-            rm -rf $MYSQL_CNF
-
-            # Terminate script on error
-            exit $?
         fi
 
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Make sure the database folder exists
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base ]]; then
+                # Check if the modules folder exists
+                if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules ]]; then
+                    # Create the folder
+                    mkdir -p $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
+                fi
+
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base/*.sql; do
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
                 done
-
-                # Update the mod_auctionhousebot table with specified values
-                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$OPTION_MODULES_AHBOT_MIN_ITEMS', maxitems='$OPTION_MODULES_AHBOT_MAX_ITEMS'"
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Remove the mysql conf
-                    rm -rf $MYSQL_CNF
-
-                    # Terminate script on error
-                    exit $?
-                fi
             fi
         else
             # Check if the mod_auctionhousebot table exists when the module is not enabled
@@ -2781,25 +2574,42 @@ function import_database
             fi
         fi
 
+        # Check if the ahbot module is enabled
+        if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base ]]; then
+                # Check if the modules folder exists
+                if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules ]]; then
+                    # Create the folder
+                    mkdir -p $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
+                fi
+
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base/*.sql; do
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
+
+                    # Import the sql file
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
+                done
+            fi
+        fi
+
         # Check if the assistant module is enabled
         if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
             # Make sure the database folder exists
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base ]]; then
+                # Check if the modules folder exists
+                if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules ]]; then
+                    # Create the folder
+                    mkdir -p $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
+                fi
+
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base/*.sql; do
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
                 done
             fi
         fi
@@ -2808,44 +2618,37 @@ function import_database
         if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED == "true" ]]; then
             # Make sure the database folder exists
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base ]]; then
+                # Check if the modules folder exists
+                if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules ]]; then
+                    # Create the folder
+                    mkdir -p $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
+                fi
+
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base/*.sql; do
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
                 done
             fi
         fi
 
         # Check if the learn spells module is enabled
         if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base ]]; then
+                # Check if the modules folder exists
+                if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules ]]; then
+                    # Create the folder
+                    mkdir -p $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
+                fi
+
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base/*.sql; do
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
                 done
             fi
         else
@@ -2869,43 +2672,35 @@ function import_database
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Make sure the database folder exists
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base ]]; then
+                # Check if the modules folder exists
+                if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/modules ]]; then
+                    # Create the folder
+                    mkdir -p $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/modules
+                fi
+
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base/*.sql; do
-                    if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
-                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
-                        # Import the sql file
-                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
-
-                        # Check to make sure there weren't any errors
-                        if [[ $? -ne 0 ]]; then
-                            # Remove the mysql conf
-                            rm -rf $MYSQL_CNF
-
-                            # Terminate script on error
-                            exit $?
-                        fi
-                    fi
+                    # Import the sql file
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/modules
                 done
             fi
 
             # Make sure the database folder exists
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base ]]; then
+                # Check if the modules folder exists
+                if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/modules ]]; then
+                    # Create the folder
+                    mkdir -p $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/modules
+                fi
+
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base/*.sql; do
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/modules
                 done
             fi
         fi
@@ -2914,21 +2709,17 @@ function import_database
         if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED == "true" ]]; then
             # Make sure the database folder exists
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base ]]; then
+                if [[ ! -d $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules ]]; then
+                    # Create the folder
+                    mkdir -p $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
+                fi
+
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base/*.sql; do
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
+                    cp -r -p $f $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/modules
                 done
             fi
         else
@@ -2947,35 +2738,12 @@ function import_database
                 fi
             fi
         fi
-
-        # Check if there is a folder for custom content
-        if [[ -d $ROOT/sql/world ]]; then
-            # Check if the folder is empty
-            if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
-                # Loop through all sql files inside the folder
-                for f in $ROOT/sql/world/*.sql; do
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        fi
     fi
 
     # Remove the mysql conf
     rm -rf $MYSQL_CNF
 
-    printf "${COLOR_GREEN}Finished importing the database files...${COLOR_END}\n"
+    printf "${COLOR_GREEN}Finished copying database files...${COLOR_END}\n"
 }
 
 # A function that changes config files to values specified in the options
@@ -3005,7 +2773,7 @@ function set_config
 
         # Update authserver.conf with values specified in the options
         sed -i 's/LoginDatabaseInfo =.*/LoginDatabaseInfo = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_AUTH'"/g' $OPTION_SOURCE_LOCATION/etc/authserver.conf
-        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $OPTION_SOURCE_LOCATION/etc/authserver.conf
+        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 1/g' $OPTION_SOURCE_LOCATION/etc/authserver.conf
     fi
 
     # Check if either both or world is used as the first parameter
@@ -3052,7 +2820,7 @@ function set_config
         sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_AUTH'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_WORLD'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_CHARACTERS'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 7/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/RealmID =.*/RealmID = '$OPTION_WORLD_ID'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GameType =.*/GameType = '$OPTION_WORLD_GAME_TYPE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/RealmZone =.*/RealmZone = '$OPTION_WORLD_REALM_ZONE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
@@ -3565,7 +3333,7 @@ if [[ $# -gt 0 ]]; then
             get_client_files $1
         elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
             # Import the database files
-            import_database $1
+            copy_database $1
         elif [[ $2 == "config" ]] || [[ $2 == "conf" ]]; then
             # Update the config files
             set_config $1
@@ -3583,7 +3351,7 @@ if [[ $# -gt 0 ]]; then
             get_client_files $1
 
             # Import the database files
-            import_database $1
+            copy_database $1
 
             # Update the config files
             set_config $1
