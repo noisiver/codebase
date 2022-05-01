@@ -13,8 +13,6 @@ The script supports Debian 11, Ubuntu 20.04, Ubuntu 20.10, Ubuntu 21.04 and Ubun
 
 I never run the script as anything other than root so I unfortunately will not be adding support for non-root users.
 
-The minimal version of the script is identical to the regular one except it doesn't handle modules. That version can be used if you don't want modules or if you want to manage those yourself.
-
 Creating the following folder in the same location as the script will let you automatically import custom content to the world database.
 - **sql/world** | *Placing sql queries inside this folder will automatically import them to the world database*
 

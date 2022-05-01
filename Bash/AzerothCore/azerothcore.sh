@@ -3056,18 +3056,7 @@ function import_database
             if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
                 # Loop through all sql files inside the folder
                 for f in $ROOT/sql/world/*.sql; do
-                    FILENAME="z$(basename $f)"
-                    HASH=($(sha1sum $f)@L)
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@L}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@L}', 'CUSTOM')"
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
