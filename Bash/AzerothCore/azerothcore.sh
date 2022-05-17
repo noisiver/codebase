@@ -10,6 +10,9 @@ if [[ -f /etc/os-release ]]; then
         echo -e "\e[0;31mThis distribution is currently not supported\e[0m"
         exit $?
     fi
+else
+    echo -e "\e[0;31mUnable to determine the distribution\e[0m"
+    exit $?
 fi
 
 # Define colors for easier access
