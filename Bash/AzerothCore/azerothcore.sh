@@ -2374,6 +2374,11 @@ function get_client_files
         # Grab the latest version available on github
         AVAILABLE_VERSION=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
 
+        # Temporary hack due to changes
+        if [[ $AVAILABLE_VERSION == 15 ]]; then
+            AVAILABLE_VERSION=14
+        fi
+
         # Check if the latest version differ from the required version
         if [[ $OPTION_SOURCE_REQUIRED_CLIENT_DATA != $AVAILABLE_VERSION ]]; then
             # Update the required version with this version
