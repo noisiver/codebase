@@ -270,195 +270,199 @@ function store_options
             </gm>
         </world>
         <modules>
+            <account_bound>
+                <!-- Enable/Disable the use of the account bound module -->
+                <enabled>${52:-false}</enabled>
+            </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${52:-false}</enabled>
+                <enabled>${53:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${53:-false}</enable_buyer>
+                <enable_buyer>${54:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${54:-false}</enable_seller>
+                <enable_seller>${55:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${55:-0}</account_id>
+                <account_id>${56:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${56:-0}</character_guid>
+                <character_guid>${57:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${57:-250}</min_items>
+                <min_items>${58:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${58:-250}</max_items>
+                <max_items>${59:-250}</max_items>
             </ahbot>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
-                <enabled>${59:-false}</enabled>
+                <enabled>${60:-false}</enabled>
                 <features>
                     <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${60:-false}</heirlooms>
+                    <heirlooms>${61:-false}</heirlooms>
                     <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${61:-false}</glyphs>
+                    <glyphs>${62:-false}</glyphs>
                     <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${62:-false}</gems>
+                    <gems>${63:-false}</gems>
                     <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${63:-false}</containers>
+                    <containers>${64:-false}</containers>
                     <utilities>
                         <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${64:-false}</enabled>
+                        <enabled>${65:-false}</enabled>
                         <!-- Cost in gold required to perform a name change -->
-                        <name_change>${65:-10}</name_change>
+                        <name_change>${66:-10}</name_change>
                         <!-- Cost in gold required to perform a customization -->
-                        <customization>${66:-50}</customization>
+                        <customization>${67:-50}</customization>
                         <!-- Cost in gold to perform a race change -->
-                        <race_change>${67:-500}</race_change>
+                        <race_change>${68:-500}</race_change>
                         <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${68:-1000}</faction_change>
+                        <faction_change>${69:-1000}</faction_change>
                     </utilities>
                     <professions>
                         <!-- Enable/Disable increasing profession skills levels at the assistant -->
-                        <enabled>${69:-false}</enabled>
+                        <enabled>${70:-false}</enabled>
                         <apprentice>
                             <!-- Enable/Disable increasing apprentice rank to level 75 -->
-                            <enabled>${70:-false}</enabled>
+                            <enabled>${71:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${71:-100}</cost>
+                            <cost>${72:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable increasing journeyman rank to level 150 -->
-                            <enabled>${72:-false}</enabled>
+                            <enabled>${73:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${73:-250}</cost>
+                            <cost>${74:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable increasing expert rank to level 225 -->
-                            <enabled>${74:-false}</enabled>
+                            <enabled>${75:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${75:-500}</cost>
+                            <cost>${76:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable increasing artisan rank to level 300 -->
-                            <enabled>${76:-false}</enabled>
+                            <enabled>${77:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${77:-750}</cost>
+                            <cost>${78:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable increasing master rank to level 375 -->
-                            <enabled>${78:-false}</enabled>
+                            <enabled>${79:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${79:-1250}</cost>
+                            <cost>${80:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable increasing grand master rank to level 450 -->
-                            <enabled>${80:-false}</enabled>
+                            <enabled>${81:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${81:-2500}</cost>
+                            <cost>${82:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${82:-false}</enabled>
+                <enabled>${83:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${83:-false}</enabled>
+                <enabled>${84:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${84:-false}</enabled>
+                <enabled>${85:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${85:-false}</on_login>
+                    <on_login>${86:-false}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${86:-false}</on_levelup>
+                    <on_levelup>${87:-false}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${87:-false}</class_spells>
+                    <class_spells>${88:-false}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${88:-false}</talent_ranks>
+                    <talent_ranks>${89:-false}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${89:-false}</proficiencies>
+                    <proficiencies>${90:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${90:-false}</from_quests>
+                    <from_quests>${91:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${91:-false}</enabled>
+                        <enabled>${92:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${92:-60}</max_level>
+                        <max_level>${93:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${93:-false}</enabled>
+                        <enabled>${94:-false}</enabled>
                         <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${94:-false}</apprentice>
+                        <apprentice>${95:-false}</apprentice>
                         <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${95:-false}</journeyman>
+                        <journeyman>${96:-false}</journeyman>
                         <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${96:-false}</expert>
+                        <expert>${97:-false}</expert>
                         <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${97:-false}</artisan>
+                        <artisan>${98:-false}</artisan>
                         <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${98:-false}</cold_weather>
+                        <cold_weather>${99:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${99:-false}</enabled>
+                <enabled>${100:-false}</enabled>
                 <gold>
                     <!-- The amount of gold given at level 10 -->
-                    <level_10>${100:-5}</level_10>
+                    <level_10>${101:-5}</level_10>
                     <!-- The amount of gold given at level 20 -->
-                    <level_20>${101:-15}</level_20>
+                    <level_20>${102:-15}</level_20>
                     <!-- The amount of gold given at level 30 -->
-                    <level_30>${102:-30}</level_30>
+                    <level_30>${103:-30}</level_30>
                     <!-- The amount of gold given at level 40 -->
-                    <level_40>${103:-45}</level_40>
+                    <level_40>${104:-45}</level_40>
                     <!-- The amount of gold given at level 50 -->
-                    <level_50>${104:-60}</level_50>
+                    <level_50>${105:-60}</level_50>
                     <!-- The amount of gold given at level 60 -->
-                    <level_60>${105:-80}</level_60>
+                    <level_60>${106:-80}</level_60>
                     <!-- The amount of gold given at level 70 -->
-                    <level_70>${106:-125}</level_70>
+                    <level_70>${107:-125}</level_70>
                     <!-- The amount of gold given at level 80 -->
-                    <level_80>${107:-250}</level_80>
+                    <level_80>${108:-250}</level_80>
                 </gold>
             </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
-                <enabled>${108:-false}</enabled>
+                <enabled>${109:-false}</enabled>
                 <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
-                <duration>${109:-90}</duration>
+                <duration>${110:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
-                <account_age>${110:-7}</account_age>
+                <account_age>${111:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${111:-30}</days>
+                    <days>${112:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${112:-true}</swift_zhevra>
+                    <swift_zhevra>${113:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${113:-true}</touring_rocket>
+                    <touring_rocket>${114:-true}</touring_rocket>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${114:-false}</enabled>
+                <enabled>${115:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${115:-58}</starting_level>
+                <starting_level>${116:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${116:-false}</enabled>
+                <enabled>${117:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${117:-false}</enabled>
+                <enabled>${118:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${118:-2.0}</experience_multiplier>
+                <experience_multiplier>${119:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${119:-2.0}</money_multiplier>
+                <money_multiplier>${120:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${120:-2}</professions_multiplier>
+                <professions_multiplier>${121:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${121:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${122:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${122:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${123:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -519,6 +523,7 @@ function save_options
     $OPTION_WORLD_GM_ALLOW_FRIEND \
     $OPTION_WORLD_GM_ALLOW_INVITE \
     $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
+    $OPTION_MODULES_ACCOUNT_BOUND_ENABLED \
     $OPTION_MODULES_AHBOT_ENABLED \
     $OPTION_MODULES_AHBOT_ENABLE_BUYER \
     $OPTION_MODULES_AHBOT_ENABLE_SELLER \
@@ -1066,6 +1071,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/gm/allow_lower_security is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_GM_ALLOW_LOWER_SECURITY="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/account_bound/enabled option
+    OPTION_MODULES_ACCOUNT_BOUND_ENABLED="$(echo "cat /options/modules/account_bound/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED != "true" && $OPTION_MODULES_ACCOUNT_BOUND_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/account_bound/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACCOUNT_BOUND_ENABLED="false"
         RESET=true
     fi
 
@@ -1769,6 +1783,54 @@ function get_source
 
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        # Check if the account bound module should be installed
+        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound ]]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-accountbound.git $OPTION_SOURCE_LOCATION/modules/mod-accountbound
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-accountbound
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound ]]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-accountbound
+
+                # Check if the source has been compiled
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
         # Check if the ahbot module should be installed
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
@@ -2749,6 +2811,86 @@ function import_database
 
             # Terminate script on error
             exit $?
+        fi
+
+        # Check if the account bound module is enabled
+        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound/sql/auth/base ]]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-accountbound/sql/auth/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                    # Add the hash to updates
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound/sql/world/base ]]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-accountbound/sql/world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                    # Add the hash to updates
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        else
+            # Check if the account_bound_template table exists when the module is not enabled
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'account_bound_template'"` ]]; then
+                # Drop the table
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE account_bound_template"
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            fi
         fi
 
         # Check if the ahbot module is enabled
