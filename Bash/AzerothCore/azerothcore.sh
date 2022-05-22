@@ -271,7 +271,7 @@ function store_options
         </world>
         <modules>
             <account_bound>
-                <!-- Enable/Disable the use of the account bound module -->
+                <!-- Enable/Disable the use of the Account Bound module -->
                 <enabled>${52:-false}</enabled>
             </account_bound>
             <ahbot>
@@ -290,179 +290,183 @@ function store_options
                 <!-- Maximum amount of items the bot will keep on the auction house -->
                 <max_items>${59:-250}</max_items>
             </ahbot>
+            <archmage_timear>
+                <!-- Enable/Disable the use of the Archmage Timear module -->
+                <enabled>${60:-false}</enabled>
+            </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
-                <enabled>${60:-false}</enabled>
+                <enabled>${61:-false}</enabled>
                 <features>
                     <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${61:-false}</heirlooms>
+                    <heirlooms>${62:-false}</heirlooms>
                     <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${62:-false}</glyphs>
+                    <glyphs>${63:-false}</glyphs>
                     <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${63:-false}</gems>
+                    <gems>${64:-false}</gems>
                     <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${64:-false}</containers>
+                    <containers>${65:-false}</containers>
                     <utilities>
                         <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${65:-false}</enabled>
+                        <enabled>${66:-false}</enabled>
                         <!-- Cost in gold required to perform a name change -->
-                        <name_change>${66:-10}</name_change>
+                        <name_change>${67:-10}</name_change>
                         <!-- Cost in gold required to perform a customization -->
-                        <customization>${67:-50}</customization>
+                        <customization>${68:-50}</customization>
                         <!-- Cost in gold to perform a race change -->
-                        <race_change>${68:-500}</race_change>
+                        <race_change>${69:-500}</race_change>
                         <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${69:-1000}</faction_change>
+                        <faction_change>${70:-1000}</faction_change>
                     </utilities>
                     <professions>
                         <!-- Enable/Disable increasing profession skills levels at the assistant -->
-                        <enabled>${70:-false}</enabled>
+                        <enabled>${71:-false}</enabled>
                         <apprentice>
                             <!-- Enable/Disable increasing apprentice rank to level 75 -->
-                            <enabled>${71:-false}</enabled>
+                            <enabled>${72:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${72:-100}</cost>
+                            <cost>${73:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable increasing journeyman rank to level 150 -->
-                            <enabled>${73:-false}</enabled>
+                            <enabled>${74:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${74:-250}</cost>
+                            <cost>${75:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable increasing expert rank to level 225 -->
-                            <enabled>${75:-false}</enabled>
+                            <enabled>${76:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${76:-500}</cost>
+                            <cost>${77:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable increasing artisan rank to level 300 -->
-                            <enabled>${77:-false}</enabled>
+                            <enabled>${78:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${78:-750}</cost>
+                            <cost>${79:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable increasing master rank to level 375 -->
-                            <enabled>${79:-false}</enabled>
+                            <enabled>${80:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${80:-1250}</cost>
+                            <cost>${81:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable increasing grand master rank to level 450 -->
-                            <enabled>${81:-false}</enabled>
+                            <enabled>${82:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${82:-2500}</cost>
+                            <cost>${83:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${83:-false}</enabled>
+                <enabled>${84:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${84:-false}</enabled>
+                <enabled>${85:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${85:-false}</enabled>
+                <enabled>${86:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${86:-false}</on_login>
+                    <on_login>${87:-false}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${87:-false}</on_levelup>
+                    <on_levelup>${88:-false}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${88:-false}</class_spells>
+                    <class_spells>${89:-false}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${89:-false}</talent_ranks>
+                    <talent_ranks>${90:-false}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${90:-false}</proficiencies>
+                    <proficiencies>${91:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${91:-false}</from_quests>
+                    <from_quests>${92:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${92:-false}</enabled>
+                        <enabled>${93:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${93:-60}</max_level>
+                        <max_level>${94:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${94:-false}</enabled>
+                        <enabled>${95:-false}</enabled>
                         <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${95:-false}</apprentice>
+                        <apprentice>${96:-false}</apprentice>
                         <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${96:-false}</journeyman>
+                        <journeyman>${97:-false}</journeyman>
                         <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${97:-false}</expert>
+                        <expert>${98:-false}</expert>
                         <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${98:-false}</artisan>
+                        <artisan>${99:-false}</artisan>
                         <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${99:-false}</cold_weather>
+                        <cold_weather>${100:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${101:-false}</enabled>
                 <gold>
                     <!-- The amount of gold given at level 10 -->
-                    <level_10>${101:-5}</level_10>
+                    <level_10>${102:-5}</level_10>
                     <!-- The amount of gold given at level 20 -->
-                    <level_20>${102:-15}</level_20>
+                    <level_20>${103:-15}</level_20>
                     <!-- The amount of gold given at level 30 -->
-                    <level_30>${103:-30}</level_30>
+                    <level_30>${104:-30}</level_30>
                     <!-- The amount of gold given at level 40 -->
-                    <level_40>${104:-45}</level_40>
+                    <level_40>${105:-45}</level_40>
                     <!-- The amount of gold given at level 50 -->
-                    <level_50>${105:-60}</level_50>
+                    <level_50>${106:-60}</level_50>
                     <!-- The amount of gold given at level 60 -->
-                    <level_60>${106:-80}</level_60>
+                    <level_60>${107:-80}</level_60>
                     <!-- The amount of gold given at level 70 -->
-                    <level_70>${107:-125}</level_70>
+                    <level_70>${108:-125}</level_70>
                     <!-- The amount of gold given at level 80 -->
-                    <level_80>${108:-250}</level_80>
+                    <level_80>${109:-250}</level_80>
                 </gold>
             </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
-                <enabled>${109:-false}</enabled>
+                <enabled>${110:-false}</enabled>
                 <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
-                <duration>${110:-90}</duration>
+                <duration>${111:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
-                <account_age>${111:-7}</account_age>
+                <account_age>${112:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${112:-30}</days>
+                    <days>${113:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${113:-true}</swift_zhevra>
+                    <swift_zhevra>${114:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${114:-true}</touring_rocket>
+                    <touring_rocket>${115:-true}</touring_rocket>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${115:-false}</enabled>
+                <enabled>${116:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${116:-58}</starting_level>
+                <starting_level>${117:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${117:-false}</enabled>
+                <enabled>${118:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${118:-false}</enabled>
+                <enabled>${119:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${119:-2.0}</experience_multiplier>
+                <experience_multiplier>${120:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${120:-2.0}</money_multiplier>
+                <money_multiplier>${121:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${121:-2}</professions_multiplier>
+                <professions_multiplier>${122:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${122:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${123:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${123:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${124:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -531,6 +535,7 @@ function save_options
     $OPTION_MODULES_AHBOT_CHARACTER_GUID \
     $OPTION_MODULES_AHBOT_MIN_ITEMS \
     $OPTION_MODULES_AHBOT_MAX_ITEMS \
+    $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED \
     $OPTION_MODULES_ASSISTANT_ENABLED \
     $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS \
     $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS \
@@ -1143,6 +1148,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/ahbot/max_items is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_AHBOT_MAX_ITEMS="250"
+        RESET=true
+    fi
+
+    # Load the /options/modules/archmage_timear/enabled option
+    OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED="$(echo "cat /options/modules/archmage_timear/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED != "true" && $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/archmage_timear/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED="false"
         RESET=true
     fi
 
@@ -1870,6 +1884,54 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
+
+                # Check if the source has been compiled
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the archmage timear module should be installed
+        if [[ $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear ]]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-archmage-timear.git $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear ]]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -2966,6 +3028,40 @@ function import_database
                     # Terminate script on error
                     exit $?
                 fi
+            fi
+        fi
+
+        # Check if the archmage timear module is enabled
+        if [[ $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear/sql/world/base ]]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear/sql/world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                    # Add the hash to updates
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
             fi
         fi
 
