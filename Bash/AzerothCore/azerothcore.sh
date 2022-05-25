@@ -273,200 +273,210 @@ function store_options
             <account_bound>
                 <!-- Enable/Disable the use of the Account Bound module -->
                 <enabled>${52:-false}</enabled>
+                <features>
+                    <!-- Enable/disable making achievements shared across all characters of an account -->
+                    <achievements>${53:-true}</achievements>
+                    <!-- Enable/disable making companions shared across all characters of an account -->
+                    <companions>${54:-true}</companions>
+                    <!-- Enable/disable making mounts shared across all characters of an account -->
+                    <mounts>${55:-true}</mounts>
+                </features>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${53:-false}</enabled>
+                <enabled>${56:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${54:-false}</enable_buyer>
+                <enable_buyer>${57:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${55:-false}</enable_seller>
+                <enable_seller>${58:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${56:-0}</account_id>
+                <account_id>${59:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${57:-0}</character_guid>
+                <character_guid>${60:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${58:-250}</min_items>
+                <min_items>${61:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${59:-250}</max_items>
+                <max_items>${62:-250}</max_items>
             </ahbot>
             <archmage_timear>
                 <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${60:-false}</enabled>
+                <enabled>${63:-false}</enabled>
             </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
-                <enabled>${61:-false}</enabled>
+                <enabled>${64:-false}</enabled>
                 <features>
                     <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${62:-false}</heirlooms>
+                    <heirlooms>${65:-false}</heirlooms>
                     <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${63:-false}</glyphs>
+                    <glyphs>${66:-false}</glyphs>
                     <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${64:-false}</gems>
+                    <gems>${67:-false}</gems>
                     <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${65:-false}</containers>
+                    <containers>${68:-false}</containers>
                     <utilities>
                         <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${66:-false}</enabled>
+                        <enabled>${69:-false}</enabled>
                         <!-- Cost in gold required to perform a name change -->
-                        <name_change>${67:-10}</name_change>
+                        <name_change>${70:-10}</name_change>
                         <!-- Cost in gold required to perform a customization -->
-                        <customization>${68:-50}</customization>
+                        <customization>${71:-50}</customization>
                         <!-- Cost in gold to perform a race change -->
-                        <race_change>${69:-500}</race_change>
+                        <race_change>${72:-500}</race_change>
                         <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${70:-1000}</faction_change>
+                        <faction_change>${73:-1000}</faction_change>
                     </utilities>
                     <professions>
                         <!-- Enable/Disable increasing profession skills levels at the assistant -->
-                        <enabled>${71:-false}</enabled>
+                        <enabled>${74:-false}</enabled>
                         <apprentice>
                             <!-- Enable/Disable increasing apprentice rank to level 75 -->
-                            <enabled>${72:-false}</enabled>
+                            <enabled>${75:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${73:-100}</cost>
+                            <cost>${76:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable increasing journeyman rank to level 150 -->
-                            <enabled>${74:-false}</enabled>
+                            <enabled>${77:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${75:-250}</cost>
+                            <cost>${78:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable increasing expert rank to level 225 -->
-                            <enabled>${76:-false}</enabled>
+                            <enabled>${79:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${77:-500}</cost>
+                            <cost>${80:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable increasing artisan rank to level 300 -->
-                            <enabled>${78:-false}</enabled>
+                            <enabled>${81:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${79:-750}</cost>
+                            <cost>${82:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable increasing master rank to level 375 -->
-                            <enabled>${80:-false}</enabled>
+                            <enabled>${83:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${81:-1250}</cost>
+                            <cost>${84:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable increasing grand master rank to level 450 -->
-                            <enabled>${82:-false}</enabled>
+                            <enabled>${85:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${83:-2500}</cost>
+                            <cost>${86:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${84:-false}</enabled>
+                <enabled>${87:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${85:-false}</enabled>
+                <enabled>${88:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${86:-false}</enabled>
+                <enabled>${89:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${87:-false}</on_login>
+                    <on_login>${90:-false}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${88:-false}</on_levelup>
+                    <on_levelup>${91:-false}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${89:-false}</class_spells>
+                    <class_spells>${92:-false}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${90:-false}</talent_ranks>
+                    <talent_ranks>${93:-false}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${91:-false}</proficiencies>
+                    <proficiencies>${94:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${92:-false}</from_quests>
+                    <from_quests>${95:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${93:-false}</enabled>
+                        <enabled>${96:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${94:-60}</max_level>
+                        <max_level>${97:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${95:-false}</enabled>
+                        <enabled>${98:-false}</enabled>
                         <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${96:-false}</apprentice>
+                        <apprentice>${99:-false}</apprentice>
                         <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${97:-false}</journeyman>
+                        <journeyman>${100:-false}</journeyman>
                         <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${98:-false}</expert>
+                        <expert>${101:-false}</expert>
                         <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${99:-false}</artisan>
+                        <artisan>${102:-false}</artisan>
                         <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${100:-false}</cold_weather>
+                        <cold_weather>${103:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${101:-false}</enabled>
+                <enabled>${104:-false}</enabled>
                 <gold>
                     <!-- The amount of gold given at level 10 -->
-                    <level_10>${102:-5}</level_10>
+                    <level_10>${105:-5}</level_10>
                     <!-- The amount of gold given at level 20 -->
-                    <level_20>${103:-15}</level_20>
+                    <level_20>${106:-15}</level_20>
                     <!-- The amount of gold given at level 30 -->
-                    <level_30>${104:-30}</level_30>
+                    <level_30>${107:-30}</level_30>
                     <!-- The amount of gold given at level 40 -->
-                    <level_40>${105:-45}</level_40>
+                    <level_40>${108:-45}</level_40>
                     <!-- The amount of gold given at level 50 -->
-                    <level_50>${106:-60}</level_50>
+                    <level_50>${109:-60}</level_50>
                     <!-- The amount of gold given at level 60 -->
-                    <level_60>${107:-80}</level_60>
+                    <level_60>${110:-80}</level_60>
                     <!-- The amount of gold given at level 70 -->
-                    <level_70>${108:-125}</level_70>
+                    <level_70>${111:-125}</level_70>
                     <!-- The amount of gold given at level 80 -->
-                    <level_80>${109:-250}</level_80>
+                    <level_80>${112:-250}</level_80>
                 </gold>
             </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
-                <enabled>${110:-false}</enabled>
+                <enabled>${113:-false}</enabled>
                 <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
-                <duration>${111:-90}</duration>
+                <duration>${114:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
-                <account_age>${112:-7}</account_age>
+                <account_age>${115:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${113:-30}</days>
+                    <days>${116:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${114:-true}</swift_zhevra>
+                    <swift_zhevra>${117:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${115:-true}</touring_rocket>
+                    <touring_rocket>${118:-true}</touring_rocket>
+                    <!-- Give the Celestial Steed item as a reward -->
+                    <celestial_steed>${119:-true}</celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${116:-false}</enabled>
+                <enabled>${120:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${117:-58}</starting_level>
+                <starting_level>${121:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${118:-false}</enabled>
+                <enabled>${122:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${119:-false}</enabled>
+                <enabled>${123:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${120:-2.0}</experience_multiplier>
+                <experience_multiplier>${124:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${121:-2.0}</money_multiplier>
+                <money_multiplier>${125:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${122:-2}</professions_multiplier>
+                <professions_multiplier>${126:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${123:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${127:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${124:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${128:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -528,6 +538,9 @@ function save_options
     $OPTION_WORLD_GM_ALLOW_INVITE \
     $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLED \
+    $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS \
+    $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS \
+    $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS \
     $OPTION_MODULES_AHBOT_ENABLED \
     $OPTION_MODULES_AHBOT_ENABLE_BUYER \
     $OPTION_MODULES_AHBOT_ENABLE_SELLER \
@@ -591,6 +604,7 @@ function save_options
     $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS \
     $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA \
     $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
     $OPTION_MODULES_SPAWN_POINTS_ENABLED \
@@ -1085,6 +1099,33 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/account_bound/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_ACCOUNT_BOUND_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/account_bound/features/achievements option
+    OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS="$(echo "cat /options/modules/account_bound/features/achievements/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/account_bound/features/achievements is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/account_bound/features/companions option
+    OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS="$(echo "cat /options/modules/account_bound/features/companions/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/account_bound/features/companions is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/account_bound/features/mounts option
+    OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS="$(echo "cat /options/modules/account_bound/features/mounts/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/account_bound/features/mounts is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS="true"
         RESET=true
     fi
 
@@ -1652,6 +1693,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/touring_rocket is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/rewards/celestial_steed option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED="$(echo "cat /options/modules/recruit_a_friend/rewards/celestial_steed/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/celestial_steed is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED="true"
         RESET=true
     fi
 
@@ -3451,6 +3501,49 @@ function set_config
         sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$WORLD_ENABLE_WARDEN'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
+        # Check if the accountbound module is enabled
+        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
+                # The file is missing, so terminate the script
+                printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_accountbound.conf${COLOR_END}\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS == "true" ] && MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS=1 || MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS=0
+            [ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS == "true" ] && MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS=1 || MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS=0
+            [ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS == "true" ] && MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS=1 || MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+
+            # Update mod_accountbound.conf with values specified in the options
+            sed -i 's/AccountBound.Achievements =.*/AccountBound.Achievements = '$MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+            sed -i 's/AccountBound.Companions =.*/AccountBound.Companions = '$MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+            sed -i 's/AccountBound.Mounts =.*/AccountBound.Mounts = '$MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+        else
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+            fi
+        fi
+
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
@@ -3692,6 +3785,7 @@ function set_config
             # Convert boolean values to integers
             [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA=0
             [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=0
+            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED=0
 
             # Copy the file before editing it
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
@@ -3702,6 +3796,7 @@ function set_config
             sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = '$MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
         else
             # Check if the config file exists
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
