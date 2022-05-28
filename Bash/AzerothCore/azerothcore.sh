@@ -230,253 +230,279 @@ function store_options
             <enable_warden>${33:-true}</enable_warden>
             <!-- Allow players to stay in regular groups when logging off. This only affects normal groups and not raids or dungeon finder groups. false = players will leave their group when logging off, true = players will stay in their groups -->
             <disable_leave_group>${34:-false}</disable_leave_group>
+            <allow_two_sided>
+                <!-- Allow creating characters of both factions on the same account. false = disabled, true = enabled -->
+                <accounts>${35:-true}</accounts>
+                <!-- Allow calendar invites between factions. false = disabled, true = enabled -->
+                <calendar>${36:-false}</calendar>
+                <!-- Allow say chat between factions. false = disabled, true = enabled -->
+                <chat>${37:-false}</chat>
+                <!-- Allow emote messages between factions. false = disabled, true = enabled -->
+                <emote>${38:-false}</emote>
+                <!-- Allow channel chat between factions. false = disabled, true = enabled -->
+                <channel>${39:-false}</channel>
+                <!-- Allow group joining between factions. false = disabled, true = enabled -->
+                <group>${40:-false}</group>
+                <!-- Allow guild joining between factions. false = disabled, true = enabled -->
+                <guild>${41:-false}</guild>
+                <!-- Allow auctions between factions. false = disabled, true = enabled -->
+                <auction>${42:-false}</auction>
+                <!-- Allow sending mails between factions. false = disabled, true = enabled -->
+                <mail>${43:-false}</mail>
+                <!-- Show characters from both factions in the who list. false = disabled, true = enabled -->
+                <who_list>${44:-false}</who_list>
+                <!-- Allow adding friends from other faction to the friends list. false = disabled, true = enabled -->
+                <friend>${45:-false}</friend>
+                <!-- Allow trading between factions. false = disabled, true = enabled -->
+                <trade>${46:-false}</trade>
+            </allow_two_sided>
             <rates>
                 <!-- Experience rates (outside battleground) -->
-                <experience>${35:-1}</experience>
+                <experience>${47:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_experience>${36:-1}</rested_experience>
+                <rested_experience>${48:-1}</rested_experience>
                 <!-- Reputation gain rate -->
-                <reputation>${37:-1}</reputation>
+                <reputation>${49:-1}</reputation>
                 <!-- Drop rates for money -->
-                <money>${38:-1}</money>
+                <money>${50:-1}</money>
                 <!-- Crafting skills gain rate -->
-                <crafting>${39:-1}</crafting>
+                <crafting>${51:-1}</crafting>
                 <!-- Gathering skills gain rate -->
-                <gathering>${40:-1}</gathering>
+                <gathering>${52:-1}</gathering>
                 <!-- Weapon skills gain rate -->
-                <weapon_skill>${41:-1}</weapon_skill>
+                <weapon_skill>${53:-1}</weapon_skill>
                 <!-- Defense skills gain rate -->
-                <defense_skill>${42:-1}</defense_skill>
+                <defense_skill>${54:-1}</defense_skill>
             </rates>
             <gm>
                 <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
-                <login_state>${43:-true}</login_state>
+                <login_state>${55:-true}</login_state>
                 <!-- GM visibility at login. false = disabled, true = enabled -->
-                <enable_visibility>${44:-false}</enable_visibility>
+                <enable_visibility>${56:-false}</enable_visibility>
                 <!-- GM chat mode at login. false = disabled, true = enabled -->
-                <enable_chat>${45:-true}</enable_chat>
+                <enable_chat>${57:-true}</enable_chat>
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
-                <enable_whisper>${46:-false}</enable_whisper>
+                <enable_whisper>${58:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${47:-1}</show_gm_list>
+                <show_gm_list>${59:-1}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_who_list>${48:-0}</show_who_list>
+                <show_who_list>${60:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
-                <allow_friend>${49:-false}</allow_friend>
+                <allow_friend>${61:-false}</allow_friend>
                 <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
-                <allow_invite>${50:-false}</allow_invite>
+                <allow_invite>${62:-false}</allow_invite>
                 <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
-                <allow_lower_security>${51:-false}</allow_lower_security>
+                <allow_lower_security>${63:-false}</allow_lower_security>
             </gm>
         </world>
         <modules>
             <account_bound>
                 <!-- Enable/Disable the use of the Account Bound module -->
-                <enabled>${52:-false}</enabled>
+                <enabled>${64:-false}</enabled>
                 <features>
                     <!-- Enable/disable making achievements shared across all characters of an account -->
-                    <achievements>${53:-true}</achievements>
+                    <achievements>${65:-true}</achievements>
                     <!-- Enable/disable making companions shared across all characters of an account -->
-                    <companions>${54:-true}</companions>
+                    <companions>${66:-true}</companions>
                     <!-- Enable/disable making mounts shared across all characters of an account -->
-                    <mounts>${55:-true}</mounts>
+                    <mounts>${67:-true}</mounts>
                 </features>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${56:-false}</enabled>
+                <enabled>${68:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${57:-false}</enable_buyer>
+                <enable_buyer>${69:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${58:-false}</enable_seller>
+                <enable_seller>${70:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${59:-0}</account_id>
+                <account_id>${71:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${60:-0}</character_guid>
+                <character_guid>${72:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${61:-250}</min_items>
+                <min_items>${73:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${62:-250}</max_items>
+                <max_items>${74:-250}</max_items>
             </ahbot>
             <archmage_timear>
                 <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${63:-false}</enabled>
+                <enabled>${75:-false}</enabled>
             </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
-                <enabled>${64:-false}</enabled>
+                <enabled>${76:-false}</enabled>
                 <features>
                     <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${65:-false}</heirlooms>
+                    <heirlooms>${77:-false}</heirlooms>
                     <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${66:-false}</glyphs>
+                    <glyphs>${78:-false}</glyphs>
                     <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${67:-false}</gems>
+                    <gems>${79:-false}</gems>
                     <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${68:-false}</containers>
+                    <containers>${80:-false}</containers>
                     <utilities>
                         <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${69:-false}</enabled>
+                        <enabled>${81:-false}</enabled>
                         <!-- Cost in gold required to perform a name change -->
-                        <name_change>${70:-10}</name_change>
+                        <name_change>${82:-10}</name_change>
                         <!-- Cost in gold required to perform a customization -->
-                        <customization>${71:-50}</customization>
+                        <customization>${83:-50}</customization>
                         <!-- Cost in gold to perform a race change -->
-                        <race_change>${72:-500}</race_change>
+                        <race_change>${84:-500}</race_change>
                         <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${73:-1000}</faction_change>
+                        <faction_change>${85:-1000}</faction_change>
                     </utilities>
                     <professions>
                         <!-- Enable/Disable increasing profession skills levels at the assistant -->
-                        <enabled>${74:-false}</enabled>
+                        <enabled>${86:-false}</enabled>
                         <apprentice>
                             <!-- Enable/Disable increasing apprentice rank to level 75 -->
-                            <enabled>${75:-false}</enabled>
+                            <enabled>${87:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${76:-100}</cost>
+                            <cost>${88:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable increasing journeyman rank to level 150 -->
-                            <enabled>${77:-false}</enabled>
+                            <enabled>${89:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${78:-250}</cost>
+                            <cost>${90:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable increasing expert rank to level 225 -->
-                            <enabled>${79:-false}</enabled>
+                            <enabled>${91:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${80:-500}</cost>
+                            <cost>${92:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable increasing artisan rank to level 300 -->
-                            <enabled>${81:-false}</enabled>
+                            <enabled>${93:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${82:-750}</cost>
+                            <cost>${94:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable increasing master rank to level 375 -->
-                            <enabled>${83:-false}</enabled>
+                            <enabled>${95:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${84:-1250}</cost>
+                            <cost>${96:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable increasing grand master rank to level 450 -->
-                            <enabled>${85:-false}</enabled>
+                            <enabled>${97:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${86:-2500}</cost>
+                            <cost>${98:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${87:-false}</enabled>
+                <enabled>${99:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${88:-false}</enabled>
+                <enabled>${100:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${89:-false}</enabled>
+                <enabled>${101:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${90:-false}</on_login>
+                    <on_login>${102:-false}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${91:-false}</on_levelup>
+                    <on_levelup>${103:-false}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${92:-false}</class_spells>
+                    <class_spells>${104:-false}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${93:-false}</talent_ranks>
+                    <talent_ranks>${105:-false}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${94:-false}</proficiencies>
+                    <proficiencies>${106:-false}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${95:-false}</from_quests>
+                    <from_quests>${107:-false}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${96:-false}</enabled>
+                        <enabled>${108:-false}</enabled>
                         <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${97:-60}</max_level>
+                        <max_level>${109:-60}</max_level>
                     </max_skill>
                     <riding>
                         <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${98:-false}</enabled>
+                        <enabled>${110:-false}</enabled>
                         <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${99:-false}</apprentice>
+                        <apprentice>${111:-false}</apprentice>
                         <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${100:-false}</journeyman>
+                        <journeyman>${112:-false}</journeyman>
                         <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${101:-false}</expert>
+                        <expert>${113:-false}</expert>
                         <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${102:-false}</artisan>
+                        <artisan>${114:-false}</artisan>
                         <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${103:-false}</cold_weather>
+                        <cold_weather>${115:-false}</cold_weather>
                     </riding>
                 </spells>
             </learn_spells>
             <level_reward>
                 <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${104:-false}</enabled>
+                <enabled>${116:-false}</enabled>
                 <gold>
                     <!-- The amount of gold given at level 10 -->
-                    <level_10>${105:-5}</level_10>
+                    <level_10>${117:-5}</level_10>
                     <!-- The amount of gold given at level 20 -->
-                    <level_20>${106:-15}</level_20>
+                    <level_20>${118:-15}</level_20>
                     <!-- The amount of gold given at level 30 -->
-                    <level_30>${107:-30}</level_30>
+                    <level_30>${119:-30}</level_30>
                     <!-- The amount of gold given at level 40 -->
-                    <level_40>${108:-45}</level_40>
+                    <level_40>${120:-45}</level_40>
                     <!-- The amount of gold given at level 50 -->
-                    <level_50>${109:-60}</level_50>
+                    <level_50>${121:-60}</level_50>
                     <!-- The amount of gold given at level 60 -->
-                    <level_60>${110:-80}</level_60>
+                    <level_60>${122:-80}</level_60>
                     <!-- The amount of gold given at level 70 -->
-                    <level_70>${111:-125}</level_70>
+                    <level_70>${123:-125}</level_70>
                     <!-- The amount of gold given at level 80 -->
-                    <level_80>${112:-250}</level_80>
+                    <level_80>${124:-250}</level_80>
                 </gold>
             </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
-                <enabled>${113:-false}</enabled>
+                <enabled>${125:-false}</enabled>
                 <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
-                <duration>${114:-90}</duration>
+                <duration>${126:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
-                <account_age>${115:-7}</account_age>
+                <account_age>${127:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${116:-30}</days>
+                    <days>${128:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${117:-true}</swift_zhevra>
+                    <swift_zhevra>${129:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${118:-true}</touring_rocket>
+                    <touring_rocket>${130:-true}</touring_rocket>
                     <!-- Give the Celestial Steed item as a reward -->
-                    <celestial_steed>${119:-true}</celestial_steed>
+                    <celestial_steed>${131:-true}</celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${120:-false}</enabled>
+                <enabled>${132:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${121:-58}</starting_level>
+                <starting_level>${133:-58}</starting_level>
             </skip_dk_starting_area>
             <spawn_points>
                 <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${122:-false}</enabled>
+                <enabled>${134:-false}</enabled>
             </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${123:-false}</enabled>
+                <enabled>${135:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${124:-2.0}</experience_multiplier>
+                <experience_multiplier>${136:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${125:-2.0}</money_multiplier>
+                <money_multiplier>${137:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${126:-2}</professions_multiplier>
+                <professions_multiplier>${138:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${127:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${139:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${128:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${140:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -520,6 +546,18 @@ function save_options
     $OPTION_WORLD_ENABLE_MINIGOB_MANABONK \
     $OPTION_WORLD_ENABLE_WARDEN \
     $OPTION_WORLD_DISABLE_LEAVE_GROUP \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_GROUP \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_GUILD \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_MAIL \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND \
+    $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE \
     $OPTION_WORLD_RATES_EXPERIENCE \
     $OPTION_WORLD_RATES_RESTED_EXPERIENCE \
     $OPTION_WORLD_RATES_REPUTATION \
@@ -937,6 +975,114 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/disable_leave_group is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_DISABLE_LEAVE_GROUP="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/accounts option
+    OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS="$(echo "cat /options/world/allow_two_sided/accounts/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/accounts is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS="true"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/calendar option
+    OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR="$(echo "cat /options/world/allow_two_sided/calendar/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/calendar is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/chat option
+    OPTION_WORLD_ALLOW_TWO_SIDED_CHAT="$(echo "cat /options/world/allow_two_sided/chat/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/chat is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_CHAT="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/emote option
+    OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE="$(echo "cat /options/world/allow_two_sided/emote/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/emote is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/channel option
+    OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL="$(echo "cat /options/world/allow_two_sided/channel/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/channel is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/group option
+    OPTION_WORLD_ALLOW_TWO_SIDED_GROUP="$(echo "cat /options/world/allow_two_sided/group/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_GROUP != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_GROUP != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/group is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_GROUP="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/guild option
+    OPTION_WORLD_ALLOW_TWO_SIDED_GUILD="$(echo "cat /options/world/allow_two_sided/guild/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_GUILD != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_GUILD != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/guild is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_GUILD="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/auction option
+    OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION="$(echo "cat /options/world/allow_two_sided/auction/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/auction is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/mail option
+    OPTION_WORLD_ALLOW_TWO_SIDED_MAIL="$(echo "cat /options/world/allow_two_sided/mail/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_MAIL != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_MAIL != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/mail is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_MAIL="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/who_list option
+    OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST="$(echo "cat /options/world/allow_two_sided/who_list/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/who_list is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/friend option
+    OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND="$(echo "cat /options/world/allow_two_sided/friend/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/friend is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/allow_two_sided/trade option
+    OPTION_WORLD_ALLOW_TWO_SIDED_TRADE="$(echo "cat /options/world/allow_two_sided/trade/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/allow_two_sided/trade is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ALLOW_TWO_SIDED_TRADE="false"
         RESET=true
     fi
 
@@ -3442,6 +3588,18 @@ function set_config
         [ $OPTION_WORLD_GM_ALLOW_FRIEND == "true" ] && WORLD_GM_ALLOW_FRIEND=1 || WORLD_GM_ALLOW_FRIEND=0
         [ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY == "true" ] && WORLD_GM_ALLOW_LOWER_SECURITY=1 || WORLD_GM_ALLOW_LOWER_SECURITY=0
         [ $OPTION_WORLD_DISABLE_LEAVE_GROUP == "true" ] && WORLD_DISABLE_LEAVE_GROUP=0 || WORLD_DISABLE_LEAVE_GROUP=1
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS == "true" ] && WORLD_ALLOW_TWO_SIDED_ACCOUNTS=1 || WORLD_ALLOW_TWO_SIDED_ACCOUNTS=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR == "true" ] && WORLD_ALLOW_TWO_SIDED_CALENDAR=1 || WORLD_ALLOW_TWO_SIDED_CALENDAR=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT == "true" ] && WORLD_ALLOW_TWO_SIDED_CHAT=1 || WORLD_ALLOW_TWO_SIDED_CHAT=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE == "true" ] && WORLD_ALLOW_TWO_SIDED_EMOTE=1 || WORLD_ALLOW_TWO_SIDED_EMOTE=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL == "true" ] && WORLD_ALLOW_TWO_SIDED_CHANNEL=1 || WORLD_ALLOW_TWO_SIDED_CHANNEL=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_GROUP == "true" ] && WORLD_ALLOW_TWO_SIDED_GROUP=1 || WORLD_ALLOW_TWO_SIDED_GROUP=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_GUILD == "true" ] && WORLD_ALLOW_TWO_SIDED_GUILD=1 || WORLD_ALLOW_TWO_SIDED_GUILD=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION == "true" ] && WORLD_ALLOW_TWO_SIDED_AUCTION=1 || WORLD_ALLOW_TWO_SIDED_AUCTION=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_MAIL == "true" ] && WORLD_ALLOW_TWO_SIDED_MAIL=1 || WORLD_ALLOW_TWO_SIDED_MAIL=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST == "true" ] && WORLD_ALLOW_TWO_SIDED_WHO_LIST=1 || WORLD_ALLOW_TWO_SIDED_WHO_LIST=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND == "true" ] && WORLD_ALLOW_TWO_SIDED_FRIEND=1 || WORLD_ALLOW_TWO_SIDED_FRIEND=0
+        [ $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE == "true" ] && WORLD_ALLOW_TWO_SIDED_TRADE=1 || WORLD_ALLOW_TWO_SIDED_TRADE=0
 
         # Copy the file before editing it
         cp $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist $OPTION_SOURCE_LOCATION/etc/worldserver.conf
@@ -3474,6 +3632,18 @@ function set_config
         sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$WORLD_PRELOAD_MAP_GRIDS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$WORLD_SET_ALL_WAYPOINTS_ACTIVE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = '$WORLD_ENABLE_MINIGOB_MANABONK'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Accounts =.*/AllowTwoSide.Accounts = '$WORLD_ALLOW_TWO_SIDED_ACCOUNTS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Interaction.Calendar =.*/AllowTwoSide.Interaction.Calendar = '$WORLD_ALLOW_TWO_SIDED_CALENDAR'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Interaction.Chat =.*/AllowTwoSide.Interaction.Chat = '$WORLD_ALLOW_TWO_SIDED_CHAT'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Interaction.Emote =.*/AllowTwoSide.Interaction.Emote = '$WORLD_ALLOW_TWO_SIDED_EMOTE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Interaction.Channel =.*/AllowTwoSide.Interaction.Channel = '$WORLD_ALLOW_TWO_SIDED_CHANNEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Interaction.Group =.*/AllowTwoSide.Interaction.Group = '$WORLD_ALLOW_TWO_SIDED_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Interaction.Guild =.*/AllowTwoSide.Interaction.Guild = '$WORLD_ALLOW_TWO_SIDED_GUILD'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Interaction.Auction =.*/AllowTwoSide.Interaction.Auction = '$WORLD_ALLOW_TWO_SIDED_AUCTION'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Interaction.Mail =.*/AllowTwoSide.Interaction.Mail = '$WORLD_ALLOW_TWO_SIDED_MAIL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.WhoList =.*/AllowTwoSide.WhoList = '$WORLD_ALLOW_TWO_SIDED_WHO_LIST'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.AddFriend =.*/AllowTwoSide.AddFriend = '$WORLD_ALLOW_TWO_SIDED_FRIEND'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/AllowTwoSide.Trade =.*/AllowTwoSide.Trade = '$WORLD_ALLOW_TWO_SIDED_TRADE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = '$OPTION_WORLD_RATES_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
