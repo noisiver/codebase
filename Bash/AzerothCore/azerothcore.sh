@@ -2200,9 +2200,9 @@ function get_source
         # Check if the eluna module should be installed
         if [[ $OPTION_MODULES_ELUNA_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine ]]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-eluna ]]; then
                 # Download the source code
-                git clone --recursive --branch master https://github.com/azerothcore/mod-eluna-lua-engine.git $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine
+                git clone --recursive --branch master https://github.com/azerothcore/mod-eluna.git $OPTION_SOURCE_LOCATION/modules/mod-eluna
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2211,7 +2211,7 @@ function get_source
                 fi
             else
                 # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine
+                cd $OPTION_SOURCE_LOCATION/modules/mod-eluna
 
                 # Fetch all available updates
                 git fetch --all
@@ -2242,9 +2242,9 @@ function get_source
             fi
         else
             # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine ]]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-eluna ]]; then
                 # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-eluna-lua-engine
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-eluna
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
