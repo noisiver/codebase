@@ -409,17 +409,17 @@ function store_options
                 <enabled>${102:-false}</enabled>
                 <spells>
                     <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${103:-false}</on_login>
+                    <on_login>${103:-true}</on_login>
                     <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${104:-false}</on_levelup>
+                    <on_levelup>${104:-true}</on_levelup>
                     <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${105:-false}</class_spells>
+                    <class_spells>${105:-true}</class_spells>
                     <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${106:-false}</talent_ranks>
+                    <talent_ranks>${106:-true}</talent_ranks>
                     <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${107:-false}</proficiencies>
+                    <proficiencies>${107:-true}</proficiencies>
                     <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${108:-false}</from_quests>
+                    <from_quests>${108:-true}</from_quests>
                     <max_skill>
                         <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
                         <enabled>${109:-false}</enabled>
@@ -1598,7 +1598,7 @@ function load_options
     if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/on_login is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN="false"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN="true"
         RESET=true
     fi
 
@@ -1607,7 +1607,7 @@ function load_options
     if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/on_levelup is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP="false"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP="true"
         RESET=true
     fi
 
@@ -1616,7 +1616,7 @@ function load_options
     if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/class_spells is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS="false"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS="true"
         RESET=true
     fi
 
@@ -1625,7 +1625,7 @@ function load_options
     if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/talent_ranks is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS="false"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS="true"
         RESET=true
     fi
 
@@ -1634,7 +1634,7 @@ function load_options
     if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/proficiencies is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES="false"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES="true"
         RESET=true
     fi
 
@@ -1643,7 +1643,7 @@ function load_options
     if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/from_quests is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS="false"
+        OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS="true"
         RESET=true
     fi
 
