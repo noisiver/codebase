@@ -298,213 +298,137 @@ function store_options
             </gm>
         </world>
         <modules>
-            <account_bound>
-                <!-- Enable/Disable the use of the Account Bound module -->
-                <enabled>${65:-false}</enabled>
-                <features>
-                    <!-- Enable/disable making achievements shared across all characters of an account -->
-                    <achievements>${66:-true}</achievements>
-                    <!-- Enable/disable making companions shared across all characters of an account -->
-                    <companions>${67:-true}</companions>
-                    <!-- Enable/disable making mounts shared across all characters of an account -->
-                    <mounts>${68:-true}</mounts>
-                </features>
-            </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${69:-false}</enabled>
+                <enabled>${65:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${70:-false}</enable_buyer>
+                <enable_buyer>${66:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${71:-false}</enable_seller>
+                <enable_seller>${67:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${72:-0}</account_id>
+                <account_id>${68:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${73:-0}</character_guid>
+                <character_guid>${69:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${74:-250}</min_items>
+                <min_items>${70:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${75:-250}</max_items>
+                <max_items>${71:-250}</max_items>
             </ahbot>
             <archmage_timear>
                 <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${76:-false}</enabled>
+                <enabled>${72:-false}</enabled>
             </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
-                <enabled>${77:-false}</enabled>
+                <enabled>${73:-false}</enabled>
                 <features>
                     <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${78:-false}</heirlooms>
+                    <heirlooms>${74:-false}</heirlooms>
                     <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${79:-false}</glyphs>
+                    <glyphs>${75:-false}</glyphs>
                     <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${80:-false}</gems>
+                    <gems>${76:-false}</gems>
                     <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${81:-false}</containers>
+                    <containers>${77:-false}</containers>
                     <utilities>
                         <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${82:-false}</enabled>
+                        <enabled>${78:-false}</enabled>
                         <!-- Cost in gold required to perform a name change -->
-                        <name_change>${83:-10}</name_change>
+                        <name_change>${79:-10}</name_change>
                         <!-- Cost in gold required to perform a customization -->
-                        <customization>${84:-50}</customization>
+                        <customization>${80:-50}</customization>
                         <!-- Cost in gold to perform a race change -->
-                        <race_change>${85:-500}</race_change>
+                        <race_change>${81:-500}</race_change>
                         <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${86:-1000}</faction_change>
+                        <faction_change>${82:-1000}</faction_change>
                     </utilities>
                     <professions>
                         <!-- Enable/Disable increasing profession skills levels at the assistant -->
-                        <enabled>${87:-false}</enabled>
+                        <enabled>${83:-false}</enabled>
                         <apprentice>
                             <!-- Enable/Disable increasing apprentice rank to level 75 -->
-                            <enabled>${88:-false}</enabled>
+                            <enabled>${84:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${89:-100}</cost>
+                            <cost>${85:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable increasing journeyman rank to level 150 -->
-                            <enabled>${90:-false}</enabled>
+                            <enabled>${86:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${91:-250}</cost>
+                            <cost>${87:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable increasing expert rank to level 225 -->
-                            <enabled>${92:-false}</enabled>
+                            <enabled>${88:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${93:-500}</cost>
+                            <cost>${89:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable increasing artisan rank to level 300 -->
-                            <enabled>${94:-false}</enabled>
+                            <enabled>${90:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${95:-750}</cost>
+                            <cost>${91:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable increasing master rank to level 375 -->
-                            <enabled>${96:-false}</enabled>
+                            <enabled>${92:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${97:-1250}</cost>
+                            <cost>${93:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable increasing grand master rank to level 450 -->
-                            <enabled>${98:-false}</enabled>
+                            <enabled>${94:-false}</enabled>
                             <!-- The amount of gold required to increase this rank -->
-                            <cost>${99:-2500}</cost>
+                            <cost>${95:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${96:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${101:-false}</enabled>
+                <enabled>${97:-false}</enabled>
             </group_quests>
-            <learn_spells>
-                <!-- Enable/Disable the use of the Learn Spells module. It teaches players all specified spells when entering the world or when leveling up -->
-                <enabled>${102:-false}</enabled>
-                <spells>
-                    <!-- Enable/Disable learning spells when entering the world -->
-                    <on_login>${103:-true}</on_login>
-                    <!-- Enable/Disable learning spells when leveling up -->
-                    <on_levelup>${104:-true}</on_levelup>
-                    <!-- Enable/Disable learning class-specific spells when leveling up or entering the world -->
-                    <class_spells>${105:-true}</class_spells>
-                    <!-- Enable/Disable learning new talent ranks when leveling up or entering the world -->
-                    <talent_ranks>${106:-true}</talent_ranks>
-                    <!-- Enable/Disable learning new weapon and armor skills when leveling up -->
-                    <proficiencies>${107:-true}</proficiencies>
-                    <!-- Enable/Disable spells that are normally obtained through quests -->
-                    <from_quests>${108:-true}</from_quests>
-                    <max_skill>
-                        <!-- Enable/Disable setting weapon skills to their max value when leveling up or entering the world -->
-                        <enabled>${109:-false}</enabled>
-                        <!-- The max level where weapon skills will be set to their max value -->
-                        <max_level>${110:-60}</max_level>
-                    </max_skill>
-                    <riding>
-                        <!-- Enable/Disable learning riding skills when leveling up or entering the world -->
-                        <enabled>${111:-false}</enabled>
-                        <!-- Enable/Disable learning the apprentice (75%) riding skill and mounts when leveling up or entering the world -->
-                        <apprentice>${112:-false}</apprentice>
-                        <!-- Enable/Disable learning the journeyman (150%) riding skill and mounts when leveling up or entering the world -->
-                        <journeyman>${113:-false}</journeyman>
-                        <!-- Enable/Disable learning the journeyman (225%) riding skill and mounts when leveling up or entering the world -->
-                        <expert>${114:-false}</expert>
-                        <!-- Enable/Disable learning the artisan (300%) riding skill and mounts when leveling up or entering the world -->
-                        <artisan>${115:-false}</artisan>
-                        <!-- Enable/Disable learning the cold weather flying skill (level 77) when leveling up or entering the world -->
-                        <cold_weather>${116:-false}</cold_weather>
-                    </riding>
-                </spells>
-            </learn_spells>
-            <level_reward>
-                <!-- Enable/Disable the use of the Level Reward module. It will give players a reward of gold when reaching specific levels -->
-                <enabled>${117:-false}</enabled>
-                <gold>
-                    <!-- The amount of gold given at level 10 -->
-                    <level_10>${118:-5}</level_10>
-                    <!-- The amount of gold given at level 20 -->
-                    <level_20>${119:-15}</level_20>
-                    <!-- The amount of gold given at level 30 -->
-                    <level_30>${120:-30}</level_30>
-                    <!-- The amount of gold given at level 40 -->
-                    <level_40>${121:-45}</level_40>
-                    <!-- The amount of gold given at level 50 -->
-                    <level_50>${122:-60}</level_50>
-                    <!-- The amount of gold given at level 60 -->
-                    <level_60>${123:-80}</level_60>
-                    <!-- The amount of gold given at level 70 -->
-                    <level_70>${124:-125}</level_70>
-                    <!-- The amount of gold given at level 80 -->
-                    <level_80>${125:-250}</level_80>
-                </gold>
-            </level_reward>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
-                <enabled>${126:-false}</enabled>
+                <enabled>${98:-false}</enabled>
                 <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
-                <duration>${127:-90}</duration>
+                <duration>${99:-90}</duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
-                <account_age>${128:-7}</account_age>
+                <account_age>${100:-7}</account_age>
                 <rewards>
                     <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${129:-30}</days>
+                    <days>${101:-30}</days>
                     <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${130:-true}</swift_zhevra>
+                    <swift_zhevra>${102:-true}</swift_zhevra>
                     <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${131:-true}</touring_rocket>
+                    <touring_rocket>${103:-true}</touring_rocket>
                     <!-- Give the Celestial Steed item as a reward -->
-                    <celestial_steed>${132:-true}</celestial_steed>
+                    <celestial_steed>${104:-true}</celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${133:-false}</enabled>
+                <enabled>${105:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${134:-58}</starting_level>
+                <starting_level>${106:-58}</starting_level>
             </skip_dk_starting_area>
-            <spawn_points>
-                <!-- Enable/Disable the use of the Spawn Points module. It will spawn new characters in specified locations -->
-                <enabled>${135:-false}</enabled>
-            </spawn_points>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${136:-false}</enabled>
+                <enabled>${107:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${137:-2.0}</experience_multiplier>
+                <experience_multiplier>${108:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${138:-2.0}</money_multiplier>
+                <money_multiplier>${109:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${139:-2}</professions_multiplier>
+                <professions_multiplier>${110:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${140:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${111:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${141:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${112:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -578,10 +502,6 @@ function save_options
     $OPTION_WORLD_GM_ALLOW_FRIEND \
     $OPTION_WORLD_GM_ALLOW_INVITE \
     $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
-    $OPTION_MODULES_ACCOUNT_BOUND_ENABLED \
-    $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS \
-    $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS \
-    $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS \
     $OPTION_MODULES_AHBOT_ENABLED \
     $OPTION_MODULES_AHBOT_ENABLE_BUYER \
     $OPTION_MODULES_AHBOT_ENABLE_SELLER \
@@ -615,30 +535,6 @@ function save_options
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST \
     $OPTION_MODULES_ELUNA_ENABLED \
     $OPTION_MODULES_GROUP_QUESTS_ENABLED \
-    $OPTION_MODULES_LEARN_SPELLS_ENABLED \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN \
-    $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER \
-    $OPTION_MODULES_LEVEL_REWARD_ENABLED \
-    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10 \
-    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20 \
-    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30 \
-    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40 \
-    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50 \
-    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60 \
-    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70 \
-    $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 \
     $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED \
     $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION \
     $OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE \
@@ -648,7 +544,6 @@ function save_options
     $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
-    $OPTION_MODULES_SPAWN_POINTS_ENABLED \
     $OPTION_MODULES_WEEKEND_BONUS_ENABLED \
     $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER \
     $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER \
@@ -1251,42 +1146,6 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/account_bound/enabled option
-    OPTION_MODULES_ACCOUNT_BOUND_ENABLED="$(echo "cat /options/modules/account_bound/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED != "true" && $OPTION_MODULES_ACCOUNT_BOUND_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/account_bound/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ACCOUNT_BOUND_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/account_bound/features/achievements option
-    OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS="$(echo "cat /options/modules/account_bound/features/achievements/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/account_bound/features/achievements is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/account_bound/features/companions option
-    OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS="$(echo "cat /options/modules/account_bound/features/companions/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/account_bound/features/companions is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/account_bound/features/mounts option
-    OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS="$(echo "cat /options/modules/account_bound/features/mounts/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/account_bound/features/mounts is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS="true"
-        RESET=true
-    fi
-
     # Load the /options/modules/ahbot/enabled option
     OPTION_MODULES_AHBOT_ENABLED="$(echo "cat /options/modules/ahbot/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_AHBOT_ENABLED != "true" && $OPTION_MODULES_AHBOT_ENABLED != "false" ]]; then
@@ -1584,222 +1443,6 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/learn_spells/enabled option
-    OPTION_MODULES_LEARN_SPELLS_ENABLED="$(echo "cat /options/modules/learn_spells/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED != "true" && $OPTION_MODULES_LEARN_SPELLS_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/on_login option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN="$(echo "cat /options/modules/learn_spells/spells/on_login/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/on_login is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/on_levelup option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP="$(echo "cat /options/modules/learn_spells/spells/on_levelup/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/on_levelup is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/class_spells option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS="$(echo "cat /options/modules/learn_spells/spells/class_spells/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/class_spells is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/talent_ranks option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS="$(echo "cat /options/modules/learn_spells/spells/talent_ranks/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/talent_ranks is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/proficiencies option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES="$(echo "cat /options/modules/learn_spells/spells/proficiencies/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/proficiencies is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/from_quests option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS="$(echo "cat /options/modules/learn_spells/spells/from_quests/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/from_quests is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/max_skill/enabled option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED="$(echo "cat /options/modules/learn_spells/spells/max_skill/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/max_skill/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/max_skill/max_level option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL="$(echo "cat /options/modules/learn_spells/spells/max_skill/max_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL < 1 || $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL > 80 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/max_skill/max_level is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL="60"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/riding/enabled option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED="$(echo "cat /options/modules/learn_spells/spells/riding/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/riding/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/riding/apprentice option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE="$(echo "cat /options/modules/learn_spells/spells/riding/apprentice/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/riding/apprentice is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/riding/journeyman option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN="$(echo "cat /options/modules/learn_spells/spells/riding/journeyman/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/riding/journeyman is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/riding/expert option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT="$(echo "cat /options/modules/learn_spells/spells/riding/expert/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/riding/expert is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/riding/artisan option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN="$(echo "cat /options/modules/learn_spells/spells/riding/artisan/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/riding/artisan is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/learn_spells/spells/riding/cold_weather option
-    OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER="$(echo "cat /options/modules/learn_spells/spells/riding/cold_weather/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER != "true" && $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/learn_spells/spells/riding/cold_weather is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/enabled option
-    OPTION_MODULES_LEVEL_REWARD_ENABLED="$(echo "cat /options/modules/level_reward/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_LEVEL_REWARD_ENABLED != "true" && $OPTION_MODULES_LEVEL_REWARD_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/gold/level_10 option
-    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10="$(echo "cat /options/modules/level_reward/gold/level_10/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10 < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/gold/level_10 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10="5"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/gold/level_20 option
-    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20="$(echo "cat /options/modules/level_reward/gold/level_20/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20 < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/gold/level_20 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20="15"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/gold/level_30 option
-    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30="$(echo "cat /options/modules/level_reward/gold/level_30/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30 < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/gold/level_30 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30="30"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/gold/level_40 option
-    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40="$(echo "cat /options/modules/level_reward/gold/level_40/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40 < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/gold/level_40 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40="45"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/gold/level_50 option
-    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50="$(echo "cat /options/modules/level_reward/gold/level_50/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50 < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/gold/level_50 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50="60"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/gold/level_60 option
-    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60="$(echo "cat /options/modules/level_reward/gold/level_60/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60 < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/gold/level_60 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60="80"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/gold/level_70 option
-    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70="$(echo "cat /options/modules/level_reward/gold/level_70/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70 < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/gold/level_70 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70="125"
-        RESET=true
-    fi
-
-    # Load the /options/modules/level_reward/gold/level_80 option
-    OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80="$(echo "cat /options/modules/level_reward/gold/level_80/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80 < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/level_reward/gold/level_80 is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80="250"
-        RESET=true
-    fi
-
     # Load the /options/modules/recruit_a_friend/enabled option
     OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /options/modules/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
@@ -1878,15 +1521,6 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/skip_dk_starting_area/starting_level is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL="58"
-        RESET=true
-    fi
-
-    # Load the /options/modules/spawn_points/enabled option
-    OPTION_MODULES_SPAWN_POINTS_ENABLED="$(echo "cat /options/modules/spawn_points/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED != "true" && $OPTION_MODULES_SPAWN_POINTS_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/spawn_points/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_SPAWN_POINTS_ENABLED="false"
         RESET=true
     fi
 
@@ -2005,54 +1639,6 @@ function get_source
 
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
-        # Check if the account bound module should be installed
-        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound ]]; then
-                # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-accountbound.git $OPTION_SOURCE_LOCATION/modules/mod-accountbound
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-accountbound
-
-                # Fetch all available updates
-                git fetch --all
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-accountbound
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
         # Check if the ahbot module should be installed
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
@@ -2302,102 +1888,6 @@ function get_source
             fi
         fi
 
-        # Check if the level reward module should be installed
-        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
-                # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-learnspells.git $OPTION_SOURCE_LOCATION/modules/mod-learnspells
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-learnspells
-
-                # Fetch all available updates
-                git fetch --all
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-learnspells
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
-        # Check if the level reward module should be installed
-        if [[ $OPTION_MODULES_LEVEL_REWARD_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-levelreward ]]; then
-                # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-levelreward.git $OPTION_SOURCE_LOCATION/modules/mod-levelreward
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-levelreward
-
-                # Fetch all available updates
-                git fetch --all
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-levelreward ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-levelreward
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
         # Check if the recruit-a-friend module should be installed
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
@@ -2485,54 +1975,6 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
-        # Check if the spawn points module should be installed
-        if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints ]]; then
-                # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-spawnpoints.git $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints
-
-                # Fetch all available updates
-                git fetch --all
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -3094,86 +2536,6 @@ function import_database
             exit $?
         fi
 
-        # Check if the account bound module is enabled
-        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound/sql/auth/base ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-accountbound/sql/auth/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound/sql/world/base ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-accountbound/sql/world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        else
-            # Check if the account_bound_template table exists when the module is not enabled
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'account_bound_template'"` ]]; then
-                # Drop the table
-                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE account_bound_template"
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Remove the mysql conf
-                    rm -rf $MYSQL_CNF
-
-                    # Terminate script on error
-                    exit $?
-                fi
-            fi
-        fi
-
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Make sure the database folder exists
@@ -3352,55 +2714,6 @@ function import_database
             fi
         fi
 
-        # Check if the learn spells module is enabled
-        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-learnspells/sql/world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        else
-            # Check if the mod_learnspells table exists when the module is not enabled
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_learnspells'"` ]]; then
-                # Drop the table
-                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_learnspells"
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Remove the mysql conf
-                    rm -rf $MYSQL_CNF
-
-                    # Terminate script on error
-                    exit $?
-                fi
-            fi
-        fi
-
         # Check if the recruit-a-friend module is enabled
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Make sure the database folder exists
@@ -3463,55 +2776,6 @@ function import_database
                         exit $?
                     fi
                 done
-            fi
-        fi
-
-        # Check if the spawn points module is enabled
-        if [[ $OPTION_MODULES_SPAWN_POINTS_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-spawnpoints/sql/world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        else
-            # Check if the mod_learnspells table exists when the module is not enabled
-            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE 'mod_spawnpoints'"` ]]; then
-                # Drop the table
-                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DROP TABLE mod_spawnpoints"
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Remove the mysql conf
-                    rm -rf $MYSQL_CNF
-
-                    # Terminate script on error
-                    exit $?
-                fi
             fi
         fi
 
@@ -3695,49 +2959,6 @@ function set_config
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MailDeliveryDelay =.*/MailDeliveryDelay = '$OPTION_WORLD_MAIL_DELIVERY_DELAY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
-        # Check if the accountbound module is enabled
-        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
-            # Check to make sure the config file exists
-            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
-                # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
-                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            printf "${COLOR_ORANGE}Updating mod_accountbound.conf${COLOR_END}\n"
-
-            # Convert boolean values to integers
-            [ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS == "true" ] && MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS=1 || MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS=0
-            [ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS == "true" ] && MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS=1 || MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS=0
-            [ $OPTION_MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS == "true" ] && MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS=1 || MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS=0
-
-            # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-
-            # Update mod_accountbound.conf with values specified in the options
-            sed -i 's/AccountBound.Achievements =.*/AccountBound.Achievements = '$MODULES_ACCOUNT_BOUND_FEATURES_ACHIEVEMENTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-            sed -i 's/AccountBound.Companions =.*/AccountBound.Companions = '$MODULES_ACCOUNT_BOUND_FEATURES_COMPANIONS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-            sed -i 's/AccountBound.Mounts =.*/AccountBound.Mounts = '$MODULES_ACCOUNT_BOUND_FEATURES_MOUNTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-        else
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist
-            fi
-
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-            fi
-        fi
-
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
@@ -3849,113 +3070,6 @@ function set_config
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            fi
-        fi
-
-        # Check if the learn spells module is enabled
-        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
-            # Check to make sure the config file exists
-            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
-                # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
-                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            printf "${COLOR_ORANGE}Updating mod_learnspells.conf${COLOR_END}\n"
-
-            # Convert boolean values to integers
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN == "true" ] && MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN=1 || MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP == "true" ] && MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP=1 || MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS == "true" ] && MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS=1 || MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS == "true" ] && MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS=1 || MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES == "true" ] && MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES=1 || MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS == "true" ] && MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS=1 || MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED == "true" ] && MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED=1 || MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN=0
-            [ $OPTION_MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER == "true" ] && MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER=1 || MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER=0
-
-            # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-
-            # Update mod_learnspells.conf with values specified in the options
-            sed -i 's/LearnSpells.OnLogin.Enabled =.*/LearnSpells.OnLogin.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_ON_LOGIN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.OnLevelUp.Enabled =.*/LearnSpells.OnLevelUp.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_ON_LEVELUP'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.ClassSpells.Enabled =.*/LearnSpells.ClassSpells.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_CLASS_SPELLS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.TalentRanks.Enabled =.*/LearnSpells.TalentRanks.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_TALENT_RANKS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Proficiencies.Enabled =.*/LearnSpells.Proficiencies.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_PROFICIENCIES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.SpellsFromQuests.Enabled =.*/LearnSpells.SpellsFromQuests.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_FROM_QUESTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.MaxSkill.Enabled =.*/LearnSpells.MaxSkill.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.MaxSkill.MaxLevel =.*/LearnSpells.MaxSkill.MaxLevel = '$OPTION_MODULES_LEARN_SPELLS_SPELLS_MAX_SKILL_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Enabled =.*/LearnSpells.Riding.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Apprentice.Enabled =.*/LearnSpells.Riding.Apprentice.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_APPRENTICE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Journeyman.Enabled =.*/LearnSpells.Riding.Journeyman.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_JOURNEYMAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Expert.Enabled =.*/LearnSpells.Riding.Expert.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_EXPERT'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Artisan.Enabled =.*/LearnSpells.Riding.Artisan.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_ARTISAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.ColdWeather.Enabled =.*/LearnSpells.Riding.ColdWeather.Enabled = '$MODULES_LEARN_SPELLS_SPELLS_RIDING_COLD_WEATHER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        else
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist
-            fi
-
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            fi
-        fi
-
-        # Check if the learn spells module is enabled
-        if [[ $OPTION_MODULES_LEVEL_REWARD_ENABLED == "true" ]]; then
-            # Check to make sure the config file exists
-            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]]; then
-                # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file mod_levelreward.conf.dist is missing.${COLOR_END}\n"
-                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            printf "${COLOR_ORANGE}Updating mod_levelreward.conf${COLOR_END}\n"
-
-            # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-
-            # Update mod_levelreward.conf with values specified in the options
-            sed -i 's/LevelReward.Level.10 =.*/LevelReward.Level.10 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_10'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/LevelReward.Level.20 =.*/LevelReward.Level.20 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_20'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/LevelReward.Level.30 =.*/LevelReward.Level.30 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_30'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/LevelReward.Level.40 =.*/LevelReward.Level.40 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_40'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/LevelReward.Level.50 =.*/LevelReward.Level.50 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_50'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/LevelReward.Level.60 =.*/LevelReward.Level.60 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_60'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/LevelReward.Level.70 =.*/LevelReward.Level.70 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_70'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-            sed -i 's/LevelReward.Level.80 =.*/LevelReward.Level.80 = '$OPTION_MODULES_LEVEL_REWARD_GOLD_LEVEL_80'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
-        else
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf.dist
-            fi
-
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_levelreward.conf
             fi
         fi
 
