@@ -392,43 +392,25 @@ function store_options
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
                 <enabled>${97:-false}</enabled>
             </group_quests>
-            <recruit_a_friend>
-                <!-- Enable/Disable the use of the Recruit-A-Friend module. Players can recruit other players by using a simple in-game command -->
-                <enabled>${98:-false}</enabled>
-                <!-- The amount of days that recruit-a-friend stays active. 0 = never expires -->
-                <duration>${99:-90}</duration>
-                <!-- The amount of days since the account was created where it can still be recruited. 0 = no limit -->
-                <account_age>${100:-7}</account_age>
-                <rewards>
-                    <!-- The amount of days that has to pass before the accounts receive rewards. 0 = never give rewards -->
-                    <days>${101:-30}</days>
-                    <!-- Give the Swift Zhevra item as a reward -->
-                    <swift_zhevra>${102:-true}</swift_zhevra>
-                    <!-- Give the X-53 Touring Rocket item as a reward -->
-                    <touring_rocket>${103:-true}</touring_rocket>
-                    <!-- Give the Celestial Steed item as a reward -->
-                    <celestial_steed>${104:-true}</celestial_steed>
-                </rewards>
-            </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${105:-false}</enabled>
+                <enabled>${98:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${106:-58}</starting_level>
+                <starting_level>${99:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${107:-false}</enabled>
+                <enabled>${100:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${108:-2.0}</experience_multiplier>
+                <experience_multiplier>${101:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${109:-2.0}</money_multiplier>
+                <money_multiplier>${102:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${110:-2}</professions_multiplier>
+                <professions_multiplier>${103:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${111:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${104:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${112:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${105:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -535,13 +517,6 @@ function save_options
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST \
     $OPTION_MODULES_ELUNA_ENABLED \
     $OPTION_MODULES_GROUP_QUESTS_ENABLED \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET \
-    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
     $OPTION_MODULES_WEEKEND_BONUS_ENABLED \
@@ -1443,69 +1418,6 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/recruit_a_friend/enabled option
-    OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /options/modules/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/recruit_a_friend/duration option
-    OPTION_MODULES_RECRUIT_A_FRIEND_DURATION="$(echo "cat /options/modules/recruit_a_friend/duration/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_DURATION =~ ^[0-9]+$ ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/duration is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_DURATION="90"
-        RESET=true
-    fi
-
-    # Load the /options/modules/recruit_a_friend/account_age option
-    OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE="$(echo "cat /options/modules/recruit_a_friend/account_age/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE =~ ^[0-9]+$ ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/account_age is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE="7"
-        RESET=true
-    fi
-
-    # Load the /options/modules/recruit_a_friend/rewards/days option
-    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS="$(echo "cat /options/modules/recruit_a_friend/rewards/days/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS =~ ^[0-9]+$ ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/days is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS="30"
-        RESET=true
-    fi
-
-    # Load the /options/modules/recruit_a_friend/rewards/swift_zhevra option
-    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA="$(echo "cat /options/modules/recruit_a_friend/rewards/swift_zhevra/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/swift_zhevra is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/recruit_a_friend/rewards/touring_rocket option
-    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET="$(echo "cat /options/modules/recruit_a_friend/rewards/touring_rocket/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/touring_rocket is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET="true"
-        RESET=true
-    fi
-
-    # Load the /options/modules/recruit_a_friend/rewards/celestial_steed option
-    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED="$(echo "cat /options/modules/recruit_a_friend/rewards/celestial_steed/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/celestial_steed is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED="true"
-        RESET=true
-    fi
-
     # Load the /options/modules/skip_dk_starting_area/enabled option
     OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED="$(echo "cat /options/modules/skip_dk_starting_area/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED != "true" && $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED != "false" ]]; then
@@ -1879,54 +1791,6 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-groupquests
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
-        # Check if the recruit-a-friend module should be installed
-        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
-                # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
-
-                # Fetch all available updates
-                git fetch --all
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -2714,71 +2578,6 @@ function import_database
             fi
         fi
 
-        # Check if the recruit-a-friend module is enabled
-        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/auth/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/sql/characters/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$FILENAME';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        fi
-
         # Check if there is a folder for custom content
         if [[ -d $ROOT/sql/world ]]; then
             # Check if the folder is empty
@@ -3070,52 +2869,6 @@ function set_config
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            fi
-        fi
-
-        # Check if the recruit-a-friend module is enabled
-        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-            # Check to make sure the config file exists
-            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
-                # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
-                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            printf "${COLOR_ORANGE}Updating mod_recruitafriend.conf${COLOR_END}\n"
-
-            # Convert boolean values to integers
-            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA=0
-            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET=0
-            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED=0
-
-            # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-
-            # Update mod_recruitafriend.conf with values specified in the options
-            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-            sed -i 's/RecruitAFriend.AccountAge =.*/RecruitAFriend.AccountAge = '$OPTION_MODULES_RECRUIT_A_FRIEND_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$MODULES_RECRUIT_A_FRIEND_REWARDS_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$MODULES_RECRUIT_A_FRIEND_REWARDS_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-            sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = '$MODULES_RECRUIT_A_FRIEND_REWARDS_CELESTIAL_STEED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-        else
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist
-            fi
-
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             fi
         fi
 
