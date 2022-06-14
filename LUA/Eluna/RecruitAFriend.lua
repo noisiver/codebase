@@ -14,6 +14,7 @@ local Status = {
 }
 
 local Event   = {
+    OnDelete  = 2,
     OnLogin   = 3,
     OnUpdate  = 13,
     OnCommand = 42,
@@ -217,3 +218,8 @@ if (Config.ReferralDuration > 0) then
     end
     RegisterServerEvent(Event.OnUpdate, RecruitOnUpdate)
 end
+
+local function RecruitOnDelete(event, guid)
+    AuthDBQuery('DELETE FROM `'..Config.Database..'`.`recruit_a_friend_rewarded` WHERE `realm_id`='..GetRealmID()..' AND `character_guid`='..guid..' LIMIT 1;')
+end
+RegisterPlayerEvent(Event.OnDelete, RecruitOnDelete)
