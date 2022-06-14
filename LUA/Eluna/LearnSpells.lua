@@ -2312,33 +2312,33 @@ local Totems = {
 
 function Player:LearnClassSpells()
     local count = 0
-    for _ in pairs(ClassSpells[player:GetClass()]) do count = count + 1 end
+    for _ in pairs(ClassSpells[self:GetClass()]) do count = count + 1 end
 
     for i=1, count do
-        if ((ClassSpells[player:GetClass()][i][1] == Race.Universal or ClassSpells[player:GetClass()][i][1] == player:GetRace()) and (ClassSpells[player:GetClass()][i][3] <= player:GetLevel()) and (ClassSpells[player:GetClass()][i][5] == 0 or (ClassSpells[player:GetClass()][i][5] == 1 and Config.SpellsFromQuests)) and (ClassSpells[player:GetClass()][i][4] == -1 or player:HasSpell(ClassSpells[player:GetClass()][i][4])) and (not player:HasSpell(ClassSpells[player:GetClass()][i][2]))) then
-            self:LearnSpell(ClassSpells[player:GetClass()][i][2])
+        if ((ClassSpells[self:GetClass()][i][1] == Race.Universal or ClassSpells[self:GetClass()][i][1] == self:GetRace()) and (ClassSpells[self:GetClass()][i][3] <= self:GetLevel()) and (ClassSpells[self:GetClass()][i][5] == 0 or (ClassSpells[self:GetClass()][i][5] == 1 and Config.SpellsFromQuests)) and (ClassSpells[self:GetClass()][i][4] == -1 or self:HasSpell(ClassSpells[self:GetClass()][i][4])) and (not self:HasSpell(ClassSpells[self:GetClass()][i][2]))) then
+            self:LearnSpell(ClassSpells[self:GetClass()][i][2])
         end
     end
 end
 
 function Player:LearnTalentRanks()
     local count = 0
-    for _ in pairs(TalentRanks[player:GetClass()]) do count = count + 1 end
+    for _ in pairs(TalentRanks[self:GetClass()]) do count = count + 1 end
 
     for i=1, count do
-        if (TalentRanks[player:GetClass()][i][2] <= player:GetLevel() and player:HasSpell(TalentRanks[player:GetClass()][i][3]) and not player:HasSpell(TalentRanks[player:GetClass()][i][1])) then
-            self:LearnSpell(TalentRanks[player:GetClass()][i][1])
+        if (TalentRanks[self:GetClass()][i][2] <= self:GetLevel() and self:HasSpell(TalentRanks[self:GetClass()][i][3]) and not self:HasSpell(TalentRanks[self:GetClass()][i][1])) then
+            self:LearnSpell(TalentRanks[self:GetClass()][i][1])
         end
     end
 end
 
 function Player:LearnProficiencies()
     local count = 0
-    for _ in pairs(Proficiencies[player:GetClass()]) do count = count + 1 end
+    for _ in pairs(Proficiencies[self:GetClass()]) do count = count + 1 end
 
     for i=1, count do
-        if (Proficiencies[player:GetClass()][i][2] <= player:GetLevel() and not player:HasSpell(Proficiencies[player:GetClass()][i][1])) then
-            self:LearnSpell(Proficiencies[player:GetClass()][i][1])
+        if (Proficiencies[self:GetClass()][i][2] <= self:GetLevel() and not self:HasSpell(Proficiencies[self:GetClass()][i][1])) then
+            self:LearnSpell(Proficiencies[self:GetClass()][i][1])
         end
     end
 end
@@ -2349,7 +2349,7 @@ function Player:AddTotems()
         for _ in pairs(Totems) do count = count + 1 end
 
         for i=1, count do
-            if (Totems[i][2] <= player:GetLevel() and not player:HasItem(Totems[i][1], 1, true)) then
+            if (Totems[i][2] <= self:GetLevel() and not self:HasItem(Totems[i][1], 1, true)) then
                 self:AddItem(Totems[i][1], 1)
             end
         end
@@ -2361,7 +2361,7 @@ function Player:LearnRiding()
     for _ in pairs(Riding) do count = count + 1 end
 
     for i=1, count do
-        if ((Riding[i][1] == Team.Universal or Riding[i][1] == player:GetTeam()) and (Riding[i][2] == Race.Universal or Riding[i][2] == player:GetRace()) and (Riding[i][3] == Class.Universal or Riding[i][3] == player:GetClass()) and (Riding[i][5] <= player:GetLevel()) and (Riding[i][6] == -1 or player:HasSpell(Riding[i][6])) and (Riding[i][7] == 0 or (Riding[i][7] == 1 and Config.SpellsFromQuests)) and (Riding[i][8]) and (not player:HasSpell(Riding[i][4]))) then
+        if ((Riding[i][1] == Team.Universal or Riding[i][1] == self:GetTeam()) and (Riding[i][2] == Race.Universal or Riding[i][2] == self:GetRace()) and (Riding[i][3] == Class.Universal or Riding[i][3] == self:GetClass()) and (Riding[i][5] <= self:GetLevel()) and (Riding[i][6] == -1 or self:HasSpell(Riding[i][6])) and (Riding[i][7] == 0 or (Riding[i][7] == 1 and Config.SpellsFromQuests)) and (Riding[i][8]) and (not self:HasSpell(Riding[i][4]))) then
             self:LearnSpell(Riding[i][4])
         end
     end
