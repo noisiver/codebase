@@ -165,21 +165,21 @@ local function RecruitCommand(event, player, command, chatHandler)
 end
 RegisterPlayerEvent(Event.OnCommand, RecruitCommand)
 
-local function SendMailToPlayer(player, title, text, item)
-    SendMail(title, text, player:GetGUIDLow(), 0, 61, 0, 0, 0, item, 1)
+function Player:SendMailToPlayer(title, text, item)
+    SendMail(title, text, self:GetGUIDLow(), 0, 61, 0, 0, 0, item, 1)
 end
 
-local function SendRewardsToPlayer(player)
+function Player:SendRewardsToPlayer()
     if (Config.RewardSwiftZhevra) then
-        SendMailToPlayer(player, 'Swift Zhevra', 'I found this stray Zhevra walking around The Barrens, aimlessly. I figured you, if anyone, could give it a good home!', 37719)
+        SendMailToPlayer(self, 'Swift Zhevra', 'I found this stray Zhevra walking around The Barrens, aimlessly. I figured you, if anyone, could give it a good home!', 37719)
     end
 
     if (Config.RewardTouringRocket) then
-        SendMailToPlayer(player, 'X-53 Touring Rocket', 'This rocket was found flying around Northrend, with what seemed like no purpose. Perhaps you could put it to good use?', 54860)
+        SendMailToPlayer(self, 'X-53 Touring Rocket', 'This rocket was found flying around Northrend, with what seemed like no purpose. Perhaps you could put it to good use?', 54860)
     end
 
     if (Config.RewardCelestialSteed) then
-        SendMailToPlayer(player, 'Celestial Steed', 'A strange steed was found roaming Northrend, phasing in and out of existence. I figured you would be interested in such a companion.', 54811)
+        SendMailToPlayer(self, 'Celestial Steed', 'A strange steed was found roaming Northrend, phasing in and out of existence. I figured you would be interested in such a companion.', 54811)
     end
 end
 
@@ -191,7 +191,7 @@ local function RecruitOnLogin(event, player)
         local eligible = AuthDBQuery('SELECT * FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `referral_date` < NOW() - INTERVAL '..Config.RewardDays..' DAY AND (`account_id` = '..player:GetAccountId()..' OR `recruiter_id` = '..player:GetAccountId()..') AND `status` NOT LIKE '..Status.Pending..' LIMIT 1;')
         if (eligible ~= nil) then
             AuthDBQuery('INSERT INTO `'..Config.Database..'`.`recruit_a_friend_rewarded` (`account_id`, `realm_id`, `character_guid`) VALUES ('..player:GetAccountId()..', '..GetRealmID()..', '..player:GetGUIDLow()..');')
-            SendRewardsToPlayer(player)
+            player:SendRewardsToPlayer()
         end
     end
 end

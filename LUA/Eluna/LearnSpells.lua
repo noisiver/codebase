@@ -2310,116 +2310,116 @@ local Totems = {
     { 5178, 30 } -- Air Totem
 }
 
-local function LearnClassSpells(player)
+function Player:LearnClassSpells()
     local count = 0
     for _ in pairs(ClassSpells[player:GetClass()]) do count = count + 1 end
 
     for i=1, count do
         if ((ClassSpells[player:GetClass()][i][1] == Race.Universal or ClassSpells[player:GetClass()][i][1] == player:GetRace()) and (ClassSpells[player:GetClass()][i][3] <= player:GetLevel()) and (ClassSpells[player:GetClass()][i][5] == 0 or (ClassSpells[player:GetClass()][i][5] == 1 and Config.SpellsFromQuests)) and (ClassSpells[player:GetClass()][i][4] == -1 or player:HasSpell(ClassSpells[player:GetClass()][i][4])) and (not player:HasSpell(ClassSpells[player:GetClass()][i][2]))) then
-            player:LearnSpell(ClassSpells[player:GetClass()][i][2])
+            self:LearnSpell(ClassSpells[player:GetClass()][i][2])
         end
     end
 end
 
-local function LearnTalentRanks(player)
+function Player:LearnTalentRanks()
     local count = 0
     for _ in pairs(TalentRanks[player:GetClass()]) do count = count + 1 end
 
     for i=1, count do
         if (TalentRanks[player:GetClass()][i][2] <= player:GetLevel() and player:HasSpell(TalentRanks[player:GetClass()][i][3]) and not player:HasSpell(TalentRanks[player:GetClass()][i][1])) then
-            player:LearnSpell(TalentRanks[player:GetClass()][i][1])
+            self:LearnSpell(TalentRanks[player:GetClass()][i][1])
         end
     end
 end
 
-local function LearnProficiencies(player)
+function Player:LearnProficiencies()
     local count = 0
     for _ in pairs(Proficiencies[player:GetClass()]) do count = count + 1 end
 
     for i=1, count do
         if (Proficiencies[player:GetClass()][i][2] <= player:GetLevel() and not player:HasSpell(Proficiencies[player:GetClass()][i][1])) then
-            player:LearnSpell(Proficiencies[player:GetClass()][i][1])
+            self:LearnSpell(Proficiencies[player:GetClass()][i][1])
         end
     end
 end
 
-local function AddTotems(player)
-    if (player:GetClass() == Class.Shaman) then
+function Player:AddTotems()
+    if (self:GetClass() == Class.Shaman) then
         local count = 0
         for _ in pairs(Totems) do count = count + 1 end
 
         for i=1, count do
             if (Totems[i][2] <= player:GetLevel() and not player:HasItem(Totems[i][1], 1, true)) then
-                player:AddItem(Totems[i][1], 1)
+                self:AddItem(Totems[i][1], 1)
             end
         end
     end
 end
 
-local function LearnRiding(player)
+function Player:LearnRiding()
     local count = 0
     for _ in pairs(Riding) do count = count + 1 end
 
     for i=1, count do
         if ((Riding[i][1] == Team.Universal or Riding[i][1] == player:GetTeam()) and (Riding[i][2] == Race.Universal or Riding[i][2] == player:GetRace()) and (Riding[i][3] == Class.Universal or Riding[i][3] == player:GetClass()) and (Riding[i][5] <= player:GetLevel()) and (Riding[i][6] == -1 or player:HasSpell(Riding[i][6])) and (Riding[i][7] == 0 or (Riding[i][7] == 1 and Config.SpellsFromQuests)) and (Riding[i][8]) and (not player:HasSpell(Riding[i][4]))) then
-            player:LearnSpell(Riding[i][4])
+            self:LearnSpell(Riding[i][4])
         end
     end
 end
 
 local function LearnSpellsOnLogin(event, player)
     if (Config.ClassSpells) then
-        LearnClassSpells(player)
+        player:LearnClassSpells()
     end
 
     if (Config.ClassSpells and Config.SpellsFromQuests) then
-        AddTotems(player)
+        player:AddTotems()
     end
 
     if (Config.TalentRanks) then
-        LearnTalentRanks(player)
+        player:LearnTalentRanks()
     end
 
     if (Config.Proficiencies) then
-        LearnProficiencies(player)
+        player:LearnProficiencies()
     end
 
     if (Config.Riding) then
-        LearnRiding(player)
+        player:LearnRiding()
     end
 end
 RegisterPlayerEvent(Event.OnLogin, LearnSpellsOnLogin)
 
 local function LearnSpellsOnLevelChanged(event, player, oldLevel)
     if (Config.ClassSpells) then
-        LearnClassSpells(player)
+        player:LearnClassSpells()
     end
 
     if (Config.ClassSpells and Config.SpellsFromQuests) then
-        AddTotems(player)
+        player:AddTotems()
     end
 
     if (Config.TalentRanks) then
-        LearnTalentRanks(player)
+        player:LearnTalentRanks()
     end
 
     if (Config.Proficiencies) then
-        LearnProficiencies(player)
+        player:LearnProficiencies()
     end
 
     if (Config.Riding) then
-        LearnRiding(player)
+        player:LearnRiding()
     end
 end
 RegisterPlayerEvent(Event.OnLevelChanged, LearnSpellsOnLevelChanged)
 
 local function LearnSpellsOnTalentsChanged(event, player, points)
     if (Config.ClassSpells and player:GetClass() == Class.Paladin) then
-        LearnClassSpells(player)
+        player:LearnClassSpells()
     end
 
     if (Config.TalentRanks) then
-        LearnTalentRanks(player)
+        player:LearnTalentRanks()
     end
 end
 RegisterPlayerEvent(Event.OnTalentsChanged, LearnSpellsOnTalentsChanged)
