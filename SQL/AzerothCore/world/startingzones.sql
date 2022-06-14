@@ -22,7 +22,7 @@ INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconNa
 (@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
 
 DELETE FROM `creature` WHERE `id1`=@Entry;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `npcflag`) VALUES (@Entry, 1, -589.616, -4224.45, 38.2941, 4.21834, 300, 0);
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES (@Entry, 1, -589.616, -4224.45, 38.2941, 4.21834, 300);
 
 DELETE FROM `gossip_menu` WHERE `MenuID`=@GossipMenu;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES (@GossipMenu, 48);
@@ -50,7 +50,7 @@ INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconNa
 (@Entry+1, @Model, @Name, @Title, @Icon, @GossipMenu+1, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
 
 DELETE FROM `creature` WHERE `id1`=@Entry+1;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `npcflag`) VALUES (@Entry+1, 1, -2900.73, -274.041, 53.8725, 1.99333, 300, 0);
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES (@Entry+1, 1, -2900.73, -274.041, 53.8725, 1.99333, 300);
 
 DELETE FROM `gossip_menu` WHERE `MenuID`=@GossipMenu+1;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES (@GossipMenu+1, 48);
@@ -78,7 +78,7 @@ INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconNa
 (@Entry+2, @Model, @Name, @Title, @Icon, @GossipMenu+2, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
 
 DELETE FROM `creature` WHERE `id1`=@Entry+2;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `npcflag`) VALUES (@Entry+2, 0, 1832.56, 1579.9, 95.4766, 1.30079, 300, 0);
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES (@Entry+2, 0, 1832.56, 1579.9, 95.4766, 1.30079, 300);
 
 DELETE FROM `gossip_menu` WHERE `MenuID`=@GossipMenu+2;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES (@GossipMenu+2, 48);
@@ -106,7 +106,7 @@ INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconNa
 (@Entry+3, @Model, @Name, @Title, @Icon, @GossipMenu+3, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
 
 DELETE FROM `creature` WHERE `id1`=@Entry+3;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `npcflag`) VALUES (@Entry+3, 530, 10357.3, -6370.18, 36.1758, 2.35042, 300, 0);
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES (@Entry+3, 530, 10357.3, -6370.18, 36.1758, 2.35042, 300);
 
 DELETE FROM `gossip_menu` WHERE `MenuID`=@GossipMenu+3;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES (@GossipMenu+3, 48);
@@ -134,7 +134,7 @@ INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconNa
 (@Entry+4, @Model, @Name, @Title, @Icon, @GossipMenu+4, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
 
 DELETE FROM `creature` WHERE `id1`=@Entry+4;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `npcflag`) VALUES (@Entry+4, 0, -8896.29, -139.16, 80.5286, 2.02353, 300, 0);
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES (@Entry+4, 0, -8896.29, -139.16, 80.5286, 2.02353, 300);
 
 DELETE FROM `gossip_menu` WHERE `MenuID`=@GossipMenu+4;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES (@GossipMenu+4, 48);
@@ -162,7 +162,7 @@ INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconNa
 (@Entry+5, @Model, @Name, @Title, @Icon, @GossipMenu+5, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
 
 DELETE FROM `creature` WHERE `id1`=@Entry+5;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `npcflag`) VALUES (@Entry+5, 0, -6214.13, 327.51, 383.573, 2.66359, 300, 0);
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES (@Entry+5, 0, -6214.13, 327.51, 383.573, 2.66359, 300);
 
 DELETE FROM `gossip_menu` WHERE `MenuID`=@GossipMenu+5;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES (@GossipMenu+5, 48);
@@ -190,7 +190,7 @@ INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconNa
 (@Entry+6, @Model, @Name, @Title, @Icon, @GossipMenu+6, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
 
 DELETE FROM `creature` WHERE `id1`=@Entry+6;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `npcflag`) VALUES (@Entry+6, 1, 10322.3, 817.783, 1326.47, 1.66919, 300, 0);
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES (@Entry+6, 1, 10322.3, 817.783, 1326.47, 1.66919, 300);
 
 DELETE FROM `gossip_menu` WHERE `MenuID`=@GossipMenu+6;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES (@GossipMenu+6, 48);
@@ -218,7 +218,7 @@ INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconNa
 (@Entry+7, @Model, @Name, @Title, @Icon, @GossipMenu+7, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
 
 DELETE FROM `creature` WHERE `id1`=@Entry+7;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `npcflag`) VALUES (@Entry+7, 530, -4176.56, -13719.7, 74.7417, 3.72837, 300, 0);
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES (@Entry+7, 530, -4176.56, -13719.7, 74.7417, 3.72837, 300);
 
 DELETE FROM `gossip_menu` WHERE `MenuID`=@GossipMenu+7;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES (@GossipMenu+7, 48);
