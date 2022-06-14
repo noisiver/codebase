@@ -166,20 +166,20 @@ end
 RegisterPlayerEvent(Event.OnCommand, RecruitCommand)
 
 function Player:SendMailToPlayer(title, text, item)
-    SendMail(title, text, self:GetGUIDLow(), 0, 61, 0, 0, 0, item, 1)
+    player:SendMail(title, text, self:GetGUIDLow(), 0, 61, 0, 0, 0, item, 1)
 end
 
 function Player:SendRewardsToPlayer()
     if (Config.EnableRewardSwiftZhevra) then
-        SendMailToPlayer(self, 'Swift Zhevra', 'I found this stray Zhevra walking around The Barrens, aimlessly. I figured you, if anyone, could give it a good home!', 37719)
+        self:SendMailToPlayer(self, 'Swift Zhevra', 'I found this stray Zhevra walking around The Barrens, aimlessly. I figured you, if anyone, could give it a good home!', 37719)
     end
 
     if (Config.EnableRewardTouringRocket) then
-        SendMailToPlayer(self, 'X-53 Touring Rocket', 'This rocket was found flying around Northrend, with what seemed like no purpose. Perhaps you could put it to good use?', 54860)
+        self:SendMailToPlayer(self, 'X-53 Touring Rocket', 'This rocket was found flying around Northrend, with what seemed like no purpose. Perhaps you could put it to good use?', 54860)
     end
 
     if (Config.EnableRewardCelestialSteed) then
-        SendMailToPlayer(self, 'Celestial Steed', 'A strange steed was found roaming Northrend, phasing in and out of existence. I figured you would be interested in such a companion.', 54811)
+        self:SendMailToPlayer(self, 'Celestial Steed', 'A strange steed was found roaming Northrend, phasing in and out of existence. I figured you would be interested in such a companion.', 54811)
     end
 end
 
