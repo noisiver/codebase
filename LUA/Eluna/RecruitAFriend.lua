@@ -1,11 +1,11 @@
 local Config = {}
-Config.Database             = 'eluna' -- The database used to store tables for eluna
-Config.Duration             = 30 -- The amount of days that a referral will stay active. Set to 0 to never have referrals expire
-Config.AccountAge           = 7 -- The amount of days since the account was created where it can still be recruited. Accounts older than this amount of days will not be able to be recruited
-Config.RewardDays           = 30 -- The amount of days since the referral that is required before the accounts receive special rewards
-Config.RewardSwiftZhevra    = true -- This setting gives the players the Swift Zhevra item
-Config.RewardTouringRocket  = true -- This setting gives the players the X-53 Touring Rocket item
-Config.RewardCelestialSteed = true -- This setting gives the players the Celestial Steed item
+Config.Database                   = 'eluna' -- The database used to store tables for eluna
+Config.ReferralDuration           = 30 -- The amount of days that a referral will stay active. Set to 0 to never have referrals expire
+Config.MaxAccountAge              = 7 -- The amount of days since the account was created where it can still be recruited. Accounts older than this amount of days will not be able to be recruited
+Config.DaysUntilReward            = 30 -- The amount of days since the referral that is required before the accounts receive special rewards. Set to 0 to disable rewards
+Config.EnableRewardSwiftZhevra    = true -- This setting gives the players the Swift Zhevra item
+Config.EnableRewardTouringRocket  = true -- This setting gives the players the X-53 Touring Rocket item
+Config.EnableRewardCelestialSteed = true -- This setting gives the players the Celestial Steed item
 
 local Status = {
     Pending  = 1,
@@ -81,9 +81,9 @@ local function RecruitCommand(event, player, command, chatHandler)
                 end
             end
 
-            local IsReferralValid = AuthDBQuery('SELECT * FROM `account` WHERE `id` = '..friend:GetAccountId()..' AND `joindate` > NOW() - INTERVAL '..Config.AccountAge..' DAY LIMIT 1;')
+            local IsReferralValid = AuthDBQuery('SELECT * FROM `account` WHERE `id` = '..friend:GetAccountId()..' AND `joindate` > NOW() - INTERVAL '..Config.MaxAccountAge..' DAY LIMIT 1;')
             if (IsReferralValid == nil) then
-                chatHandler:SendSysMessage('You can\'t recruit |cffFF0000'..friend:GetName()..'|r because their account was created more than '..Config.AccountAge..' days ago.')
+                chatHandler:SendSysMessage('You can\'t recruit |cffFF0000'..friend:GetName()..'|r because their account was created more than '..Config.MaxAccountAge..' days ago.')
                 return false
             end
 
@@ -124,7 +124,7 @@ local function RecruitCommand(event, player, command, chatHandler)
             return false
         end
     elseif (commands[2] == 'status') then
-        local ReferralStatus = AuthDBQuery('SELECT `referral_date`, `referral_date` + INTERVAL '..Config.Duration..' DAY, `status` FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `account_id` = '..player:GetAccountId()..' LIMIT 1;')
+        local ReferralStatus = AuthDBQuery('SELECT `referral_date`, `referral_date` + INTERVAL '..Config.ReferralDuration..' DAY, `status` FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `account_id` = '..player:GetAccountId()..' LIMIT 1;')
         if (ReferralStatus ~= nil) then
             local referralDate = ReferralStatus:GetString(0)
             local expirationDate = ReferralStatus:GetString(1)
@@ -133,7 +133,7 @@ local function RecruitCommand(event, player, command, chatHandler)
             if (status == Status.Pending) then
                 chatHandler:SendSysMessage('You have not been recruited but have a |cff4CFF00pending|r request.')
             elseif (status == Status.Active) then
-                if (Config.Duration > 0) then
+                if (Config.ReferralDuration > 0) then
                     chatHandler:SendSysMessage('You were recruited at |cff4CFF00'..referralDate..'|r and it will expire at |cffFF0000'..expirationDate..'|r.')
                 else
                     chatHandler:SendSysMessage('You were recruited at |cff4CFF00'..referralDate..'|r and it will |cffFF0000never|r expire.')
@@ -152,8 +152,8 @@ local function RecruitCommand(event, player, command, chatHandler)
         chatHandler:SendSysMessage('You can accept a pending request using |cff4CFF00.recruit accept|r.')
         chatHandler:SendSysMessage('You can decline a pending request using |cff4CFF00.recruit decline|r.')
 
-        if (Config.Duration > 0) then
-            chatHandler:SendSysMessage('The recruit a friend benefits will expire after '..Config.Duration..' days.')
+        if (Config.ReferralDuration > 0) then
+            chatHandler:SendSysMessage('The recruit a friend benefits will expire after '..Config.ReferralDuration..' days.')
         else
             chatHandler:SendSysMessage('The recruit a friend benefits will never expire.')
         end
@@ -170,15 +170,15 @@ function Player:SendMailToPlayer(title, text, item)
 end
 
 function Player:SendRewardsToPlayer()
-    if (Config.RewardSwiftZhevra) then
+    if (Config.EnableRewardSwiftZhevra) then
         SendMailToPlayer(self, 'Swift Zhevra', 'I found this stray Zhevra walking around The Barrens, aimlessly. I figured you, if anyone, could give it a good home!', 37719)
     end
 
-    if (Config.RewardTouringRocket) then
+    if (Config.EnableRewardTouringRocket) then
         SendMailToPlayer(self, 'X-53 Touring Rocket', 'This rocket was found flying around Northrend, with what seemed like no purpose. Perhaps you could put it to good use?', 54860)
     end
 
-    if (Config.RewardCelestialSteed) then
+    if (Config.EnableRewardCelestialSteed) then
         SendMailToPlayer(self, 'Celestial Steed', 'A strange steed was found roaming Northrend, phasing in and out of existence. I figured you would be interested in such a companion.', 54811)
     end
 end
@@ -186,23 +186,25 @@ end
 local function RecruitOnLogin(event, player)
     player:SendBroadcastMessage('This server supports the use of the Recruit-A-Friend feature. Use the command |cff4CFF00.recruit help|r for more information!')
 
-    local rewarded = AuthDBQuery('SELECT * FROM `'..Config.Database..'`.`recruit_a_friend_rewarded` WHERE `account_id` = '..player:GetAccountId()..' AND `realm_id` = '..GetRealmID()..' AND `character_guid` = '..player:GetGUIDLow()..' LIMIT 1;')
-    if (rewarded == nil) then
-        local eligible = AuthDBQuery('SELECT * FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `referral_date` < NOW() - INTERVAL '..Config.RewardDays..' DAY AND (`account_id` = '..player:GetAccountId()..' OR `recruiter_id` = '..player:GetAccountId()..') AND `status` NOT LIKE '..Status.Pending..' LIMIT 1;')
-        if (eligible ~= nil) then
-            AuthDBQuery('INSERT INTO `'..Config.Database..'`.`recruit_a_friend_rewarded` (`account_id`, `realm_id`, `character_guid`) VALUES ('..player:GetAccountId()..', '..GetRealmID()..', '..player:GetGUIDLow()..');')
-            player:SendRewardsToPlayer()
+    if (Config.DaysUntilReward > 0) then
+        local rewarded = AuthDBQuery('SELECT * FROM `'..Config.Database..'`.`recruit_a_friend_rewarded` WHERE `account_id` = '..player:GetAccountId()..' AND `realm_id` = '..GetRealmID()..' AND `character_guid` = '..player:GetGUIDLow()..' LIMIT 1;')
+        if (rewarded == nil) then
+            local eligible = AuthDBQuery('SELECT * FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `referral_date` < NOW() - INTERVAL '..Config.DaysUntilReward..' DAY AND (`account_id` = '..player:GetAccountId()..' OR `recruiter_id` = '..player:GetAccountId()..') AND `status` NOT LIKE '..Status.Pending..' LIMIT 1;')
+            if (eligible ~= nil) then
+                AuthDBQuery('INSERT INTO `'..Config.Database..'`.`recruit_a_friend_rewarded` (`account_id`, `realm_id`, `character_guid`) VALUES ('..player:GetAccountId()..', '..GetRealmID()..', '..player:GetGUIDLow()..');')
+                player:SendRewardsToPlayer()
+            end
         end
     end
 end
 RegisterPlayerEvent(Event.OnLogin, RecruitOnLogin)
 
 local function ExpireActiveReferrals()
-    AuthDBQuery('UPDATE `account` SET `recruiter` = 0 WHERE `id` IN (SELECT `account_id` FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `referral_date` < NOW() - INTERVAL '..Config.Duration..' DAY AND status = '..Status.Active..');')
-    AuthDBQuery('UPDATE `'..Config.Database..'`.`recruit_a_friend_accounts` SET `status` = '..Status.Expired..' WHERE `referral_date` < NOW() - INTERVAL '..Config.Duration..' DAY AND `status` = '..Status.Active..';')
+    AuthDBQuery('UPDATE `account` SET `recruiter` = 0 WHERE `id` IN (SELECT `account_id` FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `referral_date` < NOW() - INTERVAL '..Config.ReferralDuration..' DAY AND status = '..Status.Active..');')
+    AuthDBQuery('UPDATE `'..Config.Database..'`.`recruit_a_friend_accounts` SET `status` = '..Status.Expired..' WHERE `referral_date` < NOW() - INTERVAL '..Config.ReferralDuration..' DAY AND `status` = '..Status.Active..';')
 end
 
-if (Config.Duration > 0) then
+if (Config.ReferralDuration > 0) then
     -- Check for expired referrals every 15 minutes
     local check = 15 * (60 * 1000)
     local time = 0

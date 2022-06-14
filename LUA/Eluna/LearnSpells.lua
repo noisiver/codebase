@@ -1,14 +1,15 @@
 local Config = {}
-Config.ClassSpells       = true -- Learn class-specific spells
-Config.SpellsFromQuests  = true -- Learn spells normally obtained through quests
-Config.TalentRanks       = true -- Learn talent ranks
-Config.Proficiencies     = true -- Learn proficiencies (weapon and defense skills)
-Config.Riding            = false -- Learn riding
-Config.ApprenticeRiding  = false -- Learn apprentice riding
-Config.JourneymanRiding  = false -- Learn journeyman riding
-Config.ExpertRiding      = false -- Learn expert riding
-Config.ArtisanRiding     = false -- Learn artisan riding
-Config.ColdWeatherFlying = false -- Learn cold weather flying
+Config.EnableGamemaster        = false -- Allow GM characters to learn spells
+Config.EnableClassSpells       = true -- Learn class-specific spells
+Config.EnableSpellsFromQuests  = true -- Learn spells normally obtained through quests
+Config.EnableTalentRanks       = true -- Learn talent ranks
+Config.EnableProficiencies     = true -- Learn proficiencies (weapon and defense skills)
+Config.EnableRiding            = false -- Learn riding
+Config.EnableApprenticeRiding  = false -- Learn apprentice riding
+Config.EnableJourneymanRiding  = false -- Learn journeyman riding
+Config.EnableExpertRiding      = false -- Learn expert riding
+Config.EnableArtisanRiding     = false -- Learn artisan riding
+Config.EnableColdWeatherFlying = false -- Learn cold weather flying
 
 local Event          = {
     OnLogin          = 3,
@@ -2205,101 +2206,101 @@ local Proficiencies = {
 
 -- Required team, required race, required class, spell id, required level, required spell id, earned from quests, enabled
 local Riding = {
-    { Team.Universal, Race.Universal, Class.Universal, 33388, 20, -1, 0, Config.ApprenticeRiding }, -- Apprentice Riding
-    { Team.Alliance, Race.Human, Class.Universal, 458, 20, 33388, 0, Config.ApprenticeRiding }, -- Brown Horse
-    { Team.Alliance, Race.Human, Class.Universal, 472, 20, 33388, 0, Config.ApprenticeRiding }, -- Pinto
-    { Team.Horde, Race.Orc, Class.Universal, 580, 20, 33388, 0, Config.ApprenticeRiding }, -- Timber Wolf
-    { Team.Universal, Race.Universal, Class.Warlock, 5784, 20, 33388, 0, Config.ApprenticeRiding }, -- Felsteed
-    { Team.Alliance, Race.Human, Class.Universal, 6648, 20, 33388, 0, Config.ApprenticeRiding }, -- Chestnut Mare
-    { Team.Horde, Race.Orc, Class.Universal, 6653, 20, 33388, 0, Config.ApprenticeRiding }, -- Dire Wolf
-    { Team.Horde, Race.Orc, Class.Universal, 6654, 20, 33388, 0, Config.ApprenticeRiding }, -- Brown Wolf
-    { Team.Alliance, Race.Dwarf, Class.Universal, 6777, 20, 33388, 0, Config.ApprenticeRiding }, -- Gray Ram
-    { Team.Alliance, Race.Dwarf, Class.Universal, 6898, 20, 33388, 0, Config.ApprenticeRiding }, -- White Ram
-    { Team.Alliance, Race.Dwarf, Class.Universal, 6899, 20, 33388, 0, Config.ApprenticeRiding }, -- Brown Ram
-    { Team.Alliance, Race.NightElf, Class.Universal, 8394, 20, 33388, 0, Config.ApprenticeRiding }, -- Striped Frostsaber
-    { Team.Horde, Race.Troll, Class.Universal, 8395, 20, 33388, 0, Config.ApprenticeRiding }, -- Emerald Raptor
-    { Team.Alliance, Race.NightElf, Class.Universal, 10789, 20, 33388, 0, Config.ApprenticeRiding }, -- Spotted Frostsaber
-    { Team.Alliance, Race.NightElf, Class.Universal, 10793, 20, 33388, 0, Config.ApprenticeRiding }, -- Striped Nightsaber
-    { Team.Horde, Race.Troll, Class.Universal, 10796, 20, 33388, 0, Config.ApprenticeRiding }, -- Turquoise Raptor
-    { Team.Horde, Race.Troll, Class.Universal, 10799, 20, 33388, 0, Config.ApprenticeRiding }, -- Violet Raptor
-    { Team.Alliance, Race.Gnome, Class.Universal, 10873, 20, 33388, 0, Config.ApprenticeRiding }, -- Red Mechanostrider
-    { Team.Alliance, Race.Gnome, Class.Universal, 10969, 20, 33388, 0, Config.ApprenticeRiding }, -- Blue Mechanostrider
-    { Team.Horde, Race.BloodElf, Class.Paladin, 34769, 20, 33388, 0, Config.ApprenticeRiding }, -- Warhorse
-    { Team.Alliance, Race.Gnome, Class.Universal, 17453, 20, 33388, 0, Config.ApprenticeRiding }, -- Green Mechanostrider
-    { Team.Alliance, Race.Gnome, Class.Universal, 17454, 20, 33388, 0, Config.ApprenticeRiding }, -- Unpainted Mechanostrider
-    { Team.Horde, Race.Undead, Class.Universal, 17462, 20, 33388, 0, Config.ApprenticeRiding }, -- Red Skeletal Horse
-    { Team.Horde, Race.Undead, Class.Universal, 17463, 20, 33388, 0, Config.ApprenticeRiding }, -- Blue Skeletal Horse
-    { Team.Horde, Race.Undead, Class.Universal, 17464, 20, 33388, 0, Config.ApprenticeRiding }, -- Brown Skeletal Horse
-    { Team.Horde, Race.Tauren, Class.Universal, 18989, 20, 33388, 0, Config.ApprenticeRiding }, -- Gray Kodo
-    { Team.Horde, Race.Tauren, Class.Universal, 18990, 20, 33388, 0, Config.ApprenticeRiding }, -- Brown Kodo
-    { Team.Alliance, Race.Draenei, Class.Universal, 34406, 20, 33388, 0, Config.ApprenticeRiding }, -- Brown Elekk
-    { Team.Alliance, Race.Draenei, Class.Paladin, 13819, 20, 33388, 0, Config.ApprenticeRiding }, -- Summon Warhorse
-    { Team.Alliance, Race.Human, Class.Paladin, 13819, 20, 33388, 0, Config.ApprenticeRiding }, -- Summon Warhorse
-    { Team.Alliance, Race.Dwarf, Class.Paladin, 13819, 20, 33388, 0, Config.ApprenticeRiding }, -- Summon Warhorse
-    { Team.Horde, Race.BloodElf, Class.Universal, 34795, 20, 33388, 0, Config.ApprenticeRiding }, -- Red Hawkstrider
-    { Team.Horde, Race.BloodElf, Class.Universal, 35018, 20, 33388, 0, Config.ApprenticeRiding }, -- Purple Hawkstrider
-    { Team.Horde, Race.BloodElf, Class.Universal, 35020, 20, 33388, 0, Config.ApprenticeRiding }, -- Blue Hawkstrider
-    { Team.Horde, Race.BloodElf, Class.Universal, 35022, 20, 33388, 0, Config.ApprenticeRiding }, -- Black Hawkstrider
-    { Team.Alliance, Race.Draenei, Class.Universal, 35710, 20, 33388, 0, Config.ApprenticeRiding }, -- Gray Elekk
-    { Team.Alliance, Race.Draenei, Class.Universal, 35711, 20, 33388, 0, Config.ApprenticeRiding }, -- Purple Elekk
-    { Team.Horde, Race.Tauren, Class.Universal, 64657, 20, 33388, 0, Config.ApprenticeRiding }, -- White Kodo
-    { Team.Horde, Race.Orc, Class.Universal, 64658, 20, 33388, 0, Config.ApprenticeRiding }, -- Black Wolf
-    { Team.Horde, Race.Undead, Class.Universal, 64977, 20, 33388, 0, Config.ApprenticeRiding }, -- Black Skeletal Horse
-    { Team.Alliance, Race.NightElf, Class.Universal, 66847, 20, 33388, 0, Config.ApprenticeRiding }, -- Striped Dawnsaber
-    { Team.Universal, Race.Universal, Class.Universal, 33391, 40, 33388, 0, Config.JourneymanRiding }, -- Journeyman Riding
-    { Team.Horde, Race.Undead, Class.Universal, 17465, 40, 33391, 0, Config.JourneymanRiding }, -- Green Skeletal Warhorse
-    { Team.Universal, Race.Universal, Class.Warlock, 23161, 40, 33391, 1, Config.JourneymanRiding }, -- Dreadsteed
-    { Team.Alliance, Race.Human, Class.Paladin, 23214, 40, 33391, 1, Config.JourneymanRiding }, -- Summon Charger
-    { Team.Alliance, Race.Dwarf, Class.Paladin, 23214, 40, 33391, 1, Config.JourneymanRiding }, -- Summon Charger
-    { Team.Alliance, Race.Draenei, Class.Paladin, 23214, 40, 33391, 1, Config.JourneymanRiding }, -- Summon Charger
-    { Team.Alliance, Race.NightElf, Class.Universal, 23219, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Mistsaber
-    { Team.Alliance, Race.NightElf, Class.Universal, 23221, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Frostsaber
-    { Team.Alliance, Race.Gnome, Class.Universal, 23222, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Yellow Mechanostrider
-    { Team.Alliance, Race.Gnome, Class.Universal, 23223, 40, 33391, 0, Config.JourneymanRiding }, -- Swift White Mechanostrider
-    { Team.Alliance, Race.Gnome, Class.Universal, 23225, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Green Mechanostrider
-    { Team.Alliance, Race.Human, Class.Universal, 23227, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Palomino
-    { Team.Alliance, Race.Human, Class.Universal, 23228, 40, 33391, 0, Config.JourneymanRiding }, -- Swift White Steed
-    { Team.Alliance, Race.Human, Class.Universal, 23229, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Brown Steed
-    { Team.Alliance, Race.Dwarf, Class.Universal, 23238, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Brown Ram
-    { Team.Alliance, Race.Dwarf, Class.Universal, 23239, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Gray Ram
-    { Team.Alliance, Race.Dwarf, Class.Universal, 23240, 40, 33391, 0, Config.JourneymanRiding }, -- Swift White Ram
-    { Team.Horde, Race.Troll, Class.Universal, 23241, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Blue Raptor
-    { Team.Horde, Race.Troll, Class.Universal, 23242, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Olive Raptor
-    { Team.Horde, Race.Troll, Class.Universal, 23243, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Orange Raptor
-    { Team.Horde, Race.Undead, Class.Universal, 23246, 40, 33391, 0, Config.JourneymanRiding }, -- Purple Skeletal Warhorse
-    { Team.Horde, Race.Tauren, Class.Universal, 23247, 40, 33391, 0, Config.JourneymanRiding }, -- Great White Kodo
-    { Team.Horde, Race.Tauren, Class.Universal, 23248, 40, 33391, 0, Config.JourneymanRiding }, -- Great Gray Kodo
-    { Team.Horde, Race.Tauren, Class.Universal, 23249, 40, 33391, 0, Config.JourneymanRiding }, -- Great Brown Kodo
-    { Team.Horde, Race.Orc, Class.Universal, 23250, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Brown Wolf
-    { Team.Horde, Race.Orc, Class.Universal, 23251, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Timber Wolf
-    { Team.Horde, Race.Orc, Class.Universal, 23252, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Gray Wolf
-    { Team.Alliance, Race.NightElf, Class.Universal, 23338, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Stormsaber
-    { Team.Horde, Race.BloodElf, Class.Universal, 33660, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Pink Hawkstrider
-    { Team.Horde, Race.BloodElf, Class.Paladin, 34767, 40, 33391, 1, Config.JourneymanRiding }, -- Charger
-    { Team.Horde, Race.BloodElf, Class.Universal, 35025, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Green Hawkstrider
-    { Team.Horde, Race.BloodElf, Class.Universal, 35027, 40, 33391, 0, Config.JourneymanRiding }, -- Swift Purple Hawkstrider
-    { Team.Alliance, Race.Draenei, Class.Universal, 35712, 40, 33391, 0, Config.JourneymanRiding }, -- Great Green Elekk
-    { Team.Alliance, Race.Draenei, Class.Universal, 35713, 40, 33391, 0, Config.JourneymanRiding }, -- Great Blue Elekk
-    { Team.Alliance, Race.Draenei, Class.Universal, 35714, 40, 33391, 0, Config.JourneymanRiding }, -- Great Purple Elekk
-    { Team.Horde, Race.Undead, Class.Universal, 66846, 40, 33391, 0, Config.JourneymanRiding }, -- Ochre Skeletal Warhorse
-    { Team.Universal, Race.Universal, Class.Universal, 34090, 60, 33391, 0, Config.ExpertRiding }, -- Expert Riding
-    { Team.Alliance, Race.Universal, Class.Universal, 32235, 60, 34090, 0, Config.ExpertRiding }, -- Golden Gryphon
-    { Team.Alliance, Race.Universal, Class.Universal, 32239, 60, 34090, 0, Config.ExpertRiding }, -- Ebon Gryphon
-    { Team.Alliance, Race.Universal, Class.Universal, 32240, 60, 34090, 0, Config.ExpertRiding }, -- Snowy Gryphon
-    { Team.Horde, Race.Universal, Class.Universal, 32243, 60, 34090, 0, Config.ExpertRiding }, -- Tawny Wind Rider
-    { Team.Horde, Race.Universal, Class.Universal, 32244, 60, 34090, 0, Config.ExpertRiding }, -- Blue Wind Rider
-    { Team.Horde, Race.Universal, Class.Universal, 32245, 60, 34090, 0, Config.ExpertRiding }, -- Green Wind Rider
-    { Team.Universal, Race.Universal, Class.DeathKnight, 48778, 60, 33391, 0, Config.ExpertRiding }, -- Acherus Deathcharger
-    { Team.Universal, Race.Universal, Class.Universal, 34091, 70, 34090, 0, Config.ArtisanRiding }, -- Artisan Riding
-    { Team.Alliance, Race.Universal, Class.Universal, 32242, 70, 34091, 0, Config.ArtisanRiding }, -- Swift Blue Gryphon
-    { Team.Horde, Race.Universal, Class.Universal, 32246, 70, 34091, 0, Config.ArtisanRiding }, -- Swift Red Wind Rider
-    { Team.Alliance, Race.Universal, Class.Universal, 32289, 70, 34091, 0, Config.ArtisanRiding }, -- Swift Red Gryphon
-    { Team.Alliance, Race.Universal, Class.Universal, 32290, 70, 34091, 0, Config.ArtisanRiding }, -- Swift Green Gryphon
-    { Team.Alliance, Race.Universal, Class.Universal, 32292, 70, 34091, 0, Config.ArtisanRiding }, -- Swift Purple Gryphon
-    { Team.Horde, Race.Universal, Class.Universal, 32295, 70, 34091, 0, Config.ArtisanRiding }, -- Swift Green Wind Rider
-    { Team.Horde, Race.Universal, Class.Universal, 32296, 70, 34091, 0, Config.ArtisanRiding }, -- Swift Yellow Wind Rider
-    { Team.Horde, Race.Universal, Class.Universal, 32297, 70, 34091, 0, Config.ArtisanRiding }, -- Swift Purple Wind Rider
-    { Team.Universal, Race.Universal, Class.Universal, 54197, 77, 34090, 0, Config.ColdWeatherFlying }, -- Cold Weather Flying (Passive)
+    { Team.Universal, Race.Universal, Class.Universal, 33388, 20, -1, 0, Config.EnableApprenticeRiding }, -- Apprentice Riding
+    { Team.Alliance, Race.Human, Class.Universal, 458, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Brown Horse
+    { Team.Alliance, Race.Human, Class.Universal, 472, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Pinto
+    { Team.Horde, Race.Orc, Class.Universal, 580, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Timber Wolf
+    { Team.Universal, Race.Universal, Class.Warlock, 5784, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Felsteed
+    { Team.Alliance, Race.Human, Class.Universal, 6648, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Chestnut Mare
+    { Team.Horde, Race.Orc, Class.Universal, 6653, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Dire Wolf
+    { Team.Horde, Race.Orc, Class.Universal, 6654, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Brown Wolf
+    { Team.Alliance, Race.Dwarf, Class.Universal, 6777, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Gray Ram
+    { Team.Alliance, Race.Dwarf, Class.Universal, 6898, 20, 33388, 0, Config.EnableApprenticeRiding }, -- White Ram
+    { Team.Alliance, Race.Dwarf, Class.Universal, 6899, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Brown Ram
+    { Team.Alliance, Race.NightElf, Class.Universal, 8394, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Striped Frostsaber
+    { Team.Horde, Race.Troll, Class.Universal, 8395, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Emerald Raptor
+    { Team.Alliance, Race.NightElf, Class.Universal, 10789, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Spotted Frostsaber
+    { Team.Alliance, Race.NightElf, Class.Universal, 10793, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Striped Nightsaber
+    { Team.Horde, Race.Troll, Class.Universal, 10796, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Turquoise Raptor
+    { Team.Horde, Race.Troll, Class.Universal, 10799, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Violet Raptor
+    { Team.Alliance, Race.Gnome, Class.Universal, 10873, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Red Mechanostrider
+    { Team.Alliance, Race.Gnome, Class.Universal, 10969, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Blue Mechanostrider
+    { Team.Horde, Race.BloodElf, Class.Paladin, 34769, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Warhorse
+    { Team.Alliance, Race.Gnome, Class.Universal, 17453, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Green Mechanostrider
+    { Team.Alliance, Race.Gnome, Class.Universal, 17454, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Unpainted Mechanostrider
+    { Team.Horde, Race.Undead, Class.Universal, 17462, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Red Skeletal Horse
+    { Team.Horde, Race.Undead, Class.Universal, 17463, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Blue Skeletal Horse
+    { Team.Horde, Race.Undead, Class.Universal, 17464, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Brown Skeletal Horse
+    { Team.Horde, Race.Tauren, Class.Universal, 18989, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Gray Kodo
+    { Team.Horde, Race.Tauren, Class.Universal, 18990, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Brown Kodo
+    { Team.Alliance, Race.Draenei, Class.Universal, 34406, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Brown Elekk
+    { Team.Alliance, Race.Draenei, Class.Paladin, 13819, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Summon Warhorse
+    { Team.Alliance, Race.Human, Class.Paladin, 13819, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Summon Warhorse
+    { Team.Alliance, Race.Dwarf, Class.Paladin, 13819, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Summon Warhorse
+    { Team.Horde, Race.BloodElf, Class.Universal, 34795, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Red Hawkstrider
+    { Team.Horde, Race.BloodElf, Class.Universal, 35018, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Purple Hawkstrider
+    { Team.Horde, Race.BloodElf, Class.Universal, 35020, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Blue Hawkstrider
+    { Team.Horde, Race.BloodElf, Class.Universal, 35022, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Black Hawkstrider
+    { Team.Alliance, Race.Draenei, Class.Universal, 35710, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Gray Elekk
+    { Team.Alliance, Race.Draenei, Class.Universal, 35711, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Purple Elekk
+    { Team.Horde, Race.Tauren, Class.Universal, 64657, 20, 33388, 0, Config.EnableApprenticeRiding }, -- White Kodo
+    { Team.Horde, Race.Orc, Class.Universal, 64658, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Black Wolf
+    { Team.Horde, Race.Undead, Class.Universal, 64977, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Black Skeletal Horse
+    { Team.Alliance, Race.NightElf, Class.Universal, 66847, 20, 33388, 0, Config.EnableApprenticeRiding }, -- Striped Dawnsaber
+    { Team.Universal, Race.Universal, Class.Universal, 33391, 40, 33388, 0, Config.EnableJourneymanRiding }, -- Journeyman Riding
+    { Team.Horde, Race.Undead, Class.Universal, 17465, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Green Skeletal Warhorse
+    { Team.Universal, Race.Universal, Class.Warlock, 23161, 40, 33391, 1, Config.EnableJourneymanRiding }, -- Dreadsteed
+    { Team.Alliance, Race.Human, Class.Paladin, 23214, 40, 33391, 1, Config.EnableJourneymanRiding }, -- Summon Charger
+    { Team.Alliance, Race.Dwarf, Class.Paladin, 23214, 40, 33391, 1, Config.EnableJourneymanRiding }, -- Summon Charger
+    { Team.Alliance, Race.Draenei, Class.Paladin, 23214, 40, 33391, 1, Config.EnableJourneymanRiding }, -- Summon Charger
+    { Team.Alliance, Race.NightElf, Class.Universal, 23219, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Mistsaber
+    { Team.Alliance, Race.NightElf, Class.Universal, 23221, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Frostsaber
+    { Team.Alliance, Race.Gnome, Class.Universal, 23222, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Yellow Mechanostrider
+    { Team.Alliance, Race.Gnome, Class.Universal, 23223, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift White Mechanostrider
+    { Team.Alliance, Race.Gnome, Class.Universal, 23225, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Green Mechanostrider
+    { Team.Alliance, Race.Human, Class.Universal, 23227, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Palomino
+    { Team.Alliance, Race.Human, Class.Universal, 23228, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift White Steed
+    { Team.Alliance, Race.Human, Class.Universal, 23229, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Brown Steed
+    { Team.Alliance, Race.Dwarf, Class.Universal, 23238, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Brown Ram
+    { Team.Alliance, Race.Dwarf, Class.Universal, 23239, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Gray Ram
+    { Team.Alliance, Race.Dwarf, Class.Universal, 23240, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift White Ram
+    { Team.Horde, Race.Troll, Class.Universal, 23241, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Blue Raptor
+    { Team.Horde, Race.Troll, Class.Universal, 23242, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Olive Raptor
+    { Team.Horde, Race.Troll, Class.Universal, 23243, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Orange Raptor
+    { Team.Horde, Race.Undead, Class.Universal, 23246, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Purple Skeletal Warhorse
+    { Team.Horde, Race.Tauren, Class.Universal, 23247, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Great White Kodo
+    { Team.Horde, Race.Tauren, Class.Universal, 23248, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Great Gray Kodo
+    { Team.Horde, Race.Tauren, Class.Universal, 23249, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Great Brown Kodo
+    { Team.Horde, Race.Orc, Class.Universal, 23250, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Brown Wolf
+    { Team.Horde, Race.Orc, Class.Universal, 23251, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Timber Wolf
+    { Team.Horde, Race.Orc, Class.Universal, 23252, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Gray Wolf
+    { Team.Alliance, Race.NightElf, Class.Universal, 23338, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Stormsaber
+    { Team.Horde, Race.BloodElf, Class.Universal, 33660, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Pink Hawkstrider
+    { Team.Horde, Race.BloodElf, Class.Paladin, 34767, 40, 33391, 1, Config.EnableJourneymanRiding }, -- Charger
+    { Team.Horde, Race.BloodElf, Class.Universal, 35025, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Green Hawkstrider
+    { Team.Horde, Race.BloodElf, Class.Universal, 35027, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Swift Purple Hawkstrider
+    { Team.Alliance, Race.Draenei, Class.Universal, 35712, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Great Green Elekk
+    { Team.Alliance, Race.Draenei, Class.Universal, 35713, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Great Blue Elekk
+    { Team.Alliance, Race.Draenei, Class.Universal, 35714, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Great Purple Elekk
+    { Team.Horde, Race.Undead, Class.Universal, 66846, 40, 33391, 0, Config.EnableJourneymanRiding }, -- Ochre Skeletal Warhorse
+    { Team.Universal, Race.Universal, Class.Universal, 34090, 60, 33391, 0, Config.EnableExpertRiding }, -- Expert Riding
+    { Team.Alliance, Race.Universal, Class.Universal, 32235, 60, 34090, 0, Config.EnableExpertRiding }, -- Golden Gryphon
+    { Team.Alliance, Race.Universal, Class.Universal, 32239, 60, 34090, 0, Config.EnableExpertRiding }, -- Ebon Gryphon
+    { Team.Alliance, Race.Universal, Class.Universal, 32240, 60, 34090, 0, Config.EnableExpertRiding }, -- Snowy Gryphon
+    { Team.Horde, Race.Universal, Class.Universal, 32243, 60, 34090, 0, Config.EnableExpertRiding }, -- Tawny Wind Rider
+    { Team.Horde, Race.Universal, Class.Universal, 32244, 60, 34090, 0, Config.EnableExpertRiding }, -- Blue Wind Rider
+    { Team.Horde, Race.Universal, Class.Universal, 32245, 60, 34090, 0, Config.EnableExpertRiding }, -- Green Wind Rider
+    { Team.Universal, Race.Universal, Class.DeathKnight, 48778, 60, 33391, 0, Config.EnableExpertRiding }, -- Acherus Deathcharger
+    { Team.Universal, Race.Universal, Class.Universal, 34091, 70, 34090, 0, Config.EnableArtisanRiding }, -- Artisan Riding
+    { Team.Alliance, Race.Universal, Class.Universal, 32242, 70, 34091, 0, Config.EnableArtisanRiding }, -- Swift Blue Gryphon
+    { Team.Horde, Race.Universal, Class.Universal, 32246, 70, 34091, 0, Config.EnableArtisanRiding }, -- Swift Red Wind Rider
+    { Team.Alliance, Race.Universal, Class.Universal, 32289, 70, 34091, 0, Config.EnableArtisanRiding }, -- Swift Red Gryphon
+    { Team.Alliance, Race.Universal, Class.Universal, 32290, 70, 34091, 0, Config.EnableArtisanRiding }, -- Swift Green Gryphon
+    { Team.Alliance, Race.Universal, Class.Universal, 32292, 70, 34091, 0, Config.EnableArtisanRiding }, -- Swift Purple Gryphon
+    { Team.Horde, Race.Universal, Class.Universal, 32295, 70, 34091, 0, Config.EnableArtisanRiding }, -- Swift Green Wind Rider
+    { Team.Horde, Race.Universal, Class.Universal, 32296, 70, 34091, 0, Config.EnableArtisanRiding }, -- Swift Yellow Wind Rider
+    { Team.Horde, Race.Universal, Class.Universal, 32297, 70, 34091, 0, Config.EnableArtisanRiding }, -- Swift Purple Wind Rider
+    { Team.Universal, Race.Universal, Class.Universal, 54197, 77, 34090, 0, Config.EnableColdWeatherFlying }, -- Cold Weather Flying (Passive)
 }
 
 -- Item id, required level
@@ -2315,7 +2316,7 @@ function Player:LearnClassSpells()
     for _ in pairs(ClassSpells[self:GetClass()]) do count = count + 1 end
 
     for i=1, count do
-        if ((ClassSpells[self:GetClass()][i][1] == Race.Universal or ClassSpells[self:GetClass()][i][1] == self:GetRace()) and (ClassSpells[self:GetClass()][i][3] <= self:GetLevel()) and (ClassSpells[self:GetClass()][i][5] == 0 or (ClassSpells[self:GetClass()][i][5] == 1 and Config.SpellsFromQuests)) and (ClassSpells[self:GetClass()][i][4] == -1 or self:HasSpell(ClassSpells[self:GetClass()][i][4])) and (not self:HasSpell(ClassSpells[self:GetClass()][i][2]))) then
+        if ((ClassSpells[self:GetClass()][i][1] == Race.Universal or ClassSpells[self:GetClass()][i][1] == self:GetRace()) and (ClassSpells[self:GetClass()][i][3] <= self:GetLevel()) and (ClassSpells[self:GetClass()][i][5] == 0 or (ClassSpells[self:GetClass()][i][5] == 1 and Config.EnableSpellsFromQuests)) and (ClassSpells[self:GetClass()][i][4] == -1 or self:HasSpell(ClassSpells[self:GetClass()][i][4])) and (not self:HasSpell(ClassSpells[self:GetClass()][i][2]))) then
             self:LearnSpell(ClassSpells[self:GetClass()][i][2])
         end
     end
@@ -2361,65 +2362,71 @@ function Player:LearnRiding()
     for _ in pairs(Riding) do count = count + 1 end
 
     for i=1, count do
-        if ((Riding[i][1] == Team.Universal or Riding[i][1] == self:GetTeam()) and (Riding[i][2] == Race.Universal or Riding[i][2] == self:GetRace()) and (Riding[i][3] == Class.Universal or Riding[i][3] == self:GetClass()) and (Riding[i][5] <= self:GetLevel()) and (Riding[i][6] == -1 or self:HasSpell(Riding[i][6])) and (Riding[i][7] == 0 or (Riding[i][7] == 1 and Config.SpellsFromQuests)) and (Riding[i][8]) and (not self:HasSpell(Riding[i][4]))) then
+        if ((Riding[i][1] == Team.Universal or Riding[i][1] == self:GetTeam()) and (Riding[i][2] == Race.Universal or Riding[i][2] == self:GetRace()) and (Riding[i][3] == Class.Universal or Riding[i][3] == self:GetClass()) and (Riding[i][5] <= self:GetLevel()) and (Riding[i][6] == -1 or self:HasSpell(Riding[i][6])) and (Riding[i][7] == 0 or (Riding[i][7] == 1 and Config.EnableSpellsFromQuests)) and (Riding[i][8]) and (not self:HasSpell(Riding[i][4]))) then
             self:LearnSpell(Riding[i][4])
         end
     end
 end
 
 local function LearnSpellsOnLogin(event, player)
-    if (Config.ClassSpells) then
-        player:LearnClassSpells()
-    end
+    if (player:GetGMRank() > 0 and Config.EnableGamemaster) then
+        if (Config.EnableClassSpells) then
+            player:LearnClassSpells()
+        end
 
-    if (Config.ClassSpells and Config.SpellsFromQuests) then
-        player:AddTotems()
-    end
+        if (Config.EnableClassSpells and Config.EnableSpellsFromQuests) then
+            player:AddTotems()
+        end
 
-    if (Config.TalentRanks) then
-        player:LearnTalentRanks()
-    end
+        if (Config.EnableTalentRanks) then
+            player:LearnTalentRanks()
+        end
 
-    if (Config.Proficiencies) then
-        player:LearnProficiencies()
-    end
+        if (Config.EnableProficiencies) then
+            player:LearnProficiencies()
+        end
 
-    if (Config.Riding) then
-        player:LearnRiding()
+        if (Config.EnableRiding) then
+            player:LearnRiding()
+        end
     end
 end
 RegisterPlayerEvent(Event.OnLogin, LearnSpellsOnLogin)
 
 local function LearnSpellsOnLevelChanged(event, player, oldLevel)
-    if (Config.ClassSpells) then
-        player:LearnClassSpells()
-    end
+    if (player:GetGMRank() > 0 and Config.EnableGamemaster) then
+        if (Config.EnableClassSpells) then
+            player:LearnClassSpells()
+        end
 
-    if (Config.ClassSpells and Config.SpellsFromQuests) then
-        player:AddTotems()
-    end
+        if (Config.EnableClassSpells and Config.EnableSpellsFromQuests) then
+            player:AddTotems()
+        end
 
-    if (Config.TalentRanks) then
-        player:LearnTalentRanks()
-    end
+        if (Config.EnableTalentRanks) then
+            player:LearnTalentRanks()
+        end
 
-    if (Config.Proficiencies) then
-        player:LearnProficiencies()
-    end
+        if (Config.EnableProficiencies) then
+            player:LearnProficiencies()
+        end
 
-    if (Config.Riding) then
-        player:LearnRiding()
+        if (Config.EnableRiding) then
+            player:LearnRiding()
+        end
     end
 end
 RegisterPlayerEvent(Event.OnLevelChanged, LearnSpellsOnLevelChanged)
 
 local function LearnSpellsOnTalentsChanged(event, player, points)
-    if (Config.ClassSpells and player:GetClass() == Class.Paladin) then
-        player:LearnClassSpells()
-    end
+    if (player:GetGMRank() > 0 and Config.EnableGamemaster) then
+        if (Config.EnableClassSpells and player:GetClass() == Class.Paladin) then
+            player:LearnClassSpells()
+        end
 
-    if (Config.TalentRanks) then
-        player:LearnTalentRanks()
+        if (Config.EnableTalentRanks) then
+            player:LearnTalentRanks()
+        end
     end
 end
 RegisterPlayerEvent(Event.OnTalentsChanged, LearnSpellsOnTalentsChanged)
