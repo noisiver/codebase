@@ -1,6 +1,6 @@
 local Config = {}
 Config.Database                   = 'eluna' -- The database used to store tables for eluna
-Config.ReferralDuration           = 30 -- The amount of days that a referral will stay active. Set to 0 to never have referrals expire
+Config.ReferralDuration           = 90 -- The amount of days that a referral will stay active. Set to 0 to never have referrals expire
 Config.MaxAccountAge              = 7 -- The amount of days since the account was created where it can still be recruited. Accounts older than this amount of days will not be able to be recruited
 Config.DaysUntilReward            = 30 -- The amount of days since the referral that is required before the accounts receive special rewards. Set to 0 to disable rewards
 Config.EnableRewardSwiftZhevra    = true -- This setting gives the players the Swift Zhevra item
@@ -125,11 +125,13 @@ local function RecruitCommand(event, player, command, chatHandler)
             return false
         end
     elseif (commands[2] == 'status') then
-        local ReferralStatus = AuthDBQuery('SELECT `referral_date`, `referral_date` + INTERVAL '..Config.ReferralDuration..' DAY, `status` FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `account_id` = '..player:GetAccountId()..' LIMIT 1;')
+        local ReferralStatus = AuthDBQuery('SELECT `referral_date`, `referral_date` + INTERVAL '..Config.ReferralDuration..' DAY, `referral_date` + INTERVAL '..Config.DaysUntilReward..' DAY, `status` FROM `'..Config.Database..'`.`recruit_a_friend_accounts` WHERE `account_id` = '..player:GetAccountId()..' LIMIT 1;')
         if (ReferralStatus ~= nil) then
             local referralDate = ReferralStatus:GetString(0)
             local expirationDate = ReferralStatus:GetString(1)
-            local status = ReferralStatus:GetUInt32(2)
+            local rewardDate = ReferralStatus:GetString(2)
+            local status = ReferralStatus:GetUInt32(3)
+            local currentTimestamp = os.date('%Y-%m-%d %H:%m:%S')
 
             if (status == Status.Pending) then
                 chatHandler:SendSysMessage('You have not been recruited but have a |cff4CFF00pending|r request.')
@@ -141,6 +143,14 @@ local function RecruitCommand(event, player, command, chatHandler)
                 end
             elseif (status == Status.Expired) then
                 chatHandler:SendSysMessage('You were recruited at |cff4CFF00'..referralDate..'|r and it expired at |cffFF0000'..expirationDate..'|r.')
+            end
+
+            if (Config.DaysUntilReward > 0) then
+                if (rewardDate < currentTimestamp) then
+                    chatHandler:SendSysMessage('You received your rewards at |cffFF0000'..rewardDate..'|r.')
+                else
+                    chatHandler:SendSysMessage('You will receive your rewards at |cff4CFF00'..rewardDate..'|r.')
+                end
             end
 
             return false
