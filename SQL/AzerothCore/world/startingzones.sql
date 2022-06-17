@@ -3,7 +3,7 @@ SET
 @Entry := 8000000,
 @Model := 1379,
 @Name  := 'Kuz Bloodslice',
-@Title := '',
+@Title := 'Area Accessor',
 @Icon  := 'Speak',
 @GossipMenu := 65000,
 @MinLevel := 30,
