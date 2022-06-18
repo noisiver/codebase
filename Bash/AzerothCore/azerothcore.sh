@@ -1,5 +1,5 @@
 #!/bin/bash
-DISTRIBUTION=("debian11" "ubuntu20.04" "ubuntu20.10" "ubuntu21.04" "ubuntu21.10")
+DISTRIBUTION=("debian11" "ubuntu21.04" "ubuntu21.10")
 
 if [[ -f /etc/os-release ]]; then
     . /etc/os-release
@@ -91,13 +91,6 @@ function source_packages
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # An array of all required packages
         PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-6.*" "libace-dev" "libboost1.74-all-dev" "libmariadb-dev-compat" "mariadb-client")
-
-        # Handle each distribution properly as some require different packages
-        if [[ $OS == "ubuntu" ]]; then
-            if [[ $VERSION == "20.04" ]] || [[ $VERSION == "20.10" ]]; then
-                PACKAGES="${PACKAGES} libmariadbclient-dev"
-            fi
-        fi
 
         # Loop through each member of the array and add them to the list of packages to be installed
         for p in "${PACKAGES[@]}"; do
