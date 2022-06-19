@@ -9,7 +9,7 @@ This script does the following:
 - Update configuration files based on values set in the xml file
 - Start and stop the server
 
-The script supports Debian 11, Ubuntu 20.04, Ubuntu 20.10, Ubuntu 21.04 and Ubuntu 21.10.
+The script supports Debian 11, Ubuntu 21.04 and Ubuntu 21.10.
 
 I never run the script as anything other than root so I unfortunately will not be adding support for non-root users.
 
