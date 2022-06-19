@@ -1,5 +1,5 @@
 local Config = {}
-Config.Database                   = 'eluna' -- The database used to store tables for eluna
+Config.Database                   = 'acore_eluna' -- The database used to store tables for eluna
 Config.ReferralDuration           = 90 -- The amount of days that a referral will stay active. Set to 0 to never have referrals expire
 Config.MaxAccountAge              = 7 -- The amount of days since the account was created where it can still be recruited. Accounts older than this amount of days will not be able to be recruited
 Config.DaysUntilReward            = 30 -- The amount of days since the referral that is required before the accounts receive special rewards. Set to 0 to disable rewards
