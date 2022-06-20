@@ -311,99 +311,33 @@ function store_options
                 <!-- Enable/Disable the use of the Archmage Timear module -->
                 <enabled>${72:-false}</enabled>
             </archmage_timear>
-            <assistant>
-                <!-- Enable/Disable the use of the Assistant module. It adds an NPC that players can obtain certain items from -->
-                <enabled>${73:-false}</enabled>
-                <features>
-                    <!-- Enable/Disable obtaining heirlooms from the assistant -->
-                    <heirlooms>${74:-false}</heirlooms>
-                    <!-- Enable/Disable obtaining glyphs from the assistant -->
-                    <glyphs>${75:-false}</glyphs>
-                    <!-- Enable/Disable obtaining gems from the assistant -->
-                    <gems>${76:-false}</gems>
-                    <!-- Enable/Disable obtaining containers from the assistant -->
-                    <containers>${77:-false}</containers>
-                    <utilities>
-                        <!-- Enable/Disable obtaining utilities from the assistant -->
-                        <enabled>${78:-false}</enabled>
-                        <!-- Cost in gold required to perform a name change -->
-                        <name_change>${79:-10}</name_change>
-                        <!-- Cost in gold required to perform a customization -->
-                        <customization>${80:-50}</customization>
-                        <!-- Cost in gold to perform a race change -->
-                        <race_change>${81:-500}</race_change>
-                        <!-- Cost in gold to perform a faction change -->
-                        <faction_change>${82:-1000}</faction_change>
-                    </utilities>
-                    <professions>
-                        <!-- Enable/Disable increasing profession skills levels at the assistant -->
-                        <enabled>${83:-false}</enabled>
-                        <apprentice>
-                            <!-- Enable/Disable increasing apprentice rank to level 75 -->
-                            <enabled>${84:-false}</enabled>
-                            <!-- The amount of gold required to increase this rank -->
-                            <cost>${85:-100}</cost>
-                        </apprentice>
-                        <journeyman>
-                            <!-- Enable/Disable increasing journeyman rank to level 150 -->
-                            <enabled>${86:-false}</enabled>
-                            <!-- The amount of gold required to increase this rank -->
-                            <cost>${87:-250}</cost>
-                        </journeyman>
-                        <expert>
-                            <!-- Enable/Disable increasing expert rank to level 225 -->
-                            <enabled>${88:-false}</enabled>
-                            <!-- The amount of gold required to increase this rank -->
-                            <cost>${89:-500}</cost>
-                        </expert>
-                        <artisan>
-                            <!-- Enable/Disable increasing artisan rank to level 300 -->
-                            <enabled>${90:-false}</enabled>
-                            <!-- The amount of gold required to increase this rank -->
-                            <cost>${91:-750}</cost>
-                        </artisan>
-                        <master>
-                            <!-- Enable/Disable increasing master rank to level 375 -->
-                            <enabled>${92:-false}</enabled>
-                            <!-- The amount of gold required to increase this rank -->
-                            <cost>${93:-1250}</cost>
-                        </master>
-                        <grand_master>
-                            <!-- Enable/Disable increasing grand master rank to level 450 -->
-                            <enabled>${94:-false}</enabled>
-                            <!-- The amount of gold required to increase this rank -->
-                            <cost>${95:-2500}</cost>
-                        </grand_master>
-                    </professions>
-                </features>
-            </assistant>
             <eluna>
                 <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${96:-false}</enabled>
+                <enabled>${73:-false}</enabled>
             </eluna>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${97:-false}</enabled>
+                <enabled>${74:-false}</enabled>
             </group_quests>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${98:-false}</enabled>
+                <enabled>${75:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${99:-58}</starting_level>
+                <starting_level>${76:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${77:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${101:-2.0}</experience_multiplier>
+                <experience_multiplier>${78:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${102:-2.0}</money_multiplier>
+                <money_multiplier>${79:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${103:-2}</professions_multiplier>
+                <professions_multiplier>${80:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${104:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${81:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${105:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${82:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -485,29 +419,6 @@ function save_options
     $OPTION_MODULES_AHBOT_MIN_ITEMS \
     $OPTION_MODULES_AHBOT_MAX_ITEMS \
     $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED \
-    $OPTION_MODULES_ASSISTANT_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS \
-    $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS \
-    $OPTION_MODULES_ASSISTANT_FEATURES_GEMS \
-    $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS \
-    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE \
-    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION \
-    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE \
-    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED \
-    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST \
     $OPTION_MODULES_ELUNA_ENABLED \
     $OPTION_MODULES_GROUP_QUESTS_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
@@ -1186,213 +1097,6 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/assistant/enabled option
-    OPTION_MODULES_ASSISTANT_ENABLED="$(echo "cat /options/modules/assistant/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/heirlooms option
-    OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS="$(echo "cat /options/modules/assistant/features/heirlooms/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/heirlooms is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/glyphs option
-    OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS="$(echo "cat /options/modules/assistant/features/glyphs/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/glyphs is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/gems option
-    OPTION_MODULES_ASSISTANT_FEATURES_GEMS="$(echo "cat /options/modules/assistant/features/gems/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_GEMS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_GEMS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/gems is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_GEMS="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/containers option
-    OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS="$(echo "cat /options/modules/assistant/features/containers/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/containers is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/utilities/enabled option
-    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED="$(echo "cat /options/modules/assistant/features/utilities/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/utilities/name_change option
-    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE="$(echo "cat /options/modules/assistant/features/utilities/name_change/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/name_change is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE="10"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/utilities/customization option
-    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION="$(echo "cat /options/modules/assistant/features/utilities/customization/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/customization is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION="50"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/utilities/race_change option
-    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE="$(echo "cat /options/modules/assistant/features/utilities/race_change/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/race_change is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE="500"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/utilities/faction_change option
-    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE="$(echo "cat /options/modules/assistant/features/utilities/faction_change/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/faction_change is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE="1000"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/enabled option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED="$(echo "cat /options/modules/assistant/features/professions/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/apprentice/enabled option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED="$(echo "cat /options/modules/assistant/features/professions/apprentice/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/apprentice/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/apprentice/cost option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST="$(echo "cat /options/modules/assistant/features/professions/apprentice/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/apprentice/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST="100"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/journeyman/enabled option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED="$(echo "cat /options/modules/assistant/features/professions/journeyman/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/journeyman/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/journeyman/cost option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST="$(echo "cat /options/modules/assistant/features/professions/journeyman/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/journeyman/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST="250"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/expert/enabled option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED="$(echo "cat /options/modules/assistant/features/professions/expert/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/expert/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/expert/cost option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST="$(echo "cat /options/modules/assistant/features/professions/expert/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/expert/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST="500"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/artisan/enabled option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED="$(echo "cat /options/modules/assistant/features/professions/artisan/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/artisan/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/artisan/cost option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST="$(echo "cat /options/modules/assistant/features/professions/artisan/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/artisan/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST="750"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/master/enabled option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED="$(echo "cat /options/modules/assistant/features/professions/master/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/master/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/master/cost option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST="$(echo "cat /options/modules/assistant/features/professions/master/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/master/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST="1250"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/grand_master/enabled option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED="$(echo "cat /options/modules/assistant/features/professions/grand_master/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/grand_master/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/assistant/features/professions/grand_master/cost option
-    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST="$(echo "cat /options/modules/assistant/features/professions/grand_master/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/grand_master/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST="2500"
-        RESET=true
-    fi
-
     # Load the /options/modules/eluna/enabled option
     OPTION_MODULES_ELUNA_ENABLED="$(echo "cat /options/modules/eluna/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_ELUNA_ENABLED != "true" && $OPTION_MODULES_ELUNA_ENABLED != "false" ]]; then
@@ -1631,54 +1335,6 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
-        # Check if the assistant module should be installed
-        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
-                # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-assistant.git $OPTION_SOURCE_LOCATION/modules/mod-assistant
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-assistant
-
-                # Fetch all available updates
-                git fetch --all
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -2503,40 +2159,6 @@ function import_database
             fi
         fi
 
-        # Check if the assistant module is enabled
-        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-assistant/sql/world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        fi
-
         # Check if the group quests module is enabled
         if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED == "true" ]]; then
             # Make sure the database folder exists
@@ -2791,77 +2413,6 @@ function set_config
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
-            fi
-        fi
-
-        # Check if the assistant module is enabled
-        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
-            # Check to make sure the config file exists
-            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
-                # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
-                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            printf "${COLOR_ORANGE}Updating mod_assistant.conf${COLOR_END}\n"
-
-            # Convert boolean values to integers
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_HEIRLOOMS == "true" ] && MODULES_ASSISTANT_FEATURES_HEIRLOOMS=1 || MODULES_ASSISTANT_FEATURES_HEIRLOOMS=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_GLYPHS == "true" ] && MODULES_ASSISTANT_FEATURES_GLYPHS=1 || MODULES_ASSISTANT_FEATURES_GLYPHS=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_GEMS == "true" ] && MODULES_ASSISTANT_FEATURES_GEMS=1 || MODULES_ASSISTANT_FEATURES_GEMS=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_CONTAINERS == "true" ] && MODULES_ASSISTANT_FEATURES_CONTAINERS=1 || MODULES_ASSISTANT_FEATURES_CONTAINERS=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED=1 || MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED=0
-            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED=0
-
-            # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-
-            # Update mod_assistant.conf with values specified in the options
-            sed -i 's/Assistant.Heirlooms =.*/Assistant.Heirlooms = '$MODULES_ASSISTANT_FEATURES_HEIRLOOMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Glyphs =.*/Assistant.Glyphs = '$MODULES_ASSISTANT_FEATURES_GLYPHS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Gems =.*/Assistant.Gems = '$MODULES_ASSISTANT_FEATURES_GEMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Containers =.*/Assistant.Containers = '$MODULES_ASSISTANT_FEATURES_CONTAINERS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities =.*/Assistant.Utilities = '$MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities.NameChange =.*/Assistant.Utilities.NameChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities.Customization =.*/Assistant.Utilities.Customization = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities.RaceChange =.*/Assistant.Utilities.RaceChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities.FactionChange =.*/Assistant.Utilities.FactionChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions =.*/Assistant.Professions = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Apprentice.Enabled =.*/Assistant.Professions.Apprentice.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Journeyman.Enabled =.*/Assistant.Professions.Journeyman.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Expert.Enabled =.*/Assistant.Professions.Expert.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Artisan.Enabled =.*/Assistant.Professions.Artisan.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Master.Enabled =.*/Assistant.Professions.Master.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Apprentice.Cost =.*/Assistant.Professions.Apprentice.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Journeyman.Cost =.*/Assistant.Professions.Journeyman.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Expert.Cost =.*/Assistant.Professions.Expert.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Artisan.Cost =.*/Assistant.Professions.Artisan.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Master.Cost =.*/Assistant.Professions.Master.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.GrandMaster.Cost =.*/Assistant.Professions.GrandMaster.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        else
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist
-            fi
-
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
             fi
         fi
 
