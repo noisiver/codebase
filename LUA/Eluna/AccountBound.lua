@@ -664,7 +664,7 @@ function Player:LearnBoundMounts()
 end
 
 local function OnLearnSpell(event, player, spellId)
-    if (player:GetGMRank() > 0 and not Config.EnableGamemaster) then
+    if (player:GetGMRank() > 0 and Config.EnableGamemaster) then
         if (Config.EnableCompanions) then
             player:SaveBoundCompanion(spellId)
         end
