@@ -665,30 +665,26 @@ end
 
 local function OnLearnSpell(event, player, spellId)
     if (player:GetGMRank() > 0 and not Config.EnableGamemaster) then
-        return
-    end
+        if (Config.EnableCompanions) then
+            player:SaveBoundCompanion(spellId)
+        end
 
-    if (Config.EnableCompanions) then
-        player:SaveBoundCompanion(spellId)
-    end
-
-    if (Config.EnableMounts) then
-        player:SaveBoundMount(spellId)
+        if (Config.EnableMounts) then
+            player:SaveBoundMount(spellId)
+        end
     end
 end
 RegisterPlayerEvent(Event.OnLearnSpell, OnLearnSpell)
 
 local function OnLogin(event, player)
-    if (player:GetGMRank() > 0 and not Config.EnableGamemaster) then
-        return
-    end
+    if (player:GetGMRank() > 0 and Config.EnableGamemaster) then
+        if (Config.EnableCompanions) then
+            player:LearnBoundCompanions()
+        end
 
-    if (Config.EnableCompanions) then
-        player:LearnBoundCompanions()
-    end
-
-    if (Config.EnableMounts) then
-        player:LearnBoundMounts()
+        if (Config.EnableMounts) then
+            player:LearnBoundMounts()
+        end
     end
 end
 RegisterPlayerEvent(Event.OnLogin, OnLogin)
