@@ -42,7 +42,7 @@ local function RecruitCommand(event, player, command, chatHandler)
     local commands = {}
     commands = SplitString(command)
 
-    if (commands[1] ~= 'recruit') then
+    if (commands[1] ~= 'recruit' or player:GetGMRank() > 0) then
         return
     end
 
@@ -54,6 +54,11 @@ local function RecruitCommand(event, player, command, chatHandler)
 
         local friend = GetPlayerByName(commands[3])
         if (friend ~= nil) then
+            if (friend:GetGMRank() > 0) then
+                chatHandler:SendSysMessage('The specified character doesn\'t exist or is currently |cffFF0000offline|r!')
+                return false
+            end
+
             if (friend == player) then
                 chatHandler:SendSysMessage('You can\'t recruit |cffFF0000yourself|r!')
                 return false
