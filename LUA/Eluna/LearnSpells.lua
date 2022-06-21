@@ -4,7 +4,6 @@ Config.EnableClassSpells       = true -- Learn class-specific spells
 Config.EnableSpellsFromQuests  = true -- Learn spells normally obtained through quests
 Config.EnableTalentRanks       = true -- Learn talent ranks
 Config.EnableProficiencies     = true -- Learn proficiencies (weapon and defense skills)
-Config.EnableRiding            = false -- Learn riding
 Config.EnableApprenticeRiding  = false -- Learn apprentice riding
 Config.EnableJourneymanRiding  = false -- Learn journeyman riding
 Config.EnableExpertRiding      = false -- Learn expert riding
@@ -2389,7 +2388,7 @@ local function LearnSpellsOnLogin(event, player)
         player:LearnProficiencies()
     end
 
-    if (Config.EnableRiding) then
+    if (Config.EnableApprenticeRiding or Config.EnableJourneymanRiding or Config.EnableExpertRiding or Config.EnableArtisanRiding or Config.EnableColdWeatherFlying) then
         player:LearnRiding()
     end
 end
@@ -2416,7 +2415,7 @@ local function LearnSpellsOnLevelChanged(event, player, oldLevel)
         player:LearnProficiencies()
     end
 
-    if (Config.EnableRiding) then
+    if (Config.EnableApprenticeRiding or Config.EnableJourneymanRiding or Config.EnableExpertRiding or Config.EnableArtisanRiding or Config.EnableColdWeatherFlying) then
         player:LearnRiding()
     end
 end
