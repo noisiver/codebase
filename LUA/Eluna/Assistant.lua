@@ -1,13 +1,24 @@
 local Config = {}
-Config.EnableHeirlooms   = true -- Allow players to obtain heirlooms
-Config.EnableGlyphs      = true -- Allow players to obtain glyphs
-Config.EnableGems        = true -- Allow players to obtain gems
-Config.EnableUtilities   = true -- Allow players to perform name change, race change, customization and faction change
-Config.EnableProfessions = true -- Allow players to increase their skill in various professions
-Config.NameChangeCost    = 10 -- The cost in gold to perform a name change
-Config.CustomizeCost     = 50 -- The cost in gold to perform a customization or appearance change
-Config.RaceChangeCost    = 500 -- The cost in gold to perform a race chang
-Config.FactionChangeCost = 1000 -- The cost in gold to perform a faction change
+Config.EnableHeirlooms             = true -- Allow players to obtain heirlooms
+Config.EnableGlyphs                = true -- Allow players to obtain glyphs
+Config.EnableGems                  = true -- Allow players to obtain gems
+Config.EnableUtilities             = true -- Allow players to perform name change, race change, customization and faction change
+Config.EnableApprenticeProfession  = true -- Allow players to increase their profession to skill level 75 of 75
+Config.EnableJourneymanProfession  = true -- Allow players to increase their profession to skill level 150 of 150
+Config.EnableExpertProfession      = true -- Allow players to increase their profession to skill level 225 of 225
+Config.EnableArtisanProfession     = true -- Allow players to increase their profession to skill level 300 of 300
+Config.EnableMasterProfession      = true -- Allow players to increase their profession to skill level 375 of 375
+Config.EnableGrandMasterProfession = true -- Allow players to increase their profession to skill level 450 of 450
+Config.ApprenticeProfessionCost    = 100 -- The cost in gold to increase a profession skill level to 75
+Config.JourneymanProfessionCost    = 250 -- The cost in gold to increase a profession skill level to 150
+Config.ExpertProfessionCost        = 500 -- The cost in gold to increase a profession skill level to 225
+Config.ArtisanProfessionCost       = 750 -- The cost in gold to increase a profession skill level to 300
+Config.MasterProfessionCost        = 1250 -- The cost in gold to increase a profession skill level to 375
+Config.GrandMasterProfessionCost   = 2500 -- The cost in gold to increase a profession skill level to 450
+Config.NameChangeCost              = 10 -- The cost in gold to perform a name change
+Config.CustomizeCost               = 50 -- The cost in gold to perform a customization or appearance change
+Config.RaceChangeCost              = 500 -- The cost in gold to perform a race chang
+Config.FactionChangeCost           = 1000 -- The cost in gold to perform a faction change
 
 local Id        = {
     Return      = 50,
@@ -60,12 +71,75 @@ local Class     = {
     Druid       = 11,
 }
 
+local Skill        = {
+    FirstAid       = 129,
+    Blacksmithing  = 164,
+    Leatherworking = 165,
+    Alchemy        = 171,
+    Herbalism      = 182,
+    Cooking        = 185,
+    Mining         = 186,
+    Tailoring      = 197,
+    Engineering    = 202,
+    Enchanting     = 333,
+    Fishing        = 356,
+    Skinning       = 393,
+    Inscription    = 773,
+    Jewelcrafting  = 755,
+}
+
+local SkillLevel = {
+    Apprentice   = 75,
+    Journeyman   = 150,
+    Expert       = 225,
+    Artisan      = 300,
+    Master       = 375,
+    GrandMaster  = 450,
+}
+
 if (Config.EnableGlyphs) then
     WorldDBQuery('UPDATE `item_template` SET `SellPrice`=0 WHERE `entry` IN (43412, 43415, 43419, 43421, 45790, 45792, 45793, 45794, 45795, 45797, 41097, 41107, 41101, 43867, 43868, 43869, 45741, 45742, 45743, 45744, 43412, 42913, 42914, 42915, 42916, 42917, 45625, 45731, 45732, 45733, 42954, 42959, 42971, 45761, 45762, 45764, 45766, 45767, 45768, 45769, 42396, 42403, 42404, 42414, 45753, 45755, 45756, 45757, 45758, 45760, 43533, 43534, 43536, 43537, 43538, 43541, 43542, 43543, 43545, 43546, 41517, 41524, 41529, 41538, 41539, 41552, 45770, 45771, 45772, 45775, 42736, 45736, 45737, 42748, 42745, 42751, 42754, 44684, 44955, 50045, 42454, 42457, 42459, 42463, 42472, 45779, 45780, 45781, 45782, 45783, 40900, 40906, 40908, 40915, 40920, 40921, 44928, 45601, 45602, 45603, 43395, 43396, 43397, 43398, 43399, 43400, 49084, 43340, 43365, 43366, 43367, 43368, 43369, 43338, 43350, 43351, 43354, 43355, 43356, 43343, 43376, 43377, 43378, 43379, 43380, 43342, 43370, 43371, 43372, 43373, 43374, 43535, 43539, 43544, 43671, 43672, 43673, 44923, 43344, 43381, 43385, 43386, 43388, 43725, 43339, 43357, 43359, 43360, 43361, 43362, 43364, 44920, 43389, 43390, 43391, 43392, 43393, 43394, 43316, 43331, 43332, 43334, 43335, 43674, 44922);')
 end
 
 if (Config.EnableGems) then
     WorldDBQuery('UPDATE `item_template` SET `SellPrice`=0 WHERE `entry` IN (25890, 25893, 25894, 25895, 25896, 25897, 25898, 25899, 25901, 32409, 32410, 34220, 35501, 35503, 41285, 41307, 41333, 41335, 41339, 41375, 41376, 41377, 41378, 41379, 41380, 41381, 41382, 41385, 41389, 41395, 41396, 41397, 41398, 41400, 41401, 40111, 40112, 40113, 40114, 40115, 40116, 40117, 40118, 40119, 40120, 40121, 40122, 40123, 40124, 40125, 40126, 40127, 40128, 40129, 40130, 40131, 40132, 40133, 40134, 40135, 40136, 40137, 40138, 40139, 40140, 40141, 40164, 40165, 40166, 40167, 40168, 40169, 40170, 40171, 40172, 40173, 40174, 40175, 40176, 40177, 40178, 40179, 40180, 40181, 40182, 40142, 40143, 40144, 40145, 40146, 40147, 40148, 40149, 40150, 40151, 40152, 40153, 40154, 40155, 40156, 40157, 40158, 40159, 40160, 40161, 40162, 40163);')
+end
+
+function Player:HasValidProfession()
+    if (Config.EnableApprenticeProfession or Config.EnableJourneymanProfession or Config.EnableExpertProfession or Config.EnableArtisanProfession or Config.EnableMasterProfession or Config.EnableGrandMasterProfession) then
+        if (self:IsValidProfession(Skill.FirstAid) or self:IsValidProfession(Skill.Blacksmithing) or self:IsValidProfession(Skill.Leatherworking) or self:IsValidProfession(Skill.Alchemy) or self:IsValidProfession(Skill.Herbalism) or self:IsValidProfession(Skill.Cooking) or self:IsValidProfession(Skill.Mining) or self:IsValidProfession(Skill.Tailoring) or self:IsValidProfession(Skill.Engineering) or self:IsValidProfession(Skill.Enchanting) or self:IsValidProfession(Skill.Fishing) or self:IsValidProfession(Skill.Skinning) or self:IsValidProfession(Skill.Inscription) or self:IsValidProfession(Skill.Jewelcrafting)) then
+            return true
+        end
+    end
+
+    return false
+end
+
+function Player:IsValidProfession(skill)
+    if (self:HasSkill(skill) and ((self:GetPureSkillValue(skill) < SkillLevel.Apprentice and self:GetPureMaxSkillValue(skill) == SkillLevel.Apprentice and Config.EnableApprenticeProfession) or (self:GetPureSkillValue(skill) < SkillLevel.Journeyman and self:GetPureMaxSkillValue(skill) == SkillLevel.Journeyman and Config.EnableJourneymanProfession) or (self:GetPureSkillValue(skill) < SkillLevel.Expert and self:GetPureMaxSkillValue(skill) == SkillLevel.Expert and Config.EnableExpertProfession) or (self:GetPureSkillValue(skill) < SkillLevel.Artisan and self:GetPureMaxSkillValue(skill) == SkillLevel.Artisan and Config.EnableArtisanProfession) or (self:GetPureSkillValue(skill) < SkillLevel.Master and self:GetPureMaxSkillValue(skill) == SkillLevel.Master and Config.EnableMasterProfession) or (self:GetPureSkillValue(skill) < SkillLevel.GrandMaster and self:GetPureMaxSkillValue(skill) == SkillLevel.GrandMaster and Config.EnableGrandMasterProfession))) then
+        return true
+    end
+
+    return false
+end
+
+function Player:GetProfessionCost(skill)
+    local cost = 0
+    if (self:GetPureMaxSkillValue(skill) == SkillLevel.Apprentice) then
+        cost = Config.ApprenticeProfessionCost
+    elseif (self:GetPureMaxSkillValue(skill) == SkillLevel.Journeyman) then
+        cost = Config.JourneymanProfessionCost
+    elseif (self:GetPureMaxSkillValue(skill) == SkillLevel.Expert) then
+        cost = Config.ExpertProfessionCost
+    elseif (self:GetPureMaxSkillValue(skill) == SkillLevel.Artisan) then
+        cost = Config.ArtisanProfessionCost
+    elseif (self:GetPureMaxSkillValue(skill) == SkillLevel.Master) then
+        cost = Config.MasterProfessionCost
+    elseif (self:GetPureMaxSkillValue(skill) == SkillLevel.GrandMaster) then
+        cost = Config.GrandMasterProfessionCost
+    end
+
+    return cost * 10000
 end
 
 local function AssistantCommand(event, player, command, chatHandler)
@@ -94,7 +168,7 @@ function AssistantOnGossipHello(event, player, object)
     if (Config.EnableUtilities) then
         player:GossipMenuAddItem(Icon.Talk, "I want utilities", 1, Id.Utilities)
     end
-    if (Config.EnableProfessions) then
+    if (player:HasValidProfession()) then
         player:GossipMenuAddItem(Icon.Talk, "I need help with my professions", 1, Id.Professions)
     end
     player:GossipSendMenu(0x7FFFFFFF, object, 1)
@@ -1585,14 +1659,142 @@ function AssistantOnGossipSelect(event, player, object, sender, intid, code)
         end
     elseif (intid == Id.Professions) then
         player:GossipClearMenu()
+
+        if (player:IsValidProfession(Skill.FirstAid)) then
+            local cost = player:GetProfessionCost(Skill.FirstAid)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with First Aid", 1, Id.Professions+1, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Blacksmithing)) then
+            local cost = player:GetProfessionCost(Skill.Blacksmithing)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Blacksmithing", 1, Id.Professions+2, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Leatherworking)) then
+            local cost = player:GetProfessionCost(Skill.Leatherworking)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Leatherworking", 1, Id.Professions+3, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Alchemy)) then
+            local cost = player:GetProfessionCost(Skill.Alchemy)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Alchemy", 1, Id.Professions+4, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Herbalism)) then
+            local cost = player:GetProfessionCost(Skill.Herbalism)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Herbalism", 1, Id.Professions+5, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Cooking)) then
+            local cost = player:GetProfessionCost(Skill.Cooking)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Cooking", 1, Id.Professions+6, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Mining)) then
+            local cost = player:GetProfessionCost(Skill.Mining)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Mining", 1, Id.Professions+7, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Tailoring)) then
+            local cost = player:GetProfessionCost(Skill.Tailoring)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Tailoring", 1, Id.Professions+8, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Engineering)) then
+            local cost = player:GetProfessionCost(Skill.Engineering)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Engineering", 1, Id.Professions+9, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Enchanting)) then
+            local cost = player:GetProfessionCost(Skill.Enchanting)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Enchanting", 1, Id.Professions+10, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Fishing)) then
+            local cost = player:GetProfessionCost(Skill.Fishing)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Fishing", 1, Id.Professions+11, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Skinning)) then
+            local cost = player:GetProfessionCost(Skill.Skinning)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Skinning", 1, Id.Professions+12, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Inscription)) then
+            local cost = player:GetProfessionCost(Skill.Inscription)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Inscription", 1, Id.Professions+13, false, "Do you wish to continue the transaction?", cost)
+        end
+        if (player:IsValidProfession(Skill.Jewelcrafting)) then
+            local cost = player:GetProfessionCost(Skill.Jewelcrafting)
+            player:GossipMenuAddItem(Icon.MoneyBag, "I want help with Jewelcrafting", 1, Id.Professions+14, false, "Do you wish to continue the transaction?", cost)
+        end
+
         player:GossipMenuAddItem(Icon.Chat, "Return to the previous page", 1, Id.Return)
         player:GossipSendMenu(0x7FFFFFFF, object, 1)
+    elseif (intid == Id.Professions+1) then
+        local cost = player:GetProfessionCost(Skill.FirstAid)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.FirstAid, 0, player:GetMaxSkillValue(Skill.FirstAid), player:GetMaxSkillValue(Skill.FirstAid))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+2) then
+        local cost = player:GetProfessionCost(Skill.Blacksmithing)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Blacksmithing, 0, player:GetMaxSkillValue(Skill.Blacksmithing), player:GetMaxSkillValue(Skill.Blacksmithing))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+3) then
+        local cost = player:GetProfessionCost(Skill.Leatherworking)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Leatherworking, 0, player:GetMaxSkillValue(Skill.Leatherworking), player:GetMaxSkillValue(Skill.Leatherworking))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+4) then
+        local cost = player:GetProfessionCost(Skill.Alchemy)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Alchemy, 0, player:GetMaxSkillValue(Skill.Alchemy), player:GetMaxSkillValue(Skill.Alchemy))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+5) then
+        local cost = player:GetProfessionCost(Skill.Herbalism)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Herbalism, 0, player:GetMaxSkillValue(Skill.Herbalism), player:GetMaxSkillValue(Skill.Herbalism))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+6) then
+        local cost = player:GetProfessionCost(Skill.Cooking)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Cooking, 0, player:GetMaxSkillValue(Skill.Cooking), player:GetMaxSkillValue(Skill.Cooking))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+7) then
+        local cost = player:GetProfessionCost(Skill.Mining)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Mining, 0, player:GetMaxSkillValue(Skill.Mining), player:GetMaxSkillValue(Skill.Mining))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+8) then
+        local cost = player:GetProfessionCost(Skill.Tailoring)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Tailoring, 0, player:GetMaxSkillValue(Skill.Tailoring), player:GetMaxSkillValue(Skill.Tailoring))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+9) then
+        local cost = player:GetProfessionCost(Skill.Engineering)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Engineering, 0, player:GetMaxSkillValue(Skill.Engineering), player:GetMaxSkillValue(Skill.Engineering))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+10) then
+        local cost = player:GetProfessionCost(Skill.Enchanting)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Enchanting, 0, player:GetMaxSkillValue(Skill.Enchanting), player:GetMaxSkillValue(Skill.Enchanting))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+11) then
+        local cost = player:GetProfessionCost(Skill.Fishing)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Fishing, 0, player:GetMaxSkillValue(Skill.Fishing), player:GetMaxSkillValue(Skill.Fishing))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+12) then
+        local cost = player:GetProfessionCost(Skill.Skinning)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Skinning, 0, player:GetMaxSkillValue(Skill.Skinning), player:GetMaxSkillValue(Skill.Skinning))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+13) then
+        local cost = player:GetProfessionCost(Skill.Inscription)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Inscription, 0, player:GetMaxSkillValue(Skill.Inscription), player:GetMaxSkillValue(Skill.Inscription))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
+    elseif (intid == Id.Professions+14) then
+        local cost = player:GetProfessionCost(Skill.Jewelcrafting)
+        player:ModifyMoney(-cost)
+        player:SetSkill(Skill.Jewelcrafting, 0, player:GetMaxSkillValue(Skill.Jewelcrafting), player:GetMaxSkillValue(Skill.Jewelcrafting))
+        AssistantOnGossipSelect(event, player, object, sender, Id.Return, code)
     end
 end
 RegisterPlayerGossipEvent(1, Event.OnGossipSelect, AssistantOnGossipSelect)
 
 local function AssistantOnLogin(event, player)
-    if (Config.EnableHeirlooms or Config.EnableGlyphs or Config.EnableGems or Config.EnableUtilities or Config.EnableProfessions) then
+    if (Config.EnableHeirlooms or Config.EnableGlyphs or Config.EnableGems or Config.EnableUtilities or player:HasValidProfession()) then
         player:SendBroadcastMessage('This server uses an assistant to aid players. Use the command |cff4CFF00.assistant|r to get started!')
     end
 end
