@@ -2368,70 +2368,64 @@ function Player:LearnRiding()
 end
 
 local function LearnSpellsOnLogin(event, player)
-    if (player:GetGMRank() > 0 and not Config.EnableGamemaster) then
-        return
-    end
+    if (player:GetGMRank() == 0 or Config.EnableGamemaster) then
+        if (Config.EnableClassSpells) then
+            player:LearnClassSpells()
+        end
 
-    if (Config.EnableClassSpells) then
-        player:LearnClassSpells()
-    end
+        if (Config.EnableClassSpells and Config.EnableSpellsFromQuests) then
+            player:AddTotems()
+        end
 
-    if (Config.EnableClassSpells and Config.EnableSpellsFromQuests) then
-        player:AddTotems()
-    end
+        if (Config.EnableTalentRanks) then
+            player:LearnTalentRanks()
+        end
 
-    if (Config.EnableTalentRanks) then
-        player:LearnTalentRanks()
-    end
+        if (Config.EnableProficiencies) then
+            player:LearnProficiencies()
+        end
 
-    if (Config.EnableProficiencies) then
-        player:LearnProficiencies()
-    end
-
-    if (Config.EnableApprenticeRiding or Config.EnableJourneymanRiding or Config.EnableExpertRiding or Config.EnableArtisanRiding or Config.EnableColdWeatherFlying) then
-        player:LearnRiding()
+        if (Config.EnableApprenticeRiding or Config.EnableJourneymanRiding or Config.EnableExpertRiding or Config.EnableArtisanRiding or Config.EnableColdWeatherFlying) then
+            player:LearnRiding()
+        end
     end
 end
 RegisterPlayerEvent(Event.OnLogin, LearnSpellsOnLogin)
 
 local function LearnSpellsOnLevelChanged(event, player, oldLevel)
-    if (player:GetGMRank() > 0 and not Config.EnableGamemaster) then
-        return
-    end
+    if (player:GetGMRank() == 0 or Config.EnableGamemaster) then
+        if (Config.EnableClassSpells) then
+            player:LearnClassSpells()
+        end
 
-    if (Config.EnableClassSpells) then
-        player:LearnClassSpells()
-    end
+        if (Config.EnableClassSpells and Config.EnableSpellsFromQuests) then
+            player:AddTotems()
+        end
 
-    if (Config.EnableClassSpells and Config.EnableSpellsFromQuests) then
-        player:AddTotems()
-    end
+        if (Config.EnableTalentRanks) then
+            player:LearnTalentRanks()
+        end
 
-    if (Config.EnableTalentRanks) then
-        player:LearnTalentRanks()
-    end
+        if (Config.EnableProficiencies) then
+            player:LearnProficiencies()
+        end
 
-    if (Config.EnableProficiencies) then
-        player:LearnProficiencies()
-    end
-
-    if (Config.EnableApprenticeRiding or Config.EnableJourneymanRiding or Config.EnableExpertRiding or Config.EnableArtisanRiding or Config.EnableColdWeatherFlying) then
-        player:LearnRiding()
+        if (Config.EnableApprenticeRiding or Config.EnableJourneymanRiding or Config.EnableExpertRiding or Config.EnableArtisanRiding or Config.EnableColdWeatherFlying) then
+            player:LearnRiding()
+        end
     end
 end
 RegisterPlayerEvent(Event.OnLevelChanged, LearnSpellsOnLevelChanged)
 
 local function LearnSpellsOnTalentsChanged(event, player, points)
-    if (player:GetGMRank() > 0 and not Config.EnableGamemaster) then
-        return
-    end
+    if (player:GetGMRank() == 0 or Config.EnableGamemaster) then
+        if (Config.EnableClassSpells and player:GetClass() == Class.Paladin) then
+            player:LearnClassSpells()
+        end
 
-    if (Config.EnableClassSpells and player:GetClass() == Class.Paladin) then
-        player:LearnClassSpells()
-    end
-
-    if (Config.EnableTalentRanks) then
-        player:LearnTalentRanks()
+        if (Config.EnableTalentRanks) then
+            player:LearnTalentRanks()
+        end
     end
 end
 RegisterPlayerEvent(Event.OnTalentsChanged, LearnSpellsOnTalentsChanged)
