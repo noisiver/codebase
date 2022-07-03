@@ -2241,8 +2241,7 @@ function compile_source
     # Create the build folder and cd into it
     mkdir -p $OPTION_SOURCE_LOCATION/build && cd $_
 
-    : '
-    if [[ $1 == "auth" ]]; then
+    : 'if [[ $1 == "auth" ]]; then
         APPS_BUILD="auth-only"
     elif [[ $1 == "world" ]]; then
         APPS_BUILD="world-only"
@@ -2250,8 +2249,8 @@ function compile_source
         APPS_BUILD="all"
     fi
 
-    cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"
-    '
+    # Generate the build files
+    cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"'
 
     # Generate the build files
     cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static
@@ -3402,15 +3401,15 @@ function set_config
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
 
             # Update mod_learnspells.conf with values specified in the options
-            sed -i 's/LearnSpells.ClassSpells.Enabled =.*/LearnSpells.ClassSpells.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.TalentRanks.Enabled =.*/LearnSpells.TalentRanks.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Proficiencies.Enabled =.*/LearnSpells.Proficiencies.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.SpellsFromQuests.Enabled =.*/LearnSpells.SpellsFromQuests.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Apprentice.Enabled =.*/LearnSpells.Riding.Apprentice.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Journeyman.Enabled =.*/LearnSpells.Riding.Journeyman.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Expert.Enabled =.*/LearnSpells.Riding.Expert.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Artisan.Enabled =.*/LearnSpells.Riding.Artisan.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.ColdWeather.Enabled =.*/LearnSpells.Riding.ColdWeather.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
         else
             # Check if the config file exists
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
@@ -3452,7 +3451,7 @@ function set_config
 
             # Update mod_recruitafriend.conf with values specified in the options
             sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_REFERRAL_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-            sed -i 's/RecruitAFriend.AccountAge =.*/RecruitAFriend.AccountAge = '$OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = '$OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS_UNTIL_REWARD'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
