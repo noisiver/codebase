@@ -295,53 +295,165 @@ function store_options
             </gm>
         </world>
         <modules>
+            <account_bound>
+                <!-- Enable/Disable the use of the AccountBound module -->
+                <enabled>${67:-false}</enabled>
+                <!-- Enable/Disable companions to be account bound -->
+                <enable_companions>${68:-true}</enable_companions>
+                <!-- Enable/Disable the mounts to be account bound -->
+                <enable_mounts>${69:-true}</enable_mounts>
+            </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${67:-false}</enabled>
+                <enabled>${70:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${68:-false}</enable_buyer>
+                <enable_buyer>${71:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${69:-false}</enable_seller>
+                <enable_seller>${72:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${70:-0}</account_id>
+                <account_id>${73:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${71:-0}</character_guid>
+                <character_guid>${74:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${72:-250}</min_items>
+                <min_items>${75:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${73:-250}</max_items>
+                <max_items>${76:-250}</max_items>
             </ahbot>
             <archmage_timear>
                 <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${74:-false}</enabled>
+                <enabled>${77:-false}</enabled>
             </archmage_timear>
-            <eluna>
-                <!-- Enable/Disable the use of the Eluna LUA engine module -->
-                <enabled>${75:-false}</enabled>
-            </eluna>
+            <assistant>
+                <!-- Enable/Disable the use of the Assistant module -->
+                <enabled>${78:-false}</enabled>
+                <features>
+                    <!-- Enable/Disable the ability to obtain heirlooms from the assistant -->
+                    <enable_heirlooms>${79:-true}</enable_heirlooms>
+                    <!-- Enable/Disable the ability to obtain glyphs from the assistant -->
+                    <enable_glyphs>${80:-true}</enable_glyphs>
+                    <!-- Enable/Disable the ability to obtain gems from the assistant -->
+                    <enable_gems>${81:-true}</enable_gems>
+                    <!-- Enable/Disable the ability to obtain containers from the assistant -->
+                    <enable_containers>${82:-true}</enable_containers>
+                    <utilities>
+                        <!-- Enable/Disable the ability to obtain various utilities from the assistant -->
+                        <enabled>${83:-true}</enabled>
+                        <!-- The cost in gold to perform a name change -->
+                        <name_change_cost>${84:-10}</name_change_cost>
+                        <!-- The cost in gold to perform a customization -->
+                        <customization_cost>${85:-50}</customization_cost>
+                        <!-- The cost in gold to perform a race change -->
+                        <race_change_cost>${86:-500}</race_change_cost>
+                        <!-- The cost in gold to perform a faction change -->
+                        <faction_change_cost>${87:-1000}</faction_change_cost>
+                    </utilities>
+                    <professions>
+                        <apprentice>
+                            <!-- Enable/Disable the ability to max out an apprentice profession -->
+                            <enabled>${88:-true}</enabled>
+                            <!-- The cost in gold to max out an apprentice profession -->
+                            <cost>${89:-100}</cost>
+                        </apprentice>
+                        <journeyman>
+                            <!-- Enable/Disable the ability to max out an journeyman profession -->
+                            <enabled>${90:-true}</enabled>
+                            <!-- The cost in gold to max out an journeyman profession -->
+                            <cost>${91:-250}</cost>
+                        </journeyman>
+                        <expert>
+                            <!-- Enable/Disable the ability to max out an expert profession -->
+                            <enabled>${92:-true}</enabled>
+                            <!-- The cost in gold to max out an expert profession -->
+                            <cost>${93:-500}</cost>
+                        </expert>
+                        <artisan>
+                            <!-- Enable/Disable the ability to max out an artisan profession -->
+                            <enabled>${94:-true}</enabled>
+                            <!-- The cost in gold to max out an artisan profession -->
+                            <cost>${95:-750}</cost>
+                        </artisan>
+                        <master>
+                            <!-- Enable/Disable the ability to max out an master profession -->
+                            <enabled>${96:-false}</enabled>
+                            <!-- The cost in gold to max out an master profession -->
+                            <cost>${97:-1250}</cost>
+                        </master>
+                        <grand_master>
+                            <!-- Enable/Disable the ability to max out an grand master profession -->
+                            <enabled>${98:-false}</enabled>
+                            <!-- The cost in gold to max out an grand master profession -->
+                            <cost>${99:-2500}</cost>
+                        </grand_master>
+                    </professions>
+                </features>
+            </assistant>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${76:-false}</enabled>
+                <enabled>${100:-false}</enabled>
             </group_quests>
+            <learn_spells>
+                <!-- Enable/Disable the use of the Learn Spells module -->
+                <enabled>${101:-false}</enabled>
+                <features>
+                    <!-- Enable/Disable to learn class-specific spells -->
+                    <enable_class_spells>${102:-true}</enable_class_spells>
+                    <!-- Enable/Disable to learn talent ranks -->
+                    <enable_talent_ranks>${103:-true}</enable_talent_ranks>
+                    <!-- Enable/Disable to learn proficiencies -->
+                    <enable_proficiencies>${104:-true}</enable_proficiencies>
+                    <!-- Enable/Disable to learn spells normally obtained through quests -->
+                    <enable_spells_from_quests>${105:-true}</enable_spells_from_quests>
+                    <riding>
+                        <!-- Enable/Disable to learn apprentice riding and mounts -->
+                        <enable_apprentice>${106:-false}</enable_apprentice>
+                        <!-- Enable/Disable to learn journeyman riding and mounts -->
+                        <enable_journeyman>${107:-false}</enable_journeyman>
+                        <!-- Enable/Disable to learn expert riding and mounts -->
+                        <enable_expert>${108:-false}</enable_expert>
+                        <!-- Enable/Disable to learn artisan riding and mounts -->
+                        <enable_artisan>${109:-false}</enable_artisan>
+                        <!-- Enable/Disable to learn cold weather flying at level 77 -->
+                        <enable_cold_weather_flying>${110:-false}</enable_cold_weather_flying>
+                    </riding>
+                </features>
+            </learn_spells>
+            <recruit_a_friend>
+                <!-- Enable/Disable the use of the Recruit-A-Friend module -->
+                <enabled>${111:-false}</enabled>
+                <!-- The amount of days a referral stays active. 0 means it will never expire -->
+                <referral_duration>${112:-90}</referral_duration>
+                <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
+                <max_account_age>${113:-7}</max_account_age>
+                <rewards>
+                    <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
+                    <days_until_reward>${114:-30}</days_until_reward>
+                    <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
+                    <enable_swift_zhevra>${115:-true}</enable_swift_zhevra>
+                    <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
+                    <enable_touring_rocket>${116:-true}</enable_touring_rocket>
+                    <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
+                    <enable_celestial_steed>${117:-true}</enable_celestial_steed>
+                </rewards>
+            </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${77:-false}</enabled>
+                <enabled>${118:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${78:-58}</starting_level>
+                <starting_level>${119:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${79:-false}</enabled>
+                <enabled>${120:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${80:-2.0}</experience_multiplier>
+                <experience_multiplier>${121:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${81:-2.0}</money_multiplier>
+                <money_multiplier>${122:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${82:-2}</professions_multiplier>
+                <professions_multiplier>${123:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${83:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${124:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${84:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${125:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -417,6 +529,9 @@ function save_options
     $OPTION_WORLD_GM_ALLOW_FRIEND \
     $OPTION_WORLD_GM_ALLOW_INVITE \
     $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
+    $OPTION_MODULES_ACCOUNT_BOUND_ENABLED \
+    $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS \
+    $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS \
     $OPTION_MODULES_AHBOT_ENABLED \
     $OPTION_MODULES_AHBOT_ENABLE_BUYER \
     $OPTION_MODULES_AHBOT_ENABLE_SELLER \
@@ -425,8 +540,46 @@ function save_options
     $OPTION_MODULES_AHBOT_MIN_ITEMS \
     $OPTION_MODULES_AHBOT_MAX_ITEMS \
     $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED \
-    $OPTION_MODULES_ELUNA_ENABLED \
+    $OPTION_MODULES_ASSISTANT_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS \
+    $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS \
+    $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GEMS \
+    $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED \
+    $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST \
     $OPTION_MODULES_GROUP_QUESTS_ENABLED \
+    $OPTION_MODULES_LEARN_SPELLS_ENABLED \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN \
+    $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REFERRAL_DURATION \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS_UNTIL_REWARD \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET \
+    $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
     $OPTION_MODULES_WEEKEND_BONUS_ENABLED \
@@ -1049,6 +1202,33 @@ function load_options
         RESET=true
     fi
 
+    # Load the /options/modules/account_bound/enabled option
+    OPTION_MODULES_ACCOUNT_BOUND_ENABLED="$(echo "cat /options/modules/account_bound/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED != "true" && $OPTION_MODULES_ACCOUNT_BOUND_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/account_bound/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACCOUNT_BOUND_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/account_bound/enable_companions option
+    OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS="$(echo "cat /options/modules/account_bound/enable_companions/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/account_bound/enable_companions is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/account_bound/enable_mounts option
+    OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS="$(echo "cat /options/modules/account_bound/enable_mounts/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/account_bound/enable_mounts is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS="true"
+        RESET=true
+    fi
+
     # Load the /options/modules/ahbot/enabled option
     OPTION_MODULES_AHBOT_ENABLED="$(echo "cat /options/modules/ahbot/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_AHBOT_ENABLED != "true" && $OPTION_MODULES_AHBOT_ENABLED != "false" ]]; then
@@ -1121,12 +1301,201 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/eluna/enabled option
-    OPTION_MODULES_ELUNA_ENABLED="$(echo "cat /options/modules/eluna/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ELUNA_ENABLED != "true" && $OPTION_MODULES_ELUNA_ENABLED != "false" ]]; then
+    # Load the /options/modules/assistant/enabled option
+    OPTION_MODULES_ASSISTANT_ENABLED="$(echo "cat /options/modules/assistant/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_ENABLED != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/eluna/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ELUNA_ENABLED="false"
+        printf "${COLOR_RED}The option at /options/modules/assistant/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/enable_heirlooms option
+    OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS="$(echo "cat /options/modules/assistant/features/enable_heirlooms/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/enable_heirlooms is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/enable_glyphs option
+    OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS="$(echo "cat /options/modules/assistant/features/enable_glyphs/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/enable_glyphs is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/enable_gems option
+    OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GEMS="$(echo "cat /options/modules/assistant/features/enable_gems/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GEMS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GEMS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/enable_gems is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GEMS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/enable_containers option
+    OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS="$(echo "cat /options/modules/assistant/features/enable_containers/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/enable_containers is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED="$(echo "cat /options/modules/assistant/features/utilities/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/name_change_cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE_COST="$(echo "cat /options/modules/assistant/features/utilities/name_change_cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/name_change_cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE_COST="10"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/customization_cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION_COST="$(echo "cat /options/modules/assistant/features/utilities/customization_cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/customization_cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION_COST="50"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/race_change_cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE_COST="$(echo "cat /options/modules/assistant/features/utilities/race_change_cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/race_change_cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE_COST="500"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/utilities/faction_change_cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE_COST="$(echo "cat /options/modules/assistant/features/utilities/faction_change_cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/utilities/faction_change_cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE_COST="1000"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/apprentice/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED="$(echo "cat /options/modules/assistant/features/professions/apprentice/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/apprentice/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/apprentice/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST="$(echo "cat /options/modules/assistant/features/professions/apprentice/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/apprentice/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST="100"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/journeyman/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED="$(echo "cat /options/modules/assistant/features/professions/journeyman/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/journeyman/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/journeyman/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST="$(echo "cat /options/modules/assistant/features/professions/journeyman/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/journeyman/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST="250"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/expert/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED="$(echo "cat /options/modules/assistant/features/professions/expert/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/expert/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/expert/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST="$(echo "cat /options/modules/assistant/features/professions/expert/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/expert/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST="500"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/artisan/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED="$(echo "cat /options/modules/assistant/features/professions/artisan/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/artisan/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/artisan/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST="$(echo "cat /options/modules/assistant/features/professions/artisan/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/artisan/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST="750"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/master/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED="$(echo "cat /options/modules/assistant/features/professions/master/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/master/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/master/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST="$(echo "cat /options/modules/assistant/features/professions/master/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/master/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST="1250"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/grand_master/enabled option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED="$(echo "cat /options/modules/assistant/features/professions/grand_master/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED != "true" && $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/grand_master/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/assistant/features/professions/grand_master/cost option
+    OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST="$(echo "cat /options/modules/assistant/features/professions/grand_master/cost/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST < 1 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/grand_master/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST="2500"
         RESET=true
     fi
 
@@ -1136,6 +1505,159 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/group_quests/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_GROUP_QUESTS_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/enabled option
+    OPTION_MODULES_LEARN_SPELLS_ENABLED="$(echo "cat /options/modules/learn_spells/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED != "true" && $OPTION_MODULES_LEARN_SPELLS_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/enable_class_spells option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS="$(echo "cat /options/modules/learn_spells/features/enable_class_spells/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/enable_class_spells is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/enable_talent_ranks option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS="$(echo "cat /options/modules/learn_spells/features/enable_talent_ranks/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/enable_talent_ranks is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/enable_proficiencies option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES="$(echo "cat /options/modules/learn_spells/features/enable_proficiencies/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/enable_proficiencies is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/enable_spells_from_quests option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS="$(echo "cat /options/modules/learn_spells/features/enable_spells_from_quests/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/enable_spells_from_quests is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/riding/enable_apprentice option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE="$(echo "cat /options/modules/learn_spells/features/riding/enable_apprentice/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/riding/enable_apprentice is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/riding/enable_journeyman option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN="$(echo "cat /options/modules/learn_spells/features/riding/enable_journeyman/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/riding/enable_journeyman is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/riding/enable_expert option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT="$(echo "cat /options/modules/learn_spells/features/riding/enable_expert/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/riding/enable_expert is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/riding/enable_artisan option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN="$(echo "cat /options/modules/learn_spells/features/riding/enable_artisan/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/riding/enable_artisan is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/learn_spells/features/riding/enable_cold_weather_flying option
+    OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING="$(echo "cat /options/modules/learn_spells/features/riding/enable_cold_weather_flying/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING != "true" && $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/learn_spells/features/riding/enable_cold_weather_flying is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/enabled option
+    OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /options/modules/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/referral_duration option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REFERRAL_DURATION="$(echo "cat /options/modules/recruit_a_friend/referral_duration/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_REFERRAL_DURATION =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/referral_duration is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REFERRAL_DURATION="90"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/max_account_age option
+    OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE="$(echo "cat /options/modules/recruit_a_friend/max_account_age/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/max_account_age is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE="7"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/rewards/days_until_reward option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS_UNTIL_REWARD="$(echo "cat /options/modules/recruit_a_friend/rewards/days_until_reward/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS_UNTIL_REWARD =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/days_until_reward is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS_UNTIL_REWARD="30"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/rewards/enable_swift_zhevra option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA="$(echo "cat /options/modules/recruit_a_friend/rewards/enable_swift_zhevra/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/enable_swift_zhevra is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/rewards/enable_touring_rocket option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET="$(echo "cat /options/modules/recruit_a_friend/rewards/enable_touring_rocket/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/enable_touring_rocket is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/recruit_a_friend/rewards/enable_celestial_steed option
+    OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED="$(echo "cat /options/modules/recruit_a_friend/rewards/enable_celestial_steed/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/recruit_a_friend/rewards/enable_celestial_steed is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED="true"
         RESET=true
     fi
 
@@ -1272,6 +1794,54 @@ function get_source
 
     # Check if either both or world is used as the first parameter
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        # Check if the account bound module should be installed
+        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound ]]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-accountbound.git $OPTION_SOURCE_LOCATION/modules/mod-accountbound
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-accountbound
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound ]]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-accountbound
+
+                # Check if the source has been compiled
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
         # Check if the ahbot module should be installed
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
@@ -1368,12 +1938,12 @@ function get_source
             fi
         fi
 
-        # Check if the eluna module should be installed
-        if [[ $OPTION_MODULES_ELUNA_ENABLED == "true" ]]; then
+        # Check if the account bound module should be installed
+        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-eluna ]]; then
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Download the source code
-                git clone --recursive --branch master https://github.com/azerothcore/mod-eluna.git $OPTION_SOURCE_LOCATION/modules/mod-eluna
+                git clone --branch master https://github.com/tkn963/mod-assistant.git $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -1382,7 +1952,7 @@ function get_source
                 fi
             else
                 # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-eluna
+                cd $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Fetch all available updates
                 git fetch --all
@@ -1401,21 +1971,12 @@ function get_source
                     # Terminate script on errors
                     exit $?
                 fi
-
-                # Update any submodule
-                git submodule update
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
             fi
         else
             # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-eluna ]]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-eluna
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -1464,6 +2025,102 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-groupquests
+
+                # Check if the source has been compiled
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the account bound module should be installed
+        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-learnspells.git $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+
+                # Check if the source has been compiled
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the account bound module should be installed
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -1584,7 +2241,7 @@ function compile_source
     # Create the build folder and cd into it
     mkdir -p $OPTION_SOURCE_LOCATION/build && cd $_
 
-    : 'if [[ $1 == "auth" ]]; then
+    if [[ $1 == "auth" ]]; then
         APPS_BUILD="auth-only"
     elif [[ $1 == "world" ]]; then
         APPS_BUILD="world-only"
@@ -1592,11 +2249,8 @@ function compile_source
         APPS_BUILD="all"
     fi
 
-    cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"
-    '
-
     # Generate the build files
-    cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static
+    cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"
 
     # Check to make sure there weren't any errors
     if [[ $? -ne 0 ]]; then
@@ -2068,6 +2722,71 @@ function import_database
             exit $?
         fi
 
+        # Check if the account bound module is enabled
+        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-auth/base/ ]]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-auth/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                    # Add the hash to updates
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-world/base/ ]]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                    # Add the hash to updates
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Make sure the database folder exists
@@ -2147,9 +2866,43 @@ function import_database
         # Check if the archmage timear module is enabled
         if [[ $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear/sql/world/base ]]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear/data/sql/db-world/base/ ]]; then
                 # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear/sql/world/base/*.sql; do
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                    # Add the hash to updates
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
+        # Check if the assistant module is enabled
+        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/ ]]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -2181,9 +2934,9 @@ function import_database
         # Check if the group quests module is enabled
         if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base ]]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base/ ]]; then
                 # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-groupquests/sql/world/base/*.sql; do
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -2199,6 +2952,74 @@ function import_database
 
                     # Import the sql file
                     mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
+        # Check if the learn spells module is enabled
+        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells/data/sql/db-world/base/ ]]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-learnspells/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                    # Add the hash to updates
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Remove the mysql conf
+                        rm -rf $MYSQL_CNF
+
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
+        # Check if the archmage timear module is enabled
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+            # Make sure the database folder exists
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base/ ]]; then
+                # Loop through all sql files inside the folder
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                    # Add the hash to updates
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
+
+                    # Import the sql file
+                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
 
                     # Check to make sure there weren't any errors
                     if [[ $? -ne 0 ]]; then
@@ -2393,6 +3214,47 @@ function set_config
         sed -i 's/MailDeliveryDelay =.*/MailDeliveryDelay = '$OPTION_WORLD_MAIL_DELIVERY_DELAY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
         # Check if the ahbot module is enabled
+        if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
+                # The file is missing, so terminate the script
+                printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_accountbound.conf${COLOR_END}\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS == "true" ] && MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS=1 || MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS=0
+            [ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS == "true" ] && MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS=1 || MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+
+            # Update mod_accountbound.conf with values specified in the options
+            sed -i 's/AccountBound.Companions =.*/AccountBound.Companions = '$MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+            sed -i 's/AccountBound.Mounts =.*/AccountBound.Mounts = '$MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+        else
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+            fi
+        fi
+
+        # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
             if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
@@ -2432,6 +3294,176 @@ function set_config
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+            fi
+        fi
+
+        # Check if the ahbot module is enabled
+        if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
+                # The file is missing, so terminate the script
+                printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_assistant.conf${COLOR_END}\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS == "true" ] && MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS=1 || MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS == "true" ] && MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS=1 || MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GEMS == "true" ] && MODULES_ASSISTANT_FEATURES_ENABLE_GEMS=1 || MODULES_ASSISTANT_FEATURES_ENABLE_GEMS=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS == "true" ] && MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS=1 || MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED=1 || MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED=0
+            [ $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED == "true" ] && MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED=1 || MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+
+            # Update mod_assistant.conf with values specified in the options
+            sed -i 's/Assistant.Heirlooms =.*/Assistant.Heirlooms = '$MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Glyphs =.*/Assistant.Glyphs = '$MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems =.*/Assistant.Gems = '$MODULES_ASSISTANT_FEATURES_ENABLE_GEMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Containers =.*/Assistant.Containers = '$MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities =.*/Assistant.Utilities = '$MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.NameChange =.*/Assistant.Utilities.NameChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.Customization =.*/Assistant.Utilities.Customization = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.RaceChange =.*/Assistant.Utilities.RaceChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.FactionChange =.*/Assistant.Utilities.FactionChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Apprentice.Enabled =.*/Assistant.Professions.Apprentice.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Journeyman.Enabled =.*/Assistant.Professions.Journeyman.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Expert.Enabled =.*/Assistant.Professions.Expert.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Artisan.Enabled =.*/Assistant.Professions.Artisan.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Master.Enabled =.*/Assistant.Professions.Master.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Apprentice.Cost =.*/Assistant.Professions.Apprentice.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Journeyman.Cost =.*/Assistant.Professions.Journeyman.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Expert.Cost =.*/Assistant.Professions.Expert.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Artisan.Cost =.*/Assistant.Professions.Artisan.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Master.Cost =.*/Assistant.Professions.Master.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.GrandMaster.Cost =.*/Assistant.Professions.GrandMaster.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        else
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            fi
+        fi
+
+        # Check if the ahbot module is enabled
+        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
+                # The file is missing, so terminate the script
+                printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_learnspells.conf${COLOR_END}\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS == "true" ] && MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS=1 || MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS=0
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS == "true" ] && MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS=1 || MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS=0
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES == "true" ] && MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES=1 || MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES=0
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS == "true" ] && MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS=1 || MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS=0
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE == "true" ] && MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE=1 || MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE=0
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN == "true" ] && MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN=1 || MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN=0
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT == "true" ] && MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT=1 || MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT=0
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN == "true" ] && MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN=1 || MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN=0
+            [ $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING == "true" ] && MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING=1 || MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+
+            # Update mod_learnspells.conf with values specified in the options
+            sed -i 's/LearnSpells.ClassSpells.Enabled =.*/LearnSpells.ClassSpells.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.TalentRanks.Enabled =.*/LearnSpells.TalentRanks.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_TALENT_RANKS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Proficiencies.Enabled =.*/LearnSpells.Proficiencies.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_PROFICIENCIES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.SpellsFromQuests.Enabled =.*/LearnSpells.SpellsFromQuests.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_ENABLE_SPELLS_FROM_QUESTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Apprentice.Enabled =.*/LearnSpells.Riding.Apprentice.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_APPRENTICE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Journeyman.Enabled =.*/LearnSpells.Riding.Journeyman.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_JOURNEYMAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Expert.Enabled =.*/LearnSpells.Riding.Expert.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.Artisan.Enabled =.*/LearnSpells.Riding.Artisan.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            sed -i 's/LearnSpells.Riding.ColdWeather.Enabled =.*/LearnSpells.Riding.ColdWeather.Enabled = '$MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        else
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            fi
+        fi
+
+        # Check if the ahbot module is enabled
+        if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
+                # The file is missing, so terminate the script
+                printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_recruitafriend.conf${COLOR_END}\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA=0
+            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET=0
+            [ $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED == "true" ] && MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED=1 || MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+
+            # Update mod_recruitafriend.conf with values specified in the options
+            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$OPTION_MODULES_RECRUIT_A_FRIEND_REFERRAL_DURATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.AccountAge =.*/RecruitAFriend.AccountAge = '$OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_DAYS_UNTIL_REWARD'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+            sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = '$MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        else
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
             fi
         fi
 
