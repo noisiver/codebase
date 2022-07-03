@@ -2241,6 +2241,7 @@ function compile_source
     # Create the build folder and cd into it
     mkdir -p $OPTION_SOURCE_LOCATION/build && cd $_
 
+    : '
     if [[ $1 == "auth" ]]; then
         APPS_BUILD="auth-only"
     elif [[ $1 == "world" ]]; then
@@ -2249,8 +2250,11 @@ function compile_source
         APPS_BUILD="all"
     fi
 
-    # Generate the build files
     cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"
+    '
+
+    # Generate the build files
+    cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static
 
     # Check to make sure there weren't any errors
     if [[ $? -ne 0 ]]; then
