@@ -387,73 +387,105 @@ function store_options
                     </professions>
                 </features>
             </assistant>
+            <dynamic_rates>
+                <!-- Enable/Disable the use of the Dynamic Rates module -->
+                <enabled>${100:-false}</enabled>
+                <!-- Enable/Disable to show additional information when earning extra money from loot or quests -->
+                <show_info>${101:-false}</show_info>
+                <multipliers>
+                    <level_1_to_59>
+                        <!-- The multiplier for experience gained for level 1 to 59 -->
+                        <experience>${102:-1.0}</experience>
+                        <!-- The multiplier for reputation gained for level 1 to 59 -->
+                        <reputation>${103:-1.0}</reputation>
+                        <!-- The multiplier for money looted and money earned from quests for level 1 to 59 -->
+                        <money>${104:-1.0}</money>
+                    </level_1_to_59>
+                    <level_60_to_69>
+                        <!-- The multiplier for experience gained for level 60 to 69 -->
+                        <experience>${105:-1.0}</experience>
+                        <!-- The multiplier for reputation gained for level 60 to 69 -->
+                        <reputation>${106:-1.0}</reputation>
+                        <!-- The multiplier for money looted and money earned from quests for level 60 to 69 -->
+                        <money>${107:-1.0}</money>
+                    </level_60_to_69>
+                    <level_70_to_79>
+                        <!-- The multiplier for experience gained for level 70 to 79 -->
+                        <experience>${108:-1.0}</experience>
+                        <!-- The multiplier for reputation gained for level 70 to 79 -->
+                        <reputation>${109:-1.0}</reputation>
+                        <!-- The multiplier for money looted and money earned from quests for level 70 to 79 -->
+                        <money>${110:-1.0}</money>
+                    </level_70_to_79>
+                </multipliers>
+            </dynamic_rates>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${111:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${101:-false}</enabled>
+                <enabled>${112:-false}</enabled>
                 <features>
                     <!-- Enable/Disable to learn class-specific spells -->
-                    <enable_class_spells>${102:-true}</enable_class_spells>
+                    <enable_class_spells>${113:-true}</enable_class_spells>
                     <!-- Enable/Disable to learn talent ranks -->
-                    <enable_talent_ranks>${103:-true}</enable_talent_ranks>
+                    <enable_talent_ranks>${114:-true}</enable_talent_ranks>
                     <!-- Enable/Disable to learn proficiencies -->
-                    <enable_proficiencies>${104:-true}</enable_proficiencies>
+                    <enable_proficiencies>${115:-true}</enable_proficiencies>
                     <!-- Enable/Disable to learn spells normally obtained through quests -->
-                    <enable_spells_from_quests>${105:-true}</enable_spells_from_quests>
+                    <enable_spells_from_quests>${116:-true}</enable_spells_from_quests>
                     <riding>
                         <!-- Enable/Disable to learn apprentice riding and mounts -->
-                        <enable_apprentice>${106:-false}</enable_apprentice>
+                        <enable_apprentice>${117:-false}</enable_apprentice>
                         <!-- Enable/Disable to learn journeyman riding and mounts -->
-                        <enable_journeyman>${107:-false}</enable_journeyman>
+                        <enable_journeyman>${118:-false}</enable_journeyman>
                         <!-- Enable/Disable to learn expert riding and mounts -->
-                        <enable_expert>${108:-false}</enable_expert>
+                        <enable_expert>${119:-false}</enable_expert>
                         <!-- Enable/Disable to learn artisan riding and mounts -->
-                        <enable_artisan>${109:-false}</enable_artisan>
+                        <enable_artisan>${120:-false}</enable_artisan>
                         <!-- Enable/Disable to learn cold weather flying at level 77 -->
-                        <enable_cold_weather_flying>${110:-false}</enable_cold_weather_flying>
+                        <enable_cold_weather_flying>${121:-false}</enable_cold_weather_flying>
                     </riding>
                 </features>
             </learn_spells>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${111:-false}</enabled>
+                <enabled>${122:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${112:-90}</referral_duration>
+                <referral_duration>${123:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${113:-7}</max_account_age>
+                <max_account_age>${124:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${114:-30}</days_until_reward>
+                    <days_until_reward>${125:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${115:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${126:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${116:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${127:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${117:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${128:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${118:-false}</enabled>
+                <enabled>${129:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${119:-58}</starting_level>
+                <starting_level>${130:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${120:-false}</enabled>
+                <enabled>${131:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${121:-2.0}</experience_multiplier>
+                <experience_multiplier>${132:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${122:-2.0}</money_multiplier>
+                <money_multiplier>${133:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${123:-2}</professions_multiplier>
+                <professions_multiplier>${134:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${124:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${135:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${125:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${136:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -562,6 +594,17 @@ function save_options
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST \
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED \
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST \
+    $OPTION_MODULES_DYNAMIC_RATES_ENABLED \
+    $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION \
+    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY \
     $OPTION_MODULES_GROUP_QUESTS_ENABLED \
     $OPTION_MODULES_LEARN_SPELLS_ENABLED \
     $OPTION_MODULES_LEARN_SPELLS_FEATURES_ENABLE_CLASS_SPELLS \
@@ -1499,6 +1542,105 @@ function load_options
         RESET=true
     fi
 
+    # Load the /options/modules/dynamic_rates/enabled option
+    OPTION_MODULES_DYNAMIC_RATES_ENABLED="$(echo "cat /options/modules/dynamic_rates/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED != "true" && $OPTION_MODULES_DYNAMIC_RATES_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/show_info option
+    OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO="$(echo "cat /options/modules/dynamic_rates/show_info/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO != "true" && $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/show_info is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/experience option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE="1.0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION="1.0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/money option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/money is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY="1.0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/experience option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE="1.0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION="1.0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/money option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/money is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY="1.0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/experience option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE="1.0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION="1.0"
+        RESET=true
+    fi
+
+    # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/money option
+    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY < 1.0 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/money is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY="1.0"
+        RESET=true
+    fi    
+
     # Load the /options/modules/group_quests/enabled option
     OPTION_MODULES_GROUP_QUESTS_ENABLED="$(echo "cat /options/modules/group_quests/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_GROUP_QUESTS_ENABLED != "true" && $OPTION_MODULES_GROUP_QUESTS_ENABLED != "false" ]]; then
@@ -1977,6 +2119,54 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-assistant
+
+                # Check if the source has been compiled
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the account bound module should be installed
+        if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates ]]; then
+                # Download the source code
+                git clone --branch master https://github.com/tkn963/mod-dynamicrates.git $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
+
+                # Fetch all available updates
+                git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates ]]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -3216,7 +3406,7 @@ function set_config
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MailDeliveryDelay =.*/MailDeliveryDelay = '$OPTION_WORLD_MAIL_DELIVERY_DELAY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
-        # Check if the ahbot module is enabled
+        # Check if the account bound module is enabled
         if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
             if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
@@ -3300,7 +3490,7 @@ function set_config
             fi
         fi
 
-        # Check if the ahbot module is enabled
+        # Check if the assistant module is enabled
         if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
             if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
@@ -3369,7 +3559,55 @@ function set_config
             fi
         fi
 
-        # Check if the ahbot module is enabled
+        # Check if the dynamic rates module is enabled
+        if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist ]]; then
+                # The file is missing, so terminate the script
+                printf "${COLOR_RED}The config file mod_dynamicrates.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_dynamicrates.conf${COLOR_END}\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO == "true" ] && MODULES_DYNAMIC_RATES_SHOW_INFO=1 || MODULES_DYNAMIC_RATES_SHOW_INFO=0
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+
+            # Update mod_dynamicrates.conf with values specified in the options
+            sed -i 's/DynamicRates.ShowInfo =.*/DynamicRates.ShowInfo = '$MODULES_DYNAMIC_RATES_SHOW_INFO'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.1-59.Experience =.*/DynamicRates.Level.1-59.Experience = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.1-59.Reputation =.*/DynamicRates.Level.1-59.Reputation = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.1-59.Money =.*/DynamicRates.Level.1-59.Money = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.60-69.Experience =.*/DynamicRates.Level.60-69.Experience = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.60-69.Reputation =.*/DynamicRates.Level.60-69.Reputation = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.60-69.Money =.*/DynamicRates.Level.60-69.Money = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.70-79.Experience =.*/DynamicRates.Level.70-79.Experience = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.70-79.Reputation =.*/DynamicRates.Level.70-79.Reputation = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            sed -i 's/DynamicRates.Level.70-79.Money =.*/DynamicRates.Level.70-79.Money = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+        else
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
+            fi
+        fi
+
+        # Check if the learn spells module is enabled
         if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
             if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
@@ -3424,7 +3662,7 @@ function set_config
             fi
         fi
 
-        # Check if the ahbot module is enabled
+        # Check if the recruit-a-friend module is enabled
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
             if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
