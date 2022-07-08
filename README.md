@@ -8,18 +8,20 @@ I am not experienced enough in a specific language to call myself a professional
 # AzerothCore
 I use [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) to host my own World of Warcraft server. I'm the only one playing on it and therefore I'm changing it to fit my demands. These are the modules I created myself that has the additional features I wanted.
 
+[Account Bound](https://github.com/tkn963/mod-accountbound) : Makes mounts and companions shared across all characters of an account
+
 [Archmage Timear](https://github.com/tkn963/mod-archmage-timear) : Gives Archmage Timear the ability to offer the player daily heroic dungeon quests
 
 [Assistant](https://github.com/tkn963/mod-assistant) : Allows players to obtain certain items and utilities from an NPC.
+
+[Dynamic Rates](https://github.com/tkn963/mod-dynamicrates) : Increases the experience gained, reputation gained, money looted and money earned from quests based on the players current level.
 
 [GroupQuests](https://github.com/tkn963/mod-groupquests) : Makes quest items drop for all members of a group. In some cases it also help certain objectives count for all members of a group.
 
 [LearnSpells](https://github.com/tkn963/mod-learnspells) : Lets players learn class spells, talent ranks, proficiencies and mounts when leveling up or logging into the world.
 
-[LevelReward](https://github.com/tkn963/mod-levelreward) : Gives players a reward of gold when reaching specific levels.
+[LevelReward](https://github.com/tkn963/mod-levelreward) : Gives a player gold when reaching certain levels. It can also send an item to the player.
 
-[RecruitAFriend](https://github.com/tkn963/mod-recruitafriend) : Lets players activate recruit a friend with an in-game command.
+[RecruitAFriend](https://github.com/tkn963/mod-recruitafriend) : Adds five new in-game commands that allows players to recruit each other and receive rewards for doing so.
 
-[SpawnPoints](https://github.com/tkn963/mod-spawnpoints) : Makes new characters spawn in specified locations when entering the world for the first time.
-
-[WeekendBonus](https://github.com/tkn963/mod-weekendbonus) : Increases the experience and reputation gained on weekends.
+[WeekendBonus](https://github.com/tkn963/mod-weekendbonus) : Increases the experience, money, reputation and skill ups gained on weekends.
