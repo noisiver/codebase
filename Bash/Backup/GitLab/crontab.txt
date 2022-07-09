@@ -1,0 +1,2 @@
+0 0 * * * /opt/gitlab/bin/gitlab-backup create CRON=1
+30 0 * * * cd /opt/backup/gitlab && ./backup.sh

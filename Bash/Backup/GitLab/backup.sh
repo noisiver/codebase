@@ -39,7 +39,6 @@ BACKUP_DATE=$(date +"%Y-%m-%d_%H-%M")
 
 # Define required files
 OPTIONS="$ROOT/options.xml"
-MYSQL_CNF="$ROOT/mysql.cnf"
 
 # A function to install the options package
 function options_package
@@ -65,58 +64,24 @@ function options_package
     fi
 }
 
-# A function to install the mariadb client package
-function database_package
-{
-    # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
-    if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
-        # Check if the package is installed
-        if [ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-            clear
-
-            # Perform an update to make sure nothing is missing
-            apt-get --yes update
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
-            # Install the package that is missing
-            apt-get --yes install mariadb-client
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-        fi
-    fi
-}
-
 # A function to save all options to the file
 function store_options
 {
     echo "<?xml version=\"1.0\"?>
     <options>
-        <mysql>
-            <!-- The ip-address or hostname used to connect to the database server -->
-            <hostname>${1:-127.0.0.1}</hostname>
-            <!-- The port used to connect to the database server -->
-            <port>${2:-3306}</port>
-            <!-- The username used to connect to the database server -->
-            <username>${3:-backup}</username>
-            <!-- The password used to connect to the database server -->
-            <password>${4:-backup}</password>
-        </mysql>
         <local_backups>
             <!-- Enable to store backups locally -->
-            <enabled>${5:-true}</enabled>
+            <enabled>${1:-true}</enabled>
             <!-- The location to store local backups -->
-            <location>${6:-/opt/backup/database}</location>
+            <location>${2:-/opt/backup/gitlab/local}</location>
             <!-- The amount of files to save locally -->
-            <max_files>${7:-24}</max_files>
+            <max_files>${3:-24}</max_files>
         </local_backups>
         <gdrive_backups>
             <!-- Enable the use of google drive. Note: It has to be set up ahead of time! -->
-            <enabled>${8:-false}</enabled>
+            <enabled>${4:-false}</enabled>
             <!-- The amount of files to store on google drive -->
-            <max_files>${9:-24}</max_files>
+            <max_files>${5:-24}</max_files>
         </gdrive_backups>
     </options>" | xmllint --format - > $OPTIONS
 }
@@ -125,10 +90,6 @@ function store_options
 function save_options
 {
     store_options \
-    $OPTION_MYSQL_HOSTNAME \
-    $OPTION_MYSQL_PORT \
-    $OPTION_MYSQL_USERNAME \
-    $OPTION_MYSQL_PASSWORD \
     $OPTION_LOCAL_BACKUPS_ENABLED \
     $OPTION_LOCAL_BACKUPS_LOCATION \
     $OPTION_LOCAL_BACKUPS_MAX_FILES \
@@ -151,42 +112,6 @@ function load_options
         exit $?
     fi
 
-    # Load the /options/mysql/hostname option
-    OPTION_MYSQL_HOSTNAME="$(echo "cat /options/mysql/hostname/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_HOSTNAME ] || [[ $OPTION_MYSQL_HOSTNAME == "" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/mysql/hostname is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MYSQL_HOSTNAME="127.0.0.1"
-        RESET=true
-    fi
-
-    # Load the /options/mysql/port option
-    OPTION_MYSQL_PORT="$(echo "cat /options/mysql/port/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MYSQL_PORT =~ ^[0-9]+$ ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/mysql/port is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MYSQL_PORT="3306"
-        RESET=true
-    fi
-
-    # Load the /options/mysql/username option
-    OPTION_MYSQL_USERNAME="$(echo "cat /options/mysql/username/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_USERNAME ] || [[ $OPTION_MYSQL_USERNAME == "" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/mysql/username is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MYSQL_USERNAME="backup"
-        RESET=true
-    fi
-
-    # Load the /options/mysql/password option
-    OPTION_MYSQL_PASSWORD="$(echo "cat /options/mysql/password/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [ -z $OPTION_MYSQL_PASSWORD ] || [[ $OPTION_MYSQL_PASSWORD == "" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/mysql/password is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MYSQL_PASSWORD="backup"
-        RESET=true
-    fi
-
     # Load the /options/local_backups/enabled option
     OPTION_LOCAL_BACKUPS_ENABLED="$(echo "cat /options/local_backups/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_LOCAL_BACKUPS_ENABLED != "true" && $OPTION_LOCAL_BACKUPS_ENABLED != "false" ]]; then
@@ -201,7 +126,7 @@ function load_options
     if [ -z $OPTION_LOCAL_BACKUPS_LOCATION ] || [[ $OPTION_LOCAL_BACKUPS_LOCATION == "" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/local_backups/location is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_LOCAL_BACKUPS_LOCATION="/opt/backup/database"
+        OPTION_LOCAL_BACKUPS_LOCATION="/opt/backup/gitlab/local"
         RESET=true
     fi
 
@@ -242,21 +167,11 @@ function load_options
 }
 
 # A function to export all database tables
-function backup_database
+function backup_gitlab
 {
-    # Make sure all required packages are installed
-    database_package
-
     clear
 
-    printf "${COLOR_GREEN}Backing up the databases...${COLOR_END}\n"
-
-    # Create the mysql.cnf file to prevent warnings during import
-    echo "[client]" > $MYSQL_CNF
-    echo "host=\"$OPTION_MYSQL_HOSTNAME\"" >> $MYSQL_CNF
-    echo "port=\"$OPTION_MYSQL_PORT\"" >> $MYSQL_CNF
-    echo "user=\"$OPTION_MYSQL_USERNAME\"" >> $MYSQL_CNF
-    echo "password=\"$OPTION_MYSQL_PASSWORD\"" >> $MYSQL_CNF
+    printf "${COLOR_GREEN}Backing up gitlab...${COLOR_END}\n"
 
     # Check if the temporary folder already exists
     if [[ -d $ROOT/tmp ]]; then
@@ -266,39 +181,14 @@ function backup_database
 
     # Check to make sure a backup for the current date and time doesn't exist already
     if [[ $OPTION_LOCAL_BACKUPS_ENABLED == "true" && ! -f $OPTION_LOCAL_BACKUPS_LOCATION/$BACKUP_DATE.tar.gz ]] || [[ $OPTION_GDRIVE_BACKUPS_ENABLED == "true" && ! -f $HOME/gdrive/database/$BACKUP_DATE.tar.gz ]]; then
-        # Make sure we can connect to the database server
-        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES;"` ]]; then
-            # We can't access the database
-            printf "${COLOR_RED}The database server at $OPTION_MYSQL_HOSTNAME is inaccessible by user $OPTION_MYSQL_USERNAME.${COLOR_END}\n"
+        mkdir -p $ROOT/tmp/$BACKUP_DATE
 
-            # Remove the mysql conf
-            rm -rf $MYSQL_CNF
+        # Copy the backup created by gitlab
+        cp -r $(ls -dArt /var/opt/gitlab/backups/*.tar | tail -n 1) $ROOT/tmp/$BACKUP_DATE
 
-            # Terminate script on error
-            exit $?
-        fi
-
-        # Get the list of databases to export
-        DATABASES="$(mysql --defaults-extra-file=$MYSQL_CNF -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'phpmyadmin'") AND SCHEMA_NAME NOT LIKE "'%world%'"')"
-
-        # Loop through each database
-        for DATABASE in $DATABASES; do
-            printf "${COLOR_ORANGE}Backing up database $DATABASE${COLOR_END}\n"
-
-            # Create the temporary folder
-            mkdir -p $ROOT/tmp/$BACKUP_DATE/$DATABASE
-
-            # Loop through each table
-            for TABLE in `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW TABLES FROM $DATABASE"`; do
-                # Export the table data
-                mysqldump --defaults-extra-file=$MYSQL_CNF --hex-blob $DATABASE $TABLE > $ROOT/tmp/$BACKUP_DATE/$DATABASE/$TABLE.sql
-
-                # Stop the script on error
-                if [ $? -ne 0 ]; then
-                    exit $?
-                fi
-            done
-        done
+        # Copy the other files
+        cp -r /etc/gitlab/gitlab-secrets.json $ROOT/tmp/$BACKUP_DATE
+        cp -r /etc/gitlab/gitlab.rb $ROOT/tmp/$BACKUP_DATE
 
         # Switch to the temporary folder
         cd $ROOT/tmp/$BACKUP_DATE
@@ -346,16 +236,16 @@ function backup_database
             fi
 
             # Check if the local storage folder exists
-            if [[ ! -d $HOME/gdrive/database ]]; then
+            if [[ ! -d $HOME/gdrive/gitlab ]]; then
                 # Create the folder
-                mkdir -p $HOME/gdrive/database
+                mkdir -p $HOME/gdrive/gitlab
             fi
 
             # Copy the archive to the local storage
-            cp -r $ROOT/tmp/$BACKUP_DATE.tar.gz $HOME/gdrive/database/$BACKUP_DATE.tar.gz
+            cp -r $ROOT/tmp/$BACKUP_DATE.tar.gz $HOME/gdrive/gitlab/$BACKUP_DATE.tar.gz
 
             MAX_LOCAL_FILES=$((OPTION_GDRIVE_BACKUPS_MAX_FILES + 1))
-            ls -tp $HOME/gdrive/database/* | grep -v '/$' | tail -n +$MAX_LOCAL_FILES | xargs -d '\n' -r rm --
+            ls -tp $HOME/gdrive/gitlab/* | grep -v '/$' | tail -n +$MAX_LOCAL_FILES | xargs -d '\n' -r rm --
 
             # Upload all changes to google drive
             /snap/bin/drive push -no-prompt > /dev/null 2>&1
@@ -387,10 +277,7 @@ function backup_database
     fi
 
     printf "${COLOR_GREEN}Finished backing up the databases...${COLOR_END}\n"
-
-    # Remove the mysql conf
-    rm -rf $MYSQL_CNF
 }
 
 load_options
-backup_database
+backup_gitlab
