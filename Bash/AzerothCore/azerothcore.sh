@@ -395,27 +395,27 @@ function store_options
                 <multipliers>
                     <level_1_to_59>
                         <!-- The multiplier for experience gained for level 1 to 59 -->
-                        <experience>${102:-1.0}</experience>
+                        <experience>${102:-1}</experience>
                         <!-- The multiplier for reputation gained for level 1 to 59 -->
-                        <reputation>${103:-1.0}</reputation>
+                        <reputation>${103:-1}</reputation>
                         <!-- The multiplier for money looted and money earned from quests for level 1 to 59 -->
-                        <money>${104:-1.0}</money>
+                        <money>${104:-1}</money>
                     </level_1_to_59>
                     <level_60_to_69>
                         <!-- The multiplier for experience gained for level 60 to 69 -->
-                        <experience>${105:-1.0}</experience>
+                        <experience>${105:-1}</experience>
                         <!-- The multiplier for reputation gained for level 60 to 69 -->
-                        <reputation>${106:-1.0}</reputation>
+                        <reputation>${106:-1}</reputation>
                         <!-- The multiplier for money looted and money earned from quests for level 60 to 69 -->
-                        <money>${107:-1.0}</money>
+                        <money>${107:-1}</money>
                     </level_60_to_69>
                     <level_70_to_79>
                         <!-- The multiplier for experience gained for level 70 to 79 -->
-                        <experience>${108:-1.0}</experience>
+                        <experience>${108:-1}</experience>
                         <!-- The multiplier for reputation gained for level 70 to 79 -->
-                        <reputation>${109:-1.0}</reputation>
+                        <reputation>${109:-1}</reputation>
                         <!-- The multiplier for money looted and money earned from quests for level 70 to 79 -->
-                        <money>${110:-1.0}</money>
+                        <money>${110:-1}</money>
                     </level_70_to_79>
                 </multipliers>
             </dynamic_rates>
@@ -1562,82 +1562,82 @@ function load_options
 
     # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/experience option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE="1"
         RESET=true
     fi
 
     # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION="1"
         RESET=true
     fi
 
     # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/money option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/money is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY="1"
         RESET=true
     fi
 
     # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/experience option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE="1"
         RESET=true
     fi
 
     # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION="1"
         RESET=true
     fi
 
     # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/money option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/money is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY="1"
         RESET=true
     fi
 
     # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/experience option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE="1"
         RESET=true
     fi
 
     # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION="1"
         RESET=true
     fi
 
     # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/money option
     OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY < 1.0 ]]; then
+    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY < 1 ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/money is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY="1.0"
+        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY="1"
         RESET=true
     fi    
 
