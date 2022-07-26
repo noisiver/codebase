@@ -1,4 +1,4 @@
-SET @Entry := @Entry;
+SET @Entry := 9000000;
 
 -- Spawn points
 DELETE FROM `creature` WHERE `id1`=@Entry;
