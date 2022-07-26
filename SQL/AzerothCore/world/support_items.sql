@@ -1,5 +1,5 @@
 SET
-@Entry := 8000000,
+@Entry := 9500000,
 @Model := 18520,
 @Name  := "Onidanis",
 @Title := "Support",
