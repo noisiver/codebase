@@ -1,68 +1,34 @@
 #!/bin/bash
+if [[ $# -eq 0 ]] || [[ ! $1 == "cron" ]]; then
+    while true; do
+        read -p "Do you want to import all data from the world database into aowow? This may take a long time. (Y/N)" yn
+            case $yn in
+                [Yy]*) break;;
+                [Nn]*) clear; exit;;
+                *) echo "Please choose Y or N.";;
+        esac
+    done
+fi
+
+clear
+
 LOCATION="/var/www/html/database"
 OPTIONS=(access_requirement,
-        achievement,
-        achievement_reward,
-        areatrigger_involvedrelation,
-        areatrigger_scripts,
-        areatrigger_tavern,
-        areatrigger_teleport,
-        creature,
-        creature_addon,
-        creature_classlevelstats,
-        creature_loot_template,
-        creature_template,
-        creature_template_addon,
-        creature_template_locale,
-        creature_template_resistance,
-        creature_template_spell,
-        disables,
-        disenchant_loot_template,
-        fishing_loot_template,
-        game_event,
-        game_event_npc_vendor,
-        game_event_prerequisite,
-        game_event_seasonal_questrelation,
-        gameobject,
-        gameobject_loot_template,
-        gameobject_questitem,
-        gameobject_template,
-        gameobject_template_locale,
-        instance_encounters,
-        item_loot_template,
-        item_template,
-        item_template_locale,
-        mail_loot_template,
-        milling_loot_template,
-        npc_vendor,
-        pickpocketing_loot_template,
-        playercreateinfo_item,
-        playercreateinfo_skills,
-        prospecting_loot_template,
-        quest_template,
-        quest_template_addon,
-        quest_template_locale,
-        reference_loot_template,
-        script_waypoint,
-        skill_discovery_template,
-        skill_perfect_item_template,
-        skinning_loot_template,
-        smart_scripts,
-        spell_dbc,
-        spell_enchant_proc_data,
-        spell_group,
-        spell_ranks,
-        spelldifficulty_dbc,
-        trainer_spell,
-        vehicle_accessory,
-        vehicle_accessory_template,
-        waypoint_data,
-        waypoints)
+         creature_template,
+         disables,
+         game_event,
+         gameobject_template,
+         item_template,
+         quest_template,
+         spell_enchant_proc_data,
+         spelldifficulty_dbc)
 
 cd $LOCATION
+SECONDS=0
 for o in "${OPTIONS[@]}"; do
     php aowow --sync=$o
     if [ $? -ne 0 ]; then
         exit $?
     fi
 done
+printf 'Syncing ended after %02dh:%02dm:%02ds\n' $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
