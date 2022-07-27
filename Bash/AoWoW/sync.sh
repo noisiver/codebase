@@ -28,6 +28,7 @@ SECONDS=0
 for o in "${OPTIONS[@]}"; do
     php aowow --sync=$o
     if [ $? -ne 0 ]; then
+        printf 'Syncing failed after %02dh:%02dm:%02ds\n' $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
         exit $?
     fi
 done
