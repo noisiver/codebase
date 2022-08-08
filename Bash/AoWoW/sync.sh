@@ -13,23 +13,26 @@ fi
 clear
 
 LOCATION="/var/www/html/database"
-OPTIONS=(access_requirement,
-         creature_template,
-         disables,
-         game_event,
-         gameobject_template,
-         item_template,
-         quest_template,
-         spell_enchant_proc_data,
+OPTIONS=(access_requirement
+         creature_template
+         disables
+         game_event
+         gameobject_template
+         item_template
+         quest_template
+         spell_enchant_proc_data
          spelldifficulty_dbc)
 
 cd $LOCATION
 SECONDS=0
+PROGRESS=1
 for o in "${OPTIONS[@]}"; do
+    printf '\e[0;32mSyncing '$o' ('$PROGRESS' of '${#OPTIONS[@]}')\e[0m\n'
     php aowow --sync=$o
     if [ $? -ne 0 ]; then
-        printf 'Syncing failed after %02dh:%02dm:%02ds\n' $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
+        printf '\e[0;31mSyncing '$o' failed after %02dh:%02dm:%02ds\e[0m\n' $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
         exit $?
     fi
+    PROGRESS=$(($PROGRESS + 1))
 done
-printf 'Syncing ended after %02dh:%02dm:%02ds\n' $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
+printf '\e[0;32mSyncing finished after %02dh:%02dm:%02ds\e[0m\n' $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))

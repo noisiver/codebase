@@ -42,3 +42,33 @@ UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=44605;
 UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=44614;
 -- Devout Candle
 UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=44615;
+-- Arrows
+-- Rough Arrow
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=2512;
+-- Sharp Arrow
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=2515;
+-- Razor Arrow
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=3030;
+-- Jagged Arrow
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=11285;
+-- Wicked Arrow
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=28053;
+-- Blackflight Arrow
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=28056;
+-- Terrorshaft Arrow
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=41586;
+-- Bullets
+-- Light Shot
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=2516;
+-- Heavy Shot
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=2519;
+-- Solid Shot
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=3033;
+-- Accurate Slugs
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=11284;
+-- Impact Shot
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=28060;
+-- Ironbite Shell
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=28061;
+-- Frostbite Bullets
+UPDATE `item_template` SET `BuyPrice`=0, `SellPrice`=0 WHERE `entry`=41584;
