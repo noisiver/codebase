@@ -385,119 +385,115 @@ function store_options
                     </professions>
                 </features>
             </assistant>
-            <dungeon_quests>
-                <!-- Enable/Disable the use of the Dungeon Quests module. It adds quests to most dungeons -->
-                <enabled>${99:-false}</enabled>
-            </dungeon_quests>
             <dynamic_rates>
                 <!-- Enable/Disable the use of the Dynamic Rates module -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${99:-false}</enabled>
                 <!-- Enable/Disable to show additional information when earning extra money from loot or quests -->
-                <show_info>${101:-false}</show_info>
+                <show_info>${100:-false}</show_info>
                 <multipliers>
                     <level_1_to_59>
                         <!-- The multiplier for experience gained for level 1 to 59 -->
-                        <experience>${102:-1}</experience>
+                        <experience>${101:-1}</experience>
                         <!-- The multiplier for reputation gained for level 1 to 59 -->
-                        <reputation>${103:-1}</reputation>
+                        <reputation>${102:-1}</reputation>
                         <!-- The multiplier for money looted and money earned from quests for level 1 to 59 -->
-                        <money>${104:-1}</money>
+                        <money>${103:-1}</money>
                     </level_1_to_59>
                     <level_60_to_69>
                         <!-- The multiplier for experience gained for level 60 to 69 -->
-                        <experience>${105:-1}</experience>
+                        <experience>${104:-1}</experience>
                         <!-- The multiplier for reputation gained for level 60 to 69 -->
-                        <reputation>${106:-1}</reputation>
+                        <reputation>${105:-1}</reputation>
                         <!-- The multiplier for money looted and money earned from quests for level 60 to 69 -->
-                        <money>${107:-1}</money>
+                        <money>${106:-1}</money>
                     </level_60_to_69>
                     <level_70_to_79>
                         <!-- The multiplier for experience gained for level 70 to 79 -->
-                        <experience>${108:-1}</experience>
+                        <experience>${107:-1}</experience>
                         <!-- The multiplier for reputation gained for level 70 to 79 -->
-                        <reputation>${109:-1}</reputation>
+                        <reputation>${108:-1}</reputation>
                         <!-- The multiplier for money looted and money earned from quests for level 70 to 79 -->
-                        <money>${110:-1}</money>
+                        <money>${109:-1}</money>
                     </level_70_to_79>
                 </multipliers>
             </dynamic_rates>
             <guild_funds>
                 <!-- Enable/Disable the use of the Guild Funds module. It deposits a percentage of the money looted and earned from quests into the guild bank -->
-                <enabled>${111:-false}</enabled>
+                <enabled>${110:-false}</enabled>
                 <percentages>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when looting. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <looted>${112:-10}</looted>
+                    <looted>${111:-10}</looted>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when completing quests. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <quests>${113:-3}</quests>
+                    <quests>${112:-3}</quests>
                 </percentages>
             </guild_funds>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${114:-false}</enabled>
+                <enabled>${113:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${115:-false}</enabled>
+                <enabled>${114:-false}</enabled>
                 <features>
                     <!-- Enable/Disable to learn class-specific spells -->
-                    <enable_class_spells>${116:-true}</enable_class_spells>
+                    <enable_class_spells>${115:-true}</enable_class_spells>
                     <!-- Enable/Disable to learn talent ranks -->
-                    <enable_talent_ranks>${117:-true}</enable_talent_ranks>
+                    <enable_talent_ranks>${116:-true}</enable_talent_ranks>
                     <!-- Enable/Disable to learn proficiencies -->
-                    <enable_proficiencies>${118:-true}</enable_proficiencies>
+                    <enable_proficiencies>${117:-true}</enable_proficiencies>
                     <!-- Enable/Disable to learn spells normally obtained through quests -->
-                    <enable_spells_from_quests>${119:-true}</enable_spells_from_quests>
+                    <enable_spells_from_quests>${118:-true}</enable_spells_from_quests>
                     <riding>
                         <!-- Enable/Disable to learn apprentice riding and mounts -->
-                        <enable_apprentice>${120:-false}</enable_apprentice>
+                        <enable_apprentice>${119:-false}</enable_apprentice>
                         <!-- Enable/Disable to learn journeyman riding and mounts -->
-                        <enable_journeyman>${121:-false}</enable_journeyman>
+                        <enable_journeyman>${120:-false}</enable_journeyman>
                         <!-- Enable/Disable to learn expert riding and mounts -->
-                        <enable_expert>${122:-false}</enable_expert>
+                        <enable_expert>${121:-false}</enable_expert>
                         <!-- Enable/Disable to learn artisan riding and mounts -->
-                        <enable_artisan>${123:-false}</enable_artisan>
+                        <enable_artisan>${122:-false}</enable_artisan>
                         <!-- Enable/Disable to learn cold weather flying at level 77 -->
-                        <enable_cold_weather_flying>${124:-false}</enable_cold_weather_flying>
+                        <enable_cold_weather_flying>${123:-false}</enable_cold_weather_flying>
                     </riding>
                 </features>
             </learn_spells>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${125:-false}</enabled>
+                <enabled>${124:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${126:-90}</referral_duration>
+                <referral_duration>${125:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${127:-7}</max_account_age>
+                <max_account_age>${126:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${128:-30}</days_until_reward>
+                    <days_until_reward>${127:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${129:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${128:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${130:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${129:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${131:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${130:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${132:-false}</enabled>
+                <enabled>${131:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${133:-58}</starting_level>
+                <starting_level>${132:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${134:-false}</enabled>
+                <enabled>${133:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${135:-2.0}</experience_multiplier>
+                <experience_multiplier>${134:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${136:-2.0}</money_multiplier>
+                <money_multiplier>${135:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${137:-2}</professions_multiplier>
+                <professions_multiplier>${136:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${138:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${137:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${139:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${138:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -605,7 +601,6 @@ function save_options
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST \
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED \
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST \
-    $OPTION_MODULES_DUNGEON_QUESTS_ENABLED \
     $OPTION_MODULES_DYNAMIC_RATES_ENABLED \
     $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO \
     $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE \
@@ -1548,15 +1543,6 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/dungeon_quests/enabled option
-    OPTION_MODULES_DUNGEON_QUESTS_ENABLED="$(echo "cat /options/modules/dungeon_quests/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_DUNGEON_QUESTS_ENABLED != "true" && $OPTION_MODULES_DUNGEON_QUESTS_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dungeon_quests/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DUNGEON_QUESTS_ENABLED="false"
-        RESET=true
-    fi
-
     # Load the /options/modules/dynamic_rates/enabled option
     OPTION_MODULES_DYNAMIC_RATES_ENABLED="$(echo "cat /options/modules/dynamic_rates/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED != "true" && $OPTION_MODULES_DYNAMIC_RATES_ENABLED != "false" ]]; then
@@ -2161,54 +2147,6 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-assistant
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
-        # Check if the dungeon quests module should be installed
-        if [[ $OPTION_MODULES_DUNGEON_QUESTS_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-dungeonquests ]]; then
-                # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-dungeonquests.git $OPTION_SOURCE_LOCATION/modules/mod-dungeonquests
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-dungeonquests
-
-                # Fetch all available updates
-                git fetch --all
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-dungeonquests ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-dungeonquests
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -3234,40 +3172,6 @@ function import_database
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/ ]]; then
                 # Loop through all sql files inside the folder
                 for f in $OPTION_SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH@U}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH@U}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        fi
-
-        # Check if the dungeon quests module is enabled
-        if [[ $OPTION_MODULES_DUNGEON_QUESTS_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-dungeonquests/data/sql/db-world/base/ ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-dungeonquests/data/sql/db-world/base/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
