@@ -3,17 +3,17 @@ To remove everything, run these queries
 SET
 @Entry := 5000000,
 @QuestId := 50000;
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 1160);
-DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+10;
-DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+10;
-DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+35;
-DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+35;
-DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+35;
-DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+35;
-DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+35;
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636);
+DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+11;
+DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+11;
+DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+37;
+DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+37;
+DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+37;
+DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+37;
+DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+37;
 */
 
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 1160);
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636);
 INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Ragefire Chasm
 (1, 5723, 'Disabled quest for custom dungeon quests'),
@@ -56,7 +56,10 @@ INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 (1, 14355, 'Disabled quest for custom dungeon quests'),
 -- Scarlet Monastery (Library)
 (1, 1049, 'Disabled quest for custom dungeon quests'),
-(1, 1050, 'Disabled quest for custom dungeon quests');
+(1, 1050, 'Disabled quest for custom dungeon quests'),
+-- Razorfen Downs
+(1, 3341, 'Disabled quest for custom dungeon quests'),
+(1, 3636, 'Disabled quest for custom dungeon quests');
 
 SET
 @QuestId         := 50000,
@@ -1843,3 +1846,106 @@ INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
 DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+35;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 (@QuestId+35, @QuestRewardText);
+
+-- Razorfen Downs: Dowoe Farjumper
+SET
+@Model      := 7625,
+@Name       := 'Dowoe Farjumper',
+@Title      := '',
+@MinLevel   := 37,
+@MaxLevel   := 37,
+@Rank       := 1,
+@UnitFlags  := 768,
+@Type       := 7;
+
+DELETE FROM `creature_template` WHERE `entry`=@Entry+11;
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
+(@Entry+11, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+
+DELETE FROM `creature` WHERE `id1`=@Entry+11;
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
+(@Entry+11, 129, 2571.45, 1108.09, 47.6629, 4.50831);
+
+SET
+@QuestLevel                     := 37,
+@QuestMinLevel                  := 33,
+@QuestSortID                    := 796,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 3300,
+@QuestRewardItem1               := 10823,
+@QuestRewardAmount1             := 1,
+@QuestRewardFactionId1          := 68,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Bring the End',
+@QuestLogDescription            := 'Dowoe Farjumper wants you to kill Amnennar the Coldbringer and return his skull.',
+@QuestDescription               := 'While our first observations of this place revealed little threat, our recent findings are much more serious...$B$BThe quilboar have aligned themselves with the Scourge. A Lich named Amnennar the Coldbringer rules them now, using the power of his massive consciousness to control their every move.$B$BAmnennar has a direct telepathic link to Ner\'zhul; we must sever this bond, $N. An end must come to the Coldbringer.',
+@QuestCompletionLog             := 'Return to Dowoe Farjumper.',
+@QuestRequiredItemId1           := 10420,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'This matter is of utmost importance, $N. We must stop any attempt by the Scourge to bolster their ranks.',
+@QuestRewardText                := 'The loyalty of a Lich is unswerving, $N. Let them know that such loyalty will only bring them destruction.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+36;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+36, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+11 AND `quest`=@QuestId+36;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+11, @QuestId+36);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+11 AND `quest`=@QuestId+36;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+11, @QuestId+36);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+36;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+36, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+36;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+36, @QuestRewardText);
+
+SET
+@QuestLevel                     := 37,
+@QuestMinLevel                  := 33,
+@QuestSortID                    := 796,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 3300,
+@QuestRewardItem1               := 10823,
+@QuestRewardAmount1             := 1,
+@QuestRewardItem2               := 10824,
+@QuestRewardAmount2             := 1,
+@QuestRewardFactionId1          := 72,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'Bring the Light',
+@QuestLogDescription            := 'Dowoe Farjumper wants you to slay Amnennar the Coldbringer.',
+@QuestDescription               := 'The Scourge is a persistent threat to the Alliance, a fact I am sure you know quite well. Recently, we have come across some very peculiar findings, $N.$B$BWhile once this was the home of simple quilboar, now it has become apparent that a pact was made with the Scourge, creating creatures far worse... They are now ruled by the lich, Amnennar the Coldbringer.$B$BAlign yourself with the Light, $N; put an end to this evil union.',
+@QuestCompletionLog             := 'Return to Dowoe Farjumper.',
+@QuestRequiredNpcOrGo1          := 7358,
+@QuestRequiredNpcOrGoCount1     := 1,
+
+@QuestRequestitems              := 'Amnennar must be eradicated. Go, swiftly.',
+@QuestRewardText                := 'Thank you, $N. The Scourge will now think twice before attempting to bolster its ranks again.$B$BMay you be blessed by the Light.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+37;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardItem1`, `RewardAmount1`, `RewardItem2`, `RewardAmount2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+37, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+11 AND `quest`=@QuestId+37;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+11, @QuestId+37);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+11 AND `quest`=@QuestId+37;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+11, @QuestId+37);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+37;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+37, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+37;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+37, @QuestRewardText);
