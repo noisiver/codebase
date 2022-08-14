@@ -3,17 +3,17 @@ To remove everything, run these queries
 SET
 @Entry := 5000000,
 @QuestId := 50000;
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636);
-DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+11;
-DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+11;
-DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+37;
-DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+37;
-DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+37;
-DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+37;
-DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+37;
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042);
+DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+12;
+DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+12;
+DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+42;
+DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+42;
+DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+42;
+DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+42;
+DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+42;
 */
 
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636);
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042);
 INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Ragefire Chasm
 (1, 5723, 'Disabled quest for custom dungeon quests'),
@@ -59,7 +59,13 @@ INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 (1, 1050, 'Disabled quest for custom dungeon quests'),
 -- Razorfen Downs
 (1, 3341, 'Disabled quest for custom dungeon quests'),
-(1, 3636, 'Disabled quest for custom dungeon quests');
+(1, 3636, 'Disabled quest for custom dungeon quests'),
+-- Zul'Farrak
+(1, 2768, 'Disabled quest for custom dungeon quests'),
+(1, 2770, 'Disabled quest for custom dungeon quests'),
+(1, 2846, 'Disabled quest for custom dungeon quests'),
+(1, 2865, 'Disabled quest for custom dungeon quests'),
+(1, 3042, 'Disabled quest for custom dungeon quests');
 
 SET
 @QuestId         := 50000,
@@ -1949,3 +1955,225 @@ INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
 DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+37;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 (@QuestId+37, @QuestRewardText);
+
+-- Zul'Farrak: Javion Padley
+SET
+@Model      := 5547,
+@Name       := 'Javion Padley',
+@Title      := '',
+@MinLevel   := 46,
+@MaxLevel   := 46,
+@Rank       := 1,
+@UnitFlags  := 768,
+@Type       := 7;
+
+DELETE FROM `creature_template` WHERE `entry`=@Entry+12;
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
+(@Entry+12, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+
+DELETE FROM `creature` WHERE `id1`=@Entry+12;
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
+(@Entry+12, 209, 1241.62, 811.337, 8.97133, 2.0579);
+
+SET
+@QuestLevel                     := 47,
+@QuestMinLevel                  := 40,
+@QuestSortID                    := 978,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 5400,
+@QuestRewardChoiceItemID1       := 9533,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 9534,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardFactionId1          := 369,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Divino-matic Rod',
+@QuestLogDescription            := 'Bring the Divino-matic Rod to Javion Padley.',
+@QuestDescription               := 'Sergeant Bly stole from me! He said he\'d only borrow it, but he stole my cherished divino-matic rod!! Without that rod how will I know where to dig new water holes??$B$BFind Bly and bring me my rod! Let\'s hope the trolls took care of him, because if you have to fight him for the rod then you\'re in for a serious fight.',
+@QuestCompletionLog             := 'Return to Javion Padley.',
+@QuestRequiredItemId1           := 8548,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Did you find Sergeant Bly? Did you get my divino-matic rod?',
+@QuestRewardText                := 'You found it! Well done, $N! Did you have to fight Bly for it? I hope you knocked him and his band down good and hard!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+38;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+38, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+38;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+38);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+38;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+38);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+38;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+38, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+38;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+38, @QuestRewardText);
+
+SET
+@QuestLevel                     := 50,
+@QuestMinLevel                  := 40,
+@QuestSortID                    := 978,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 7500,
+@QuestRewardBonusMoney          := 6000,
+@QuestRewardItem1               := 11122,
+@QuestRewardAmount1             := 1,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Gahz\'rilla',
+@QuestLogDescription            := 'Bring Gahz\'rilla\'s Electrified Scale to Javion Padley.',
+@QuestDescription               := 'Deep in Zul\'Farrak there is a sacred pool. From that pool the trolls summon a huge beast! Gahz\'rilla! He\'s so fierce that even his scales crackle with energy. It\'s that energy I want to harness for my car!$B$BBring me the electrified scale of Gahz\'rilla!$B$BBut the summoning of Gahz\'rilla is a well-kept secret of the trolls. To face him, you must first wrest the secret from them.',
+@QuestCompletionLog             := 'Return to Javion Padley.',
+@QuestRequiredItemId1           := 8707,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Do you have the scale? I can\'t wait to try different ways to harness its energy!',
+@QuestRewardText                := 'Wow, you got the scale! Thanks, $N. I can\'t wait to get to work on this thing!$B$BSo you saw Gahz\'rilla? Was he as big as they say??';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+39;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+39, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+39;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+39);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+39;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+39);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+39;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+39, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+39;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+39, @QuestRewardText);
+
+SET
+@QuestLevel                     := 46,
+@QuestMinLevel                  := 40,
+@QuestSortID                    := 978,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 6500,
+@QuestRewardBonusMoney          := 5250,
+@QuestRewardItem1               := 9527,
+@QuestRewardAmount1             := 1,
+@QuestRewardItem2               := 9531,
+@QuestRewardAmount2             := 1,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Tiara of the Deep',
+@QuestLogDescription            := 'Bring the Tiara of the Deep to Javion Padley.',
+@QuestDescription               := 'Long ago I possessed a beautiful piece of jewelry, the Tiara of the Deep. And not only was it pretty--it held great power for those with the knowledge to use it.$B$BSo when word of the tiara reached the Hydromancer Velratha, she had to have it. She sent agents to my home and they stole it while I was away. The thieves!$B$BI want my tiara back! Find Velratha and wrench the tiara from her. Return it to me and you\'ll earn my favor.',
+@QuestCompletionLog             := 'Return to Javion Padley.',
+@QuestRequiredItemId1           := 9234,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Do you have the tiara, $N? Has Velratha learned the price of crossing me?',
+@QuestRewardText                := 'Wonderful! You found it! And what\'s just as important--Velratha no longer has it! Thank you, $N. I am forever in your debt!$B$BAnd if I sounded a little... mean before, pay it no mind. You\'ll find me a much nicer person to those who haven\'t stolen from me.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+40;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardItem2`, `RewardAmount2`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+40, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+40;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+40);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+40;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+40);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+40;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+40, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+40;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+40, @QuestRewardText);
+
+SET
+@QuestLevel                     := 45,
+@QuestMinLevel                  := 40,
+@QuestSortID                    := 978,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 6500,
+@QuestRewardBonusMoney          := 4950,
+@QuestRewardFactionId1          := 369,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Scarab Shells',
+@QuestLogDescription            := 'Bring 5 Uncracked Scarab Shells to Javion Padley.',
+@QuestDescription               := 'The scarabs of Tanaris have very hard shells! Hard enough to use as a building material for lots of things. So many things!$B$BIn fact, those shells are so useful... the scarabs were hunted all to near extinction!$B$BI know where there are more scarabs, and if you promise to bring me their shells then I\'ll tell you where they are. Promise?$B$BOk, the scarabs have a colony here in Zul\'Farrak. I guess the trolls don\'t hunt them for their shells.$B$BBut you can! Go and get me uncracked shells!',
+@QuestCompletionLog             := 'Return to Javion Padley.',
+@QuestRequiredItemId1           := 9238,
+@QuestRequiredItemCount1        := 5,
+
+@QuestRequestitems              := 'Do you have the shells? My cousin in Booty Bay is waiting for a load of them, and he\'s getting impatient!',
+@QuestRewardText                := 'Oh, great! You got them!$B$BThanks, $N. You\'re a real lifesaver!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+41;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+41, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+41;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+41);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+41;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+41);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+41;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+41, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+41;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+41, @QuestRewardText);
+
+SET
+@QuestLevel                     := 45,
+@QuestMinLevel                  := 40,
+@QuestSortID                    := 978,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 19500,
+@QuestRewardBonusMoney          := 4950,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Troll Temper',
+@QuestLogDescription            := 'Bring 20 Vials of Troll Temper to Javion Padley.',
+@QuestDescription               := 'The Sandfury trolls make a tempering agent from sandstones, and I can use that to temper the goods I craft, yes I can! It is highly prized by connoisseurs, so if you bring me a good supply of the temper, then I\'ll reward you well.$B$BGood luck.',
+@QuestCompletionLog             := 'Return to Javion Padley.',
+@QuestRequiredItemId1           := 9523,
+@QuestRequiredItemCount1        := 20,
+
+@QuestRequestitems              := 'Did you bring me the temper, $N?',
+@QuestRewardText                := 'Ah, this is very nice temper indeed! And so much of it! I\'ll be at work for days before I use it all!$B$BThank you, $N. Please, take this as payment.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+42;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+42, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+42;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+42);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+42;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+12, @QuestId+42);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+42;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+42, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+42;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+42, @QuestRewardText);
