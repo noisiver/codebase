@@ -3,17 +3,17 @@ To remove everything, run these queries
 SET
 @Entry := 5000000,
 @QuestId := 50000;
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042);
-DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+12;
-DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+12;
-DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+42;
-DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+42;
-DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+42;
-DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+42;
-DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+42;
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065);
+DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+13;
+DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+13;
+DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+43;
+DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+43;
+DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+43;
+DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+43;
+DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+43;
 */
 
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042);
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065);
 INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Ragefire Chasm
 (1, 5723, 'Disabled quest for custom dungeon quests'),
@@ -65,7 +65,10 @@ INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 (1, 2770, 'Disabled quest for custom dungeon quests'),
 (1, 2846, 'Disabled quest for custom dungeon quests'),
 (1, 2865, 'Disabled quest for custom dungeon quests'),
-(1, 3042, 'Disabled quest for custom dungeon quests');
+(1, 3042, 'Disabled quest for custom dungeon quests'),
+-- Maraudon
+(1, 7064, 'Disabled quest for custom dungeon quests'),
+(1, 7065, 'Disabled quest for custom dungeon quests');
 
 SET
 @QuestId         := 50000,
@@ -2177,3 +2180,112 @@ INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
 DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+42;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 (@QuestId+42, @QuestRewardText);
+
+-- Maraudon: Dendron Skystalker
+SET
+@Model      := 7997,
+@Name       := 'Dendron Skystalker',
+@Title      := '',
+@MinLevel   := 48,
+@MaxLevel   := 48,
+@Rank       := 1,
+@UnitFlags  := 768,
+@Type       := 7;
+
+DELETE FROM `creature_template` WHERE `entry`=@Entry+13;
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
+(@Entry+13, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+
+DELETE FROM `creature` WHERE `id1`=@Entry+13;
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
+(@Entry+13, 349, 19.2122, -11.5937, -127.618, 5.31322);
+
+SET
+@QuestLevel                     := 51,
+@QuestMinLevel                  := 45,
+@QuestSortID                    := 2100,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 6300,
+@QuestRewardChoiceItemID1       := 17705,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 17743,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 17753,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestRewardFactionId1          := 609,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Corruption of Earth and Seed',
+@QuestLogDescription            := 'Slay Princess Theradras and return to Dendron Skystalker.',
+@QuestDescription               := 'Princess Theradras is an elemental force of earth related to the Old Gods. Ages ago, she and Zaetar, first son of Cenarius, began a relationship. The offspring of their time together became known to the people of Kalimdor as centaur. Ever-thankful creatures, the centaur killed Zaetar, and now hold Zaetar\'s remains. My quest here is to find those powerful enough to slay Theradras so we may recover Zaetar\'s remains before returning to Stonetalon.',
+@QuestCompletionLog             := 'Return to Dendron Skystalker.',
+@QuestRequiredNpcOrGo1          := 12201,
+@QuestRequiredNpcOrGoCount1     := 1,
+
+@QuestRequestitems              := 'I would prefer to fight this battle on our own, but we are left with no other options--we need those more powerful, and the races of Azeroth have proven without a doubt they can overcome such things when they work together. So it is to you we turn for help.$B$BI only hope it is enough.$B$BZaetar, brother to Remulos, brought many pains to this world, and ultimately it caused his own death. I just hope I have not caused more death by asking you to aid us.',
+@QuestRewardText                := 'This is most wonderful news, $N! Thank you!$b$bI will speak with Marandis and ask his wisdom on the topic of Zaetar\'s remains, but at least you have overcome the hardest of the tasks.$b$bI was told that if we were successful in our mission, I had permission to reward those who aided us. I was given these items as tokens from our people--you may choose one.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+42;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+42, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+13 AND `quest`=@QuestId+42;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+13, @QuestId+42);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+13 AND `quest`=@QuestId+42;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+13, @QuestId+42);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+42;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+42, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+42;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+42, @QuestRewardText);
+
+SET
+@QuestLevel                     := 51,
+@QuestMinLevel                  := 45,
+@QuestSortID                    := 2100,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 6300,
+@QuestRewardChoiceItemID1       := 17705,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 17743,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 17753,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestRewardFactionId1          := 609,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'Corruption of Earth and Seed',
+@QuestLogDescription            := 'Slay Princess Theradras and return to Dendron Skystalker.',
+@QuestDescription               := 'Princess Theradras is an elemental force of earth related to the Old Gods. Ages ago, she and Zaetar, first son of Cenarius, began a relationship. The offspring of their time together became known to the people of Kalimdor as centaur. Ever-thankful creatures, the centaur killed Zaetar, and now hold Zaetar\'s remains. My quest here is to find those powerful enough to slay Theradras so we may recover Zaetar\'s remains before returning to Stonetalon.',
+@QuestCompletionLog             := 'Return to Dendron Skystalker.',
+@QuestRequiredNpcOrGo1          := 12201,
+@QuestRequiredNpcOrGoCount1     := 1,
+
+@QuestRequestitems              := 'I feel the weight of imposing my plea on the mortal races, but we are left with no other options. The races of Azeroth have proven without a doubt they can overcome such things when they work together, so it is to them I ask for help.$B$BI only hope it is enough.$B$BZaetar, brother to Remulos, brought many pains to this world, and ultimately it caused his own death. There is a lesson there to all of us if we are wise enough to see it.',
+@QuestRewardText                := 'This is most wonderful news, $N! Thank you!$B$BAlthough it concerns me that you were not able to bring back Zaetar\'s remains, who am I to question the will of Cenarius\' first born. Perhaps now the will of the centaur will break and their thirst for blood will lesson--we can only hope.$B$BIf successful in our mission, I was given these items to reward any who aided us. You may choose one as a token of thanks.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+43;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+43, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+13 AND `quest`=@QuestId+43;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+13, @QuestId+43);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+13 AND `quest`=@QuestId+43;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+13, @QuestId+43);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+43;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+43, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+43;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+43, @QuestRewardText);
