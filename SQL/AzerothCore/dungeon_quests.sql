@@ -3,17 +3,17 @@ To remove everything, run these queries
 SET
 @Entry := 5000000,
 @QuestId := 50000;
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065);
-DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+13;
-DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+13;
-DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+43;
-DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+43;
-DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+43;
-DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+43;
-DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+43;
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201);
+DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+15;
+DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+15;
+DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+59;
+DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+59;
+DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+59;
+DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+59;
+DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+59;
 */
 
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065);
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201);
 INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Ragefire Chasm
 (1, 5723, 'Disabled quest for custom dungeon quests'),
@@ -68,7 +68,25 @@ INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 (1, 3042, 'Disabled quest for custom dungeon quests'),
 -- Maraudon
 (1, 7064, 'Disabled quest for custom dungeon quests'),
-(1, 7065, 'Disabled quest for custom dungeon quests');
+(1, 7065, 'Disabled quest for custom dungeon quests'),
+-- Sunken Temple
+(1, 1445, 'Disabled quest for custom dungeon quests'),
+(1, 1446, 'Disabled quest for custom dungeon quests'),
+-- Blackrock Depths
+(1, 3907, 'Disabled quest for custom dungeon quests'),
+(1, 4003, 'Disabled quest for custom dungeon quests'),
+(1, 4063, 'Disabled quest for custom dungeon quests'),
+(1, 4081, 'Disabled quest for custom dungeon quests'),
+(1, 4082, 'Disabled quest for custom dungeon quests'),
+(1, 4123, 'Disabled quest for custom dungeon quests'),
+(1, 4126, 'Disabled quest for custom dungeon quests'),
+(1, 4132, 'Disabled quest for custom dungeon quests'),
+(1, 4134, 'Disabled quest for custom dungeon quests'),
+(1, 4136, 'Disabled quest for custom dungeon quests'),
+(1, 4263, 'Disabled quest for custom dungeon quests'),
+(1, 4286, 'Disabled quest for custom dungeon quests'),
+(1, 4362, 'Disabled quest for custom dungeon quests'),
+(1, 7201, 'Disabled quest for custom dungeon quests');
 
 SET
 @QuestId         := 50000,
@@ -1878,7 +1896,7 @@ INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, 
 SET
 @QuestLevel                     := 37,
 @QuestMinLevel                  := 33,
-@QuestSortID                    := 796,
+@QuestSortID                    := 722,
 @QuestRewardXPDifficulty        := 7,
 @QuestRewardBonusMoney          := 3300,
 @QuestRewardItem1               := 10823,
@@ -1919,7 +1937,7 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 SET
 @QuestLevel                     := 37,
 @QuestMinLevel                  := 33,
-@QuestSortID                    := 796,
+@QuestSortID                    := 722,
 @QuestRewardXPDifficulty        := 7,
 @QuestRewardBonusMoney          := 3300,
 @QuestRewardItem1               := 10823,
@@ -2289,3 +2307,729 @@ INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
 DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+43;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 (@QuestId+43, @QuestRewardText);
+
+-- Sunken Temple: Taesosh
+SET
+@Model      := 10171,
+@Name       := 'Taesosh',
+@Title      := '',
+@MinLevel   := 50,
+@MaxLevel   := 50,
+@Rank       := 1,
+@UnitFlags  := 768,
+@Type       := 7;
+
+DELETE FROM `creature_template` WHERE `entry`=@Entry+14;
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
+(@Entry+14, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+
+DELETE FROM `creature` WHERE `id1`=@Entry+14;
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
+(@Entry+14, 109, -349.203, 100.612, -131.85, 6.28016);
+
+SET
+@QuestLevel                     := 50,
+@QuestMinLevel                  := 38,
+@QuestSortID                    := 1417,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 6000,
+@QuestRewardItem1               := 1490,
+@QuestRewardAmount1             := 1,
+@QuestRewardFactionId1          := 76,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'The Temple of Atal\'Hakkar',
+@QuestLogDescription            := 'Collect 20 Fetishes of Hakkar and bring them to Taesosh.',
+@QuestDescription               := 'The Atal\'ai spiritual leader believes once Hakkar returns to Azeroth from the Nether, the god will grant the Atal\'ai tribe immortality.$b$bFoolish trickery to bring about a premature doomsday if you ask me.$b$bBut you say the exile spoke of enchanted fetishes? This concerns me greatly. If these are in fact the key to the Atal\'ai ritual which caused this mess, we must understand their intrinsic powers.$b$bYou must seize the fetishes!',
+@QuestCompletionLog             := 'Return to Taesosh.',
+@QuestRequiredItemId1           := 6181,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'If the Atal\'ai fetishes hold the power to summon Hakkar and fulfill Jammal\'an\'s prophecy they must be seized. Such powers must be understood by the Horde!',
+@QuestRewardText                := 'Brave $c, you have proven yourself to be a great champion of the Horde.$b$bNow this collection of fetishes of Hakkar must be dealt with at once!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+44;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+44, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+14 AND `quest`=@QuestId+44;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+14, @QuestId+44);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+14 AND `quest`=@QuestId+44;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+14, @QuestId+44);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+44;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+44, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+44;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+44, @QuestRewardText);
+
+SET
+@QuestLevel                     := 53,
+@QuestMinLevel                  := 38,
+@QuestSortID                    := 1417,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 6900,
+@QuestRewardChoiceItemID1       := 11123,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 11124,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Jammal\'an the Prophet',
+@QuestLogDescription            := 'Taesosh wants the Head of Jammal\'an.',
+@QuestDescription               := 'My Witherbark companions don\'t take kindly to strangers around their home.$b$bMe? I don\'t have a home anymore. I was exiled from my people, the great Atal\'ai tribe of the Swamp of Sorrows.$b$bOur spiritual leader, Jammal\'an, had what he called a prophecy. He believes the summoning of the god, Hakkar will bring the Atal\'ai immortality.$b$bBut I urged caution. What if the prophecy was nothing more than manipulation?$b$bI want revenge for my exile. Bring me Jammal\'an\'s head. Maybe then my people will be free.',
+@QuestCompletionLog             := 'Return to Taesosh.',
+@QuestRequiredItemId1           := 6212,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Once Jammal\'an has been removed, I stand a chance of returning to my people.$b$bWith Jammal\'an as their spiritual leader, the Atal\'ai face certain destruction.',
+@QuestRewardText                := 'Jammal\'an\'s reckless trust of false visions led my people to their eternal doom.$b$bI thank you, $c, for avenging my exile. I mourn for my people. I have no home to return to.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+45;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+45, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+14 AND `quest`=@QuestId+45;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+14, @QuestId+45);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+14 AND `quest`=@QuestId+45;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+14, @QuestId+45);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+45;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+45, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+45;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+45, @QuestRewardText);
+
+-- Blackrock Depths: Ugdarn Wildhold
+SET
+@Model      := 10184,
+@Name       := 'Ugdarn Wildhold',
+@Title      := '',
+@MinLevel   := 56,
+@MaxLevel   := 56,
+@Rank       := 1,
+@UnitFlags  := 768,
+@Type       := 7;
+
+DELETE FROM `creature_template` WHERE `entry`=@Entry+15;
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
+(@Entry+15, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+
+DELETE FROM `creature` WHERE `id1`=@Entry+15;
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
+(@Entry+15, 230, 450.705, -0.353959, -70.3875, 1.48246);
+
+SET
+@QuestLevel                     := 56,
+@QuestMinLevel                  := 48,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 25500,
+@QuestRewardBonusMoney          := 7500,
+@QuestRewardChoiceItemID1       := 12113,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 12114,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 12112,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestRewardChoiceItemID4       := 12115,
+@QuestRewardChoiceItemQuantity4 := 1,
+@QuestRewardFactionId1          := 81,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Disharmony of Fire',
+@QuestLogDescription            := 'Track down Lord Incendius. Slay him and return any source of information you may find to Ugdarn Wildhold.$B',
+@QuestDescription               := 'I can taste the foulness in the air that surrounds you, $N. There is another, hidden in the depths, who does control this foulness.$B$BThe wind and earth cry his name: Lord Incendius... but someone... something... commands this being. He is merely an emissary.$B$BFind him and discover where his master hides. Return to me when you have collected this information.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredNpcOrGo1          := 9017,
+@QuestRequiredNpcOrGoCount1     := 1,
+
+@QuestRequestitems              := 'The flames will soon overtake these lands. Make haste, $N!',
+@QuestRewardText                := '<Ugdarn Wildhold clutches the Tablet of Kurniya.>$b$bRagnaros... here...$b$bThe elders were right to fear the corruption emanating from Blackrock Mountain. A general of the Old Gods! IN OUR WORLD! We must reassess our position. We must decide on whether we stay and fight or run for fear of a new sundering.$b$bBe weary of any further exploration, $N. A far greater evil than anything that exists in this world resides in those fiery depths.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+46;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+46, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+46;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+46);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+46;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+46);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+46;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+46, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+46;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+46, @QuestRewardText);
+
+SET
+@QuestLevel                     := 59,
+@QuestMinLevel                  := 48,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 8400,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'The Royal Rescue',
+@QuestLogDescription            := 'Slay Emperor Dagran Thaurissan and free Princess Moira Bronzebeard from his evil spell. $B',
+@QuestDescription               := 'This strike against the Dark Iron dwarves, if successful, will send a shockwave throughout their entire kingdom.$B$BPrincess Bronzebeard is under the control of Emperor Thaurissan. To free her, you must kill the Emperor. Be warned, your task is doubly dangerous, as Bronzebeard will attack you without question while under the control of the Emperor.$B$BDO NOT HARM HER!',
+@QuestCompletionLog             := 'Speak to Princess Moira Bronzebeard near the throne.',
+@QuestRequiredNpcOrGo1          := 9019,
+@QuestRequiredNpcOrGoCount1     := 1,
+
+@QuestRequestitems              := '<Princess Moira cowers in fear.>',
+@QuestRewardText                := 'What have you done!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+47;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+47, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+47;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+47);
+
+DELETE FROM `creature_questender` WHERE `id`=8929 AND `quest`=@QuestId+47;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(8929, @QuestId+47);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+47;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+47, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+47;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+47, @QuestRewardText);
+
+SET
+@QuestLevel                     := 58,
+@QuestMinLevel                  := 52,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 26500,
+@QuestRewardBonusMoney          := 8100,
+@QuestRewardChoiceItemID1       := 12109,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 12110,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 12108,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestRewardChoiceItemID4       := 12111,
+@QuestRewardChoiceItemQuantity4 := 1,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'The Rise of the Machines',
+@QuestLogDescription            := 'Find and slay Golem Lord Argelmach. Return his head to Ugdarn Wildhold. You will also need to collect 10 Intact Elemental Cores from the Ragereaver Golems and Warbringer Constructs protecting Argelmach. You know this because you are psychic.',
+@QuestDescription               := 'This can\'t be Argelmach! Argelmach was killed ten years ago. How can I be sure? I was the one who killed him.$B$BHe was a despicable dwarf, hell-bent on twisting my life\'s work to meet his diabolical needs. It seems that the wicked always find a way to escape justice.$B$BIf this is Argelmach\'s handiwork then he must be destroyed. I will need samplings of his latest creations. With the proper samples, I may be able to stop this uprising. The creations guard Argelmach.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredItemId1           := 11268,
+@QuestRequiredItemId2           := 11269,
+@QuestRequiredItemCount1        := 1,
+@QuestRequiredItemCount2        := 10,
+
+@QuestRequestitems              := 'Was it him? Was he really alive?',
+@QuestRewardText                := 'What is this?!? This head is not flesh. This is some sort of dark iron creation: A shadow of Argelmach - ANOTHER machine! I suspect that your destruction of Argelmach will be short lived as another shall rise to take \'its\' place soon.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+48;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemCount1`, `RequiredItemCount2`) VALUES
+(@QuestId+48, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemCount1, @QuestRequiredItemCount2);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+48;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+48);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+48;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+48);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+48;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+48, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+48;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+48, @QuestRewardText);
+
+SET
+@QuestLevel                     := 52,
+@QuestMinLevel                  := 48,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 15500,
+@QuestRewardBonusMoney          := 6600,
+@QuestRewardFactionId1          := 76,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Dark Iron Dwarves',
+@QuestLogDescription            := 'Destroy the vile aggressors!$B$BUgdarn Wildhold wants you to kill 15 Anvilrage Guardsmen, 10 Anvilrage Wardens and 5 Anvilrage Footmen. Return to him once your task is complete.',
+@QuestDescription               := 'Any and all of General Angerforge\'s forces must be annihilated.$B$BAngerforge\'s men are ruthless killers, responsible for the mass murder of the 109th division of the Kargath Expeditionary Force. You are warned to exercise extreme caution when confronting these brutes.$B$BIf you manage to destroy the first line of General Angerforge\'s forces, you shall receive a tribute.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredNpcOrGo1          := 8891,
+@QuestRequiredNpcOrGo2          := 8890,
+@QuestRequiredNpcOrGo3          := 8892,
+@QuestRequiredNpcOrGoCount1     := 15,
+@QuestRequiredNpcOrGoCount2     := 10,
+@QuestRequiredNpcOrGoCount3     := 5,
+
+@QuestRequestitems              := 'What is it, $r? Don\'t you know I have a platoon to command?',
+@QuestRewardText                := 'This first strike should put a crease in Angerforge\'s pants. Now, move along soldier. I have work to complete, battles to plan, enemies to crush!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+49;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGo3`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`, `RequiredNpcOrGoCount3`) VALUES
+(@QuestId+49, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+49;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+49);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+49;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+49);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+49;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+49, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+49;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+49, @QuestRewardText);
+
+SET
+@QuestLevel                     := 54,
+@QuestMinLevel                  := 48,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 16500,
+@QuestRewardBonusMoney          := 7200,
+@QuestRewardFactionId1          := 76,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'High Ranking Dark Iron Officials',
+@QuestLogDescription            := 'Destroy the vile aggressors!$B$BUgdarn Wildhold wants you to kill 10 Anvilrage Medics, 10 Anvilrage Soldiers and 10 Anvilrage Officers. Return to him once your task is complete.',
+@QuestDescription               := 'Head of the K.E.F. reconnaissance division, Grandmaster Lexlort, has returned with news of the whereabouts of high ranking Dark Iron officials. Through locked gate, near the heart of the city, they train their forces to snuff out our men. You must destroy them!$B$BCompletion of this mission will result in a tribute.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredNpcOrGo1          := 8894,
+@QuestRequiredNpcOrGo2          := 8893,
+@QuestRequiredNpcOrGo3          := 8895,
+@QuestRequiredNpcOrGoCount1     := 10,
+@QuestRequiredNpcOrGoCount2     := 10,
+@QuestRequiredNpcOrGoCount3     := 10,
+
+@QuestRequestitems              := 'You again? I have to hand it to you, $N, you are tenacious.',
+@QuestRewardText                := 'Angerforge is undoubtedly... angry.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+50;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGo3`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`, `RequiredNpcOrGoCount3`) VALUES
+(@QuestId+50, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+50;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+50);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+50;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+50);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+50;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+50, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+50;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+50, @QuestRewardText);
+
+SET
+@QuestLevel                     := 55,
+@QuestMinLevel                  := 50,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 8500,
+@QuestRewardBonusMoney          := 7500,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'The Heart of the Mountain',
+@QuestLogDescription            := 'Bring the Heart of the Mountain to Ugdarn Wildhold.',
+@QuestDescription               := 'For years I have sought a certain gem.  It is called the Heart of the Mountain and it\'s the size of your fist! The Dark Iron dwarves have it locked in their vault and, try as I may, they won\'t let me purchase it.$B$BSo I must resort to force.$B$BFight your way to the Lower Vault, breach its secret safe and gain the Heart. To do that,you must defeat Watchman Doomgrip, and he won\'t appear until you\'ve opened every relic coffer in the vault!$B$BGood luck.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredItemId1           := 11309,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Do you have the Heart of the Mountain? To me, its value is without limit.',
+@QuestRewardText                := 'You have the heart! Amazing! It is even more beautiful than I imagined!$B$BPlease, $N, take this as payment!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+51;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+51, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+51;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+51);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+51;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+51);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+51;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+51, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+51;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+51, @QuestRewardText);
+
+SET
+@QuestLevel                     := 55,
+@QuestMinLevel                  := 50,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 16500,
+@QuestRewardBonusMoney          := 7500,
+@QuestRewardItem1               := 12003,
+@QuestRewardAmount1             := 10,
+@QuestRewardChoiceItemID1       := 11964,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 12000,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'Hurley Blackbreath',
+@QuestLogDescription            := 'Bring the Lost Thunderbrew Recipe to Ugdarn Wildhold.',
+@QuestDescription               := 'The Dark Iron dwarves, led by the villain Hurley Blackbreath, stole one of the Thunderbrew\'s best recipes, Thunderbrew Lager. The villains! They don\'t deserve such a fine brew!$B$B$N, I have a tough task for you. Destroy any kegs of Thunderbrew Lager you find, and bring back our recipe for Thunderbrew Lager!$B$BPlease, get that recipe back, even if you have to turn this place upside down to do it!',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredItemId1           := 11312,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Do you have the recipe, $N? I can\'t stand the idea of those Dark Iron dwarves drinking my family\'s drink!',
+@QuestRewardText                := 'You found it! Well done! And I hope you gave those Dark Irons, and Hurley Blackbreath, a good thumping!$b$bThe Thunderbrews are at your service, $N. You are a hero of heroes!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+52;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+52, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+52;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+52);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+52;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+52);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+52;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+52, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+52;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+52, @QuestRewardText);
+
+SET
+@QuestLevel                     := 58,
+@QuestMinLevel                  := 52,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 26500,
+@QuestRewardBonusMoney          := 8100,
+@QuestRewardItem1               := 12059,
+@QuestRewardAmount1             := 1,
+@QuestRewardFactionId1          := 76,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Death to Angerforge',
+@QuestLogDescription            := 'Slay General Angerforge! Return to Ugdarn Wildhold when the task is complete.',
+@QuestDescription               := 'You have done an exemplary job, $N. It is now time to send you on your last mission.$B$BGeneral Angerforge, the Dark Iron responsible for coordinating the attacks on the 109th division of the K.E.F. and the mass slaughter of our forces must be brought to justice.$B$BThis will undoubtedly be your most grueling mission, but should you succeed, you will be richly rewarded.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredNpcOrGo1          := 9033,
+@QuestRequiredNpcOrGoCount1     := 1,
+
+@QuestRequestitems              := 'Has the Butcher of Blackrock been disposed of?',
+@QuestRewardText                := 'Finally! The villain been brought to justice! You are a remarkable individual, $N. Wear this medallion as a symbol of your stalwart dedication to the Horde and the K.E.F.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+53;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+53, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+53;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+53);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+53;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+53);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+53;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+53, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+53;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+53, @QuestRewardText);
+
+SET
+@QuestLevel                     := 55,
+@QuestMinLevel                  := 50,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 8500,
+@QuestRewardBonusMoney          := 7500,
+@QuestRewardItem1               := 3928,
+@QuestRewardAmount1             := 5,
+@QuestRewardItem2               := 6149,
+@QuestRewardAmount2             := 5,
+@QuestRewardChoiceItemID1       := 11964,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 12000,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Lost Thunderbrew Recipe',
+@QuestLogDescription            := 'Bring the Lost Thunderbrew Recipe to Ugdarn Wildhold.',
+@QuestDescription               := 'It is rumored that the Dark Iron Hurley Blackbreath has stolen a recipe for ale. This ale, Thunderbrew Lager, is said to infuse its imbiber with great strength and courage. We wish to study the drink. Perhaps, we will find other applications for its virtues... applications more in line with Forsaken objectives.$B$BFind Hurley, take from him the recipe for Thunderbrew lager and bring it to me.$B$BAnd to find him, you may have to entice him by threatening his precious ale.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredItemId1           := 11312,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Do you have the recipe for the Thunderbrew Lager, $N?',
+@QuestRewardText                := 'Very good. I will send this recipe to the Apothecarium to be studied, and in time we will unlock its secrets. One day, the dwarves of the Alliance may find the virtues of this drink used against them!$b$bI find that terribly amusing. Perhaps death has an affect on one\'s sense of humor... do you think?';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+54;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardItem2`, `RewardAmount2`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+54, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+54;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+54);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+54;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+54);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+54;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+54, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+54;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+54, @QuestRewardText);
+
+SET
+@QuestLevel                     := 53,
+@QuestMinLevel                  := 48,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 6000,
+@QuestRewardBonusMoney          := 6900,
+@QuestRewardChoiceItemID1       := 11865,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 11963,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 12049,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Ribbly Screwspigot',
+@QuestLogDescription            := 'Bring Ribbly\'s Head to Ugdarn Wildhold.',
+@QuestDescription               := 'My brother Ribbly has always been a drain to his family, taking our money and wasting it on one scheme after another.$B$BWell, his last scheme must have been his worst, because Baron Revilgaz of Booty Bay just put a price on poor Ribbly\'s head. I can\'t tell you how happy this makes the Screwspigots! Our little Ribbly\'s finally worth something!$B$BBut now he\'s hiding. Please, find him and bring him to me!$B$BOr, if he won\'t come, then that\'s ok... just bring me his head.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredItemId1           := 11313,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Do you have Ribbly? Or, at least a part of him?',
+@QuestRewardText                := 'Aha! You found him! And... it appears that my little brother didn\'t want to come quiety. It\'s a pity. I would have liked to see the look on his face when I told him our plans to turn him in to Revilgaz.$b$bThank you, $N. You\'ve made my family very happy. And Ribbly\'s never looked as peaceful as he does now.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+55;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+55, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+55;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+55);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+55;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+55);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+55;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+55, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+55;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+55, @QuestRewardText);
+
+SET
+@QuestLevel                     := 56,
+@QuestMinLevel                  := 48,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 8500,
+@QuestRewardBonusMoney          := 7500,
+@QuestRewardChoiceItemID1       := 12113,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 12114,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 12112,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestRewardChoiceItemID4       := 12115,
+@QuestRewardChoiceItemQuantity4 := 1,
+@QuestRewardFactionId1          := 54,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'Incendius!',
+@QuestLogDescription            := 'Find Lord Incendius and destroy him!',
+@QuestDescription               := 'Lord Incendius is purported to be a minion of Ragnaros! Oh dear, oh dear... whatever will we do?$B$BDo you think you can handle another mission? I don\'t have anybody else to send, $N!$B$BWe will never get a team in if Incendius continues to raise Pyron from the ashes.$B$BYou\'ll have to find and destroy Lord Incendius!',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredNpcOrGo1          := 9017,
+@QuestRequiredNpcOrGoCount1     := 1,
+
+@QuestRequestitems              := 'Is the fiend dead??',
+@QuestRewardText                := 'Oh dear! Are you sure Incendius said \'Ragnaros?\'$b$b<Ugdarn hands you something and pats you on the wrist as he fades deep into thought.>';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+56;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+56, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+56;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+56);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+56;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+56);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+56;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+56, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+56;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+56, @QuestRewardText);
+
+SET
+@QuestLevel                     := 56,
+@QuestMinLevel                  := 50,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 8500,
+@QuestRewardBonusMoney          := 7500,
+@QuestRewardItem1               := 11883,
+@QuestRewardAmount1             := 1,
+@QuestRewardFactionId1          := 47,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'The Good Stuff',
+@QuestLogDescription            := 'Collect 20 Dark Iron Fanny Packs.',
+@QuestDescription               := 'Captain Winky tells me that the Dark Irons in the Depths got all the good stuff. Ain\'t that right, Winky?$B$B<Ugdarn does his best impersonation of a pirate.>$B$BARRR MATEY! IT BE RIGHT!$B$BSee what I\'m saying? You need to bring me some samples of the good stuff.$B$BGet in there and shake your moneymaker!$B',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredItemId1           := 11468,
+@QuestRequiredItemCount1        := 20,
+
+@QuestRequestitems              := 'I can\'t be bothered right now, $N. Me and Winky got a meeting to attend.',
+@QuestRewardText                := '<Ugdarn starts rummaging through the mountainous pile of fanny packs.>$B$BOH WONDERFUL!$B$B<Ugdarn sticks his large nose into the pile and takes a whiff.>$B$BDELICIOUS! Look at all these goodies!$B$BTake one for yourself, $N. There\'s plenty to go around.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+57;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+57, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+57;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+57);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+57;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+57);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+57;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+57, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+57;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+57, @QuestRewardText);
+
+SET
+@QuestLevel                     := 59,
+@QuestMinLevel                  := 50,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 8400,
+@QuestRewardFactionId1          := 47,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'The Fate of the Kingdom',
+@QuestLogDescription            := 'Rescue Princess Moira Bronzebeard from the evil clutches of Emperor Dagran Thaurissan.',
+@QuestDescription               := 'It would seem as if my old adversary, Dagran Thaurissan, has me and the kingdom of Ironforge at his mercy.$B$BYou may be my last hope, $N. You must rescue my dear daughter, Moira!$B$BThere is only one way to make sure that the spell Thaurissan has cast on Moira is broken: Kill him.$B$BAnd $N, do not harm her! Remember, she is being controlled by Thaurissan! The things she may do or say are a result of Thaurissan\'s evil spell!',
+@QuestCompletionLog             := 'Speak to Princess Moira Bronzebeard near the throne in Blackrock Depths.',
+@QuestRequiredNpcOrGo1          := 9019,
+@QuestRequiredNpcOrGoCount1     := 1,
+
+@QuestRequestitems              := '',
+@QuestRewardText                := '<Princess Bronzebeard weeps over the loss of Emperor Dagran Thaurissan.>$B$BWhy???';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+58;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+58, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+58;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+58);
+
+DELETE FROM `creature_questender` WHERE `id`=8929 AND `quest`=@QuestId+58;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(8929, @QuestId+58);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+58;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+58, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+58;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+58, @QuestRewardText);
+
+SET
+@QuestLevel                     := 54,
+@QuestMinLevel                  := 48,
+@QuestSortID                    := 1584,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 24500,
+@QuestRewardBonusMoney          := 7200,
+@QuestRewardItem1               := 12038,
+@QuestRewardAmount1             := 1,
+@QuestRewardFactionId1          := 68,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'The Last Element',
+@QuestLogDescription            := 'Recover 10 Essence of the Elements. Your first inclination is to search the golems and golem makers.',
+@QuestDescription               := 'There is work to be had for those venturing into the depths, $N.$B$BThe Dark Irons have mastered creation of extremely powerful golems.$B$BInitial reports from our spies indicate that the dwarves use a unique power source to give their creations incomparable killing power.$B$BJust imagine what we could do with our abominations if we could get our hands on this essence of the elements! Turn that city upside down if you must, but do not return until you have found the essence! Payment will be worth the risk.',
+@QuestCompletionLog             := 'Return to Ugdarn Wildhold.',
+@QuestRequiredItemId1           := 11129,
+@QuestRequiredItemCount1        := 10,
+
+@QuestRequestitems              := 'Show them to me!',
+@QuestRewardText                := 'Wonderful! I will have these sent by courier to the Undercity at once!$B$BAs for you - here is payment, as promised. Keep the change, you filthy beast!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+59;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+59, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+59;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+15, @QuestId+59);
+
+DELETE FROM `creature_questender` WHERE `id`=8929 AND `quest`=@QuestId+59;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(8929, @QuestId+59);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+59;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+59, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+59;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+59, @QuestRewardText);
