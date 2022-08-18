@@ -2343,7 +2343,7 @@ SET
 @QuestDescription               := 'The Atal\'ai spiritual leader believes once Hakkar returns to Azeroth from the Nether, the god will grant the Atal\'ai tribe immortality.$b$bFoolish trickery to bring about a premature doomsday if you ask me.$b$bBut you say the exile spoke of enchanted fetishes? This concerns me greatly. If these are in fact the key to the Atal\'ai ritual which caused this mess, we must understand their intrinsic powers.$b$bYou must seize the fetishes!',
 @QuestCompletionLog             := 'Return to Taesosh.',
 @QuestRequiredItemId1           := 6181,
-@QuestRequiredItemCount1        := 1,
+@QuestRequiredItemCount1        := 20,
 
 @QuestRequestitems              := 'If the Atal\'ai fetishes hold the power to summon Hakkar and fulfill Jammal\'an\'s prophecy they must be seized. Such powers must be understood by the Horde!',
 @QuestRewardText                := 'Brave $c, you have proven yourself to be a great champion of the Horde.$b$bNow this collection of fetishes of Hakkar must be dealt with at once!';
