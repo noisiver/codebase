@@ -3022,9 +3022,9 @@ DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+60
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
 (@Entry+15, @QuestId+60);
 
-DELETE FROM `creature_questender` WHERE `id`=8929 AND `quest`=@QuestId+60;
+DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+60;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(8929, @QuestId+60);
+(@Entry+15, @QuestId+60);
 
 DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+60;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
