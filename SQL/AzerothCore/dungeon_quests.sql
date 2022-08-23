@@ -3,17 +3,17 @@ To remove everything, run these queries
 SET
 @Entry := 5000000,
 @QuestId := 50000;
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201);
-DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+15;
-DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+15;
-DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+60;
-DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+60;
-DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+60;
-DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+60;
-DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+60;
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489);
+DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+16;
+DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+16;
+DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+63;
+DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+63;
+DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+63;
+DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+63;
+DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+63;
 */
 
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201);
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489);
 INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Ragefire Chasm
 (1, 5723, 'Disabled quest for custom dungeon quests'),
@@ -86,7 +86,11 @@ INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 (1, 4263, 'Disabled quest for custom dungeon quests'),
 (1, 4286, 'Disabled quest for custom dungeon quests'),
 (1, 4362, 'Disabled quest for custom dungeon quests'),
-(1, 7201, 'Disabled quest for custom dungeon quests');
+(1, 7201, 'Disabled quest for custom dungeon quests'),
+-- Dire Maul (East)
+(1, 7441, 'Disabled quest for custom dungeon quests'),
+(1, 7488, 'Disabled quest for custom dungeon quests'),
+(1, 7489, 'Disabled quest for custom dungeon quests');
 
 SET
 @QuestId         := 50000,
@@ -94,26 +98,26 @@ SET
 @QuestInfoID     := 81,
 @QuestFlags      := 8,
 @Entry           := 5000000,
+@Title           := '',
 @Icon            := 'Speak',
 @GossipMenu      := 0,
 @NPCFlag         := 3,
 @Scale           := 1.0,
 @TypeFlags       := 0,
 @FlagsExtra      := 2,
+@Rank            := 1,
+@UnitFlags       := 768,
+@Type            := 7,
 @FactionHorde    := 83,
 @FactionAlliance := 84,
 @FactionFriendly := 35;
 
 -- Ragefire Chasm: Groggarg
 SET
-@Model      := 6873,
-@Name       := 'Groggarg',
-@Title      := '',
-@MinLevel   := 16,
-@MaxLevel   := 16,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 6873,
+@Name     := 'Groggarg',
+@MinLevel := 16,
+@MaxLevel := 16;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -294,14 +298,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- The Deadmines: Bradly Stanford
 SET
-@Model      := 1504,
-@Name       := 'Bradly Stanford',
-@Title      := '',
-@MinLevel   := 20,
-@MaxLevel   := 20,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 1504,
+@Name     := 'Bradly Stanford',
+@MinLevel := 20,
+@MaxLevel := 20;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+1;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -401,14 +401,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Wailing Caverns: Lynasha
 SET
-@Model      := 4290,
-@Name       := 'Lynasha',
-@Title      := '',
-@MinLevel   := 20,
-@MaxLevel   := 20,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 4290,
+@Name     := 'Lynasha',
+@MinLevel := 20,
+@MaxLevel := 20;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+2;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -603,14 +599,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Shadowfang Keep: Luther
 SET
-@Model      := 11805,
-@Name       := 'Luther',
-@Title      := '',
-@MinLevel   := 21,
-@MaxLevel   := 21,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 11805,
+@Name     := 'Luther',
+@MinLevel := 21,
+@MaxLevel := 21;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+3;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -707,14 +699,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Blackfathom Deeps: Larthras Leafgazer
 SET
-@Model      := 3301,
-@Name       := 'Larthras Leafgazer',
-@Title      := '',
-@MinLevel   := 24,
-@MaxLevel   := 24,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 3301,
+@Name     := 'Larthras Leafgazer',
+@MinLevel := 24,
+@MaxLevel := 24;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+4;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -947,14 +935,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- The Stockade: Andrew Oakley
 SET
-@Model      := 2991,
-@Name       := 'Andrew Oakley',
-@Title      := '',
-@MinLevel   := 25,
-@MaxLevel   := 25,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 2991,
+@Name     := 'Andrew Oakley',
+@MinLevel := 25,
+@MaxLevel := 25;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+5;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -1179,14 +1163,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Razorfen Kraul: Dekle Shortwizzle
 SET
-@Model      := 7051,
-@Name       := 'Dekle Shortwizzle',
-@Title      := '',
-@MinLevel   := 27,
-@MaxLevel   := 27,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 7051,
+@Name     := 'Dekle Shortwizzle',
+@MinLevel := 27,
+@MaxLevel := 27;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+6;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -1327,14 +1307,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Gnomeregan: Sunkull Fizzlebell
 SET
-@Model      := 3106,
-@Name       := 'Sunkull Fizzlebell',
-@Title      := '',
-@MinLevel   := 28,
-@MaxLevel   := 28,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 3106,
+@Name     := 'Sunkull Fizzlebell',
+@MinLevel := 28,
+@MaxLevel := 28;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+7;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -1477,14 +1453,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Scarlet Monastery (Cathedral): Reese Hartford
 SET
-@Model      := 10187,
-@Name       := 'Reese Hartford',
-@Title      := '',
-@MinLevel   := 40,
-@MaxLevel   := 40,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 10187,
+@Name     := 'Reese Hartford',
+@MinLevel := 40,
+@MaxLevel := 40;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+8;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -1592,14 +1564,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Scarlet Monastery (Armory): Trail'tuho
 SET
-@Model      := 6839,
-@Name       := 'Trail\'tuho',
-@Title      := '',
-@MinLevel   := 40,
-@MaxLevel   := 40,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 6839,
+@Name     := 'Trail\'tuho',
+@MinLevel := 40,
+@MaxLevel := 40;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+9;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -1691,14 +1659,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Scarlet Monastery (Library): Gidion Thackeray
 SET
-@Model      := 13171,
-@Name       := 'Gidion Thackeray',
-@Title      := '',
-@MinLevel   := 40,
-@MaxLevel   := 40,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 13171,
+@Name     := 'Gidion Thackeray',
+@MinLevel := 40,
+@MaxLevel := 40;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+10;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -1876,14 +1840,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Razorfen Downs: Dowoe Farjumper
 SET
-@Model      := 7625,
-@Name       := 'Dowoe Farjumper',
-@Title      := '',
-@MinLevel   := 37,
-@MaxLevel   := 37,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 7625,
+@Name     := 'Dowoe Farjumper',
+@MinLevel := 37,
+@MaxLevel := 37;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+11;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -1979,14 +1939,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Zul'Farrak: Javion Padley
 SET
-@Model      := 5547,
-@Name       := 'Javion Padley',
-@Title      := '',
-@MinLevel   := 46,
-@MaxLevel   := 46,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 5547,
+@Name     := 'Javion Padley',
+@MinLevel := 46,
+@MaxLevel := 46;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+12;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -2201,14 +2157,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Maraudon: Dendron Skystalker
 SET
-@Model      := 7997,
-@Name       := 'Dendron Skystalker',
-@Title      := '',
-@MinLevel   := 48,
-@MaxLevel   := 48,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 7997,
+@Name     := 'Dendron Skystalker',
+@MinLevel := 48,
+@MaxLevel := 48;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+13;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -2310,14 +2262,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Sunken Temple: Taesosh
 SET
-@Model      := 10171,
-@Name       := 'Taesosh',
-@Title      := '',
-@MinLevel   := 50,
-@MaxLevel   := 50,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 10171,
+@Name     := 'Taesosh',
+@MinLevel := 50,
+@MaxLevel := 50;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+14;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -2411,14 +2359,10 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 
 -- Blackrock Depths: Ugdarn Wildhold
 SET
-@Model      := 10184,
-@Name       := 'Ugdarn Wildhold',
-@Title      := '',
-@MinLevel   := 56,
-@MaxLevel   := 56,
-@Rank       := 1,
-@UnitFlags  := 768,
-@Type       := 7;
+@Model    := 10184,
+@Name     := 'Ugdarn Wildhold',
+@MinLevel := 56,
+@MaxLevel := 56;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+15;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
@@ -3033,3 +2977,146 @@ INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
 DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+60;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 (@QuestId+60, @QuestRewardText);
+
+-- Dire Maul (East): Gronladan Ravenoak
+SET
+@Model    := 2264,
+@Name     := 'Gronladan Ravenoak',
+@MinLevel := 60,
+@MaxLevel := 60;
+
+DELETE FROM `creature_template` WHERE `entry`=@Entry+16;
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
+(@Entry+16, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+
+DELETE FROM `creature` WHERE `id1`=@Entry+16;
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
+(@Entry+16, 429, 61.9005, -148.875, -2.71438, 3.97019);
+
+SET
+@QuestLevel                     := 58,
+@QuestMinLevel                  := 54,
+@QuestSortID                    := 2557,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 17500,
+@QuestRewardBonusMoney          := 7200,
+@QuestRewardChoiceItemID1       := 18411,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 18410,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardFactionId1          := 809,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Pusillin and the Elder Azj\'Tordin',
+@QuestLogDescription            := 'Locate the Imp, Pusillin. Convince Pusillin to give you Azj\'Tordin\'s Book of Incantations through any means necessary.$B$BReturn to Gronladan Ravenoak should you recover the Book of Incantations.',
+@QuestDescription               := 'I had let my guard down for only one moment, stranger. In my haste to escape the grip of the fallen Prince, I was robbed. A most foul demon, the imp Pusillin, pilfered my book of incantations and the key to the once great halls of Eldre\'Thalas.$B$BI no longer hold interest in the key, as I have exchanged my immortality for freedom, but I desperately need my book of incantations.$B$BFind the imp, Pusillin, and recover my book.$B$BSearch the Warpwood Quarter for Pusillin.',
+@QuestCompletionLog             := 'Return to Gronladan Ravenoak.',
+@QuestRequiredItemId1           := 18261,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'I regret nothing, stranger. The Queen has long since passed. The works of the Shen\'Dralar have been marred by the madness of Prince Tortheldrin. I seek only freedom... Escape...',
+@QuestRewardText                := 'You have found it! A curse upon that miserable imp. Alas, my material possessions are meager at best. You may choose from what I have to offer.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+61;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+61, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+16 AND `quest`=@QuestId+61;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+16, @QuestId+61);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+16 AND `quest`=@QuestId+61;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+16, @QuestId+61);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+61;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+61, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+61;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+61, @QuestRewardText);
+
+SET
+@QuestLevel                     := 57,
+@QuestMinLevel                  := 54,
+@QuestSortID                    := 2557,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 17000,
+@QuestRewardBonusMoney          := 7800,
+@QuestRewardItem1               := 18491,
+@QuestRewardAmount1             := 1,
+@QuestRewardFactionId1          := 469,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'Lethtendris\'s Web',
+@QuestLogDescription            := 'Bring Lethtendris\' Web to Gronladan Ravenoak.',
+@QuestDescription               := 'The mage Lethtendris, a vicious blood elf whose brutality is matched only by her twisted addiction to magic, has fled. She has created a device, a web to ensnare the magical energies of that place and we fear that, if left unchecked, she will cause irreparable damage to our world!$B$BStop her, $N. Find her and retrieve her web. She is likely near the satyrs in Warpwood Quarter. Bring the web to me so that its power may be released safely back into the wilds...',
+@QuestCompletionLog             := 'Return to Gronladan Ravenoak.',
+@QuestRequiredItemId1           := 18426,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := 'Do you have the web, $N?  Its concentrated magical energy must be dissipated!',
+@QuestRewardText                := 'You retrieved the web! Well done, $N! Lethtendris, like many elves of her ilk, are blind to the dangers the abuse of magic can cause to our world. They believe they are masters of magic; they do not realize that they are slaves to their own addiction. Her death saddens me, but it was necessary.$B$BThank you, $N. I will have the energies within the web released safely over a wide area, and then I\'ll destroy it to prevent future magical exploits.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+62;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+62, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+16 AND `quest`=@QuestId+62;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+16, @QuestId+62);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+16 AND `quest`=@QuestId+62;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+16, @QuestId+62);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+62;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+62, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+62;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+62, @QuestRewardText);
+
+SET
+@QuestLevel                     := 57,
+@QuestMinLevel                  := 54,
+@QuestSortID                    := 2557,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 17000,
+@QuestRewardBonusMoney          := 7800,
+@QuestRewardItem1               := 18491,
+@QuestRewardAmount1             := 1,
+@QuestRewardFactionId1          := 67,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Lethtendris\'s Web',
+@QuestLogDescription            := 'Bring Lethtendris\' Web to Gronladan Ravenoak.',
+@QuestDescription               := 'The blood elf Lethtendris has overstepped her bounds. So eager was she to gather magical power that she defied her brethren and created a device of insidious design, a web meant to siphon the tainted magical energies of Dire Maul. Even now she gathers those energies and plans to release them against her enemies.$B$BLethtendris must be stopped. Find her within the Warpwood Quarter, defeat her and bring her web to me so that it might be returned to more clear-headed blood elves for study.',
+@QuestCompletionLog             := 'Return to Gronladan Ravenoak.',
+@QuestRequiredItemId1           := 18426,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := '$N, do you have Lethtendris\'s Web?',
+@QuestRewardText                := 'You have done well, $N. This web holds within it vast stores of the magic of Dire Maul, and I fear what damage may be unleashed if those energies were harnessed by one so irresponsible as Lethtendris. I am saddened by her death, but I know that she could never part with her web while alive.$b$bThank you, $N. I will send the web to students of magic more responsible than Lethtendris. They will be the new wardens of its power.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+63;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+63, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+16 AND `quest`=@QuestId+63;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+16, @QuestId+63);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+16 AND `quest`=@QuestId+63;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+16, @QuestId+63);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+63;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+63, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+63;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+63, @QuestRewardText);
