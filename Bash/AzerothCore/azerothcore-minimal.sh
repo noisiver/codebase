@@ -173,125 +173,121 @@ function store_options
             <required_client_data>${9:-14}</required_client_data>
             <!-- The installed client data version. WARNING: DO NOT EDIT -->
             <installed_client_data>${10:-0}</installed_client_data>
-            <!-- The repository used -->
-            <repository>${11:-https://github.com/azerothcore/azerothcore-wotlk.git}</repository>
-            <!-- The branch of the repository used -->
-            <branch>${12:-master}</branch>
         </source>
         <world>
             <!-- The name of the realm as seen in the list -->
-            <name>${13:-AzerothCore}</name>
+            <name>${11:-AzerothCore}</name>
             <!-- Message of the Day, displayed at login. Use '@' for a newline and make sure to escape special characters -->
-            <motd>${14:-Welcome to AzerothCore.}</motd>
+            <motd>${12:-Welcome to AzerothCore.}</motd>
             <!-- The id of the realm -->
-            <id>${15:-1}</id>
+            <id>${13:-1}</id>
             <!-- The ip or hostname used to connect to the world server. Use external ip if required -->
-            <address>${16:-127.0.0.1}</address>
+            <address>${14:-127.0.0.1}</address>
             <!-- Server game type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
-            <game_type>${17:-0}</game_type>
+            <game_type>${15:-0}</game_type>
             <!-- Server realm zone. Set allowed alphabet in character names etc. 1 = development, 2 = united states, 6 = korea, 9 = german, 10 = french, 11 = spanish, 12 = russian, 14 = taiwan, 16 = china, 26 = test server -->
-            <realm_zone>${18:-1}</realm_zone>
+            <realm_zone>${16:-1}</realm_zone>
             <!-- Allow server to use content from expansions. Checks for expansion-related map files, client compatibility and class/race character creation. 0 = none, 1 = tbc, 2 = wotlk -->
-            <expansion>${19:-2}</expansion>
+            <expansion>${17:-2}</expansion>
             <!-- Maximum number of players in the world. Excluding Mods, GMs and Admins -->
-            <player_limit>${20:-1000}</player_limit>
+            <player_limit>${18:-1000}</player_limit>
             <!-- Disable cinematic intro at first login after character creation. Prevents buggy intros in case of custom start location coordinates. 0 = Show intro for each new character, 1 = Show intro only for first character of selected race, 2 = Disable intro for all classes -->
-            <skip_cinematics>${21:-0}</skip_cinematics>
+            <skip_cinematics>${19:-0}</skip_cinematics>
             <!-- Maximum level that can be reached by players. Levels below 1 and above 80 will reset to 80 -->
-            <max_level>${22:-80}</max_level>
+            <max_level>${20:-80}</max_level>
             <!-- Starting level for characters after creation. Levels below 1 and above 80 will reset to 1 -->
-            <start_level>${23:-1}</start_level>
+            <start_level>${21:-1}</start_level>
             <!-- Amount of money (in Copper) that a character has after creation -->
-            <start_money>${24:-0}</start_money>
+            <start_money>${22:-0}</start_money>
             <!-- Players will automatically gain max skill level when logging in or leveling up. false = disabled, true = enabled -->
-            <always_max_skill>${25:-false}</always_max_skill>
+            <always_max_skill>${23:-false}</always_max_skill>
             <!-- Character knows all flight paths (of both factions) after creation. false = disabled, true = enabled -->
-            <all_flight_paths>${26:-false}</all_flight_paths>
+            <all_flight_paths>${24:-false}</all_flight_paths>
             <!-- Characters start with all maps explored. false = disabled, true = enabled -->
-            <maps_explored>${27:-false}</maps_explored>
+            <maps_explored>${25:-false}</maps_explored>
             <!-- Allow players to use commands. false = disabled, true = enabled -->
-            <allow_commands>${28:-true}</allow_commands>
+            <allow_commands>${26:-true}</allow_commands>
             <!-- Allow non-raid quests to be completed while in a raid group. false = disabled, true = enabled -->
-            <quest_ignore_raid>${29:-false}</quest_ignore_raid>
+            <quest_ignore_raid>${27:-false}</quest_ignore_raid>
             <!-- Prevent players AFK from being logged out. false = disabled, true = enabled -->
-            <prevent_afk_logout>${30:-false}</prevent_afk_logout>
+            <prevent_afk_logout>${28:-false}</prevent_afk_logout>
             <!-- Highest level up to which a character can benefit from the Recruit-A-Friend experience multiplier -->
-            <raf_max_level>${31:-60}</raf_max_level>
+            <raf_max_level>${29:-60}</raf_max_level>
             <!-- Preload all grids on all non-instanced maps. This will take a great amount of additional RAM (ca. 9 GB) and causes the server to take longer to start, but can increase performance if used on a server with a high amount of players. It will also activate all creatures which are set active (e.g. the Fel Reavers in Hellfire Peninsula) on server start. false = disabled, true = enabled -->
-            <preload_map_grids>${32:-false}</preload_map_grids>
+            <preload_map_grids>${30:-false}</preload_map_grids>
             <!-- Set all creatures with waypoint movement active. This means that they will start movement once they are loaded (which happens on grid load) and keep moving even when no player is near. This will increase CPU usage significantly and can be used with enabled preload_map_grids to start waypoint movement on server startup. false = disabled, true = enabled -->
-            <set_all_waypoints_active>${33:-false}</set_all_waypoints_active>
+            <set_all_waypoints_active>${31:-false}</set_all_waypoints_active>
             <!-- Enable/Disable Minigob Manabonk in Dalaran. false = disabled, true = enabled -->
-            <enable_minigob_manabonk>${34:-true}</enable_minigob_manabonk>
+            <enable_minigob_manabonk>${32:-true}</enable_minigob_manabonk>
             <!-- Enable Warden anti-cheat system. false = disabled, true = enabled -->
-            <enable_warden>${35:-true}</enable_warden>
+            <enable_warden>${33:-true}</enable_warden>
             <!-- Allow players to stay in regular groups when logging off. This only affects normal groups and not raids or dungeon finder groups. false = players will leave their group when logging off, true = players will stay in their groups -->
-            <disable_leave_group>${36:-false}</disable_leave_group>
+            <disable_leave_group>${34:-false}</disable_leave_group>
             <!-- Time in seconds for mail delivery when sending items -->
-            <mail_delivery_delay>${37:-3600}</mail_delivery_delay>
+            <mail_delivery_delay>${35:-3600}</mail_delivery_delay>
             <allow_two_sided>
                 <!-- Allow creating characters of both factions on the same account. false = disabled, true = enabled -->
-                <accounts>${38:-true}</accounts>
+                <accounts>${36:-true}</accounts>
                 <!-- Allow calendar invites between factions. false = disabled, true = enabled -->
-                <calendar>${39:-false}</calendar>
+                <calendar>${37:-false}</calendar>
                 <!-- Allow say chat between factions. false = disabled, true = enabled -->
-                <chat>${40:-false}</chat>
+                <chat>${38:-false}</chat>
                 <!-- Allow emote messages between factions. false = disabled, true = enabled -->
-                <emote>${41:-false}</emote>
+                <emote>${39:-false}</emote>
                 <!-- Allow channel chat between factions. false = disabled, true = enabled -->
-                <channel>${42:-false}</channel>
+                <channel>${40:-false}</channel>
                 <!-- Allow group joining between factions. false = disabled, true = enabled -->
-                <group>${43:-false}</group>
+                <group>${41:-false}</group>
                 <!-- Allow guild joining between factions. false = disabled, true = enabled -->
-                <guild>${44:-false}</guild>
+                <guild>${42:-false}</guild>
                 <!-- Allow auctions between factions. false = disabled, true = enabled -->
-                <auction>${45:-false}</auction>
+                <auction>${43:-false}</auction>
                 <!-- Allow sending mails between factions. false = disabled, true = enabled -->
-                <mail>${46:-false}</mail>
+                <mail>${44:-false}</mail>
                 <!-- Show characters from both factions in the who list. false = disabled, true = enabled -->
-                <who_list>${47:-false}</who_list>
+                <who_list>${45:-false}</who_list>
                 <!-- Allow adding friends from other faction to the friends list. false = disabled, true = enabled -->
-                <friend>${48:-false}</friend>
+                <friend>${46:-false}</friend>
                 <!-- Allow trading between factions. false = disabled, true = enabled -->
-                <trade>${49:-false}</trade>
+                <trade>${47:-false}</trade>
             </allow_two_sided>
             <rates>
                 <!-- Experience rates (outside battleground) -->
-                <experience>${50:-1}</experience>
+                <experience>${48:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_experience>${51:-1}</rested_experience>
+                <rested_experience>${49:-1}</rested_experience>
                 <!-- Reputation gain rate -->
-                <reputation>${52:-1}</reputation>
+                <reputation>${50:-1}</reputation>
                 <!-- Drop rates for money -->
-                <money>${53:-1}</money>
+                <money>${51:-1}</money>
                 <!-- Crafting skills gain rate -->
-                <crafting>${54:-1}</crafting>
+                <crafting>${52:-1}</crafting>
                 <!-- Gathering skills gain rate -->
-                <gathering>${55:-1}</gathering>
+                <gathering>${53:-1}</gathering>
                 <!-- Weapon skills gain rate -->
-                <weapon_skill>${56:-1}</weapon_skill>
+                <weapon_skill>${54:-1}</weapon_skill>
                 <!-- Defense skills gain rate -->
-                <defense_skill>${57:-1}</defense_skill>
+                <defense_skill>${55:-1}</defense_skill>
             </rates>
             <gm>
                 <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
-                <login_state>${58:-true}</login_state>
+                <login_state>${56:-true}</login_state>
                 <!-- GM visibility at login. false = disabled, true = enabled -->
-                <enable_visibility>${59:-false}</enable_visibility>
+                <enable_visibility>${57:-false}</enable_visibility>
                 <!-- GM chat mode at login. false = disabled, true = enabled -->
-                <enable_chat>${60:-true}</enable_chat>
+                <enable_chat>${58:-true}</enable_chat>
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
-                <enable_whisper>${61:-false}</enable_whisper>
+                <enable_whisper>${59:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${62:-1}</show_gm_list>
+                <show_gm_list>${60:-1}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_who_list>${63:-0}</show_who_list>
+                <show_who_list>${61:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
-                <allow_friend>${64:-false}</allow_friend>
+                <allow_friend>${62:-false}</allow_friend>
                 <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
-                <allow_invite>${65:-false}</allow_invite>
+                <allow_invite>${63:-false}</allow_invite>
                 <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
-                <allow_lower_security>${66:-false}</allow_lower_security>
+                <allow_lower_security>${64:-false}</allow_lower_security>
             </gm>
         </world>
     </options>" | xmllint --format - > $OPTIONS
@@ -311,8 +307,6 @@ function save_options
     "$OPTION_SOURCE_LOCATION" \
     $OPTION_SOURCE_REQUIRED_CLIENT_DATA \
     $OPTION_SOURCE_INSTALLED_CLIENT_DATA \
-    $OPTION_SOURCE_REPOSITORY \
-    $OPTION_SOURCE_BRANCH \
     "$OPTION_WORLD_NAME" \
     "$OPTION_WORLD_MOTD" \
     $OPTION_WORLD_ID \
@@ -474,24 +468,6 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/source/installed_client_data is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_SOURCE_INSTALLED_CLIENT_DATA="0"
-        RESET=true
-    fi
-
-    # Load the /options/source/repository option
-    OPTION_SOURCE_REPOSITORY="$(echo "cat /options/source/repository/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ -z $OPTION_SOURCE_REPOSITORY ]] || [[ $OPTION_SOURCE_REPOSITORY == "" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/source/repository is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_SOURCE_REPOSITORY="https://github.com/azerothcore/azerothcore-wotlk.git"
-        RESET=true
-    fi
-
-    # Load the /options/source/branch option
-    OPTION_SOURCE_BRANCH="$(echo "cat /options/source/branch/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ -z $OPTION_SOURCE_BRANCH ]] || [[ $OPTION_SOURCE_BRANCH == "" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/source/branch is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_SOURCE_BRANCH="master"
         RESET=true
     fi
 
@@ -1001,7 +977,7 @@ function get_source
     # Check if the source is already downloaded
     if [[ ! -d $OPTION_SOURCE_LOCATION ]]; then
         # Download the source code
-        git clone --recursive --branch $OPTION_SOURCE_BRANCH $OPTION_SOURCE_REPOSITORY $OPTION_SOURCE_LOCATION
+        git clone --recursive --branch master https://github.com/azerothcore/azerothcore-wotlk.git $OPTION_SOURCE_LOCATION
 
         # Check to make sure there weren't any errors
         if [[ $? -ne 0 ]]; then
@@ -1022,7 +998,7 @@ function get_source
         fi
 
         # Reset the source code, removing all local changes
-        git reset --hard origin/$OPTION_SOURCE_BRANCH
+        git reset --hard origin/master
 
         # Check to make sure there weren't any errors
         if [[ $? -ne 0 ]]; then
