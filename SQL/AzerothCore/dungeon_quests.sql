@@ -3,17 +3,17 @@ To remove everything, run these queries
 SET
 @Entry := 5000000,
 @QuestId := 50000;
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489);
-DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+16;
-DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+16;
-DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+63;
-DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+63;
-DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+63;
-DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+63;
-DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+63;
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489, 4771, 5341, 5343, 5382, 5384, 5466, 5515, 5529);
+DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+17;
+DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+17;
+DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+71;
+DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+71;
+DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+71;
+DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+71;
+DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+71;
 */
 
-DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489);
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489, 4771, 5341, 5343, 5382, 5384, 5466, 5515, 5529);
 INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Ragefire Chasm
 (1, 5723, 'Disabled quest for custom dungeon quests'),
@@ -90,7 +90,16 @@ INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Dire Maul (East)
 (1, 7441, 'Disabled quest for custom dungeon quests'),
 (1, 7488, 'Disabled quest for custom dungeon quests'),
-(1, 7489, 'Disabled quest for custom dungeon quests');
+(1, 7489, 'Disabled quest for custom dungeon quests'),
+-- Scholomance
+(1, 4771, 'Disabled quest for custom dungeon quests'),
+(1, 5341, 'Disabled quest for custom dungeon quests'),
+(1, 5343, 'Disabled quest for custom dungeon quests'),
+(1, 5382, 'Disabled quest for custom dungeon quests'),
+(1, 5384, 'Disabled quest for custom dungeon quests'),
+(1, 5466, 'Disabled quest for custom dungeon quests'),
+(1, 5515, 'Disabled quest for custom dungeon quests'),
+(1, 5529, 'Disabled quest for custom dungeon quests');
 
 SET
 @QuestId         := 50000,
@@ -3120,3 +3129,374 @@ INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
 DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+63;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 (@QuestId+63, @QuestRewardText);
+
+-- Scholomance: Erhard Barclay
+SET
+@Model    := 16027,
+@Name     := 'Erhard Barclay',
+@MinLevel := 60,
+@MaxLevel := 60;
+
+DELETE FROM `creature_template` WHERE `entry`=@Entry+17;
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
+(@Entry+17, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+
+DELETE FROM `creature` WHERE `id1`=@Entry+17;
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
+(@Entry+17, 289, 204.283, 106.037, 128.407, 2.30831);
+
+SET
+@QuestLevel                     := 60,
+@QuestMinLevel                  := 57,
+@QuestSortID                    := 2057,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 27000,
+@QuestRewardBonusMoney          := 8700,
+@QuestStartItem                 := 12368,
+@QuestRewardChoiceItemID1       := 15853,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 15854,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardFactionId1          := 529,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Dawn\'s Gambit',
+@QuestLogDescription            := 'Place Dawn\'s Gambit in the Viewing Room of the Scholomance. Defeat Vectus, then return to Erhard Barclay.',
+@QuestDescription               := 'I\'ve placed Dawn\'s Gambit in the container, the one that held the dragon eggs. Your job is to bring it deep within the Scholomance.$B$BThe undead mage Vectus leads a team of Scourge scholars... place Dawn\'s Gambit in their chamber, called the "viewing room." It will then react with the undead found there and, with a little luck, destroy them!$B$BAfter that, defeating Vectus shouldn\'t be a problem. Right?',
+@QuestCompletionLog             := 'Return to Erhard Barclay.',
+@QuestRequiredNpcOrGo1          := 10432,
+@QuestRequiredNpcOrGoCount1     := 1,
+@QuestProvidedItemCount         := 1,
+
+@QuestRequestitems              := 'Remember, $N - we must be tolerant yet rigid in our beliefs!',
+@QuestRewardText                := 'You did it! Vectus is defeated! And Dawn\'s Gambit... did it work?$B$BHm... maybe my device wasn\'t the success I had hoped, but I\'m glad you were able to handle things anyway. Well done, $n!$B$BThe Argent Dawn, and the good people of Azeroth, are in your debt.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+64;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `StartItem`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+64, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+64;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+64);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+64;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+64);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+64;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+64, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+64;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+64, @QuestRewardText);
+
+DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId+64;
+INSERT INTO `quest_template_addon` (`ID`, `ProvidedItemCount`) VALUES
+(@QuestId+64, @QuestProvidedItemCount);
+
+SET
+@QuestLevel                     := 60,
+@QuestMinLevel                  := 52,
+@QuestSortID                    := 2057,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 18000,
+@QuestRewardBonusMoney          := 8700,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Barov Family Fortune',
+@QuestLogDescription            := 'Recover the Barov family fortune. Four deeds make up this fortune: The Deed to Caer Darrow; The Deed to Brill; The Deed to Tarren Mill; and The Deed to Southshore. Return to Erhard Barclay when you have completed this task.',
+@QuestDescription               := 'This place holds the Barov family fortune. Alexi Barov is one of the last two remaining heirs of the house Barov. His brother, Weldon, is the other.$B$BWeldon, the miserable coward, fled during the war and thus retained his worthless existence as a human.$B$BHe now searches for the deeds so that he may claim the fortune for his own. Recover the deeds before his brother does and he shall make you wealthy beyond your wildest dreams!',
+@QuestCompletionLog             := 'Return to Erhard Barclay.',
+@QuestRequiredItemId1           := 13471,
+@QuestRequiredItemId2           := 13448,
+@QuestRequiredItemId3           := 13450,
+@QuestRequiredItemId4           := 13451,
+@QuestRequiredItemCount1        := 1,
+@QuestRequiredItemCount2        := 1,
+@QuestRequiredItemCount3        := 1,
+@QuestRequiredItemCount4        := 1,
+
+@QuestRequestitems              := 'Bow your head in his presence, $r. He is a noble, after all, and you are a copperless peasant.',
+@QuestRewardText                := 'Excellent work, $R. Now to secure the inheritance...';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+65;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemId3`, `RequiredItemId4`, `RequiredItemCount1`, `RequiredItemCount2`, `RequiredItemCount3`, `RequiredItemCount4`) VALUES
+(@QuestId+65, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemId4, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3, @QuestRequiredItemCount4);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+65;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+65);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+65;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+65);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+65;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+65, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+65;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+65, @QuestRewardText);
+
+SET
+@QuestLevel                     := 60,
+@QuestMinLevel                  := 52,
+@QuestSortID                    := 2057,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 18000,
+@QuestRewardBonusMoney          := 8700,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'Barov Family Fortune',
+@QuestLogDescription            := 'Recover the Barov family fortune. Four deeds make up this fortune: The Deed to Caer Darrow; The Deed to Brill; The Deed to Tarren Mill; and The Deed to Southshore. Return to Erhard Barclay when you have completed this task.',
+@QuestDescription               := 'This place holds the Barov family fortune. Alexi Barov is one of the last two remaining heirs of the house Barov. His brother, Weldon, is the other.$B$BWeldon, the miserable coward, fled during the war and thus retained his worthless existence as a human.$B$BHe now searches for the deeds so that he may claim the fortune for his own. Recover the deeds before his brother does and he shall make you wealthy beyond your wildest dreams!',
+@QuestCompletionLog             := 'Return to Erhard Barclay.',
+@QuestRequiredItemId1           := 13471,
+@QuestRequiredItemId2           := 13448,
+@QuestRequiredItemId3           := 13450,
+@QuestRequiredItemId4           := 13451,
+@QuestRequiredItemCount1        := 1,
+@QuestRequiredItemCount2        := 1,
+@QuestRequiredItemCount3        := 1,
+@QuestRequiredItemCount4        := 1,
+
+@QuestRequestitems              := 'Bow your head in his presence, $r. He is a noble, after all, and you are a copperless peasant.',
+@QuestRewardText                := 'Excellent work, $R. Now to secure the inheritance...';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+66;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemId3`, `RequiredItemId4`, `RequiredItemCount1`, `RequiredItemCount2`, `RequiredItemCount3`, `RequiredItemCount4`) VALUES
+(@QuestId+66, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemId4, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3, @QuestRequiredItemCount4);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+66;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+66);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+66;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+66);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+66;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+66, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+66;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+66, @QuestRewardText);
+
+SET
+@QuestLevel                     := 60,
+@QuestMinLevel                  := 55,
+@QuestSortID                    := 2057,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 8700,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Doctor Theolen Krastinov, the Butcher',
+@QuestLogDescription            := 'Find Doctor Theolen Krastinov. Destroy him, then burn the Remains of Eva Sarkhoff and the Remains of Lucien Sarkhoff. Return to Erhard Barclay when the task is complete.',
+@QuestDescription               := 'Krastinov is responsible for the deaths of thousands. He must be punished, justice must be meted out.$B$BFind him and exact upon him the agony he has inflicted upon countless innocents. Once he is destroyed, burn our remains. Turn them to ashes, $N.',
+@QuestCompletionLog             := 'Return to Erhard Barclay.',
+@QuestRequiredNpcOrGo1          := 11261,
+@QuestRequiredNpcOrGo2          := -176544,
+@QuestRequiredNpcOrGo3          := -176545,
+@QuestRequiredNpcOrGoCount1     := 1,
+@QuestRequiredNpcOrGoCount2     := 1,
+@QuestRequiredNpcOrGoCount3     := 1,
+
+@QuestRequestitems              := 'The Butcher must be stopped!',
+@QuestRewardText                := 'You have done Eva Sarkhoff a great service, but I am certain there is more to be done.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+67;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGo3`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`, `RequiredNpcOrGoCount3`) VALUES
+(@QuestId+67, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+67;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+67);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+67;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+67);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+67;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+67, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+67;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+67, @QuestRewardText);
+
+SET
+@QuestLevel                     := 60,
+@QuestMinLevel                  := 55,
+@QuestSortID                    := 2057,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 8700,
+@QuestStartItem                 := 13523,
+@QuestRewardItem1               := 13544,
+@QuestRewardAmount1             := 1,
+@QuestRewardChoiceItemID1       := 15805,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 15806,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Kirtonos the Herald',
+@QuestLogDescription            := 'Find the porch and place the Blood of Innocents in the brazier. Kirtonos will come to feast upon your soul.$B$BFight valiantly, do not give an inch! Destroy Kirtonos and return to Erhard Barclay.',
+@QuestDescription               := 'This is it, $N. The blood of innocents. The purest blood, used to appease Krastinov\'s master.$B$BIt is with this blood that Kirtonos may be summoned. It is with this blood, then, that Kirtonos must be destroyed.$B$BTake the blood to the porch. Place it upon the brazier. Kirtonos will come - he cannot resist. When he appears, unleash the fury and wrath of a thousand innocent deaths upon him.$B$BShould you succeed, you will earn more than just my gratitude.',
+@QuestCompletionLog             := 'Return to Erhard Barclay.',
+@QuestRequiredNpcOrGo1          := 10506,
+@QuestRequiredNpcOrGoCount1     := 1,
+@QuestProvidedItemCount         := 1,
+
+@QuestRequestitems              := 'Be wary, Kirtonos is a seasoned fighter.',
+@QuestRewardText                := 'With the death of Kirtonos, a chapter in the horrible tale of Scholomance comes to a close. There is, however, more to be done. Others here are now aware of your brave acts. Take this, $N. It is a piece of our own essence. It will allow you to communicate with the other lost souls of Caer Darrow.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+68;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `StartItem`, `RewardItem1`, `RewardAmount1`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+68, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+68;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+68);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+68;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+68);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+68;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+68, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+68;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+68, @QuestRewardText);
+
+DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId+68;
+INSERT INTO `quest_template_addon` (`ID`, `ProvidedItemCount`) VALUES
+(@QuestId+68, @QuestProvidedItemCount);
+
+SET
+@QuestLevel                     := 60,
+@QuestMinLevel                  := 57,
+@QuestSortID                    := 2057,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 8700,
+@QuestStartItem                 := 13752,
+@QuestRewardItem1               := 14002,
+@QuestRewardAmount1             := 1,
+@QuestRewardChoiceItemID1       := 13982,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 13986,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 13984,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'The Lich, Ras Frostwhisper',
+@QuestLogDescription            := 'Find Ras Frostwhisper. When you have found him, use the Soulbound Keepsake on his undead visage. Should you succeed in reverting him to a mortal, strike him down and recover the Human Head of Ras Frostwhisper. Take the head back to Erhard Barclay.',
+@QuestDescription               := 'There is but one task remaining, $N. Confront the lich, Ras Frostwhisper, in his lair.$B$BUse the power of the keepsake against the beast - be unrelenting in your actions! Weather the blows that the flailing beast will surely bring down upon you. Do not give in to the pain!$B$BWhen the ritual is complete, Ras will be mortal once more. It is at that point that he must be slain. Strike him down and take his human head.',
+@QuestCompletionLog             := 'Return to Erhard Barclay.',
+@QuestRequiredItemId1           := 13626,
+@QuestRequiredItemCount1        := 1,
+@QuestProvidedItemCount         := 1,
+
+@QuestRequestitems              := 'You carry the burden of ten thousand restless souls, $N.',
+@QuestRewardText                := 'Ten thousand souls cry out in unison, $N! You have struck a mortal blow to the Scourge and their masters.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+69;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `StartItem`, `RewardItem1`, `RewardAmount1`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+69, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+69;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+69);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+69;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+69);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+69;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+69, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+69;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+69, @QuestRewardText);
+
+DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId+69;
+INSERT INTO `quest_template_addon` (`ID`, `ProvidedItemCount`) VALUES
+(@QuestId+69, @QuestProvidedItemCount);
+
+SET
+@QuestLevel                     := 60,
+@QuestMinLevel                  := 55,
+@QuestSortID                    := 2057,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardBonusMoney          := 8700,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Krastinov\'s Bag of Horrors',
+@QuestLogDescription            := 'Locate Jandice Barov and destroy her. From her corpse recover Krastinov\'s Bag of Horrors. Return the bag to Erhard Barclay.',
+@QuestDescription               := 'A great weight has been lifted from our hearts, $N, but your task is not yet complete. Krastinov\'s master, Kirtonos, still lives.$B$BBefore you may face Kirtonos, however, you must first secure a method in which to summon him.$B$BIt is said that Jandice Barov stewards the blood of innocents from Krastinov to Kirtonos.$B$BFind her in the sunken catacombs of Scholomance and strike her down. Bring back any clues that you may find.',
+@QuestCompletionLog             := 'Return to Erhard Barclay.',
+@QuestRequiredItemId1           := 13725,
+@QuestRequiredItemCount1        := 1,
+
+@QuestRequestitems              := '<Erhard fades in and out of focus.>',
+@QuestRewardText                := 'The bag of horrors!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+70;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
+(@QuestId+70, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+70;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+70);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+70;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+70);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+70;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+70, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+70;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+70, @QuestRewardText);
+
+SET
+@QuestLevel                     := 58,
+@QuestMinLevel                  := 55,
+@QuestSortID                    := 2057,
+@QuestRewardXPDifficulty        := 7,
+@QuestRewardMoney               := 9000,
+@QuestRewardBonusMoney          := 8100,
+@QuestRewardFactionId1          := 529,
+@QuestRewardFactionValue1       := 7,
+@QuestAllowableRaces            := 0,
+@QuestLogTitle                  := 'Plagued Hatchlings',
+@QuestLogDescription            := 'Kill 20 Plagued Hatchlings, then return to Erhard Barclay.',
+@QuestDescription               := 'The Argent Dawn recently learned that the Scourge are creating their own plagued dragonflight! We must stop them -- if the Scourge gain a force of dragons they\'ll sweep across Azeroth unchecked!$B$BTheir necromancers are breeding plagued dragons.$B$BGo and kill as many hatchlings as you can... before they get any bigger!',
+@QuestCompletionLog             := 'Return to Erhard Barclay.',
+@QuestRequiredNpcOrGo1          := 10678,
+@QuestRequiredNpcOrGoCount1     := 20,
+
+@QuestRequestitems              := '<Erhard fades in and out of focus.>',
+@QuestRewardText                := 'The bag of horrors!';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId+71;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
+(@QuestId+71, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+71;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+71);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+71;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry+17, @QuestId+71);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+71;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId+71, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+71;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId+71, @QuestRewardText);
