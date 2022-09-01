@@ -1,5 +1,0 @@
-<Bindings>
-    <Binding name="TOGGLEBARTENDER" header="INTERFACED">
-        Interfaced_ToggleBartenderVisibility();
-    </Binding>
-</Bindings>
