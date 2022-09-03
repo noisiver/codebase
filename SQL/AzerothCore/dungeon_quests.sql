@@ -4,18 +4,19 @@ SET
 @Entry := 5000000,
 @QuestId := 50000;
 DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489, 4771, 5341, 5343, 5382, 5384, 5466, 5515, 5529);
-DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+17;
-DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+17;
-DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+71;
-DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+71;
-DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+71;
-DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+71;
-DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+71;
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (9572, 9575);
+DELETE FROM `creature` WHERE `id1` BETWEEN @Entry AND @Entry+18;
+DELETE FROM `creature_template` WHERE `entry` BETWEEN @Entry AND @Entry+18;
+DELETE FROM `quest_template` WHERE `ID` BETWEEN @QuestId AND @QuestId+73;
+DELETE FROM `quest_request_items` WHERE `ID` BETWEEN @QuestId AND @QuestId+73;
+DELETE FROM `quest_offer_reward` WHERE `ID` BETWEEN @QuestId AND @QuestId+73;
+DELETE FROM `creature_queststarter` WHERE `quest` BETWEEN @QuestId AND @QuestId+73;
+DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+73;
 */
 
+-- Classic
 DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489, 4771, 5341, 5343, 5382, 5384, 5466, 5515, 5529);
 INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
--- Classic
 -- Ragefire Chasm
 (1, 5723, 'Disabled quest for custom dungeon quests'),
 (1, 5728, 'Disabled quest for custom dungeon quests'),
@@ -105,7 +106,11 @@ INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Blackrock Spire
 
 -- The Burning Crusade
+DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (9572, 9575);
+INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 -- Hellfire Ramparts
+(1, 9572, 'Disabled quest for custom dungeon quests'),
+(1, 9575, 'Disabled quest for custom dungeon quests');
 -- The Blood Furnace
 -- The Slave Pens
 -- The Underbog
@@ -3611,6 +3616,128 @@ SET
 DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
 (@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry, @QuestId);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry, @QuestId);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId, @QuestRewardText);
+
+-- Hellfire Ramparts: Zorg Halffall
+SET
+@Entry    := @Entry+1,
+@Model    := 16310,
+@Name     := 'Zorg Halffall',
+@MinLevel := 63,
+@MaxLevel := 63;
+
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+
+DELETE FROM `creature` WHERE `id1`=@Entry;
+INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
+(@Entry, 543, -1360.87, 1652.13, 68.4662, 5.34574);
+
+SET
+@QuestId                        := @QuestId+1,
+@QuestLevel                     := 62,
+@QuestMinLevel                  := 59,
+@QuestSortID                    := 3535,
+@QuestRewardXPDifficulty        := 8,
+@QuestRewardMoney               := 54000,
+@QuestRewardBonusMoney          := 48300,
+@QuestRewardChoiceItemID1       := 25716,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 25715,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 25718,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestRewardChoiceItemID4       := 25717,
+@QuestRewardChoiceItemQuantity4 := 1,
+@QuestRewardFactionId1          := 947,
+@QuestRewardFactionValue1       := 6,
+@QuestAllowableRaces            := 690,
+@QuestLogTitle                  := 'Weaken the Ramparts',
+@QuestLogDescription            := 'Slay Watchkeeper Gargolmar, Omor the Unscarred and the drake, Nazan. Return Gargolmar\'s Hand, Omor\'s Hoof and Nazan\'s Head to Zorg Halffall.',
+@QuestDescription               := 'Quick, there isn\'t much time. Thrallmar\'s existence balances on the razor\'s edge!$B$BWe\'re caught between Hellfire Citadel and the Burning Legion. With the Legion\'s attention turned toward the Dark Portal we must take this opportunity to strike at the fel orcs of Hellfire Citadel. The key to this is to first break through their ramparts!$B$BSlay their leaders, and then bring back the proof!',
+@QuestCompletionLog             := 'Return to Zorg Halffall.',
+@QuestRequiredItemId1           := 23881,
+@QuestRequiredItemCount1        := 1,
+@QuestRequiredItemId2           := 23886,
+@QuestRequiredItemCount2        := 1,
+@QuestRequiredItemId3           := 23901,
+@QuestRequiredItemCount3        := 1,
+
+@QuestRequestitems              := 'I trust that you bring good news, $N?',
+@QuestRewardText                := 'It\'s a good start. With those three dead their forces should be in disarray. And with their artillery up there silenced we\'ll have an easier time getting close enough to take this citadel!$B$BBut there\'s more to this than meets the eye - I can feel it.$B$BFor the time being, though, you\'ve done well. Take your pick of any of these from the Thrallmar armory.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemId3`, `RequiredItemCount1`, `RequiredItemCount2`, `RequiredItemCount3`) VALUES
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3);
+
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
+(@Entry, @QuestId);
+
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
+(@Entry, @QuestId);
+
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
+INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
+(@QuestId, @QuestRequestItems);
+
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
+INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
+(@QuestId, @QuestRewardText);
+
+SET
+@QuestId                        := @QuestId+1,
+@QuestLevel                     := 62,
+@QuestMinLevel                  := 59,
+@QuestSortID                    := 3535,
+@QuestRewardXPDifficulty        := 8,
+@QuestRewardMoney               := 54000,
+@QuestRewardBonusMoney          := 48300,
+@QuestRewardChoiceItemID1       := 25716,
+@QuestRewardChoiceItemQuantity1 := 1,
+@QuestRewardChoiceItemID2       := 25715,
+@QuestRewardChoiceItemQuantity2 := 1,
+@QuestRewardChoiceItemID3       := 25718,
+@QuestRewardChoiceItemQuantity3 := 1,
+@QuestRewardChoiceItemID4       := 25717,
+@QuestRewardChoiceItemQuantity4 := 1,
+@QuestRewardFactionId1          := 946,
+@QuestRewardFactionValue1       := 6,
+@QuestAllowableRaces            := 1101,
+@QuestLogTitle                  := 'Weaken the Ramparts',
+@QuestLogDescription            := 'Slay Watchkeeper Gargolmar, Omor the Unscarred and the drake, Nazan. Return Gargolmar\'s Hand, Omor\'s Hoof and Nazan\'s Head to Zorg Halffall.',
+@QuestDescription               := 'Quick, there isn\'t much time. Thrallmar\'s existence balances on the razor\'s edge!$B$BWe\'re caught between Hellfire Citadel and the Burning Legion. With the Legion\'s attention turned toward the Dark Portal we must take this opportunity to strike at the fel orcs of Hellfire Citadel. The key to this is to first break through their ramparts!$B$BSlay their leaders, and then bring back the proof!',
+@QuestCompletionLog             := 'Return to Zorg Halffall.',
+@QuestRequiredItemId1           := 23881,
+@QuestRequiredItemCount1        := 1,
+@QuestRequiredItemId2           := 23886,
+@QuestRequiredItemCount2        := 1,
+@QuestRequiredItemId3           := 23901,
+@QuestRequiredItemCount3        := 1,
+
+@QuestRequestitems              := 'Is your assignment complete? Are you a complete and utter lackwit? You make me want to vomit!$B$BNow get your worthless hide and do what you were instructed to do! Do you hear me?!',
+@QuestRewardText                := 'Do you know what I hate worse than being wrong? Losing gold on a bet that you couldn\'t pull it off.$B$BOutstanding! With those three dead their forces should be in disarray. And with their artillery up there silenced we\'ll have an easier time getting close enough to take this citadel!$B$BI have a feeling there\'s more to this than meets the eye, though. Here, take one of these from the armory.';
+
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
+INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemId3`, `RequiredItemCount1`, `RequiredItemCount2`, `RequiredItemCount3`) VALUES
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3);
 
 DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
