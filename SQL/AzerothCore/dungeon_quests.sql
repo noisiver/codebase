@@ -179,6 +179,7 @@ INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
 (@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 16,
 @QuestMinLevel                  := 9,
 @QuestSortID                    := 2437,
@@ -200,27 +201,28 @@ SET
 @QuestRequestitems              := 'Have you found them yet, $N? The leaders of the Searing Blade.$b$bI knew the Shadow Council sought to take Orgrimmar and all of the Horde from me, but I hadn\'t realized how quickly they were able to infiltrate the city. So many arms this beast has... we can cut them off until exhaustion sets in, but we will be no further than when we started. I will have to have my spies double their efforts.',
 @QuestRewardText                := 'I am glad you\'ve returned, $N. Some of those loyal to me brought word immediately that the caverns below Orgrimmar were in disarray now that their leaders have been slain. I even heard reports that Neeru was more than agitated. It seems we\'ve put a dent in his armor. I can\'t say I\'m displeased... even with such a minor victory.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+1;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionId1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`) VALUES
-(@QuestId+1, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId+1;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry, @QuestId+1);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId+1;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry, @QuestId+1);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+1;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+1, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+1;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+1, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 16,
 @QuestMinLevel                  := 9,
 @QuestSortID                    := 2437,
@@ -238,27 +240,28 @@ SET
 @QuestRequestitems              := 'Have you killed the beast? He surely must be the leader of the Searing Blade in Ragefire Chasm.',
 @QuestRewardText                := 'Ha! You\'ve done it! Thrall will be so pleased.$b$bI will ensure this heart is taken care of properly.$b$bFor now though, you must celebrate your victory. I will inform Thrall of your success.$b$bThank you for your aid, $c.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+2;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+2, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId+2;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry, @QuestId+2);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId+2;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry, @QuestId+2);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+2;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+2, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+2;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+2, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 16,
 @QuestMinLevel                  := 9,
 @QuestSortID                    := 2437,
@@ -285,42 +288,44 @@ SET
 @QuestRequestitems              := 'Did you secure the books? They need to be kept out of the wrong hands.',
 @QuestRewardText                := 'Good, $c. You\'ve done well. I\'ll keep these safe from prying eyes; the last thing we need is a strong Shadow Council rising up again.$B$BCheck back with me in the future; there\'s always something that needs doing around here, apparently, and I might need another able body.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+3;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `Flags`, `RewardFactionId1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemCount1`, `RequiredItemCount2`) VALUES
-(@QuestId+3, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemCount1, @QuestRequiredItemCount2);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemCount1, @QuestRequiredItemCount2);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId+3;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry, @QuestId+3);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId+3;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry, @QuestId+3);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+3;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+3, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+3;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+3, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- The Deadmines: Bradly Stanford
 SET
+@Entry    := @Entry+1,
 @Model    := 1504,
 @Name     := 'Bradly Stanford',
 @MinLevel := 20,
 @MaxLevel := 20;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+1;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+1, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionAlliance, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionAlliance, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+1;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+1, 36, -11.1909, -375.448, 61.1099, 3.71272);
+(@Entry, 36, -11.1909, -375.448, 61.1099, 3.71272);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 22,
 @QuestMinLevel                  := 14,
 @QuestSortID                    := 1581,
@@ -345,27 +350,28 @@ SET
 @QuestRequestitems              := 'How goes the hunt for Edwin VanCleef?',
 @QuestRewardText                := '$N, your bravery is remarkable. The People\'s Militia thanks you for your service to the people of Westfall. With VanCleef dead, this marks the beginning of the end for the Defias Brotherhood. Hopefully some day soon peace will once again grace the plains of this fair land.$B$BI salute you, $gLord:Lady;!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+4;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `Flags`, `RewardFactionId1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+4, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+1 AND `quest`=@QuestId+4;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+1, @QuestId+4);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+1 AND `quest`=@QuestId+4;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+1, @QuestId+4);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+4;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+4, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+4;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+4, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 20,
 @QuestMinLevel                  := 15,
 @QuestSortID                    := 1581,
@@ -388,42 +394,44 @@ SET
 @QuestRequestitems              := 'Have you found the Gnoam Sprecklesprocket, $N?',
 @QuestRewardText                := 'Well done, $N. Thanks to you, Gnomeregan is one step closer to its day of liberation!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+5;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `Flags`, `RewardFactionId1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+5, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+1 AND `quest`=@QuestId+5;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+1, @QuestId+5);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+1 AND `quest`=@QuestId+5;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+1, @QuestId+5);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+5;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+5, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+5;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+5, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Wailing Caverns: Lynasha
 SET
+@Entry    := @Entry+1,
 @Model    := 4290,
 @Name     := 'Lynasha',
 @MinLevel := 20,
 @MaxLevel := 20;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+2;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+2, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+2;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+2, 43, -146.196, 122.073, -76.7319, 1.64649);
+(@Entry, 43, -146.196, 122.073, -76.7319, 1.64649);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 22,
 @QuestMinLevel                  := 10,
 @QuestSortID                    := 718,
@@ -452,27 +460,28 @@ SET
 @QuestRequestitems              := 'Memories of my nightmares haunt me, $N. Have you defeated the leaders of the fang and acquired their gems?',
 @QuestRewardText                := 'You have done it, $N. You killed the leaders of the Druids of the Fang. My dreams are now free of their wicked faces, and you have helped save the Barrens from a cursed future.$b$bI thank you, $N. I thank you for myself, for the druids of Thunder Bluff, and for the land.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+6;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `Flags`, `RewardFactionId1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemId3`, `RequiredItemId4`, `RequiredItemCount1`, `RequiredItemCount2`, `RequiredItemCount3`, `RequiredItemCount4`) VALUES
-(@QuestId+6, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemId4, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3, @QuestRequiredItemCount4);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemId4, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3, @QuestRequiredItemCount4);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+2 AND `quest`=@QuestId+6;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+2, @QuestId+6);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+2 AND `quest`=@QuestId+6;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+2, @QuestId+6);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+6;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+6, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+6;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+6, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 18,
 @QuestMinLevel                  := 14,
 @QuestSortID                    := 718,
@@ -494,27 +503,28 @@ SET
 @QuestRequestitems              := 'I am eager to see if you can gather enough Serpentbloom. I\'ve sent many to do my bidding but none have returned.',
 @QuestRewardText                := 'Ah, splendid specimens. You have done well, $N.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+7;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `Flags`, `RewardFactionId1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+7, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+2 AND `quest`=@QuestId+7;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+2, @QuestId+7);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+2 AND `quest`=@QuestId+7;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+2, @QuestId+7);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+7;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+7, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+7;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+7, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 17,
 @QuestMinLevel                  := 13,
 @QuestSortID                    := 718,
@@ -536,27 +546,28 @@ SET
 @QuestRequestitems              := 'I am very interested in examining the hides from the deviate creatures who have infested these caves. Have you had any luck in collecting some, $C?',
 @QuestRewardText                := 'Your efforts shall not go unnoticed in gathering these hides, $N.$b$bThank you for your dedication.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+8;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+8, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+2 AND `quest`=@QuestId+8;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+2, @QuestId+8);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+2 AND `quest`=@QuestId+8;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+2, @QuestId+8);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+8;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+8, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+8;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+8, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 21,
 @QuestMinLevel                  := 15,
 @QuestSortID                    := 718,
@@ -586,42 +597,44 @@ SET
 @QuestRequestitems              := '$N, the Disciples of Naralex needs your help. Their numbers are dwindling with their master trapped in his twisted nightmare. They have not the forces necessary to deal with the corrupt creatures which now haunt these caverns.$b$bI beg of you, enter the caves and wage war on the deviate creatures!',
 @QuestRewardText                := 'I commend your bravery, $N.$b$bYour aid in ridding the caverns is the first step in our long plight to see the Barrens restored.$b$bThank you and may you prosper.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+9;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGo3`, `RequiredNpcOrGo4`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`, `RequiredNpcOrGoCount3`, `RequiredNpcOrGoCount4`) VALUES
-(@QuestId+9, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGo4, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3, @QuestRequiredNpcOrGoCount4);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGo4, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3, @QuestRequiredNpcOrGoCount4);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+2 AND `quest`=@QuestId+9;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+2, @QuestId+9);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+2 AND `quest`=@QuestId+9;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+2, @QuestId+9);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+9;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+9, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+9;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+9, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Shadowfang Keep: Luther
 SET
+@Entry    := @Entry+1,
 @Model    := 11805,
 @Name     := 'Luther',
 @MinLevel := 21,
 @MaxLevel := 21;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+3;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+3, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionHorde, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionHorde, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+3;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+3, 33, -216.062, 2120.4, 80.1958, 3.70959);
+(@Entry, 33, -216.062, 2120.4, 80.1958, 3.70959);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 26,
 @QuestMinLevel                  := 16,
 @QuestSortID                    := 209,
@@ -644,27 +657,28 @@ SET
 @QuestRequestitems              := 'Did you find the book, $N?',
 @QuestRewardText                := 'Very good. This book will add nicely to my collections of the workings of Ur. His knowledge was great, but his conscience held him from true power. And so when the Scourge came and his strength was tested, it failed.$B$BWe of the Forsaken cannot afford such weakness, if we are to survive...';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+10;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+10, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+3 AND `quest`=@QuestId+10;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+3, @QuestId+10);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+3 AND `quest`=@QuestId+10;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+3, @QuestId+10);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+10;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+10, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+10;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+10, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 27,
 @QuestMinLevel                  := 18,
 @QuestSortID                    := 209,
@@ -686,42 +700,44 @@ SET
 @QuestRequestitems              := 'With Arugal\'s death we stand to increase the Dark Lady\'s stronghold on Lordaeron.',
 @QuestRewardText                := 'Silverpine Forest is finally free from the vice of that wretch Arugal. You have done the Dark Lady a great service, $N. Your tenacity shall be rewarded.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+11;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardSpell`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+11, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardSpell, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardSpell, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+3 AND `quest`=@QuestId+11;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+3, @QuestId+11);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+3 AND `quest`=@QuestId+11;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+3, @QuestId+11);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+11;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+11, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+11;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+11, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Blackfathom Deeps: Larthras Leafgazer
 SET
+@Entry    := @Entry+1,
 @Model    := 3301,
 @Name     := 'Larthras Leafgazer',
 @MinLevel := 24,
 @MaxLevel := 24;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+4;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+4, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+4;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+4, 48, -149.417, 81.4611, -43.6999, 1.9696);
+(@Entry, 48, -149.417, 81.4611, -43.6999, 1.9696);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 25,
 @QuestMinLevel                  := 20,
 @QuestSortID                    := 719,
@@ -746,27 +762,28 @@ SET
 @QuestRequestitems              := 'Blackfathom Deeps was once an ancient night elf temple. It once housed a most powerful moonwell. Who knows what evil brews there now at the hands of the Twilight\'s Hammer.$B$BHave you made any progress in ridding their presence?',
 @QuestRewardText                := 'You are no doubt of brave and noble blood, $N. The Argent Dawn commends you for your efforts against evil.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+12;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardItem1`, `RewardAmount1`, `RewardItem2`, `RewardAmount2`, `RewardFactionID1`, `RewardFactionValue1`, `RewardFactionID2`, `RewardFactionValue2`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+12, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestRewardFactionId2, @QuestRewardFactionValue2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestRewardFactionId2, @QuestRewardFactionValue2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+4 AND `quest`=@QuestId+12;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+12);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+4 AND `quest`=@QuestId+12;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+12);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+12;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+12, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+12;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+12, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 27,
 @QuestMinLevel                  := 18,
 @QuestSortID                    := 719,
@@ -792,27 +809,28 @@ SET
 @QuestRequestitems              := 'Time is a precious commodity, $C.$B$BMy role here is to ensure that the Argent Dawn thrives and that the evil forces encroaching upon Kalimdor are thwarted.$B$BState your business quickly or be on your way.',
 @QuestRewardText                := 'Kelris has eluded us for quite some time.$B$BIt seems as though whenever evil made its presence known in these parts, Kelris had played a role. For some time we considered him dead or missing.$B$BBut this makes perfect sense. By ending his reign you have spared the lives of many innocent people.$B$BBy the light! To sacrifice someone to a servant of an Old God for one\'s personal gain is beyond reproachful!$B$BYou have done a great deed, $N. I salute you on behalf of the Argent Dawn.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+13;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `RewardFactionID2`, `RewardFactionValue2`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+13, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestRewardFactionId2, @QuestRewardFactionValue2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestRewardFactionId2, @QuestRewardFactionValue2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+4 AND `quest`=@QuestId+13;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+13);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+4 AND `quest`=@QuestId+13;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+13);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+13;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+13, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+13;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+13, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 27,
 @QuestMinLevel                  := 18,
 @QuestSortID                    := 719,
@@ -838,27 +856,28 @@ SET
 @QuestRequestitems              := 'Time is a precious commodity, $C.$B$BMy role here is to ensure that the Argent Dawn thrives and that the evil forces encroaching upon Kalimdor are thwarted.$B$BState your business quickly or be on your way.',
 @QuestRewardText                := 'Kelris has eluded us for quite some time.$B$BIt seems as though whenever evil made its presence known in these parts, Kelris had played a role. For some time we considered him dead or missing.$B$BBut this makes perfect sense. By ending his reign you have spared the lives of many innocent people.$B$BBy the light! To sacrifice someone to a servant of an Old God for one\'s personal gain is beyond reproachful!$B$BYou have done a great deed, $N. I salute you on behalf of the Argent Dawn.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+14;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `RewardFactionID2`, `RewardFactionValue2`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+14, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestRewardFactionId2, @QuestRewardFactionValue2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestRewardFactionId2, @QuestRewardFactionValue2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+4 AND `quest`=@QuestId+14;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+14);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+4 AND `quest`=@QuestId+14;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+14);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+14;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+14, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+14;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+14, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 26,
 @QuestMinLevel                  := 17,
 @QuestSortID                    := 719,
@@ -882,27 +901,28 @@ SET
 @QuestRequestitems              := 'Have you found him yet, $N? Lorgus must be stopped!',
 @QuestRewardText                := 'Very good!! Thank you, $N. We may not have stopped the Twilight\'s Hammer completely, but at least you have staved off another of their plans to return the Old Gods to power.$b$bWho knows what other plans they have manifesting, but we can rest easy for now.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+15;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+15, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+4 AND `quest`=@QuestId+15;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+15);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+4 AND `quest`=@QuestId+15;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+15);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+15;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+15, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+15;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+15, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 27,
 @QuestMinLevel                  := 21,
 @QuestSortID                    := 719,
@@ -922,42 +942,44 @@ SET
 @QuestRequestitems              := 'Have you been successful in locating the fathom core?  Without it we\'ll have no idea what the Twilight\'s Hammer is exactly up to down there.',
 @QuestRewardText                := 'This is exactly what I need! A fathom core is an incredible well of information that we will be able to draw much good from. Whatever the Twilight\'s Hammer is up to in there - and believe me when I say it is no good - my comrades and I will now uncover.$b$bYou\'ve done well here today; the Earthen Ring looks upon you warmly for assisting us. You\'ve also helped the Horde as a whole, and for that you should be proud.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+16;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+16, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+4 AND `quest`=@QuestId+16;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+16);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+4 AND `quest`=@QuestId+16;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+4, @QuestId+16);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+16;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+16, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+16;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+16, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- The Stockade: Andrew Oakley
 SET
+@Entry    := @Entry+1,
 @Model    := 2991,
 @Name     := 'Andrew Oakley',
 @MinLevel := 25,
 @MaxLevel := 25;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+5;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+5, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionAlliance, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionAlliance, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+5;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+5, 34, 59.119, 4.45802, -20.2073, 4.08445);
+(@Entry, 34, 59.119, 4.45802, -20.2073, 4.08445);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 26,
 @QuestMinLevel                  := 22,
 @QuestSortID                    := 717,
@@ -980,27 +1002,28 @@ SET
 @QuestRequestitems              := 'So long as a molester of the dead like Dextren Ward is permitted to live, justice stands betrayed. Return to me once Lord Ebonlocke\'s sentence of death is carried out on that defiler, Ward. We shall give the families of the dead the closure they deserve and better yet, we will send a clear message to the House of Nobles in Stormwind.',
 @QuestRewardText                := 'So Dextren Ward finally paid for his crimes against humanity? Good riddance to the scum I say. And cheers to you, my friend! Not only have you given the families of the dead the peace of mind they deserve, you sent a poignant message to those corrupt bureaucrats in the House of Nobles. Stormwind must rise to the needs of the people of Duskwood or we will break free from their tyranny.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+17;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+17, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+5 AND `quest`=@QuestId+17;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+17);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+5 AND `quest`=@QuestId+17;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+17);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+17;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+17, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+17;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+17, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 27,
 @QuestMinLevel                  := 22,
 @QuestSortID                    := 717,
@@ -1023,27 +1046,28 @@ SET
 @QuestRequestitems              := 'I won\'t let foolish Human bureaucracy interfere with Dwarven matters, $N. Kam Deepfury is a proven conspirator in the Thandol Span attack. King Magni\'s good people lost their lives because of Deepfury\'s deceit. The Humans might be content to let Deepfury rot in The Stockade but I will not sleep soundly at night until Deepfury is slain.',
 @QuestRewardText                := 'So Kam Deepfury finally got to feel what it is like to be on the receiving end of Death? Good. Serves the cowardly Dark Iron scum right. You have done well, $c. The victims of the Thandol Span attack were but mere victims in a world torn with war and unrest. Their families will have the peace of knowing Deepfury got the punishment he deserved. Longbraid\'s brother\'s death has been avenged.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+18;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+18, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+5 AND `quest`=@QuestId+18;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+18);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+5 AND `quest`=@QuestId+18;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+18);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+18;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+18, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+18;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+18, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 25,
 @QuestMinLevel                  := 22,
 @QuestSortID                    := 717,
@@ -1066,27 +1090,28 @@ SET
 @QuestRequestitems              := 'I fear whatever trickery that has kept Targorr the Dread alive for this long will eventually bring about his freedom. He was sentenced to die, $N, not act as some political pawn on a noble\'s whim.',
 @QuestRewardText                := 'Targorr the Dread has finally met his fate. I for one am glad to hear the beast now knows what it is like to be on the receiving end of Death\'s ruthless grip. You have done well, $N. Sometimes the truest justice can only be found outside the courtroom and beyond the clouded vision of politics.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+19;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+19, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+5 AND `quest`=@QuestId+19;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+19);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+5 AND `quest`=@QuestId+19;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+19);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+19;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+19, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+19;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+19, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 26,
 @QuestMinLevel                  := 22,
 @QuestSortID                    := 717,
@@ -1110,27 +1135,28 @@ SET
 @QuestRequestitems              := 'The Stockade is still overrun! These Defias Rats must be shown that their actions will not be tolerated. Now go down there and show some force!',
 @QuestRewardText                := 'Your efforts were valiant, $N. It\'s obvious this problem is bigger than the both of us. But you have performed well and for that I am thankful.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+20;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGo3`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`, `RequiredNpcOrGoCount3`) VALUES
-(@QuestId+20, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+5 AND `quest`=@QuestId+20;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+20);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+5 AND `quest`=@QuestId+20;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+20);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+20;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+20, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+20;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+20, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 29,
 @QuestMinLevel                  := 16,
 @QuestSortID                    := 717,
@@ -1150,42 +1176,44 @@ SET
 @QuestRequestitems              := 'Either you bring me Thredd\'s head, or I\'ll take yours, understand, $N?',
 @QuestRewardText                := 'Without Thredd to lead them, hopefully the riots will be more controllable. We shall see.$B$BI must say, after a half hour, I hardly expected you to come out, but it seems I misjudged you.$B$BI\'d guess, then, that you didn\'t get much useful information out of him? But I know a thing or two that might be of interest to you about Thredd\'s activities.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+21;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+21, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+5 AND `quest`=@QuestId+21;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+21);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+5 AND `quest`=@QuestId+21;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+5, @QuestId+21);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+21;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+21, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+21;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+21, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Razorfen Kraul: Dekle Shortwizzle
 SET
+@Entry    := @Entry+1,
 @Model    := 7051,
 @Name     := 'Dekle Shortwizzle',
 @MinLevel := 27,
 @MaxLevel := 27;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+6;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+6, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+6;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+6, 47, 1947.8, 1586.11, 82.2491, 5.10672);
+(@Entry, 47, 1947.8, 1586.11, 82.2491, 5.10672);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 27,
 @QuestMinLevel                  := 23,
 @QuestSortID                    := 1717,
@@ -1210,27 +1238,28 @@ SET
 @QuestRequestitems              := 'So long as Charlga Razorflank is mustering a force, these lands are in great danger.',
 @QuestRewardText                := 'The crone has been laid to rest. This is fantastic news, $N.$B$BIn these times of peril, it is refreshing to see one as brave as yourself.$B$BWith Razorflank\'s minions taken care of, our studies in the area can continue. Perhaps now we can gain further knowledge of exactly what happened to corrupt the resting place of Agamaggan.$B$BHowever, I fear the answer to that question lies in treachery as well...';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+22;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+22, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+6 AND `quest`=@QuestId+22;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+6, @QuestId+22);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+6 AND `quest`=@QuestId+22;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+6, @QuestId+22);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+22;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+22, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+22;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+22, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 27,
 @QuestMinLevel                  := 23,
 @QuestSortID                    := 1717,
@@ -1255,27 +1284,28 @@ SET
 @QuestRequestitems              := 'Once I know the foul beasts have been driven from their foul lair, I will be able to rest in peace, knowing that revenge has been served.$b$bHave you the driven the quilboar away? Do you bring to me good news in the form of Razorflank\'s heart?',
 @QuestRewardText                := 'I see the nasty tribe now knows the pain of the people of Thunder Bluff. Serves the foul beasts right.$b$bTo drive one from a holy land is a sin worthy of the most severe revenge.$b$bThank you, $N, for aiding them in their plight.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+23;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+23, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+6 AND `quest`=@QuestId+23;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+6, @QuestId+23);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+6 AND `quest`=@QuestId+23;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+6, @QuestId+23);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+23;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+23, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+23;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+23, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 26,
 @QuestMinLevel                  := 22,
 @QuestSortID                    := 1717,
@@ -1294,42 +1324,44 @@ SET
 @QuestRequestitems              := 'Ah, I see you have returned. Were you able to procure any Kraul Guano?',
 @QuestRewardText                := 'Splendid! This is just the start we needed, $N.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+24;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+24, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+6 AND `quest`=@QuestId+24;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+6, @QuestId+24);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+6 AND `quest`=@QuestId+24;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+6, @QuestId+24);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+24;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+24, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+24;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+24, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Gnomeregan: Sunkull Fizzlebell
 SET
+@Entry    := @Entry+1,
 @Model    := 3106,
 @Name     := 'Sunkull Fizzlebell',
 @MinLevel := 28,
 @MaxLevel := 28;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+7;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+7, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionAlliance, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionAlliance, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+7;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+7, 90, -359.066, 4.51921, -152.851, 6.23753);
+(@Entry, 90, -359.066, 4.51921, -152.851, 6.23753);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 30,
 @QuestMinLevel                  := 24,
 @QuestSortID                    := 133,
@@ -1349,27 +1381,28 @@ SET
 @QuestRequestitems              := 'Do you have the essential artificials?',
 @QuestRewardText                := 'You got them! Now I can begin my new experiments!$B$BI can\'t thank you enough, $N! Your bravery has advanced gnomish research by a leap and a bound!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+25;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+25, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+7 AND `quest`=@QuestId+25;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+7, @QuestId+25);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+7 AND `quest`=@QuestId+25;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+7, @QuestId+25);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+25;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+25, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+25;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+25, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 30,
 @QuestMinLevel                  := 20,
 @QuestSortID                    := 133,
@@ -1394,27 +1427,28 @@ SET
 @QuestRequestitems              := 'If this were a race, you would have lost by now.',
 @QuestRewardText                := 'This will do nicely, $N. One gyrodrillmatic excavationator fixed; 398 left to go.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+26;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `RewardFactionID2`, `RewardFactionValue2`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+26, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestRewardFactionId2, @QuestRewardFactionValue2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestRewardFactionId2, @QuestRewardFactionValue2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+7 AND `quest`=@QuestId+26;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+7, @QuestId+26);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+7 AND `quest`=@QuestId+26;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+7, @QuestId+26);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+26;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+26, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+26;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+26, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 35,
 @QuestMinLevel                  := 25,
 @QuestSortID                    := 133,
@@ -1440,42 +1474,44 @@ SET
 @QuestRequestitems              := 'Is the task complete? Did he beg for lenience? For mercy??',
 @QuestRewardText                := 'I like to think that the last thing that went through his head as he collapsed to the ground was your foot, $R. With Thermaplugg dead, our plans to retake Gnomeregan are one step closer to becoming a reality.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+27;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+27, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+7 AND `quest`=@QuestId+27;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+7, @QuestId+27);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+7 AND `quest`=@QuestId+27;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+7, @QuestId+27);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+27;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+27, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+27;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+27, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Scarlet Monastery (Cathedral): Reese Hartford
 SET
+@Entry    := @Entry+1,
 @Model    := 10187,
 @Name     := 'Reese Hartford',
 @MinLevel := 40,
 @MaxLevel := 40;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+8;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+8, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+8;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+8, 189, 870.735, 1309.67, 18.006, 1.48615);
+(@Entry, 189, 870.735, 1309.67, 18.006, 1.48615);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 40,
 @QuestMinLevel                  := 34,
 @QuestSortID                    := 796,
@@ -1504,27 +1540,28 @@ SET
 @QuestRequestitems              := 'The corruption in the Monastery will not end until the highest ranking officials have been removed.$b$bIn the name of the Light, slay High Inquisitor Whitemane and Scarlet Commander Mograine. Once they have fallen, perhaps the true cause can be rekindled. Until then, anyone who crosses the path of the Crusade lies in peril.$b$bVenture forth and make it so!',
 @QuestRewardText                := 'While disciples of the Light never revel in the loss of life, we must accept that on occasion, such sacrifices must happen for the greater good of the Kingdom and the planet.$B$BThrough your deeds you have spared many innocent lives, $N. I salute your tenacity.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+28;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`) VALUES
-(@QuestId+28, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+8 AND `quest`=@QuestId+28;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+8, @QuestId+28);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+8 AND `quest`=@QuestId+28;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+8, @QuestId+28);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+28;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+28, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+28;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+28, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 42,
 @QuestMinLevel                  := 30,
 @QuestSortID                    := 796,
@@ -1551,42 +1588,44 @@ SET
 @QuestRequestitems              := 'Have you taken care of the High Inquisitor and Scarlet Commander?',
 @QuestRewardText                := 'I\'m sure Sylvanas will be glad to have that problem taken care of, $N. The task I gave you wasn\'t easy, but here you stand, victorious. That commands respect, and what you\'ve done won\'t be forgotten.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+29;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`) VALUES
-(@QuestId+29, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+8 AND `quest`=@QuestId+29;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+8, @QuestId+29);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+8 AND `quest`=@QuestId+29;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+8, @QuestId+29);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+29;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+29, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+29;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+29, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Scarlet Monastery (Armory): Trail'tuho
 SET
+@Entry    := @Entry+1,
 @Model    := 6839,
 @Name     := 'Trail\'tuho',
 @MinLevel := 40,
 @MaxLevel := 40;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+9;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+9, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+9;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+9, 189, 1624.79, -312.561, 18.0075, 4.67025);
+(@Entry, 189, 1624.79, -312.561, 18.0075, 4.67025);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 38,
 @QuestMinLevel                  := 32,
 @QuestSortID                    := 796,
@@ -1606,27 +1645,28 @@ SET
 @QuestRequestitems              := 'Have you disposed of the Scarlet Champion?',
 @QuestRewardText                := 'You did it!$B$BWe are truly close to putting an end to the Scarlet Crusade, thanks to you!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+30;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+30, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+9 AND `quest`=@QuestId+30;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+9, @QuestId+30);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+9 AND `quest`=@QuestId+30;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+9, @QuestId+30);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+30;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+30, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+30;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+30, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 38,
 @QuestMinLevel                  := 32,
 @QuestSortID                    := 796,
@@ -1646,42 +1686,44 @@ SET
 @QuestRequestitems              := 'Have you disposed of the Scarlet Champion?',
 @QuestRewardText                := 'You did it!$B$BWe are truly close to putting an end to the Scarlet Crusade, thanks to you!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+31;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+31, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+9 AND `quest`=@QuestId+31;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+9, @QuestId+31);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+9 AND `quest`=@QuestId+31;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+9, @QuestId+31);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+31;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+31, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+31;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+31, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Scarlet Monastery (Library): Gidion Thackeray
 SET
+@Entry    := @Entry+1,
 @Model    := 13171,
 @Name     := 'Gidion Thackeray',
 @MinLevel := 40,
 @MaxLevel := 40;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+10;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+10, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+10;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+10, 189, 280.646, -228.318, 18.5307, 3.09748);
+(@Entry, 189, 280.646, -228.318, 18.5307, 3.09748);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 36,
 @QuestMinLevel                  := 30,
 @QuestSortID                    := 796,
@@ -1701,27 +1743,28 @@ SET
 @QuestRequestitems              := 'Have you taken care of the Houndmaster?',
 @QuestRewardText                := 'You did it!$B$BWe\'re close to putting an end to the Scarlet Crusade, after all!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+32;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+32, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+10 AND `quest`=@QuestId+32;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+10, @QuestId+32);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+10 AND `quest`=@QuestId+32;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+10, @QuestId+32);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+32;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+32, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+32;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+32, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 36,
 @QuestMinLevel                  := 30,
 @QuestSortID                    := 796,
@@ -1741,27 +1784,28 @@ SET
 @QuestRequestitems              := 'Have you taken care of the Houndmaster?',
 @QuestRewardText                := 'You did it!$B$BWe\'re close to putting an end to the Scarlet Crusade, after all!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+33;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+33, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+10 AND `quest`=@QuestId+33;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+10, @QuestId+33);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+10 AND `quest`=@QuestId+33;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+10, @QuestId+33);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+33;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+33, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+33;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+33, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 38,
 @QuestMinLevel                  := 28,
 @QuestSortID                    := 796,
@@ -1786,27 +1830,28 @@ SET
 @QuestRequestitems              := 'Cairne is a brave and noble leader and I would trust him with my own life. But it is others that I do not trust in this political climate.$b$bOnce I have a chance to gather all the knowledge available I can provide sound council to the Chieftain.$b$bHave you had a chance to retrieve the compendium? The Compendium of the Fallen is just one piece in this complicated puzzle...',
 @QuestRewardText                := 'The Compendium of the Fallen! I was beginning to wonder if the very book existed!$b$bYou have served the Tauren of Thunder Bluff well, $N. Your dedication shall not be forgotten.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+34;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+34, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+10 AND `quest`=@QuestId+34;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+10, @QuestId+34);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+10 AND `quest`=@QuestId+34;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+10, @QuestId+34);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+34;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+34, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+34;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+34, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 38,
 @QuestMinLevel                  := 28,
 @QuestSortID                    := 796,
@@ -1827,42 +1872,44 @@ SET
 @QuestRequestitems              := 'The Monastery was a seminary for Paladins-in-training. Once a stronghold of the Light, it fell into the hands of the crazed zealots of the Scarlet Crusade.$b$bThe Crusade believed their goal a noble one: to purify the land of the undead plague. But insanity tainted their plight and now they stand enemies to all.$b$bBring Mythology of the Titans to me so I can study it.$b$bThe corrupt halls of the Monastery are no place for such a historical treasure.',
 @QuestRewardText                := 'You have rescued the sacred text!$b$bYour journey was long and acquiring the book was undoubtedly no easy task. But the dwarves of Ironforge stand to benefit from your success.$b$bThank you, $N, on behalf of the Explorers\' League.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+35;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+35, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+10 AND `quest`=@QuestId+35;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+10, @QuestId+35);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+10 AND `quest`=@QuestId+35;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+10, @QuestId+35);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+35;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+35, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+35;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+35, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Razorfen Downs: Dowoe Farjumper
 SET
+@Entry    := @Entry+1,
 @Model    := 7625,
 @Name     := 'Dowoe Farjumper',
 @MinLevel := 37,
 @MaxLevel := 37;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+11;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+11, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+11;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+11, 129, 2571.45, 1108.09, 47.6629, 4.50831);
+(@Entry, 129, 2571.45, 1108.09, 47.6629, 4.50831);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 37,
 @QuestMinLevel                  := 33,
 @QuestSortID                    := 722,
@@ -1883,27 +1930,28 @@ SET
 @QuestRequestitems              := 'This matter is of utmost importance, $N. We must stop any attempt by the Scourge to bolster their ranks.',
 @QuestRewardText                := 'The loyalty of a Lich is unswerving, $N. Let them know that such loyalty will only bring them destruction.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+36;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+36, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+11 AND `quest`=@QuestId+36;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+11, @QuestId+36);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+11 AND `quest`=@QuestId+36;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+11, @QuestId+36);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+36;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+36, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+36;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+36, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 37,
 @QuestMinLevel                  := 33,
 @QuestSortID                    := 722,
@@ -1926,42 +1974,44 @@ SET
 @QuestRequestitems              := 'Amnennar must be eradicated. Go, swiftly.',
 @QuestRewardText                := 'Thank you, $N. The Scourge will now think twice before attempting to bolster its ranks again.$B$BMay you be blessed by the Light.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+37;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardItem1`, `RewardAmount1`, `RewardItem2`, `RewardAmount2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+37, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+11 AND `quest`=@QuestId+37;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+11, @QuestId+37);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+11 AND `quest`=@QuestId+37;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+11, @QuestId+37);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+37;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+37, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+37;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+37, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Zul'Farrak: Javion Padley
 SET
+@Entry    := @Entry+1,
 @Model    := 5547,
 @Name     := 'Javion Padley',
 @MinLevel := 46,
 @MaxLevel := 46;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+12;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+12, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+12;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+12, 209, 1241.62, 811.337, 8.97133, 2.0579);
+(@Entry, 209, 1241.62, 811.337, 8.97133, 2.0579);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 47,
 @QuestMinLevel                  := 40,
 @QuestSortID                    := 978,
@@ -1984,27 +2034,28 @@ SET
 @QuestRequestitems              := 'Did you find Sergeant Bly? Did you get my divino-matic rod?',
 @QuestRewardText                := 'You found it! Well done, $N! Did you have to fight Bly for it? I hope you knocked him and his band down good and hard!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+38;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+38, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+38;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+38);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+38;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+38);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+38;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+38, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+38;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+38, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 50,
 @QuestMinLevel                  := 40,
 @QuestSortID                    := 978,
@@ -2024,27 +2075,28 @@ SET
 @QuestRequestitems              := 'Do you have the scale? I can\'t wait to try different ways to harness its energy!',
 @QuestRewardText                := 'Wow, you got the scale! Thanks, $N. I can\'t wait to get to work on this thing!$B$BSo you saw Gahz\'rilla? Was he as big as they say??';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+39;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+39, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+39;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+39);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+39;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+39);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+39;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+39, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+39;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+39, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 46,
 @QuestMinLevel                  := 40,
 @QuestSortID                    := 978,
@@ -2066,27 +2118,28 @@ SET
 @QuestRequestitems              := 'Do you have the tiara, $N? Has Velratha learned the price of crossing me?',
 @QuestRewardText                := 'Wonderful! You found it! And what\'s just as important--Velratha no longer has it! Thank you, $N. I am forever in your debt!$B$BAnd if I sounded a little... mean before, pay it no mind. You\'ll find me a much nicer person to those who haven\'t stolen from me.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+40;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardItem2`, `RewardAmount2`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+40, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+40;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+40);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+40;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+40);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+40;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+40, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+40;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+40, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 45,
 @QuestMinLevel                  := 40,
 @QuestSortID                    := 978,
@@ -2106,27 +2159,28 @@ SET
 @QuestRequestitems              := 'Do you have the shells? My cousin in Booty Bay is waiting for a load of them, and he\'s getting impatient!',
 @QuestRewardText                := 'Oh, great! You got them!$B$BThanks, $N. You\'re a real lifesaver!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+41;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+41, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+41;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+41);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+41;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+41);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+41;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+41, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+41;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+41, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 45,
 @QuestMinLevel                  := 40,
 @QuestSortID                    := 978,
@@ -2144,42 +2198,44 @@ SET
 @QuestRequestitems              := 'Did you bring me the temper, $N?',
 @QuestRewardText                := 'Ah, this is very nice temper indeed! And so much of it! I\'ll be at work for days before I use it all!$B$BThank you, $N. Please, take this as payment.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+42;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+42, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+12 AND `quest`=@QuestId+42;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+42);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+12 AND `quest`=@QuestId+42;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+12, @QuestId+42);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+42;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+42, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+42;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+42, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Maraudon: Dendron Skystalker
 SET
+@Entry    := @Entry+1,
 @Model    := 7997,
 @Name     := 'Dendron Skystalker',
 @MinLevel := 48,
 @MaxLevel := 48;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+13;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+13, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+13;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+13, 349, 19.2122, -11.5937, -127.618, 5.31322);
+(@Entry, 349, 19.2122, -11.5937, -127.618, 5.31322);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 51,
 @QuestMinLevel                  := 45,
 @QuestSortID                    := 2100,
@@ -2204,27 +2260,28 @@ SET
 @QuestRequestitems              := 'I would prefer to fight this battle on our own, but we are left with no other options--we need those more powerful, and the races of Azeroth have proven without a doubt they can overcome such things when they work together. So it is to you we turn for help.$B$BI only hope it is enough.$B$BZaetar, brother to Remulos, brought many pains to this world, and ultimately it caused his own death. I just hope I have not caused more death by asking you to aid us.',
 @QuestRewardText                := 'This is most wonderful news, $N! Thank you!$b$bI will speak with Marandis and ask his wisdom on the topic of Zaetar\'s remains, but at least you have overcome the hardest of the tasks.$b$bI was told that if we were successful in our mission, I had permission to reward those who aided us. I was given these items as tokens from our people--you may choose one.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+43;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+43, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+13 AND `quest`=@QuestId+43;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+13, @QuestId+43);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+13 AND `quest`=@QuestId+43;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+13, @QuestId+43);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+43;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+43, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+43;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+43, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 51,
 @QuestMinLevel                  := 45,
 @QuestSortID                    := 2100,
@@ -2249,42 +2306,44 @@ SET
 @QuestRequestitems              := 'I feel the weight of imposing my plea on the mortal races, but we are left with no other options. The races of Azeroth have proven without a doubt they can overcome such things when they work together, so it is to them I ask for help.$B$BI only hope it is enough.$B$BZaetar, brother to Remulos, brought many pains to this world, and ultimately it caused his own death. There is a lesson there to all of us if we are wise enough to see it.',
 @QuestRewardText                := 'This is most wonderful news, $N! Thank you!$B$BAlthough it concerns me that you were not able to bring back Zaetar\'s remains, who am I to question the will of Cenarius\' first born. Perhaps now the will of the centaur will break and their thirst for blood will lesson--we can only hope.$B$BIf successful in our mission, I was given these items to reward any who aided us. You may choose one as a token of thanks.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+44;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+44, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+13 AND `quest`=@QuestId+44;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+13, @QuestId+44);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+13 AND `quest`=@QuestId+44;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+13, @QuestId+44);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+44;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+44, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+44;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+44, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Sunken Temple: Taesosh
 SET
+@Entry    := @Entry+1,
 @Model    := 10171,
 @Name     := 'Taesosh',
 @MinLevel := 50,
 @MaxLevel := 50;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+14;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+14, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+14;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+14, 109, -349.203, 100.612, -131.85, 6.28016);
+(@Entry, 109, -349.203, 100.612, -131.85, 6.28016);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 50,
 @QuestMinLevel                  := 38,
 @QuestSortID                    := 1417,
@@ -2305,27 +2364,28 @@ SET
 @QuestRequestitems              := 'If the Atal\'ai fetishes hold the power to summon Hakkar and fulfill Jammal\'an\'s prophecy they must be seized. Such powers must be understood by the Horde!',
 @QuestRewardText                := 'Brave $c, you have proven yourself to be a great champion of the Horde.$b$bNow this collection of fetishes of Hakkar must be dealt with at once!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+45;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+45, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+14 AND `quest`=@QuestId+45;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+14, @QuestId+45);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+14 AND `quest`=@QuestId+45;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+14, @QuestId+45);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+45;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+45, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+45;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+45, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 53,
 @QuestMinLevel                  := 38,
 @QuestSortID                    := 1417,
@@ -2346,42 +2406,44 @@ SET
 @QuestRequestitems              := 'Once Jammal\'an has been removed, I stand a chance of returning to my people.$b$bWith Jammal\'an as their spiritual leader, the Atal\'ai face certain destruction.',
 @QuestRewardText                := 'Jammal\'an\'s reckless trust of false visions led my people to their eternal doom.$b$bI thank you, $c, for avenging my exile. I mourn for my people. I have no home to return to.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+46;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+46, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+14 AND `quest`=@QuestId+46;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+14, @QuestId+46);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+14 AND `quest`=@QuestId+46;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+14, @QuestId+46);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+46;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+46, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+46;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+46, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Blackrock Depths: Ugdarn Wildhold
 SET
+@Entry    := @Entry+1,
 @Model    := 10184,
 @Name     := 'Ugdarn Wildhold',
 @MinLevel := 56,
 @MaxLevel := 56;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+15;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+15, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+15;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+15, 230, 450.705, -0.353959, -70.3875, 1.48246);
+(@Entry, 230, 450.705, -0.353959, -70.3875, 1.48246);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 56,
 @QuestMinLevel                  := 48,
 @QuestSortID                    := 1584,
@@ -2409,27 +2471,28 @@ SET
 @QuestRequestitems              := 'The flames will soon overtake these lands. Make haste, $N!',
 @QuestRewardText                := '<Ugdarn Wildhold clutches the Tablet of Kurniya.>$b$bRagnaros... here...$b$bThe elders were right to fear the corruption emanating from Blackrock Mountain. A general of the Old Gods! IN OUR WORLD! We must reassess our position. We must decide on whether we stay and fight or run for fear of a new sundering.$b$bBe weary of any further exploration, $N. A far greater evil than anything that exists in this world resides in those fiery depths.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+47;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `RewardFactionID1`, `RewardFactionValue1`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+47, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+47;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+47);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+47;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+47);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+47;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+47, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+47;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+47, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 59,
 @QuestMinLevel                  := 48,
 @QuestSortID                    := 1584,
@@ -2446,27 +2509,28 @@ SET
 @QuestRequestitems              := '<Princess Moira cowers in fear.>',
 @QuestRewardText                := 'What have you done!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+48;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+48, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+48;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+48);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=8929 AND `quest`=@QuestId+48;
+DELETE FROM `creature_questender` WHERE `id`=8929 AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(8929, @QuestId+48);
+(8929, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+48;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+48, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+48;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+48, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 58,
 @QuestMinLevel                  := 52,
 @QuestSortID                    := 1584,
@@ -2494,27 +2558,28 @@ SET
 @QuestRequestitems              := 'Was it him? Was he really alive?',
 @QuestRewardText                := 'What is this?!? This head is not flesh. This is some sort of dark iron creation: A shadow of Argelmach - ANOTHER machine! I suspect that your destruction of Argelmach will be short lived as another shall rise to take \'its\' place soon.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+49;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemCount1`, `RequiredItemCount2`) VALUES
-(@QuestId+49, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemCount1, @QuestRequiredItemCount2);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemCount1, @QuestRequiredItemCount2);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+49;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+49);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+49;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+49);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+49;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+49, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+49;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+49, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 52,
 @QuestMinLevel                  := 48,
 @QuestSortID                    := 1584,
@@ -2538,27 +2603,28 @@ SET
 @QuestRequestitems              := 'What is it, $r? Don\'t you know I have a platoon to command?',
 @QuestRewardText                := 'This first strike should put a crease in Angerforge\'s pants. Now, move along soldier. I have work to complete, battles to plan, enemies to crush!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+50;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGo3`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`, `RequiredNpcOrGoCount3`) VALUES
-(@QuestId+50, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+50;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+50);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+50;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+50);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+50;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+50, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+50;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+50, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 54,
 @QuestMinLevel                  := 48,
 @QuestSortID                    := 1584,
@@ -2582,27 +2648,28 @@ SET
 @QuestRequestitems              := 'You again? I have to hand it to you, $N, you are tenacious.',
 @QuestRewardText                := 'Angerforge is undoubtedly... angry.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+51;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGo3`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`, `RequiredNpcOrGoCount3`) VALUES
-(@QuestId+51, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+51;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+51);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+51;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+51);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+51;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+51, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+51;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+51, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 55,
 @QuestMinLevel                  := 50,
 @QuestSortID                    := 1584,
@@ -2620,27 +2687,28 @@ SET
 @QuestRequestitems              := 'Do you have the Heart of the Mountain? To me, its value is without limit.',
 @QuestRewardText                := 'You have the heart! Amazing! It is even more beautiful than I imagined!$B$BPlease, $N, take this as payment!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+52;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+52, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+52;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+52);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+52;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+52);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+52;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+52, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+52;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+52, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 55,
 @QuestMinLevel                  := 50,
 @QuestSortID                    := 1584,
@@ -2664,27 +2732,28 @@ SET
 @QuestRequestitems              := 'Do you have the recipe, $N? I can\'t stand the idea of those Dark Iron dwarves drinking my family\'s drink!',
 @QuestRewardText                := 'You found it! Well done! And I hope you gave those Dark Irons, and Hurley Blackbreath, a good thumping!$b$bThe Thunderbrews are at your service, $N. You are a hero of heroes!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+53;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+53, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+53;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+53);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+53;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+53);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+53;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+53, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+53;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+53, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 58,
 @QuestMinLevel                  := 52,
 @QuestSortID                    := 1584,
@@ -2706,27 +2775,28 @@ SET
 @QuestRequestitems              := 'Has the Butcher of Blackrock been disposed of?',
 @QuestRewardText                := 'Finally! The villain been brought to justice! You are a remarkable individual, $N. Wear this medallion as a symbol of your stalwart dedication to the Horde and the K.E.F.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+54;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+54, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+54;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+54);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+54;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+54);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+54;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+54, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+54;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+54, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 55,
 @QuestMinLevel                  := 50,
 @QuestSortID                    := 1584,
@@ -2752,27 +2822,28 @@ SET
 @QuestRequestitems              := 'Do you have the recipe for the Thunderbrew Lager, $N?',
 @QuestRewardText                := 'Very good. I will send this recipe to the Apothecarium to be studied, and in time we will unlock its secrets. One day, the dwarves of the Alliance may find the virtues of this drink used against them!$b$bI find that terribly amusing. Perhaps death has an affect on one\'s sense of humor... do you think?';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+55;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardItem2`, `RewardAmount2`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+55, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardItem2, @QuestRewardAmount2, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+55;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+55);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+55;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+55);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+55;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+55, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+55;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+55, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 53,
 @QuestMinLevel                  := 48,
 @QuestSortID                    := 1584,
@@ -2796,27 +2867,28 @@ SET
 @QuestRequestitems              := 'Do you have Ribbly? Or, at least a part of him?',
 @QuestRewardText                := 'Aha! You found him! And... it appears that my little brother didn\'t want to come quiety. It\'s a pity. I would have liked to see the look on his face when I told him our plans to turn him in to Revilgaz.$b$bThank you, $N. You\'ve made my family very happy. And Ribbly\'s never looked as peaceful as he does now.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+56;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+56, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+56;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+56);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+56;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+56);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+56;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+56, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+56;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+56, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 56,
 @QuestMinLevel                  := 48,
 @QuestSortID                    := 1584,
@@ -2844,27 +2916,28 @@ SET
 @QuestRequestitems              := 'Is the fiend dead??',
 @QuestRewardText                := 'Oh dear! Are you sure Incendius said \'Ragnaros?\'$b$b<Ugdarn hands you something and pats you on the wrist as he fades deep into thought.>';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+57;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `RewardChoiceItemID4`, `RewardChoiceItemQuantity4`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+57, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestRewardChoiceItemID4, @QuestRewardChoiceItemQuantity4, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+57;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+57);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+57;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+57);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+57;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+57, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+57;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+57, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 56,
 @QuestMinLevel                  := 50,
 @QuestSortID                    := 1584,
@@ -2886,27 +2959,28 @@ SET
 @QuestRequestitems              := 'I can\'t be bothered right now, $N. Me and Winky got a meeting to attend.',
 @QuestRewardText                := '<Ugdarn starts rummaging through the mountainous pile of fanny packs.>$B$BOH WONDERFUL!$B$B<Ugdarn sticks his large nose into the pile and takes a whiff.>$B$BDELICIOUS! Look at all these goodies!$B$BTake one for yourself, $N. There\'s plenty to go around.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+58;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+58, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+58;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+58);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+58;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+58);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+58;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+58, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+58;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+58, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 59,
 @QuestMinLevel                  := 50,
 @QuestSortID                    := 1584,
@@ -2925,27 +2999,28 @@ SET
 @QuestRequestitems              := '',
 @QuestRewardText                := '<Princess Bronzebeard weeps over the loss of Emperor Dagran Thaurissan.>$B$BWhy???';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+59;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+59, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+59;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+59);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=8929 AND `quest`=@QuestId+59;
+DELETE FROM `creature_questender` WHERE `id`=8929 AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(8929, @QuestId+59);
+(8929, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+59;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+59, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+59;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+59, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 54,
 @QuestMinLevel                  := 48,
 @QuestSortID                    := 1584,
@@ -2967,42 +3042,44 @@ SET
 @QuestRequestitems              := 'Show them to me!',
 @QuestRewardText                := 'Wonderful! I will have these sent by courier to the Undercity at once!$B$BAs for you - here is payment, as promised. Keep the change, you filthy beast!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+60;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+60, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+15 AND `quest`=@QuestId+60;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+60);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+15 AND `quest`=@QuestId+60;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+15, @QuestId+60);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+60;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+60, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+60;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+60, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Dire Maul (East): Gronladan Ravenoak
 SET
+@Entry    := @Entry+1,
 @Model    := 2264,
 @Name     := 'Gronladan Ravenoak',
 @MinLevel := 60,
 @MaxLevel := 60;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+16;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+16, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+16;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+16, 429, 61.9005, -148.875, -2.71438, 3.97019);
+(@Entry, 429, 61.9005, -148.875, -2.71438, 3.97019);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 58,
 @QuestMinLevel                  := 54,
 @QuestSortID                    := 2557,
@@ -3026,27 +3103,28 @@ SET
 @QuestRequestitems              := 'I regret nothing, stranger. The Queen has long since passed. The works of the Shen\'Dralar have been marred by the madness of Prince Tortheldrin. I seek only freedom... Escape...',
 @QuestRewardText                := 'You have found it! A curse upon that miserable imp. Alas, my material possessions are meager at best. You may choose from what I have to offer.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+61;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+61, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+16 AND `quest`=@QuestId+61;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+16, @QuestId+61);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+16 AND `quest`=@QuestId+61;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+16, @QuestId+61);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+61;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+61, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+61;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+61, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 57,
 @QuestMinLevel                  := 54,
 @QuestSortID                    := 2557,
@@ -3068,27 +3146,28 @@ SET
 @QuestRequestitems              := 'Do you have the web, $N?  Its concentrated magical energy must be dissipated!',
 @QuestRewardText                := 'You retrieved the web! Well done, $N! Lethtendris, like many elves of her ilk, are blind to the dangers the abuse of magic can cause to our world. They believe they are masters of magic; they do not realize that they are slaves to their own addiction. Her death saddens me, but it was necessary.$B$BThank you, $N. I will have the energies within the web released safely over a wide area, and then I\'ll destroy it to prevent future magical exploits.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+62;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+62, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+16 AND `quest`=@QuestId+62;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+16, @QuestId+62);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+16 AND `quest`=@QuestId+62;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+16, @QuestId+62);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+62;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+62, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+62;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+62, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 57,
 @QuestMinLevel                  := 54,
 @QuestSortID                    := 2557,
@@ -3110,42 +3189,44 @@ SET
 @QuestRequestitems              := '$N, do you have Lethtendris\'s Web?',
 @QuestRewardText                := 'You have done well, $N. This web holds within it vast stores of the magic of Dire Maul, and I fear what damage may be unleashed if those energies were harnessed by one so irresponsible as Lethtendris. I am saddened by her death, but I know that she could never part with her web while alive.$b$bThank you, $N. I will send the web to students of magic more responsible than Lethtendris. They will be the new wardens of its power.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+63;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardItem1`, `RewardAmount1`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+63, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+16 AND `quest`=@QuestId+63;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+16, @QuestId+63);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+16 AND `quest`=@QuestId+63;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+16, @QuestId+63);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+63;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+63, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+63;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+63, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 -- Scholomance: Erhard Barclay
 SET
+@Entry    := @Entry+1,
 @Model    := 16027,
 @Name     := 'Erhard Barclay',
 @MinLevel := 60,
 @MaxLevel := 60;
 
-DELETE FROM `creature_template` WHERE `entry`=@Entry+17;
+DELETE FROM `creature_template` WHERE `entry`=@Entry;
 INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `flags_extra`) VALUES
-(@Entry+17, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
+(@Entry, @Model, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @FactionFriendly, @NPCFlag, 1, 1, @Scale, @Rank, 1, @UnitFlags, @Type, @TypeFlags, @FlagsExtra);
 
-DELETE FROM `creature` WHERE `id1`=@Entry+17;
+DELETE FROM `creature` WHERE `id1`=@Entry;
 INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES 
-(@Entry+17, 289, 204.283, 106.037, 128.407, 2.30831);
+(@Entry, 289, 204.283, 106.037, 128.407, 2.30831);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 60,
 @QuestMinLevel                  := 57,
 @QuestSortID                    := 2057,
@@ -3171,31 +3252,32 @@ SET
 @QuestRequestitems              := 'Remember, $N - we must be tolerant yet rigid in our beliefs!',
 @QuestRewardText                := 'You did it! Vectus is defeated! And Dawn\'s Gambit... did it work?$B$BHm... maybe my device wasn\'t the success I had hoped, but I\'m glad you were able to handle things anyway. Well done, $n!$B$BThe Argent Dawn, and the good people of Azeroth, are in your debt.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+64;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `StartItem`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+64, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+64;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+64);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+64;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+64);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+64;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+64, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+64;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+64, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
-DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId+64;
+DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template_addon` (`ID`, `ProvidedItemCount`) VALUES
-(@QuestId+64, @QuestProvidedItemCount);
+(@QuestId, @QuestProvidedItemCount);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 60,
 @QuestMinLevel                  := 52,
 @QuestSortID                    := 2057,
@@ -3219,27 +3301,28 @@ SET
 @QuestRequestitems              := 'Bow your head in his presence, $r. He is a noble, after all, and you are a copperless peasant.',
 @QuestRewardText                := 'Excellent work, $R. Now to secure the inheritance...';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+65;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemId3`, `RequiredItemId4`, `RequiredItemCount1`, `RequiredItemCount2`, `RequiredItemCount3`, `RequiredItemCount4`) VALUES
-(@QuestId+65, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemId4, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3, @QuestRequiredItemCount4);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemId4, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3, @QuestRequiredItemCount4);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+65;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+65);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+65;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+65);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+65;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+65, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+65;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+65, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 60,
 @QuestMinLevel                  := 52,
 @QuestSortID                    := 2057,
@@ -3263,27 +3346,28 @@ SET
 @QuestRequestitems              := 'Bow your head in his presence, $r. He is a noble, after all, and you are a copperless peasant.',
 @QuestRewardText                := 'Excellent work, $R. Now to secure the inheritance...';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+66;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemId2`, `RequiredItemId3`, `RequiredItemId4`, `RequiredItemCount1`, `RequiredItemCount2`, `RequiredItemCount3`, `RequiredItemCount4`) VALUES
-(@QuestId+66, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemId4, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3, @QuestRequiredItemCount4);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemId2, @QuestRequiredItemId3, @QuestRequiredItemId4, @QuestRequiredItemCount1, @QuestRequiredItemCount2, @QuestRequiredItemCount3, @QuestRequiredItemCount4);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+66;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+66);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+66;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+66);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+66;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+66, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+66;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+66, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 60,
 @QuestMinLevel                  := 55,
 @QuestSortID                    := 2057,
@@ -3304,27 +3388,28 @@ SET
 @QuestRequestitems              := 'The Butcher must be stopped!',
 @QuestRewardText                := 'You have done Eva Sarkhoff a great service, but I am certain there is more to be done.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+67;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGo2`, `RequiredNpcOrGo3`, `RequiredNpcOrGoCount1`, `RequiredNpcOrGoCount2`, `RequiredNpcOrGoCount3`) VALUES
-(@QuestId+67, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGo2, @QuestRequiredNpcOrGo3, @QuestRequiredNpcOrGoCount1, @QuestRequiredNpcOrGoCount2, @QuestRequiredNpcOrGoCount3);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+67;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+67);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+67;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+67);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+67;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+67, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+67;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+67, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 60,
 @QuestMinLevel                  := 55,
 @QuestSortID                    := 2057,
@@ -3349,31 +3434,32 @@ SET
 @QuestRequestitems              := 'Be wary, Kirtonos is a seasoned fighter.',
 @QuestRewardText                := 'With the death of Kirtonos, a chapter in the horrible tale of Scholomance comes to a close. There is, however, more to be done. Others here are now aware of your brave acts. Take this, $N. It is a piece of our own essence. It will allow you to communicate with the other lost souls of Caer Darrow.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+68;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `StartItem`, `RewardItem1`, `RewardAmount1`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+68, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+68;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+68);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+68;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+68);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+68;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+68, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+68;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+68, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
-DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId+68;
+DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template_addon` (`ID`, `ProvidedItemCount`) VALUES
-(@QuestId+68, @QuestProvidedItemCount);
+(@QuestId, @QuestProvidedItemCount);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 60,
 @QuestMinLevel                  := 57,
 @QuestSortID                    := 2057,
@@ -3400,31 +3486,32 @@ SET
 @QuestRequestitems              := 'You carry the burden of ten thousand restless souls, $N.',
 @QuestRewardText                := 'Ten thousand souls cry out in unison, $N! You have struck a mortal blow to the Scourge and their masters.';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+69;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `StartItem`, `RewardItem1`, `RewardAmount1`, `RewardChoiceItemID1`, `RewardChoiceItemQuantity1`, `RewardChoiceItemID2`, `RewardChoiceItemQuantity2`, `RewardChoiceItemID3`, `RewardChoiceItemQuantity3`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+69, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestStartItem, @QuestRewardItem1, @QuestRewardAmount1, @QuestRewardChoiceItemID1, @QuestRewardChoiceItemQuantity1, @QuestRewardChoiceItemID2, @QuestRewardChoiceItemQuantity2, @QuestRewardChoiceItemID3, @QuestRewardChoiceItemQuantity3, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+69;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+69);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+69;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+69);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+69;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+69, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+69;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+69, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
-DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId+69;
+DELETE FROM `quest_template_addon` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template_addon` (`ID`, `ProvidedItemCount`) VALUES
-(@QuestId+69, @QuestProvidedItemCount);
+(@QuestId, @QuestProvidedItemCount);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 60,
 @QuestMinLevel                  := 55,
 @QuestSortID                    := 2057,
@@ -3441,27 +3528,28 @@ SET
 @QuestRequestitems              := '<Erhard fades in and out of focus.>',
 @QuestRewardText                := 'The bag of horrors!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+70;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardBonusMoney`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredItemId1`, `RequiredItemCount1`) VALUES
-(@QuestId+70, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardBonusMoney, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredItemId1, @QuestRequiredItemCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+70;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+70);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+70;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+70);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+70;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+70, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+70;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+70, @QuestRewardText);
+(@QuestId, @QuestRewardText);
 
 SET
+@QuestId                        := @QuestId+1,
 @QuestLevel                     := 58,
 @QuestMinLevel                  := 55,
 @QuestSortID                    := 2057,
@@ -3481,22 +3569,22 @@ SET
 @QuestRequestitems              := '<Erhard fades in and out of focus.>',
 @QuestRewardText                := 'The bag of horrors!';
 
-DELETE FROM `quest_template` WHERE `ID`=@QuestId+71;
+DELETE FROM `quest_template` WHERE `ID`=@QuestId;
 INSERT INTO `quest_template` (`ID`, `QuestType`, `QuestLevel`, `MinLevel`, `QuestSortID`, `QuestInfoID`, `RewardXPDifficulty`, `RewardMoney`, `RewardBonusMoney`, `RewardFactionID1`, `RewardFactionValue1`, `Flags`, `AllowableRaces`, `LogTitle`, `LogDescription`, `QuestDescription`, `QuestCompletionLog`, `RequiredNpcOrGo1`, `RequiredNpcOrGoCount1`) VALUES
-(@QuestId+71, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
+(@QuestId, @QuestType, @QuestLevel, @QuestMinLevel, @QuestSortID, @QuestInfoID, @QuestRewardXPDifficulty, @QuestRewardMoney, @QuestRewardBonusMoney, @QuestRewardFactionId1, @QuestRewardFactionValue1, @QuestFlags, @QuestAllowableRaces, @QuestLogTitle, @QuestLogDescription, @QuestDescription, @QuestCompletionLog, @QuestRequiredNpcOrGo1, @QuestRequiredNpcOrGoCount1);
 
-DELETE FROM `creature_queststarter` WHERE `id`=@Entry+17 AND `quest`=@QuestId+71;
+DELETE FROM `creature_queststarter` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+71);
+(@Entry, @QuestId);
 
-DELETE FROM `creature_questender` WHERE `id`=@Entry+17 AND `quest`=@QuestId+71;
+DELETE FROM `creature_questender` WHERE `id`=@Entry AND `quest`=@QuestId;
 INSERT INTO `creature_questender` (`id`, `quest`) VALUES 
-(@Entry+17, @QuestId+71);
+(@Entry, @QuestId);
 
-DELETE FROM `quest_request_items` WHERE `ID`=@QuestId+71;
+DELETE FROM `quest_request_items` WHERE `ID`=@QuestId;
 INSERT INTO `quest_request_items` (`ID`, `CompletionText`) VALUES
-(@QuestId+71, @QuestRequestItems);
+(@QuestId, @QuestRequestItems);
 
-DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId+71;
+DELETE FROM `quest_offer_reward` WHERE `ID`=@QuestId;
 INSERT INTO `quest_offer_reward` (`ID`, `RewardText`) VALUES
-(@QuestId+71, @QuestRewardText);
+(@QuestId, @QuestRewardText);
