@@ -15,6 +15,7 @@ DELETE FROM `creature_questender` WHERE `quest` BETWEEN @QuestId AND @QuestId+71
 
 DELETE FROM `disables` WHERE `sourceType`=1 AND `entry` IN (5723, 5728, 5761, 14356, 166, 2040, 914, 962, 1486, 1487, 1013, 1014, 1199, 1200, 6561, 6565, 6921, 377, 378, 386, 387, 391, 1101, 1102, 1109, 2924, 2928, 2929, 1053, 14355, 1049, 1050, 3341, 3636, 2768, 2770, 2846, 2865, 3042, 7064, 7065, 1445, 1446, 3907, 4003, 4063, 4081, 4082, 4123, 4126, 4132, 4134, 4136, 4263, 4286, 4362, 7201, 7441, 7488, 7489, 4771, 5341, 5343, 5382, 5384, 5466, 5515, 5529);
 INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
+-- Classic
 -- Ragefire Chasm
 (1, 5723, 'Disabled quest for custom dungeon quests'),
 (1, 5728, 'Disabled quest for custom dungeon quests'),
@@ -100,6 +101,44 @@ INSERT INTO `disables` (`sourceType`, `entry`, `comment`) VALUES
 (1, 5466, 'Disabled quest for custom dungeon quests'),
 (1, 5515, 'Disabled quest for custom dungeon quests'),
 (1, 5529, 'Disabled quest for custom dungeon quests');
+-- Stratholme
+-- Blackrock Spire
+
+-- The Burning Crusade
+-- Hellfire Ramparts
+-- The Blood Furnace
+-- The Slave Pens
+-- The Underbog
+-- Mana-Tombs
+-- Auchenai Crypts
+-- Old Hillsbrad Foothills
+-- Sethekk Halls
+-- Shadow Labyrinth
+-- The Botanica
+-- The Mechanar
+-- The Shattered Halls
+-- The Steamvault
+-- Magisters' Terrace
+-- The Arcatraz
+-- The Black Morass
+
+-- Wrath of the Lich King
+-- Utgarde Keep
+-- The Nexus
+-- Azjol-Nerub
+-- Ahn'kahet: The Old Kingdom
+-- Drak'Tharon Keep
+-- Violet Hold
+-- Gundrak
+-- Halls of Stone
+-- Halls of Lightning
+-- Halls of Reflection
+-- Pit of Saron
+-- The Culling of Stratholme
+-- The Forge of Souls
+-- The Oculus
+-- Trial of the Champion
+-- Utgarde Pinnacle
 
 SET
 @QuestId         := 50000,
