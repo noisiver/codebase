@@ -46,13 +46,21 @@ function options_package
             clear
 
             # Perform an update to make sure nothing is missing
-            apt-get --yes update
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes update
+            else
+                apt-get --yes update
+            fi
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
-            apt-get --yes install libxml2-utils
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes install libxml2-utils
+            else
+                apt-get --yes install libxml2-utils
+            fi
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
@@ -70,13 +78,21 @@ function git_package
             clear
 
             # Perform an update to make sure nothing is missing
-            apt-get --yes update
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes update
+            else
+                apt-get --yes update
+            fi
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
-            apt-get --yes install git
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes install git
+            else
+                apt-get --yes install git
+            fi
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
@@ -105,13 +121,21 @@ function source_packages
             clear
 
             # Perform an update to make sure nothing is missing
-            apt-get --yes update
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes update
+            else
+                apt-get --yes update
+            fi
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install all packages that are missing
-            apt-get --yes install ${INSTALL[*]}
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes install ${INSTALL[*]}
+            else
+                apt-get --yes install ${INSTALL[*]}
+            fi
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
@@ -129,13 +153,21 @@ function database_package
             clear
 
             # Perform an update to make sure nothing is missing
-            apt-get --yes update
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes update
+            else
+                apt-get --yes update
+            fi
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
 
             # Install the package that is missing
-            apt-get --yes install mariadb-client
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes install mariadb-client
+            else
+                apt-get --yes install mariadb-client
+            fi
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
