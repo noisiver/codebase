@@ -219,317 +219,287 @@ function store_options
             <id>${13:-1}</id>
             <!-- The ip or hostname used to connect to the world server. Use external ip if required -->
             <address>${14:-127.0.0.1}</address>
+            <!-- The port used by the world server -->
+            <port>${15:-8085}</port>
             <!-- Server game type. 0 = normal, 1 = pvp, 6 = rp, 8 = rppvp -->
-            <game_type>${15:-0}</game_type>
+            <game_type>${16:-0}</game_type>
             <!-- Server realm zone. Set allowed alphabet in character names etc. 1 = development, 2 = united states, 6 = korea, 9 = german, 10 = french, 11 = spanish, 12 = russian, 14 = taiwan, 16 = china, 26 = test server -->
-            <realm_zone>${16:-1}</realm_zone>
+            <realm_zone>${17:-1}</realm_zone>
             <!-- Allow server to use content from expansions. Checks for expansion-related map files, client compatibility and class/race character creation. 0 = none, 1 = tbc, 2 = wotlk -->
-            <expansion>${17:-2}</expansion>
+            <expansion>${18:-2}</expansion>
             <!-- Maximum number of players in the world. Excluding Mods, GMs and Admins -->
-            <player_limit>${18:-1000}</player_limit>
+            <player_limit>${19:-1000}</player_limit>
             <!-- Disable cinematic intro at first login after character creation. Prevents buggy intros in case of custom start location coordinates. 0 = Show intro for each new character, 1 = Show intro only for first character of selected race, 2 = Disable intro for all classes -->
-            <skip_cinematics>${19:-0}</skip_cinematics>
+            <skip_cinematics>${20:-0}</skip_cinematics>
             <!-- Maximum level that can be reached by players. Levels below 1 and above 80 will reset to 80 -->
-            <max_level>${20:-80}</max_level>
+            <max_level>${21:-80}</max_level>
             <!-- Starting level for characters after creation. Levels below 1 and above 80 will reset to 1 -->
-            <start_level>${21:-1}</start_level>
+            <start_level>${22:-1}</start_level>
             <!-- Amount of money (in Copper) that a character has after creation -->
-            <start_money>${22:-0}</start_money>
+            <start_money>${23:-0}</start_money>
             <!-- Players will automatically gain max skill level when logging in or leveling up. false = disabled, true = enabled -->
-            <always_max_skill>${23:-false}</always_max_skill>
+            <always_max_skill>${24:-false}</always_max_skill>
             <!-- Character knows all flight paths (of both factions) after creation. false = disabled, true = enabled -->
-            <all_flight_paths>${24:-false}</all_flight_paths>
+            <all_flight_paths>${25:-false}</all_flight_paths>
             <!-- Characters start with all maps explored. false = disabled, true = enabled -->
-            <maps_explored>${25:-false}</maps_explored>
+            <maps_explored>${26:-false}</maps_explored>
             <!-- Allow players to use commands. false = disabled, true = enabled -->
-            <allow_commands>${26:-true}</allow_commands>
+            <allow_commands>${27:-true}</allow_commands>
             <!-- Allow non-raid quests to be completed while in a raid group. false = disabled, true = enabled -->
-            <quest_ignore_raid>${27:-false}</quest_ignore_raid>
+            <quest_ignore_raid>${28:-false}</quest_ignore_raid>
             <!-- Prevent players AFK from being logged out. false = disabled, true = enabled -->
-            <prevent_afk_logout>${28:-false}</prevent_afk_logout>
+            <prevent_afk_logout>${29:-false}</prevent_afk_logout>
             <!-- Highest level up to which a character can benefit from the Recruit-A-Friend experience multiplier -->
-            <raf_max_level>${29:-60}</raf_max_level>
+            <raf_max_level>${30:-60}</raf_max_level>
             <!-- Preload all grids on all non-instanced maps. This will take a great amount of additional RAM (ca. 9 GB) and causes the server to take longer to start, but can increase performance if used on a server with a high amount of players. It will also activate all creatures which are set active (e.g. the Fel Reavers in Hellfire Peninsula) on server start. false = disabled, true = enabled -->
-            <preload_map_grids>${30:-false}</preload_map_grids>
+            <preload_map_grids>${31:-false}</preload_map_grids>
             <!-- Set all creatures with waypoint movement active. This means that they will start movement once they are loaded (which happens on grid load) and keep moving even when no player is near. This will increase CPU usage significantly and can be used with enabled preload_map_grids to start waypoint movement on server startup. false = disabled, true = enabled -->
-            <set_all_waypoints_active>${31:-false}</set_all_waypoints_active>
+            <set_all_waypoints_active>${32:-false}</set_all_waypoints_active>
             <!-- Enable/Disable Minigob Manabonk in Dalaran. false = disabled, true = enabled -->
-            <enable_minigob_manabonk>${32:-true}</enable_minigob_manabonk>
+            <enable_minigob_manabonk>${33:-true}</enable_minigob_manabonk>
             <!-- Enable Warden anti-cheat system. false = disabled, true = enabled -->
-            <enable_warden>${33:-true}</enable_warden>
+            <enable_warden>${34:-true}</enable_warden>
             <!-- Allow players to stay in regular groups when logging off. This only affects normal groups and not raids or dungeon finder groups. false = players will leave their group when logging off, true = players will stay in their groups -->
-            <disable_leave_group>${34:-false}</disable_leave_group>
+            <disable_leave_group>${35:-false}</disable_leave_group>
             <!-- Time in seconds for mail delivery when sending items -->
-            <mail_delivery_delay>${35:-3600}</mail_delivery_delay>
+            <mail_delivery_delay>${36:-3600}</mail_delivery_delay>
             <allow_two_sided>
                 <!-- Allow creating characters of both factions on the same account. false = disabled, true = enabled -->
-                <accounts>${36:-true}</accounts>
+                <accounts>${37:-true}</accounts>
                 <!-- Allow calendar invites between factions. false = disabled, true = enabled -->
-                <calendar>${37:-false}</calendar>
+                <calendar>${38:-false}</calendar>
                 <!-- Allow say chat between factions. false = disabled, true = enabled -->
-                <chat>${38:-false}</chat>
+                <chat>${39:-false}</chat>
                 <!-- Allow emote messages between factions. false = disabled, true = enabled -->
-                <emote>${39:-false}</emote>
+                <emote>${40:-false}</emote>
                 <!-- Allow channel chat between factions. false = disabled, true = enabled -->
-                <channel>${40:-false}</channel>
+                <channel>${41:-false}</channel>
                 <!-- Allow group joining between factions. false = disabled, true = enabled -->
-                <group>${41:-false}</group>
+                <group>${42:-false}</group>
                 <!-- Allow guild joining between factions. false = disabled, true = enabled -->
-                <guild>${42:-false}</guild>
+                <guild>${43:-false}</guild>
                 <!-- Allow auctions between factions. false = disabled, true = enabled -->
-                <auction>${43:-false}</auction>
+                <auction>${44:-false}</auction>
                 <!-- Allow sending mails between factions. false = disabled, true = enabled -->
-                <mail>${44:-false}</mail>
+                <mail>${45:-false}</mail>
                 <!-- Show characters from both factions in the who list. false = disabled, true = enabled -->
-                <who_list>${45:-false}</who_list>
+                <who_list>${46:-false}</who_list>
                 <!-- Allow adding friends from other faction to the friends list. false = disabled, true = enabled -->
-                <friend>${46:-false}</friend>
+                <friend>${47:-false}</friend>
                 <!-- Allow trading between factions. false = disabled, true = enabled -->
-                <trade>${47:-false}</trade>
+                <trade>${48:-false}</trade>
             </allow_two_sided>
             <rates>
                 <!-- Experience rates (outside battleground) -->
-                <experience>${48:-1}</experience>
+                <experience>${49:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_experience>${49:-1}</rested_experience>
+                <rested_experience>${50:-1}</rested_experience>
                 <!-- Reputation gain rate -->
-                <reputation>${50:-1}</reputation>
+                <reputation>${51:-1}</reputation>
                 <!-- Drop rates for money -->
-                <money>${51:-1}</money>
+                <money>${52:-1}</money>
                 <!-- Crafting skills gain rate -->
-                <crafting>${52:-1}</crafting>
+                <crafting>${53:-1}</crafting>
                 <!-- Gathering skills gain rate -->
-                <gathering>${53:-1}</gathering>
+                <gathering>${54:-1}</gathering>
                 <!-- Weapon skills gain rate -->
-                <weapon_skill>${54:-1}</weapon_skill>
+                <weapon_skill>${55:-1}</weapon_skill>
                 <!-- Defense skills gain rate -->
-                <defense_skill>${55:-1}</defense_skill>
+                <defense_skill>${56:-1}</defense_skill>
             </rates>
             <gm>
                 <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
-                <login_state>${56:-true}</login_state>
+                <login_state>${57:-true}</login_state>
                 <!-- GM visibility at login. false = disabled, true = enabled -->
-                <enable_visibility>${57:-false}</enable_visibility>
+                <enable_visibility>${58:-false}</enable_visibility>
                 <!-- GM chat mode at login. false = disabled, true = enabled -->
-                <enable_chat>${58:-true}</enable_chat>
+                <enable_chat>${59:-true}</enable_chat>
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
-                <enable_whisper>${59:-false}</enable_whisper>
+                <enable_whisper>${60:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${60:-1}</show_gm_list>
+                <show_gm_list>${61:-1}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_who_list>${61:-0}</show_who_list>
+                <show_who_list>${62:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
-                <allow_friend>${62:-false}</allow_friend>
+                <allow_friend>${63:-false}</allow_friend>
                 <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
-                <allow_invite>${63:-false}</allow_invite>
+                <allow_invite>${64:-false}</allow_invite>
                 <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
-                <allow_lower_security>${64:-false}</allow_lower_security>
+                <allow_lower_security>${65:-false}</allow_lower_security>
             </gm>
         </world>
         <modules>
             <account_bound>
                 <!-- Enable/Disable the use of the AccountBound module -->
-                <enabled>${65:-false}</enabled>
+                <enabled>${66:-false}</enabled>
                 <!-- Enable/Disable companions to be account bound -->
-                <enable_companions>${66:-true}</enable_companions>
+                <enable_companions>${67:-true}</enable_companions>
                 <!-- Enable/Disable heirlooms to be account bound -->
-                <enable_heirlooms>${67:-true}</enable_heirlooms>
+                <enable_heirlooms>${68:-true}</enable_heirlooms>
                 <!-- Enable/Disable the mounts to be account bound -->
-                <enable_mounts>${68:-true}</enable_mounts>
+                <enable_mounts>${69:-true}</enable_mounts>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${69:-false}</enabled>
+                <enabled>${70:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${70:-false}</enable_buyer>
+                <enable_buyer>${71:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${71:-false}</enable_seller>
+                <enable_seller>${72:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${72:-0}</account_id>
+                <account_id>${73:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${73:-0}</character_guid>
+                <character_guid>${74:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${74:-250}</min_items>
+                <min_items>${75:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${75:-250}</max_items>
+                <max_items>${76:-250}</max_items>
             </ahbot>
             <archmage_timear>
                 <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${76:-false}</enabled>
+                <enabled>${77:-false}</enabled>
             </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module -->
-                <enabled>${77:-false}</enabled>
+                <enabled>${78:-false}</enabled>
                 <features>
                     <!-- Enable/Disable the ability to obtain heirlooms from the assistant -->
-                    <enable_heirlooms>${78:-true}</enable_heirlooms>
+                    <enable_heirlooms>${79:-true}</enable_heirlooms>
                     <!-- Enable/Disable the ability to obtain glyphs from the assistant -->
-                    <enable_glyphs>${79:-true}</enable_glyphs>
+                    <enable_glyphs>${80:-true}</enable_glyphs>
                     <!-- Enable/Disable the ability to obtain gems from the assistant -->
-                    <enable_gems>${80:-true}</enable_gems>
+                    <enable_gems>${81:-true}</enable_gems>
                     <!-- Enable/Disable the ability to obtain containers from the assistant -->
-                    <enable_containers>${81:-true}</enable_containers>
+                    <enable_containers>${82:-true}</enable_containers>
                     <utilities>
                         <!-- Enable/Disable the ability to obtain various utilities from the assistant -->
-                        <enabled>${82:-true}</enabled>
+                        <enabled>${83:-true}</enabled>
                         <!-- The cost in gold to perform a name change -->
-                        <name_change_cost>${83:-10}</name_change_cost>
+                        <name_change_cost>${84:-10}</name_change_cost>
                         <!-- The cost in gold to perform a customization -->
-                        <customization_cost>${84:-50}</customization_cost>
+                        <customization_cost>${85:-50}</customization_cost>
                         <!-- The cost in gold to perform a race change -->
-                        <race_change_cost>${85:-500}</race_change_cost>
+                        <race_change_cost>${86:-500}</race_change_cost>
                         <!-- The cost in gold to perform a faction change -->
-                        <faction_change_cost>${86:-1000}</faction_change_cost>
+                        <faction_change_cost>${87:-1000}</faction_change_cost>
                     </utilities>
                     <professions>
                         <apprentice>
                             <!-- Enable/Disable the ability to max out an apprentice profession -->
-                            <enabled>${87:-true}</enabled>
+                            <enabled>${88:-true}</enabled>
                             <!-- The cost in gold to max out an apprentice profession -->
-                            <cost>${88:-100}</cost>
+                            <cost>${89:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable the ability to max out an journeyman profession -->
-                            <enabled>${89:-true}</enabled>
+                            <enabled>${90:-true}</enabled>
                             <!-- The cost in gold to max out an journeyman profession -->
-                            <cost>${90:-250}</cost>
+                            <cost>${91:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable the ability to max out an expert profession -->
-                            <enabled>${91:-true}</enabled>
+                            <enabled>${92:-true}</enabled>
                             <!-- The cost in gold to max out an expert profession -->
-                            <cost>${92:-500}</cost>
+                            <cost>${93:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable the ability to max out an artisan profession -->
-                            <enabled>${93:-true}</enabled>
+                            <enabled>${94:-true}</enabled>
                             <!-- The cost in gold to max out an artisan profession -->
-                            <cost>${94:-750}</cost>
+                            <cost>${95:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable the ability to max out an master profession -->
-                            <enabled>${95:-false}</enabled>
+                            <enabled>${96:-false}</enabled>
                             <!-- The cost in gold to max out an master profession -->
-                            <cost>${96:-1250}</cost>
+                            <cost>${97:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable the ability to max out an grand master profession -->
-                            <enabled>${97:-false}</enabled>
+                            <enabled>${98:-false}</enabled>
                             <!-- The cost in gold to max out an grand master profession -->
-                            <cost>${98:-2500}</cost>
+                            <cost>${99:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
-            <dynamic_rates>
-                <!-- Enable/Disable the use of the Dynamic Rates module -->
-                <enabled>${99:-false}</enabled>
-                <!-- Enable/Disable to show additional information when earning extra money from loot or quests -->
-                <show_info>${100:-false}</show_info>
-                <multipliers>
-                    <level_1_to_59>
-                        <!-- The multiplier for experience gained for level 1 to 59 -->
-                        <experience>${101:-1}</experience>
-                        <!-- The multiplier for reputation gained for level 1 to 59 -->
-                        <reputation>${102:-1}</reputation>
-                        <!-- The multiplier for money looted and money earned from quests for level 1 to 59 -->
-                        <money>${103:-1}</money>
-                    </level_1_to_59>
-                    <level_60_to_69>
-                        <!-- The multiplier for experience gained for level 60 to 69 -->
-                        <experience>${104:-1}</experience>
-                        <!-- The multiplier for reputation gained for level 60 to 69 -->
-                        <reputation>${105:-1}</reputation>
-                        <!-- The multiplier for money looted and money earned from quests for level 60 to 69 -->
-                        <money>${106:-1}</money>
-                    </level_60_to_69>
-                    <level_70_to_79>
-                        <!-- The multiplier for experience gained for level 70 to 79 -->
-                        <experience>${107:-1}</experience>
-                        <!-- The multiplier for reputation gained for level 70 to 79 -->
-                        <reputation>${108:-1}</reputation>
-                        <!-- The multiplier for money looted and money earned from quests for level 70 to 79 -->
-                        <money>${109:-1}</money>
-                    </level_70_to_79>
-                </multipliers>
-            </dynamic_rates>
             <guild_funds>
                 <!-- Enable/Disable the use of the Guild Funds module. It deposits a percentage of the money looted and earned from quests into the guild bank -->
-                <enabled>${110:-false}</enabled>
+                <enabled>${100:-false}</enabled>
                 <percentages>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when looting. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <looted>${111:-10}</looted>
+                    <looted>${101:-10}</looted>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when completing quests. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <quests>${112:-3}</quests>
+                    <quests>${102:-3}</quests>
                 </percentages>
             </guild_funds>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${113:-false}</enabled>
+                <enabled>${103:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${114:-false}</enabled>
+                <enabled>${104:-false}</enabled>
                 <features>
                     <!-- Enable/Disable to learn class-specific spells -->
-                    <enable_class_spells>${115:-true}</enable_class_spells>
+                    <enable_class_spells>${105:-true}</enable_class_spells>
                     <!-- Enable/Disable to learn talent ranks -->
-                    <enable_talent_ranks>${116:-true}</enable_talent_ranks>
+                    <enable_talent_ranks>${106:-true}</enable_talent_ranks>
                     <!-- Enable/Disable to learn proficiencies -->
-                    <enable_proficiencies>${117:-true}</enable_proficiencies>
+                    <enable_proficiencies>${107:-true}</enable_proficiencies>
                     <!-- Enable/Disable to learn spells normally obtained through quests -->
-                    <enable_spells_from_quests>${118:-true}</enable_spells_from_quests>
+                    <enable_spells_from_quests>${108:-true}</enable_spells_from_quests>
                     <riding>
                         <!-- Enable/Disable to learn apprentice riding and mounts -->
-                        <enable_apprentice>${119:-false}</enable_apprentice>
+                        <enable_apprentice>${109:-false}</enable_apprentice>
                         <!-- Enable/Disable to learn journeyman riding and mounts -->
-                        <enable_journeyman>${120:-false}</enable_journeyman>
+                        <enable_journeyman>${110:-false}</enable_journeyman>
                         <!-- Enable/Disable to learn expert riding and mounts -->
-                        <enable_expert>${121:-false}</enable_expert>
+                        <enable_expert>${111:-false}</enable_expert>
                         <!-- Enable/Disable to learn artisan riding and mounts -->
-                        <enable_artisan>${122:-false}</enable_artisan>
+                        <enable_artisan>${112:-false}</enable_artisan>
                         <!-- Enable/Disable to learn cold weather flying at level 77 -->
-                        <enable_cold_weather_flying>${123:-false}</enable_cold_weather_flying>
+                        <enable_cold_weather_flying>${113:-false}</enable_cold_weather_flying>
                     </riding>
                 </features>
             </learn_spells>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${124:-false}</enabled>
+                <enabled>${114:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${125:-90}</referral_duration>
+                <referral_duration>${115:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${126:-7}</max_account_age>
+                <max_account_age>${116:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${127:-30}</days_until_reward>
+                    <days_until_reward>${117:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${128:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${118:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${129:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${119:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${130:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${120:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${131:-false}</enabled>
+                <enabled>${121:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${132:-58}</starting_level>
+                <starting_level>${122:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${133:-false}</enabled>
+                <enabled>${123:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${134:-2.0}</experience_multiplier>
+                <experience_multiplier>${124:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${135:-2.0}</money_multiplier>
+                <money_multiplier>${125:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${136:-2}</professions_multiplier>
+                <professions_multiplier>${126:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${137:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${127:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${138:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${128:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -553,6 +523,7 @@ function save_options
     "$OPTION_WORLD_MOTD" \
     $OPTION_WORLD_ID \
     $OPTION_WORLD_ADDRESS \
+    $OPTION_WORLD_PORT \
     $OPTION_WORLD_GAME_TYPE \
     $OPTION_WORLD_REALM_ZONE \
     $OPTION_WORLD_EXPANSION \
@@ -637,17 +608,6 @@ function save_options
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST \
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED \
     $OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST \
-    $OPTION_MODULES_DYNAMIC_RATES_ENABLED \
-    $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION \
-    $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY \
     $OPTION_MODULES_GUILD_FUNDS_ENABLED \
     $OPTION_MODULES_GUILD_FUNDS_PERCENTAGES_LOOTED \
     $OPTION_MODULES_GUILD_FUNDS_PERCENTAGES_QUESTS \
@@ -820,6 +780,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/address is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_ADDRESS="127.0.0.1"
+        RESET=true
+    fi
+
+    # Load the /options/world/port option
+    OPTION_WORLD_PORT="$(echo "cat /options/world/port/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_WORLD_PORT =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/port is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_PORT="8085"
         RESET=true
     fi
 
@@ -1576,105 +1545,6 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/assistant/features/professions/grand_master/cost is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST="2500"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/enabled option
-    OPTION_MODULES_DYNAMIC_RATES_ENABLED="$(echo "cat /options/modules/dynamic_rates/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED != "true" && $OPTION_MODULES_DYNAMIC_RATES_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/show_info option
-    OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO="$(echo "cat /options/modules/dynamic_rates/show_info/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO != "true" && $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/show_info is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/experience option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE="1"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION="1"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_1_to_59/money option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_1_to_59/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_1_to_59/money is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY="1"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/experience option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE="1"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION="1"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_60_to_69/money option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_60_to_69/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_60_to_69/money is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY="1"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/experience option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE="1"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION="1"
-        RESET=true
-    fi
-
-    # Load the /options/modules/dynamic_rates/multipliers/level_70_to_79/money option
-    OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY="$(echo "cat /options/modules/dynamic_rates/multipliers/level_70_to_79/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY =~ ^[0-9.]+$ ]] || [[ $OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/dynamic_rates/multipliers/level_70_to_79/money is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY="1"
         RESET=true
     fi
 
@@ -3014,9 +2884,9 @@ function import_database
             fi
         done
 
-        printf "${COLOR_ORANGE}Adding to the realmlist (id: $OPTION_WORLD_ID, name: $OPTION_WORLD_NAME, address $OPTION_WORLD_ADDRESS)${COLOR_END}\n"
+        printf "${COLOR_ORANGE}Adding to the realmlist (id: $OPTION_WORLD_ID, name: $OPTION_WORLD_NAME, address $OPTION_WORLD_ADDRESS, port $OPTION_WORLD_PORT)${COLOR_END}\n"
         # Update the realmlist with the id, name and address specified
-        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$OPTION_WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$OPTION_WORLD_ID', '$OPTION_WORLD_NAME', '$OPTION_WORLD_ADDRESS', '$OPTION_WORLD_ADDRESS', '255.255.255.0', '8085')"
+        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$OPTION_WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$OPTION_WORLD_ID', '$OPTION_WORLD_NAME', '$OPTION_WORLD_ADDRESS', '$OPTION_WORLD_ADDRESS', '255.255.255.0', '$OPTION_WORLD_PORT')"
 
         # Check to make sure there weren't any errors
         if [[ $? -ne 0 ]]; then
@@ -3456,6 +3326,7 @@ function set_config
         sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$OPTION_MYSQL_HOSTNAME';'$OPTION_MYSQL_PORT';'$OPTION_MYSQL_USERNAME';'$OPTION_MYSQL_PASSWORD';'$OPTION_MYSQL_DATABASES_CHARACTERS'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/RealmID =.*/RealmID = '$OPTION_WORLD_ID'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/WorldServerPort =.*/WorldServerPort = '$OPTION_WORLD_PORT'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GameType =.*/GameType = '$OPTION_WORLD_GAME_TYPE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/RealmZone =.*/RealmZone = '$OPTION_WORLD_REALM_ZONE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Expansion =.*/Expansion = '$OPTION_WORLD_EXPANSION'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
