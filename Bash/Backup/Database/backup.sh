@@ -279,7 +279,7 @@ function backup_database
         fi
 
         # Get the list of databases to export
-        DATABASES="$(mysql --defaults-extra-file=$MYSQL_CNF -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'phpmyadmin'") AND SCHEMA_NAME NOT LIKE "'%world%'"')"
+        DATABASES="$(mysql --defaults-extra-file=$MYSQL_CNF -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'phpmyadmin'", "'aowow'") AND SCHEMA_NAME NOT LIKE "'%world%'"')"
 
         # Loop through each database
         for DATABASE in $DATABASES; do
