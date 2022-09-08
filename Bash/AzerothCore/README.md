@@ -11,7 +11,16 @@ This script does the following:
 
 The script supports Debian 11, Ubuntu 21.04 and Ubuntu 21.10.
 
-I never run the script as anything other than root so I unfortunately will not be adding support for non-root users.
+Ubuntu 20.04 is supported by requires some work. After running the script and seeing it error when running CMake, I run the following lines to install Boost 1.74 before clearing the build folder and running the script again.
+
+```
+wget https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.tar.bz2
+tar -xf boost_1_74_0.tar.bz2
+cd boost_1_74_0
+sudo ./bootstrap.sh
+sudo ./b2
+sudo ./b2 install
+```
 
 Creating the following folder in the same location as the script will let you automatically import custom content to the world database.
 - **sql/world** | *Placing sql queries inside this folder will automatically import them to the world database*
