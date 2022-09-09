@@ -399,7 +399,7 @@ function save_options
     $OPTION_WORLD_GM_SHOW_WHO_LIST \
     $OPTION_WORLD_GM_ALLOW_FRIEND \
     $OPTION_WORLD_GM_ALLOW_INVITE \
-    $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
+    $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY
 }
 
 # A function that loads options from the file
