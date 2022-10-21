@@ -338,168 +338,170 @@ function store_options
                 <enable_heirlooms>${68:-true}</enable_heirlooms>
                 <!-- Enable/Disable the mounts to be account bound -->
                 <enable_mounts>${69:-true}</enable_mounts>
+                <!-- Enable/Disable companions, heirlooms and mounts to be shared across linked accounts -->
+                <enable_linked_accounts>${70:-false}</enable_mounts>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${70:-false}</enabled>
+                <enabled>${71:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${71:-false}</enable_buyer>
+                <enable_buyer>${72:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${72:-false}</enable_seller>
+                <enable_seller>${73:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${73:-0}</account_id>
+                <account_id>${74:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${74:-0}</character_guid>
+                <character_guid>${75:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${75:-250}</min_items>
+                <min_items>${76:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${76:-250}</max_items>
+                <max_items>${77:-250}</max_items>
             </ahbot>
             <archmage_timear>
                 <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${77:-false}</enabled>
+                <enabled>${78:-false}</enabled>
             </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module -->
-                <enabled>${78:-false}</enabled>
+                <enabled>${79:-false}</enabled>
                 <features>
                     <!-- Enable/Disable the ability to obtain heirlooms from the assistant -->
-                    <enable_heirlooms>${79:-true}</enable_heirlooms>
+                    <enable_heirlooms>${80:-true}</enable_heirlooms>
                     <!-- Enable/Disable the ability to obtain glyphs from the assistant -->
-                    <enable_glyphs>${80:-true}</enable_glyphs>
+                    <enable_glyphs>${81:-true}</enable_glyphs>
                     <!-- Enable/Disable the ability to obtain gems from the assistant -->
-                    <enable_gems>${81:-true}</enable_gems>
+                    <enable_gems>${82:-true}</enable_gems>
                     <!-- Enable/Disable the ability to obtain containers from the assistant -->
-                    <enable_containers>${82:-true}</enable_containers>
+                    <enable_containers>${83:-true}</enable_containers>
                     <utilities>
                         <!-- Enable/Disable the ability to obtain various utilities from the assistant -->
-                        <enabled>${83:-true}</enabled>
+                        <enabled>${84:-true}</enabled>
                         <!-- The cost in gold to perform a name change -->
-                        <name_change_cost>${84:-10}</name_change_cost>
+                        <name_change_cost>${85:-10}</name_change_cost>
                         <!-- The cost in gold to perform a customization -->
-                        <customization_cost>${85:-50}</customization_cost>
+                        <customization_cost>${86:-50}</customization_cost>
                         <!-- The cost in gold to perform a race change -->
-                        <race_change_cost>${86:-500}</race_change_cost>
+                        <race_change_cost>${87:-500}</race_change_cost>
                         <!-- The cost in gold to perform a faction change -->
-                        <faction_change_cost>${87:-1000}</faction_change_cost>
+                        <faction_change_cost>${88:-1000}</faction_change_cost>
                     </utilities>
                     <professions>
                         <apprentice>
                             <!-- Enable/Disable the ability to max out an apprentice profession -->
-                            <enabled>${88:-true}</enabled>
+                            <enabled>${89:-true}</enabled>
                             <!-- The cost in gold to max out an apprentice profession -->
-                            <cost>${89:-100}</cost>
+                            <cost>${90:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable the ability to max out an journeyman profession -->
-                            <enabled>${90:-true}</enabled>
+                            <enabled>${91:-true}</enabled>
                             <!-- The cost in gold to max out an journeyman profession -->
-                            <cost>${91:-250}</cost>
+                            <cost>${92:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable the ability to max out an expert profession -->
-                            <enabled>${92:-true}</enabled>
+                            <enabled>${93:-true}</enabled>
                             <!-- The cost in gold to max out an expert profession -->
-                            <cost>${93:-500}</cost>
+                            <cost>${94:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable the ability to max out an artisan profession -->
-                            <enabled>${94:-true}</enabled>
+                            <enabled>${95:-true}</enabled>
                             <!-- The cost in gold to max out an artisan profession -->
-                            <cost>${95:-750}</cost>
+                            <cost>${96:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable the ability to max out an master profession -->
-                            <enabled>${96:-false}</enabled>
+                            <enabled>${97:-false}</enabled>
                             <!-- The cost in gold to max out an master profession -->
-                            <cost>${97:-1250}</cost>
+                            <cost>${98:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable the ability to max out an grand master profession -->
-                            <enabled>${98:-false}</enabled>
+                            <enabled>${99:-false}</enabled>
                             <!-- The cost in gold to max out an grand master profession -->
-                            <cost>${99:-2500}</cost>
+                            <cost>${100:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <guild_funds>
                 <!-- Enable/Disable the use of the Guild Funds module. It deposits a percentage of the money looted and earned from quests into the guild bank -->
-                <enabled>${100:-false}</enabled>
+                <enabled>${101:-false}</enabled>
                 <percentages>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when looting. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <looted>${101:-10}</looted>
+                    <looted>${102:-10}</looted>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when completing quests. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <quests>${102:-3}</quests>
+                    <quests>${103:-3}</quests>
                 </percentages>
             </guild_funds>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${103:-false}</enabled>
+                <enabled>${104:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${104:-false}</enabled>
+                <enabled>${105:-false}</enabled>
                 <features>
                     <!-- Enable/Disable to learn class-specific spells -->
-                    <enable_class_spells>${105:-true}</enable_class_spells>
+                    <enable_class_spells>${106:-true}</enable_class_spells>
                     <!-- Enable/Disable to learn talent ranks -->
-                    <enable_talent_ranks>${106:-true}</enable_talent_ranks>
+                    <enable_talent_ranks>${107:-true}</enable_talent_ranks>
                     <!-- Enable/Disable to learn proficiencies -->
-                    <enable_proficiencies>${107:-true}</enable_proficiencies>
+                    <enable_proficiencies>${108:-true}</enable_proficiencies>
                     <!-- Enable/Disable to learn spells normally obtained through quests -->
-                    <enable_spells_from_quests>${108:-true}</enable_spells_from_quests>
+                    <enable_spells_from_quests>${109:-true}</enable_spells_from_quests>
                     <riding>
                         <!-- Enable/Disable to learn apprentice riding and mounts -->
-                        <enable_apprentice>${109:-false}</enable_apprentice>
+                        <enable_apprentice>${110:-false}</enable_apprentice>
                         <!-- Enable/Disable to learn journeyman riding and mounts -->
-                        <enable_journeyman>${110:-false}</enable_journeyman>
+                        <enable_journeyman>${111:-false}</enable_journeyman>
                         <!-- Enable/Disable to learn expert riding and mounts -->
-                        <enable_expert>${111:-false}</enable_expert>
+                        <enable_expert>${112:-false}</enable_expert>
                         <!-- Enable/Disable to learn artisan riding and mounts -->
-                        <enable_artisan>${112:-false}</enable_artisan>
+                        <enable_artisan>${113:-false}</enable_artisan>
                         <!-- Enable/Disable to learn cold weather flying at level 77 -->
-                        <enable_cold_weather_flying>${113:-false}</enable_cold_weather_flying>
+                        <enable_cold_weather_flying>${114:-false}</enable_cold_weather_flying>
                     </riding>
                 </features>
             </learn_spells>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${114:-false}</enabled>
+                <enabled>${115:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${115:-90}</referral_duration>
+                <referral_duration>${116:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${116:-7}</max_account_age>
+                <max_account_age>${117:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${117:-30}</days_until_reward>
+                    <days_until_reward>${118:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${118:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${119:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${119:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${120:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${120:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${121:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${121:-false}</enabled>
+                <enabled>${122:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${122:-58}</starting_level>
+                <starting_level>${123:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${123:-false}</enabled>
+                <enabled>${124:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${124:-2.0}</experience_multiplier>
+                <experience_multiplier>${125:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${125:-2.0}</money_multiplier>
+                <money_multiplier>${126:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${126:-2}</professions_multiplier>
+                <professions_multiplier>${127:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${127:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${128:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${128:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${129:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -578,6 +580,7 @@ function save_options
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS \
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_HEIRLOOMS \
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS \
+    $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS \
     $OPTION_MODULES_AHBOT_ENABLED \
     $OPTION_MODULES_AHBOT_ENABLE_BUYER \
     $OPTION_MODULES_AHBOT_ENABLE_SELLER \
@@ -1275,6 +1278,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/account_bound/enable_mounts is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS="true"
+        RESET=true
+    fi
+
+    # Load the /options/modules/account_bound/enable_linked_accounts option
+    OPTION_MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS="$(echo "cat /options/modules/account_bound/enable_linked_accounts/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS != "true" && $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/account_bound/enable_linked_accounts is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS="false"
         RESET=true
     fi
 
@@ -3410,6 +3422,7 @@ function set_config
             [ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS == "true" ] && MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS=1 || MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS=0
             [ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_HEIRLOOMS == "true" ] && MODULES_ACCOUNT_BOUND_ENABLE_HEIRLOOMS=1 || MODULES_ACCOUNT_BOUND_ENABLE_HEIRLOOMS=0
             [ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS == "true" ] && MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS=1 || MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS=0
+            [ $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS == "true" ] && MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS=1 || MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS=0
 
             # Copy the file before editing it
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
@@ -3418,6 +3431,7 @@ function set_config
             sed -i 's/AccountBound.Companions =.*/AccountBound.Companions = '$MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
             sed -i 's/AccountBound.Heirlooms =.*/AccountBound.Heirlooms = '$MODULES_ACCOUNT_BOUND_ENABLE_HEIRLOOMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
             sed -i 's/AccountBound.Mounts =.*/AccountBound.Mounts = '$MODULES_ACCOUNT_BOUND_ENABLE_MOUNTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+            sed -i 's/AccountBound.LinkedAccounts =.*/AccountBound.LinkedAccounts = '$MODULES_ACCOUNT_BOUND_ENABLE_LINKED_ACCOUNTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf
         else
             # Check if the config file exists
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then

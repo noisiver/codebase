@@ -12,8 +12,8 @@ SET
 
 -- Creature template
 DELETE FROM `creature_template` WHERE `entry`=@Entry;
-INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `type`) VALUES
-(@Entry, @Model, @Name, @Title, @Icon, @MinLevel, @MaxLevel, @Faction, @NPCFlag, @Type);
+INSERT INTO `creature_template` (`entry`, `modelid1`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `type`, `unit_class`) VALUES
+(@Entry, @Model, @Name, @Title, @Icon, @MinLevel, @MaxLevel, @Faction, @NPCFlag, @Type, 1);
 
 -- Spawn point
 DELETE FROM `creature` WHERE `id1`=@Entry;
