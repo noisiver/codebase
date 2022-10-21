@@ -339,7 +339,7 @@ function store_options
                 <!-- Enable/Disable the mounts to be account bound -->
                 <enable_mounts>${69:-true}</enable_mounts>
                 <!-- Enable/Disable companions, heirlooms and mounts to be shared across linked accounts -->
-                <enable_linked_accounts>${70:-false}</enable_mounts>
+                <enable_linked_accounts>${70:-false}</enable_linked_accounts>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
