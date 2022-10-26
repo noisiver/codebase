@@ -1,7 +1,7 @@
--- Emblem of Conquest
+-- Emblem of Heroism
 SET
-@emblemName := 'Emblem of Conquest',
-@emblem := 45624,
+@emblemName := 'Emblem of Heroism',
+@emblem := 40752,
 @bossAmount := 1,
 @finalBossAmount := 2;
 
