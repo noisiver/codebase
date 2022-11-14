@@ -3878,13 +3878,19 @@ function stop_server
 
     # Check if the worldserver is running
     if [[ ! -z `screen -list | grep -E "world"` ]]; then
-        printf "${COLOR_ORANGE}Telling the world server to save before shutting down.${COLOR_END}\n"
+        printf "${COLOR_ORANGE}Telling the world server to shut down.${COLOR_END}\n"
 
-        # Send the saveall command to the worldserver
-        screen -S world -p 0 -X stuff "saveall^m"
+        # Get the process id
+        PID=$(pgrep worldserver)
+        
+        # Make sure the process id isn't empty
+        if [[ $PID != "" ]]; then
+            # Send shutdown command
+            screen -S world -p 0 -X stuff "server shutdown 5^m"
 
-        # Sleep for 3 seconds to let the server save
-        sleep 3
+            # Wait for up to 10 seconds before terminating
+            timeout 10 tail --pid=$PID -f /dev/null
+        fi
     fi
 
     # Check if the file exists
