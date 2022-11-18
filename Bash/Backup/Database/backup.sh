@@ -112,12 +112,16 @@ function store_options
             <!-- The amount of files to save locally -->
             <max_files>${7:-24}</max_files>
         </local_backups>
-        <gdrive_backups>
-            <!-- Enable the use of google drive. Note: It has to be set up ahead of time! -->
+        <cloud_backups>
+            <!-- Enable the use of cloud storage. Note: It has to be set up ahead of time! -->
             <enabled>${8:-false}</enabled>
-            <!-- The amount of files to store on google drive -->
-            <max_files>${9:-24}</max_files>
-        </gdrive_backups>
+            <!-- The type of cloud storage to use. Accepted values are gdrive and mega -->
+            <type>${9:-gdrive}</type>
+            <!-- The location to store cloud backups -->
+            <location>${10:-/opt/backup/database/cloud}</location>
+            <!-- The amount of files to store on the cloud -->
+            <max_files>${11:-24}</max_files>
+        </cloud_backups>
     </options>" | xmllint --format - > $OPTIONS
 }
 
@@ -132,8 +136,10 @@ function save_options
     $OPTION_LOCAL_BACKUPS_ENABLED \
     $OPTION_LOCAL_BACKUPS_LOCATION \
     $OPTION_LOCAL_BACKUPS_MAX_FILES \
-    $OPTION_GDRIVE_BACKUPS_ENABLED \
-    $OPTION_GDRIVE_BACKUPS_MAX_FILES
+    $OPTION_CLOUD_BACKUPS_ENABLED \
+    $OPTION_CLOUD_BACKUPS_TYPE \
+    $OPTION_CLOUD_BACKUPS_LOCATION \
+    $OPTION_CLOUD_BACKUPS_MAX_FILES
 }
 
 # A function that loads options from the file
@@ -214,21 +220,39 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/gdrive_backups/enabled option
-    OPTION_GDRIVE_BACKUPS_ENABLED="$(echo "cat /options/gdrive_backups/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_GDRIVE_BACKUPS_ENABLED != "true" && $OPTION_GDRIVE_BACKUPS_ENABLED != "false" ]]; then
+    # Load the /options/cloud_backups/enabled option
+    OPTION_CLOUD_BACKUPS_ENABLED="$(echo "cat /options/cloud_backups/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_CLOUD_BACKUPS_ENABLED != "true" && $OPTION_CLOUD_BACKUPS_ENABLED != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/gdrive_backups/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_GDRIVE_BACKUPS_ENABLED="false"
+        printf "${COLOR_RED}The option at /options/cloud_backups/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_CLOUD_BACKUPS_ENABLED="false"
         RESET=true
     fi
 
-    # Load the /options/gdrive_backups/max_files option
-    OPTION_GDRIVE_BACKUPS_MAX_FILES="$(echo "cat /options/gdrive_backups/max_files/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_GDRIVE_BACKUPS_MAX_FILES =~ ^[0-9]+$ ]]; then
+    # Load the /options/cloud_backups/type option
+    OPTION_CLOUD_BACKUPS_TYPE="$(echo "cat /options/cloud_backups/type/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_CLOUD_BACKUPS_TYPE != "gdrive" && $OPTION_CLOUD_BACKUPS_TYPE != "mega" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/gdrive_backups/max_files is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_GDRIVE_BACKUPS_MAX_FILES="24"
+        printf "${COLOR_RED}The option at /options/cloud_backups/type is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_CLOUD_BACKUPS_TYPE="gdrive"
+        RESET=true
+    fi
+
+    # Load the /options/cloud_backups/location option
+    OPTION_CLOUD_BACKUPS_LOCATION="$(echo "cat /options/cloud_backups/location/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [ -z $OPTION_CLOUD_BACKUPS_LOCATION ] || [[ $OPTION_CLOUD_BACKUPS_LOCATION == "" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/cloud_backups/location is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_CLOUD_BACKUPS_LOCATION="/opt/backup/database/cloud"
+        RESET=true
+    fi
+
+    # Load the /options/cloud_backups/max_files option
+    OPTION_CLOUD_BACKUPS_MAX_FILES="$(echo "cat /options/cloud_backups/max_files/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_CLOUD_BACKUPS_MAX_FILES =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/cloud_backups/max_files is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_CLOUD_BACKUPS_MAX_FILES="24"
         RESET=true
     fi
 
@@ -265,7 +289,7 @@ function backup_database
     fi
 
     # Check to make sure a backup for the current date and time doesn't exist already
-    if [[ $OPTION_LOCAL_BACKUPS_ENABLED == "true" && ! -f $OPTION_LOCAL_BACKUPS_LOCATION/$BACKUP_DATE.tar.gz ]] || [[ $OPTION_GDRIVE_BACKUPS_ENABLED == "true" && ! -f $HOME/gdrive/database/$BACKUP_DATE.tar.gz ]]; then
+    if [[ $OPTION_LOCAL_BACKUPS_ENABLED == "true" && ! -f $OPTION_LOCAL_BACKUPS_LOCATION/$BACKUP_DATE.tar.gz ]] || [[ $OPTION_CLOUD_BACKUPS_ENABLED == "true" && ! -f $OPTION_CLOUD_BACKUPS_LOCATION/$BACKUP_DATE.tar.gz ]]; then
         # Make sure we can connect to the database server
         if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES;"` ]]; then
             # We can't access the database
@@ -331,55 +355,62 @@ function backup_database
         fi
 
         # Check if the local storage is enabled
-        if [ $OPTION_GDRIVE_BACKUPS_ENABLED == "true" ]; then
-            printf "${COLOR_ORANGE}Uploading the archive to google drive${COLOR_END}\n"
-
-            # Switch to the google drive folder
-            cd $HOME/gdrive
-
-            # Download any changes from google drive
-            /snap/bin/drive pull -no-prompt > /dev/null 2>&1
-
-            # Stop the script on error
-            if [ $? -ne 0 ]; then
-                exit $?
+        if [ $OPTION_CLOUD_BACKUPS_ENABLED == "true" ]; then
+            # Check if the local storage folder exists
+            if [[ ! -d $OPTION_CLOUD_BACKUPS_LOCATION ]]; then
+                # Create the folder
+                mkdir -p $OPTION_CLOUD_BACKUPS_LOCATION
             fi
 
-            # Check if the local storage folder exists
-            if [[ ! -d $HOME/gdrive/database ]]; then
-                # Create the folder
-                mkdir -p $HOME/gdrive/database
+            # Check if google drive is used
+            if [[ $OPTION_CLOUD_BACKUPS_TYPE == "gdrive" ]]; then
+                # Switch to the google drive folder
+                cd $OPTION_CLOUD_BACKUPS_TYPE
+
+                # Download any changes from google drive
+                /snap/bin/drive pull -no-prompt > /dev/null 2>&1
+
+                # Stop the script on error
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
             fi
 
             # Copy the archive to the local storage
-            cp -r $ROOT/tmp/$BACKUP_DATE.tar.gz $HOME/gdrive/database/$BACKUP_DATE.tar.gz
+            cp -r $ROOT/tmp/$BACKUP_DATE.tar.gz $OPTION_CLOUD_BACKUPS_LOCATION/$BACKUP_DATE.tar.gz
 
-            MAX_LOCAL_FILES=$((OPTION_GDRIVE_BACKUPS_MAX_FILES + 1))
-            ls -tp $HOME/gdrive/database/* | grep -v '/$' | tail -n +$MAX_LOCAL_FILES | xargs -d '\n' -r rm --
+            MAX_LOCAL_FILES=$((OPTION_CLOUD_BACKUPS_MAX_FILES + 1))
+            ls -tp $OPTION_CLOUD_BACKUPS_LOCATION/* | grep -v '/$' | tail -n +$MAX_LOCAL_FILES | xargs -d '\n' -r rm --
 
-            # Upload all changes to google drive
-            /snap/bin/drive push -no-prompt > /dev/null 2>&1
+            # Check what type of cloud storage is used
+            if [[ $OPTION_CLOUD_BACKUPS_TYPE == "gdrive" ]]; then
+                # Switch to the google drive folder
+                cd $OPTION_CLOUD_BACKUPS_LOCATION
 
-            # Stop the script on error
-            if [ $? -ne 0 ]; then
-                exit $?
+                # Upload all changes to google drive
+                /snap/bin/drive push -no-prompt > /dev/null 2>&1
+
+                # Stop the script on error
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+
+                # Empty the google drive trash
+                /snap/bin/drive emptytrash -no-prompt > /dev/null 2>&1
+
+                # Stop the script on error
+                if [ $? -ne 0 ]; then
+                    exit $?
+                fi
+            elif [[ $OPTION_CLOUD_BACKUPS_TYPE == "mega" ]]; then
+                mega-put $OPTION_CLOUD_BACKUPS_LOCATION /
             fi
-
-
-            # Empty the google drive trash
-            /snap/bin/drive emptytrash -no-prompt > /dev/null 2>&1
-
-            # Stop the script on error
-            if [ $? -ne 0 ]; then
-                exit $?
-            fi
-
         fi
 
         # Remove the temporary folder
         rm -rf $ROOT/tmp
     else
-        if [[ $OPTION_LOCAL_BACKUPS_ENABLED == "false" && $OPTION_GDRIVE_BACKUPS_ENABLED == "false" ]]; then
+        if [[ $OPTION_LOCAL_BACKUPS_ENABLED == "false" && $OPTION_CLOUD_BACKUPS_ENABLED == "false" ]]; then
             printf "${COLOR_RED}All backup storage options are disabled.${COLOR_END}\n"
         else
             printf "${COLOR_RED}A backup of the current date and time has already been created.${COLOR_END}\n"
