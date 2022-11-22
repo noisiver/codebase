@@ -379,8 +379,8 @@ function backup_database
             # Copy the archive to the local storage
             cp -r $ROOT/tmp/$BACKUP_DATE.tar.gz $OPTION_CLOUD_BACKUPS_LOCATION/$BACKUP_DATE.tar.gz
 
-            MAX_LOCAL_FILES=$((OPTION_CLOUD_BACKUPS_MAX_FILES + 1))
-            ls -tp $OPTION_CLOUD_BACKUPS_LOCATION/* | grep -v '/$' | tail -n +$MAX_LOCAL_FILES | xargs -d '\n' -r rm --
+            MAX_CLOUD_FILES=$((OPTION_CLOUD_BACKUPS_MAX_FILES + 1))
+            ls -tp $OPTION_CLOUD_BACKUPS_LOCATION/* | grep -v '/$' | tail -n +$MAX_CLOUD_FILES | xargs -d '\n' -r rm --
 
             # Check what type of cloud storage is used
             if [[ $OPTION_CLOUD_BACKUPS_TYPE == "gdrive" ]]; then
@@ -404,6 +404,16 @@ function backup_database
                 fi
             elif [[ $OPTION_CLOUD_BACKUPS_TYPE == "mega" ]]; then
                 mega-put $OPTION_CLOUD_BACKUPS_LOCATION /
+
+                MEGA_DIRECTORY=${OPTION_CLOUD_BACKUPS_LOCATION##*/}
+                MEGA_FILE_COUNT=$(mega-ls /$MEGA_DIRECTORY | wc -l)
+                MEGA_REMOVED_FILE_COUNT=$((MEGA_FILE_COUNT - OPTION_CLOUD_BACKUPS_MAX_FILES))
+
+                if [[ $MEGA_REMOVED_FILE_COUNT > 0 ]]; then
+                    for f in `mega-ls /$MEGA_DIRECTORY | head -n $MEGA_REMOVED_FILE_COUNT`; do
+                        mega-rm -r -f /$MEGA_DIRECTORY/$f
+                    done
+                fi
             fi
         fi
 
