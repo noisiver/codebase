@@ -1,5 +1,6 @@
 DELETE FROM `recruit_a_friend_accounts`;
 INSERT INTO `recruit_a_friend_accounts` (`account_id`, `recruiter_id`, `status`) VALUES
+(3, 2, 2),
 (4, 3, 2),
 (5, 4, 2),
 (6, 5, 2),
@@ -21,8 +22,10 @@ INSERT INTO `recruit_a_friend_accounts` (`account_id`, `recruiter_id`, `status`)
 (22, 21, 2),
 (23, 22, 2),
 (24, 23, 2),
-(25, 24, 2);
+(25, 24, 2),
+(26, 25, 2);
 
+UPDATE `account` SET `recruiter`=2 WHERE `id`=3;
 UPDATE `account` SET `recruiter`=3 WHERE `id`=4;
 UPDATE `account` SET `recruiter`=4 WHERE `id`=5;
 UPDATE `account` SET `recruiter`=5 WHERE `id`=6;
@@ -45,3 +48,4 @@ UPDATE `account` SET `recruiter`=21 WHERE `id`=22;
 UPDATE `account` SET `recruiter`=22 WHERE `id`=23;
 UPDATE `account` SET `recruiter`=23 WHERE `id`=24;
 UPDATE `account` SET `recruiter`=24 WHERE `id`=25;
+UPDATE `account` SET `recruiter`=25 WHERE `id`=26;
