@@ -1810,11 +1810,15 @@ function stop_server
         
         # Make sure the process id isn't empty
         if [[ $PID != "" ]]; then
-            # Send shutdown command
-            screen -S world -p 0 -X stuff "server shutdown 5^m"
+            # Send command
+            if [[ $2 == "restart" ]]; then
+                screen -S world -p 0 -X stuff "server restart 10^m"
+            else
+                screen -S world -p 0 -X stuff "server shutdown 10^m"
+            fi
 
-            # Wait for up to 10 seconds before terminating
-            timeout 10 tail --pid=$PID -f /dev/null
+            # Wait for up to 30 seconds before terminating
+            timeout 30 tail --pid=$PID -f /dev/null
         fi
     fi
 
