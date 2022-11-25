@@ -106,14 +106,10 @@ function source_packages
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # An array of all required packages
-        PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libace-dev" "libmariadb-dev-compat" "mariadb-client")
+        PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libmariadb-dev-compat" "mariadb-client")
 
         if [[ $VERSION != "20.04" ]]; then
             PACKAGES="${PACKAGES} libboost1.74-all-dev"
-        fi
-
-        if [[ $VERSION != "22.04" ]]; then
-            PACKAGES="${PACKAGES} libace-6.*"
         fi
 
         # Loop through each member of the array and add them to the list of packages to be installed

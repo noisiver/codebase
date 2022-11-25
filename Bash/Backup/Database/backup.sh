@@ -1,5 +1,5 @@
 #!/bin/bash
-DISTRIBUTION=("debian11" "ubuntu20.04" "ubuntu20.10" "ubuntu21.04" "ubuntu21.10")
+DISTRIBUTION=("debian11" "ubuntu20.04" "ubuntu20.10" "ubuntu21.04" "ubuntu21.10" "ubuntu22.04")
 
 if [ -f /etc/os-release ]; then
     . /etc/os-release
@@ -51,15 +51,17 @@ function options_package
             clear
 
             # Perform an update to make sure nothing is missing
-            apt-get --yes update
-            if [ $? -ne 0 ]; then
-                exit $?
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes update
+            else
+                apt-get --yes update
             fi
 
             # Install the package that is missing
-            apt-get --yes install libxml2-utils
-            if [ $? -ne 0 ]; then
-                exit $?
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes install libxml2-utils
+            else
+                apt-get --yes install libxml2-utils
             fi
         fi
     fi
@@ -75,13 +77,18 @@ function database_package
             clear
 
             # Perform an update to make sure nothing is missing
-            apt-get --yes update
-            if [ $? -ne 0 ]; then
-                exit $?
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes update
+            else
+                apt-get --yes update
             fi
 
             # Install the package that is missing
-            apt-get --yes install mariadb-client
+            if [[ $EUID != 0 ]]; then
+                sudo apt-get --yes install mariadb-client
+            else
+                apt-get --yes install mariadb-client
+            fi
             if [ $? -ne 0 ]; then
                 exit $?
             fi
@@ -303,7 +310,7 @@ function backup_database
         fi
 
         # Get the list of databases to export
-        DATABASES="$(mysql --defaults-extra-file=$MYSQL_CNF -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'phpmyadmin'", "'aowow'") AND SCHEMA_NAME NOT LIKE "'%world%'"')"
+        DATABASES="$(mysql --defaults-extra-file=$MYSQL_CNF -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'sys'", "'phpmyadmin'", "'aowow'") AND SCHEMA_NAME NOT LIKE "'%world%'"')"
 
         # Loop through each database
         for DATABASE in $DATABASES; do
