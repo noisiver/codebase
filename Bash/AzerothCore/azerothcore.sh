@@ -1887,7 +1887,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-accountbound.git $OPTION_SOURCE_LOCATION/modules/mod-accountbound
+                git clone --branch master https://github.com/noisiver/mod-accountbound.git $OPTION_SOURCE_LOCATION/modules/mod-accountbound
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -1983,7 +1983,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-archmage-timear.git $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
+                git clone --branch master https://github.com/noisiver/mod-archmage-timear.git $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2031,7 +2031,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-assistant.git $OPTION_SOURCE_LOCATION/modules/mod-assistant
+                git clone --branch master https://github.com/noisiver/mod-assistant.git $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2079,7 +2079,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-dynamicrates.git $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
+                git clone --branch master https://github.com/noisiver/mod-dynamicrates.git $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2127,7 +2127,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-guildfunds ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-guildfunds.git $OPTION_SOURCE_LOCATION/modules/mod-guildfunds
+                git clone --branch master https://github.com/noisiver/mod-guildfunds.git $OPTION_SOURCE_LOCATION/modules/mod-guildfunds
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2175,7 +2175,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-groupquests.git $OPTION_SOURCE_LOCATION/modules/mod-groupquests
+                git clone --branch master https://github.com/noisiver/mod-groupquests.git $OPTION_SOURCE_LOCATION/modules/mod-groupquests
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2223,7 +2223,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-learnspells.git $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+                git clone --branch master https://github.com/noisiver/mod-learnspells.git $OPTION_SOURCE_LOCATION/modules/mod-learnspells
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2271,7 +2271,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+                git clone --branch master https://github.com/noisiver/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2367,7 +2367,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/tkn963/mod-weekendbonus.git $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
+                git clone --branch master https://github.com/noisiver/mod-weekendbonus.git $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
