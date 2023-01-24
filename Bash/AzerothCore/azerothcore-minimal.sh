@@ -1086,32 +1086,32 @@ function compile_source
         APPS_BUILD="all"
     fi
 
-    # Generate the build files
-    cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"
+    for i in {1..2}; do
+        # Generate the build files
+        cmake ../ -DCMAKE_INSTALL_PREFIX=$OPTION_SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"
 
-    # Check to make sure there weren't any errors
-    if [[ $? -ne 0 ]]; then
-        # Terminate script on errors
-        exit $?
-    fi
+        # Check to make sure there weren't any errors
+        if [[ $? -ne 0 ]]; then
+            # Terminate script on errors
+            exit $?
+        fi
 
-    # Clean the project
-    make clean
+        # Build the source code
+        make -j $(nproc)
 
-    # Check to make sure there weren't any errors
-    if [[ $? -ne 0 ]]; then
-        # Terminate script on errors
-        exit $?
-    fi
-
-    # Build the source code
-    make -j $(nproc)
-
-    # Check to make sure there weren't any errors
-    if [[ $? -ne 0 ]]; then
-        # Terminate script on errors
-        exit $?
-    fi
+        # Check to make sure there weren't any errors
+        if [[ $? -ne 0 ]]; then
+            if [[ $i == 1 ]]; then
+                # Clean the build files
+                make clean
+            else
+                # Terminate script on errors
+                exit $?
+            fi
+        else
+            break
+        fi
+    done
 
     # Copy the binaries and other required files to their designated directories
     make install
