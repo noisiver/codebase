@@ -261,247 +261,267 @@ function store_options
             <enable_warden>${34:-true}</enable_warden>
             <!-- Allow players to stay in regular groups when logging off. This only affects normal groups and not raids or dungeon finder groups. false = players will leave their group when logging off, true = players will stay in their groups -->
             <disable_leave_group>${35:-false}</disable_leave_group>
+            <!-- Enable the quest markers on the map -->
+            <enable_quest_poi>${36:-true}</enable_quest_poi>
             <!-- Time in seconds for mail delivery when sending items -->
-            <mail_delivery_delay>${36:-3600}</mail_delivery_delay>
+            <mail_delivery_delay>${37:-3600}</mail_delivery_delay>
             <allow_two_sided>
                 <!-- Allow creating characters of both factions on the same account. false = disabled, true = enabled -->
-                <accounts>${37:-true}</accounts>
+                <accounts>${38:-true}</accounts>
                 <!-- Allow calendar invites between factions. false = disabled, true = enabled -->
-                <calendar>${38:-false}</calendar>
+                <calendar>${39:-false}</calendar>
                 <!-- Allow say chat between factions. false = disabled, true = enabled -->
-                <chat>${39:-false}</chat>
+                <chat>${40:-false}</chat>
                 <!-- Allow emote messages between factions. false = disabled, true = enabled -->
-                <emote>${40:-false}</emote>
+                <emote>${41:-false}</emote>
                 <!-- Allow channel chat between factions. false = disabled, true = enabled -->
-                <channel>${41:-false}</channel>
+                <channel>${42:-false}</channel>
                 <!-- Allow group joining between factions. false = disabled, true = enabled -->
-                <group>${42:-false}</group>
+                <group>${43:-false}</group>
                 <!-- Allow guild joining between factions. false = disabled, true = enabled -->
-                <guild>${43:-false}</guild>
+                <guild>${44:-false}</guild>
                 <!-- Allow auctions between factions. false = disabled, true = enabled -->
-                <auction>${44:-false}</auction>
+                <auction>${45:-false}</auction>
                 <!-- Allow sending mails between factions. false = disabled, true = enabled -->
-                <mail>${45:-false}</mail>
+                <mail>${46:-false}</mail>
                 <!-- Show characters from both factions in the who list. false = disabled, true = enabled -->
-                <who_list>${46:-false}</who_list>
+                <who_list>${47:-false}</who_list>
                 <!-- Allow adding friends from other faction to the friends list. false = disabled, true = enabled -->
-                <friend>${47:-false}</friend>
+                <friend>${48:-false}</friend>
                 <!-- Allow trading between factions. false = disabled, true = enabled -->
-                <trade>${48:-false}</trade>
+                <trade>${49:-false}</trade>
             </allow_two_sided>
             <rates>
                 <!-- Experience rates (outside battleground) -->
-                <experience>${49:-1}</experience>
+                <experience>${50:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_experience>${50:-1}</rested_experience>
+                <rested_experience>${51:-1}</rested_experience>
                 <!-- Reputation gain rate -->
-                <reputation>${51:-1}</reputation>
+                <reputation>${52:-1}</reputation>
                 <!-- Drop rates for money -->
-                <money>${52:-1}</money>
+                <money>${53:-1}</money>
                 <!-- Crafting skills gain rate -->
-                <crafting>${53:-1}</crafting>
+                <crafting>${54:-1}</crafting>
                 <!-- Gathering skills gain rate -->
-                <gathering>${54:-1}</gathering>
+                <gathering>${55:-1}</gathering>
                 <!-- Weapon skills gain rate -->
-                <weapon_skill>${55:-1}</weapon_skill>
+                <weapon_skill>${56:-1}</weapon_skill>
                 <!-- Defense skills gain rate -->
-                <defense_skill>${56:-1}</defense_skill>
+                <defense_skill>${57:-1}</defense_skill>
             </rates>
             <gm>
                 <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
-                <login_state>${57:-true}</login_state>
+                <login_state>${58:-true}</login_state>
                 <!-- GM visibility at login. false = disabled, true = enabled -->
-                <enable_visibility>${58:-false}</enable_visibility>
+                <enable_visibility>${59:-false}</enable_visibility>
                 <!-- GM chat mode at login. false = disabled, true = enabled -->
-                <enable_chat>${59:-true}</enable_chat>
+                <enable_chat>${60:-true}</enable_chat>
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
-                <enable_whisper>${60:-false}</enable_whisper>
+                <enable_whisper>${61:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${61:-1}</show_gm_list>
+                <show_gm_list>${62:-1}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_who_list>${62:-0}</show_who_list>
+                <show_who_list>${63:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
-                <allow_friend>${63:-false}</allow_friend>
+                <allow_friend>${64:-false}</allow_friend>
                 <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
-                <allow_invite>${64:-false}</allow_invite>
+                <allow_invite>${65:-false}</allow_invite>
                 <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
-                <allow_lower_security>${65:-false}</allow_lower_security>
+                <allow_lower_security>${66:-false}</allow_lower_security>
             </gm>
         </world>
         <modules>
             <account_bound>
                 <!-- Enable/Disable the use of the AccountBound module -->
-                <enabled>${66:-false}</enabled>
+                <enabled>${67:-false}</enabled>
                 <!-- Enable/Disable companions to be account bound -->
-                <enable_companions>${67:-true}</enable_companions>
+                <enable_companions>${68:-true}</enable_companions>
                 <!-- Enable/Disable heirlooms to be account bound -->
-                <enable_heirlooms>${68:-true}</enable_heirlooms>
+                <enable_heirlooms>${69:-true}</enable_heirlooms>
                 <!-- Enable/Disable the mounts to be account bound -->
-                <enable_mounts>${69:-true}</enable_mounts>
+                <enable_mounts>${70:-true}</enable_mounts>
                 <!-- Enable/Disable companions, heirlooms and mounts to be shared across linked accounts -->
-                <enable_linked_accounts>${70:-false}</enable_linked_accounts>
+                <enable_linked_accounts>${71:-false}</enable_linked_accounts>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${71:-false}</enabled>
+                <enabled>${72:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${72:-false}</enable_buyer>
+                <enable_buyer>${73:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${73:-false}</enable_seller>
+                <enable_seller>${74:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${74:-0}</account_id>
+                <account_id>${75:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${75:-0}</character_guid>
+                <character_guid>${76:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${76:-250}</min_items>
+                <min_items>${77:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${77:-250}</max_items>
+                <max_items>${78:-250}</max_items>
             </ahbot>
             <archmage_timear>
                 <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${78:-false}</enabled>
+                <enabled>${79:-false}</enabled>
             </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module -->
-                <enabled>${79:-false}</enabled>
+                <enabled>${80:-false}</enabled>
                 <features>
                     <!-- Enable/Disable the ability to obtain heirlooms from the assistant -->
-                    <enable_heirlooms>${80:-true}</enable_heirlooms>
+                    <enable_heirlooms>${81:-true}</enable_heirlooms>
                     <!-- Enable/Disable the ability to obtain glyphs from the assistant -->
-                    <enable_glyphs>${81:-true}</enable_glyphs>
+                    <enable_glyphs>${82:-true}</enable_glyphs>
                     <!-- Enable/Disable the ability to obtain gems from the assistant -->
-                    <enable_gems>${82:-true}</enable_gems>
+                    <enable_gems>${83:-true}</enable_gems>
                     <!-- Enable/Disable the ability to obtain containers from the assistant -->
-                    <enable_containers>${83:-true}</enable_containers>
+                    <enable_containers>${84:-true}</enable_containers>
                     <utilities>
                         <!-- Enable/Disable the ability to obtain various utilities from the assistant -->
-                        <enabled>${84:-true}</enabled>
+                        <enabled>${85:-true}</enabled>
                         <!-- The cost in gold to perform a name change -->
-                        <name_change_cost>${85:-10}</name_change_cost>
+                        <name_change_cost>${86:-10}</name_change_cost>
                         <!-- The cost in gold to perform a customization -->
-                        <customization_cost>${86:-50}</customization_cost>
+                        <customization_cost>${87:-50}</customization_cost>
                         <!-- The cost in gold to perform a race change -->
-                        <race_change_cost>${87:-500}</race_change_cost>
+                        <race_change_cost>${88:-500}</race_change_cost>
                         <!-- The cost in gold to perform a faction change -->
-                        <faction_change_cost>${88:-1000}</faction_change_cost>
+                        <faction_change_cost>${89:-1000}</faction_change_cost>
                     </utilities>
                     <professions>
                         <apprentice>
                             <!-- Enable/Disable the ability to max out an apprentice profession -->
-                            <enabled>${89:-true}</enabled>
+                            <enabled>${90:-true}</enabled>
                             <!-- The cost in gold to max out an apprentice profession -->
-                            <cost>${90:-100}</cost>
+                            <cost>${91:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable the ability to max out an journeyman profession -->
-                            <enabled>${91:-true}</enabled>
+                            <enabled>${92:-true}</enabled>
                             <!-- The cost in gold to max out an journeyman profession -->
-                            <cost>${92:-250}</cost>
+                            <cost>${93:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable the ability to max out an expert profession -->
-                            <enabled>${93:-true}</enabled>
+                            <enabled>${94:-true}</enabled>
                             <!-- The cost in gold to max out an expert profession -->
-                            <cost>${94:-500}</cost>
+                            <cost>${95:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable the ability to max out an artisan profession -->
-                            <enabled>${95:-true}</enabled>
+                            <enabled>${96:-true}</enabled>
                             <!-- The cost in gold to max out an artisan profession -->
-                            <cost>${96:-750}</cost>
+                            <cost>${97:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable the ability to max out an master profession -->
-                            <enabled>${97:-false}</enabled>
+                            <enabled>${98:-false}</enabled>
                             <!-- The cost in gold to max out an master profession -->
-                            <cost>${98:-1250}</cost>
+                            <cost>${99:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable the ability to max out an grand master profession -->
-                            <enabled>${99:-false}</enabled>
+                            <enabled>${100:-false}</enabled>
                             <!-- The cost in gold to max out an grand master profession -->
-                            <cost>${100:-2500}</cost>
+                            <cost>${101:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <guild_funds>
                 <!-- Enable/Disable the use of the Guild Funds module. It deposits a percentage of the money looted and earned from quests into the guild bank -->
-                <enabled>${101:-false}</enabled>
+                <enabled>${102:-false}</enabled>
                 <percentages>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when looting. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <looted>${102:-10}</looted>
+                    <looted>${103:-10}</looted>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when completing quests. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <quests>${103:-3}</quests>
+                    <quests>${104:-3}</quests>
                 </percentages>
             </guild_funds>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${104:-false}</enabled>
+                <enabled>${105:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${105:-false}</enabled>
+                <enabled>${106:-false}</enabled>
                 <features>
                     <!-- Enable/Disable to learn class-specific spells -->
-                    <enable_class_spells>${106:-true}</enable_class_spells>
+                    <enable_class_spells>${107:-true}</enable_class_spells>
                     <!-- Enable/Disable to learn talent ranks -->
-                    <enable_talent_ranks>${107:-true}</enable_talent_ranks>
+                    <enable_talent_ranks>${108:-true}</enable_talent_ranks>
                     <!-- Enable/Disable to learn proficiencies -->
-                    <enable_proficiencies>${108:-true}</enable_proficiencies>
+                    <enable_proficiencies>${109:-true}</enable_proficiencies>
                     <!-- Enable/Disable to learn spells normally obtained through quests -->
-                    <enable_spells_from_quests>${109:-true}</enable_spells_from_quests>
+                    <enable_spells_from_quests>${110:-true}</enable_spells_from_quests>
                     <riding>
                         <!-- Enable/Disable to learn apprentice riding and mounts -->
-                        <enable_apprentice>${110:-false}</enable_apprentice>
+                        <enable_apprentice>${111:-false}</enable_apprentice>
                         <!-- Enable/Disable to learn journeyman riding and mounts -->
-                        <enable_journeyman>${111:-false}</enable_journeyman>
+                        <enable_journeyman>${112:-false}</enable_journeyman>
                         <!-- Enable/Disable to learn expert riding and mounts -->
-                        <enable_expert>${112:-false}</enable_expert>
+                        <enable_expert>${113:-false}</enable_expert>
                         <!-- Enable/Disable to learn artisan riding and mounts -->
-                        <enable_artisan>${113:-false}</enable_artisan>
+                        <enable_artisan>${114:-false}</enable_artisan>
                         <!-- Enable/Disable to learn cold weather flying at level 77 -->
-                        <enable_cold_weather_flying>${114:-false}</enable_cold_weather_flying>
+                        <enable_cold_weather_flying>${115:-false}</enable_cold_weather_flying>
                     </riding>
                 </features>
             </learn_spells>
+            <progression>
+                <!-- Enable/Disable the user of the Progression module -->
+                <enabled>${116:-false}</enabled>
+                <!-- The game patch to mimic -->
+                <active_patch>${117:-21}</active_patch>
+                <!-- Allow setting expansion rather than the module enforcing it based on the active patch -->
+                <expansion>${118:-false}</expansion>
+                <!-- Allow unlocking achievements before patch 3.0 -->
+                <achievements>${119:-false}</achievements>
+                <!-- Allow the use of Dual Talent Specialization before patch 3.1 -->
+                <dual_talent_specialization>${120:-false}</dual_talent_specialization>
+                <!-- Allow the use of the Dungeon Finder before patch 3.3 -->
+                <dungeon_finder>${121:-false}</dungeon_finder>
+                <!-- Allow seeing points of interest on the map for active quests before patch 3.2 -->
+                <quest_poi>${122:-false}</quest_poi>
+                <!-- Show patch notes on the character selection screen. It requires Warden to be enabled -->
+                <patch_notes>${123:-false}</patch_notes>
+            </progression>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${115:-false}</enabled>
+                <enabled>${124:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${116:-90}</referral_duration>
+                <referral_duration>${125:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${117:-7}</max_account_age>
+                <max_account_age>${126:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${118:-30}</days_until_reward>
+                    <days_until_reward>${127:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${119:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${128:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${120:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${129:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${121:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${130:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${122:-false}</enabled>
+                <enabled>${131:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${123:-58}</starting_level>
+                <starting_level>${132:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${124:-false}</enabled>
+                <enabled>${133:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${125:-2.0}</experience_multiplier>
+                <experience_multiplier>${134:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${126:-2.0}</money_multiplier>
+                <money_multiplier>${135:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${127:-2}</professions_multiplier>
+                <professions_multiplier>${136:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${128:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${137:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${129:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${138:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -546,6 +566,7 @@ function save_options
     $OPTION_WORLD_ENABLE_MINIGOB_MANABONK \
     $OPTION_WORLD_ENABLE_WARDEN \
     $OPTION_WORLD_DISABLE_LEAVE_GROUP \
+    $OPTION_WORLD_ENABLE_QUEST_POI \
     $OPTION_WORLD_MAIL_DELIVERY_DELAY \
     $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS \
     $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR \
@@ -625,6 +646,14 @@ function save_options
     $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_EXPERT \
     $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_ENABLE_ARTISAN \
     $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING \
+    $OPTION_MODULES_PROGRESSION_ENABLED \
+    $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH \
+    $OPTION_MODULES_PROGRESSION_EXPANSION \
+    $OPTION_MODULES_PROGRESSION_ACHIEVEMENTS \
+    $OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION \
+    $OPTION_MODULES_PROGRESSION_DUNGEON_FINDER \
+    $OPTION_MODULES_PROGRESSION_QUEST_POI \
+    $OPTION_MODULES_PROGRESSION_PATCH_NOTES \
     $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED \
     $OPTION_MODULES_RECRUIT_A_FRIEND_REFERRAL_DURATION \
     $OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE \
@@ -972,6 +1001,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/disable_leave_group is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_DISABLE_LEAVE_GROUP="false"
+        RESET=true
+    fi
+
+    # Load the /options/world/enable_quest_poi option
+    OPTION_WORLD_ENABLE_QUEST_POI="$(echo "cat /options/world/enable_quest_poi/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_ENABLE_QUEST_POI != "true" && $OPTION_WORLD_ENABLE_QUEST_POI != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/enable_quest_poi is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_ENABLE_QUEST_POI="false"
         RESET=true
     fi
 
@@ -1686,6 +1724,78 @@ function load_options
         RESET=true
     fi
 
+    # Load the /options/modules/progression/enabled option
+    OPTION_MODULES_PROGRESSION_ENABLED="$(echo "cat /options/modules/progression/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_ENABLED != "true" && $OPTION_MODULES_PROGRESSION_ENABLED != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ENABLED="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/progression/active_patch option
+    OPTION_MODULES_PROGRESSION_ACTIVE_PATCH="$(echo "cat /options/modules/progression/active_patch/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/active_patch is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ACTIVE_PATCH="21"
+        RESET=true
+    fi
+
+    # Load the /options/modules/progression/expansion option
+    OPTION_MODULES_PROGRESSION_EXPANSION="$(echo "cat /options/modules/progression/expansion/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_EXPANSION != "true" && $OPTION_MODULES_PROGRESSION_EXPANSION != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/expansion is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_EXPANSION="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/progression/achievements option
+    OPTION_MODULES_PROGRESSION_ACHIEVEMENTS="$(echo "cat /options/modules/progression/achievements/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_ACHIEVEMENTS != "true" && $OPTION_MODULES_PROGRESSION_ACHIEVEMENTS != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/achievements is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ACHIEVEMENTS="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/progression/dual_talent_specialization option
+    OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION="$(echo "cat /options/modules/progression/dual_talent_specialization/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION != "true" && $OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/dual_talent_specialization is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/progression/dungeon_finder option
+    OPTION_MODULES_PROGRESSION_DUNGEON_FINDER="$(echo "cat /options/modules/progression/dungeon_finder/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_DUNGEON_FINDER != "true" && $OPTION_MODULES_PROGRESSION_DUNGEON_FINDER != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/dungeon_finder is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_DUNGEON_FINDER="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/progression/quest_poi option
+    OPTION_MODULES_PROGRESSION_QUEST_POI="$(echo "cat /options/modules/progression/quest_poi/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_QUEST_POI != "true" && $OPTION_MODULES_PROGRESSION_QUEST_POI != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/quest_poi is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_QUEST_POI="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/progression/patch_notes option
+    OPTION_MODULES_PROGRESSION_PATCH_NOTES="$(echo "cat /options/modules/progression/patch_notes/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_PATCH_NOTES != "true" && $OPTION_MODULES_PROGRESSION_PATCH_NOTES != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/patch_notes is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_PATCH_NOTES="true"
+        RESET=true
+    fi
+
     # Load the /options/modules/recruit_a_friend/enabled option
     OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED="$(echo "cat /options/modules/recruit_a_friend/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "true" && $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED != "false" ]]; then
@@ -2257,6 +2367,54 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+
+                # Check if the source has been compiled
+                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
+                    # Remove the build folder to make sure there are no errors during the compile
+                    rm -rf $OPTION_SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        # Check if the progression module should be installed
+        if [[ $OPTION_MODULES_PROGRESSION_ENABLED == "true" ]]; then
+            # Check if the source is already downloaded
+            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-progression ]]; then
+                # Download the source code
+                # git clone --branch master https://github.com/noisiver/mod-progression.git $OPTION_SOURCE_LOCATION/modules/mod-progression
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            else
+                # Go into the source folder to update it
+                cd $OPTION_SOURCE_LOCATION/modules/mod-progression
+
+                # Fetch all available updates
+                # git fetch --all
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+
+                # Reset the source code, removing any local changes
+                # git reset --hard origin/master
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Terminate script on errors
+                    exit $?
+                fi
+            fi
+        else
+            # Check if the source is downloaded
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression ]]; then
+                # Remove it so it won't be included
+                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-progression
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -3192,6 +3350,735 @@ function import_database
             fi
         fi
 
+        # Check if the progression module is enabled
+        if [[ $OPTION_MODULES_PROGRESSION_ENABLED == "true" ]]; then
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 0 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_01-1_1/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_01-1_1/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 1 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_02-1_2/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_02-1_2/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 2 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_03-1_3/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_03-1_3/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 3 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_04-1_4/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_04-1_4/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 4 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_05-1_5/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_05-1_5/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 5 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_06-1_6/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_06-1_6/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 6 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_07-1_7/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_07-1_7/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 7 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_08-1_8/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_08-1_8/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 8 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_09-1_9/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_09-1_9/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 9 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_10-1_10/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_10-1_10/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 10 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_11-1_11/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_11-1_11/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 11 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_12-1_12/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_12-1_12/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 12 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_13-2_0/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_13-2_0/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 13 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_14-2_1/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_14-2_1/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 14 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_15-2_2/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_15-2_2/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 15 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_16-2_3/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_16-2_3/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 16 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_17-2_4/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_17-2_4/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 17 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_18-3_0/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_18-3_0/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 18 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_19-3_1/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_19-3_1/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 19 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_20-3_2/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_20-3_2/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 20 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_21-3_3/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_21-3_3/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH -ge 21 ]]; then
+                # Make sure the database folder exists
+                if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_22-3_3_5/sql/ ]]; then
+                    # Loop through all sql files inside the folder
+                    for f in $OPTION_SOURCE_LOCATION/modules/mod-progression/src/patch_22-3_3_5/sql/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                            continue;
+                        fi
+
+                        printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                        # Add the hash to updates
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+
+                        # Import the sql file
+                        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                        # Check to make sure there weren't any errors
+                        if [[ $? -ne 0 ]]; then
+                            # Remove the mysql conf
+                            rm -rf $MYSQL_CNF
+
+                            # Terminate script on error
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+        fi
+
         # Check if the archmage timear module is enabled
         if [[ $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             # Make sure the database folder exists
@@ -3322,6 +4209,7 @@ function set_config
         [ $OPTION_WORLD_GM_ALLOW_FRIEND == "true" ] && WORLD_GM_ALLOW_FRIEND=1 || WORLD_GM_ALLOW_FRIEND=0
         [ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY == "true" ] && WORLD_GM_ALLOW_LOWER_SECURITY=1 || WORLD_GM_ALLOW_LOWER_SECURITY=0
         [ $OPTION_WORLD_DISABLE_LEAVE_GROUP == "true" ] && WORLD_DISABLE_LEAVE_GROUP=0 || WORLD_DISABLE_LEAVE_GROUP=1
+        [ $OPTION_WORLD_ENABLE_QUEST_POI == "true" ] && WORLD_ENABLE_QUEST_POI=1 || WORLD_ENABLE_QUEST_POI=0
         [ $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS == "true" ] && WORLD_ALLOW_TWO_SIDED_ACCOUNTS=1 || WORLD_ALLOW_TWO_SIDED_ACCOUNTS=0
         [ $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR == "true" ] && WORLD_ALLOW_TWO_SIDED_CALENDAR=1 || WORLD_ALLOW_TWO_SIDED_CALENDAR=0
         [ $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT == "true" ] && WORLD_ALLOW_TWO_SIDED_CHAT=1 || WORLD_ALLOW_TWO_SIDED_CHAT=0
@@ -3405,6 +4293,7 @@ function set_config
         sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = '$WORLD_GM_ALLOW_LOWER_SECURITY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$WORLD_ENABLE_WARDEN'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/QuestPOI.Enabled =.*/QuestPOI.Enabled = '$WORLD_ENABLE_QUEST_POI'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MailDeliveryDelay =.*/MailDeliveryDelay = '$OPTION_WORLD_MAIL_DELIVERY_DELAY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
         # Check if the account bound module is enabled
@@ -3701,6 +4590,60 @@ function set_config
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+            fi
+        fi
+
+        # Check if the progression module is enabled
+        if [[ $OPTION_MODULES_PROGRESSION_ENABLED == "true" ]]; then
+            # Check to make sure the config file exists
+            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf.dist ]]; then
+                # The file is missing, so terminate the script
+                printf "${COLOR_RED}The config file mod_progression.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+
+                # Remove the mysql conf
+                rm -rf $MYSQL_CNF
+
+                # Terminate script on error
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_progression.conf${COLOR_END}\n"
+
+            # Convert boolean values to integers
+            [ $OPTION_MODULES_PROGRESSION_EXPANSION == "true" ] && MODULES_PROGRESSION_EXPANSION=1 || MODULES_PROGRESSION_EXPANSION=0
+            [ $OPTION_MODULES_PROGRESSION_ACHIEVEMENTS == "true" ] && MODULES_PROGRESSION_ACHIEVEMENTS=1 || MODULES_PROGRESSION_ACHIEVEMENTS=0
+            [ $OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION == "true" ] && MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION=1 || MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION=0
+            [ $OPTION_MODULES_PROGRESSION_DUNGEON_FINDER == "true" ] && MODULES_PROGRESSION_DUNGEON_FINDER=1 || MODULES_PROGRESSION_DUNGEON_FINDER=0
+            [ $OPTION_MODULES_PROGRESSION_QUEST_POI == "true" ] && MODULES_PROGRESSION_QUEST_POI=1 || MODULES_PROGRESSION_QUEST_POI=0
+            [ $OPTION_MODULES_PROGRESSION_PATCH_NOTES == "true" ] && MODULES_PROGRESSION_PATCH_NOTES=1 || MODULES_PROGRESSION_PATCH_NOTES=0
+
+            if [[ $OPTION_WORLD_ENABLE_WARDEN == "false" ]]; then
+                MODULES_PROGRESSION_PATCH_NOTES=0
+            fi
+
+            # Copy the file before editing it
+            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+
+            # Update mod_progression.conf with values specified in the options
+            sed -i 's/Progression.Patch =.*/Progression.Patch = '$OPTION_MODULES_PROGRESSION_ACTIVE_PATCH'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.Expansion =.*/Progression.Expansion = '$MODULES_PROGRESSION_EXPANSION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.Achievements =.*/Progression.Achievements = '$MODULES_PROGRESSION_ACHIEVEMENTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.DualTalent =.*/Progression.DualTalent = '$MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.DungeonFinder =.*/Progression.DungeonFinder = '$MODULES_PROGRESSION_DUNGEON_FINDER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.QuestPOI =.*/Progression.QuestPOI = '$MODULES_PROGRESSION_QUEST_POI'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.PatchNotes =.*/Progression.PatchNotes = '$MODULES_PROGRESSION_PATCH_NOTES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+        else
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf.dist ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf.dist
+            fi
+
+            # Check if the config file exists
+            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf ]]; then
+                # Remove the file since the module is disabled
+                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
             fi
         fi
 
