@@ -1951,7 +1951,7 @@ function get_source
     # Check if the source is already downloaded
     if [[ ! -d $OPTION_SOURCE_LOCATION ]]; then
         # Download the source code
-        git clone --recursive --branch master https://github.com/azerothcore/azerothcore-wotlk.git $OPTION_SOURCE_LOCATION
+        git clone --recursive --depth 1 --branch master https://github.com/azerothcore/azerothcore-wotlk.git $OPTION_SOURCE_LOCATION
 
         # Check to make sure there weren't any errors
         if [[ $? -ne 0 ]]; then
@@ -1963,7 +1963,7 @@ function get_source
         cd $OPTION_SOURCE_LOCATION
 
         # Fetch all available updates
-        git fetch --all
+        git pull
 
         # Check to make sure there weren't any errors
         if [[ $? -ne 0 ]]; then
@@ -1997,7 +1997,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-accountbound ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-accountbound.git $OPTION_SOURCE_LOCATION/modules/mod-accountbound
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-accountbound.git $OPTION_SOURCE_LOCATION/modules/mod-accountbound
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2009,7 +2009,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-accountbound
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2045,7 +2045,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/azerothcore/mod-ah-bot.git $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
+                git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2057,7 +2057,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-ah-bot
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2093,7 +2093,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-archmage-timear.git $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-archmage-timear.git $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2105,7 +2105,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2141,7 +2141,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-assistant.git $OPTION_SOURCE_LOCATION/modules/mod-assistant
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-assistant.git $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2153,7 +2153,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-assistant
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2189,7 +2189,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-dynamicrates.git $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-dynamicrates.git $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2201,7 +2201,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2237,7 +2237,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-guildfunds ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-guildfunds.git $OPTION_SOURCE_LOCATION/modules/mod-guildfunds
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-guildfunds.git $OPTION_SOURCE_LOCATION/modules/mod-guildfunds
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2249,7 +2249,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-guildfunds
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2285,7 +2285,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-groupquests ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-groupquests.git $OPTION_SOURCE_LOCATION/modules/mod-groupquests
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $OPTION_SOURCE_LOCATION/modules/mod-groupquests
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2297,7 +2297,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-groupquests
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2333,7 +2333,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-learnspells.git $OPTION_SOURCE_LOCATION/modules/mod-learnspells
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $OPTION_SOURCE_LOCATION/modules/mod-learnspells
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2345,7 +2345,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-learnspells
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2381,7 +2381,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-progression ]]; then
                 # Download the source code
-                # git clone --branch master https://github.com/noisiver/mod-progression.git $OPTION_SOURCE_LOCATION/modules/mod-progression
+                # git clone --depth 1 --branch master https://github.com/noisiver/mod-progression.git $OPTION_SOURCE_LOCATION/modules/mod-progression
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2393,7 +2393,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-progression
 
                 # Fetch all available updates
-                # git fetch --all
+                # git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2429,7 +2429,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2441,7 +2441,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2477,7 +2477,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
+                git clone --depth 1 --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2489,7 +2489,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2525,7 +2525,7 @@ function get_source
             # Check if the source is already downloaded
             if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
                 # Download the source code
-                git clone --branch master https://github.com/noisiver/mod-weekendbonus.git $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-weekendbonus.git $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -2537,7 +2537,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-weekendbonus
 
                 # Fetch all available updates
-                git fetch --all
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then

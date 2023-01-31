@@ -1025,7 +1025,7 @@ function get_source
     # Check if the source is already downloaded
     if [[ ! -d $OPTION_SOURCE_LOCATION ]]; then
         # Download the source code
-        git clone --recursive --branch master https://github.com/azerothcore/azerothcore-wotlk.git $OPTION_SOURCE_LOCATION
+        git clone --recursive --depth 1 --branch master https://github.com/azerothcore/azerothcore-wotlk.git $OPTION_SOURCE_LOCATION
 
         # Check to make sure there weren't any errors
         if [[ $? -ne 0 ]]; then
@@ -1037,7 +1037,7 @@ function get_source
         cd $OPTION_SOURCE_LOCATION
 
         # Fetch all available updates
-        git fetch --all
+        git pull
 
         # Check to make sure there weren't any errors
         if [[ $? -ne 0 ]]; then
