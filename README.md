@@ -1,3 +1,6 @@
+# Buy Me A Coffee
+Want to show me some appreciation? Why not [buy me a coffee](https://www.buymeacoffee.com/noisiver)?
+
 # Codebase
 A collection of all my scripts as I create them. This includes, but is not limited to, languages such as Bash, Powershell, C++, C#, LUA, PHP and SQL.
 
