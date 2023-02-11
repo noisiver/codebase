@@ -473,55 +473,57 @@ function store_options
                 <!-- The game patch to mimic -->
                 <active_patch>${117:-21}</active_patch>
                 <!-- Allow setting expansion rather than the module enforcing it based on the active patch -->
-                <expansion>${118:-false}</expansion>
+                <enable_expansion>${118:-false}</enable_expansion>
                 <!-- Allow unlocking achievements before patch 3.0 -->
-                <achievements>${119:-false}</achievements>
+                <enable_achievements>${119:-false}</enable_achievements>
                 <!-- Allow the use of Dual Talent Specialization before patch 3.1 -->
-                <dual_talent_specialization>${120:-false}</dual_talent_specialization>
+                <enable_dual_talent_specialization>${120:-false}</enable_dual_talent_specialization>
                 <!-- Allow the use of the Dungeon Finder before patch 3.3 -->
-                <dungeon_finder>${121:-false}</dungeon_finder>
+                <enable_dungeon_finder>${121:-false}</enable_dungeon_finder>
                 <!-- Allow seeing points of interest on the map for active quests before patch 3.2 -->
-                <quest_poi>${122:-false}</quest_poi>
+                <enable_quest_poi>${122:-false}</enable_quest_poi>
+                <!-- Set the active buff inside Icecrown Citadel based on the active patch -->
+                <icecrown_citadel_buff>${123:-3}</icecrown_citadel_buff>
                 <!-- Show patch notes on the character selection screen. It requires Warden to be enabled -->
-                <patch_notes>${123:-false}</patch_notes>
+                <enable_patch_notes>${124:-false}</enable_patch_notes>
             </progression>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${124:-false}</enabled>
+                <enabled>${125:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${125:-90}</referral_duration>
+                <referral_duration>${126:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${126:-7}</max_account_age>
+                <max_account_age>${127:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${127:-30}</days_until_reward>
+                    <days_until_reward>${128:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${128:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${129:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${129:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${130:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${130:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${131:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${131:-false}</enabled>
+                <enabled>${132:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${132:-58}</starting_level>
+                <starting_level>${133:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${133:-false}</enabled>
+                <enabled>${134:-false}</enabled>
                 <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${134:-2.0}</experience_multiplier>
+                <experience_multiplier>${135:-2.0}</experience_multiplier>
                 <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${135:-2.0}</money_multiplier>
+                <money_multiplier>${136:-2.0}</money_multiplier>
                 <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${136:-2}</professions_multiplier>
+                <professions_multiplier>${137:-2}</professions_multiplier>
                 <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${137:-2.0}</reputation_multiplier>
+                <reputation_multiplier>${138:-2.0}</reputation_multiplier>
                 <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${138:-2}</proficiencies_multiplier>
+                <proficiencies_multiplier>${139:-2}</proficiencies_multiplier>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -648,12 +650,13 @@ function save_options
     $OPTION_MODULES_LEARN_SPELLS_FEATURES_RIDING_COLD_WEATHER_FLYING \
     $OPTION_MODULES_PROGRESSION_ENABLED \
     $OPTION_MODULES_PROGRESSION_ACTIVE_PATCH \
-    $OPTION_MODULES_PROGRESSION_EXPANSION \
-    $OPTION_MODULES_PROGRESSION_ACHIEVEMENTS \
-    $OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION \
-    $OPTION_MODULES_PROGRESSION_DUNGEON_FINDER \
-    $OPTION_MODULES_PROGRESSION_QUEST_POI \
-    $OPTION_MODULES_PROGRESSION_PATCH_NOTES \
+    $OPTION_MODULES_PROGRESSION_ENABLE_EXPANSION \
+    $OPTION_MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS \
+    $OPTION_MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION \
+    $OPTION_MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER \
+    $OPTION_MODULES_PROGRESSION_ENABLE_QUEST_POI \
+    $OPTION_MODULES_PROGRESSION_ICECROWN_CITADEL_BUFF \
+    $OPTION_MODULES_PROGRESSION_ENABLE_PATCH_NOTES \
     $OPTION_MODULES_RECRUIT_A_FRIEND_ENABLED \
     $OPTION_MODULES_RECRUIT_A_FRIEND_REFERRAL_DURATION \
     $OPTION_MODULES_RECRUIT_A_FRIEND_MAX_ACCOUNT_AGE \
@@ -1743,56 +1746,65 @@ function load_options
     fi
 
     # Load the /options/modules/progression/expansion option
-    OPTION_MODULES_PROGRESSION_EXPANSION="$(echo "cat /options/modules/progression/expansion/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_PROGRESSION_EXPANSION != "true" && $OPTION_MODULES_PROGRESSION_EXPANSION != "false" ]]; then
+    OPTION_MODULES_PROGRESSION_ENABLE_EXPANSION="$(echo "cat /options/modules/progression/enable_expansion/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_ENABLE_EXPANSION != "true" && $OPTION_MODULES_PROGRESSION_ENABLE_EXPANSION != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/progression/expansion is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_PROGRESSION_EXPANSION="false"
+        printf "${COLOR_RED}The option at /options/modules/progression/enable_expansion is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ENABLE_EXPANSION="false"
         RESET=true
     fi
 
     # Load the /options/modules/progression/achievements option
-    OPTION_MODULES_PROGRESSION_ACHIEVEMENTS="$(echo "cat /options/modules/progression/achievements/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_PROGRESSION_ACHIEVEMENTS != "true" && $OPTION_MODULES_PROGRESSION_ACHIEVEMENTS != "false" ]]; then
+    OPTION_MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS="$(echo "cat /options/modules/progression/enable_achievements/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS != "true" && $OPTION_MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/progression/achievements is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_PROGRESSION_ACHIEVEMENTS="false"
+        printf "${COLOR_RED}The option at /options/modules/progression/enable_achievements is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS="false"
         RESET=true
     fi
 
     # Load the /options/modules/progression/dual_talent_specialization option
-    OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION="$(echo "cat /options/modules/progression/dual_talent_specialization/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION != "true" && $OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION != "false" ]]; then
+    OPTION_MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION="$(echo "cat /options/modules/progression/enable_dual_talent_specialization/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION != "true" && $OPTION_MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/progression/dual_talent_specialization is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION="false"
+        printf "${COLOR_RED}The option at /options/modules/progression/enable_dual_talent_specialization is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION="false"
         RESET=true
     fi
 
     # Load the /options/modules/progression/dungeon_finder option
-    OPTION_MODULES_PROGRESSION_DUNGEON_FINDER="$(echo "cat /options/modules/progression/dungeon_finder/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_PROGRESSION_DUNGEON_FINDER != "true" && $OPTION_MODULES_PROGRESSION_DUNGEON_FINDER != "false" ]]; then
+    OPTION_MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER="$(echo "cat /options/modules/progression/enable_dungeon_finder/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER != "true" && $OPTION_MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/progression/dungeon_finder is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_PROGRESSION_DUNGEON_FINDER="false"
+        printf "${COLOR_RED}The option at /options/modules/progression/enable_dungeon_finder is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER="false"
         RESET=true
     fi
 
     # Load the /options/modules/progression/quest_poi option
-    OPTION_MODULES_PROGRESSION_QUEST_POI="$(echo "cat /options/modules/progression/quest_poi/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_PROGRESSION_QUEST_POI != "true" && $OPTION_MODULES_PROGRESSION_QUEST_POI != "false" ]]; then
+    OPTION_MODULES_PROGRESSION_ENABLE_QUEST_POI="$(echo "cat /options/modules/progression/enable_quest_poi/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_ENABLE_QUEST_POI != "true" && $OPTION_MODULES_PROGRESSION_ENABLE_QUEST_POI != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/progression/quest_poi is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_PROGRESSION_QUEST_POI="false"
+        printf "${COLOR_RED}The option at /options/modules/progression/enable_quest_poi is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ENABLE_QUEST_POI="false"
+        RESET=true
+    fi
+
+    # Load the /options/modules/progression/icecrown_citadel_buff
+    OPTION_MODULES_PROGRESSION_ICECROWN_CITADEL_BUFF="$(echo "cat /options/modules/progression/icecrown_citadel_buff/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_PROGRESSION_ICECROWN_CITADEL_BUFF =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_PROGRESSION_ICECROWN_CITADEL_BUFF > 3 ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/progression/icecrown_citadel_buff is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ICECROWN_CITADEL_BUFF="3"
         RESET=true
     fi
 
     # Load the /options/modules/progression/patch_notes option
-    OPTION_MODULES_PROGRESSION_PATCH_NOTES="$(echo "cat /options/modules/progression/patch_notes/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_PROGRESSION_PATCH_NOTES != "true" && $OPTION_MODULES_PROGRESSION_PATCH_NOTES != "false" ]]; then
+    OPTION_MODULES_PROGRESSION_ENABLE_PATCH_NOTES="$(echo "cat /options/modules/progression/enable_patch_notes/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_PROGRESSION_ENABLE_PATCH_NOTES != "true" && $OPTION_MODULES_PROGRESSION_ENABLE_PATCH_NOTES != "false" ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/progression/patch_notes is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_PROGRESSION_PATCH_NOTES="true"
+        printf "${COLOR_RED}The option at /options/modules/progression/enable_patch_notes is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_PROGRESSION_ENABLE_PATCH_NOTES="true"
         RESET=true
     fi
 
@@ -2402,7 +2414,7 @@ function get_source
                 fi
 
                 # Reset the source code, removing any local changes
-                # git reset --hard origin/master
+                git reset --hard origin/master
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
@@ -4611,12 +4623,12 @@ function set_config
             printf "${COLOR_ORANGE}Updating mod_progression.conf${COLOR_END}\n"
 
             # Convert boolean values to integers
-            [ $OPTION_MODULES_PROGRESSION_EXPANSION == "true" ] && MODULES_PROGRESSION_EXPANSION=1 || MODULES_PROGRESSION_EXPANSION=0
-            [ $OPTION_MODULES_PROGRESSION_ACHIEVEMENTS == "true" ] && MODULES_PROGRESSION_ACHIEVEMENTS=1 || MODULES_PROGRESSION_ACHIEVEMENTS=0
-            [ $OPTION_MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION == "true" ] && MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION=1 || MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION=0
-            [ $OPTION_MODULES_PROGRESSION_DUNGEON_FINDER == "true" ] && MODULES_PROGRESSION_DUNGEON_FINDER=1 || MODULES_PROGRESSION_DUNGEON_FINDER=0
-            [ $OPTION_MODULES_PROGRESSION_QUEST_POI == "true" ] && MODULES_PROGRESSION_QUEST_POI=1 || MODULES_PROGRESSION_QUEST_POI=0
-            [ $OPTION_MODULES_PROGRESSION_PATCH_NOTES == "true" ] && MODULES_PROGRESSION_PATCH_NOTES=1 || MODULES_PROGRESSION_PATCH_NOTES=0
+            [ $OPTION_MODULES_PROGRESSION_ENABLE_EXPANSION == "true" ] && MODULES_PROGRESSION_ENABLE_EXPANSION=1 || MODULES_PROGRESSION_ENABLE_EXPANSION=0
+            [ $OPTION_MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS == "true" ] && MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS=1 || MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS=0
+            [ $OPTION_MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION == "true" ] && MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION=1 || MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION=0
+            [ $OPTION_MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER == "true" ] && MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER=1 || MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER=0
+            [ $OPTION_MODULES_PROGRESSION_ENABLE_QUEST_POI == "true" ] && MODULES_PROGRESSION_ENABLE_QUEST_POI=1 || MODULES_PROGRESSION_ENABLE_QUEST_POI=0
+            [ $OPTION_MODULES_PROGRESSION_ENABLE_PATCH_NOTES == "true" ] && MODULES_PROGRESSION_ENABLE_PATCH_NOTES=1 || MODULES_PROGRESSION_ENABLE_PATCH_NOTES=0
 
             if [[ $OPTION_WORLD_ENABLE_WARDEN == "false" ]]; then
                 MODULES_PROGRESSION_PATCH_NOTES=0
@@ -4627,12 +4639,13 @@ function set_config
 
             # Update mod_progression.conf with values specified in the options
             sed -i 's/Progression.Patch =.*/Progression.Patch = '$OPTION_MODULES_PROGRESSION_ACTIVE_PATCH'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
-            sed -i 's/Progression.Expansion =.*/Progression.Expansion = '$MODULES_PROGRESSION_EXPANSION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
-            sed -i 's/Progression.Achievements =.*/Progression.Achievements = '$MODULES_PROGRESSION_ACHIEVEMENTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
-            sed -i 's/Progression.DualTalent =.*/Progression.DualTalent = '$MODULES_PROGRESSION_DUAL_TALENT_SPECIALIZATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
-            sed -i 's/Progression.DungeonFinder =.*/Progression.DungeonFinder = '$MODULES_PROGRESSION_DUNGEON_FINDER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
-            sed -i 's/Progression.QuestPOI =.*/Progression.QuestPOI = '$MODULES_PROGRESSION_QUEST_POI'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
-            sed -i 's/Progression.PatchNotes =.*/Progression.PatchNotes = '$MODULES_PROGRESSION_PATCH_NOTES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.Expansion.Enabled =.*/Progression.Expansion.Enabled = '$MODULES_PROGRESSION_ENABLE_EXPANSION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.Achievements.Enabled =.*/Progression.Achievements.Enabled = '$MODULES_PROGRESSION_ENABLE_ACHIEVEMENTS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.DualTalent.Enabled =.*/Progression.DualTalent.Enabled = '$MODULES_PROGRESSION_ENABLE_DUAL_TALENT_SPECIALIZATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.DungeonFinder.Enabled =.*/Progression.DungeonFinder.Enabled = '$MODULES_PROGRESSION_ENABLE_DUNGEON_FINDER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.QuestPOI.Enabled =.*/Progression.QuestPOI.Enabled = '$MODULES_PROGRESSION_ENABLE_QUEST_POI'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.IcecrownCitadel.Buff =.*/Progression.IcecrownCitadel.Buff = '$OPTION_MODULES_PROGRESSION_ICECROWN_CITADEL_BUFF'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
+            sed -i 's/Progression.PatchNotes.Enabled =.*/Progression.PatchNotes.Enabled = '$MODULES_PROGRESSION_ENABLE_PATCH_NOTES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf
         else
             # Check if the config file exists
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_progression.conf.dist ]]; then
