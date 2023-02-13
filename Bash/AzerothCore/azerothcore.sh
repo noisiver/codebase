@@ -2381,7 +2381,7 @@ function get_source
                 cd $OPTION_SOURCE_LOCATION/modules/mod-progressive
 
                 # Fetch all available updates
-                # git pull
+                git pull
 
                 # Check to make sure there weren't any errors
                 if [[ $? -ne 0 ]]; then
