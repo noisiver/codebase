@@ -3304,40 +3304,6 @@ function import_database
             fi
         fi
 
-        # Check if the learn spells module is enabled
-        if [[ $OPTION_MODULES_LEARN_SPELLS_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-learnspells/data/sql/db-world/base/ ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-learnspells/data/sql/db-world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        fi
-
         # Check if the progressive module is enabled
         if [[ $OPTION_MODULES_PROGRESSIVE_ENABLED == "true" ]]; then
             if [[ $OPTION_MODULES_PROGRESSIVE_ACTIVE_PATCH -ge 0 ]]; then
