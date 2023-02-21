@@ -3061,6 +3061,19 @@ function import_database
             exit $?
         fi
 
+        printf "${COLOR_ORANGE}Updating message of the day${COLOR_END}\n"
+        # Update the motd with the id and text specified
+        mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM motd WHERE realmid='$OPTION_WORLD_ID';INSERT INTO motd (realmid, text) VALUES ('$OPTION_WORLD_ID', '$OPTION_WORLD_MOTD')"
+
+        # Check to make sure there weren't any errors
+        if [[ $? -ne 0 ]]; then
+            # Remove the mysql conf
+            rm -rf $MYSQL_CNF
+
+            # Terminate script on error
+            exit $?
+        fi
+
         # Check if the account bound module is enabled
         if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
             # Make sure the database folder exists
@@ -3633,7 +3646,6 @@ function set_config
         sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Motd =.*/Motd = "'"$OPTION_WORLD_MOTD"'"/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/SkipCinematics =.*/SkipCinematics = '$OPTION_WORLD_SKIP_CINEMATICS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MaxPlayerLevel =.*/MaxPlayerLevel = '$OPTION_WORLD_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/StartPlayerLevel =.*/StartPlayerLevel = '$OPTION_WORLD_START_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
