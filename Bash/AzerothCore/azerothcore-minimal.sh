@@ -1258,6 +1258,36 @@ function get_client_files
     fi
 }
 
+# A function that copies any modified dbc files to the correct folder
+function copy_dbc_files
+{
+    # Make sure this is only used with the both or world subparameters
+    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        if [[ -d $ROOT/dbc ]]; then
+            printf "${COLOR_GREEN}Copying modified dbc files...${COLOR_END}\n"
+
+            # Check if the folder is empty
+            if [[ ! -z "$(ls -A $ROOT/dbc/)" ]]; then
+                # Loop through all sql files inside the folder
+                for f in $ROOT/dbc/*.dbc; do
+                    printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
+
+                    # Copy the file
+                    cp $f $OPTION_SOURCE_LOCATION/bin/dbc
+
+                    # Check to make sure there weren't any errors
+                    if [[ $? -ne 0 ]]; then
+                        # Terminate script on error
+                        exit $?
+                    fi
+                done
+            fi
+
+            printf "${COLOR_GREEN}Finished copying the modified dbc files...${COLOR_END}\n"
+        fi
+    fi
+}
+
 # A function that imports all database files
 function import_database
 {
@@ -1582,11 +1612,11 @@ function import_database
         fi
 
         # Check if there is a folder for custom content
-        if [[ -d $ROOT/sql/world ]]; then
+        if [[ -d $ROOT/sql ]]; then
             # Check if the folder is empty
-            if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
+            if [[ ! -z "$(ls -A $ROOT/sql/)" ]]; then
                 # Loop through all sql files inside the folder
-                for f in $ROOT/sql/world/*.sql; do
+                for f in $ROOT/sql/*.sql; do
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
 
                     # Import the sql file
@@ -1888,6 +1918,9 @@ if [[ $# -gt 0 ]]; then
 
             # Download the client data files
             get_client_files $1
+
+            # Copy custom dbc files
+            copy_dbc_files $1
         elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
             # Import the database files
             import_database $1
@@ -1906,6 +1939,9 @@ if [[ $# -gt 0 ]]; then
 
             # Download the client data files
             get_client_files $1
+
+            # Copy custom dbc files
+            copy_dbc_files $1
 
             # Import the database files
             import_database $1
