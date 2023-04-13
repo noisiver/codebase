@@ -1441,6 +1441,46 @@ function import_database
                 exit $?
             fi
         done
+
+        # Check if any custom files exist
+        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            # Loop through all sql files inside the auth custom folder
+            for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                # Add the hash to file
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+
+                # Import the sql file
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_AUTH < $f
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            done
+        fi
     fi
 
     # Check if either both or world is used as the first parameter
@@ -1515,6 +1555,46 @@ function import_database
             fi
         done
 
+        # Check if any custom files exist
+        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            # Loop through all sql files inside the characters custom folder
+            for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                # Add the hash to file
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+
+                # Import the sql file
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_CHARACTERS < $f
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            done
+        fi
+
         # Loop through all sql files inside the world base folder
         for f in $OPTION_SOURCE_LOCATION/data/sql/base/db_world/*.sql; do
             # Check if the table already exists
@@ -1584,6 +1664,46 @@ function import_database
                 exit $?
             fi
         done
+
+        # Check if any custom files exist
+        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            # Loop through all sql files inside the world custom folder
+            for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+
+                # Add the hash to file
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+
+                # Import the sql file
+                mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
+
+                # Check to make sure there weren't any errors
+                if [[ $? -ne 0 ]]; then
+                    # Remove the mysql conf
+                    rm -rf $MYSQL_CNF
+
+                    # Terminate script on error
+                    exit $?
+                fi
+            done
+        fi
 
         printf "${COLOR_ORANGE}Adding to the realmlist (id: $OPTION_WORLD_ID, name: $OPTION_WORLD_NAME, address $OPTION_WORLD_ADDRESS, port $OPTION_WORLD_PORT)${COLOR_END}\n"
         # Update the realmlist with the id, name and address specified
