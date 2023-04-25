@@ -106,7 +106,7 @@ function source_packages
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # An array of all required packages
-        PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libmariadb-dev-compat" "mariadb-client")
+        PACKAGES=("cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libmysqlclient-dev" "mysql-client")
 
         if [[ $VERSION != "20.04" ]]; then
             PACKAGES="${PACKAGES} libboost1.74-all-dev"
@@ -153,7 +153,7 @@ function database_package
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
     if [[ $OS == "ubuntu" ]] || [[ $OS == "debian" ]]; then
         # Check if the package is installed
-        if [[ $(dpkg-query -W -f='${Status}' mariadb-client 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
+        if [[ $(dpkg-query -W -f='${Status}' mysql-client 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
             clear
 
             # Perform an update to make sure nothing is missing
@@ -168,9 +168,9 @@ function database_package
 
             # Install the package that is missing
             if [[ $EUID != 0 ]]; then
-                sudo apt-get --yes install mariadb-client
+                sudo apt-get --yes install mysql-client
             else
-                apt-get --yes install mariadb-client
+                apt-get --yes install mysql-client
             fi
             if [[ $? -ne 0 ]]; then
                 exit $?
