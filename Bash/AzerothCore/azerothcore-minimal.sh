@@ -147,7 +147,7 @@ function source_packages
     fi
 }
 
-# A function to install the mariadb client package
+# A function to install the mysql client package
 function database_package
 {
     # Different distributions are handled in their own way. This is unnecessary but will help if other distributions are added in the future
