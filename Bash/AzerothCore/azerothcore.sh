@@ -3619,6 +3619,7 @@ function set_config
         sed -i 's/Progression.Achievements.Locked =.*/Progression.Achievements.Locked = '$WORLD_PROGRESSION_LOCK_ACHIEVEMENTS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.DungeonFinder.Locked =.*/Progression.DungeonFinder.Locked = '$WORLD_PROGRESSION_LOCK_DUNGEON_FINDER'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
         # Check if the account bound module is enabled
         if [[ $OPTION_MODULES_ACCOUNT_BOUND_ENABLED == "true" ]]; then
