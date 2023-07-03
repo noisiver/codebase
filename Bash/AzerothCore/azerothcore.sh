@@ -332,190 +332,188 @@ function store_options
             <progression>
                 <!-- The game patch to mimic -->
                 <active_patch>${67:-21}</active_patch>
-                <!-- Lock expansion based on the active patch -->
-                <lock_expansion>${68:-true}</lock_expansion>
-                <!-- Disable achievements before patch 3.0 -->
-                <lock_achievements>${69:-true}</lock_achievements>
-                <!-- Disable the use of the Dungeon Finder before patch 3.3 -->
-                <lock_dungeon_finder>${70:-true}</lock_dungeon_finder>
                 <!-- Set the active buff inside Icecrown Citadel based on the active patch -->
-                <icecrown_citadel_buff>${71:-3}</icecrown_citadel_buff>
+                <icecrown_citadel_buff>${68:-3}</icecrown_citadel_buff>
             </progression>
         </world>
         <modules>
             <account_bound>
                 <!-- Enable/Disable the use of the AccountBound module -->
-                <enabled>${72:-false}</enabled>
+                <enabled>${69:-false}</enabled>
                 <!-- Enable/Disable companions to be account bound -->
-                <enable_companions>${73:-true}</enable_companions>
+                <enable_companions>${70:-true}</enable_companions>
                 <!-- Enable/Disable heirlooms to be account bound -->
-                <enable_heirlooms>${74:-true}</enable_heirlooms>
+                <enable_heirlooms>${71:-true}</enable_heirlooms>
                 <!-- Enable/Disable the mounts to be account bound -->
-                <enable_mounts>${75:-true}</enable_mounts>
+                <enable_mounts>${72:-true}</enable_mounts>
                 <!-- Enable/Disable companions, heirlooms and mounts to be shared across linked accounts -->
-                <enable_linked_accounts>${76:-false}</enable_linked_accounts>
+                <enable_linked_accounts>${73:-false}</enable_linked_accounts>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${77:-false}</enabled>
+                <enabled>${74:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${78:-false}</enable_buyer>
+                <enable_buyer>${75:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${79:-false}</enable_seller>
+                <enable_seller>${76:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${80:-0}</account_id>
+                <account_id>${77:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${81:-0}</character_guid>
+                <character_guid>${78:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${82:-250}</min_items>
+                <min_items>${79:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${83:-250}</max_items>
+                <max_items>${80:-250}</max_items>
+                <!-- The max item level of items to be posted. 0 = no limit -->
+                <max_item_level>${81:-0}</max_item_level>
             </ahbot>
             <archmage_timear>
                 <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${84:-false}</enabled>
+                <enabled>${82:-false}</enabled>
             </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module -->
-                <enabled>${85:-false}</enabled>
+                <enabled>${83:-false}</enabled>
                 <features>
                     <!-- Enable/Disable the ability to obtain heirlooms from the assistant -->
-                    <enable_heirlooms>${86:-true}</enable_heirlooms>
+                    <enable_heirlooms>${84:-true}</enable_heirlooms>
                     <!-- Enable/Disable the ability to obtain glyphs from the assistant -->
-                    <enable_glyphs>${87:-true}</enable_glyphs>
+                    <enable_glyphs>${85:-true}</enable_glyphs>
                     <!-- Enable/Disable the ability to obtain gems from the assistant -->
-                    <enable_gems>${88:-true}</enable_gems>
+                    <enable_gems>${86:-true}</enable_gems>
                     <!-- Enable/Disable the ability to obtain containers from the assistant -->
-                    <enable_containers>${89:-true}</enable_containers>
+                    <enable_containers>${87:-true}</enable_containers>
                     <utilities>
                         <!-- Enable/Disable the ability to obtain various utilities from the assistant -->
-                        <enabled>${90:-true}</enabled>
+                        <enabled>${88:-true}</enabled>
                         <!-- The cost in gold to perform a name change -->
-                        <name_change_cost>${91:-10}</name_change_cost>
+                        <name_change_cost>${89:-10}</name_change_cost>
                         <!-- The cost in gold to perform a customization -->
-                        <customization_cost>${92:-50}</customization_cost>
+                        <customization_cost>${90:-50}</customization_cost>
                         <!-- The cost in gold to perform a race change -->
-                        <race_change_cost>${93:-500}</race_change_cost>
+                        <race_change_cost>${91:-500}</race_change_cost>
                         <!-- The cost in gold to perform a faction change -->
-                        <faction_change_cost>${94:-1000}</faction_change_cost>
+                        <faction_change_cost>${92:-1000}</faction_change_cost>
                     </utilities>
                     <professions>
                         <apprentice>
                             <!-- Enable/Disable the ability to max out an apprentice profession -->
-                            <enabled>${95:-true}</enabled>
+                            <enabled>${93:-true}</enabled>
                             <!-- The cost in gold to max out an apprentice profession -->
-                            <cost>${96:-100}</cost>
+                            <cost>${94:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable the ability to max out an journeyman profession -->
-                            <enabled>${97:-true}</enabled>
+                            <enabled>${95:-true}</enabled>
                             <!-- The cost in gold to max out an journeyman profession -->
-                            <cost>${98:-250}</cost>
+                            <cost>${96:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable the ability to max out an expert profession -->
-                            <enabled>${99:-true}</enabled>
+                            <enabled>${97:-true}</enabled>
                             <!-- The cost in gold to max out an expert profession -->
-                            <cost>${100:-500}</cost>
+                            <cost>${98:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable the ability to max out an artisan profession -->
-                            <enabled>${101:-true}</enabled>
+                            <enabled>${99:-true}</enabled>
                             <!-- The cost in gold to max out an artisan profession -->
-                            <cost>${102:-750}</cost>
+                            <cost>${100:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable the ability to max out an master profession -->
-                            <enabled>${103:-false}</enabled>
+                            <enabled>${101:-false}</enabled>
                             <!-- The cost in gold to max out an master profession -->
-                            <cost>${104:-1250}</cost>
+                            <cost>${102:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable the ability to max out an grand master profession -->
-                            <enabled>${105:-false}</enabled>
+                            <enabled>${103:-false}</enabled>
                             <!-- The cost in gold to max out an grand master profession -->
-                            <cost>${106:-2500}</cost>
+                            <cost>${104:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <guild_funds>
                 <!-- Enable/Disable the use of the Guild Funds module. It deposits a percentage of the money looted and earned from quests into the guild bank -->
-                <enabled>${107:-false}</enabled>
+                <enabled>${105:-false}</enabled>
                 <percentages>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when looting. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <looted>${108:-10}</looted>
+                    <looted>${106:-10}</looted>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when completing quests. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <quests>${109:-3}</quests>
+                    <quests>${107:-3}</quests>
                 </percentages>
             </guild_funds>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${110:-false}</enabled>
+                <enabled>${108:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${111:-false}</enabled>
+                <enabled>${109:-false}</enabled>
                 <features>
                     <!-- Enable/Disable to learn class-specific spells -->
-                    <enable_class_spells>${112:-true}</enable_class_spells>
+                    <enable_class_spells>${110:-true}</enable_class_spells>
                     <!-- Enable/Disable to learn talent ranks -->
-                    <enable_talent_ranks>${113:-true}</enable_talent_ranks>
+                    <enable_talent_ranks>${111:-true}</enable_talent_ranks>
                     <!-- Enable/Disable to learn proficiencies -->
-                    <enable_proficiencies>${114:-true}</enable_proficiencies>
+                    <enable_proficiencies>${112:-true}</enable_proficiencies>
                     <!-- Enable/Disable to learn spells normally obtained through quests -->
-                    <enable_spells_from_quests>${115:-true}</enable_spells_from_quests>
+                    <enable_spells_from_quests>${113:-true}</enable_spells_from_quests>
                     <riding>
                         <!-- Enable/Disable to learn apprentice riding and mounts -->
-                        <enable_apprentice>${116:-false}</enable_apprentice>
+                        <enable_apprentice>${114:-false}</enable_apprentice>
                         <!-- Enable/Disable to learn journeyman riding and mounts -->
-                        <enable_journeyman>${117:-false}</enable_journeyman>
+                        <enable_journeyman>${115:-false}</enable_journeyman>
                         <!-- Enable/Disable to learn expert riding and mounts -->
-                        <enable_expert>${118:-false}</enable_expert>
+                        <enable_expert>${116:-false}</enable_expert>
                         <!-- Enable/Disable to learn artisan riding and mounts -->
-                        <enable_artisan>${119:-false}</enable_artisan>
+                        <enable_artisan>${117:-false}</enable_artisan>
                         <!-- Enable/Disable to learn cold weather flying at level 77 -->
-                        <enable_cold_weather_flying>${120:-false}</enable_cold_weather_flying>
+                        <enable_cold_weather_flying>${118:-false}</enable_cold_weather_flying>
                     </riding>
                 </features>
             </learn_spells>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${121:-false}</enabled>
+                <enabled>${119:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${122:-90}</referral_duration>
+                <referral_duration>${120:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${123:-7}</max_account_age>
+                <max_account_age>${121:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${124:-30}</days_until_reward>
+                    <days_until_reward>${122:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${125:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${123:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${126:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${124:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${127:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${125:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <skip_dk_starting_area>
                 <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${128:-false}</enabled>
+                <enabled>${126:-false}</enabled>
                 <!-- The level that death knight starts at -->
-                <starting_level>${129:-58}</starting_level>
+                <starting_level>${127:-58}</starting_level>
             </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${130:-false}</enabled>
-                <!-- The multiplier for experience on weekends -->
-                <experience_multiplier>${131:-2.0}</experience_multiplier>
-                <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                <money_multiplier>${132:-2.0}</money_multiplier>
-                <!-- The multiplier for profession skill ups on weekends -->
-                <professions_multiplier>${133:-2}</professions_multiplier>
-                <!-- The multiplier for reputation on weekends -->
-                <reputation_multiplier>${134:-2.0}</reputation_multiplier>
-                <!-- The multiplier for weapons and defense skill ups on weekends -->
-                <proficiencies_multiplier>${135:-2}</proficiencies_multiplier>
+                <enabled>${128:-false}</enabled>
+                <multipliers>
+                    <!-- The multiplier for experience on weekends -->
+                    <experience>${129:-2.0}</experience>
+                    <!-- The multiplier for money looted and rewarded from quests on weekends -->
+                    <money>${130:-2.0}</money>
+                    <!-- The multiplier for profession skill ups on weekends -->
+                    <professions>${131:-2}</professions>
+                    <!-- The multiplier for reputation on weekends -->
+                    <reputation>${132:-2.0}</reputation>
+                    <!-- The multiplier for weapons and defense skill ups on weekends -->
+                    <proficiencies>${133:-2}</proficiencies>
+                </multipliers>
             </weekend_bonus>
         </modules>
     </options>" | xmllint --format - > $OPTIONS
@@ -592,9 +590,6 @@ function save_options
     $OPTION_WORLD_GM_ALLOW_INVITE \
     $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
     $OPTION_WORLD_PROGRESSION_ACTIVE_PATCH \
-    $OPTION_WORLD_PROGRESSION_LOCK_EXPANSION \
-    $OPTION_WORLD_PROGRESSION_LOCK_ACHIEVEMENTS \
-    $OPTION_WORLD_PROGRESSION_LOCK_DUNGEON_FINDER \
     $OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF \
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLED \
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS \
@@ -608,6 +603,7 @@ function save_options
     $OPTION_MODULES_AHBOT_CHARACTER_GUID \
     $OPTION_MODULES_AHBOT_MIN_ITEMS \
     $OPTION_MODULES_AHBOT_MAX_ITEMS \
+    $OPTION_MODULES_AHBOT_MAX_ITEM_LEVEL \
     $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED \
     $OPTION_MODULES_ASSISTANT_ENABLED \
     $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS \
@@ -655,11 +651,11 @@ function save_options
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
     $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
     $OPTION_MODULES_WEEKEND_BONUS_ENABLED \
-    $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER \
-    $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER \
-    $OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER \
-    $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER \
-    $OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER
+    $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_EXPERIENCE \
+    $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_MONEY \
+    $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFESSIONS \
+    $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_REPUTATION \
+    $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFICIENCIES
 }
 
 # A function that loads options from the file
@@ -1283,33 +1279,6 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/world/progression/lock_expansion option
-    OPTION_WORLD_PROGRESSION_LOCK_EXPANSION="$(echo "cat /options/world/progression/lock_expansion/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_PROGRESSION_LOCK_EXPANSION != "true" && $OPTION_WORLD_PROGRESSION_LOCK_EXPANSION != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/progression/enable_expansion is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_PROGRESSION_LOCK_EXPANSION="true"
-        RESET=true
-    fi
-
-    # Load the /options/world/progression/lock_achievements option
-    OPTION_WORLD_PROGRESSION_LOCK_ACHIEVEMENTS="$(echo "cat /options/world/progression/lock_achievements/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_PROGRESSION_LOCK_ACHIEVEMENTS != "true" && $OPTION_WORLD_PROGRESSION_LOCK_ACHIEVEMENTS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/progression/enable_achievements is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_PROGRESSION_LOCK_ACHIEVEMENTS="true"
-        RESET=true
-    fi
-
-    # Load the /options/world/progression/lock_dungeon_finder option
-    OPTION_WORLD_PROGRESSION_LOCK_DUNGEON_FINDER="$(echo "cat /options/world/progression/lock_dungeon_finder/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_PROGRESSION_LOCK_DUNGEON_FINDER != "true" && $OPTION_WORLD_PROGRESSION_LOCK_DUNGEON_FINDER != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/progression/enable_dungeon_finder is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_PROGRESSION_LOCK_DUNGEON_FINDER="true"
-        RESET=true
-    fi
-
     # Load the /options/world/progression/icecrown_citadel_buff
     OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF="$(echo "cat /options/world/progression/icecrown_citadel_buff/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ ! $OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF > 3 ]]; then
@@ -1424,6 +1393,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/ahbot/max_items is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_AHBOT_MAX_ITEMS="250"
+        RESET=true
+    fi
+
+    # Load the /options/modules/ahbot/max_item_level option
+    OPTION_MODULES_AHBOT_MAX_ITEM_LEVEL="$(echo "cat /options/modules/ahbot/max_item_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_AHBOT_MAX_ITEM_LEVEL =~ ^[0-9]+$ ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/modules/ahbot/max_item_level is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_AHBOT_MAX_ITEM_LEVEL="0"
         RESET=true
     fi
 
@@ -1850,48 +1828,48 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/weekend_bonus/experience_multiplier option
-    OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/experience_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER < 1 ]]; then
+    # Load the /options/modules/weekend_bonus/multipliers/experience option
+    OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_EXPERIENCE="$(echo "cat /options/modules/weekend_bonus/multipliers/experience/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_EXPERIENCE < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/experience_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER="2.0"
+        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/multipliers/experience is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_EXPERIENCE="2.0"
         RESET=true
     fi
 
-    # Load the /options/modules/weekend_bonus/money_multiplier option
-    OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/money_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER < 1 ]]; then
+    # Load the /options/modules/weekend_bonus/multipliers/money option
+    OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_MONEY="$(echo "cat /options/modules/weekend_bonus/multipliers/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_MONEY < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/money_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER="2.0"
+        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/multipliers/money is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_MONEY="2.0"
         RESET=true
     fi
 
-    # Load the /options/modules/weekend_bonus/professions_multiplier option
-    OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/professions_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER < 1 ]]; then
+    # Load the /options/modules/weekend_bonus/multipliers/professions option
+    OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFESSIONS="$(echo "cat /options/modules/weekend_bonus/multipliers/professions/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFESSIONS =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFESSIONS < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/professions_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER="2"
+        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/multipliers/professions is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFESSIONS="2"
         RESET=true
     fi
 
-    # Load the /options/modules/weekend_bonus/reputation_multiplier option
-    OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/reputation_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER < 1 ]]; then
+    # Load the /options/modules/weekend_bonus/multipliers/reputation option
+    OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_REPUTATION="$(echo "cat /options/modules/weekend_bonus/multipliers/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_REPUTATION < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/reputation_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER="2.0"
+        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/multipliers/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_REPUTATION="2.0"
         RESET=true
     fi
 
-    # Load the /options/modules/weekend_bonus/proficiencies_multiplier option
-    OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER="$(echo "cat /options/modules/weekend_bonus/proficiencies_multiplier/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER < 1 ]]; then
+    # Load the /options/modules/weekend_bonus/multipliers/proficiencies option
+    OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFICIENCIES="$(echo "cat /options/modules/weekend_bonus/multipliers/proficiencies/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ ! $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFICIENCIES =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFICIENCIES < 1 ]]; then
         # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/proficiencies_multiplier is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER="2"
+        printf "${COLOR_RED}The option at /options/modules/weekend_bonus/multipliers/proficiencies is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFICIENCIES="2"
         RESET=true
     fi
 
@@ -2864,7 +2842,7 @@ function import_database
         done
 
         # Check if any custom files exist
-        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        if [[ `ls -1 $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             # Loop through all sql files inside the auth custom folder
             for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/*.sql; do
                 FILENAME=$(basename $f)
@@ -2977,7 +2955,7 @@ function import_database
         done
 
         # Check if any custom files exist
-        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        if [[ `ls -1 $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             # Loop through all sql files inside the characters custom folder
             for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/*.sql; do
                 FILENAME=$(basename $f)
@@ -3087,7 +3065,7 @@ function import_database
         done
 
         # Check if any custom files exist
-        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        if [[ `ls -1 $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             # Loop through all sql files inside the world custom folder
             for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/*.sql; do
                 FILENAME=$(basename $f)
@@ -3220,9 +3198,9 @@ function import_database
         # Check if the ahbot module is enabled
         if [[ $OPTION_MODULES_AHBOT_ENABLED == "true" ]]; then
             # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base ]]; then
+            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base ]]; then
                 # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/sql/world/base/*.sql; do
+                for f in $OPTION_SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -3539,10 +3517,6 @@ function set_config
         [ $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND == "true" ] && WORLD_ALLOW_TWO_SIDED_FRIEND=1 || WORLD_ALLOW_TWO_SIDED_FRIEND=0
         [ $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE == "true" ] && WORLD_ALLOW_TWO_SIDED_TRADE=1 || WORLD_ALLOW_TWO_SIDED_TRADE=0
 
-        [ $OPTION_WORLD_PROGRESSION_LOCK_EXPANSION == "true" ] && WORLD_PROGRESSION_LOCK_EXPANSION=1 || WORLD_PROGRESSION_LOCK_EXPANSION=0
-        [ $OPTION_WORLD_PROGRESSION_LOCK_ACHIEVEMENTS == "true" ] && WORLD_PROGRESSION_LOCK_ACHIEVEMENTS=1 || WORLD_PROGRESSION_LOCK_ACHIEVEMENTS=0
-        [ $OPTION_WORLD_PROGRESSION_LOCK_DUNGEON_FINDER == "true" ] && WORLD_PROGRESSION_LOCK_DUNGEON_FINDER=1 || WORLD_PROGRESSION_LOCK_DUNGEON_FINDER=0
-
         # Copy the file before editing it
         cp $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
@@ -3615,9 +3589,6 @@ function set_config
         sed -i 's/QuestPOI.Enabled =.*/QuestPOI.Enabled = '$WORLD_ENABLE_QUEST_POI'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MailDeliveryDelay =.*/MailDeliveryDelay = '$OPTION_WORLD_MAIL_DELIVERY_DELAY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$OPTION_WORLD_PROGRESSION_ACTIVE_PATCH'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Progression.Expansion.Locked =.*/Progression.Expansion.Locked = '$WORLD_PROGRESSION_LOCK_EXPANSION'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Progression.Achievements.Locked =.*/Progression.Achievements.Locked = '$WORLD_PROGRESSION_LOCK_ACHIEVEMENTS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Progression.DungeonFinder.Locked =.*/Progression.DungeonFinder.Locked = '$WORLD_PROGRESSION_LOCK_DUNGEON_FINDER'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
@@ -3695,6 +3666,7 @@ function set_config
             sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = '$MODULES_AHBOT_ENABLE_SELLER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
             sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = '$OPTION_MODULES_AHBOT_ACCOUNT_ID'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
             sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = '$OPTION_MODULES_AHBOT_CHARACTER_GUID'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+            sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$OPTION_MODULES_AHBOT_MAX_ITEM_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf
         else
             # Check if the config file exists
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
@@ -4023,11 +3995,11 @@ function set_config
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
 
             # Update mod_weekendbonus.conf with values specified in the options
-            sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = '$OPTION_MODULES_WEEKEND_BONUS_EXPERIENCE_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-            sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = '$OPTION_MODULES_WEEKEND_BONUS_MONEY_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-            sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = '$OPTION_MODULES_WEEKEND_BONUS_PROFESSIONS_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-            sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = '$OPTION_MODULES_WEEKEND_BONUS_REPUTATION_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-            sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = '$OPTION_MODULES_WEEKEND_BONUS_PROFICIENCIES_MULTIPLIER'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = '$OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = '$OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = '$OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFESSIONS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = '$OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+            sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = '$OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_PROFICIENCIES'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
         else
             # Check if the config file exists
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
