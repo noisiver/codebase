@@ -1911,6 +1911,7 @@ function set_config
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MailDeliveryDelay =.*/MailDeliveryDelay = '$OPTION_WORLD_MAIL_DELIVERY_DELAY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
     fi
 
     printf "${COLOR_GREEN}Finished updating the config files...${COLOR_END}\n"
