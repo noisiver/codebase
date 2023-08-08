@@ -1443,7 +1443,7 @@ function import_database
         done
 
         # Check if any custom files exist
-        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        if [[ `ls -1 $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             # Loop through all sql files inside the auth custom folder
             for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_auth/*.sql; do
                 FILENAME=$(basename $f)
@@ -1556,7 +1556,7 @@ function import_database
         done
 
         # Check if any custom files exist
-        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        if [[ `ls -1 $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             # Loop through all sql files inside the characters custom folder
             for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_characters/*.sql; do
                 FILENAME=$(basename $f)
@@ -1666,7 +1666,7 @@ function import_database
         done
 
         # Check if any custom files exist
-        if [[ `ls -1 /home/ubuntu/azerothcore/source/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        if [[ `ls -1 $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             # Loop through all sql files inside the world custom folder
             for f in $OPTION_SOURCE_LOCATION/data/sql/custom/db_world/*.sql; do
                 FILENAME=$(basename $f)
