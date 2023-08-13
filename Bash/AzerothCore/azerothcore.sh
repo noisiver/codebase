@@ -206,7 +206,7 @@ function store_options
             <!-- The location where the source is located -->
             <location>${8:-/opt/azerothcore}</location>
             <!-- The required client data version -->
-            <required_client_data>${9:-14}</required_client_data>
+            <required_client_data>${9:-16}</required_client_data>
             <!-- The installed client data version. WARNING: DO NOT EDIT -->
             <installed_client_data>${10:-0}</installed_client_data>
         </source>
@@ -227,292 +227,218 @@ function store_options
             <realm_zone>${17:-1}</realm_zone>
             <!-- Allow server to use content from expansions. Checks for expansion-related map files, client compatibility and class/race character creation. 0 = none, 1 = tbc, 2 = wotlk -->
             <expansion>${18:-2}</expansion>
-            <!-- Maximum number of players in the world. Excluding Mods, GMs and Admins -->
-            <player_limit>${19:-1000}</player_limit>
-            <!-- Disable cinematic intro at first login after character creation. Prevents buggy intros in case of custom start location coordinates. 0 = Show intro for each new character, 1 = Show intro only for first character of selected race, 2 = Disable intro for all classes -->
-            <skip_cinematics>${20:-0}</skip_cinematics>
-            <!-- Maximum level that can be reached by players. Levels below 1 and above 80 will reset to 80 -->
-            <max_level>${21:-80}</max_level>
-            <!-- Starting level for characters after creation. Levels below 1 and above 80 will reset to 1 -->
-            <start_level>${22:-1}</start_level>
-            <!-- Amount of money (in Copper) that a character has after creation -->
-            <start_money>${23:-0}</start_money>
-            <!-- Players will automatically gain max skill level when logging in or leveling up. false = disabled, true = enabled -->
-            <always_max_skill>${24:-false}</always_max_skill>
-            <!-- Character knows all flight paths (of both factions) after creation. false = disabled, true = enabled -->
-            <all_flight_paths>${25:-false}</all_flight_paths>
-            <!-- Characters start with all maps explored. false = disabled, true = enabled -->
-            <maps_explored>${26:-false}</maps_explored>
             <!-- Allow players to use commands. false = disabled, true = enabled -->
-            <allow_commands>${27:-true}</allow_commands>
+            <allow_commands>${19:-true}</allow_commands>
             <!-- Allow non-raid quests to be completed while in a raid group. false = disabled, true = enabled -->
-            <quest_ignore_raid>${28:-false}</quest_ignore_raid>
-            <!-- Prevent players AFK from being logged out. false = disabled, true = enabled -->
-            <prevent_afk_logout>${29:-false}</prevent_afk_logout>
-            <!-- Highest level up to which a character can benefit from the Recruit-A-Friend experience multiplier -->
-            <raf_max_level>${30:-60}</raf_max_level>
+            <quest_ignore_raid>${20:-false}</quest_ignore_raid>
             <!-- Preload all grids on all non-instanced maps. This will take a great amount of additional RAM (ca. 9 GB) and causes the server to take longer to start, but can increase performance if used on a server with a high amount of players. It will also activate all creatures which are set active (e.g. the Fel Reavers in Hellfire Peninsula) on server start. false = disabled, true = enabled -->
-            <preload_map_grids>${31:-false}</preload_map_grids>
+            <preload_map_grids>${21:-false}</preload_map_grids>
             <!-- Set all creatures with waypoint movement active. This means that they will start movement once they are loaded (which happens on grid load) and keep moving even when no player is near. This will increase CPU usage significantly and can be used with enabled preload_map_grids to start waypoint movement on server startup. false = disabled, true = enabled -->
-            <set_all_waypoints_active>${32:-false}</set_all_waypoints_active>
+            <set_all_waypoints_active>${22:-false}</set_all_waypoints_active>
             <!-- Enable/Disable Minigob Manabonk in Dalaran. false = disabled, true = enabled -->
-            <enable_minigob_manabonk>${33:-true}</enable_minigob_manabonk>
-            <!-- Enable Warden anti-cheat system. false = disabled, true = enabled -->
-            <enable_warden>${34:-true}</enable_warden>
+            <enable_minigob_manabonk>${23:-true}</enable_minigob_manabonk>
             <!-- Allow players to stay in regular groups when logging off. This only affects normal groups and not raids or dungeon finder groups. false = players will leave their group when logging off, true = players will stay in their groups -->
-            <disable_leave_group>${35:-false}</disable_leave_group>
-            <!-- Enable the quest markers on the map -->
-            <enable_quest_poi>${36:-true}</enable_quest_poi>
-            <!-- Time in seconds for mail delivery when sending items -->
-            <mail_delivery_delay>${37:-3600}</mail_delivery_delay>
-            <allow_two_sided>
-                <!-- Allow creating characters of both factions on the same account. false = disabled, true = enabled -->
-                <accounts>${38:-true}</accounts>
-                <!-- Allow calendar invites between factions. false = disabled, true = enabled -->
-                <calendar>${39:-false}</calendar>
-                <!-- Allow say chat between factions. false = disabled, true = enabled -->
-                <chat>${40:-false}</chat>
-                <!-- Allow emote messages between factions. false = disabled, true = enabled -->
-                <emote>${41:-false}</emote>
-                <!-- Allow channel chat between factions. false = disabled, true = enabled -->
-                <channel>${42:-false}</channel>
-                <!-- Allow group joining between factions. false = disabled, true = enabled -->
-                <group>${43:-false}</group>
-                <!-- Allow guild joining between factions. false = disabled, true = enabled -->
-                <guild>${44:-false}</guild>
-                <!-- Allow auctions between factions. false = disabled, true = enabled -->
-                <auction>${45:-false}</auction>
-                <!-- Allow sending mails between factions. false = disabled, true = enabled -->
-                <mail>${46:-false}</mail>
-                <!-- Show characters from both factions in the who list. false = disabled, true = enabled -->
-                <who_list>${47:-false}</who_list>
-                <!-- Allow adding friends from other faction to the friends list. false = disabled, true = enabled -->
-                <friend>${48:-false}</friend>
-                <!-- Allow trading between factions. false = disabled, true = enabled -->
-                <trade>${49:-false}</trade>
-            </allow_two_sided>
+            <disable_leave_group>${24:-false}</disable_leave_group>
             <rates>
                 <!-- Experience rates (outside battleground) -->
-                <experience>${50:-1}</experience>
+                <experience>${25:-1}</experience>
                 <!-- Resting points grow rates -->
-                <rested_experience>${51:-1}</rested_experience>
-                <!-- Reputation gain rate -->
-                <reputation>${52:-1}</reputation>
-                <!-- Drop rates for money -->
-                <money>${53:-1}</money>
-                <!-- Crafting skills gain rate -->
-                <crafting>${54:-1}</crafting>
-                <!-- Gathering skills gain rate -->
-                <gathering>${55:-1}</gathering>
-                <!-- Weapon skills gain rate -->
-                <weapon_skill>${56:-1}</weapon_skill>
-                <!-- Defense skills gain rate -->
-                <defense_skill>${57:-1}</defense_skill>
+                <rested_experience>${26:-1}</rested_experience>
             </rates>
             <gm>
                 <!-- Set GM state when a GM character enters the world. false = disabled, true = enabled -->
-                <login_state>${58:-true}</login_state>
+                <login_state>${27:-true}</login_state>
                 <!-- GM visibility at login. false = disabled, true = enabled -->
-                <enable_visibility>${59:-false}</enable_visibility>
+                <enable_visibility>${28:-false}</enable_visibility>
                 <!-- GM chat mode at login. false = disabled, true = enabled -->
-                <enable_chat>${60:-true}</enable_chat>
+                <enable_chat>${29:-true}</enable_chat>
                 <!-- Is GM accepting whispers from player by default or not. false = disabled, true = enabled -->
-                <enable_whisper>${61:-false}</enable_whisper>
+                <enable_whisper>${30:-false}</enable_whisper>
                 <!-- Maximum GM level shown in GM list (if enabled) in non-GM state. 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_gm_list>${62:-1}</show_gm_list>
+                <show_gm_list>${31:-1}</show_gm_list>
                 <!-- Max GM level showed in who list (if visible). 0 = only players, 1 = only moderators, 2 = only gamemasters, 3 = anyone -->
-                <show_who_list>${63:-0}</show_who_list>
+                <show_who_list>${32:-0}</show_who_list>
                 <!-- Allow players to add GM characters to their friends list. false = disabled, true = enabled -->
-                <allow_friend>${64:-false}</allow_friend>
+                <allow_friend>${33:-false}</allow_friend>
                 <!-- Allow players to invite GM characters. false = disabled, true = enabled -->
-                <allow_invite>${65:-false}</allow_invite>
+                <allow_invite>${34:-false}</allow_invite>
                 <!-- Allow lower security levels to use commands on higher security level characters. false = disabled, true = enabled -->
-                <allow_lower_security>${66:-false}</allow_lower_security>
+                <allow_lower_security>${35:-false}</allow_lower_security>
             </gm>
             <progression>
                 <!-- The game patch to mimic -->
-                <active_patch>${67:-21}</active_patch>
+                <active_patch>${36:-21}</active_patch>
                 <!-- Set the active buff inside Icecrown Citadel based on the active patch -->
-                <icecrown_citadel_buff>${68:-3}</icecrown_citadel_buff>
+                <icecrown_citadel_buff>${37:-4}</icecrown_citadel_buff>
             </progression>
         </world>
         <modules>
             <account_bound>
                 <!-- Enable/Disable the use of the AccountBound module -->
-                <enabled>${69:-false}</enabled>
+                <enabled>${38:-false}</enabled>
                 <!-- Enable/Disable companions to be account bound -->
-                <enable_companions>${70:-true}</enable_companions>
+                <enable_companions>${39:-true}</enable_companions>
                 <!-- Enable/Disable heirlooms to be account bound -->
-                <enable_heirlooms>${71:-true}</enable_heirlooms>
+                <enable_heirlooms>${40:-true}</enable_heirlooms>
                 <!-- Enable/Disable the mounts to be account bound -->
-                <enable_mounts>${72:-true}</enable_mounts>
+                <enable_mounts>${41:-true}</enable_mounts>
                 <!-- Enable/Disable companions, heirlooms and mounts to be shared across linked accounts -->
-                <enable_linked_accounts>${73:-false}</enable_linked_accounts>
+                <enable_linked_accounts>${42:-false}</enable_linked_accounts>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${74:-false}</enabled>
+                <enabled>${43:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${75:-false}</enable_buyer>
+                <enable_buyer>${44:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${76:-false}</enable_seller>
+                <enable_seller>${45:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${77:-0}</account_id>
+                <account_id>${46:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${78:-0}</character_guid>
+                <character_guid>${47:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${79:-250}</min_items>
+                <min_items>${48:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${80:-250}</max_items>
+                <max_items>${49:-250}</max_items>
                 <!-- The max item level of items to be posted. 0 = no limit -->
-                <max_item_level>${81:-0}</max_item_level>
+                <max_item_level>${50:-0}</max_item_level>
             </ahbot>
-            <archmage_timear>
-                <!-- Enable/Disable the use of the Archmage Timear module -->
-                <enabled>${82:-false}</enabled>
-            </archmage_timear>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module -->
-                <enabled>${83:-false}</enabled>
+                <enabled>${51:-false}</enabled>
                 <features>
                     <!-- Enable/Disable the ability to obtain heirlooms from the assistant -->
-                    <enable_heirlooms>${84:-true}</enable_heirlooms>
+                    <enable_heirlooms>${52:-true}</enable_heirlooms>
                     <!-- Enable/Disable the ability to obtain glyphs from the assistant -->
-                    <enable_glyphs>${85:-true}</enable_glyphs>
+                    <enable_glyphs>${53:-true}</enable_glyphs>
                     <!-- Enable/Disable the ability to obtain gems from the assistant -->
-                    <enable_gems>${86:-true}</enable_gems>
+                    <enable_gems>${54:-true}</enable_gems>
                     <!-- Enable/Disable the ability to obtain containers from the assistant -->
-                    <enable_containers>${87:-true}</enable_containers>
+                    <enable_containers>${55:-true}</enable_containers>
                     <utilities>
                         <!-- Enable/Disable the ability to obtain various utilities from the assistant -->
-                        <enabled>${88:-true}</enabled>
+                        <enabled>${56:-true}</enabled>
                         <!-- The cost in gold to perform a name change -->
-                        <name_change_cost>${89:-10}</name_change_cost>
+                        <name_change_cost>${57:-10}</name_change_cost>
                         <!-- The cost in gold to perform a customization -->
-                        <customization_cost>${90:-50}</customization_cost>
+                        <customization_cost>${58:-50}</customization_cost>
                         <!-- The cost in gold to perform a race change -->
-                        <race_change_cost>${91:-500}</race_change_cost>
+                        <race_change_cost>${59:-500}</race_change_cost>
                         <!-- The cost in gold to perform a faction change -->
-                        <faction_change_cost>${92:-1000}</faction_change_cost>
+                        <faction_change_cost>${60:-1000}</faction_change_cost>
                     </utilities>
                     <professions>
                         <apprentice>
                             <!-- Enable/Disable the ability to max out an apprentice profession -->
-                            <enabled>${93:-true}</enabled>
+                            <enabled>${61:-true}</enabled>
                             <!-- The cost in gold to max out an apprentice profession -->
-                            <cost>${94:-100}</cost>
+                            <cost>${62:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable the ability to max out an journeyman profession -->
-                            <enabled>${95:-true}</enabled>
+                            <enabled>${63:-true}</enabled>
                             <!-- The cost in gold to max out an journeyman profession -->
-                            <cost>${96:-250}</cost>
+                            <cost>${64:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable the ability to max out an expert profession -->
-                            <enabled>${97:-true}</enabled>
+                            <enabled>${65:-true}</enabled>
                             <!-- The cost in gold to max out an expert profession -->
-                            <cost>${98:-500}</cost>
+                            <cost>${66:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable the ability to max out an artisan profession -->
-                            <enabled>${99:-true}</enabled>
+                            <enabled>${67:-true}</enabled>
                             <!-- The cost in gold to max out an artisan profession -->
-                            <cost>${100:-750}</cost>
+                            <cost>${68:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable the ability to max out an master profession -->
-                            <enabled>${101:-false}</enabled>
+                            <enabled>${69:-false}</enabled>
                             <!-- The cost in gold to max out an master profession -->
-                            <cost>${102:-1250}</cost>
+                            <cost>${70:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable the ability to max out an grand master profession -->
-                            <enabled>${103:-false}</enabled>
+                            <enabled>${71:-false}</enabled>
                             <!-- The cost in gold to max out an grand master profession -->
-                            <cost>${104:-2500}</cost>
+                            <cost>${72:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <guild_funds>
                 <!-- Enable/Disable the use of the Guild Funds module. It deposits a percentage of the money looted and earned from quests into the guild bank -->
-                <enabled>${105:-false}</enabled>
+                <enabled>${73:-false}</enabled>
                 <percentages>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when looting. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <looted>${106:-10}</looted>
+                    <looted>${74:-10}</looted>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when completing quests. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <quests>${107:-3}</quests>
+                    <quests>${75:-3}</quests>
                 </percentages>
             </guild_funds>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${108:-false}</enabled>
+                <enabled>${76:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${109:-false}</enabled>
+                <enabled>${77:-false}</enabled>
                 <features>
                     <!-- Enable/Disable to learn class-specific spells -->
-                    <enable_class_spells>${110:-true}</enable_class_spells>
+                    <enable_class_spells>${78:-true}</enable_class_spells>
                     <!-- Enable/Disable to learn talent ranks -->
-                    <enable_talent_ranks>${111:-true}</enable_talent_ranks>
+                    <enable_talent_ranks>${79:-true}</enable_talent_ranks>
                     <!-- Enable/Disable to learn proficiencies -->
-                    <enable_proficiencies>${112:-true}</enable_proficiencies>
+                    <enable_proficiencies>${80:-true}</enable_proficiencies>
                     <!-- Enable/Disable to learn spells normally obtained through quests -->
-                    <enable_spells_from_quests>${113:-true}</enable_spells_from_quests>
+                    <enable_spells_from_quests>${81:-true}</enable_spells_from_quests>
                     <riding>
                         <!-- Enable/Disable to learn apprentice riding and mounts -->
-                        <enable_apprentice>${114:-false}</enable_apprentice>
+                        <enable_apprentice>${82:-false}</enable_apprentice>
                         <!-- Enable/Disable to learn journeyman riding and mounts -->
-                        <enable_journeyman>${115:-false}</enable_journeyman>
+                        <enable_journeyman>${83:-false}</enable_journeyman>
                         <!-- Enable/Disable to learn expert riding and mounts -->
-                        <enable_expert>${116:-false}</enable_expert>
+                        <enable_expert>${84:-false}</enable_expert>
                         <!-- Enable/Disable to learn artisan riding and mounts -->
-                        <enable_artisan>${117:-false}</enable_artisan>
+                        <enable_artisan>${85:-false}</enable_artisan>
                         <!-- Enable/Disable to learn cold weather flying at level 77 -->
-                        <enable_cold_weather_flying>${118:-false}</enable_cold_weather_flying>
+                        <enable_cold_weather_flying>${86:-false}</enable_cold_weather_flying>
                     </riding>
                 </features>
             </learn_spells>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${119:-false}</enabled>
+                <enabled>${87:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${120:-90}</referral_duration>
+                <referral_duration>${88:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${121:-7}</max_account_age>
+                <max_account_age>${89:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${122:-30}</days_until_reward>
+                    <days_until_reward>${90:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${123:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${91:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${124:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${92:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${125:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${93:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
-            <skip_dk_starting_area>
-                <!-- Enable/Disable the use of the Skip DK Starting Area module -->
-                <enabled>${126:-false}</enabled>
-                <!-- The level that death knight starts at -->
-                <starting_level>${127:-58}</starting_level>
-            </skip_dk_starting_area>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${128:-false}</enabled>
+                <enabled>${94:-false}</enabled>
                 <multipliers>
                     <!-- The multiplier for experience on weekends -->
-                    <experience>${129:-2.0}</experience>
+                    <experience>${95:-2.0}</experience>
                     <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                    <money>${130:-2.0}</money>
+                    <money>${96:-2.0}</money>
                     <!-- The multiplier for profession skill ups on weekends -->
-                    <professions>${131:-2}</professions>
+                    <professions>${97:-2}</professions>
                     <!-- The multiplier for reputation on weekends -->
-                    <reputation>${132:-2.0}</reputation>
+                    <reputation>${98:-2.0}</reputation>
                     <!-- The multiplier for weapons and defense skill ups on weekends -->
-                    <proficiencies>${133:-2}</proficiencies>
+                    <proficiencies>${99:-2}</proficiencies>
                 </multipliers>
             </weekend_bonus>
         </modules>
@@ -541,45 +467,14 @@ function save_options
     $OPTION_WORLD_GAME_TYPE \
     $OPTION_WORLD_REALM_ZONE \
     $OPTION_WORLD_EXPANSION \
-    $OPTION_WORLD_PLAYER_LIMIT \
-    $OPTION_WORLD_SKIP_CINEMATICS \
-    $OPTION_WORLD_MAX_LEVEL \
-    $OPTION_WORLD_START_LEVEL \
-    $OPTION_WORLD_START_MONEY \
-    $OPTION_WORLD_ALWAYS_MAX_SKILL \
-    $OPTION_WORLD_ALL_FLIGHT_PATHS \
-    $OPTION_WORLD_MAPS_EXPLORED \
     $OPTION_WORLD_ALLOW_COMMANDS \
     $OPTION_WORLD_QUEST_IGNORE_RAID \
-    $OPTION_WORLD_PREVENT_AFK_LOGOUT \
-    $OPTION_WORLD_RAF_MAX_LEVEL \
     $OPTION_WORLD_PRELOAD_MAP_GRIDS \
     $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE \
     $OPTION_WORLD_ENABLE_MINIGOB_MANABONK \
-    $OPTION_WORLD_ENABLE_WARDEN \
     $OPTION_WORLD_DISABLE_LEAVE_GROUP \
-    $OPTION_WORLD_ENABLE_QUEST_POI \
-    $OPTION_WORLD_MAIL_DELIVERY_DELAY \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_GROUP \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_GUILD \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_MAIL \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND \
-    $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE \
     $OPTION_WORLD_RATES_EXPERIENCE \
     $OPTION_WORLD_RATES_RESTED_EXPERIENCE \
-    $OPTION_WORLD_RATES_REPUTATION \
-    $OPTION_WORLD_RATES_MONEY \
-    $OPTION_WORLD_RATES_CRAFTING \
-    $OPTION_WORLD_RATES_GATHERING \
-    $OPTION_WORLD_RATES_WEAPON_SKILL \
-    $OPTION_WORLD_RATES_DEFENSE_SKILL \
     $OPTION_WORLD_GM_LOGIN_STATE \
     $OPTION_WORLD_GM_ENABLE_VISIBILITY \
     $OPTION_WORLD_GM_ENABLE_CHAT \
@@ -604,7 +499,6 @@ function save_options
     $OPTION_MODULES_AHBOT_MIN_ITEMS \
     $OPTION_MODULES_AHBOT_MAX_ITEMS \
     $OPTION_MODULES_AHBOT_MAX_ITEM_LEVEL \
-    $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED \
     $OPTION_MODULES_ASSISTANT_ENABLED \
     $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS \
     $OPTION_MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS \
@@ -648,8 +542,6 @@ function save_options
     $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_SWIFT_ZHEVRA \
     $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_TOURING_ROCKET \
     $OPTION_MODULES_RECRUIT_A_FRIEND_REWARDS_ENABLE_CELESTIAL_STEED \
-    $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED \
-    $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL \
     $OPTION_MODULES_WEEKEND_BONUS_ENABLED \
     $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_EXPERIENCE \
     $OPTION_MODULES_WEEKEND_BONUS_MULTIPLIERS_MONEY \
@@ -838,78 +730,6 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/world/player_limit option
-    OPTION_WORLD_PLAYER_LIMIT="$(echo "cat /options/world/player_limit/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_PLAYER_LIMIT =~ ^[0-9]+$ ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/player_limit is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_PLAYER_LIMIT="1000"
-        RESET=true
-    fi
-
-    # Load the /options/world/skip_cinematics option
-    OPTION_WORLD_SKIP_CINEMATICS="$(echo "cat /options/world/skip_cinematics/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_SKIP_CINEMATICS =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_SKIP_CINEMATICS != 0 && $OPTION_WORLD_SKIP_CINEMATICS != 1 && $OPTION_WORLD_SKIP_CINEMATICS != 2 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/skip_cinematics is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_SKIP_CINEMATICS="0"
-        RESET=true
-    fi
-
-    # Load the /options/world/max_level option
-    OPTION_WORLD_MAX_LEVEL="$(echo "cat /options/world/max_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_MAX_LEVEL < 1 || $OPTION_WORLD_MAX_LEVEL > 80 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/max_level is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_MAX_LEVEL="80"
-        RESET=true
-    fi
-
-    # Load the /options/world/start_level option
-    OPTION_WORLD_START_LEVEL="$(echo "cat /options/world/start_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_START_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_START_LEVEL < 1 || $OPTION_WORLD_START_LEVEL > 80 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/start_level is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_START_LEVEL="1"
-        RESET=true
-    fi
-
-    # Load the /options/world/start_money option
-    OPTION_WORLD_START_MONEY="$(echo "cat /options/world/start_money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_START_MONEY =~ ^[0-9]+$ ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/start_money is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_START_MONEY="0"
-        RESET=true
-    fi
-
-    # Load the /options/world/always_max_skill option
-    OPTION_WORLD_ALWAYS_MAX_SKILL="$(echo "cat /options/world/always_max_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALWAYS_MAX_SKILL != "true" && $OPTION_WORLD_ALWAYS_MAX_SKILL != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/always_max_skill is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALWAYS_MAX_SKILL="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/all_flight_paths option
-    OPTION_WORLD_ALL_FLIGHT_PATHS="$(echo "cat /options/world/all_flight_paths/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALL_FLIGHT_PATHS != "true" && $OPTION_WORLD_ALL_FLIGHT_PATHS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/all_flight_paths is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALL_FLIGHT_PATHS="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/maps_explored option
-    OPTION_WORLD_MAPS_EXPLORED="$(echo "cat /options/world/maps_explored/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_MAPS_EXPLORED != "true" && $OPTION_WORLD_MAPS_EXPLORED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/maps_explored is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_MAPS_EXPLORED="false"
-        RESET=true
-    fi
-
     # Load the /options/world/allow_commands option
     OPTION_WORLD_ALLOW_COMMANDS="$(echo "cat /options/world/allow_commands/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_ALLOW_COMMANDS != "true" && $OPTION_WORLD_ALLOW_COMMANDS != "false" ]]; then
@@ -925,24 +745,6 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/quest_ignore_raid is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_QUEST_IGNORE_RAID="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/prevent_afk_logout option
-    OPTION_WORLD_PREVENT_AFK_LOGOUT="$(echo "cat /options/world/prevent_afk_logout/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_PREVENT_AFK_LOGOUT != "true" && $OPTION_WORLD_PREVENT_AFK_LOGOUT != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/prevent_afk_logout is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_PREVENT_AFK_LOGOUT="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/raf_max_level option
-    OPTION_WORLD_RAF_MAX_LEVEL="$(echo "cat /options/world/raf_max_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_RAF_MAX_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RAF_MAX_LEVEL < 1 || $OPTION_WORLD_RAF_MAX_LEVEL > 80 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/raf_max_level is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_RAF_MAX_LEVEL="60"
         RESET=true
     fi
 
@@ -973,147 +775,12 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/world/enable_warden option
-    OPTION_WORLD_ENABLE_WARDEN="$(echo "cat /options/world/enable_warden/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ENABLE_WARDEN != "true" && $OPTION_WORLD_ENABLE_WARDEN != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/enable_warden is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ENABLE_WARDEN="true"
-        RESET=true
-    fi
-
     # Load the /options/world/disable_leave_group option
     OPTION_WORLD_DISABLE_LEAVE_GROUP="$(echo "cat /options/world/disable_leave_group/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_WORLD_DISABLE_LEAVE_GROUP != "true" && $OPTION_WORLD_DISABLE_LEAVE_GROUP != "false" ]]; then
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/disable_leave_group is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_DISABLE_LEAVE_GROUP="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/enable_quest_poi option
-    OPTION_WORLD_ENABLE_QUEST_POI="$(echo "cat /options/world/enable_quest_poi/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ENABLE_QUEST_POI != "true" && $OPTION_WORLD_ENABLE_QUEST_POI != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/enable_quest_poi is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ENABLE_QUEST_POI="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/mail_delivery_delay option
-    OPTION_WORLD_MAIL_DELIVERY_DELAY="$(echo "cat /options/world/mail_delivery_delay/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_MAIL_DELIVERY_DELAY =~ ^[0-9]+$ ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/mail_delivery_delay is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_MAIL_DELIVERY_DELAY="3600"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/accounts option
-    OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS="$(echo "cat /options/world/allow_two_sided/accounts/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/accounts is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS="true"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/calendar option
-    OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR="$(echo "cat /options/world/allow_two_sided/calendar/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/calendar is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/chat option
-    OPTION_WORLD_ALLOW_TWO_SIDED_CHAT="$(echo "cat /options/world/allow_two_sided/chat/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/chat is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_CHAT="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/emote option
-    OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE="$(echo "cat /options/world/allow_two_sided/emote/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/emote is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/channel option
-    OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL="$(echo "cat /options/world/allow_two_sided/channel/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/channel is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/group option
-    OPTION_WORLD_ALLOW_TWO_SIDED_GROUP="$(echo "cat /options/world/allow_two_sided/group/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_GROUP != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_GROUP != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/group is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_GROUP="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/guild option
-    OPTION_WORLD_ALLOW_TWO_SIDED_GUILD="$(echo "cat /options/world/allow_two_sided/guild/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_GUILD != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_GUILD != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/guild is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_GUILD="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/auction option
-    OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION="$(echo "cat /options/world/allow_two_sided/auction/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/auction is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/mail option
-    OPTION_WORLD_ALLOW_TWO_SIDED_MAIL="$(echo "cat /options/world/allow_two_sided/mail/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_MAIL != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_MAIL != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/mail is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_MAIL="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/who_list option
-    OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST="$(echo "cat /options/world/allow_two_sided/who_list/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/who_list is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/friend option
-    OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND="$(echo "cat /options/world/allow_two_sided/friend/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/friend is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND="false"
-        RESET=true
-    fi
-
-    # Load the /options/world/allow_two_sided/trade option
-    OPTION_WORLD_ALLOW_TWO_SIDED_TRADE="$(echo "cat /options/world/allow_two_sided/trade/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE != "true" && $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/allow_two_sided/trade is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_ALLOW_TWO_SIDED_TRADE="false"
         RESET=true
     fi
 
@@ -1132,60 +799,6 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/rates/rested_experience is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_RATES_RESTED_EXPERIENCE="1"
-        RESET=true
-    fi
-
-    # Load the /options/world/rates/reputation option
-    OPTION_WORLD_RATES_REPUTATION="$(echo "cat /options/world/rates/reputation/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_RATES_REPUTATION =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_REPUTATION < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/rates/reputation is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_RATES_REPUTATION="1"
-        RESET=true
-    fi
-
-    # Load the /options/world/rates/money option
-    OPTION_WORLD_RATES_MONEY="$(echo "cat /options/world/rates/money/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_RATES_MONEY =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_MONEY < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/rates/money is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_RATES_MONEY="1"
-        RESET=true
-    fi
-
-    # Load the /options/world/rates/crafting option
-    OPTION_WORLD_RATES_CRAFTING="$(echo "cat /options/world/rates/crafting/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_RATES_CRAFTING =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_CRAFTING < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/rates/crafting is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_RATES_CRAFTING="1"
-        RESET=true
-    fi
-
-    # Load the /options/world/rates/gathering option
-    OPTION_WORLD_RATES_GATHERING="$(echo "cat /options/world/rates/gathering/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_RATES_GATHERING =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_GATHERING < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/rates/gathering is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_RATES_GATHERING="1"
-        RESET=true
-    fi
-
-    # Load the /options/world/rates/weapon_skill option
-    OPTION_WORLD_RATES_WEAPON_SKILL="$(echo "cat /options/world/rates/weapon_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_RATES_WEAPON_SKILL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_WEAPON_SKILL < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/rates/weapon_skill is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_RATES_WEAPON_SKILL="1"
-        RESET=true
-    fi
-
-    # Load the /options/world/rates/defense_skill option
-    OPTION_WORLD_RATES_DEFENSE_SKILL="$(echo "cat /options/world/rates/defense_skill/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_WORLD_RATES_DEFENSE_SKILL =~ ^[0-9]+$ ]] || [[ $OPTION_WORLD_RATES_DEFENSE_SKILL < 1 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/world/rates/defense_skill is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_WORLD_RATES_DEFENSE_SKILL="1"
         RESET=true
     fi
 
@@ -1402,15 +1015,6 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/modules/ahbot/max_item_level is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_MODULES_AHBOT_MAX_ITEM_LEVEL="0"
-        RESET=true
-    fi
-
-    # Load the /options/modules/archmage_timear/enabled option
-    OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED="$(echo "cat /options/modules/archmage_timear/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED != "true" && $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/archmage_timear/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED="false"
         RESET=true
     fi
 
@@ -1801,24 +1405,6 @@ function load_options
         RESET=true
     fi
 
-    # Load the /options/modules/skip_dk_starting_area/enabled option
-    OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED="$(echo "cat /options/modules/skip_dk_starting_area/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED != "true" && $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED != "false" ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/skip_dk_starting_area/enabled is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED="false"
-        RESET=true
-    fi
-
-    # Load the /options/modules/skip_dk_starting_area/starting_level option
-    OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL="$(echo "cat /options/modules/skip_dk_starting_area/starting_level/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
-    if [[ ! $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL =~ ^[0-9]+$ ]] || [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL < 1 || $OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL > 80 ]]; then
-        # The value is invalid so it will be reset to the default value
-        printf "${COLOR_RED}The option at /options/modules/skip_dk_starting_area/starting_level is invalid. It has been reset to the default value.${COLOR_END}\n"
-        OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL="58"
-        RESET=true
-    fi
-
     # Load the /options/modules/weekend_bonus/enabled option
     OPTION_MODULES_WEEKEND_BONUS_ENABLED="$(echo "cat /options/modules/weekend_bonus/enabled/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
     if [[ $OPTION_MODULES_WEEKEND_BONUS_ENABLED != "true" && $OPTION_MODULES_WEEKEND_BONUS_ENABLED != "false" ]]; then
@@ -2030,54 +1616,6 @@ function get_source
             fi
         fi
 
-        # Check if the archmage timear module should be installed
-        if [[ $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear ]]; then
-                # Download the source code
-                git clone --depth 1 --branch master https://github.com/noisiver/mod-archmage-timear.git $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
-
-                # Fetch all available updates
-                git pull
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
         # Check if the assistant module should be installed
         if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
             # Check if the source is already downloaded
@@ -2117,54 +1655,6 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-assistant ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-assistant
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
-        # Check if the dynamic rates module should be installed
-        if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates ]]; then
-                # Download the source code
-                git clone --depth 1 --branch master https://github.com/noisiver/mod-dynamicrates.git $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
-
-                # Fetch all available updates
-                git pull
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-dynamicrates
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -2357,54 +1847,6 @@ function get_source
             if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
                 # Remove it so it won't be included
                 rm -rf $OPTION_SOURCE_LOCATION/modules/mod-recruitafriend
-
-                # Check if the source has been compiled
-                if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
-                    # Remove the build folder to make sure there are no errors during the compile
-                    rm -rf $OPTION_SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
-        # Check if the skip dk starting area module should be installed
-        if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED == "true" ]]; then
-            # Check if the source is already downloaded
-            if [[ ! -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]]; then
-                # Download the source code
-                git clone --depth 1 --branch master https://github.com/azerothcore/mod-skip-dk-starting-area.git $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            else
-                # Go into the source folder to update it
-                cd $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
-
-                # Fetch all available updates
-                git pull
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-
-                # Reset the source code, removing any local changes
-                git reset --hard origin/master
-
-                # Check to make sure there weren't any errors
-                if [[ $? -ne 0 ]]; then
-                    # Terminate script on errors
-                    exit $?
-                fi
-            fi
-        else
-            # Check if the source is downloaded
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area ]]; then
-                # Remove it so it won't be included
-                rm -rf $OPTION_SOURCE_LOCATION/modules/mod-skip-dk-starting-area
 
                 # Check if the source has been compiled
                 if [[ -d $OPTION_SOURCE_LOCATION/build ]]; then
@@ -3271,40 +2713,6 @@ function import_database
             fi
         fi
 
-        # Check if the archmage timear module is enabled
-        if [[ $OPTION_MODULES_ARCHMAGE_TIMEAR_ENABLED == "true" ]]; then
-            # Make sure the database folder exists
-            if [[ -d $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear/data/sql/db-world/base/ ]]; then
-                # Loop through all sql files inside the folder
-                for f in $OPTION_SOURCE_LOCATION/modules/mod-archmage-timear/data/sql/db-world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $OPTION_MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
-                        continue;
-                    fi
-
-                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-
-                    # Add the hash to updates
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-
-                    # Import the sql file
-                    mysql --defaults-extra-file=$MYSQL_CNF $OPTION_MYSQL_DATABASES_WORLD < $f
-
-                    # Check to make sure there weren't any errors
-                    if [[ $? -ne 0 ]]; then
-                        # Remove the mysql conf
-                        rm -rf $MYSQL_CNF
-
-                        # Terminate script on error
-                        exit $?
-                    fi
-                done
-            fi
-        fi
-
         # Check if the assistant module is enabled
         if [[ $OPTION_MODULES_ASSISTANT_ENABLED == "true" ]]; then
             # Make sure the database folder exists
@@ -3485,16 +2893,11 @@ function set_config
         printf "${COLOR_ORANGE}Updating worldserver.conf${COLOR_END}\n"
 
         # Convert boolean values to integers
-        [ $OPTION_WORLD_ALWAYS_MAX_SKILL == "true" ] && WORLD_ALWAYS_MAX_SKILL=1 || WORLD_ALWAYS_MAX_SKILL=0
-        [ $OPTION_WORLD_ALL_FLIGHT_PATHS == "true" ] && WORLD_ALL_FLIGHT_PATHS=1 || WORLD_ALL_FLIGHT_PATHS=0
-        [ $OPTION_WORLD_MAPS_EXPLORED == "true" ] && WORLD_MAPS_EXPLORED=1 || WORLD_MAPS_EXPLORED=0
         [ $OPTION_WORLD_ALLOW_COMMANDS == "true" ] && WORLD_ALLOW_COMMANDS=1 || WORLD_ALLOW_COMMANDS=0
         [ $OPTION_WORLD_QUEST_IGNORE_RAID == "true" ] && WORLD_QUEST_IGNORE_RAID=1 || WORLD_QUEST_IGNORE_RAID=0
-        [ $OPTION_WORLD_PREVENT_AFK_LOGOUT == "true" ] && WORLD_PREVENT_AFK_LOGOUT=1 || WORLD_PREVENT_AFK_LOGOUT=0
         [ $OPTION_WORLD_PRELOAD_MAP_GRIDS == "true" ] && WORLD_PRELOAD_MAP_GRIDS=1 || WORLD_PRELOAD_MAP_GRIDS=0
         [ $OPTION_WORLD_SET_ALL_WAYPOINTS_ACTIVE == "true" ] && WORLD_SET_ALL_WAYPOINTS_ACTIVE=1 || WORLD_SET_ALL_WAYPOINTS_ACTIVE=0
         [ $OPTION_WORLD_ENABLE_MINIGOB_MANABONK == "true" ] && WORLD_ENABLE_MINIGOB_MANABONK=1 || WORLD_ENABLE_MINIGOB_MANABONK=0
-        [ $OPTION_WORLD_ENABLE_WARDEN == "true" ] && WORLD_ENABLE_WARDEN=1 || WORLD_ENABLE_WARDEN=0
         [ $OPTION_WORLD_GM_LOGIN_STATE == "true" ] && WORLD_GM_LOGIN_STATE=1 || WORLD_GM_LOGIN_STATE=0
         [ $OPTION_WORLD_GM_ENABLE_VISIBILITY == "true" ] && WORLD_GM_ENABLE_VISIBILITY=1 || WORLD_GM_ENABLE_VISIBILITY=0
         [ $OPTION_WORLD_GM_ENABLE_CHAT == "true" ] && WORLD_GM_ENABLE_CHAT=1 || WORLD_GM_ENABLE_CHAT=0
@@ -3503,19 +2906,6 @@ function set_config
         [ $OPTION_WORLD_GM_ALLOW_FRIEND == "true" ] && WORLD_GM_ALLOW_FRIEND=1 || WORLD_GM_ALLOW_FRIEND=0
         [ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY == "true" ] && WORLD_GM_ALLOW_LOWER_SECURITY=1 || WORLD_GM_ALLOW_LOWER_SECURITY=0
         [ $OPTION_WORLD_DISABLE_LEAVE_GROUP == "true" ] && WORLD_DISABLE_LEAVE_GROUP=0 || WORLD_DISABLE_LEAVE_GROUP=1
-        [ $OPTION_WORLD_ENABLE_QUEST_POI == "true" ] && WORLD_ENABLE_QUEST_POI=1 || WORLD_ENABLE_QUEST_POI=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_ACCOUNTS == "true" ] && WORLD_ALLOW_TWO_SIDED_ACCOUNTS=1 || WORLD_ALLOW_TWO_SIDED_ACCOUNTS=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_CALENDAR == "true" ] && WORLD_ALLOW_TWO_SIDED_CALENDAR=1 || WORLD_ALLOW_TWO_SIDED_CALENDAR=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_CHAT == "true" ] && WORLD_ALLOW_TWO_SIDED_CHAT=1 || WORLD_ALLOW_TWO_SIDED_CHAT=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_EMOTE == "true" ] && WORLD_ALLOW_TWO_SIDED_EMOTE=1 || WORLD_ALLOW_TWO_SIDED_EMOTE=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_CHANNEL == "true" ] && WORLD_ALLOW_TWO_SIDED_CHANNEL=1 || WORLD_ALLOW_TWO_SIDED_CHANNEL=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_GROUP == "true" ] && WORLD_ALLOW_TWO_SIDED_GROUP=1 || WORLD_ALLOW_TWO_SIDED_GROUP=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_GUILD == "true" ] && WORLD_ALLOW_TWO_SIDED_GUILD=1 || WORLD_ALLOW_TWO_SIDED_GUILD=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_AUCTION == "true" ] && WORLD_ALLOW_TWO_SIDED_AUCTION=1 || WORLD_ALLOW_TWO_SIDED_AUCTION=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_MAIL == "true" ] && WORLD_ALLOW_TWO_SIDED_MAIL=1 || WORLD_ALLOW_TWO_SIDED_MAIL=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_WHO_LIST == "true" ] && WORLD_ALLOW_TWO_SIDED_WHO_LIST=1 || WORLD_ALLOW_TWO_SIDED_WHO_LIST=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_FRIEND == "true" ] && WORLD_ALLOW_TWO_SIDED_FRIEND=1 || WORLD_ALLOW_TWO_SIDED_FRIEND=0
-        [ $OPTION_WORLD_ALLOW_TWO_SIDED_TRADE == "true" ] && WORLD_ALLOW_TWO_SIDED_TRADE=1 || WORLD_ALLOW_TWO_SIDED_TRADE=0
 
         # Copy the file before editing it
         cp $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist $OPTION_SOURCE_LOCATION/etc/worldserver.conf
@@ -3534,43 +2924,16 @@ function set_config
         sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/SkipCinematics =.*/SkipCinematics = '$OPTION_WORLD_SKIP_CINEMATICS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/MaxPlayerLevel =.*/MaxPlayerLevel = '$OPTION_WORLD_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/StartPlayerLevel =.*/StartPlayerLevel = '$OPTION_WORLD_START_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/StartPlayerMoney =.*/StartPlayerMoney = '$OPTION_WORLD_START_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllFlightPaths =.*/AllFlightPaths = '$WORLD_ALL_FLIGHT_PATHS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AlwaysMaxSkillForLevel =.*/AlwaysMaxSkillForLevel = '$WORLD_ALWAYS_MAX_SKILL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/PlayerStart.MapsExplored =.*/PlayerStart.MapsExplored = '$WORLD_MAPS_EXPLORED'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = '$WORLD_ALLOW_COMMANDS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = '$WORLD_QUEST_IGNORE_RAID'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/PreventAFKLogout =.*/PreventAFKLogout = '$WORLD_PREVENT_AFK_LOGOUT'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = '$OPTION_WORLD_RAF_MAX_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$WORLD_PRELOAD_MAP_GRIDS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$WORLD_SET_ALL_WAYPOINTS_ACTIVE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = '$WORLD_ENABLE_MINIGOB_MANABONK'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Accounts =.*/AllowTwoSide.Accounts = '$WORLD_ALLOW_TWO_SIDED_ACCOUNTS'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Interaction.Calendar =.*/AllowTwoSide.Interaction.Calendar = '$WORLD_ALLOW_TWO_SIDED_CALENDAR'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Interaction.Chat =.*/AllowTwoSide.Interaction.Chat = '$WORLD_ALLOW_TWO_SIDED_CHAT'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Interaction.Emote =.*/AllowTwoSide.Interaction.Emote = '$WORLD_ALLOW_TWO_SIDED_EMOTE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Interaction.Channel =.*/AllowTwoSide.Interaction.Channel = '$WORLD_ALLOW_TWO_SIDED_CHANNEL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Interaction.Group =.*/AllowTwoSide.Interaction.Group = '$WORLD_ALLOW_TWO_SIDED_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Interaction.Guild =.*/AllowTwoSide.Interaction.Guild = '$WORLD_ALLOW_TWO_SIDED_GUILD'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Interaction.Auction =.*/AllowTwoSide.Interaction.Auction = '$WORLD_ALLOW_TWO_SIDED_AUCTION'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Interaction.Mail =.*/AllowTwoSide.Interaction.Mail = '$WORLD_ALLOW_TWO_SIDED_MAIL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.WhoList =.*/AllowTwoSide.WhoList = '$WORLD_ALLOW_TWO_SIDED_WHO_LIST'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.AddFriend =.*/AllowTwoSide.AddFriend = '$WORLD_ALLOW_TWO_SIDED_FRIEND'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/AllowTwoSide.Trade =.*/AllowTwoSide.Trade = '$WORLD_ALLOW_TWO_SIDED_TRADE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = '$OPTION_WORLD_RATES_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = '$OPTION_WORLD_RATES_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Rate.Reputation.Gain =.*/Rate.Reputation.Gain = '$OPTION_WORLD_RATES_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/SkillGain.Crafting  =.*/SkillGain.Crafting  = '$OPTION_WORLD_RATES_CRAFTING'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/SkillGain.Defense   =.*/SkillGain.Defense   = '$OPTION_WORLD_RATES_DEFENSE_SKILL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/SkillGain.Gathering =.*/SkillGain.Gathering = '$OPTION_WORLD_RATES_GATHERING'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/SkillGain.Weapon    =.*/SkillGain.Weapon    = '$OPTION_WORLD_RATES_WEAPON_SKILL'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = '$OPTION_WORLD_RATES_RESTED_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = '$OPTION_WORLD_RATES_RESTED_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = '$OPTION_WORLD_RATES_RESTED_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
@@ -3584,10 +2947,7 @@ function set_config
         sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = '$WORLD_GM_ALLOW_INVITE'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = '$WORLD_GM_ALLOW_FRIEND'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = '$WORLD_GM_ALLOW_LOWER_SECURITY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$WORLD_ENABLE_WARDEN'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/QuestPOI.Enabled =.*/QuestPOI.Enabled = '$WORLD_ENABLE_QUEST_POI'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/MailDeliveryDelay =.*/MailDeliveryDelay = '$OPTION_WORLD_MAIL_DELIVERY_DELAY'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$OPTION_WORLD_PROGRESSION_ACTIVE_PATCH'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
@@ -3751,54 +3111,6 @@ function set_config
             fi
         fi
 
-        # Check if the dynamic rates module is enabled
-        if [[ $OPTION_MODULES_DYNAMIC_RATES_ENABLED == "true" ]]; then
-            # Check to make sure the config file exists
-            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist ]]; then
-                # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file mod_dynamicrates.conf.dist is missing.${COLOR_END}\n"
-                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            printf "${COLOR_ORANGE}Updating mod_dynamicrates.conf${COLOR_END}\n"
-
-            # Convert boolean values to integers
-            [ $OPTION_MODULES_DYNAMIC_RATES_SHOW_INFO == "true" ] && MODULES_DYNAMIC_RATES_SHOW_INFO=1 || MODULES_DYNAMIC_RATES_SHOW_INFO=0
-
-            # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-
-            # Update mod_dynamicrates.conf with values specified in the options
-            sed -i 's/DynamicRates.ShowInfo =.*/DynamicRates.ShowInfo = '$MODULES_DYNAMIC_RATES_SHOW_INFO'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.1-59.Experience =.*/DynamicRates.Level.1-59.Experience = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.1-59.Reputation =.*/DynamicRates.Level.1-59.Reputation = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.1-59.Money =.*/DynamicRates.Level.1-59.Money = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_1_TO_59_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.60-69.Experience =.*/DynamicRates.Level.60-69.Experience = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.60-69.Reputation =.*/DynamicRates.Level.60-69.Reputation = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.60-69.Money =.*/DynamicRates.Level.60-69.Money = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_60_TO_69_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.70-79.Experience =.*/DynamicRates.Level.70-79.Experience = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_EXPERIENCE'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.70-79.Reputation =.*/DynamicRates.Level.70-79.Reputation = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_REPUTATION'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            sed -i 's/DynamicRates.Level.70-79.Money =.*/DynamicRates.Level.70-79.Money = '$OPTION_MODULES_DYNAMIC_RATES_MULTIPLIERS_LEVEL_70_TO_79_MONEY'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-        else
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf.dist
-            fi
-
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_dynamicrates.conf
-            fi
-        fi
-
         # Check if the guild funds module is enabled
         if [[ $OPTION_MODULES_GUILD_FUNDS_ENABLED == "true" ]]; then
             # Check to make sure the config file exists
@@ -3934,44 +3246,6 @@ function set_config
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]]; then
                 # Remove the file since the module is disabled
                 rm -rf $OPTION_SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-            fi
-        fi
-
-        # Check if the skip dk starting area module is enabled
-        if [[ $OPTION_MODULES_SKIP_DK_STARTING_AREA_ENABLED == "true" ]]; then
-            # Check to make sure the config file exists
-            if [[ ! -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]]; then
-                # The file is missing, so terminate the script
-                printf "${COLOR_RED}The config file SkipDKModule.conf.dist is missing.${COLOR_END}\n"
-                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-
-                # Remove the mysql conf
-                rm -rf $MYSQL_CNF
-
-                # Terminate script on error
-                exit $?
-            fi
-
-            printf "${COLOR_ORANGE}Updating SkipDKModule.conf${COLOR_END}\n"
-
-            # Copy the file before editing it
-            cp $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
-
-            # Update SkipDKModule.conf with values specified in the options
-            sed -i 's/Skip.Deathknight.Starter.Enable =.*/Skip.Deathknight.Starter.Enable = 1/g' $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
-            sed -i 's/GM.Skip.Deathknight.Starter.Enable =.*/GM.Skip.Deathknight.Starter.Enable = 1/g' $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
-            sed -i 's/Skip.Deathknight.Start.Level =.*/Skip.Deathknight.Start.Level = '$OPTION_MODULES_SKIP_DK_STARTING_AREA_STARTING_LEVEL'/g' $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
-        else
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf.dist
-            fi
-
-            # Check if the config file exists
-            if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf ]]; then
-                # Remove the file since the module is disabled
-                rm -rf $OPTION_SOURCE_LOCATION/etc/modules/SkipDKModule.conf
             fi
         fi
 
