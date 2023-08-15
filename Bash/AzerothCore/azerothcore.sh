@@ -270,175 +270,177 @@ function store_options
                 <active_patch>${36:-21}</active_patch>
                 <!-- Set the active buff inside Icecrown Citadel based on the active patch -->
                 <icecrown_citadel_buff>${37:-4}</icecrown_citadel_buff>
+                <!-- Enforce quest-related information -->
+                <enforce_quest_info>${38:-true}</enforce_quest_info>
             </progression>
         </world>
         <modules>
             <account_bound>
                 <!-- Enable/Disable the use of the AccountBound module -->
-                <enabled>${38:-false}</enabled>
+                <enabled>${39:-false}</enabled>
                 <!-- Enable/Disable companions to be account bound -->
-                <enable_companions>${39:-true}</enable_companions>
+                <enable_companions>${40:-true}</enable_companions>
                 <!-- Enable/Disable heirlooms to be account bound -->
-                <enable_heirlooms>${40:-true}</enable_heirlooms>
+                <enable_heirlooms>${41:-true}</enable_heirlooms>
                 <!-- Enable/Disable the mounts to be account bound -->
-                <enable_mounts>${41:-true}</enable_mounts>
+                <enable_mounts>${42:-true}</enable_mounts>
                 <!-- Enable/Disable companions, heirlooms and mounts to be shared across linked accounts -->
-                <enable_linked_accounts>${42:-false}</enable_linked_accounts>
+                <enable_linked_accounts>${43:-false}</enable_linked_accounts>
             </account_bound>
             <ahbot>
                 <!-- Enable/Disable the use of the AHBot module -->
-                <enabled>${43:-false}</enabled>
+                <enabled>${44:-false}</enabled>
                 <!-- Enable/Disable the part of AHBot that buys items from players -->
-                <enable_buyer>${44:-false}</enable_buyer>
+                <enable_buyer>${45:-false}</enable_buyer>
                 <!-- Enable/Disable the part of AHBot that puts items up for auction -->
-                <enable_seller>${45:-false}</enable_seller>
+                <enable_seller>${46:-false}</enable_seller>
                 <!-- Account id is the account number (account) of the player you want to use as the auction bot -->
-                <account_id>${46:-0}</account_id>
+                <account_id>${47:-0}</account_id>
                 <!-- Character guid is the GUID (characters table) of the player you want to use as the auction bot -->
-                <character_guid>${47:-0}</character_guid>
+                <character_guid>${48:-0}</character_guid>
                 <!-- Minimum amount of items the bot will keep on the auction house. 0 = use the same value as max_items -->
-                <min_items>${48:-250}</min_items>
+                <min_items>${49:-250}</min_items>
                 <!-- Maximum amount of items the bot will keep on the auction house -->
-                <max_items>${49:-250}</max_items>
+                <max_items>${50:-250}</max_items>
                 <!-- The max item level of items to be posted. 0 = no limit -->
-                <max_item_level>${50:-0}</max_item_level>
+                <max_item_level>${51:-0}</max_item_level>
             </ahbot>
             <assistant>
                 <!-- Enable/Disable the use of the Assistant module -->
-                <enabled>${51:-false}</enabled>
+                <enabled>${52:-false}</enabled>
                 <features>
                     <!-- Enable/Disable the ability to obtain heirlooms from the assistant -->
-                    <enable_heirlooms>${52:-true}</enable_heirlooms>
+                    <enable_heirlooms>${53:-true}</enable_heirlooms>
                     <!-- Enable/Disable the ability to obtain glyphs from the assistant -->
-                    <enable_glyphs>${53:-true}</enable_glyphs>
+                    <enable_glyphs>${54:-true}</enable_glyphs>
                     <!-- Enable/Disable the ability to obtain gems from the assistant -->
-                    <enable_gems>${54:-true}</enable_gems>
+                    <enable_gems>${55:-true}</enable_gems>
                     <!-- Enable/Disable the ability to obtain containers from the assistant -->
-                    <enable_containers>${55:-true}</enable_containers>
+                    <enable_containers>${56:-true}</enable_containers>
                     <utilities>
                         <!-- Enable/Disable the ability to obtain various utilities from the assistant -->
-                        <enabled>${56:-true}</enabled>
+                        <enabled>${57:-true}</enabled>
                         <!-- The cost in gold to perform a name change -->
-                        <name_change_cost>${57:-10}</name_change_cost>
+                        <name_change_cost>${58:-10}</name_change_cost>
                         <!-- The cost in gold to perform a customization -->
-                        <customization_cost>${58:-50}</customization_cost>
+                        <customization_cost>${59:-50}</customization_cost>
                         <!-- The cost in gold to perform a race change -->
-                        <race_change_cost>${59:-500}</race_change_cost>
+                        <race_change_cost>${60:-500}</race_change_cost>
                         <!-- The cost in gold to perform a faction change -->
-                        <faction_change_cost>${60:-1000}</faction_change_cost>
+                        <faction_change_cost>${61:-1000}</faction_change_cost>
                     </utilities>
                     <professions>
                         <apprentice>
                             <!-- Enable/Disable the ability to max out an apprentice profession -->
-                            <enabled>${61:-true}</enabled>
+                            <enabled>${62:-true}</enabled>
                             <!-- The cost in gold to max out an apprentice profession -->
-                            <cost>${62:-100}</cost>
+                            <cost>${63:-100}</cost>
                         </apprentice>
                         <journeyman>
                             <!-- Enable/Disable the ability to max out an journeyman profession -->
-                            <enabled>${63:-true}</enabled>
+                            <enabled>${64:-true}</enabled>
                             <!-- The cost in gold to max out an journeyman profession -->
-                            <cost>${64:-250}</cost>
+                            <cost>${65:-250}</cost>
                         </journeyman>
                         <expert>
                             <!-- Enable/Disable the ability to max out an expert profession -->
-                            <enabled>${65:-true}</enabled>
+                            <enabled>${66:-true}</enabled>
                             <!-- The cost in gold to max out an expert profession -->
-                            <cost>${66:-500}</cost>
+                            <cost>${67:-500}</cost>
                         </expert>
                         <artisan>
                             <!-- Enable/Disable the ability to max out an artisan profession -->
-                            <enabled>${67:-true}</enabled>
+                            <enabled>${68:-true}</enabled>
                             <!-- The cost in gold to max out an artisan profession -->
-                            <cost>${68:-750}</cost>
+                            <cost>${69:-750}</cost>
                         </artisan>
                         <master>
                             <!-- Enable/Disable the ability to max out an master profession -->
-                            <enabled>${69:-false}</enabled>
+                            <enabled>${70:-false}</enabled>
                             <!-- The cost in gold to max out an master profession -->
-                            <cost>${70:-1250}</cost>
+                            <cost>${71:-1250}</cost>
                         </master>
                         <grand_master>
                             <!-- Enable/Disable the ability to max out an grand master profession -->
-                            <enabled>${71:-false}</enabled>
+                            <enabled>${72:-false}</enabled>
                             <!-- The cost in gold to max out an grand master profession -->
-                            <cost>${72:-2500}</cost>
+                            <cost>${73:-2500}</cost>
                         </grand_master>
                     </professions>
                 </features>
             </assistant>
             <guild_funds>
                 <!-- Enable/Disable the use of the Guild Funds module. It deposits a percentage of the money looted and earned from quests into the guild bank -->
-                <enabled>${73:-false}</enabled>
+                <enabled>${74:-false}</enabled>
                 <percentages>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when looting. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <looted>${74:-10}</looted>
+                    <looted>${75:-10}</looted>
                     <!-- The amount, in percentage, that will get deposited into the guild bank when completing quests. Does not reduce the money the player gets. Set to 0 to disable the feature -->
-                    <quests>${75:-3}</quests>
+                    <quests>${76:-3}</quests>
                 </percentages>
             </guild_funds>
             <group_quests>
                 <!-- Enable/Disable the use of the Group Quests module. It changes items dropped by creatures to be lootable by all members of a group, changes the respawn time of objects to help groups loot the same object, changes scripts to give credit to all members of a group etc -->
-                <enabled>${76:-false}</enabled>
+                <enabled>${77:-false}</enabled>
             </group_quests>
             <learn_spells>
                 <!-- Enable/Disable the use of the Learn Spells module -->
-                <enabled>${77:-false}</enabled>
+                <enabled>${78:-false}</enabled>
                 <features>
                     <!-- Enable/Disable to learn class-specific spells -->
-                    <enable_class_spells>${78:-true}</enable_class_spells>
+                    <enable_class_spells>${79:-true}</enable_class_spells>
                     <!-- Enable/Disable to learn talent ranks -->
-                    <enable_talent_ranks>${79:-true}</enable_talent_ranks>
+                    <enable_talent_ranks>${80:-true}</enable_talent_ranks>
                     <!-- Enable/Disable to learn proficiencies -->
-                    <enable_proficiencies>${80:-true}</enable_proficiencies>
+                    <enable_proficiencies>${81:-true}</enable_proficiencies>
                     <!-- Enable/Disable to learn spells normally obtained through quests -->
-                    <enable_spells_from_quests>${81:-true}</enable_spells_from_quests>
+                    <enable_spells_from_quests>${82:-true}</enable_spells_from_quests>
                     <riding>
                         <!-- Enable/Disable to learn apprentice riding and mounts -->
-                        <enable_apprentice>${82:-false}</enable_apprentice>
+                        <enable_apprentice>${83:-false}</enable_apprentice>
                         <!-- Enable/Disable to learn journeyman riding and mounts -->
-                        <enable_journeyman>${83:-false}</enable_journeyman>
+                        <enable_journeyman>${84:-false}</enable_journeyman>
                         <!-- Enable/Disable to learn expert riding and mounts -->
-                        <enable_expert>${84:-false}</enable_expert>
+                        <enable_expert>${85:-false}</enable_expert>
                         <!-- Enable/Disable to learn artisan riding and mounts -->
-                        <enable_artisan>${85:-false}</enable_artisan>
+                        <enable_artisan>${86:-false}</enable_artisan>
                         <!-- Enable/Disable to learn cold weather flying at level 77 -->
-                        <enable_cold_weather_flying>${86:-false}</enable_cold_weather_flying>
+                        <enable_cold_weather_flying>${87:-false}</enable_cold_weather_flying>
                     </riding>
                 </features>
             </learn_spells>
             <recruit_a_friend>
                 <!-- Enable/Disable the use of the Recruit-A-Friend module -->
-                <enabled>${87:-false}</enabled>
+                <enabled>${88:-false}</enabled>
                 <!-- The amount of days a referral stays active. 0 means it will never expire -->
-                <referral_duration>${88:-90}</referral_duration>
+                <referral_duration>${89:-90}</referral_duration>
                 <!-- The amount of days since the account was created where it can still be recruited. 0 means any age -->
-                <max_account_age>${89:-7}</max_account_age>
+                <max_account_age>${90:-7}</max_account_age>
                 <rewards>
                     <!-- The amount of days until the accounts receive rewards. 0 means that rewards are disabled -->
-                    <days_until_reward>${90:-30}</days_until_reward>
+                    <days_until_reward>${91:-30}</days_until_reward>
                     <!-- Enable/Disable to give the players the Swift Zhevra mount as a reward -->
-                    <enable_swift_zhevra>${91:-true}</enable_swift_zhevra>
+                    <enable_swift_zhevra>${92:-true}</enable_swift_zhevra>
                     <!-- Enable/Disable to give the players the Touring Rocket mount as a reward -->
-                    <enable_touring_rocket>${92:-true}</enable_touring_rocket>
+                    <enable_touring_rocket>${93:-true}</enable_touring_rocket>
                     <!-- Enable/Disable to give the players the Celestial Steed mount as a reward -->
-                    <enable_celestial_steed>${93:-true}</enable_celestial_steed>
+                    <enable_celestial_steed>${94:-true}</enable_celestial_steed>
                 </rewards>
             </recruit_a_friend>
             <weekend_bonus>
                 <!-- Enable/Disable the use of the Weekend Bonus module. It will increase the experience and reputation gains on friday, saturday and sunday -->
-                <enabled>${94:-false}</enabled>
+                <enabled>${95:-false}</enabled>
                 <multipliers>
                     <!-- The multiplier for experience on weekends -->
-                    <experience>${95:-2.0}</experience>
+                    <experience>${96:-2.0}</experience>
                     <!-- The multiplier for money looted and rewarded from quests on weekends -->
-                    <money>${96:-2.0}</money>
+                    <money>${97:-2.0}</money>
                     <!-- The multiplier for profession skill ups on weekends -->
-                    <professions>${97:-2}</professions>
+                    <professions>${98:-2}</professions>
                     <!-- The multiplier for reputation on weekends -->
-                    <reputation>${98:-2.0}</reputation>
+                    <reputation>${99:-2.0}</reputation>
                     <!-- The multiplier for weapons and defense skill ups on weekends -->
-                    <proficiencies>${99:-2}</proficiencies>
+                    <proficiencies>${100:-2}</proficiencies>
                 </multipliers>
             </weekend_bonus>
         </modules>
@@ -486,6 +488,7 @@ function save_options
     $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY \
     $OPTION_WORLD_PROGRESSION_ACTIVE_PATCH \
     $OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF \
+    $OPTION_WORLD_PROGRESSION_ENFORCE_QUEST_INFO \
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLED \
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_COMPANIONS \
     $OPTION_MODULES_ACCOUNT_BOUND_ENABLE_HEIRLOOMS \
@@ -898,6 +901,15 @@ function load_options
         # The value is invalid so it will be reset to the default value
         printf "${COLOR_RED}The option at /options/world/progression/icecrown_citadel_buff is invalid. It has been reset to the default value.${COLOR_END}\n"
         OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF="3"
+        RESET=true
+    fi
+
+    # Load the /options/world/progression/enforce_quest_info
+    OPTION_WORLD_PROGRESSION_ENFORCE_QUEST_INFO="$(echo "cat /options/world/progression/enforce_quest_info/text()" | xmllint --nocdata --shell $OPTIONS | sed '1d;$d')"
+    if [[ $OPTION_WORLD_PROGRESSION_ENFORCE_QUEST_INFO != "true" && $OPTION_WORLD_PROGRESSION_ENFORCE_QUEST_INFO != "false" ]]; then
+        # The value is invalid so it will be reset to the default value
+        printf "${COLOR_RED}The option at /options/world/progression/enforce_quest_info is invalid. It has been reset to the default value.${COLOR_END}\n"
+        OPTION_WORLD_PROGRESSION_ENFORCE_QUEST_INFO="true"
         RESET=true
     fi
 
@@ -2906,6 +2918,7 @@ function set_config
         [ $OPTION_WORLD_GM_ALLOW_FRIEND == "true" ] && WORLD_GM_ALLOW_FRIEND=1 || WORLD_GM_ALLOW_FRIEND=0
         [ $OPTION_WORLD_GM_ALLOW_LOWER_SECURITY == "true" ] && WORLD_GM_ALLOW_LOWER_SECURITY=1 || WORLD_GM_ALLOW_LOWER_SECURITY=0
         [ $OPTION_WORLD_DISABLE_LEAVE_GROUP == "true" ] && WORLD_DISABLE_LEAVE_GROUP=0 || WORLD_DISABLE_LEAVE_GROUP=1
+        [ $OPTION_WORLD_PROGRESSION_ENFORCE_QUEST_INFO == "true" ] && WORLD_PROGRESSION_ENFORCE_QUEST_INFO=1 || WORLD_PROGRESSION_ENFORCE_QUEST_INFO=0
 
         # Copy the file before editing it
         cp $OPTION_SOURCE_LOCATION/etc/worldserver.conf.dist $OPTION_SOURCE_LOCATION/etc/worldserver.conf
@@ -2950,6 +2963,7 @@ function set_config
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$WORLD_DISABLE_LEAVE_GROUP'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$OPTION_WORLD_PROGRESSION_ACTIVE_PATCH'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$OPTION_WORLD_PROGRESSION_ICECROWN_CITADEL_BUFF'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = '$WORLD_PROGRESSION_ENFORCE_QUEST_INFO'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $OPTION_SOURCE_LOCATION/etc/worldserver.conf
 
