@@ -3090,27 +3090,27 @@ function set_config
             cp $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
 
             # Update mod_assistant.conf with values specified in the options
-            sed -i 's/Assistant.Heirlooms =.*/Assistant.Heirlooms = '$MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Glyphs =.*/Assistant.Glyphs = '$MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Gems =.*/Assistant.Gems = '$MODULES_ASSISTANT_FEATURES_ENABLE_GEMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Containers =.*/Assistant.Containers = '$MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities =.*/Assistant.Utilities = '$MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities.NameChange =.*/Assistant.Utilities.NameChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities.Customization =.*/Assistant.Utilities.Customization = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities.RaceChange =.*/Assistant.Utilities.RaceChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Utilities.FactionChange =.*/Assistant.Utilities.FactionChange = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Apprentice.Enabled =.*/Assistant.Professions.Apprentice.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Journeyman.Enabled =.*/Assistant.Professions.Journeyman.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Expert.Enabled =.*/Assistant.Professions.Expert.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Artisan.Enabled =.*/Assistant.Professions.Artisan.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Master.Enabled =.*/Assistant.Professions.Master.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = '$MODULES_ASSISTANT_FEATURES_ENABLE_HEIRLOOMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = '$MODULES_ASSISTANT_FEATURES_ENABLE_GLYPHS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = '$MODULES_ASSISTANT_FEATURES_ENABLE_GEMS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = '$MODULES_ASSISTANT_FEATURES_ENABLE_CONTAINERS'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = '$MODULES_ASSISTANT_FEATURES_UTILITIES_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.NameChange.Cost    =.*/Assistant.Utilities.NameChange.Cost    = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_NAME_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.Customize.Cost     =.*/Assistant.Utilities.Customize.Cost     = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_CUSTOMIZATION_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.RaceChange.Cost    =.*/Assistant.Utilities.RaceChange.Cost    = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_RACE_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Utilities.FactionChange.Cost =.*/Assistant.Utilities.FactionChange.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_UTILITIES_FACTION_CHANGE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = '$MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_ENABLED'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Apprentice.Cost =.*/Assistant.Professions.Apprentice.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_APPRENTICE_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Journeyman.Cost =.*/Assistant.Professions.Journeyman.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_JOURNEYMAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Expert.Cost =.*/Assistant.Professions.Expert.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_EXPERT_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Artisan.Cost =.*/Assistant.Professions.Artisan.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_ARTISAN_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.Master.Cost =.*/Assistant.Professions.Master.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Professions.GrandMaster.Cost =.*/Assistant.Professions.GrandMaster.Cost = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = '$OPTION_MODULES_ASSISTANT_FEATURES_PROFESSIONS_GRAND_MASTER_COST'/g' $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf
         else
             # Check if the config file exists
             if [[ -f $OPTION_SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
