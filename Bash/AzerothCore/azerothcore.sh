@@ -679,6 +679,7 @@ function set_config
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' $SOURCE_LOCATION/etc/worldserver.conf
