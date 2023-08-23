@@ -615,7 +615,6 @@ function set_config
         if [[ ! -f $SOURCE_LOCATION/etc/authserver.conf.dist ]]; then
             printf "${COLOR_RED}The config file authserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-            rm -rf $MYSQL_CNF
             exit $?
         fi
 
@@ -631,7 +630,6 @@ function set_config
         if [[ ! -f $SOURCE_LOCATION/etc/worldserver.conf.dist ]]; then
             printf "${COLOR_RED}The config file worldserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-            rm -rf $MYSQL_CNF
             exit $?
         fi
 
@@ -712,7 +710,6 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                rm -rf $MYSQL_CNF
                 exit $?
             fi
 
@@ -738,7 +735,6 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_ahbot.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                rm -rf $MYSQL_CNF
                 exit $?
             fi
 
@@ -765,7 +761,6 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                rm -rf $MYSQL_CNF
                 exit $?
             fi
 
@@ -817,7 +812,6 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_guildfunds.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                rm -rf $MYSQL_CNF
                 exit $?
             fi
 
@@ -841,7 +835,6 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                rm -rf $MYSQL_CNF
                 exit $?
             fi
 
@@ -872,7 +865,6 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                rm -rf $MYSQL_CNF
                 exit $?
             fi
 
@@ -900,7 +892,6 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_weekendbonus.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                rm -rf $MYSQL_CNF
                 exit $?
             fi
 
