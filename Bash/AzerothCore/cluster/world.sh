@@ -47,6 +47,7 @@ WORLD_MOTD="Welcome to AzerothCore."
 WORLD_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS THE CLIENT CONNECTS TO
 WORLD_PORT="9644" # CHANGE IF MULTIPLE WORLDSERVERS ARE RUNNING ON THE SAME SYSTEM
 AUTH_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS OF THE SERVER RUNNING THE TOCLOUD9 PROCESSES
+LOCAL_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS OF THIS SYSTEM
 PROGRESSION_ACTIVE_PATCH="21"
 # Eastern Kingdoms, Kalimdor, Outland, Northrend and Deeprun Tram: 0,1,369,530,571
 # All dungeon, raid, battleground and arena maps: 30,33,34,36,43,44,47,48,70,90,109,129,169,189,209,229,230,249,269,289,309,329,349,389,409,429,469,489,509,529,531,532,533,534,540,542,543,544,545,546,547,548,550,552,553,554,555,556,557,558,559,560,562,564,565,566,568,572,574,575,576,578,580,585,595,598,599,600,601,602,603,604,607,608,615,616,617,618,619,624,628,631,632,649,650,658,668,724
@@ -405,7 +406,7 @@ function set_config
     sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$AUTH_ADDRESS':8992"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
     sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$AUTH_ADDRESS':8995"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
     sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$AUTH_ADDRESS':8997"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  preferredHostname:.*/  preferredHostname: "'$WORLD_ADDRESS'"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
+    sed -i 's/  preferredHostname:.*/  preferredHostname: "'$LOCAL_ADDRESS'"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
     sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$AUTH_ADDRESS':8996"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
 
     if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/worldserver.conf.dist ]]; then
