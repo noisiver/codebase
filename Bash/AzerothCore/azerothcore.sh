@@ -406,8 +406,8 @@ function compile_source
 
         echo "#!/bin/bash" > $SOURCE_LOCATION/bin/auth.sh
         echo "while :; do" >> $SOURCE_LOCATION/bin/auth.sh
-        echo "./authserver" >> $SOURCE_LOCATION/bin/auth.sh
-        echo "sleep 5" >> $SOURCE_LOCATION/bin/auth.sh
+        echo "  ./authserver" >> $SOURCE_LOCATION/bin/auth.sh
+        echo "  sleep 5" >> $SOURCE_LOCATION/bin/auth.sh
         echo "done" >> $SOURCE_LOCATION/bin/auth.sh
 
         chmod +x $SOURCE_LOCATION/bin/auth.sh
@@ -423,11 +423,11 @@ function compile_source
 
         echo "#!/bin/bash" > $SOURCE_LOCATION/bin/world.sh
         echo "while :; do" >> $SOURCE_LOCATION/bin/world.sh
-        echo "./worldserver" >> $SOURCE_LOCATION/bin/world.sh
-        echo "if [[ \$? == 0 ]]; then" >> $SOURCE_LOCATION/bin/world.sh
-        echo "break" >> $SOURCE_LOCATION/bin/world.sh
-        echo "fi" >> $SOURCE_LOCATION/bin/world.sh
-        echo "sleep 5" >> $SOURCE_LOCATION/bin/world.sh
+        echo "  ./worldserver" >> $SOURCE_LOCATION/bin/world.sh
+        echo "  if [[ \$? == 0 ]]; then" >> $SOURCE_LOCATION/bin/world.sh
+        echo "    break" >> $SOURCE_LOCATION/bin/world.sh
+        echo "  fi" >> $SOURCE_LOCATION/bin/world.sh
+        echo "  sleep 5" >> $SOURCE_LOCATION/bin/world.sh
         echo "done" >> $SOURCE_LOCATION/bin/world.sh
 
         chmod +x $SOURCE_LOCATION/bin/world.sh
@@ -508,7 +508,7 @@ function copy_database_files
     echo "DELETE FROM \`realmlist\` WHERE \`id\`="$WORLD_ID";" > $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
     echo "INSERT INTO \`realmlist\` (\`id\`, \`name\`, \`address\`, \`localAddress\`, \`port\`) VALUES ("$WORLD_ID", '"$WORLD_NAME"', '"$WORLD_ADDRESS"', '"$WORLD_ADDRESS"', "$WORLD_PORT");" >> $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
     echo "DELETE FROM \`motd\` WHERE \`realmid\`="$WORLD_ID";" > $ROOT/sql/auth/motd_id_$WORLD_ID.sql
-    echo "INSERT INTO \`motd\` (\`realmid\`, \`text\`) VALUES (1, '"$WORLD_MOTD"');" >> $ROOT/sql/auth/motd_id_$WORLD_ID.sql
+    echo "INSERT INTO \`motd\` (\`realmid\`, \`text\`) VALUES ("$WORLD_ID", '"$WORLD_MOTD"');" >> $ROOT/sql/auth/motd_id_$WORLD_ID.sql
 
     if [[ ! -d $ROOT/sql/characters ]]; then
         mkdir -p $ROOT/sql/characters
@@ -926,20 +926,19 @@ function start_server
     if [[ ! -f $SOURCE_LOCATION/bin/start.sh ]] || [[ ! -f $SOURCE_LOCATION/bin/stop.sh ]]; then
         printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-        exit $?
-    fi
-
-    if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]] || [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
-        printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
     else
-        cd $SOURCE_LOCATION/bin && ./start.sh
+        if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]] || [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
+            printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
+        else
+            cd $SOURCE_LOCATION/bin && ./start.sh
 
-        if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]]; then
-            printf "${COLOR_ORANGE}To access the screen of the authserver, use the command ${COLOR_BLUE}screen -r auth${COLOR_ORANGE}.${COLOR_END}\n"
-        fi
+            if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]]; then
+                printf "${COLOR_ORANGE}To access the screen of the authserver, use the command ${COLOR_BLUE}screen -r auth${COLOR_ORANGE}.${COLOR_END}\n"
+            fi
 
-        if [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
-            printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world${COLOR_ORANGE}.${COLOR_END}\n"
+            if [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
+                printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world${COLOR_ORANGE}.${COLOR_END}\n"
+            fi
         fi
     fi
 
@@ -980,25 +979,25 @@ function stop_server
 function parameters
 {
     printf "${COLOR_GREEN}Available parameters${COLOR_END}\n"
-    printf "${COLOR_ORANGE}both           ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters for the auth and worldserver${COLOR_END}\n"
-    printf "${COLOR_ORANGE}auth           ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters only for the authserver${COLOR_END}\n"
-    printf "${COLOR_ORANGE}world          ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters only for the worldserver${COLOR_END}\n"
-    printf "${COLOR_ORANGE}start          ${COLOR_WHITE}| ${COLOR_BLUE}Starts the compiled processes, based off of the choice for compilation${COLOR_END}\n"
-    printf "${COLOR_ORANGE}stop           ${COLOR_WHITE}| ${COLOR_BLUE}Stops the compiled processes, based off of the choice for compilation${COLOR_END}\n"
-    printf "${COLOR_ORANGE}restart        ${COLOR_WHITE}| ${COLOR_BLUE}Stops and then starts the compiled processes, based off of the choice for compilation${COLOR_END}\n\n"
+    printf "${COLOR_ORANGE}both                             ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters for the auth and worldserver${COLOR_END}\n"
+    printf "${COLOR_ORANGE}auth                             ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters only for the authserver${COLOR_END}\n"
+    printf "${COLOR_ORANGE}world                            ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters only for the worldserver${COLOR_END}\n"
+    printf "${COLOR_ORANGE}start                            ${COLOR_WHITE}| ${COLOR_BLUE}Starts the compiled processes, based off of the choice for compilation${COLOR_END}\n"
+    printf "${COLOR_ORANGE}stop                             ${COLOR_WHITE}| ${COLOR_BLUE}Stops the compiled processes, based off of the choice for compilation${COLOR_END}\n"
+    printf "${COLOR_ORANGE}restart                          ${COLOR_WHITE}| ${COLOR_BLUE}Stops and then starts the compiled processes, based off of the choice for compilation${COLOR_END}\n\n"
 
     printf "${COLOR_GREEN}Available subparameters${COLOR_END}\n"
-    printf "${COLOR_ORANGE}install/update ${COLOR_WHITE}| ${COLOR_BLUE}Downloads the source code, with enabled modules, and compiles it. Also downloads client files${COLOR_END}\n"
-    printf "${COLOR_ORANGE}database/db ${COLOR_WHITE}| ${COLOR_BLUE}Copy all custom sql files to the core${COLOR_END}\n"
-    printf "${COLOR_ORANGE}config/conf    ${COLOR_WHITE}| ${COLOR_BLUE}Updates all config files, including enabled modules, with options specified${COLOR_END}\n"
-    printf "${COLOR_ORANGE}all            ${COLOR_WHITE}| ${COLOR_BLUE}Run all subparameters listed above, including stop and start${COLOR_END}\n"
+    printf "${COLOR_ORANGE}install/update                   ${COLOR_WHITE}| ${COLOR_BLUE}Downloads the source code, with enabled modules, and compiles it. Also downloads client files${COLOR_END}\n"
+    printf "${COLOR_ORANGE}database/db                      ${COLOR_WHITE}| ${COLOR_BLUE}Copy all custom sql files to the core${COLOR_END}\n"
+    printf "${COLOR_ORANGE}config/conf/cfg/settings/options ${COLOR_WHITE}| ${COLOR_BLUE}Updates all config files, including enabled modules, with options specified${COLOR_END}\n"
+    printf "${COLOR_ORANGE}all                              ${COLOR_WHITE}| ${COLOR_BLUE}Run all subparameters listed above, including stop and start${COLOR_END}\n"
 
     exit $?
 }
 
 if [[ $# -gt 0 ]]; then
     if [[ $1 == "both" ]] || [[ $1 == "auth" ]] || [[ $1 == "world" ]]; then
-        if [[ $2 == "install" ]] || [[ $2 == "update" ]]; then
+        if [[ $2 == "install" ]] || [[ $2 == "setup" ]] || [[ $2 == "update" ]]; then
             stop_server
             install_packages
             get_source $1
@@ -1006,7 +1005,7 @@ if [[ $# -gt 0 ]]; then
             get_client_files $1
         elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
             copy_database_files
-        elif [[ $2 == "config" ]] || [[ $2 == "conf" ]]; then
+        elif [[ $2 == "config" ]] || [[ $2 == "conf" ]] || [[ $2 == "cfg" ]] || [[ $2 == "settings" ]] || [[ $2 == "options" ]]; then
             set_config $1
         elif [[ $2 == "all" ]]; then
             stop_server

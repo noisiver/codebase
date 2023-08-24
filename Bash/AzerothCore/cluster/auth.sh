@@ -35,6 +35,16 @@ COLOR_END="\e[0m"
 
 ROOT=$(pwd)
 
+MYSQL_HOSTNAME="127.0.0.1"
+MYSQL_PORT="3306"
+MYSQL_USERNAME="acore"
+MYSQL_PASSWORD="acore"
+MYSQL_DATABASE_AUTH="acore_auth"
+MYSQL_DATABASE_CHARACTERS="acore_characters"
+MYSQL_DATABASE_WORLD="acore_world"
+LOCAL_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS THE CLIENT CONNECTS TO
+
+# DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING
 SOURCE_REPOSITORY="https://github.com/walkline/ToCloud9.git"
 SOURCE_BRANCH="master"
 SOURCE_LOCATION="$ROOT/source"
@@ -115,6 +125,8 @@ function get_source
             exit $?
         fi
     fi
+
+    printf "${COLOR_GREEN}Finished downloading the source code...${COLOR_END}\n"
 }
 
 function compile_source
@@ -172,7 +184,7 @@ function compile_source
     fi
 
     echo "#!/bin/bash" > $SOURCE_LOCATION/bin/start.sh
-    #echo "screen -L -Logfile nats-server.log -dmS nats-server ./nats-server.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile nats-server.log -dmS nats-server ./nats-server.sh" >> $SOURCE_LOCATION/bin/start.sh
     echo "screen -L -Logfile servers-registry.log -dmS servers-registry ./servers-registry.sh" >> $SOURCE_LOCATION/bin/start.sh
     echo "screen -L -Logfile guidserver.log -dmS guidserver ./guidserver.sh" >> $SOURCE_LOCATION/bin/start.sh
     echo "screen -L -Logfile authserver.log -dmS authserver ./authserver.sh" >> $SOURCE_LOCATION/bin/start.sh
@@ -183,12 +195,12 @@ function compile_source
     echo "screen -L -Logfile mailserver.log -dmS mailserver ./mailserver.sh" >> $SOURCE_LOCATION/bin/start.sh
     chmod +x $SOURCE_LOCATION/bin/start.sh
 
-    #echo "#!/bin/bash" > $SOURCE_LOCATION/bin/nats-server.sh
-    #echo "while :; do" >> $SOURCE_LOCATION/bin/nats-server.sh
-    #echo "    nats-server" >> $SOURCE_LOCATION/bin/nats-server.sh
-    #echo "    sleep 5" >> $SOURCE_LOCATION/bin/nats-server.sh
-    #echo "done" >> $SOURCE_LOCATION/bin/nats-server.sh
-    #chmod +x $SOURCE_LOCATION/bin/nats-server.sh
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/nats-server.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/nats-server.sh
+    echo "    nats-server" >> $SOURCE_LOCATION/bin/nats-server.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/nats-server.sh
+    echo "done" >> $SOURCE_LOCATION/bin/nats-server.sh
+    chmod +x $SOURCE_LOCATION/bin/nats-server.sh
 
     echo "#!/bin/bash" > $SOURCE_LOCATION/bin/servers-registry.sh
     echo "while :; do" >> $SOURCE_LOCATION/bin/servers-registry.sh
@@ -247,7 +259,7 @@ function compile_source
     chmod +x $SOURCE_LOCATION/bin/mailserver.sh
 
     echo "#!/bin/bash" > $SOURCE_LOCATION/bin/stop.sh
-    #echo "screen -X -S \"nats-server\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"nats-server\" quit && pkill \"nats-server\"" >> $SOURCE_LOCATION/bin/stop.sh
     echo "screen -X -S \"servers-registry\" quit" >> $SOURCE_LOCATION/bin/stop.sh
     echo "screen -X -S \"guidserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
     echo "screen -X -S \"authserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
@@ -275,6 +287,18 @@ function set_config
 
     cp $SOURCE_LOCATION/config.yml.example $SOURCE_LOCATION/bin/config.yml
 
+    sed -i 's/  auth: \&defaultAuthDB.*/  auth: \&defaultAuthDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_AUTH'"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  characters: \&defaultCharactersDB.*/  characters: \&defaultCharactersDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_CHARACTERS'"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_WORLD'"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$LOCAL_ADDRESS':8999/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$LOCAL_ADDRESS':8991"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$LOCAL_ADDRESS':8992"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$LOCAL_ADDRESS':8995"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$LOCAL_ADDRESS':8997"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  preferredHostname:.*/  preferredHostname: "'$LOCAL_ADDRESS'"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$LOCAL_ADDRESS':8996"/g' $SOURCE_LOCATION/bin/config.yml
+
     printf "${COLOR_GREEN}Finished updating the config files...${COLOR_END}\n"
 }
 
@@ -285,13 +309,12 @@ function start_server
     if [[ ! -f $SOURCE_LOCATION/bin/start.sh ]] || [[ ! -f $SOURCE_LOCATION/bin/stop.sh ]]; then
         printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-        exit $?
-    fi
-
-    if [[ ! -z `screen -list | grep -E "nats-server"` ]] || [[ ! -z `screen -list | grep -E "servers-registry"` ]] || [[ ! -z `screen -list | grep -E "guidserver"` ]] || [[ ! -z `screen -list | grep -E "authserver"` ]] || [[ ! -z `screen -list | grep -E "charserver"` ]] || [[ ! -z `screen -list | grep -E "chatserver"` ]] || [[ ! -z `screen -list | grep -E "game-load-balancer"` ]] || [[ ! -z `screen -list | grep -E "guildserver"` ]] || [[ ! -z `screen -list | grep -E "mailserver"` ]]; then
-        printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
     else
-        cd $SOURCE_LOCATION/bin && ./start.sh
+        if [[ ! -z `screen -list | grep -E "nats-server"` ]] || [[ ! -z `screen -list | grep -E "servers-registry"` ]] || [[ ! -z `screen -list | grep -E "guidserver"` ]] || [[ ! -z `screen -list | grep -E "authserver"` ]] || [[ ! -z `screen -list | grep -E "charserver"` ]] || [[ ! -z `screen -list | grep -E "chatserver"` ]] || [[ ! -z `screen -list | grep -E "game-load-balancer"` ]] || [[ ! -z `screen -list | grep -E "guildserver"` ]] || [[ ! -z `screen -list | grep -E "mailserver"` ]]; then
+            printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
+        else
+            cd $SOURCE_LOCATION/bin && ./start.sh
+        fi
     fi
 
     printf "${COLOR_GREEN}Finished starting the server...${COLOR_END}\n"
@@ -312,14 +335,28 @@ function stop_server
     printf "${COLOR_GREEN}Finished stopping the server...${COLOR_END}\n"
 }
 
+function parameters
+{
+    printf "${COLOR_GREEN}Available parameters${COLOR_END}\n"
+
+    printf "${COLOR_GREEN}Available subparameters${COLOR_END}\n"
+    printf "${COLOR_ORANGE}install/setup/update             ${COLOR_WHITE}| ${COLOR_BLUE}Downloads the source code and compiles it${COLOR_END}\n"
+    printf "${COLOR_ORANGE}config/conf/cfg/settings/options ${COLOR_WHITE}| ${COLOR_BLUE}Updates all config files with options specified${COLOR_END}\n"
+    printf "${COLOR_ORANGE}start                            ${COLOR_WHITE}| ${COLOR_BLUE}Starts the compiled processes${COLOR_END}\n"
+    printf "${COLOR_ORANGE}stop                             ${COLOR_WHITE}| ${COLOR_BLUE}Stops the compiled processes${COLOR_END}\n"
+    printf "${COLOR_ORANGE}restart                          ${COLOR_WHITE}| ${COLOR_BLUE}Stops and then starts the compiled processes${COLOR_END}\n\n"
+    printf "${COLOR_ORANGE}all                              ${COLOR_WHITE}| ${COLOR_BLUE}Run all subparameters listed above, including stop and start${COLOR_END}\n"
+
+    exit $?
+}
+
 if [[ $# -gt 0 ]]; then
     if [[ $1 == "install" ]] || [[ $1 == "setup" ]] || [[ $1 == "update" ]]; then
         stop_server
         install_packages
         get_source
         compile_source
-        set_config
-    elif [[ $1 == "config" ]] || [[ $1 == "cfg" ]] || [[ $1 == "settings" ]]; then
+    elif [[ $1 == "config" ]] || [[ $1 == "conf" ]] || [[ $1 == "cfg" ]] || [[ $1 == "settings" ]] || [[ $1 == "options" ]]; then
         set_config
     elif [[ $1 == "start" ]]; then
         start_server
@@ -327,6 +364,13 @@ if [[ $# -gt 0 ]]; then
         stop_server
     elif [[ $1 == "restart" ]]; then
         stop_server
+        start_server
+    elif [[ $1 == "all" ]]; then
+        stop_server
+        install_packages
+        get_source
+        compile_source
+        set_config
         start_server
     fi
 fi
