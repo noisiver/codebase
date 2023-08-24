@@ -64,11 +64,7 @@ WEEKEND_BONUS_ENABLED="false"
 
 function install_packages
 {
-    PACKAGES=("git" "cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libmysqlclient-dev" "mysql-client")
-
-    if [[ $VERSION != "20.04" ]]; then
-        PACKAGES="${PACKAGES} libboost1.74-all-dev"
-    fi
+    PACKAGES=("git" "cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libboost1.74-all-dev" "libmysqlclient-dev" "mysql-client")
 
     for p in "${PACKAGES[@]}"; do
         if [[ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
@@ -462,10 +458,6 @@ function get_client_files
 
         AVAILABLE_VERSION=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
 
-        if [[ $AVAILABLE_VERSION != $AVAILABLE_VERSION ]]; then
-            AVAILABLE_VERSION=$AVAILABLE_VERSION
-        fi
-
         if [[ $VERSION != $AVAILABLE_VERSION ]]; then
             printf "${COLOR_GREEN}Downloading the client data files...${COLOR_END}\n"
 
@@ -532,7 +524,16 @@ function copy_database_files
         fi
     fi
 
-    echo "UPDATE \`mod_auctionhousebot\` SET \`minitems\`="$AHBOT_MIN_ITEMS", \`maxitems\`="$AHBOT_MAX_ITEMS"" > $ROOT/sql/world/ahbot_id_$WORLD_ID.sql
+    if [[ $AHBOT_ENABLED == "true" ]]; then
+        echo "UPDATE \`mod_auctionhousebot\` SET \`minitems\`="$AHBOT_MIN_ITEMS", \`maxitems\`="$AHBOT_MAX_ITEMS"" > $ROOT/sql/world/ahbot_id_$WORLD_ID.sql
+        if [[ $? -ne 0 ]]; then
+            exit $?
+        fi
+    else
+        if [[ -f $ROOT/sql/world/ahbot_id_$WORLD_ID.sql ]]; then
+            rm -rf $ROOT/sql/world/ahbot_id_$WORLD_ID.sql
+        fi
+    fi
 
     if [[ -d $SOURCE_LOCATION/data/sql/custom/db_auth ]]; then
         if [[ ! -z "$(ls -A $SOURCE_LOCATION/data/sql/custom/db_auth/)" ]]; then
