@@ -931,17 +931,16 @@ function start_server
 
     if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]] || [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
         printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
-        exit $?
-    fi
+    else
+        cd $SOURCE_LOCATION/bin && ./start.sh
 
-    cd $SOURCE_LOCATION/bin && ./start.sh
+        if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]]; then
+            printf "${COLOR_ORANGE}To access the screen of the authserver, use the command ${COLOR_BLUE}screen -r auth${COLOR_ORANGE}.${COLOR_END}\n"
+        fi
 
-    if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]]; then
-        printf "${COLOR_ORANGE}To access the screen of the authserver, use the command ${COLOR_BLUE}screen -r auth${COLOR_ORANGE}.${COLOR_END}\n"
-    fi
-
-    if [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
-        printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world${COLOR_ORANGE}.${COLOR_END}\n"
+        if [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
+            printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world${COLOR_ORANGE}.${COLOR_END}\n"
+        fi
     fi
 
     printf "${COLOR_GREEN}Finished starting the server...${COLOR_END}\n"

@@ -123,45 +123,142 @@ function compile_source
 
     cd $SOURCE_LOCATION
 
+    printf "${COLOR_ORANGE}Building authserver.${COLOR_END}\n"
     go build -o bin/authserver apps/authserver/cmd/authserver/main.go
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
 
+    printf "${COLOR_ORANGE}Building charserver.${COLOR_END}\n"
     go build -o bin/charserver apps/charserver/cmd/charserver/main.go
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
 
+    printf "${COLOR_ORANGE}Building chatserver.${COLOR_END}\n"
     go build -o bin/chatserver apps/chatserver/cmd/chatserver/main.go
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
 
+    printf "${COLOR_ORANGE}Building game-load-balancer.${COLOR_END}\n"
     go build -o bin/game-load-balancer apps/game-load-balancer/cmd/game-load-balancer/main.go
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
 
+    printf "${COLOR_ORANGE}Building servers-registry.${COLOR_END}\n"
     go build -o bin/servers-registry apps/servers-registry/cmd/servers-registry/main.go
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
 
+    printf "${COLOR_ORANGE}Building guidserver.${COLOR_END}\n"
     go build -o bin/guidserver apps/guidserver/cmd/guidserver/main.go
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
 
+    printf "${COLOR_ORANGE}Building guildserver.${COLOR_END}\n"
     go build -o bin/guildserver apps/guildserver/cmd/guildserver/main.go
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
 
+    printf "${COLOR_ORANGE}Building mailserver.${COLOR_END}\n"
     go build -o bin/mailserver apps/mailserver/cmd/mailserver/main.go
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/start.sh
+    #echo "screen -L -Logfile nats-server.log -dmS nats-server ./nats-server.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile servers-registry.log -dmS servers-registry ./servers-registry.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile guidserver.log -dmS guidserver ./guidserver.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile authserver.log -dmS authserver ./authserver.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile charserver.log -dmS charserver ./charserver.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile chatserver.log -dmS chatserver ./chatserver.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile game-load-balancer.log -dmS game-load-balancer ./game-load-balancer.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile guildserver.log -dmS guildserver ./guildserver.sh" >> $SOURCE_LOCATION/bin/start.sh
+    echo "screen -L -Logfile mailserver.log -dmS mailserver ./mailserver.sh" >> $SOURCE_LOCATION/bin/start.sh
+    chmod +x $SOURCE_LOCATION/bin/start.sh
+
+    #echo "#!/bin/bash" > $SOURCE_LOCATION/bin/nats-server.sh
+    #echo "while :; do" >> $SOURCE_LOCATION/bin/nats-server.sh
+    #echo "    nats-server" >> $SOURCE_LOCATION/bin/nats-server.sh
+    #echo "    sleep 5" >> $SOURCE_LOCATION/bin/nats-server.sh
+    #echo "done" >> $SOURCE_LOCATION/bin/nats-server.sh
+    #chmod +x $SOURCE_LOCATION/bin/nats-server.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/servers-registry.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/servers-registry.sh
+    echo "    ./servers-registry" >> $SOURCE_LOCATION/bin/servers-registry.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/servers-registry.sh
+    echo "done" >> $SOURCE_LOCATION/bin/servers-registry.sh
+    chmod +x $SOURCE_LOCATION/bin/servers-registry.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/guidserver.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/guidserver.sh
+    echo "    ./guidserver" >> $SOURCE_LOCATION/bin/guidserver.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/guidserver.sh
+    echo "done" >> $SOURCE_LOCATION/bin/guidserver.sh
+    chmod +x $SOURCE_LOCATION/bin/guidserver.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/authserver.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/authserver.sh
+    echo "    ./authserver" >> $SOURCE_LOCATION/bin/authserver.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/authserver.sh
+    echo "done" >> $SOURCE_LOCATION/bin/authserver.sh
+    chmod +x $SOURCE_LOCATION/bin/authserver.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/charserver.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/charserver.sh
+    echo "    ./charserver" >> $SOURCE_LOCATION/bin/charserver.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/charserver.sh
+    echo "done" >> $SOURCE_LOCATION/bin/charserver.sh
+    chmod +x $SOURCE_LOCATION/bin/charserver.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/chatserver.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/chatserver.sh
+    echo "    ./chatserver" >> $SOURCE_LOCATION/bin/chatserver.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/chatserver.sh
+    echo "done" >> $SOURCE_LOCATION/bin/chatserver.sh
+    chmod +x $SOURCE_LOCATION/bin/chatserver.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/game-load-balancer.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/game-load-balancer.sh
+    echo "    ./game-load-balancer" >> $SOURCE_LOCATION/bin/game-load-balancer.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/game-load-balancer.sh
+    echo "done" >> $SOURCE_LOCATION/bin/game-load-balancer.sh
+    chmod +x $SOURCE_LOCATION/bin/game-load-balancer.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/guildserver.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/guildserver.sh
+    echo "    ./guildserver" >> $SOURCE_LOCATION/bin/guildserver.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/guildserver.sh
+    echo "done" >> $SOURCE_LOCATION/bin/guildserver.sh
+    chmod +x $SOURCE_LOCATION/bin/guildserver.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/mailserver.sh
+    echo "while :; do" >> $SOURCE_LOCATION/bin/mailserver.sh
+    echo "    ./mailserver" >> $SOURCE_LOCATION/bin/mailserver.sh
+    echo "    sleep 5" >> $SOURCE_LOCATION/bin/mailserver.sh
+    echo "done" >> $SOURCE_LOCATION/bin/mailserver.sh
+    chmod +x $SOURCE_LOCATION/bin/mailserver.sh
+
+    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/stop.sh
+    #echo "screen -X -S \"nats-server\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"servers-registry\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"guidserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"authserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"charserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"chatserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"game-load-balancer\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"guildserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    echo "screen -X -S \"mailserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+    chmod +x $SOURCE_LOCATION/bin/stop.sh
+
+    printf "${COLOR_GREEN}Finished compiling the source code...${COLOR_END}\n"
 }
 
 function set_config
@@ -176,16 +273,60 @@ function set_config
 
     printf "${COLOR_ORANGE}Updating config.yml${COLOR_END}\n"
 
-    cp $SOURCE_LOCATION/config.yml.example $SOURCE_LOCATION/bin/config.yml    
+    cp $SOURCE_LOCATION/config.yml.example $SOURCE_LOCATION/bin/config.yml
+
+    printf "${COLOR_GREEN}Finished updating the config files...${COLOR_END}\n"
+}
+
+function start_server
+{
+    printf "${COLOR_GREEN}Starting the server...${COLOR_END}\n"
+
+    if [[ ! -f $SOURCE_LOCATION/bin/start.sh ]] || [[ ! -f $SOURCE_LOCATION/bin/stop.sh ]]; then
+        printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
+        printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+        exit $?
+    fi
+
+    if [[ ! -z `screen -list | grep -E "nats-server"` ]] || [[ ! -z `screen -list | grep -E "servers-registry"` ]] || [[ ! -z `screen -list | grep -E "guidserver"` ]] || [[ ! -z `screen -list | grep -E "authserver"` ]] || [[ ! -z `screen -list | grep -E "charserver"` ]] || [[ ! -z `screen -list | grep -E "chatserver"` ]] || [[ ! -z `screen -list | grep -E "game-load-balancer"` ]] || [[ ! -z `screen -list | grep -E "guildserver"` ]] || [[ ! -z `screen -list | grep -E "mailserver"` ]]; then
+        printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
+    else
+        cd $SOURCE_LOCATION/bin && ./start.sh
+    fi
+
+    printf "${COLOR_GREEN}Finished starting the server...${COLOR_END}\n"
+}
+
+function stop_server
+{
+    printf "${COLOR_GREEN}Stopping the server...${COLOR_END}\n"
+
+    if [[ -z `screen -list | grep -E "nats-server"` ]] && [[ -z `screen -list | grep -E "servers-registry"` ]] && [[ -z `screen -list | grep -E "guidserver"` ]] && [[ -z `screen -list | grep -E "authserver"` ]] && [[ -z `screen -list | grep -E "charserver"` ]] && [[ -z `screen -list | grep -E "chatserver"` ]] && [[ -z `screen -list | grep -E "game-load-balancer"` ]] && [[ -z `screen -list | grep -E "guildserver"` ]] && [[ -z `screen -list | grep -E "mailserver"` ]]; then
+        printf "${COLOR_RED}The server is not running.${COLOR_END}\n"
+    else
+        if [[ -f $SOURCE_LOCATION/bin/stop.sh ]]; then
+            cd $SOURCE_LOCATION/bin && ./stop.sh
+        fi
+    fi
+
+    printf "${COLOR_GREEN}Finished stopping the server...${COLOR_END}\n"
 }
 
 if [[ $# -gt 0 ]]; then
     if [[ $1 == "install" ]] || [[ $1 == "setup" ]] || [[ $1 == "update" ]]; then
+        stop_server
         install_packages
         get_source
         compile_source
         set_config
     elif [[ $1 == "config" ]] || [[ $1 == "cfg" ]] || [[ $1 == "settings" ]]; then
         set_config
+    elif [[ $1 == "start" ]]; then
+        start_server
+    elif [[ $1 == "stop" ]]; then
+        stop_server
+    elif [[ $1 == "restart" ]]; then
+        stop_server
+        start_server
     fi
 fi
