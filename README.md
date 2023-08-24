@@ -11,20 +11,20 @@ I am not experienced enough in a specific language to call myself a professional
 # AzerothCore
 I use [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) to host my own World of Warcraft server. I'm the only one playing on it and therefore I'm changing it to fit my demands. These are the modules I created myself that has the additional features I wanted.
 
-[Account Bound](https://github.com/tkn963/mod-accountbound) : Makes mounts and companions shared across all characters of an account
+[Account Bound](https://github.com/noisiver/mod-accountbound) : Makes mounts and companions shared across all characters of an account
 
-[Archmage Timear](https://github.com/tkn963/mod-archmage-timear) : Gives Archmage Timear the ability to offer the player daily heroic dungeon quests
+[Appreciation](https://github.com/noisiver/mod-appreciation) : Allows players to be boosted to a specific level and to unlock flight paths by using an item called Token of Appreciation. NOTE: This module hasn't been made public yet
 
-[Assistant](https://github.com/tkn963/mod-assistant) : Allows players to obtain certain items and utilities from an NPC.
+[Assistant](https://github.com/noisiver/mod-assistant) : Allows players to obtain certain items and utilities from an NPC.
 
-[Dynamic Rates](https://github.com/tkn963/mod-dynamicrates) : Increases the experience gained, reputation gained, money looted and money earned from quests based on the players current level.
+[GroupQuests](https://github.com/noisiver/mod-groupquests) : Makes quest items drop for all members of a group. In some cases it also help certain objectives count for all members of a group.
 
-[GroupQuests](https://github.com/tkn963/mod-groupquests) : Makes quest items drop for all members of a group. In some cases it also help certain objectives count for all members of a group.
+[GuildFunds](https://github.com/noisiver/mod-guildfunds) : Deposits a certain percentage of money looted and earned from quests to the guild bank.
 
-[LearnSpells](https://github.com/tkn963/mod-learnspells) : Lets players learn class spells, talent ranks, proficiencies and mounts when leveling up or logging into the world.
+[Junk-to-Gold](https://github.com/noisiver/mod-junk-to-gold) : Automatically sells gray items when looted
 
-[LevelReward](https://github.com/tkn963/mod-levelreward) : Gives a player gold when reaching certain levels. It can also send an item to the player.
+[LearnSpells](https://github.com/noisiver/mod-learnspells) : Lets players learn class spells, talent ranks, proficiencies and mounts when leveling up or logging into the world.
 
-[RecruitAFriend](https://github.com/tkn963/mod-recruitafriend) : Adds five new in-game commands that allows players to recruit each other and receive rewards for doing so.
+[RecruitAFriend](https://github.com/noisiver/mod-recruitafriend) : Adds five new in-game commands that allows players to recruit each other and receive rewards for doing so.
 
-[WeekendBonus](https://github.com/tkn963/mod-weekendbonus) : Increases the experience, money, reputation and skill ups gained on weekends.
+[WeekendBonus](https://github.com/noisiver/mod-weekendbonus) : Increases the experience, money, reputation and skill ups gained on weekends.
