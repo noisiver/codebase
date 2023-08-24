@@ -929,18 +929,18 @@ function start_server
         exit $?
     fi
 
-    if [[ ! -z `screen -list | grep -E "auth"` ]] || [[ ! -z `screen -list | grep -E "world"` ]]; then
+    if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]] || [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
         printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
         exit $?
     fi
 
     cd $SOURCE_LOCATION/bin && ./start.sh
 
-    if [[ ! -z `screen -list | grep -E "auth"` ]]; then
+    if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]]; then
         printf "${COLOR_ORANGE}To access the screen of the authserver, use the command ${COLOR_BLUE}screen -r auth${COLOR_ORANGE}.${COLOR_END}\n"
     fi
 
-    if [[ ! -z `screen -list | grep -E "world"` ]]; then
+    if [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
         printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world${COLOR_ORANGE}.${COLOR_END}\n"
     fi
 
@@ -951,28 +951,26 @@ function stop_server
 {
     printf "${COLOR_GREEN}Stopping the server...${COLOR_END}\n"
 
-    if [[ -z `screen -list | grep -E "auth"` ]] && [[ -z `screen -list | grep -E "world"` ]]; then
+    if [[ -z `screen -list | grep -E "auth"` || ! -f $SOURCE_LOCATION/bin/auth.sh ]] && [[ -z `screen -list | grep -E "world"` || ! -f $SOURCE_LOCATION/bin/world.sh ]]; then
         printf "${COLOR_RED}The server is not running.${COLOR_END}\n"
-    fi
+    else
+        if [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
+            printf "${COLOR_ORANGE}Telling the world server to shut down.${COLOR_END}\n"
 
-    if [[ ! -z `screen -list | grep -E "world"` ]]; then
-        printf "${COLOR_ORANGE}Telling the world server to shut down.${COLOR_END}\n"
+            PID=$(pgrep worldserver)
 
-        PID=$(pgrep worldserver)
+            if [[ $PID != "" ]]; then
+                if [[ $1 == "restart" ]]; then
+                    screen -S world -p 0 -X stuff "server restart 10^m"
+                else
+                    screen -S world -p 0 -X stuff "server shutdown 10^m"
+                fi
 
-        if [[ $PID != "" ]]; then
-            if [[ $2 == "restart" ]]; then
-                screen -S world -p 0 -X stuff "server restart 10^m"
-            else
-                screen -S world -p 0 -X stuff "server shutdown 10^m"
+                timeout 30 tail --pid=$PID -f /dev/null
             fi
-
-            timeout 30 tail --pid=$PID -f /dev/null
         fi
-    fi
 
-    if [[ -f $SOURCE_LOCATION/bin/stop.sh ]]; then
-        if [[ ! -z `screen -list | grep -E "auth"` ]] || [[ ! -z `screen -list | grep -E "world"` ]]; then
+        if [[ -f $SOURCE_LOCATION/bin/stop.sh ]]; then
             cd $SOURCE_LOCATION/bin && ./stop.sh
         fi
     fi
@@ -1026,9 +1024,9 @@ if [[ $# -gt 0 ]]; then
     elif [[ $1 == "start" ]]; then
         start_server
     elif [[ $1 == "stop" ]]; then
-        stop_server
+        stop_server $1
     elif [[ $1 == "restart" ]]; then
-        stop_server
+        stop_server $1
         start_server
     else
         parameters
