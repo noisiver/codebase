@@ -496,9 +496,52 @@ function get_client_files
     fi
 }
 
-function copy_database_files
+function import_database_files
 {
-    printf "${COLOR_GREEN}Copying the database files...${COLOR_END}\n"
+    printf "${COLOR_GREEN}Importing the database files...${COLOR_END}\n"
+
+    MYSQL_CNF="$ROOT/mysql.cnf"
+    echo "[client]" > $MYSQL_CNF
+    echo "host=\"$MYSQL_HOSTNAME\"" >> $MYSQL_CNF
+    echo "port=\"$MYSQL_PORT\"" >> $MYSQL_CNF
+    echo "user=\"$MYSQL_USERNAME\"" >> $MYSQL_CNF
+    echo "password=\"$MYSQL_PASSWORD\"" >> $MYSQL_CNF
+
+    if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_AUTH'"` ]]; then
+        printf "${COLOR_RED}The database named $MYSQL_DATABASES_AUTH is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
+        rm -rf $MYSQL_CNF
+        exit $?
+    fi
+
+    if [[ $1 == "world" ]] || [[ $1 == "both" ]]; then
+        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_CHARACTERS'"` ]]; then
+            printf "${COLOR_RED}The database named $MYSQL_DATABASES_CHARACTERS is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
+            rm -rf $MYSQL_CNF
+            exit $?
+        fi
+
+        if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_WORLD'"` ]] && [[ $1 == "world" || $1 == "both" ]]; then
+            printf "${COLOR_RED}The database named $MYSQL_DATABASES_WORLD is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
+            rm -rf $MYSQL_CNF
+            exit $?
+        fi
+    fi
+
+    if [[ ! -d $SOURCE_LOCATION/data/sql/base/db_auth ]] || [[ ! -d $SOURCE_LOCATION/data/sql/updates/db_auth ]] || [[ ! -d $SOURCE_LOCATION/data/sql/custom/db_auth ]]; then
+        printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
+        printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+        rm -rf $MYSQL_CNF
+        exit $?
+    fi
+
+    if [[ $1 == "world" ]] || [[ $1 == "both" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/data/sql/base/db_characters ]] || [[ ! -d $SOURCE_LOCATION/data/sql/updates/db_characters ]] || [[ ! -d $SOURCE_LOCATION/data/sql/custom/db_characters ]] || [[ ! -d $SOURCE_LOCATION/data/sql/base/db_world ]] || [[ ! -d $SOURCE_LOCATION/data/sql/updates/db_world ]] || [[ ! -d $SOURCE_LOCATION/data/sql/custom/db_world ]]; then
+            printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            rm -rf $MYSQL_CNF
+            exit $?
+        fi
+    fi
 
     if [[ ! -d $ROOT/sql/auth ]]; then
         mkdir -p $ROOT/sql/auth
@@ -507,121 +550,419 @@ function copy_database_files
         fi
     fi
 
-    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
-        echo "DELETE FROM \`realmlist\` WHERE \`id\`="$WORLD_ID";" > $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
-        echo "INSERT INTO \`realmlist\` (\`id\`, \`name\`, \`address\`, \`localAddress\`, \`port\`) VALUES ("$WORLD_ID", '"$WORLD_NAME"', '"$WORLD_ADDRESS"', '"$WORLD_ADDRESS"', "$WORLD_PORT");" >> $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
-        echo "DELETE FROM \`motd\` WHERE \`realmid\`="$WORLD_ID";" > $ROOT/sql/auth/motd_id_$WORLD_ID.sql
-        echo "INSERT INTO \`motd\` (\`realmid\`, \`text\`) VALUES ("$WORLD_ID", '"$WORLD_MOTD"');" >> $ROOT/sql/auth/motd_id_$WORLD_ID.sql
-    else
-        if [[ -f $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql ]]; then
-            rm -rf $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
+    if [[ $1 == "world" ]] || [[ $1 == "both" ]]; then
+        if [[ ! -d $ROOT/sql/characters ]]; then
+            mkdir -p $ROOT/sql/characters
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
         fi
 
-        if [[ -f $ROOT/sql/auth/motd_id_$WORLD_ID.sql ]]; then
-            rm -rf $ROOT/sql/auth/motd_id_$WORLD_ID.sql
+        if [[ ! -d $ROOT/sql/world ]]; then
+            mkdir -p $ROOT/sql/world
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
         fi
     fi
 
-    if [[ ! -d $ROOT/sql/characters ]]; then
-        mkdir -p $ROOT/sql/characters
-        if [[ $? -ne 0 ]]; then
-            exit $?
-        fi
+    if [[ `ls -1 $SOURCE_LOCATION/data/sql/base/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $SOURCE_LOCATION/data/sql/base/db_auth/*.sql; do
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
+            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
+            if [[ $? -ne 0 ]]; then
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+        done
+        else
+            printf "${COLOR_RED}The required files for the auth database are missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     fi
 
-    if [[ ! -d $ROOT/sql/world ]]; then
-        mkdir -p $ROOT/sql/world
-        if [[ $? -ne 0 ]]; then
-            exit $?
-        fi
+    if [[ `ls -1 $SOURCE_LOCATION/data/sql/updates/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $SOURCE_LOCATION/data/sql/updates/db_auth/*.sql; do
+            FILENAME=$(basename $f)
+            HASH=($(sha1sum $f))
+
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
+            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
+            if [[ $? -ne 0 ]]; then
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+            if [[ $? -ne 0 ]]; then
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+        done
     fi
 
-    if [[ $1 == "both" || $1 == "world" ]] && [[ $AHBOT_ENABLED == "true" ]]; then
-        echo "UPDATE \`mod_auctionhousebot\` SET \`minitems\`="$AHBOT_MIN_ITEMS", \`maxitems\`="$AHBOT_MAX_ITEMS"" > $ROOT/sql/world/ahbot_id_$WORLD_ID.sql
-        if [[ $? -ne 0 ]]; then
-            exit $?
-        fi
-    else
-        if [[ -f $ROOT/sql/world/ahbot_id_$WORLD_ID.sql ]]; then
-            rm -rf $ROOT/sql/world/ahbot_id_$WORLD_ID.sql
-        fi
+    if [[ `ls -1 $SOURCE_LOCATION/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $SOURCE_LOCATION/data/sql/custom/db_auth/*.sql; do
+            FILENAME=$(basename $f)
+            HASH=($(sha1sum $f))
+
+            if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                continue;
+            fi
+
+            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
+            if [[ $? -ne 0 ]]; then
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+            if [[ $? -ne 0 ]]; then
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+        done
     fi
 
-    if [[ -d $SOURCE_LOCATION/data/sql/custom/db_auth ]]; then
-        if [[ ! -z "$(ls -A $SOURCE_LOCATION/data/sql/custom/db_auth/)" ]]; then
-            for f in $SOURCE_LOCATION/data/sql/custom/db_auth/*.sql; do
-                rm -rf $f
+    if [[ `ls -1 $ROOT/sql/auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/sql/auth/*.sql; do
+            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
+            if [[ $? -ne 0 ]]; then
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+        done
+    fi
+
+    if [[ $1 == "world" ]] || [[ $1 == "both" ]]; then
+        if [[ `ls -1 $SOURCE_LOCATION/data/sql/base/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/data/sql/base/db_characters/*.sql; do
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        else
+            printf "${COLOR_RED}The required files for the characters database are missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+        fi
+
+        if [[ `ls -1 $SOURCE_LOCATION/data/sql/updates/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/data/sql/updates/db_characters/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
                     exit $?
                 fi
             done
         fi
-    fi
 
-    if [[ -d $ROOT/sql/auth ]]; then
-        if [[ ! -z "$(ls -A $ROOT/sql/auth/)" ]]; then
-            for f in $ROOT/sql/auth/*.sql; do
-                printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
-
-                cp $f $SOURCE_LOCATION/data/sql/custom/db_auth/$(basename $f)
-                if [[ $? -ne 0 ]]; then
-                    exit $?
-                fi
-            done
-        fi
-    fi
-
-    if [[ -d $SOURCE_LOCATION/data/sql/custom/db_characters ]]; then
-        if [[ ! -z "$(ls -A $SOURCE_LOCATION/data/sql/custom/db_characters/)" ]]; then
+        if [[ `ls -1 $SOURCE_LOCATION/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             for f in $SOURCE_LOCATION/data/sql/custom/db_characters/*.sql; do
-                rm -rf $f
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
                     exit $?
                 fi
             done
         fi
-    fi
 
-    if [[ -d $ROOT/sql/characters ]]; then
-        if [[ ! -z "$(ls -A $ROOT/sql/characters/)" ]]; then
+        if [[ `ls -1 $ROOT/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             for f in $ROOT/sql/characters/*.sql; do
-                printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
-
-                cp $f $SOURCE_LOCATION/data/sql/custom/db_characters/$(basename $f)
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
                     exit $?
                 fi
             done
         fi
-    fi
 
-    if [[ -d $SOURCE_LOCATION/data/sql/custom/db_world ]]; then
-        if [[ ! -z "$(ls -A $SOURCE_LOCATION/data/sql/custom/db_world/)" ]]; then
+        if [[ `ls -1 $SOURCE_LOCATION/data/sql/base/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/data/sql/base/db_world/*.sql; do
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        else
+            printf "${COLOR_RED}The required files for the world database are missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+        fi
+
+        if [[ `ls -1 $SOURCE_LOCATION/data/sql/updates/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/data/sql/updates/db_world/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+
+        if [[ `ls -1 $SOURCE_LOCATION/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             for f in $SOURCE_LOCATION/data/sql/custom/db_world/*.sql; do
-                if [[ ! "$(basename $f)" =~ ^"progression_" ]] && [[ ! "$(basename $f)" =~ ^"00_progression_" ]]; then
-                    rm -rf $f
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+
+        if [[ `ls -1 $ROOT/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/sql/world/*.sql; do
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+
+        if [[ $AHBOT_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base ]]; then
+                printf "${COLOR_RED}The auction house bot module is enabled but the files aren't where they should be.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                exit $?
+            fi
+
+            if [[ `ls -1 $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
+                        rm -rf $MYSQL_CNF
                         exit $?
                     fi
-                fi
-            done
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$AHBOT_MIN_ITEMS', maxitems='$AHBOT_MAX_ITEMS'"
+            if [[ $? -ne 0 ]]; then
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+        fi
+
+        if [[ $ASSISTANT_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base ]]; then
+                printf "${COLOR_RED}The assistant module is enabled but the files aren't where they should be.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                exit $?
+            fi
+
+            if [[ `ls -1 $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                    if [[ $? -ne 0 ]]; then
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
+        if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base ]]; then
+                printf "${COLOR_RED}The group quests module is enabled but the files aren't where they should be.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                exit $?
+            fi
+
+            if [[ `ls -1 $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                    if [[ $? -ne 0 ]]; then
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
+        if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
+                printf "${COLOR_RED}The recruit-a-friend module is enabled but the files aren't where they should be.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                exit $?
+            fi
+
+            if [[ `ls -1 $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
+                    if [[ $? -ne 0 ]]; then
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
+        printf "${COLOR_ORANGE}Adding to the realmlist (id: $WORLD_ID, name: $WORLD_NAME, address $WORLD_ADDRESS, port $WORLD_PORT)${COLOR_END}\n"
+        mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$WORLD_ID', '$WORLD_NAME', '$WORLD_ADDRESS', '$WORLD_ADDRESS', '255.255.255.0', '$WORLD_PORT')"
+        if [[ $? -ne 0 ]]; then
+            rm -rf $MYSQL_CNF
+            exit $?
+        fi
+
+        printf "${COLOR_ORANGE}Updating message of the day${COLOR_END}\n"
+        mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM motd WHERE realmid='$WORLD_ID';INSERT INTO motd (realmid, text) VALUES ('$WORLD_ID', '$WORLD_MOTD')"
+        if [[ $? -ne 0 ]]; then
+            rm -rf $MYSQL_CNF
+            exit $?
         fi
     fi
 
-    if [[ -d $ROOT/sql/world ]]; then
-        if [[ ! -z "$(ls -A $ROOT/sql/world/)" ]]; then
-            for f in $ROOT/sql/world/*.sql; do
-                printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
+    rm -rf $MYSQL_CNF
 
-                cp $f $SOURCE_LOCATION/data/sql/custom/db_world/$(basename $f)
-                if [[ $? -ne 0 ]]; then
-                    exit $?
-                fi
-            done
-        fi
-    fi
-
-    printf "${COLOR_GREEN}Finished copying the database files...${COLOR_END}\n"
+    printf "${COLOR_GREEN}Finished importing the database files...${COLOR_END}\n"
 }
 
 function set_config
@@ -640,7 +981,7 @@ function set_config
         cp $SOURCE_LOCATION/etc/authserver.conf.dist $SOURCE_LOCATION/etc/authserver.conf
 
         sed -i 's/LoginDatabaseInfo =.*/LoginDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_AUTH'"/g' $SOURCE_LOCATION/etc/authserver.conf
-        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 1/g' $SOURCE_LOCATION/etc/authserver.conf
+        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $SOURCE_LOCATION/etc/authserver.conf
     fi
 
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
@@ -657,7 +998,7 @@ function set_config
         sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_AUTH'"/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_WORLD'"/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_CHARACTERS'"/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 7/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/RealmID =.*/RealmID = '$WORLD_ID'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/WorldServerPort =.*/WorldServerPort = '$WORLD_PORT'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GameType =.*/GameType = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
@@ -995,16 +1336,16 @@ function stop_server
 function parameters
 {
     printf "${COLOR_GREEN}Available parameters${COLOR_END}\n"
-    printf "${COLOR_ORANGE}both                             ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters for the auth and worldserver${COLOR_END}\n"
     printf "${COLOR_ORANGE}auth                             ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters only for the authserver${COLOR_END}\n"
     printf "${COLOR_ORANGE}world                            ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters only for the worldserver${COLOR_END}\n"
+    printf "${COLOR_ORANGE}both                             ${COLOR_WHITE}| ${COLOR_BLUE}Use chosen subparameters for the auth and worldserver${COLOR_END}\n"
     printf "${COLOR_ORANGE}start                            ${COLOR_WHITE}| ${COLOR_BLUE}Starts the compiled processes, based off of the choice for compilation${COLOR_END}\n"
     printf "${COLOR_ORANGE}stop                             ${COLOR_WHITE}| ${COLOR_BLUE}Stops the compiled processes, based off of the choice for compilation${COLOR_END}\n"
     printf "${COLOR_ORANGE}restart                          ${COLOR_WHITE}| ${COLOR_BLUE}Stops and then starts the compiled processes, based off of the choice for compilation${COLOR_END}\n\n"
 
     printf "${COLOR_GREEN}Available subparameters${COLOR_END}\n"
     printf "${COLOR_ORANGE}install/update                   ${COLOR_WHITE}| ${COLOR_BLUE}Downloads the source code, with enabled modules, and compiles it. Also downloads client files${COLOR_END}\n"
-    printf "${COLOR_ORANGE}database/db                      ${COLOR_WHITE}| ${COLOR_BLUE}Copy all custom sql files to the core${COLOR_END}\n"
+    printf "${COLOR_ORANGE}database/db                      ${COLOR_WHITE}| ${COLOR_BLUE}Import all files to the specified databases${COLOR_END}\n"
     printf "${COLOR_ORANGE}config/conf/cfg/settings/options ${COLOR_WHITE}| ${COLOR_BLUE}Updates all config files, including enabled modules, with options specified${COLOR_END}\n"
     printf "${COLOR_ORANGE}all                              ${COLOR_WHITE}| ${COLOR_BLUE}Run all subparameters listed above, including stop and start${COLOR_END}\n"
 
@@ -1020,7 +1361,7 @@ if [[ $# -gt 0 ]]; then
             compile_source $1
             get_client_files $1
         elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
-            copy_database_files $1
+            import_database_files $1
         elif [[ $2 == "config" ]] || [[ $2 == "conf" ]] || [[ $2 == "cfg" ]] || [[ $2 == "settings" ]] || [[ $2 == "options" ]]; then
             set_config $1
         elif [[ $2 == "all" ]]; then
@@ -1028,7 +1369,7 @@ if [[ $# -gt 0 ]]; then
             install_packages
             get_source $1
             compile_source $1
-            copy_database_files $1
+            import_database_files $1
             get_client_files $1
             set_config $1
             start_server
