@@ -258,7 +258,7 @@ function get_client_files
             rm -rf $SOURCE_LOCATION/azerothcore/bin/vmaps
         fi
 
-        curl -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip > $SOURCE_LOCATION/azerothcore/bin/data.zip
+        curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $SOURCE_LOCATION/azerothcore/bin/data.zip
         if [[ $? -ne 0 ]]; then
             exit $?
         fi
@@ -334,9 +334,26 @@ function import_database_files
     fi
 
     # A temporary workaround
-    curl -L https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000001_create_guild_invites_table.down.sql > $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000001_create_guild_invites_table.down.sql
-    curl -L https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000001_create_guild_invites_table.up.sql > $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000001_create_guild_invites_table.up.sql
-    curl -L https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000002_add_auto_increment_to_mail.up.sql > $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000002_add_auto_increment_to_mail.up.sql
+    printf "${COLOR_ORANGE}Downloading 000001_create_guild_invites_table.down.sql${COLOR_END}\n"
+    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000001_create_guild_invites_table.down.sql -o $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000001_create_guild_invites_table.down.sql
+    if [[ $? -ne 0 ]]; then
+        rm -rf $MYSQL_CNF
+        exit $?
+    fi
+
+    printf "${COLOR_ORANGE}Downloading 000001_create_guild_invites_table.up.sql${COLOR_END}\n"
+    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000001_create_guild_invites_table.up.sql -o $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000001_create_guild_invites_table.up.sql
+    if [[ $? -ne 0 ]]; then
+        rm -rf $MYSQL_CNF
+        exit $?
+    fi
+
+    printf "${COLOR_ORANGE}Downloading 000002_add_auto_increment_to_mail.up.sql${COLOR_END}\n"
+    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000002_add_auto_increment_to_mail.up.sql -o $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000002_add_auto_increment_to_mail.up.sql
+    if [[ $? -ne 0 ]]; then
+        rm -rf $MYSQL_CNF
+        exit $?
+    fi
 
     if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/base/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
         for f in $SOURCE_LOCATION/azerothcore/data/sql/base/db_auth/*.sql; do

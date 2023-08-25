@@ -477,7 +477,7 @@ function get_client_files
                 rm -rf $SOURCE_LOCATION/bin/vmaps
             fi
 
-            curl -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip > $SOURCE_LOCATION/bin/data.zip
+            curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $SOURCE_LOCATION/bin/data.zip
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
