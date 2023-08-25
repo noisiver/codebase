@@ -498,6 +498,8 @@ function get_client_files
 
 function copy_database_files
 {
+    printf "${COLOR_GREEN}Copying the database files...${COLOR_END}\n"
+
     if [[ ! -d $ROOT/sql/auth ]]; then
         mkdir -p $ROOT/sql/auth
         if [[ $? -ne 0 ]]; then
@@ -505,10 +507,20 @@ function copy_database_files
         fi
     fi
 
-    echo "DELETE FROM \`realmlist\` WHERE \`id\`="$WORLD_ID";" > $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
-    echo "INSERT INTO \`realmlist\` (\`id\`, \`name\`, \`address\`, \`localAddress\`, \`port\`) VALUES ("$WORLD_ID", '"$WORLD_NAME"', '"$WORLD_ADDRESS"', '"$WORLD_ADDRESS"', "$WORLD_PORT");" >> $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
-    echo "DELETE FROM \`motd\` WHERE \`realmid\`="$WORLD_ID";" > $ROOT/sql/auth/motd_id_$WORLD_ID.sql
-    echo "INSERT INTO \`motd\` (\`realmid\`, \`text\`) VALUES ("$WORLD_ID", '"$WORLD_MOTD"');" >> $ROOT/sql/auth/motd_id_$WORLD_ID.sql
+    if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        echo "DELETE FROM \`realmlist\` WHERE \`id\`="$WORLD_ID";" > $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
+        echo "INSERT INTO \`realmlist\` (\`id\`, \`name\`, \`address\`, \`localAddress\`, \`port\`) VALUES ("$WORLD_ID", '"$WORLD_NAME"', '"$WORLD_ADDRESS"', '"$WORLD_ADDRESS"', "$WORLD_PORT");" >> $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
+        echo "DELETE FROM \`motd\` WHERE \`realmid\`="$WORLD_ID";" > $ROOT/sql/auth/motd_id_$WORLD_ID.sql
+        echo "INSERT INTO \`motd\` (\`realmid\`, \`text\`) VALUES ("$WORLD_ID", '"$WORLD_MOTD"');" >> $ROOT/sql/auth/motd_id_$WORLD_ID.sql
+    else
+        if [[ -f $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql ]]; then
+            rm -rf $ROOT/sql/auth/realmlist_id_$WORLD_ID.sql
+        fi
+
+        if [[ -f $ROOT/sql/auth/motd_id_$WORLD_ID.sql ]]; then
+            rm -rf $ROOT/sql/auth/motd_id_$WORLD_ID.sql
+        fi
+    fi
 
     if [[ ! -d $ROOT/sql/characters ]]; then
         mkdir -p $ROOT/sql/characters
@@ -524,7 +536,7 @@ function copy_database_files
         fi
     fi
 
-    if [[ $AHBOT_ENABLED == "true" ]]; then
+    if [[ $1 == "both" || $1 == "world" ]] && [[ $AHBOT_ENABLED == "true" ]]; then
         echo "UPDATE \`mod_auctionhousebot\` SET \`minitems\`="$AHBOT_MIN_ITEMS", \`maxitems\`="$AHBOT_MAX_ITEMS"" > $ROOT/sql/world/ahbot_id_$WORLD_ID.sql
         if [[ $? -ne 0 ]]; then
             exit $?
@@ -608,6 +620,8 @@ function copy_database_files
             done
         fi
     fi
+
+    printf "${COLOR_GREEN}Finished copying the database files...${COLOR_END}\n"
 }
 
 function set_config
@@ -1006,7 +1020,7 @@ if [[ $# -gt 0 ]]; then
             compile_source $1
             get_client_files $1
         elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
-            copy_database_files
+            copy_database_files $1
         elif [[ $2 == "config" ]] || [[ $2 == "conf" ]] || [[ $2 == "cfg" ]] || [[ $2 == "settings" ]] || [[ $2 == "options" ]]; then
             set_config $1
         elif [[ $2 == "all" ]]; then
@@ -1014,7 +1028,7 @@ if [[ $# -gt 0 ]]; then
             install_packages
             get_source $1
             compile_source $1
-            copy_database_files
+            copy_database_files $1
             get_client_files $1
             set_config $1
             start_server
