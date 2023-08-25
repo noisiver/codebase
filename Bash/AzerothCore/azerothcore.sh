@@ -586,9 +586,11 @@ function copy_database_files
     if [[ -d $SOURCE_LOCATION/data/sql/custom/db_world ]]; then
         if [[ ! -z "$(ls -A $SOURCE_LOCATION/data/sql/custom/db_world/)" ]]; then
             for f in $SOURCE_LOCATION/data/sql/custom/db_world/*.sql; do
-                rm -rf $f
-                if [[ $? -ne 0 ]]; then
-                    exit $?
+                if [[ ! "$(basename $f)" =~ ^"progression_" ]] && [[ ! "$(basename $f)" =~ ^"00_progression_" ]]; then
+                    rm -rf $f
+                    if [[ $? -ne 0 ]]; then
+                        exit $?
+                    fi
                 fi
             done
         fi
