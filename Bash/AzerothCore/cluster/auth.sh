@@ -372,5 +372,9 @@ if [[ $# -gt 0 ]]; then
         compile_source
         set_config
         start_server
+    else
+        parameters
     fi
+else
+    parameters
 fi
