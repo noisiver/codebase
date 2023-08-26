@@ -260,6 +260,7 @@ function get_client_files
 
         curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $SOURCE_LOCATION/azerothcore/bin/data.zip
         if [[ $? -ne 0 ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/bin/data.zip
             exit $?
         fi
 
@@ -614,6 +615,29 @@ function import_database_files
     printf "${COLOR_GREEN}Finished importing the database files...${COLOR_END}\n"
 }
 
+function copy_dbc_files
+{
+    printf "${COLOR_GREEN}Copying modified client data files...${COLOR_END}\n"
+
+    if [[ ! -d $ROOT/dbc ]]; then
+        mkdir $ROOT/dbc
+    fi
+
+    if [[ `ls -1 $ROOT/dbc/*.dbc 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/dbc/*.dbc; do
+            printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
+            cp $f $SOURCE_LOCATION/azerothcore/bin/dbc/$(basename $f)
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        done
+    else
+        printf "${COLOR_ORANGE}No files found in the directory${COLOR_END}\n"
+    fi
+
+    printf "${COLOR_GREEN}Finished copying modified client data files...${COLOR_END}\n"
+}
+
 function set_config
 {
     printf "${COLOR_GREEN}Updating the config files...${COLOR_END}\n"
@@ -760,6 +784,7 @@ function parameters
     printf "${COLOR_GREEN}Available subparameters${COLOR_END}\n"
     printf "${COLOR_ORANGE}install/setup/update             ${COLOR_WHITE}| ${COLOR_BLUE}Downloads the source code and compiles it. Also downloads client files${COLOR_END}\n"
     printf "${COLOR_ORANGE}database/db                      ${COLOR_WHITE}| ${COLOR_BLUE}Import all files to the specified databases${COLOR_END}\n"
+    printf "${COLOR_ORANGE}dbc                              ${COLOR_WHITE}| ${COLOR_BLUE}Copy modified client data files to the proper folder${COLOR_END}\n"
     printf "${COLOR_ORANGE}config/conf/cfg/settings/options ${COLOR_WHITE}| ${COLOR_BLUE}Updates all config files with options specified${COLOR_END}\n"
     printf "${COLOR_ORANGE}start                            ${COLOR_WHITE}| ${COLOR_BLUE}Starts the compiled processes${COLOR_END}\n"
     printf "${COLOR_ORANGE}stop                             ${COLOR_WHITE}| ${COLOR_BLUE}Stops the compiled process${COLOR_END}\n"
@@ -778,6 +803,8 @@ if [[ $# -gt 0 ]]; then
         get_client_files
     elif [[ $1 == "database" ]] || [[ $1 == "db" ]]; then
         import_database_files
+    elif [[ $1 == "dbc" ]]; then
+        copy_dbc_files
     elif [[ $1 == "config" ]] || [[ $1 == "conf" ]] || [[ $1 == "cfg" ]] || [[ $1 == "settings" ]] || [[ $1 == "options" ]]; then
         set_config
     elif [[ $1 == "start" ]]; then
@@ -794,6 +821,7 @@ if [[ $# -gt 0 ]]; then
         compile_source
         import_database_files
         get_client_files
+        copy_dbc_files
         set_config
         start_server
     else

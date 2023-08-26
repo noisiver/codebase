@@ -479,6 +479,7 @@ function get_client_files
 
             curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $SOURCE_LOCATION/bin/data.zip
             if [[ $? -ne 0 ]]; then
+                rm -rf $SOURCE_LOCATION/azerothcore/bin/data.zip
                 exit $?
             fi
 
@@ -965,6 +966,33 @@ function import_database_files
     printf "${COLOR_GREEN}Finished importing the database files...${COLOR_END}\n"
 }
 
+function copy_dbc_files
+{
+    printf "${COLOR_GREEN}Copying modified client data files...${COLOR_END}\n"
+
+    if [[ $1 == "world" ]] || [[ $1 == "both" ]]; then
+        if [[ ! -d $ROOT/dbc ]]; then
+            mkdir $ROOT/dbc
+        fi
+
+        if [[ `ls -1 $ROOT/dbc/*.dbc 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/dbc/*.dbc; do
+                printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
+                cp $f $SOURCE_LOCATION/bin/dbc/$(basename $f)
+                if [[ $? -ne 0 ]]; then
+                    exit $?
+                fi
+            done
+        else
+            printf "${COLOR_ORANGE}No files found in the directory${COLOR_END}\n"
+        fi
+    else
+        printf "${COLOR_ORANGE}Skipping process due to world server being disabled${COLOR_END}\n"
+    fi
+
+    printf "${COLOR_GREEN}Finished copying modified client data files...${COLOR_END}\n"
+}
+
 function set_config
 {
     printf "${COLOR_GREEN}Updating the config files...${COLOR_END}\n"
@@ -1346,6 +1374,7 @@ function parameters
     printf "${COLOR_GREEN}Available subparameters${COLOR_END}\n"
     printf "${COLOR_ORANGE}install/update                   ${COLOR_WHITE}| ${COLOR_BLUE}Downloads the source code, with enabled modules, and compiles it. Also downloads client files${COLOR_END}\n"
     printf "${COLOR_ORANGE}database/db                      ${COLOR_WHITE}| ${COLOR_BLUE}Import all files to the specified databases${COLOR_END}\n"
+    printf "${COLOR_ORANGE}dbc                              ${COLOR_WHITE}| ${COLOR_BLUE}Copy modified client data files to the proper folder${COLOR_END}\n"
     printf "${COLOR_ORANGE}config/conf/cfg/settings/options ${COLOR_WHITE}| ${COLOR_BLUE}Updates all config files, including enabled modules, with options specified${COLOR_END}\n"
     printf "${COLOR_ORANGE}all                              ${COLOR_WHITE}| ${COLOR_BLUE}Run all subparameters listed above, including stop and start${COLOR_END}\n"
 
@@ -1362,6 +1391,8 @@ if [[ $# -gt 0 ]]; then
             get_client_files $1
         elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
             import_database_files $1
+        elif [[ $1 == "dbc" ]]; then
+            copy_dbc_files
         elif [[ $2 == "config" ]] || [[ $2 == "conf" ]] || [[ $2 == "cfg" ]] || [[ $2 == "settings" ]] || [[ $2 == "options" ]]; then
             set_config $1
         elif [[ $2 == "all" ]]; then
@@ -1371,6 +1402,7 @@ if [[ $# -gt 0 ]]; then
             compile_source $1
             import_database_files $1
             get_client_files $1
+            copy_dbc_files $1
             set_config $1
             start_server
         else
