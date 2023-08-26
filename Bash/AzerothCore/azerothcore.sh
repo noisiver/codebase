@@ -1404,7 +1404,7 @@ if [[ $# -gt 0 ]]; then
             get_client_files $1
         elif [[ $2 == "database" ]] || [[ $2 == "db" ]]; then
             import_database_files $1
-        elif [[ $1 == "dbc" ]]; then
+        elif [[ $2 == "dbc" ]]; then
             copy_dbc_files
         elif [[ $2 == "config" ]] || [[ $2 == "conf" ]] || [[ $2 == "cfg" ]] || [[ $2 == "settings" ]] || [[ $2 == "options" ]]; then
             set_config $1
