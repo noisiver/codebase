@@ -1,6 +1,10 @@
 Auth
-0 6 1 * * cd /root && ./azerothcore.sh auth all >/dev/null 2>&1
+0 6 1 * * cd /home/ubuntu/azerothcore/auth && ./azerothcore.sh auth all >/dev/null 2>&1
 
 World
-0 5 * * 0 screen -S world -p 0 -X stuff "server shutdown 3600^m" >/dev/null 2>&1
-5 6 * * 0 cd /root && ./azerothcore.sh world all >/dev/null 2>&1
+0 23 * * 0 screen -S world-1 -p 0 -X stuff "server shutdown 3600^m" >/dev/null 2>&1
+0 0 * * 1 cd /home/ubuntu/azerothcore/world1 && ./azerothcore.sh world all >/dev/null 2>&1
+30 23 * * 0 screen -S world-2 -p 0 -X stuff "server shutdown 3600^m" >/dev/null 2>&1
+30 0 * * 1 cd /home/ubuntu/azerothcore/world2 && ./azerothcore.sh world all >/dev/null 2>&1
+0 0 * * 1 screen -S world-3 -p 0 -X stuff "server shutdown 3600^m" >/dev/null 2>&1
+0 1 * * 1 cd /home/ubuntu/azerothcore/world3 && ./azerothcore.sh world all >/dev/null 2>&1

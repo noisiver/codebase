@@ -1,1 +1,1 @@
-0 * * * * cd /opt/backup/database && ./backup.sh
+0 * * * * cd /home/ubuntu/backup && ./backup.sh
