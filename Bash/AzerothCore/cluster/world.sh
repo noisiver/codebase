@@ -45,9 +45,10 @@ MYSQL_DATABASES_WORLD="acore_world"
 WORLD_NAME="AzerothCore"
 WORLD_MOTD="Welcome to AzerothCore."
 WORLD_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS THE CLIENT CONNECTS TO
-WORLD_PORT="9644" # CHANGE IF MULTIPLE WORLDSERVERS ARE RUNNING ON THE SAME SYSTEM
+WORLD_PORT="9644" # CHANGE THIS TO BE UNIQUE IF MULTIPLE WORLD SERVERS ARE RUNNING ON THE SAME SYSTEM
 AUTH_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS OF THE SERVER RUNNING THE TOCLOUD9 PROCESSES
 LOCAL_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS OF THIS SYSTEM
+NODE_ID="1" # CHANGE THIS TO BE UNIQUE IF MULTIPLE WORLD SERVERS ARE RUNNING ON THE SAME SYSTEM
 PROGRESSION_ACTIVE_PATCH="21"
 # Eastern Kingdoms, Kalimdor, Outland, Northrend and Deeprun Tram: 0,1,369,530,571
 # All dungeon, raid, battleground and arena maps: 30,33,34,36,43,44,47,48,70,90,109,129,169,189,209,229,230,249,269,289,309,329,349,389,409,429,469,489,509,529,531,532,533,534,540,542,543,544,545,546,547,548,550,552,553,554,555,556,557,558,559,560,562,564,565,566,568,572,574,575,576,578,580,585,595,598,599,600,601,602,603,604,607,608,615,616,617,618,619,624,628,631,632,649,650,658,668,724
@@ -205,11 +206,11 @@ function compile_source
     fi
 
     echo "#!/bin/bash" > $SOURCE_LOCATION/azerothcore/bin/start.sh
-    echo "screen -AmdS world ./world.sh" >> $SOURCE_LOCATION/azerothcore/bin/start.sh
+    echo "screen -AmdS world-$NODE_ID ./world.sh" >> $SOURCE_LOCATION/azerothcore/bin/start.sh
     chmod +x $SOURCE_LOCATION/azerothcore/bin/start.sh
 
     echo "#!/bin/bash" > $SOURCE_LOCATION/azerothcore/bin/stop.sh
-    echo "screen -X -S \"world\" quit" >> $SOURCE_LOCATION/azerothcore/bin/stop.sh
+    echo "screen -X -S \"world-$NODE_ID\" quit" >> $SOURCE_LOCATION/azerothcore/bin/stop.sh
     chmod +x $SOURCE_LOCATION/azerothcore/bin/stop.sh
 
     echo "#!/bin/bash" > $SOURCE_LOCATION/azerothcore/bin/world.sh
@@ -734,13 +735,13 @@ function start_server
         printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     else
-        if [[ ! -z `screen -list | grep -E "world"` ]]; then
+        if [[ ! -z `screen -list | grep -E "world-$NODE_ID"` ]]; then
             printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
         else
             cd $SOURCE_LOCATION/azerothcore/bin && ./start.sh
 
-            if [[ ! -z `screen -list | grep -E "world"` ]]; then
-                printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world${COLOR_ORANGE}.${COLOR_END}\n"
+            if [[ ! -z `screen -list | grep -E "world-$NODE_ID"` ]]; then
+                printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world-$NODE_ID${COLOR_ORANGE}.${COLOR_END}\n"
             fi
         fi
     fi
@@ -752,18 +753,18 @@ function stop_server
 {
     printf "${COLOR_GREEN}Stopping the server...${COLOR_END}\n"
 
-    if [[ -z `screen -list | grep -E "world"` ]]; then
+    if [[ -z `screen -list | grep -E "world-$NODE_ID"` ]]; then
         printf "${COLOR_RED}The server is not running.${COLOR_END}\n"
     else
         printf "${COLOR_ORANGE}Telling the world server to shut down.${COLOR_END}\n"
 
-        PID=$(pgrep worldserver)
+        PID=$(screen -ls | grep -oE "[0-9]+\.world-$WORLD_ID" | sed -e "s/\..*$//g")
 
         if [[ $PID != "" ]]; then
             if [[ $1 == "restart" ]]; then
-                screen -S world -p 0 -X stuff "server restart 10^m"
+                screen -S world-$NODE_ID -p 0 -X stuff "server restart 10^m"
             else
-                screen -S world -p 0 -X stuff "server shutdown 10^m"
+                screen -S world-$NODE_ID -p 0 -X stuff "server shutdown 10^m"
             fi
 
             timeout 30 tail --pid=$PID -f /dev/null

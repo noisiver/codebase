@@ -431,8 +431,8 @@ function compile_source
     fi
 
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
-        echo "screen -AmdS world ./world.sh" >> $SOURCE_LOCATION/bin/start.sh
-        echo "screen -X -S \"world\" quit" >> $SOURCE_LOCATION/bin/stop.sh
+        echo "screen -AmdS world-$WORLD_ID ./world.sh" >> $SOURCE_LOCATION/bin/start.sh
+        echo "screen -X -S \"world-$WORLD_ID\" quit" >> $SOURCE_LOCATION/bin/stop.sh
 
         echo "#!/bin/bash" > $SOURCE_LOCATION/bin/world.sh
         echo "while :; do" >> $SOURCE_LOCATION/bin/world.sh
@@ -1325,7 +1325,7 @@ function start_server
         printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     else
-        if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]] || [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
+        if [[ ! -z `screen -list | grep -E "auth"` && -f $SOURCE_LOCATION/bin/auth.sh ]] || [[ ! -z `screen -list | grep -E "world-$WORLD_ID"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
             printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
         else
             cd $SOURCE_LOCATION/bin && ./start.sh
@@ -1334,8 +1334,8 @@ function start_server
                 printf "${COLOR_ORANGE}To access the screen of the authserver, use the command ${COLOR_BLUE}screen -r auth${COLOR_ORANGE}.${COLOR_END}\n"
             fi
 
-            if [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
-                printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world${COLOR_ORANGE}.${COLOR_END}\n"
+            if [[ ! -z `screen -list | grep -E "world-$WORLD_ID"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
+                printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world-$WORLD_ID${COLOR_ORANGE}.${COLOR_END}\n"
             fi
         fi
     fi
@@ -1347,19 +1347,19 @@ function stop_server
 {
     printf "${COLOR_GREEN}Stopping the server...${COLOR_END}\n"
 
-    if [[ -z `screen -list | grep -E "auth"` || ! -f $SOURCE_LOCATION/bin/auth.sh ]] && [[ -z `screen -list | grep -E "world"` || ! -f $SOURCE_LOCATION/bin/world.sh ]]; then
+    if [[ -z `screen -list | grep -E "auth"` || ! -f $SOURCE_LOCATION/bin/auth.sh ]] && [[ -z `screen -list | grep -E "world-$WORLD_ID"` || ! -f $SOURCE_LOCATION/bin/world.sh ]]; then
         printf "${COLOR_RED}The server is not running.${COLOR_END}\n"
     else
-        if [[ ! -z `screen -list | grep -E "world"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
+        if [[ ! -z `screen -list | grep -E "world-$WORLD_ID"` && -f $SOURCE_LOCATION/bin/world.sh ]]; then
             printf "${COLOR_ORANGE}Telling the world server to shut down.${COLOR_END}\n"
 
-            PID=$(pgrep worldserver)
+            PID=$(screen -ls | grep -oE "[0-9]+\.world-$WORLD_ID" | sed -e "s/\..*$//g")
 
             if [[ $PID != "" ]]; then
                 if [[ $1 == "restart" ]]; then
-                    screen -S world -p 0 -X stuff "server restart 10^m"
+                    screen -S world-$WORLD_ID -p 0 -X stuff "server restart 10^m"
                 else
-                    screen -S world -p 0 -X stuff "server shutdown 10^m"
+                    screen -S world-$WORLD_ID -p 0 -X stuff "server shutdown 10^m"
                 fi
 
                 timeout 30 tail --pid=$PID -f /dev/null
