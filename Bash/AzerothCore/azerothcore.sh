@@ -1107,6 +1107,7 @@ function set_config
         sed -i 's/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.AV =.*/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.AV = 39/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.WS =.*/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.WS = 9/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.AB =.*/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.AB = 14/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/NpcBot.WanderingBots.BG.CapLevel =.*/NpcBot.WanderingBots.BG.CapLevel = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
 
         if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
@@ -1171,8 +1172,13 @@ function set_config
             cp $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist $SOURCE_LOCATION/etc/modules/mod_assistant.conf
 
             sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            else
+                sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+                sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            fi
             sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.Utilities.NameChange.Cost    =.*/Assistant.Utilities.NameChange.Cost    = 100000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
@@ -1182,10 +1188,18 @@ function set_config
             sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = 60/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = 250000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+                sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            else
+                sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            fi
             sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = 70/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = 1000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            else
+                sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            fi
             sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = 80/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = 2500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
             sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
