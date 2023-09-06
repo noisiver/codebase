@@ -1092,8 +1092,8 @@ function set_config
         sed -i 's/NpcBot.Enable.BG            =.*/NpcBot.Enable.BG            = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Enable.Arena         =.*/NpcBot.Enable.Arena         = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Cost =.*/NpcBot.Cost = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/NpcBot.EngageDelay.DPS  =.*/NpcBot.EngageDelay.DPS  = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/NpcBot.EngageDelay.Heal =.*/NpcBot.EngageDelay.Heal = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/NpcBot.EngageDelay.DPS  =.*/NpcBot.EngageDelay.DPS  = 3000/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/NpcBot.EngageDelay.Heal =.*/NpcBot.EngageDelay.Heal = 1000/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Classes.ObsidianDestroyer.Enable =.*/NpcBot.Classes.ObsidianDestroyer.Enable = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Classes.Archmage.Enable          =.*/NpcBot.Classes.Archmage.Enable          = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Classes.Dreadlord.Enable         =.*/NpcBot.Classes.Dreadlord.Enable         = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
