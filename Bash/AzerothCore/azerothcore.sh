@@ -63,10 +63,7 @@ WEEKEND_BONUS_ENABLED="false"
 
 if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
     AHBOT_MAX_ITEM_LEVEL="92"
-elif [[ $PROGRESSION_ACTIVE_PATCH -lt 15 ]]; then
-    GUILD_FUNDS_ENABLED="false"
 elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-    RECRUIT_A_FRIEND_ENABLED="false"
     AHBOT_MAX_ITEM_LEVEL="164"
 elif [[ $PROGRESSION_ACTIVE_PATCH -lt 18 ]]; then
     AHBOT_MAX_ITEM_LEVEL="213"
@@ -76,6 +73,14 @@ elif [[ $PROGRESSION_ACTIVE_PATCH -lt 20 ]]; then
     AHBOT_MAX_ITEM_LEVEL="245"
 else
     AHBOT_MAX_ITEM_LEVEL="0"
+fi
+
+if [[ $PROGRESSION_ACTIVE_PATCH -lt 15 ]]; then
+    GUILD_FUNDS_ENABLED="false"
+fi
+
+if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+    RECRUIT_A_FRIEND_ENABLED="false"
 fi
 
 function install_packages
