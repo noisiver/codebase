@@ -439,7 +439,8 @@ function compile_source
     fi
 
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
-        echo "screen -AmdS world-$WORLD_ID ./world.sh" >> $SOURCE_LOCATION/bin/start.sh
+        echo "TIME=\$(date +%s)" >> $SOURCE_LOCATION/bin/start.sh
+        echo "screen -L -Logfile \$TIME.log -AmdS world-$WORLD_ID ./world.sh" >> $SOURCE_LOCATION/bin/start.sh
         echo "screen -X -S \"world-$WORLD_ID\" quit" >> $SOURCE_LOCATION/bin/stop.sh
 
         echo "#!/bin/bash" > $SOURCE_LOCATION/bin/world.sh
@@ -1152,6 +1153,7 @@ function set_config
 
             sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
             sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+            sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
             sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
             sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
             sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$AHBOT_MAX_ITEM_LEVEL'/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
