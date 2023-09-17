@@ -61,6 +61,9 @@ LEARN_SPELLS_ENABLED="false"
 RECRUIT_A_FRIEND_ENABLED="false"
 WEEKEND_BONUS_ENABLED="false"
 
+TELEGRAM_TOKEN=""
+TELEGRAM_CHAT_ID=""
+
 if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
     AHBOT_MAX_ITEM_LEVEL="92"
 elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
@@ -102,6 +105,7 @@ function install_packages
             apt-get --yes update
         fi
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to install the required packages"
             exit $?
         fi
 
@@ -111,6 +115,7 @@ function install_packages
             apt-get --yes install ${INSTALL[*]}
         fi
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to install the required packages"
             exit $?
         fi
     fi
@@ -123,6 +128,7 @@ function get_source
     if [[ ! -d $SOURCE_LOCATION ]]; then
         git clone --recursive --depth 1 --branch $SOURCE_BRANCH $SOURCE_REPOSITORY $SOURCE_LOCATION
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to download the source code"
             exit $?
         fi
     else
@@ -130,16 +136,19 @@ function get_source
 
         git pull
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to update the source code"
             exit $?
         fi
 
         git reset --hard origin/$SOURCE_BRANCH
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to update the source code"
             exit $?
         fi
 
         git submodule update
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to update the source code"
             exit $?
         fi
     fi
@@ -149,6 +158,7 @@ function get_source
             if [[ ! -d $SOURCE_LOCATION/modules/mod-accountbound ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-accountbound.git $SOURCE_LOCATION/modules/mod-accountbound
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-accountbound"
                     exit $?
                 fi
             else
@@ -156,11 +166,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-accountbound"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-accountbound"
                     exit $?
                 fi
             fi
@@ -178,6 +190,7 @@ function get_source
             if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot ]]; then
                 git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $SOURCE_LOCATION/modules/mod-ah-bot
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-ah-bot"
                     exit $?
                 fi
             else
@@ -185,11 +198,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-ah-bot"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-ah-bot"
                     exit $?
                 fi
             fi
@@ -207,6 +222,7 @@ function get_source
             if [[ ! -d $SOURCE_LOCATION/modules/mod-assistant ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-assistant.git $SOURCE_LOCATION/modules/mod-assistant
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-assistant"
                     exit $?
                 fi
             else
@@ -214,11 +230,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-assistant"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-assistant"
                     exit $?
                 fi
             fi
@@ -236,6 +254,7 @@ function get_source
             if [[ ! -d $SOURCE_LOCATION/modules/mod-guildfunds ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-guildfunds.git $SOURCE_LOCATION/modules/mod-guildfunds
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-guildfunds"
                     exit $?
                 fi
             else
@@ -243,11 +262,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-guildfunds"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-guildfunds"
                     exit $?
                 fi
             fi
@@ -265,6 +286,7 @@ function get_source
             if [[ ! -d $SOURCE_LOCATION/modules/mod-groupquests ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $SOURCE_LOCATION/modules/mod-groupquests
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-groupquests"
                     exit $?
                 fi
             else
@@ -272,11 +294,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-groupquests"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-groupquests"
                     exit $?
                 fi
             fi
@@ -294,6 +318,7 @@ function get_source
             if [[ ! -d $SOURCE_LOCATION/modules/mod-learnspells ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $SOURCE_LOCATION/modules/mod-learnspells
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-learnspells"
                     exit $?
                 fi
             else
@@ -301,11 +326,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-learnspells"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-learnspells"
                     exit $?
                 fi
             fi
@@ -323,6 +350,7 @@ function get_source
             if [[ ! -d $SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $SOURCE_LOCATION/modules/mod-recruitafriend
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-recruitafriend"
                     exit $?
                 fi
             else
@@ -330,11 +358,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-recruitafriend"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-recruitafriend"
                     exit $?
                 fi
             fi
@@ -352,6 +382,7 @@ function get_source
             if [[ ! -d $SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-weekendbonus.git $SOURCE_LOCATION/modules/mod-weekendbonus
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-weekendbonus"
                     exit $?
                 fi
             else
@@ -359,11 +390,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-weekendbonus"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-weekendbonus"
                     exit $?
                 fi
             fi
@@ -398,6 +431,7 @@ function compile_source
     for i in {1..2}; do
         cmake ../ -DCMAKE_INSTALL_PREFIX=$SOURCE_LOCATION -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to compile the source code"
             exit $?
         fi
 
@@ -406,6 +440,7 @@ function compile_source
             if [[ $i == 1 ]]; then
                 make clean
             else
+                notify_telegram "An error occurred while trying to compile the source code"
                 exit $?
             fi
         else
@@ -415,6 +450,7 @@ function compile_source
 
     make install
     if [[ $? -ne 0 ]]; then
+        notify_telegram "An error occurred while trying to compile the source code"
         exit $?
     fi
 
@@ -502,11 +538,13 @@ function get_client_files
             curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $SOURCE_LOCATION/bin/data.zip
             if [[ $? -ne 0 ]]; then
                 rm -rf $SOURCE_LOCATION/azerothcore/bin/data.zip
+                notify_telegram "An error occurred while trying to download the client data files"
                 exit $?
             fi
 
             unzip -o "$SOURCE_LOCATION/bin/data.zip" -d "$SOURCE_LOCATION/bin/"
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to download the client data files"
                 exit $?
             fi
 
@@ -532,6 +570,7 @@ function import_database_files
 
     if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_AUTH'"` ]]; then
         printf "${COLOR_RED}The database named $MYSQL_DATABASES_AUTH is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
+        notify_telegram "An error occurred while trying to import the database files"
         rm -rf $MYSQL_CNF
         exit $?
     fi
@@ -539,12 +578,14 @@ function import_database_files
     if [[ $1 == "world" ]] || [[ $1 == "both" ]]; then
         if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_CHARACTERS'"` ]]; then
             printf "${COLOR_RED}The database named $MYSQL_DATABASES_CHARACTERS is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
+            notify_telegram "An error occurred while trying to import the database files"
             rm -rf $MYSQL_CNF
             exit $?
         fi
 
         if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_WORLD'"` ]] && [[ $1 == "world" || $1 == "both" ]]; then
             printf "${COLOR_RED}The database named $MYSQL_DATABASES_WORLD is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
+            notify_telegram "An error occurred while trying to import the database files"
             rm -rf $MYSQL_CNF
             exit $?
         fi
@@ -553,6 +594,7 @@ function import_database_files
     if [[ ! -d $SOURCE_LOCATION/data/sql/base/db_auth ]] || [[ ! -d $SOURCE_LOCATION/data/sql/updates/db_auth ]] || [[ ! -d $SOURCE_LOCATION/data/sql/custom/db_auth ]]; then
         printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+        notify_telegram "An error occurred while trying to import the database files"
         rm -rf $MYSQL_CNF
         exit $?
     fi
@@ -561,6 +603,7 @@ function import_database_files
         if [[ ! -d $SOURCE_LOCATION/data/sql/base/db_characters ]] || [[ ! -d $SOURCE_LOCATION/data/sql/updates/db_characters ]] || [[ ! -d $SOURCE_LOCATION/data/sql/custom/db_characters ]] || [[ ! -d $SOURCE_LOCATION/data/sql/base/db_world ]] || [[ ! -d $SOURCE_LOCATION/data/sql/updates/db_world ]] || [[ ! -d $SOURCE_LOCATION/data/sql/custom/db_world ]]; then
             printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            notify_telegram "An error occurred while trying to import the database files"
             rm -rf $MYSQL_CNF
             exit $?
         fi
@@ -569,6 +612,7 @@ function import_database_files
     if [[ ! -d $ROOT/sql/auth ]]; then
         mkdir -p $ROOT/sql/auth
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to import the database files"
             exit $?
         fi
     fi
@@ -577,6 +621,7 @@ function import_database_files
         if [[ ! -d $ROOT/sql/characters ]]; then
             mkdir -p $ROOT/sql/characters
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 exit $?
             fi
         fi
@@ -584,6 +629,7 @@ function import_database_files
         if [[ ! -d $ROOT/sql/world ]]; then
             mkdir -p $ROOT/sql/world
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 exit $?
             fi
         fi
@@ -599,6 +645,7 @@ function import_database_files
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -621,12 +668,14 @@ function import_database_files
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
 
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -646,12 +695,14 @@ function import_database_files
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
 
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -663,6 +714,7 @@ function import_database_files
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -680,6 +732,7 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -702,12 +755,14 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -727,12 +782,14 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -744,6 +801,7 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -760,6 +818,7 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -782,12 +841,14 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -807,12 +868,14 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -824,6 +887,7 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -850,12 +914,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -864,6 +930,7 @@ function import_database_files
 
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$AHBOT_MIN_ITEMS', maxitems='$AHBOT_MAX_ITEMS'"
             if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -889,12 +956,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -922,12 +991,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -955,12 +1026,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
                     if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -971,6 +1044,7 @@ function import_database_files
         printf "${COLOR_ORANGE}Adding to the realmlist (id: $WORLD_ID, name: $WORLD_NAME, address $WORLD_ADDRESS, port $WORLD_PORT)${COLOR_END}\n"
         mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$WORLD_ID', '$WORLD_NAME', '$WORLD_ADDRESS', '$WORLD_ADDRESS', '255.255.255.0', '$WORLD_PORT')"
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to import the database files"
             rm -rf $MYSQL_CNF
             exit $?
         fi
@@ -978,6 +1052,7 @@ function import_database_files
         printf "${COLOR_ORANGE}Updating message of the day${COLOR_END}\n"
         mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM motd WHERE realmid='$WORLD_ID';INSERT INTO motd (realmid, text) VALUES ('$WORLD_ID', '$WORLD_MOTD')"
         if [[ $? -ne 0 ]]; then
+            notify_telegram "An error occurred while trying to import the database files"
             rm -rf $MYSQL_CNF
             exit $?
         fi
@@ -1002,6 +1077,7 @@ function copy_dbc_files
                 printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
                 cp $f $SOURCE_LOCATION/bin/dbc/$(basename $f)
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to copy custom dbc files"
                     exit $?
                 fi
             done
@@ -1023,6 +1099,7 @@ function set_config
         if [[ ! -f $SOURCE_LOCATION/etc/authserver.conf.dist ]]; then
             printf "${COLOR_RED}The config file authserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            notify_telegram "An error occurred while trying to update the config files"
             exit $?
         fi
 
@@ -1038,6 +1115,7 @@ function set_config
         if [[ ! -f $SOURCE_LOCATION/etc/worldserver.conf.dist ]]; then
             printf "${COLOR_RED}The config file worldserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            notify_telegram "An error occurred while trying to update the config files"
             exit $?
         fi
 
@@ -1081,11 +1159,11 @@ function set_config
         sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' $SOURCE_LOCATION/etc/worldserver.conf
@@ -1098,7 +1176,7 @@ function set_config
         sed -i 's/NpcBot.Enable.BG            =.*/NpcBot.Enable.BG            = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Enable.Arena         =.*/NpcBot.Enable.Arena         = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Cost =.*/NpcBot.Cost = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/NpcBot.EngageDelay.DPS  =.*/NpcBot.EngageDelay.DPS  = 3000/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/NpcBot.EngageDelay.DPS  =.*/NpcBot.EngageDelay.DPS  = 8000/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.EngageDelay.Heal =.*/NpcBot.EngageDelay.Heal = 1000/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Classes.ObsidianDestroyer.Enable =.*/NpcBot.Classes.ObsidianDestroyer.Enable = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.Classes.Archmage.Enable          =.*/NpcBot.Classes.Archmage.Enable          = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
@@ -1119,6 +1197,7 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
                 exit $?
             fi
 
@@ -1144,6 +1223,7 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_ahbot.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
                 exit $?
             fi
 
@@ -1171,6 +1251,7 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
                 exit $?
             fi
 
@@ -1235,6 +1316,7 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_guildfunds.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
                 exit $?
             fi
 
@@ -1258,6 +1340,7 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
                 exit $?
             fi
 
@@ -1288,6 +1371,7 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
                 exit $?
             fi
 
@@ -1315,6 +1399,7 @@ function set_config
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_weekendbonus.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
                 exit $?
             fi
 
@@ -1396,6 +1481,13 @@ function stop_server
     fi
 
     printf "${COLOR_GREEN}Finished stopping the server...${COLOR_END}\n"
+}
+
+function notify_telegram
+{
+    if [[ $TELEGRAM_TOKEN != "" ]] && [[ $TELEGRAM_CHAT_ID != "" ]]; then
+        curl -s -X POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage -d chat_id=$TELEGRAM_CHAT_ID -d text="[$WORLD_NAME (ID: $WORLD_ID)]: $1" > /dev/null
+    fi
 }
 
 function parameters
