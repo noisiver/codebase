@@ -54,6 +54,7 @@ PROGRESSION_ACTIVE_PATCH="21"
 AHBOT_ENABLED="false"
 AHBOT_MIN_ITEMS="250"
 AHBOT_MAX_ITEMS="250"
+APPRECIATION_ENABLED="false"
 ASSISTANT_ENABLED="false"
 GUILD_FUNDS_ENABLED="false"
 GROUP_QUESTS_ENABLED="false"
@@ -154,38 +155,6 @@ function get_source
     fi
 
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
-        if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
-            if [[ ! -d $SOURCE_LOCATION/modules/mod-accountbound ]]; then
-                git clone --depth 1 --branch master https://github.com/noisiver/mod-accountbound.git $SOURCE_LOCATION/modules/mod-accountbound
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to download the source code of mod-accountbound"
-                    exit $?
-                fi
-            else
-                cd $SOURCE_LOCATION/modules/mod-accountbound
-
-                git pull
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to update the source code of mod-accountbound"
-                    exit $?
-                fi
-
-                git reset --hard origin/master
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to update the source code of mod-accountbound"
-                    exit $?
-                fi
-            fi
-        else
-            if [[ -d $SOURCE_LOCATION/modules/mod-accountbound ]]; then
-                rm -rf $SOURCE_LOCATION/modules/mod-accountbound
-
-                if [[ -d $SOURCE_LOCATION/build ]]; then
-                    rm -rf $SOURCE_LOCATION/build
-                fi
-            fi
-        fi
-
         if [[ $AHBOT_ENABLED == "true" ]]; then
             if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot ]]; then
                 git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $SOURCE_LOCATION/modules/mod-ah-bot
@@ -217,6 +186,38 @@ function get_source
                 fi
             fi
         fi
+
+        : 'if [[ $APPRECIATION_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-appreciation ]]; then
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-appreciation.git $SOURCE_LOCATION/modules/mod-appreciation
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-assistant"
+                    exit $?
+                fi
+            else
+                cd $SOURCE_LOCATION/modules/mod-appreciation
+
+                git pull
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-assistant"
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-assistant"
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d $SOURCE_LOCATION/modules/mod-appreciation ]]; then
+                rm -rf $SOURCE_LOCATION/modules/mod-appreciation
+
+                if [[ -d $SOURCE_LOCATION/build ]]; then
+                    rm -rf $SOURCE_LOCATION/build
+                fi
+            fi
+        fi'
 
         if [[ $ASSISTANT_ENABLED == "true" ]]; then
             if [[ ! -d $SOURCE_LOCATION/modules/mod-assistant ]]; then
@@ -898,6 +899,7 @@ function import_database_files
             if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The auction house bot module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to import the database files"
                 exit $?
             fi
 
@@ -936,10 +938,47 @@ function import_database_files
             fi
         fi
 
+        if [[ $APPRECIATION_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base ]]; then
+                printf "${COLOR_RED}The appreciation module is enabled but the files aren't where they should be.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to import the database files"
+                exit $?
+            fi
+
+            if [[ `ls -1 $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
         if [[ $ASSISTANT_ENABLED == "true" ]]; then
             if [[ ! -d $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The assistant module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to import the database files"
                 exit $?
             fi
 
@@ -975,6 +1014,7 @@ function import_database_files
             if [[ ! -d $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The group quests module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to import the database files"
                 exit $?
             fi
 
@@ -1010,6 +1050,7 @@ function import_database_files
             if [[ ! -d $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
                 printf "${COLOR_RED}The recruit-a-friend module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to import the database files"
                 exit $?
             fi
 
@@ -1244,6 +1285,40 @@ function set_config
 
             if [[ -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf ]]; then
                 rm -rf $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+            fi
+        fi
+
+        if [[ $APPRECIATION_ENABLED == "true" ]]; then
+            if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist ]]; then
+                printf "${COLOR_RED}The config file mod_appreciation.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_appreciation.conf${COLOR_END}\n"
+
+            cp $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            else
+                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 80/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            fi
+
+            sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+        else
+            if [[ -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist ]]; then
+                rm -rf $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist
+            fi
+
+            if [[ -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf ]]; then
+                rm -rf $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
             fi
         fi
 
