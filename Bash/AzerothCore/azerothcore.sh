@@ -1234,32 +1234,6 @@ function set_config
         sed -i 's/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.AB =.*/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.AB = 14/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.WanderingBots.BG.CapLevel =.*/NpcBot.WanderingBots.BG.CapLevel = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
 
-        if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
-            if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
-                printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
-                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram "An error occurred while trying to update the config files"
-                exit $?
-            fi
-
-            printf "${COLOR_ORANGE}Updating mod_accountbound.conf${COLOR_END}\n"
-
-            cp $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-
-            sed -i 's/AccountBound.Companions =.*/AccountBound.Companions = 1/g' $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-            sed -i 's/AccountBound.Heirlooms =.*/AccountBound.Heirlooms = 1/g' $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-            sed -i 's/AccountBound.Mounts =.*/AccountBound.Mounts = 1/g' $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-            sed -i 's/AccountBound.LinkedAccounts =.*/AccountBound.LinkedAccounts = 0/g' $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-        else
-            if [[ -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
-                rm -rf $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist
-            fi
-
-            if [[ -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf ]]; then
-                rm -rf $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
-            fi
-        fi
-
         if [[ $AHBOT_ENABLED == "true" ]]; then
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_ahbot.conf.dist is missing.${COLOR_END}\n"
