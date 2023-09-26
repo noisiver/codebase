@@ -34,36 +34,44 @@ COLOR_WHITE="\e[1;37m"
 COLOR_END="\e[0m"
 
 ROOT=$(pwd)
-
-MYSQL_HOSTNAME="127.0.0.1"
-MYSQL_PORT="3306"
-MYSQL_USERNAME="acore"
-MYSQL_PASSWORD="acore"
-MYSQL_DATABASES_AUTH="acore_auth"
-MYSQL_DATABASES_CHARACTERS="acore_characters"
-MYSQL_DATABASES_WORLD="acore_world"
-SOURCE_REPOSITORY="https://github.com/azerothcore/azerothcore-wotlk.git"
-SOURCE_BRANCH="master"
 SOURCE_LOCATION="$ROOT/source"
-WORLD_NAME="AzerothCore"
-WORLD_MOTD="Welcome to AzerothCore."
-WORLD_ID="1"
-WORLD_ADDRESS="127.0.0.1"
-WORLD_PORT="8085"
-PROGRESSION_ACTIVE_PATCH="21"
-AHBOT_ENABLED="false"
-AHBOT_MIN_ITEMS="250"
-AHBOT_MAX_ITEMS="250"
-APPRECIATION_ENABLED="false"
-ASSISTANT_ENABLED="false"
-GUILD_FUNDS_ENABLED="false"
-GROUP_QUESTS_ENABLED="false"
-LEARN_SPELLS_ENABLED="false"
-RECRUIT_A_FRIEND_ENABLED="false"
-WEEKEND_BONUS_ENABLED="false"
 
-TELEGRAM_TOKEN=""
-TELEGRAM_CHAT_ID=""
+if [[ ! -f $ROOT/config.sh ]]; then
+    printf "${COLOR_RED}The config file is missing. Generating one with default values.${COLOR_END}\n"
+    printf "${COLOR_RED}Make sure to edit it before running this script again.${COLOR_END}\n"
+
+    echo "MYSQL_HOSTNAME=\"127.0.0.1\"" > config.sh
+    echo "MYSQL_PORT=\"3306\"" >> config.sh
+    echo "MYSQL_USERNAME=\"acore\"" >> config.sh
+    echo "MYSQL_PASSWORD=\"acore\"" >> config.sh
+    echo "MYSQL_DATABASES_AUTH=\"acore_auth\"" >> config.sh
+    echo "MYSQL_DATABASES_CHARACTERS=\"acore_characters\"" >> config.sh
+    echo "MYSQL_DATABASES_WORLD=\"acore_world\"" >> config.sh
+    echo "SOURCE_REPOSITORY=\"https://github.com/azerothcore/azerothcore-wotlk.git\"" >> config.sh
+    echo "SOURCE_BRANCH=\"master\"" >> config.sh
+    echo "WORLD_NAME=\"AzerothCore\"" >> config.sh
+    echo "WORLD_MOTD=\"Welcome to AzerothCore.\"" >> config.sh
+    echo "WORLD_ID=\"1\"" >> config.sh
+    echo "WORLD_ADDRESS=\"127.0.0.1\"" >> config.sh
+    echo "WORLD_PORT=\"8085\"" >> config.sh
+    echo "PROGRESSION_ACTIVE_PATCH=\"21\"" >> config.sh
+    echo "PROGRESSION_ICECROWN_CITADEL_AURA=\"0\"" >> config.sh
+    echo "AHBOT_ENABLED=\"false\"" >> config.sh
+    echo "AHBOT_MIN_ITEMS=\"200\"" >> config.sh
+    echo "AHBOT_MAX_ITEMS=\"200\"" >> config.sh
+    echo "APPRECIATION_ENABLED=\"false\"" >> config.sh
+    echo "ASSISTANT_ENABLED=\"false\"" >> config.sh
+    echo "GUILD_FUNDS_ENABLED=\"false\"" >> config.sh
+    echo "GROUP_QUESTS_ENABLED=\"false\"" >> config.sh
+    echo "LEARN_SPELLS_ENABLED=\"false\"" >> config.sh
+    echo "RECRUIT_A_FRIEND_ENABLED=\"false\"" >> config.sh
+    echo "WEEKEND_BONUS_ENABLED=\"false\"" >> config.sh
+    echo "TELEGRAM_TOKEN=\"\"" >> config.sh
+    echo "TELEGRAM_CHAT_ID=\"\"" >> config.sh
+    exit $?
+fi
+
+source "$ROOT/config.sh"
 
 if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
     AHBOT_MAX_ITEM_LEVEL="92"
@@ -1202,7 +1210,7 @@ function set_config
         sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
