@@ -54,6 +54,8 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "WORLD_ID=\"1\"" >> config.sh
     echo "WORLD_ADDRESS=\"127.0.0.1\"" >> config.sh
     echo "WORLD_PORT=\"8085\"" >> config.sh
+    echo "PRELOAD_MAP_GRIDS=\"false\"" >> config.sh
+    echo "SET_CREATURES_ACTIVE=\"false\"" >> config.sh
     echo "PROGRESSION_ACTIVE_PATCH=\"21\"" >> config.sh
     echo "PROGRESSION_ICECROWN_CITADEL_AURA=\"0\"" >> config.sh
     echo "AHBOT_ENABLED=\"false\"" >> config.sh
@@ -1187,8 +1189,20 @@ function set_config
         sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        if [[ $PRELOAD_MAP_GRIDS == "true" ]]; then
+            sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+            sed -i 's/GridUnload =.*/GridUnload = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+
+            if [[ $SET_CREATURES_ACTIVE == "true" ]]; then
+                sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+            else
+                sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+            fi
+        else
+            sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+            sed -i 's/GridUnload =.*/GridUnload = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+        fi
         sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
