@@ -56,6 +56,17 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "PRELOAD_MAP_GRIDS=\"false\"" >> $ROOT/config.sh
     echo "SET_CREATURES_ACTIVE=\"false\"" >> $ROOT/config.sh
     echo "PROGRESSION_ACTIVE_PATCH=\"21\"" >> $ROOT/config.sh
+    echo "AHBOT_ENABLED=\"false\"" >> config.sh
+    echo "AHBOT_MIN_ITEMS=\"200\"" >> config.sh
+    echo "AHBOT_MAX_ITEMS=\"200\"" >> config.sh
+    echo "APPRECIATION_ENABLED=\"false\"" >> config.sh
+    echo "ASSISTANT_ENABLED=\"false\"" >> config.sh
+    echo "GUILD_FUNDS_ENABLED=\"false\"" >> config.sh
+    echo "GROUP_QUESTS_ENABLED=\"false\"" >> config.sh
+    echo "JUNK_TO_GOLD_ENABLED=\"false\"" >> config.sh
+    echo "LEARN_SPELLS_ENABLED=\"false\"" >> config.sh
+    echo "RECRUIT_A_FRIEND_ENABLED=\"false\"" >> config.sh
+    echo "WEEKEND_BONUS_ENABLED=\"false\"" >> config.sh
     echo "# Eastern Kingdoms, Kalimdor, Outland, Northrend and Deeprun Tram: 0,1,369,530,571" >> $ROOT/config.sh
     echo "# All dungeon, raid, battleground and arena maps: 30,33,34,36,43,44,47,48,70,90,109,129,169,189,209,229,230,249,269,289,309,329,349,389,409,429,469,489,509,529,531,532,533,534,540,542,543,544,545,546,547,548,550,552,553,554,555,556,557,558,559,560,562,564,565,566,568,572,574,575,576,578,580,585,595,598,599,600,601,602,603,604,607,608,615,616,617,618,619,624,628,631,632,649,650,658,668,724" >> $ROOT/config.sh
     echo "AVAILABLE_MAPS=\"\"" >> $ROOT/config.sh
@@ -72,6 +83,28 @@ if [[ ! -f $ROOT/config.sh ]]; then
 fi
 
 source "$ROOT/config.sh"
+
+if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+    AHBOT_MAX_ITEM_LEVEL="92"
+elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+    AHBOT_MAX_ITEM_LEVEL="164"
+elif [[ $PROGRESSION_ACTIVE_PATCH -lt 18 ]]; then
+    AHBOT_MAX_ITEM_LEVEL="213"
+elif [[ $PROGRESSION_ACTIVE_PATCH -lt 19 ]]; then
+    AHBOT_MAX_ITEM_LEVEL="226"
+elif [[ $PROGRESSION_ACTIVE_PATCH -lt 20 ]]; then
+    AHBOT_MAX_ITEM_LEVEL="245"
+else
+    AHBOT_MAX_ITEM_LEVEL="0"
+fi
+
+if [[ $PROGRESSION_ACTIVE_PATCH -lt 15 ]]; then
+    GUILD_FUNDS_ENABLED="false"
+fi
+
+if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+    RECRUIT_A_FRIEND_ENABLED="false"
+fi
 
 function install_packages
 {
@@ -155,6 +188,267 @@ function get_source
         git submodule update
         if [[ $? -ne 0 ]]; then
             exit $?
+        fi
+    fi
+
+    if [[ $AHBOT_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot ]]; then
+            git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $SOURCE_LOCATION/modules/mod-ah-bot
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-ah-bot
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-ah-bot ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-ah-bot
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
+        fi
+    fi
+
+    : 'if [[ $APPRECIATION_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-appreciation ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-appreciation.git $SOURCE_LOCATION/modules/mod-appreciation
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-appreciation
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-appreciation ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-appreciation
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
+        fi
+    fi'
+
+    if [[ $ASSISTANT_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-assistant ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-assistant.git $SOURCE_LOCATION/modules/mod-assistant
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-assistant
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-assistant ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-assistant
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
+        fi
+    fi
+
+    if [[ $GUILD_FUNDS_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-guildfunds ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-guildfunds.git $SOURCE_LOCATION/modules/mod-guildfunds
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-guildfunds
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-guildfunds ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-guildfunds
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
+        fi
+    fi
+
+    if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-groupquests ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $SOURCE_LOCATION/modules/mod-groupquests
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-groupquests
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-groupquests ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-groupquests
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
+        fi
+    fi
+
+    if [[ $JUNK_TO_GOLD_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-junk-to-gold ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-junk-to-gold.git $SOURCE_LOCATION/modules/mod-junk-to-gold
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-junk-to-gold
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-junk-to-gold ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-junk-to-gold
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
+        fi
+    fi
+
+    if [[ $LEARN_SPELLS_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-learnspells ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $SOURCE_LOCATION/modules/mod-learnspells
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-learnspells
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-learnspells ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-learnspells
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
+        fi
+    fi
+
+    if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $SOURCE_LOCATION/modules/mod-recruitafriend
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-recruitafriend
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-recruitafriend
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
+        fi
+    fi
+
+    if [[ $WEEKEND_BONUS_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-weekendbonus.git $SOURCE_LOCATION/modules/mod-weekendbonus
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $SOURCE_LOCATION/modules/mod-weekendbonus
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
+            rm -rf $SOURCE_LOCATION/modules/mod-weekendbonus
+
+            if [[ -d $SOURCE_LOCATION/build ]]; then
+                rm -rf $SOURCE_LOCATION/build
+            fi
         fi
     fi
 
@@ -607,6 +901,177 @@ function import_database_files
         done
     fi
 
+    if [[ $AHBOT_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base ]]; then
+            printf "${COLOR_RED}The auction house bot module is enabled but the files aren't where they should be.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+
+        mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$AHBOT_MIN_ITEMS', maxitems='$AHBOT_MAX_ITEMS'"
+        if [[ $? -ne 0 ]]; then
+            rm -rf $MYSQL_CNF
+            exit $?
+        fi
+    fi
+
+    if [[ $APPRECIATION_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base ]]; then
+            printf "${COLOR_RED}The appreciation module is enabled but the files aren't where they should be.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+    fi
+
+    if [[ $ASSISTANT_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base ]]; then
+            printf "${COLOR_RED}The assistant module is enabled but the files aren't where they should be.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+    fi
+
+    if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base ]]; then
+            printf "${COLOR_RED}The group quests module is enabled but the files aren't where they should be.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+    fi
+
+    if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+        if [[ ! -d $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
+            printf "${COLOR_RED}The recruit-a-friend module is enabled but the files aren't where they should be.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+    fi
+
     printf "${COLOR_ORANGE}Adding to the realmlist (id: $WORLD_ID, name: $WORLD_NAME, address $WORLD_ADDRESS, port $WORLD_PORT)${COLOR_END}\n"
     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$WORLD_ID', '$WORLD_NAME', '$WORLD_ADDRESS', '$WORLD_ADDRESS', '255.255.255.0', '$DEFAULT_WORLD_PORT')"
     if [[ $? -ne 0 ]]; then
@@ -745,6 +1210,236 @@ function set_config
     sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' $SOURCE_LOCATION/etc/worldserver.conf
     sed -i 's/Cluster.Enabled=.*/Cluster.Enabled=1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps="'$AVAILABLE_MAPS'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+
+    if [[ $AHBOT_ENABLED == "true" ]]; then
+        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
+            printf "${COLOR_RED}The config file mod_ahbot.conf.dist is missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        printf "${COLOR_ORANGE}Updating mod_ahbot.conf${COLOR_END}\n"
+
+        cp $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+
+        sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$AHBOT_MAX_ITEM_LEVEL'/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+    else
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist
+        fi
+
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        fi
+    fi
+
+    if [[ $APPRECIATION_ENABLED == "true" ]]; then
+        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist ]]; then
+            printf "${COLOR_RED}The config file mod_appreciation.conf.dist is missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        printf "${COLOR_ORANGE}Updating mod_appreciation.conf${COLOR_END}\n"
+
+        cp $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+
+        if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+        elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+        else
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 80/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+        fi
+
+        sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+    else
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist
+        fi
+
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+        fi
+    fi
+
+    if [[ $ASSISTANT_ENABLED == "true" ]]; then
+        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
+            printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        printf "${COLOR_ORANGE}Updating mod_assistant.conf${COLOR_END}\n"
+
+        cp $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+
+        sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        else
+            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        fi
+        sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.NameChange.Cost    =.*/Assistant.Utilities.NameChange.Cost    = 100000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.Customize.Cost     =.*/Assistant.Utilities.Customize.Cost     = 500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.RaceChange.Cost    =.*/Assistant.Utilities.RaceChange.Cost    = 5000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.FactionChange.Cost =.*/Assistant.Utilities.FactionChange.Cost = 10000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = 60/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = 250000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        else
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        fi
+        sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = 70/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = 1000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        else
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        fi
+        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = 80/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = 2500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = 1000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = 2500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = 5000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = 7500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = 12500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = 25000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+    else
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist
+        fi
+
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_assistant.conf ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        fi
+    fi
+
+    if [[ $GUILD_FUNDS_ENABLED == "true" ]]; then
+        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist ]]; then
+            printf "${COLOR_RED}The config file mod_guildfunds.conf.dist is missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        printf "${COLOR_ORANGE}Updating mod_guildfunds.conf${COLOR_END}\n"
+
+        cp $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf
+
+        sed -i 's/GuildFunds.Looted =.*/GuildFunds.Looted = 10/g' $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf
+        sed -i 's/GuildFunds.Quests =.*/GuildFunds.Quests = 3/g' $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf
+    else
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist
+        fi
+
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf
+        fi
+    fi
+
+    if [[ $LEARN_SPELLS_ENABLED == "true" ]]; then
+        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
+            printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        printf "${COLOR_ORANGE}Updating mod_learnspells.conf${COLOR_END}\n"
+
+        cp $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+
+        sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = 1/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = 1/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = 1/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = 1/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+    else
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist
+        fi
+
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_learnspells.conf ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        fi
+    fi
+
+    if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
+        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
+            printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        printf "${COLOR_ORANGE}Updating mod_recruitafriend.conf${COLOR_END}\n"
+
+        cp $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+
+        sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = 90/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = 7/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = 30/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = 1/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = 1/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = 1/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+    else
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist
+        fi
+
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        fi
+    fi
+
+    if [[ $WEEKEND_BONUS_ENABLED == "true" ]]; then
+        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
+            printf "${COLOR_RED}The config file mod_weekendbonus.conf.dist is missing.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        printf "${COLOR_ORANGE}Updating mod_weekendbonus.conf${COLOR_END}\n"
+
+        cp $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+
+        sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = 2.0/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = 2.0/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = 2/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = 2.0/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = 2/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+    else
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist
+        fi
+
+        if [[ -f $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf ]]; then
+            rm -rf $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+        fi
+    fi
 
     printf "${COLOR_GREEN}Finished updating the config files...${COLOR_END}\n"
 }
