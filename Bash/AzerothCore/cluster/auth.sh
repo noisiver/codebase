@@ -35,19 +35,27 @@ COLOR_END="\e[0m"
 
 ROOT=$(pwd)
 
-MYSQL_HOSTNAME="127.0.0.1"
-MYSQL_PORT="3306"
-MYSQL_USERNAME="acore"
-MYSQL_PASSWORD="acore"
-MYSQL_DATABASE_AUTH="acore_auth"
-MYSQL_DATABASE_CHARACTERS="acore_characters"
-MYSQL_DATABASE_WORLD="acore_world"
-LOCAL_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS THE CLIENT CONNECTS TO
+if [[ ! -f $ROOT/config.sh ]]; then
+    printf "${COLOR_RED}The config file is missing. Generating one with default values.${COLOR_END}\n"
+    printf "${COLOR_RED}Make sure to edit it before running this script again.${COLOR_END}\n"
 
-# DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING
-SOURCE_REPOSITORY="https://github.com/walkline/ToCloud9.git"
-SOURCE_BRANCH="master"
-SOURCE_LOCATION="$ROOT/source"
+    echo "MYSQL_HOSTNAME=\"127.0.0.1\"" >> $ROOT/config.sh
+    echo "MYSQL_PORT=\"3306\"" >> $ROOT/config.sh
+    echo "MYSQL_USERNAME=\"acore\"" >> $ROOT/config.sh
+    echo "MYSQL_PASSWORD=\"acore\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASE_AUTH=\"acore_auth\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASE_CHARACTERS=\"acore_characters\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASE_WORLD=\"acore_world\"" >> $ROOT/config.sh
+    echo "LOCAL_ADDRESS=\"127.0.0.1\" # SET THIS TO THE ADDRESS THE CLIENT CONNECTS TO" >> $ROOT/config.sh
+    echo "# DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING" >> $ROOT/config.sh
+    echo "SOURCE_REPOSITORY=\"https://github.com/walkline/ToCloud9.git\"" >> $ROOT/config.sh
+    echo "SOURCE_BRANCH=\"master\"" >> $ROOT/config.sh
+    echo "SOURCE_LOCATION=\"$ROOT/source\"" >> $ROOT/config.sh
+
+    exit $?
+fi
+
+source "$ROOT/config.sh"
 
 function install_packages
 {

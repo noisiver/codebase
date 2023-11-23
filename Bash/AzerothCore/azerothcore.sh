@@ -661,9 +661,9 @@ function import_database_files
                 exit $?
             fi
         done
-        else
-            printf "${COLOR_RED}The required files for the auth database are missing.${COLOR_END}\n"
-            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+    else
+        printf "${COLOR_RED}The required files for the auth database are missing.${COLOR_END}\n"
+        printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     fi
 
     if [[ `ls -1 $SOURCE_LOCATION/data/sql/updates/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
@@ -1225,7 +1225,7 @@ function set_config
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $SOURCE_LOCATION/etc/worldserver.conf

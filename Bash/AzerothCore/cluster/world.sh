@@ -35,33 +35,43 @@ COLOR_END="\e[0m"
 
 ROOT=$(pwd)
 
-MYSQL_HOSTNAME="127.0.0.1"
-MYSQL_PORT="3306"
-MYSQL_USERNAME="acore"
-MYSQL_PASSWORD="acore"
-MYSQL_DATABASES_AUTH="acore_auth"
-MYSQL_DATABASES_CHARACTERS="acore_characters"
-MYSQL_DATABASES_WORLD="acore_world"
-WORLD_NAME="AzerothCore"
-WORLD_MOTD="Welcome to AzerothCore."
-WORLD_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS THE CLIENT CONNECTS TO
-WORLD_PORT="9644" # CHANGE THIS TO BE UNIQUE IF MULTIPLE WORLD SERVERS ARE RUNNING ON THE SAME SYSTEM
-AUTH_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS OF THE SERVER RUNNING THE TOCLOUD9 PROCESSES
-LOCAL_ADDRESS="127.0.0.1" # SET THIS TO THE ADDRESS OF THIS SYSTEM
-NODE_ID="1" # CHANGE THIS TO BE UNIQUE IF MULTIPLE WORLD SERVERS ARE RUNNING ON THE SAME SYSTEM
-PROGRESSION_ACTIVE_PATCH="21"
-# Eastern Kingdoms, Kalimdor, Outland, Northrend and Deeprun Tram: 0,1,369,530,571
-# All dungeon, raid, battleground and arena maps: 30,33,34,36,43,44,47,48,70,90,109,129,169,189,209,229,230,249,269,289,309,329,349,389,409,429,469,489,509,529,531,532,533,534,540,542,543,544,545,546,547,548,550,552,553,554,555,556,557,558,559,560,562,564,565,566,568,572,574,575,576,578,580,585,595,598,599,600,601,602,603,604,607,608,615,616,617,618,619,624,628,631,632,649,650,658,668,724
-AVAILABLE_MAPS=""
+if [[ ! -f $ROOT/config.sh ]]; then
+    printf "${COLOR_RED}The config file is missing. Generating one with default values.${COLOR_END}\n"
+    printf "${COLOR_RED}Make sure to edit it before running this script again.${COLOR_END}\n"
 
-# DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING
-SOURCE_AZEROTHCORE_REPOSITORY="https://github.com/walkline/azerothcore-wotlk.git"
-SOURCE_AZEROTHCORE_BRANCH="cluster-mode"
-SOURCE_LOCATION="$ROOT/source"
-SOURCE_TOCLOUD9_REPOSITORY="https://github.com/walkline/ToCloud9.git"
-SOURCE_TOCLOUD9_BRANCH="master"
-WORLD_ID="1"
-DEFAULT_WORLD_PORT="8085"
+    echo "MYSQL_HOSTNAME=\"127.0.0.1\"" >> $ROOT/config.sh
+    echo "MYSQL_PORT=\"3306\"" >> $ROOT/config.sh
+    echo "MYSQL_USERNAME=\"acore\"" >> $ROOT/config.sh
+    echo "MYSQL_PASSWORD=\"acore\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASES_AUTH=\"acore_auth\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASES_CHARACTERS=\"acore_characters\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASES_WORLD=\"acore_world\"" >> $ROOT/config.sh
+    echo "WORLD_NAME=\"AzerothCore\"" >> $ROOT/config.sh
+    echo "WORLD_MOTD=\"Welcome to AzerothCore.\"" >> $ROOT/config.sh
+    echo "WORLD_ADDRESS=\"127.0.0.1\" # SET THIS TO THE ADDRESS THE CLIENT CONNECTS TO" >> $ROOT/config.sh
+    echo "WORLD_PORT=\"9644\" # CHANGE THIS TO BE UNIQUE IF MULTIPLE WORLD SERVERS ARE RUNNING ON THE SAME SYSTEM" >> $ROOT/config.sh
+    echo "AUTH_ADDRESS=\"127.0.0.1\" # SET THIS TO THE ADDRESS OF THE SERVER RUNNING THE TOCLOUD9 PROCESSES" >> $ROOT/config.sh
+    echo "LOCAL_ADDRESS=\"127.0.0.1\" # SET THIS TO THE ADDRESS OF THIS SYSTEM" >> $ROOT/config.sh
+    echo "NODE_ID=\"1\" # CHANGE THIS TO BE UNIQUE IF MULTIPLE WORLD SERVERS ARE RUNNING ON THE SAME SYSTEM" >> $ROOT/config.sh
+    echo "PRELOAD_MAP_GRIDS=\"false\"" >> $ROOT/config.sh
+    echo "SET_CREATURES_ACTIVE=\"false\"" >> $ROOT/config.sh
+    echo "PROGRESSION_ACTIVE_PATCH=\"21\"" >> $ROOT/config.sh
+    echo "# Eastern Kingdoms, Kalimdor, Outland, Northrend and Deeprun Tram: 0,1,369,530,571" >> $ROOT/config.sh
+    echo "# All dungeon, raid, battleground and arena maps: 30,33,34,36,43,44,47,48,70,90,109,129,169,189,209,229,230,249,269,289,309,329,349,389,409,429,469,489,509,529,531,532,533,534,540,542,543,544,545,546,547,548,550,552,553,554,555,556,557,558,559,560,562,564,565,566,568,572,574,575,576,578,580,585,595,598,599,600,601,602,603,604,607,608,615,616,617,618,619,624,628,631,632,649,650,658,668,724" >> $ROOT/config.sh
+    echo "AVAILABLE_MAPS=\"\"" >> $ROOT/config.sh
+    echo "# DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING" >> $ROOT/config.sh
+    echo "SOURCE_AZEROTHCORE_REPOSITORY=\"https://github.com/walkline/azerothcore-wotlk.git\"" >> $ROOT/config.sh
+    echo "SOURCE_AZEROTHCORE_BRANCH=\"cluster-mode\"" >> $ROOT/config.sh
+    echo "SOURCE_LOCATION=\"$ROOT/source\"" >> $ROOT/config.sh
+    echo "SOURCE_TOCLOUD9_REPOSITORY=\"https://github.com/walkline/ToCloud9.git\"" >> $ROOT/config.sh
+    echo "SOURCE_TOCLOUD9_BRANCH=\"master\"" >> $ROOT/config.sh
+    echo "WORLD_ID=\"1\"" >> $ROOT/config.sh
+    echo "DEFAULT_WORLD_PORT=\"8085\"" >> $ROOT/config.sh
+
+    exit $?
+fi
+
+source "$ROOT/config.sh"
 
 function install_packages
 {
@@ -371,9 +381,9 @@ function import_database_files
                 exit $?
             fi
         done
-        else
-            printf "${COLOR_RED}The required files for the auth database are missing.${COLOR_END}\n"
-            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+    else
+        printf "${COLOR_RED}The required files for the auth database are missing.${COLOR_END}\n"
+        printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     fi
 
     if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/updates/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
@@ -676,51 +686,63 @@ function set_config
 
     cp $SOURCE_LOCATION/azerothcore/etc/worldserver.conf.dist $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
 
-    sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_AUTH'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_WORLD'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_CHARACTERS'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/RealmID =.*/RealmID = '$WORLD_ID'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/WorldServerPort =.*/WorldServerPort = '$DEFAULT_WORLD_PORT'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GameType =.*/GameType = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/RealmZone =.*/RealmZone = 2/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Expansion =.*/Expansion = 2/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/PlayerLimit =.*/PlayerLimit = 1000/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.Visible =.*/GM.Visible = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.Chat =.*/GM.Chat = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.StartLevel = .*/GM.StartLevel = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_AUTH'"/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_WORLD'"/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_CHARACTERS'"/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/RealmID =.*/RealmID = '$WORLD_ID'/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/WorldServerPort =.*/WorldServerPort = '$DEFAULT_WORLD_PORT'/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GameType =.*/GameType = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/RealmZone =.*/RealmZone = 2/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Expansion =.*/Expansion = 2/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/PlayerLimit =.*/PlayerLimit = 1000/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    if [[ $PRELOAD_MAP_GRIDS == "true" ]]; then
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GridUnload =.*/GridUnload = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+
+        if [[ $SET_CREATURES_ACTIVE == "true" ]]; then
+            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+        else
+            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        fi
+    else
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/GridUnload =.*/GridUnload = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    fi
+    sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.Visible =.*/GM.Visible = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.Chat =.*/GM.Chat = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.StartLevel = .*/GM.StartLevel = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' $SOURCE_LOCATION/etc/worldserver.conf
     sed -i 's/Cluster.Enabled=.*/Cluster.Enabled=1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps="'$AVAILABLE_MAPS'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
 
@@ -781,8 +803,6 @@ function stop_server
 function parameters
 {
     printf "${COLOR_GREEN}Available parameters${COLOR_END}\n"
-
-    printf "${COLOR_GREEN}Available subparameters${COLOR_END}\n"
     printf "${COLOR_ORANGE}install/setup/update             ${COLOR_WHITE}| ${COLOR_BLUE}Downloads the source code and compiles it. Also downloads client files${COLOR_END}\n"
     printf "${COLOR_ORANGE}database/db                      ${COLOR_WHITE}| ${COLOR_BLUE}Import all files to the specified databases${COLOR_END}\n"
     printf "${COLOR_ORANGE}dbc                              ${COLOR_WHITE}| ${COLOR_BLUE}Copy modified client data files to the proper folder${COLOR_END}\n"
