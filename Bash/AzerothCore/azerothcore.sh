@@ -65,6 +65,7 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "ASSISTANT_ENABLED=\"false\"" >> config.sh
     echo "GUILD_FUNDS_ENABLED=\"false\"" >> config.sh
     echo "GROUP_QUESTS_ENABLED=\"false\"" >> config.sh
+    echo "JUNK_TO_GOLD_ENABLED=\"false\"" >> config.sh
     echo "LEARN_SPELLS_ENABLED=\"false\"" >> config.sh
     echo "RECRUIT_A_FRIEND_ENABLED=\"false\"" >> config.sh
     echo "WEEKEND_BONUS_ENABLED=\"false\"" >> config.sh
@@ -318,6 +319,38 @@ function get_source
         else
             if [[ -d $SOURCE_LOCATION/modules/mod-groupquests ]]; then
                 rm -rf $SOURCE_LOCATION/modules/mod-groupquests
+
+                if [[ -d $SOURCE_LOCATION/build ]]; then
+                    rm -rf $SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
+        if [[ $JUNK_TO_GOLD_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-junk-to-gold ]]; then
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-junk-to-gold.git $SOURCE_LOCATION/modules/mod-junk-to-gold
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-junk-to-gold"
+                    exit $?
+                fi
+            else
+                cd $SOURCE_LOCATION/modules/mod-junk-to-gold
+
+                git pull
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-junk-to-gold"
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-junk-to-gold"
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d $SOURCE_LOCATION/modules/mod-junk-to-gold ]]; then
+                rm -rf $SOURCE_LOCATION/modules/mod-junk-to-gold
 
                 if [[ -d $SOURCE_LOCATION/build ]]; then
                     rm -rf $SOURCE_LOCATION/build
