@@ -1152,68 +1152,68 @@ function set_config
 
     cp $SOURCE_LOCATION/azerothcore/etc/worldserver.conf.dist $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
 
-    sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_AUTH'"/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_WORLD'"/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_CHARACTERS'"/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/RealmID =.*/RealmID = '$WORLD_ID'/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/WorldServerPort =.*/WorldServerPort = '$DEFAULT_WORLD_PORT'/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GameType =.*/GameType = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/RealmZone =.*/RealmZone = 2/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Expansion =.*/Expansion = 2/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/PlayerLimit =.*/PlayerLimit = 1000/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_AUTH'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_WORLD'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_CHARACTERS'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/RealmID =.*/RealmID = '$WORLD_ID'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/WorldServerPort =.*/WorldServerPort = '$DEFAULT_WORLD_PORT'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GameType =.*/GameType = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/RealmZone =.*/RealmZone = 2/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Expansion =.*/Expansion = 2/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/PlayerLimit =.*/PlayerLimit = 1000/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     if [[ $PRELOAD_MAP_GRIDS == "true" ]]; then
-        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/GridUnload =.*/GridUnload = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+        sed -i 's/GridUnload =.*/GridUnload = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
 
         if [[ $SET_CREATURES_ACTIVE == "true" ]]; then
-            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
         else
-            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
         fi
     else
-        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-        sed -i 's/GridUnload =.*/GridUnload = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+        sed -i 's/GridUnload =.*/GridUnload = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     fi
-    sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.Visible =.*/GM.Visible = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.Chat =.*/GM.Chat = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.StartLevel = .*/GM.StartLevel = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' $SOURCE_LOCATION/etc/worldserver.conf
-    sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' $SOURCE_LOCATION/etc/worldserver.conf
+    sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.Visible =.*/GM.Visible = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.Chat =.*/GM.Chat = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.StartLevel = .*/GM.StartLevel = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/Cluster.Enabled=.*/Cluster.Enabled=1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps="'$AVAILABLE_MAPS'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
 
     if [[ $AHBOT_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
+        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_ahbot.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1221,26 +1221,26 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_ahbot.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
 
-        sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = 1/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$AHBOT_MAX_ITEM_LEVEL'/g' $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$AHBOT_MAX_ITEM_LEVEL'/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
     else
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_ahbot.conf
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
         fi
     fi
 
     if [[ $APPRECIATION_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist ]]; then
+        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_appreciation.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1248,32 +1248,32 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_appreciation.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
 
         if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
-            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
-            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
         elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
-            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
         else
-            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 80/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
-            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 80/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
         fi
 
-        sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+        sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
     else
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_appreciation.conf.dist
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_appreciation.conf ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_appreciation.conf
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
         fi
     fi
 
     if [[ $ASSISTANT_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
+        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1281,63 +1281,63 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_assistant.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
 
-        sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         else
-            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         fi
-        sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.NameChange.Cost    =.*/Assistant.Utilities.NameChange.Cost    = 100000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.Customize.Cost     =.*/Assistant.Utilities.Customize.Cost     = 500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.RaceChange.Cost    =.*/Assistant.Utilities.RaceChange.Cost    = 5000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.FactionChange.Cost =.*/Assistant.Utilities.FactionChange.Cost = 10000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = 60/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = 250000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.NameChange.Cost    =.*/Assistant.Utilities.NameChange.Cost    = 100000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.Customize.Cost     =.*/Assistant.Utilities.Customize.Cost     = 500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.RaceChange.Cost    =.*/Assistant.Utilities.RaceChange.Cost    = 5000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.FactionChange.Cost =.*/Assistant.Utilities.FactionChange.Cost = 10000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = 60/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = 250000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         else
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         fi
-        sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = 70/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = 1000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = 70/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = 1000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 0/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         else
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         fi
-        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = 80/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = 2500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = 1000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = 2500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = 5000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = 7500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = 12500000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = 1/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = 25000000/g' $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = 80/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = 2500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = 1000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = 2500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = 5000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = 7500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = 12500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = 25000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
     else
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_assistant.conf.dist
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_assistant.conf ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_assistant.conf
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
         fi
     fi
 
     if [[ $GUILD_FUNDS_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist ]]; then
+        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_guildfunds.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1345,22 +1345,22 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_guildfunds.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf
+        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf
 
-        sed -i 's/GuildFunds.Looted =.*/GuildFunds.Looted = 10/g' $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf
-        sed -i 's/GuildFunds.Quests =.*/GuildFunds.Quests = 3/g' $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf
+        sed -i 's/GuildFunds.Looted =.*/GuildFunds.Looted = 10/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf
+        sed -i 's/GuildFunds.Quests =.*/GuildFunds.Quests = 3/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf
     else
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf.dist
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_guildfunds.conf
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf
         fi
     fi
 
     if [[ $LEARN_SPELLS_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
+        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1368,29 +1368,29 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_learnspells.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
 
-        sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = 1/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = 1/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = 1/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = 1/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = 0/g' $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
     else
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_learnspells.conf.dist
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_learnspells.conf ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_learnspells.conf
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
         fi
     fi
 
     if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
+        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1398,26 +1398,26 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_recruitafriend.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
 
-        sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = 90/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = 7/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = 30/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = 1/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = 1/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = 1/g' $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = 90/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = 7/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = 30/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
     else
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf.dist
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_recruitafriend.conf
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
         fi
     fi
 
     if [[ $WEEKEND_BONUS_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
+        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_weekendbonus.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1425,20 +1425,20 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_weekendbonus.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
 
-        sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = 2.0/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-        sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = 2.0/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-        sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = 2/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-        sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = 2.0/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
-        sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = 2/g' $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = 2.0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = 2.0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = 2/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = 2.0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = 2/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
     else
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf.dist
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf.dist ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_weekendbonus.conf
+        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
         fi
     fi
 
