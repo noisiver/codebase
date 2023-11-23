@@ -56,6 +56,7 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "PRELOAD_MAP_GRIDS=\"false\"" >> $ROOT/config.sh
     echo "SET_CREATURES_ACTIVE=\"false\"" >> $ROOT/config.sh
     echo "PROGRESSION_ACTIVE_PATCH=\"21\"" >> $ROOT/config.sh
+    echo "PROGRESSION_ICECROWN_CITADEL_AURA=\"0\"" >> $ROOT/config.sh
     echo "AHBOT_ENABLED=\"false\"" >> config.sh
     echo "AHBOT_MIN_ITEMS=\"200\"" >> config.sh
     echo "AHBOT_MAX_ITEMS=\"200\"" >> config.sh
@@ -1201,6 +1202,7 @@ function set_config
     sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
     sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf

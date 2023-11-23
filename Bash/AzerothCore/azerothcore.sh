@@ -1256,6 +1256,7 @@ function set_config
         sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/etc/worldserver.conf
+        sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
