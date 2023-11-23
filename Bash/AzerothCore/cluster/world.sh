@@ -73,7 +73,6 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "# DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING" >> $ROOT/config.sh
     echo "SOURCE_AZEROTHCORE_REPOSITORY=\"https://github.com/walkline/azerothcore-wotlk.git\"" >> $ROOT/config.sh
     echo "SOURCE_AZEROTHCORE_BRANCH=\"cluster-mode\"" >> $ROOT/config.sh
-    echo "SOURCE_LOCATION=\"$ROOT/source\"" >> $ROOT/config.sh
     echo "SOURCE_TOCLOUD9_REPOSITORY=\"https://github.com/walkline/ToCloud9.git\"" >> $ROOT/config.sh
     echo "SOURCE_TOCLOUD9_BRANCH=\"master\"" >> $ROOT/config.sh
     echo "WORLD_ID=\"1\"" >> $ROOT/config.sh
@@ -83,6 +82,8 @@ if [[ ! -f $ROOT/config.sh ]]; then
 fi
 
 source "$ROOT/config.sh"
+
+SOURCE_LOCATION="$ROOT/source"
 
 if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
     AHBOT_MAX_ITEM_LEVEL="92"
@@ -192,13 +193,13 @@ function get_source
     fi
 
     if [[ $AHBOT_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot ]]; then
-            git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $SOURCE_LOCATION/modules/mod-ah-bot
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot ]]; then
+            git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-ah-bot
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -211,8 +212,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-ah-bot ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-ah-bot
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -221,13 +222,13 @@ function get_source
     fi
 
     : 'if [[ $APPRECIATION_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-appreciation ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-appreciation.git $SOURCE_LOCATION/modules/mod-appreciation
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-appreciation ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-appreciation.git $SOURCE_LOCATION/azerothcore/modules/mod-appreciation
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-appreciation
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-appreciation
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -240,8 +241,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-appreciation ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-appreciation
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-appreciation ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-appreciation
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -250,13 +251,13 @@ function get_source
     fi'
 
     if [[ $ASSISTANT_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-assistant ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-assistant.git $SOURCE_LOCATION/modules/mod-assistant
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-assistant ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-assistant.git $SOURCE_LOCATION/azerothcore/modules/mod-assistant
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-assistant
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-assistant
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -269,8 +270,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-assistant ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-assistant
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-assistant ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-assistant
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -279,13 +280,13 @@ function get_source
     fi
 
     if [[ $GUILD_FUNDS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-guildfunds ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-guildfunds.git $SOURCE_LOCATION/modules/mod-guildfunds
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-guildfunds.git $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-guildfunds
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -298,8 +299,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-guildfunds ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-guildfunds
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -308,13 +309,13 @@ function get_source
     fi
 
     if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-groupquests ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $SOURCE_LOCATION/modules/mod-groupquests
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-groupquests ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $SOURCE_LOCATION/azerothcore/modules/mod-groupquests
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-groupquests
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-groupquests
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -327,8 +328,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-groupquests ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-groupquests
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-groupquests ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-groupquests
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -337,13 +338,13 @@ function get_source
     fi
 
     if [[ $JUNK_TO_GOLD_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-junk-to-gold ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-junk-to-gold.git $SOURCE_LOCATION/modules/mod-junk-to-gold
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-junk-to-gold.git $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-junk-to-gold
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -356,8 +357,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-junk-to-gold ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-junk-to-gold
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -366,13 +367,13 @@ function get_source
     fi
 
     if [[ $LEARN_SPELLS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-learnspells ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $SOURCE_LOCATION/modules/mod-learnspells
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-learnspells ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $SOURCE_LOCATION/azerothcore/modules/mod-learnspells
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-learnspells
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-learnspells
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -385,8 +386,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-learnspells ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-learnspells
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-learnspells ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-learnspells
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -395,13 +396,13 @@ function get_source
     fi
 
     if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $SOURCE_LOCATION/modules/mod-recruitafriend
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-recruitafriend
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -414,8 +415,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-recruitafriend ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-recruitafriend
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -424,13 +425,13 @@ function get_source
     fi
 
     if [[ $WEEKEND_BONUS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-weekendbonus.git $SOURCE_LOCATION/modules/mod-weekendbonus
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-weekendbonus.git $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-weekendbonus
+            cd $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -443,8 +444,8 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-weekendbonus ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-weekendbonus
+        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus ]]; then
+            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus
 
             if [[ -d $SOURCE_LOCATION/build ]]; then
                 rm -rf $SOURCE_LOCATION/build
@@ -902,14 +903,14 @@ function import_database_files
     fi
 
     if [[ $AHBOT_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base ]]; then
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The auction house bot module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -941,14 +942,14 @@ function import_database_files
     fi
 
     if [[ $APPRECIATION_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base ]]; then
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-appreciation/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The appreciation module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/azerothcore/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -974,14 +975,14 @@ function import_database_files
     fi
 
     if [[ $ASSISTANT_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base ]]; then
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-assistant/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The assistant module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/modules/mod-assistant/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/azerothcore/modules/mod-assistant/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -1007,14 +1008,14 @@ function import_database_files
     fi
 
     if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base ]]; then
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-groupquests/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The group quests module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/azerothcore/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -1040,14 +1041,14 @@ function import_database_files
     fi
 
     if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
+        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
             printf "${COLOR_RED}The recruit-a-friend module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
+        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 

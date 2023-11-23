@@ -50,12 +50,13 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "# DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING" >> $ROOT/config.sh
     echo "SOURCE_REPOSITORY=\"https://github.com/walkline/ToCloud9.git\"" >> $ROOT/config.sh
     echo "SOURCE_BRANCH=\"master\"" >> $ROOT/config.sh
-    echo "SOURCE_LOCATION=\"$ROOT/source\"" >> $ROOT/config.sh
 
     exit $?
 fi
 
 source "$ROOT/config.sh"
+
+SOURCE_LOCATION="$ROOT/source"
 
 function install_packages
 {
