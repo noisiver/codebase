@@ -758,7 +758,7 @@ function stop_server
     else
         printf "${COLOR_ORANGE}Telling the world server to shut down.${COLOR_END}\n"
 
-        PID=$(screen -ls | grep -oE "[0-9]+\.world-$WORLD_ID" | sed -e "s/\..*$//g")
+        PID=$(screen -ls | grep -oE "[0-9]+\.world-$NODE_ID" | sed -e "s/\..*$//g")
 
         if [[ $PID != "" ]]; then
             if [[ $1 == "restart" ]]; then
