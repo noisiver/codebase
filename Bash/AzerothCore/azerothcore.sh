@@ -40,37 +40,38 @@ if [[ ! -f $ROOT/config.sh ]]; then
     printf "${COLOR_RED}The config file is missing. Generating one with default values.${COLOR_END}\n"
     printf "${COLOR_RED}Make sure to edit it before running this script again.${COLOR_END}\n"
 
-    echo "MYSQL_HOSTNAME=\"127.0.0.1\"" > config.sh
-    echo "MYSQL_PORT=\"3306\"" >> config.sh
-    echo "MYSQL_USERNAME=\"acore\"" >> config.sh
-    echo "MYSQL_PASSWORD=\"acore\"" >> config.sh
-    echo "MYSQL_DATABASES_AUTH=\"acore_auth\"" >> config.sh
-    echo "MYSQL_DATABASES_CHARACTERS=\"acore_characters\"" >> config.sh
-    echo "MYSQL_DATABASES_WORLD=\"acore_world\"" >> config.sh
-    echo "SOURCE_REPOSITORY=\"https://github.com/azerothcore/azerothcore-wotlk.git\"" >> config.sh
-    echo "SOURCE_BRANCH=\"master\"" >> config.sh
-    echo "WORLD_NAME=\"AzerothCore\"" >> config.sh
-    echo "WORLD_MOTD=\"Welcome to AzerothCore.\"" >> config.sh
-    echo "WORLD_ID=\"1\"" >> config.sh
-    echo "WORLD_ADDRESS=\"127.0.0.1\"" >> config.sh
-    echo "WORLD_PORT=\"8085\"" >> config.sh
-    echo "PRELOAD_MAP_GRIDS=\"false\"" >> config.sh
-    echo "SET_CREATURES_ACTIVE=\"false\"" >> config.sh
-    echo "PROGRESSION_ACTIVE_PATCH=\"21\"" >> config.sh
-    echo "PROGRESSION_ICECROWN_CITADEL_AURA=\"0\"" >> config.sh
-    echo "AHBOT_ENABLED=\"false\"" >> config.sh
-    echo "AHBOT_MIN_ITEMS=\"200\"" >> config.sh
-    echo "AHBOT_MAX_ITEMS=\"200\"" >> config.sh
-    echo "APPRECIATION_ENABLED=\"false\"" >> config.sh
-    echo "ASSISTANT_ENABLED=\"false\"" >> config.sh
-    echo "GUILD_FUNDS_ENABLED=\"false\"" >> config.sh
-    echo "GROUP_QUESTS_ENABLED=\"false\"" >> config.sh
-    echo "JUNK_TO_GOLD_ENABLED=\"false\"" >> config.sh
-    echo "LEARN_SPELLS_ENABLED=\"false\"" >> config.sh
-    echo "RECRUIT_A_FRIEND_ENABLED=\"false\"" >> config.sh
-    echo "WEEKEND_BONUS_ENABLED=\"false\"" >> config.sh
-    echo "TELEGRAM_TOKEN=\"\"" >> config.sh
-    echo "TELEGRAM_CHAT_ID=\"\"" >> config.sh
+    echo "MYSQL_HOSTNAME=\"127.0.0.1\"" > $ROOT/config.sh
+    echo "MYSQL_PORT=\"3306\"" >> $ROOT/config.sh
+    echo "MYSQL_USERNAME=\"acore\"" >> $ROOT/config.sh
+    echo "MYSQL_PASSWORD=\"acore\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASES_AUTH=\"acore_auth\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASES_CHARACTERS=\"acore_characters\"" >> $ROOT/config.sh
+    echo "MYSQL_DATABASES_WORLD=\"acore_world\"" >> $ROOT/config.sh
+    echo "SOURCE_REPOSITORY=\"https://github.com/azerothcore/azerothcore-wotlk.git\"" >> $ROOT/config.sh
+    echo "SOURCE_BRANCH=\"master\"" >> $ROOT/config.sh
+    echo "WORLD_NAME=\"AzerothCore\"" >> $ROOT/config.sh
+    echo "WORLD_MOTD=\"Welcome to AzerothCore.\"" >> $ROOT/config.sh
+    echo "WORLD_ID=\"1\"" >> $ROOT/config.sh
+    echo "WORLD_ADDRESS=\"127.0.0.1\"" >> $ROOT/config.sh
+    echo "WORLD_PORT=\"8085\"" >> $ROOT/config.sh
+    echo "PRELOAD_MAP_GRIDS=\"false\"" >> $ROOT/config.sh
+    echo "SET_CREATURES_ACTIVE=\"false\"" >> $ROOT/config.sh
+    echo "PROGRESSION_ACTIVE_PATCH=\"21\"" >> $ROOT/config.sh
+    echo "PROGRESSION_ICECROWN_CITADEL_AURA=\"0\"" >> $ROOT/config.sh
+    echo "ACCOUNT_BOUND_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "AHBOT_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "AHBOT_MIN_ITEMS=\"200\"" >> $ROOT/config.sh
+    echo "AHBOT_MAX_ITEMS=\"200\"" >> $ROOT/config.sh
+    echo "APPRECIATION_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "ASSISTANT_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "GUILD_FUNDS_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "GROUP_QUESTS_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "JUNK_TO_GOLD_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "LEARN_SPELLS_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "RECRUIT_A_FRIEND_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "WEEKEND_BONUS_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "TELEGRAM_TOKEN=\"\"" >> $ROOT/config.sh
+    echo "TELEGRAM_CHAT_ID=\"\"" >> $ROOT/config.sh
     exit $?
 fi
 
@@ -95,6 +96,7 @@ if [[ $PROGRESSION_ACTIVE_PATCH -lt 15 ]]; then
 fi
 
 if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+    ACCOUNT_BOUND_ENABLED="false"
     RECRUIT_A_FRIEND_ENABLED="false"
 fi
 
@@ -166,6 +168,38 @@ function get_source
     fi
 
     if [[ $1 == "both" ]] || [[ $1 == "world" ]]; then
+        if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-accountbound ]]; then
+                git clone --depth 1 --branch master https://github.com/noisiver/mod-accountbound.git $SOURCE_LOCATION/modules/mod-accountbound
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-accountbound"
+                    exit $?
+                fi
+            else
+                cd $SOURCE_LOCATION/modules/mod-accountbound
+
+                git pull
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-accountbound"
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-accountbound"
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d $SOURCE_LOCATION/modules/mod-accountbound ]]; then
+                rm -rf $SOURCE_LOCATION/modules/mod-accountbound
+
+                if [[ -d $SOURCE_LOCATION/build ]]; then
+                    rm -rf $SOURCE_LOCATION/build
+                fi
+            fi
+        fi
+
         if [[ $AHBOT_ENABLED == "true" ]]; then
             if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot ]]; then
                 git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $SOURCE_LOCATION/modules/mod-ah-bot
@@ -938,6 +972,76 @@ function import_database_files
             done
         fi
 
+        if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            if [[ ! -d $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-auth/base ]] || [[ ! -d $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-world/base ]]; then
+                printf "${COLOR_RED}The account bound module is enabled but the files aren't where they should be.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to import the database files"
+                exit $?
+            fi
+
+            if [[ `ls -1 $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-auth/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_AUTH -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+
+            if [[ `ls -1 $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$AHBOT_MIN_ITEMS', maxitems='$AHBOT_MAX_ITEMS'"
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to import the database files"
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+        fi
+
         if [[ $AHBOT_ENABLED == "true" ]]; then
             if [[ ! -d $SOURCE_LOCATION/modules/mod-ah-bot/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The auction house bot module is enabled but the files aren't where they should be.${COLOR_END}\n"
@@ -1289,6 +1393,29 @@ function set_config
         sed -i 's/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.WS =.*/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.WS = 9/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.AB =.*/NpcBot.WanderingBots.BG.TargetTeamPlayersCount.AB = 14/g' $SOURCE_LOCATION/etc/worldserver.conf
         sed -i 's/NpcBot.WanderingBots.BG.CapLevel =.*/NpcBot.WanderingBots.BG.CapLevel = 1/g' $SOURCE_LOCATION/etc/worldserver.conf
+
+        if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
+            if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
+                printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram "An error occurred while trying to update the config files"
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating mod_accountbound.conf${COLOR_END}\n"
+
+            cp $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+
+            sed -i 's/AccountBound.Heirlooms =.*/AccountBound.Heirlooms = 1/g' $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+        else
+            if [[ -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
+                rm -rf $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist
+            fi
+
+            if [[ -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf ]]; then
+                rm -rf $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+            fi
+        fi
 
         if [[ $AHBOT_ENABLED == "true" ]]; then
             if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_ahbot.conf.dist ]]; then
