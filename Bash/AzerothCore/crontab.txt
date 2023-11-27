@@ -8,3 +8,5 @@ World
 30 0 * * 1 cd /home/ubuntu/azerothcore/world2 && ./azerothcore.sh world all >/dev/null 2>&1
 0 0 * * 1 screen -S world-3 -p 0 -X stuff "server shutdown 3600^m" >/dev/null 2>&1
 0 1 * * 1 cd /home/ubuntu/azerothcore/world3 && ./azerothcore.sh world all >/dev/null 2>&1
+30 23 * * 0 screen -S world-4 -p 0 -X stuff "server shutdown 3600^m" >/dev/null 2>&1
+30 0 * * 1 cd /home/ubuntu/azerothcore/world4 && ./azerothcore.sh world all >/dev/null 2>&1
