@@ -85,8 +85,6 @@ fi
 
 source "$ROOT/config.sh"
 
-SOURCE_LOCATION="$ROOT/source"
-
 if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
     AHBOT_MAX_ITEM_LEVEL="92"
 elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
@@ -147,13 +145,13 @@ function get_source
 {
     printf "${COLOR_GREEN}Downloading the source code...${COLOR_END}\n"
 
-    if [[ ! -d $SOURCE_LOCATION/tocloud9 ]]; then
-        git clone --recursive --depth 1 --branch $SOURCE_TOCLOUD9_BRANCH $SOURCE_TOCLOUD9_REPOSITORY $SOURCE_LOCATION/tocloud9
+    if [[ ! -d $ROOT/source/tocloud9 ]]; then
+        git clone --recursive --depth 1 --branch $SOURCE_TOCLOUD9_BRANCH $SOURCE_TOCLOUD9_REPOSITORY $ROOT/source/tocloud9
         if [[ $? -ne 0 ]]; then
             exit $?
         fi
     else
-        cd $SOURCE_LOCATION/tocloud9
+        cd $ROOT/source/tocloud9
 
         git pull
         if [[ $? -ne 0 ]]; then
@@ -171,13 +169,13 @@ function get_source
         fi
     fi
 
-    if [[ ! -d $SOURCE_LOCATION/azerothcore ]]; then
-        git clone --recursive --depth 1 --branch $SOURCE_AZEROTHCORE_BRANCH $SOURCE_AZEROTHCORE_REPOSITORY $SOURCE_LOCATION/azerothcore
+    if [[ ! -d $ROOT/source/azerothcore ]]; then
+        git clone --recursive --depth 1 --branch $SOURCE_AZEROTHCORE_BRANCH $SOURCE_AZEROTHCORE_REPOSITORY $ROOT/source/azerothcore
         if [[ $? -ne 0 ]]; then
             exit $?
         fi
     else
-        cd $SOURCE_LOCATION/azerothcore
+        cd $ROOT/source/azerothcore
 
         git pull
         if [[ $? -ne 0 ]]; then
@@ -196,14 +194,14 @@ function get_source
     fi
 
     if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-accountbound ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-accountbound.git $SOURCE_LOCATION/modules/mod-accountbound
+        if [[ ! -d $ROOT/source/modules/mod-accountbound ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-accountbound.git $ROOT/source/modules/mod-accountbound
             if [[ $? -ne 0 ]]; then
                 notify_telegram "An error occurred while trying to download the source code of mod-accountbound"
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/modules/mod-accountbound
+            cd $ROOT/source/modules/mod-accountbound
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -218,23 +216,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/modules/mod-accountbound ]]; then
-            rm -rf $SOURCE_LOCATION/modules/mod-accountbound
+        if [[ -d $ROOT/source/modules/mod-accountbound ]]; then
+            rm -rf $ROOT/source/modules/mod-accountbound
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
 
     if [[ $AHBOT_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot ]]; then
-            git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-ah-bot ]]; then
+            git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $ROOT/source/azerothcore/modules/mod-ah-bot
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot
+            cd $ROOT/source/azerothcore/modules/mod-ah-bot
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -247,23 +245,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot
+        if [[ -d $ROOT/source/azerothcore/modules/mod-ah-bot ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-ah-bot
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
 
     : 'if [[ $APPRECIATION_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-appreciation ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-appreciation.git $SOURCE_LOCATION/azerothcore/modules/mod-appreciation
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-appreciation ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-appreciation.git $ROOT/source/azerothcore/modules/mod-appreciation
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-appreciation
+            cd $ROOT/source/azerothcore/modules/mod-appreciation
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -276,23 +274,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-appreciation ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-appreciation
+        if [[ -d $ROOT/source/azerothcore/modules/mod-appreciation ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-appreciation
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi'
 
     if [[ $ASSISTANT_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-assistant ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-assistant.git $SOURCE_LOCATION/azerothcore/modules/mod-assistant
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-assistant ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-assistant.git $ROOT/source/azerothcore/modules/mod-assistant
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-assistant
+            cd $ROOT/source/azerothcore/modules/mod-assistant
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -305,23 +303,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-assistant ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-assistant
+        if [[ -d $ROOT/source/azerothcore/modules/mod-assistant ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-assistant
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
 
     if [[ $GUILD_FUNDS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-guildfunds.git $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-guildfunds ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-guildfunds.git $ROOT/source/azerothcore/modules/mod-guildfunds
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds
+            cd $ROOT/source/azerothcore/modules/mod-guildfunds
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -334,23 +332,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-guildfunds
+        if [[ -d $ROOT/source/azerothcore/modules/mod-guildfunds ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-guildfunds
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
 
     if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-groupquests ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $SOURCE_LOCATION/azerothcore/modules/mod-groupquests
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-groupquests ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $ROOT/source/azerothcore/modules/mod-groupquests
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-groupquests
+            cd $ROOT/source/azerothcore/modules/mod-groupquests
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -363,23 +361,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-groupquests ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-groupquests
+        if [[ -d $ROOT/source/azerothcore/modules/mod-groupquests ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-groupquests
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
 
     if [[ $JUNK_TO_GOLD_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-junk-to-gold.git $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-junk-to-gold ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-junk-to-gold.git $ROOT/source/azerothcore/modules/mod-junk-to-gold
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold
+            cd $ROOT/source/azerothcore/modules/mod-junk-to-gold
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -392,23 +390,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-junk-to-gold
+        if [[ -d $ROOT/source/azerothcore/modules/mod-junk-to-gold ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-junk-to-gold
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
 
     if [[ $LEARN_SPELLS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-learnspells ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $SOURCE_LOCATION/azerothcore/modules/mod-learnspells
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-learnspells ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $ROOT/source/azerothcore/modules/mod-learnspells
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-learnspells
+            cd $ROOT/source/azerothcore/modules/mod-learnspells
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -421,23 +419,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-learnspells ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-learnspells
+        if [[ -d $ROOT/source/azerothcore/modules/mod-learnspells ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-learnspells
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
 
     if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-recruitafriend ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $ROOT/source/azerothcore/modules/mod-recruitafriend
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend
+            cd $ROOT/source/azerothcore/modules/mod-recruitafriend
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -450,23 +448,23 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend
+        if [[ -d $ROOT/source/azerothcore/modules/mod-recruitafriend ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-recruitafriend
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
 
     if [[ $WEEKEND_BONUS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus ]]; then
-            git clone --depth 1 --branch master https://github.com/noisiver/mod-weekendbonus.git $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-weekendbonus ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-weekendbonus.git $ROOT/source/azerothcore/modules/mod-weekendbonus
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
         else
-            cd $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus
+            cd $ROOT/source/azerothcore/modules/mod-weekendbonus
 
             git pull
             if [[ $? -ne 0 ]]; then
@@ -479,11 +477,11 @@ function get_source
             fi
         fi
     else
-        if [[ -d $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/modules/mod-weekendbonus
+        if [[ -d $ROOT/source/azerothcore/modules/mod-weekendbonus ]]; then
+            rm -rf $ROOT/source/azerothcore/modules/mod-weekendbonus
 
-            if [[ -d $SOURCE_LOCATION/build ]]; then
-                rm -rf $SOURCE_LOCATION/build
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
             fi
         fi
     fi
@@ -495,7 +493,7 @@ function compile_source
 {
     printf "${COLOR_GREEN}Compiling the source code...${COLOR_END}\n"
 
-    cd $SOURCE_LOCATION/tocloud9
+    cd $ROOT/source/tocloud9
 
     printf "${COLOR_ORANGE}Building libsidecar.${COLOR_END}\n"
 
@@ -504,15 +502,15 @@ function compile_source
         exit $?
     fi
 
-    cp $SOURCE_LOCATION/tocloud9/bin/libsidecar.so $SOURCE_LOCATION/azerothcore/deps/libsidecar/libsidecar.so
+    cp $ROOT/source/tocloud9/bin/libsidecar.so $ROOT/source/azerothcore/deps/libsidecar/libsidecar.so
     if [[ $? -ne 0 ]]; then
         exit $?
     fi
 
     if [[ $EUID != 0 ]]; then
-        sudo cp $SOURCE_LOCATION/tocloud9/bin/libsidecar.so /usr/lib/libsidecar.so
+        sudo cp $ROOT/source/tocloud9/bin/libsidecar.so /usr/lib/libsidecar.so
     else
-        cp $SOURCE_LOCATION/tocloud9/bin/libsidecar.so /usr/lib/libsidecar.so
+        cp $ROOT/source/tocloud9/bin/libsidecar.so /usr/lib/libsidecar.so
     fi
     if [[ $? -ne 0 ]]; then
         exit $?
@@ -520,10 +518,10 @@ function compile_source
 
     printf "${COLOR_ORANGE}Building worldserver.${COLOR_END}\n"
 
-    mkdir -p $SOURCE_LOCATION/azerothcore/build && cd $_
+    mkdir -p $ROOT/source/azerothcore/build && cd $_
 
     for i in {1..2}; do
-        cmake ../ -DCMAKE_INSTALL_PREFIX=$SOURCE_LOCATION/azerothcore -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="world-only" -DUSE_REAL_LIBSIDECAR=ON
+        cmake ../ -DCMAKE_INSTALL_PREFIX=$ROOT/source/azerothcore -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="world-only" -DUSE_REAL_LIBSIDECAR=ON
         if [[ $? -ne 0 ]]; then
             exit $?
         fi
@@ -545,23 +543,23 @@ function compile_source
         exit $?
     fi
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/azerothcore/bin/start.sh
-    echo "screen -AmdS world-$NODE_ID ./world.sh" >> $SOURCE_LOCATION/azerothcore/bin/start.sh
-    chmod +x $SOURCE_LOCATION/azerothcore/bin/start.sh
+    echo "#!/bin/bash" > $ROOT/source/azerothcore/bin/start.sh
+    echo "screen -AmdS world-$NODE_ID ./world.sh" >> $ROOT/source/azerothcore/bin/start.sh
+    chmod +x $ROOT/source/azerothcore/bin/start.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/azerothcore/bin/stop.sh
-    echo "screen -X -S \"world-$NODE_ID\" quit" >> $SOURCE_LOCATION/azerothcore/bin/stop.sh
-    chmod +x $SOURCE_LOCATION/azerothcore/bin/stop.sh
+    echo "#!/bin/bash" > $ROOT/source/azerothcore/bin/stop.sh
+    echo "screen -X -S \"world-$NODE_ID\" quit" >> $ROOT/source/azerothcore/bin/stop.sh
+    chmod +x $ROOT/source/azerothcore/bin/stop.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/azerothcore/bin/world.sh
-    echo "while :; do" >> $SOURCE_LOCATION/azerothcore/bin/world.sh
-    echo "  TC9_CONFIG_FILE=$SOURCE_LOCATION/azerothcore/bin/config.yml AC_WORLD_SERVER_PORT="$WORLD_PORT" ./worldserver" >> $SOURCE_LOCATION/azerothcore/bin/world.sh
-    echo "  if [[ \$? == 0 ]]; then" >> $SOURCE_LOCATION/azerothcore/bin/world.sh
-    echo "    break" >> $SOURCE_LOCATION/azerothcore/bin/world.sh
-    echo "  fi" >> $SOURCE_LOCATION/azerothcore/bin/world.sh
-    echo "  sleep 5" >> $SOURCE_LOCATION/azerothcore/bin/world.sh
-    echo "done" >> $SOURCE_LOCATION/azerothcore/bin/world.sh
-    chmod +x $SOURCE_LOCATION/azerothcore/bin/world.sh
+    echo "#!/bin/bash" > $ROOT/source/azerothcore/bin/world.sh
+    echo "while :; do" >> $ROOT/source/azerothcore/bin/world.sh
+    echo "  TC9_CONFIG_FILE=$ROOT/source/azerothcore/bin/config.yml AC_WORLD_SERVER_PORT="$WORLD_PORT" ./worldserver" >> $ROOT/source/azerothcore/bin/world.sh
+    echo "  if [[ \$? == 0 ]]; then" >> $ROOT/source/azerothcore/bin/world.sh
+    echo "    break" >> $ROOT/source/azerothcore/bin/world.sh
+    echo "  fi" >> $ROOT/source/azerothcore/bin/world.sh
+    echo "  sleep 5" >> $ROOT/source/azerothcore/bin/world.sh
+    echo "done" >> $ROOT/source/azerothcore/bin/world.sh
+    chmod +x $ROOT/source/azerothcore/bin/world.sh
 
     printf "${COLOR_GREEN}Finished compiling the source code...${COLOR_END}\n"
 }
@@ -574,7 +572,7 @@ function get_client_files
         VERSION=$(<$ROOT/client.version)
     fi
 
-    if [[ ! -d $SOURCE_LOCATION/azerothcore/bin/Cameras ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/bin/dbc ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/bin/maps ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/bin/mmaps ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/bin/vmaps ]]; then
+    if [[ ! -d $ROOT/source/azerothcore/bin/Cameras ]] || [[ ! -d $ROOT/source/azerothcore/bin/dbc ]] || [[ ! -d $ROOT/source/azerothcore/bin/maps ]] || [[ ! -d $ROOT/source/azerothcore/bin/mmaps ]] || [[ ! -d $ROOT/source/azerothcore/bin/vmaps ]]; then
         VERSION=0
     fi
 
@@ -583,34 +581,34 @@ function get_client_files
     if [[ $VERSION != $AVAILABLE_VERSION ]]; then
         printf "${COLOR_GREEN}Downloading the client data files...${COLOR_END}\n"
 
-        if [[ -d $SOURCE_LOCATION/azerothcore/bin/Cameras ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/bin/Cameras
+        if [[ -d $ROOT/source/azerothcore/bin/Cameras ]]; then
+            rm -rf $ROOT/source/azerothcore/bin/Cameras
         fi
-        if [[ -d $SOURCE_LOCATION/azerothcore/bin/dbc ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/bin/dbc
+        if [[ -d $ROOT/source/azerothcore/bin/dbc ]]; then
+            rm -rf $ROOT/source/azerothcore/bin/dbc
         fi
-        if [[ -d $SOURCE_LOCATION/azerothcore/bin/maps ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/bin/maps
+        if [[ -d $ROOT/source/azerothcore/bin/maps ]]; then
+            rm -rf $ROOT/source/azerothcore/bin/maps
         fi
-        if [[ -d $SOURCE_LOCATION/azerothcore/bin/mmaps ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/bin/mmaps
+        if [[ -d $ROOT/source/azerothcore/bin/mmaps ]]; then
+            rm -rf $ROOT/source/azerothcore/bin/mmaps
         fi
-        if [[ -d $SOURCE_LOCATION/azerothcore/bin/vmaps ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/bin/vmaps
+        if [[ -d $ROOT/source/azerothcore/bin/vmaps ]]; then
+            rm -rf $ROOT/source/azerothcore/bin/vmaps
         fi
 
-        curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $SOURCE_LOCATION/azerothcore/bin/data.zip
+        curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $ROOT/source/azerothcore/bin/data.zip
         if [[ $? -ne 0 ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/bin/data.zip
+            rm -rf $ROOT/source/azerothcore/bin/data.zip
             exit $?
         fi
 
-        unzip -o "$SOURCE_LOCATION/azerothcore/bin/data.zip" -d "$SOURCE_LOCATION/azerothcore/bin/"
+        unzip -o "$ROOT/source/azerothcore/bin/data.zip" -d "$ROOT/source/azerothcore/bin/"
         if [[ $? -ne 0 ]]; then
             exit $?
         fi
 
-        rm -rf $SOURCE_LOCATION/azerothcore/bin/data.zip
+        rm -rf $ROOT/source/azerothcore/bin/data.zip
 
         echo $AVAILABLE_VERSION > $ROOT/client.version
 
@@ -647,7 +645,7 @@ function import_database_files
         exit $?
     fi
 
-    if [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/base/db_auth ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/updates/db_auth ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/custom/db_auth ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/base/db_characters ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/updates/db_characters ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/base/db_world ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/updates/db_world ]] || [[ ! -d $SOURCE_LOCATION/azerothcore/data/sql/custom/db_world ]]; then
+    if [[ ! -d $ROOT/source/azerothcore/data/sql/base/db_auth ]] || [[ ! -d $ROOT/source/azerothcore/data/sql/updates/db_auth ]] || [[ ! -d $ROOT/source/azerothcore/data/sql/custom/db_auth ]] || [[ ! -d $ROOT/source/azerothcore/data/sql/base/db_characters ]] || [[ ! -d $ROOT/source/azerothcore/data/sql/updates/db_characters ]] || [[ ! -d $ROOT/source/azerothcore/data/sql/custom/db_characters ]] || [[ ! -d $ROOT/source/azerothcore/data/sql/base/db_world ]] || [[ ! -d $ROOT/source/azerothcore/data/sql/updates/db_world ]] || [[ ! -d $ROOT/source/azerothcore/data/sql/custom/db_world ]]; then
         printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
         rm -rf $MYSQL_CNF
@@ -677,28 +675,28 @@ function import_database_files
 
     # A temporary workaround
     printf "${COLOR_ORANGE}Downloading 000001_create_guild_invites_table.down.sql${COLOR_END}\n"
-    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000001_create_guild_invites_table.down.sql -o $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000001_create_guild_invites_table.down.sql
+    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000001_create_guild_invites_table.down.sql -o $ROOT/source/azerothcore/data/sql/custom/db_characters/000001_create_guild_invites_table.down.sql
     if [[ $? -ne 0 ]]; then
         rm -rf $MYSQL_CNF
         exit $?
     fi
 
     printf "${COLOR_ORANGE}Downloading 000001_create_guild_invites_table.up.sql${COLOR_END}\n"
-    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000001_create_guild_invites_table.up.sql -o $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000001_create_guild_invites_table.up.sql
+    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000001_create_guild_invites_table.up.sql -o $ROOT/source/azerothcore/data/sql/custom/db_characters/000001_create_guild_invites_table.up.sql
     if [[ $? -ne 0 ]]; then
         rm -rf $MYSQL_CNF
         exit $?
     fi
 
     printf "${COLOR_ORANGE}Downloading 000002_add_auto_increment_to_mail.up.sql${COLOR_END}\n"
-    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000002_add_auto_increment_to_mail.up.sql -o $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/000002_add_auto_increment_to_mail.up.sql
+    curl -s -S -f https://github.com/walkline/ToCloud9/raw/master/sql/characters/mysql/000002_add_auto_increment_to_mail.up.sql -o $ROOT/source/azerothcore/data/sql/custom/db_characters/000002_add_auto_increment_to_mail.up.sql
     if [[ $? -ne 0 ]]; then
         rm -rf $MYSQL_CNF
         exit $?
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/base/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/base/db_auth/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/base/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/base/db_auth/*.sql; do
             if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_AUTH -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                 continue;
@@ -716,8 +714,8 @@ function import_database_files
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/updates/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/updates/db_auth/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/updates/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/updates/db_auth/*.sql; do
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
@@ -741,8 +739,8 @@ function import_database_files
         done
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/custom/db_auth/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/custom/db_auth/*.sql; do
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
@@ -777,8 +775,8 @@ function import_database_files
         done
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/base/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/base/db_characters/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/base/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/base/db_characters/*.sql; do
             if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_CHARACTERS -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                 continue;
@@ -796,8 +794,8 @@ function import_database_files
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/updates/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/updates/db_characters/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/updates/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/updates/db_characters/*.sql; do
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
@@ -821,8 +819,8 @@ function import_database_files
         done
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/custom/db_characters/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/custom/db_characters/*.sql; do
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
@@ -857,8 +855,8 @@ function import_database_files
         done
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/base/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/base/db_world/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/base/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/base/db_world/*.sql; do
             if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                 printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
                 continue;
@@ -876,8 +874,8 @@ function import_database_files
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/updates/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/updates/db_world/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/updates/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/updates/db_world/*.sql; do
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
@@ -901,8 +899,8 @@ function import_database_files
         done
     fi
 
-    if [[ `ls -1 $SOURCE_LOCATION/azerothcore/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $SOURCE_LOCATION/azerothcore/data/sql/custom/db_world/*.sql; do
+    if [[ `ls -1 $ROOT/source/azerothcore/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/source/azerothcore/data/sql/custom/db_world/*.sql; do
             FILENAME=$(basename $f)
             HASH=($(sha1sum $f))
 
@@ -938,15 +936,15 @@ function import_database_files
     fi
 
     if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-auth/base ]] || [[ ! -d $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-world/base ]]; then
+        if [[ ! -d $ROOT/source/modules/mod-accountbound/data/sql/db-auth/base ]] || [[ ! -d $ROOT/source/modules/mod-accountbound/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The account bound module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             notify_telegram "An error occurred while trying to import the database files"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-auth/base/*.sql; do
+        if [[ `ls -1 $ROOT/source/modules/mod-accountbound/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/source/modules/mod-accountbound/data/sql/db-auth/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -972,8 +970,8 @@ function import_database_files
             done
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/modules/mod-accountbound/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $ROOT/source/modules/mod-accountbound/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/source/modules/mod-accountbound/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -1008,14 +1006,14 @@ function import_database_files
     fi
 
     if [[ $AHBOT_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot/data/sql/db-world/base ]]; then
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-ah-bot/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The auction house bot module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/azerothcore/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $ROOT/source/azerothcore/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/source/azerothcore/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -1047,14 +1045,14 @@ function import_database_files
     fi
 
     if [[ $APPRECIATION_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-appreciation/data/sql/db-world/base ]]; then
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-appreciation/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The appreciation module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/azerothcore/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $ROOT/source/azerothcore/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/source/azerothcore/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -1080,14 +1078,14 @@ function import_database_files
     fi
 
     if [[ $ASSISTANT_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-assistant/data/sql/db-world/base ]]; then
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-assistant/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The assistant module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/azerothcore/modules/mod-assistant/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $ROOT/source/azerothcore/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/source/azerothcore/modules/mod-assistant/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -1113,14 +1111,14 @@ function import_database_files
     fi
 
     if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-groupquests/data/sql/db-world/base ]]; then
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-groupquests/data/sql/db-world/base ]]; then
             printf "${COLOR_RED}The group quests module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/azerothcore/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
+        if [[ `ls -1 $ROOT/source/azerothcore/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/source/azerothcore/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -1146,14 +1144,14 @@ function import_database_files
     fi
 
     if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-        if [[ ! -d $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
+        if [[ ! -d $ROOT/source/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
             printf "${COLOR_RED}The recruit-a-friend module is enabled but the files aren't where they should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
         fi
 
-        if [[ `ls -1 $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $SOURCE_LOCATION/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
+        if [[ `ls -1 $ROOT/source/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/source/azerothcore/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
@@ -1208,7 +1206,7 @@ function copy_dbc_files
     if [[ `ls -1 $ROOT/dbc/*.dbc 2>/dev/null | wc -l` -gt 0 ]]; then
         for f in $ROOT/dbc/*.dbc; do
             printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
-            cp $f $SOURCE_LOCATION/azerothcore/bin/dbc/$(basename $f)
+            cp $f $ROOT/source/azerothcore/bin/dbc/$(basename $f)
             if [[ $? -ne 0 ]]; then
                 exit $?
             fi
@@ -1224,7 +1222,7 @@ function set_config
 {
     printf "${COLOR_GREEN}Updating the config files...${COLOR_END}\n"
 
-    if [[ ! -f $SOURCE_LOCATION/tocloud9/config.yml.example ]]; then
+    if [[ ! -f $ROOT/source/tocloud9/config.yml.example ]]; then
         printf "${COLOR_RED}The config file config.yml.example is missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
         exit $?
@@ -1232,22 +1230,22 @@ function set_config
 
     printf "${COLOR_ORANGE}Updating config.yml${COLOR_END}\n"
 
-    cp $SOURCE_LOCATION/tocloud9/config.yml.example $SOURCE_LOCATION/azerothcore/bin/config.yml
+    cp $ROOT/source/tocloud9/config.yml.example $ROOT/source/azerothcore/bin/config.yml
 
-    sed -i 's/  auth: \&defaultAuthDB.*/  auth: \&defaultAuthDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_AUTH'"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  characters: \&defaultCharactersDB.*/  characters: \&defaultCharactersDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_CHARACTERS'"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_WORLD'"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/nats: \&defaultNatsUrl.*/nats: \&defaultNatsUrl "nats:\/\/'$AUTH_ADDRESS':4222"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$AUTH_ADDRESS':8999/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$AUTH_ADDRESS':8991"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$AUTH_ADDRESS':8992"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$AUTH_ADDRESS':8995"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$AUTH_ADDRESS':8997"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  preferredHostname:.*/  preferredHostname: "'$LOCAL_ADDRESS'"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
-    sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$AUTH_ADDRESS':8996"/g' $SOURCE_LOCATION/azerothcore/bin/config.yml
+    sed -i 's/  auth: \&defaultAuthDB.*/  auth: \&defaultAuthDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_AUTH'"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  characters: \&defaultCharactersDB.*/  characters: \&defaultCharactersDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_CHARACTERS'"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_WORLD'"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/nats: \&defaultNatsUrl.*/nats: \&defaultNatsUrl "nats:\/\/'$AUTH_ADDRESS':4222"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$AUTH_ADDRESS':8999/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$AUTH_ADDRESS':8991"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$AUTH_ADDRESS':8992"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$AUTH_ADDRESS':8995"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$AUTH_ADDRESS':8997"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  preferredHostname:.*/  preferredHostname: "'$LOCAL_ADDRESS'"/g' $ROOT/source/azerothcore/bin/config.yml
+    sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$AUTH_ADDRESS':8996"/g' $ROOT/source/azerothcore/bin/config.yml
 
-    if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/worldserver.conf.dist ]]; then
+    if [[ ! -f $ROOT/source/azerothcore/etc/worldserver.conf.dist ]]; then
         printf "${COLOR_RED}The config file worldserver.conf.dist is missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
         exit $?
@@ -1255,71 +1253,71 @@ function set_config
 
     printf "${COLOR_ORANGE}Updating worldserver.conf${COLOR_END}\n"
 
-    cp $SOURCE_LOCATION/azerothcore/etc/worldserver.conf.dist $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    cp $ROOT/source/azerothcore/etc/worldserver.conf.dist $ROOT/source/azerothcore/etc/worldserver.conf
 
-    sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_AUTH'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_WORLD'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_CHARACTERS'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/RealmID =.*/RealmID = '$WORLD_ID'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/WorldServerPort =.*/WorldServerPort = '$DEFAULT_WORLD_PORT'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GameType =.*/GameType = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/RealmZone =.*/RealmZone = 2/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Expansion =.*/Expansion = 2/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/PlayerLimit =.*/PlayerLimit = 1000/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_AUTH'"/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_WORLD'"/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$MYSQL_DATABASES_CHARACTERS'"/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/RealmID =.*/RealmID = '$WORLD_ID'/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/WorldServerPort =.*/WorldServerPort = '$DEFAULT_WORLD_PORT'/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GameType =.*/GameType = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/RealmZone =.*/RealmZone = 2/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Expansion =.*/Expansion = 2/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/PlayerLimit =.*/PlayerLimit = 1000/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
     if [[ $PRELOAD_MAP_GRIDS == "true" ]]; then
-        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-        sed -i 's/GridUnload =.*/GridUnload = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+        sed -i 's/GridUnload =.*/GridUnload = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
 
         if [[ $SET_CREATURES_ACTIVE == "true" ]]; then
-            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
         else
-            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+            sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
         fi
     else
-        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-        sed -i 's/GridUnload =.*/GridUnload = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+        sed -i 's/GridUnload =.*/GridUnload = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
     fi
-    sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.Visible =.*/GM.Visible = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.Chat =.*/GM.Chat = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.StartLevel = .*/GM.StartLevel = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Cluster.Enabled=.*/Cluster.Enabled=1/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
-    sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps="'$AVAILABLE_MAPS'"/g' $SOURCE_LOCATION/azerothcore/etc/worldserver.conf
+    sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.Visible =.*/GM.Visible = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.Chat =.*/GM.Chat = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.StartLevel = .*/GM.StartLevel = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Cluster.Enabled=.*/Cluster.Enabled=1/g' $ROOT/source/azerothcore/etc/worldserver.conf
+    sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps="'$AVAILABLE_MAPS'"/g' $ROOT/source/azerothcore/etc/worldserver.conf
 
     if [[ $ACCOUNT_BOUND_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
+        if [[ ! -f $ROOT/source/etc/modules/mod_accountbound.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             notify_telegram "An error occurred while trying to update the config files"
@@ -1328,21 +1326,21 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_accountbound.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+        cp $ROOT/source/etc/modules/mod_accountbound.conf.dist $ROOT/source/etc/modules/mod_accountbound.conf
 
-        sed -i 's/AccountBound.Heirlooms =.*/AccountBound.Heirlooms = 1/g' $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+        sed -i 's/AccountBound.Heirlooms =.*/AccountBound.Heirlooms = 1/g' $ROOT/source/etc/modules/mod_accountbound.conf
     else
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_accountbound.conf.dist
+        if [[ -f $ROOT/source/etc/modules/mod_accountbound.conf.dist ]]; then
+            rm -rf $ROOT/source/etc/modules/mod_accountbound.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/etc/modules/mod_accountbound.conf ]]; then
-            rm -rf $SOURCE_LOCATION/etc/modules/mod_accountbound.conf
+        if [[ -f $ROOT/source/etc/modules/mod_accountbound.conf ]]; then
+            rm -rf $ROOT/source/etc/modules/mod_accountbound.conf
         fi
     fi
 
     if [[ $AHBOT_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf.dist ]]; then
+        if [[ ! -f $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_ahbot.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1350,26 +1348,26 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_ahbot.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
+        cp $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf.dist $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf
 
-        sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
-        sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$AHBOT_MAX_ITEM_LEVEL'/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = 1/g' $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = 1/g' $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = 1/g' $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = 1/g' $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = 1/g' $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf
+        sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$AHBOT_MAX_ITEM_LEVEL'/g' $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf
     else
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf.dist
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf.dist ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_ahbot.conf
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_ahbot.conf
         fi
     fi
 
     if [[ $APPRECIATION_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf.dist ]]; then
+        if [[ ! -f $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_appreciation.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1377,32 +1375,32 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_appreciation.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+        cp $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf.dist $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
 
         if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
-            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
-            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
         elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
-            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
         else
-            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 80/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
-            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 80/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
         fi
 
-        sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+        sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
     else
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf.dist
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf.dist ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_appreciation.conf
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
         fi
     fi
 
     if [[ $ASSISTANT_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf.dist ]]; then
+        if [[ ! -f $ROOT/source/azerothcore/etc/modules/mod_assistant.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1410,63 +1408,63 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_assistant.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        cp $ROOT/source/azerothcore/etc/modules/mod_assistant.conf.dist $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
 
-        sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         else
-            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         fi
-        sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.NameChange.Cost    =.*/Assistant.Utilities.NameChange.Cost    = 100000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.Customize.Cost     =.*/Assistant.Utilities.Customize.Cost     = 500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.RaceChange.Cost    =.*/Assistant.Utilities.RaceChange.Cost    = 5000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Utilities.FactionChange.Cost =.*/Assistant.Utilities.FactionChange.Cost = 10000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = 60/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = 250000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.NameChange.Cost    =.*/Assistant.Utilities.NameChange.Cost    = 100000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.Customize.Cost     =.*/Assistant.Utilities.Customize.Cost     = 500000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.RaceChange.Cost    =.*/Assistant.Utilities.RaceChange.Cost    = 5000000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Utilities.FactionChange.Cost =.*/Assistant.Utilities.FactionChange.Cost = 10000000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = 60/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = 250000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 0/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         else
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         fi
-        sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = 70/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = 1000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = 70/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = 1000000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 0/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         else
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         fi
-        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = 80/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = 2500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = 1000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = 2500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = 5000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = 7500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = 12500000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
-        sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = 25000000/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = 80/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = 2500000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = 1000000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = 2500000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = 5000000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = 7500000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = 12500000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = 1/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
+        sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = 25000000/g' $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
     else
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf.dist
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_assistant.conf.dist ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_assistant.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_assistant.conf
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_assistant.conf ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_assistant.conf
         fi
     fi
 
     if [[ $GUILD_FUNDS_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf.dist ]]; then
+        if [[ ! -f $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_guildfunds.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1474,22 +1472,22 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_guildfunds.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf
+        cp $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf.dist $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf
 
-        sed -i 's/GuildFunds.Looted =.*/GuildFunds.Looted = 10/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf
-        sed -i 's/GuildFunds.Quests =.*/GuildFunds.Quests = 3/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf
+        sed -i 's/GuildFunds.Looted =.*/GuildFunds.Looted = 10/g' $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf
+        sed -i 's/GuildFunds.Quests =.*/GuildFunds.Quests = 3/g' $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf
     else
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf.dist
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf.dist ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_guildfunds.conf
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_guildfunds.conf
         fi
     fi
 
     if [[ $LEARN_SPELLS_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf.dist ]]; then
+        if [[ ! -f $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1497,29 +1495,29 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_learnspells.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        cp $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf.dist $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
 
-        sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
-        sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = 0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = 1/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = 1/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = 1/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = 1/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 0/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 0/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 0/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = 0/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
+        sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = 0/g' $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
     else
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf.dist
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf.dist ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_learnspells.conf
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_learnspells.conf
         fi
     fi
 
     if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf.dist ]]; then
+        if [[ ! -f $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1527,26 +1525,26 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_recruitafriend.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
+        cp $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf.dist $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf
 
-        sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = 90/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = 7/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = 30/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
-        sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = 1/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = 90/g' $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = 7/g' $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = 30/g' $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = 1/g' $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = 1/g' $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf
+        sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = 1/g' $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf
     else
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf.dist
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf.dist ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_recruitafriend.conf
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_recruitafriend.conf
         fi
     fi
 
     if [[ $WEEKEND_BONUS_ENABLED == "true" ]]; then
-        if [[ ! -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf.dist ]]; then
+        if [[ ! -f $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf.dist ]]; then
             printf "${COLOR_RED}The config file mod_weekendbonus.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
             exit $?
@@ -1554,20 +1552,20 @@ function set_config
 
         printf "${COLOR_ORANGE}Updating mod_weekendbonus.conf${COLOR_END}\n"
 
-        cp $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf.dist $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
+        cp $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf.dist $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf
 
-        sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = 2.0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
-        sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = 2.0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
-        sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = 2/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
-        sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = 2.0/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
-        sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = 2/g' $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = 2.0/g' $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = 2.0/g' $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = 2/g' $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = 2.0/g' $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf
+        sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = 2/g' $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf
     else
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf.dist ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf.dist
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf.dist ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf.dist
         fi
 
-        if [[ -f $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf ]]; then
-            rm -rf $SOURCE_LOCATION/azerothcore/etc/modules/mod_weekendbonus.conf
+        if [[ -f $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf ]]; then
+            rm -rf $ROOT/source/azerothcore/etc/modules/mod_weekendbonus.conf
         fi
     fi
 
@@ -1578,14 +1576,14 @@ function start_server
 {
     printf "${COLOR_GREEN}Starting the server...${COLOR_END}\n"
 
-    if [[ ! -f $SOURCE_LOCATION/azerothcore/bin/start.sh ]] || [[ ! -f $SOURCE_LOCATION/azerothcore/bin/stop.sh ]]; then
+    if [[ ! -f $ROOT/source/azerothcore/bin/start.sh ]] || [[ ! -f $ROOT/source/azerothcore/bin/stop.sh ]]; then
         printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     else
         if [[ ! -z `screen -list | grep -E "world-$NODE_ID"` ]]; then
             printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
         else
-            cd $SOURCE_LOCATION/azerothcore/bin && ./start.sh
+            cd $ROOT/source/azerothcore/bin && ./start.sh
 
             if [[ ! -z `screen -list | grep -E "world-$NODE_ID"` ]]; then
                 printf "${COLOR_ORANGE}To access the screen of the worldserver, use the command ${COLOR_BLUE}screen -r world-$NODE_ID${COLOR_ORANGE}.${COLOR_END}\n"
@@ -1617,8 +1615,8 @@ function stop_server
             timeout 30 tail --pid=$PID -f /dev/null
         fi
 
-        if [[ -f $SOURCE_LOCATION/azerothcore/bin/stop.sh ]]; then
-            cd $SOURCE_LOCATION/azerothcore/bin && ./stop.sh
+        if [[ -f $ROOT/source/azerothcore/bin/stop.sh ]]; then
+            cd $ROOT/source/azerothcore/bin && ./stop.sh
         fi
     fi
 

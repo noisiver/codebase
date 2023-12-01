@@ -56,8 +56,6 @@ fi
 
 source "$ROOT/config.sh"
 
-SOURCE_LOCATION="$ROOT/source"
-
 function install_packages
 {
     PACKAGES=("git" "screen" "golang-go" "redis")
@@ -111,13 +109,13 @@ function get_source
 {
     printf "${COLOR_GREEN}Downloading the source code...${COLOR_END}\n"
 
-    if [[ ! -d $SOURCE_LOCATION ]]; then
-        git clone --recursive --depth 1 --branch $SOURCE_BRANCH $SOURCE_REPOSITORY $SOURCE_LOCATION
+    if [[ ! -d $ROOT/source ]]; then
+        git clone --recursive --depth 1 --branch $SOURCE_BRANCH $SOURCE_REPOSITORY $ROOT/source
         if [[ $? -ne 0 ]]; then
             exit $?
         fi
     else
-        cd $SOURCE_LOCATION
+        cd $ROOT/source
 
         git pull
         if [[ $? -ne 0 ]]; then
@@ -142,7 +140,7 @@ function compile_source
 {
     printf "${COLOR_GREEN}Compiling the source code...${COLOR_END}\n"
 
-    cd $SOURCE_LOCATION
+    cd $ROOT/source
 
     printf "${COLOR_ORANGE}Building authserver.${COLOR_END}\n"
     go build -o bin/authserver apps/authserver/cmd/authserver/main.go
@@ -192,92 +190,92 @@ function compile_source
         exit $?
     fi
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile nats-server.log -dmS nats-server ./nats-server.sh" >> $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile servers-registry.log -dmS servers-registry ./servers-registry.sh" >> $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile guidserver.log -dmS guidserver ./guidserver.sh" >> $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile authserver.log -dmS authserver ./authserver.sh" >> $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile charserver.log -dmS charserver ./charserver.sh" >> $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile chatserver.log -dmS chatserver ./chatserver.sh" >> $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile game-load-balancer.log -dmS game-load-balancer ./game-load-balancer.sh" >> $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile guildserver.log -dmS guildserver ./guildserver.sh" >> $SOURCE_LOCATION/bin/start.sh
-    echo "screen -L -Logfile mailserver.log -dmS mailserver ./mailserver.sh" >> $SOURCE_LOCATION/bin/start.sh
-    chmod +x $SOURCE_LOCATION/bin/start.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile nats-server.log -dmS nats-server ./nats-server.sh" >> $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile servers-registry.log -dmS servers-registry ./servers-registry.sh" >> $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile guidserver.log -dmS guidserver ./guidserver.sh" >> $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile authserver.log -dmS authserver ./authserver.sh" >> $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile charserver.log -dmS charserver ./charserver.sh" >> $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile chatserver.log -dmS chatserver ./chatserver.sh" >> $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile game-load-balancer.log -dmS game-load-balancer ./game-load-balancer.sh" >> $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile guildserver.log -dmS guildserver ./guildserver.sh" >> $ROOT/source/bin/start.sh
+    echo "screen -L -Logfile mailserver.log -dmS mailserver ./mailserver.sh" >> $ROOT/source/bin/start.sh
+    chmod +x $ROOT/source/bin/start.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/nats-server.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/nats-server.sh
-    echo "    nats-server" >> $SOURCE_LOCATION/bin/nats-server.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/nats-server.sh
-    echo "done" >> $SOURCE_LOCATION/bin/nats-server.sh
-    chmod +x $SOURCE_LOCATION/bin/nats-server.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/nats-server.sh
+    echo "while :; do" >> $ROOT/source/bin/nats-server.sh
+    echo "    nats-server" >> $ROOT/source/bin/nats-server.sh
+    echo "    sleep 5" >> $ROOT/source/bin/nats-server.sh
+    echo "done" >> $ROOT/source/bin/nats-server.sh
+    chmod +x $ROOT/source/bin/nats-server.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/servers-registry.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/servers-registry.sh
-    echo "    ./servers-registry" >> $SOURCE_LOCATION/bin/servers-registry.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/servers-registry.sh
-    echo "done" >> $SOURCE_LOCATION/bin/servers-registry.sh
-    chmod +x $SOURCE_LOCATION/bin/servers-registry.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/servers-registry.sh
+    echo "while :; do" >> $ROOT/source/bin/servers-registry.sh
+    echo "    ./servers-registry" >> $ROOT/source/bin/servers-registry.sh
+    echo "    sleep 5" >> $ROOT/source/bin/servers-registry.sh
+    echo "done" >> $ROOT/source/bin/servers-registry.sh
+    chmod +x $ROOT/source/bin/servers-registry.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/guidserver.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/guidserver.sh
-    echo "    ./guidserver" >> $SOURCE_LOCATION/bin/guidserver.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/guidserver.sh
-    echo "done" >> $SOURCE_LOCATION/bin/guidserver.sh
-    chmod +x $SOURCE_LOCATION/bin/guidserver.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/guidserver.sh
+    echo "while :; do" >> $ROOT/source/bin/guidserver.sh
+    echo "    ./guidserver" >> $ROOT/source/bin/guidserver.sh
+    echo "    sleep 5" >> $ROOT/source/bin/guidserver.sh
+    echo "done" >> $ROOT/source/bin/guidserver.sh
+    chmod +x $ROOT/source/bin/guidserver.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/authserver.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/authserver.sh
-    echo "    ./authserver" >> $SOURCE_LOCATION/bin/authserver.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/authserver.sh
-    echo "done" >> $SOURCE_LOCATION/bin/authserver.sh
-    chmod +x $SOURCE_LOCATION/bin/authserver.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/authserver.sh
+    echo "while :; do" >> $ROOT/source/bin/authserver.sh
+    echo "    ./authserver" >> $ROOT/source/bin/authserver.sh
+    echo "    sleep 5" >> $ROOT/source/bin/authserver.sh
+    echo "done" >> $ROOT/source/bin/authserver.sh
+    chmod +x $ROOT/source/bin/authserver.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/charserver.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/charserver.sh
-    echo "    ./charserver" >> $SOURCE_LOCATION/bin/charserver.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/charserver.sh
-    echo "done" >> $SOURCE_LOCATION/bin/charserver.sh
-    chmod +x $SOURCE_LOCATION/bin/charserver.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/charserver.sh
+    echo "while :; do" >> $ROOT/source/bin/charserver.sh
+    echo "    ./charserver" >> $ROOT/source/bin/charserver.sh
+    echo "    sleep 5" >> $ROOT/source/bin/charserver.sh
+    echo "done" >> $ROOT/source/bin/charserver.sh
+    chmod +x $ROOT/source/bin/charserver.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/chatserver.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/chatserver.sh
-    echo "    ./chatserver" >> $SOURCE_LOCATION/bin/chatserver.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/chatserver.sh
-    echo "done" >> $SOURCE_LOCATION/bin/chatserver.sh
-    chmod +x $SOURCE_LOCATION/bin/chatserver.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/chatserver.sh
+    echo "while :; do" >> $ROOT/source/bin/chatserver.sh
+    echo "    ./chatserver" >> $ROOT/source/bin/chatserver.sh
+    echo "    sleep 5" >> $ROOT/source/bin/chatserver.sh
+    echo "done" >> $ROOT/source/bin/chatserver.sh
+    chmod +x $ROOT/source/bin/chatserver.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/game-load-balancer.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/game-load-balancer.sh
-    echo "    ./game-load-balancer" >> $SOURCE_LOCATION/bin/game-load-balancer.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/game-load-balancer.sh
-    echo "done" >> $SOURCE_LOCATION/bin/game-load-balancer.sh
-    chmod +x $SOURCE_LOCATION/bin/game-load-balancer.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/game-load-balancer.sh
+    echo "while :; do" >> $ROOT/source/bin/game-load-balancer.sh
+    echo "    ./game-load-balancer" >> $ROOT/source/bin/game-load-balancer.sh
+    echo "    sleep 5" >> $ROOT/source/bin/game-load-balancer.sh
+    echo "done" >> $ROOT/source/bin/game-load-balancer.sh
+    chmod +x $ROOT/source/bin/game-load-balancer.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/guildserver.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/guildserver.sh
-    echo "    ./guildserver" >> $SOURCE_LOCATION/bin/guildserver.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/guildserver.sh
-    echo "done" >> $SOURCE_LOCATION/bin/guildserver.sh
-    chmod +x $SOURCE_LOCATION/bin/guildserver.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/guildserver.sh
+    echo "while :; do" >> $ROOT/source/bin/guildserver.sh
+    echo "    ./guildserver" >> $ROOT/source/bin/guildserver.sh
+    echo "    sleep 5" >> $ROOT/source/bin/guildserver.sh
+    echo "done" >> $ROOT/source/bin/guildserver.sh
+    chmod +x $ROOT/source/bin/guildserver.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/mailserver.sh
-    echo "while :; do" >> $SOURCE_LOCATION/bin/mailserver.sh
-    echo "    ./mailserver" >> $SOURCE_LOCATION/bin/mailserver.sh
-    echo "    sleep 5" >> $SOURCE_LOCATION/bin/mailserver.sh
-    echo "done" >> $SOURCE_LOCATION/bin/mailserver.sh
-    chmod +x $SOURCE_LOCATION/bin/mailserver.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/mailserver.sh
+    echo "while :; do" >> $ROOT/source/bin/mailserver.sh
+    echo "    ./mailserver" >> $ROOT/source/bin/mailserver.sh
+    echo "    sleep 5" >> $ROOT/source/bin/mailserver.sh
+    echo "done" >> $ROOT/source/bin/mailserver.sh
+    chmod +x $ROOT/source/bin/mailserver.sh
 
-    echo "#!/bin/bash" > $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"nats-server\" quit && pkill \"nats-server\"" >> $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"servers-registry\" quit" >> $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"guidserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"authserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"charserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"chatserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"game-load-balancer\" quit" >> $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"guildserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
-    echo "screen -X -S \"mailserver\" quit" >> $SOURCE_LOCATION/bin/stop.sh
-    chmod +x $SOURCE_LOCATION/bin/stop.sh
+    echo "#!/bin/bash" > $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"nats-server\" quit && pkill \"nats-server\"" >> $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"servers-registry\" quit" >> $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"guidserver\" quit" >> $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"authserver\" quit" >> $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"charserver\" quit" >> $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"chatserver\" quit" >> $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"game-load-balancer\" quit" >> $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"guildserver\" quit" >> $ROOT/source/bin/stop.sh
+    echo "screen -X -S \"mailserver\" quit" >> $ROOT/source/bin/stop.sh
+    chmod +x $ROOT/source/bin/stop.sh
 
     printf "${COLOR_GREEN}Finished compiling the source code...${COLOR_END}\n"
 }
@@ -286,7 +284,7 @@ function set_config
 {
     printf "${COLOR_GREEN}Updating the config files...${COLOR_END}\n"
 
-    if [[ ! -f $SOURCE_LOCATION/config.yml.example ]]; then
+    if [[ ! -f $ROOT/source/config.yml.example ]]; then
         printf "${COLOR_RED}The config file config.yml.example is missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
         exit $?
@@ -294,19 +292,19 @@ function set_config
 
     printf "${COLOR_ORANGE}Updating config.yml${COLOR_END}\n"
 
-    cp $SOURCE_LOCATION/config.yml.example $SOURCE_LOCATION/bin/config.yml
+    cp $ROOT/source/config.yml.example $ROOT/source/bin/config.yml
 
-    sed -i 's/  auth: \&defaultAuthDB.*/  auth: \&defaultAuthDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_AUTH'"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  characters: \&defaultCharactersDB.*/  characters: \&defaultCharactersDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_CHARACTERS'"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_WORLD'"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$LOCAL_ADDRESS':8999/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$LOCAL_ADDRESS':8991"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$LOCAL_ADDRESS':8992"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$LOCAL_ADDRESS':8995"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$LOCAL_ADDRESS':8997"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  preferredHostname:.*/  preferredHostname: "'$LOCAL_ADDRESS'"/g' $SOURCE_LOCATION/bin/config.yml
-    sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$LOCAL_ADDRESS':8996"/g' $SOURCE_LOCATION/bin/config.yml
+    sed -i 's/  auth: \&defaultAuthDB.*/  auth: \&defaultAuthDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_AUTH'"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  characters: \&defaultCharactersDB.*/  characters: \&defaultCharactersDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_CHARACTERS'"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$MYSQL_USERNAME':'$MYSQL_PASSWORD'@tcp('$MYSQL_HOSTNAME':'$MYSQL_PORT')\/'$MYSQL_DATABASE_WORLD'"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$LOCAL_ADDRESS':8999/g' $ROOT/source/bin/config.yml
+    sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$LOCAL_ADDRESS':8991"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$LOCAL_ADDRESS':8992"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$LOCAL_ADDRESS':8995"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$LOCAL_ADDRESS':8997"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  preferredHostname:.*/  preferredHostname: "'$LOCAL_ADDRESS'"/g' $ROOT/source/bin/config.yml
+    sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$LOCAL_ADDRESS':8996"/g' $ROOT/source/bin/config.yml
 
     printf "${COLOR_GREEN}Finished updating the config files...${COLOR_END}\n"
 }
@@ -315,14 +313,14 @@ function start_server
 {
     printf "${COLOR_GREEN}Starting the server...${COLOR_END}\n"
 
-    if [[ ! -f $SOURCE_LOCATION/bin/start.sh ]] || [[ ! -f $SOURCE_LOCATION/bin/stop.sh ]]; then
+    if [[ ! -f $ROOT/source/bin/start.sh ]] || [[ ! -f $ROOT/source/bin/stop.sh ]]; then
         printf "${COLOR_RED}The required binaries are missing.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
     else
         if [[ ! -z `screen -list | grep -E "nats-server"` ]] || [[ ! -z `screen -list | grep -E "servers-registry"` ]] || [[ ! -z `screen -list | grep -E "guidserver"` ]] || [[ ! -z `screen -list | grep -E "authserver"` ]] || [[ ! -z `screen -list | grep -E "charserver"` ]] || [[ ! -z `screen -list | grep -E "chatserver"` ]] || [[ ! -z `screen -list | grep -E "game-load-balancer"` ]] || [[ ! -z `screen -list | grep -E "guildserver"` ]] || [[ ! -z `screen -list | grep -E "mailserver"` ]]; then
             printf "${COLOR_RED}The server is already running.${COLOR_END}\n"
         else
-            cd $SOURCE_LOCATION/bin && ./start.sh
+            cd $ROOT/source/bin && ./start.sh
         fi
     fi
 
@@ -336,8 +334,8 @@ function stop_server
     if [[ -z `screen -list | grep -E "nats-server"` ]] && [[ -z `screen -list | grep -E "servers-registry"` ]] && [[ -z `screen -list | grep -E "guidserver"` ]] && [[ -z `screen -list | grep -E "authserver"` ]] && [[ -z `screen -list | grep -E "charserver"` ]] && [[ -z `screen -list | grep -E "chatserver"` ]] && [[ -z `screen -list | grep -E "game-load-balancer"` ]] && [[ -z `screen -list | grep -E "guildserver"` ]] && [[ -z `screen -list | grep -E "mailserver"` ]]; then
         printf "${COLOR_RED}The server is not running.${COLOR_END}\n"
     else
-        if [[ -f $SOURCE_LOCATION/bin/stop.sh ]]; then
-            cd $SOURCE_LOCATION/bin && ./stop.sh
+        if [[ -f $ROOT/source/bin/stop.sh ]]; then
+            cd $ROOT/source/bin && ./stop.sh
         fi
     fi
 

@@ -78,6 +78,10 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "GROUP_QUESTS_ENABLED=\"false\"" >> $ROOT/config.sh
     echo "JUNK_TO_GOLD_ENABLED=\"false\"" >> $ROOT/config.sh
     echo "LEARN_SPELLS_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "PLAYER_BOTS_ENABLED=\"false\"" >> $ROOT/config.sh
+    echo "PLAYER_BOTS_DATABASE=\"acore_playerbots\"" >> $ROOT/config.sh
+    echo "PLAYER_BOTS_RANDOM_BOTS=\"500\"" >> $ROOT/config.sh
+    echo "PLAYER_BOTS_RANDOM_BOT_ACCOUNTS=\"200\"" >> $ROOT/config.sh
     echo "RECRUIT_A_FRIEND_ENABLED=\"false\"" >> $ROOT/config.sh
     echo "WEEKEND_BONUS_ENABLED=\"false\"" >> $ROOT/config.sh
     echo "TELEGRAM_TOKEN=\"\"" >> $ROOT/config.sh
@@ -434,6 +438,38 @@ function get_source
             fi
         fi
 
+        if [[ $PLAYER_BOTS_ENABLED == "true" ]]; then
+            if [[ ! -d $ROOT/source/modules/mod-playerbots ]]; then
+                git clone --depth 1 --branch master https://github.com/liyunfan1223/mod-playerbots.git $ROOT/source/modules/mod-playerbots
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-playerbots"
+                    exit $?
+                fi
+            else
+                cd $ROOT/source/modules/mod-playerbots
+
+                git pull
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-playerbots"
+                    exit $?
+                fi
+
+                git reset --hard origin/master
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-playerbots"
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d $ROOT/source/modules/mod-playerbots ]]; then
+                rm -rf $ROOT/source/modules/mod-playerbots
+
+                if [[ -d $ROOT/source/build ]]; then
+                    rm -rf $ROOT/source/build
+                fi
+            fi
+        fi
+
         if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             if [[ ! -d $ROOT/source/modules/mod-recruitafriend ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $ROOT/source/modules/mod-recruitafriend
@@ -676,6 +712,15 @@ function import_database_files
             notify_telegram $ERROR_IMPORT_DATABASE
             rm -rf $MYSQL_CNF
             exit $?
+        fi
+
+        if [[ $PLAYER_BOTS_ENABLED == "true" ]]; then
+            if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$PLAYER_BOTS_DATABASE'"` ]] && [[ $1 == "world" || $1 == "both" ]]; then
+                printf "${COLOR_RED}The database named $PLAYER_BOTS_DATABASE is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
+                notify_telegram $ERROR_IMPORT_DATABASE
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
         fi
     fi
 
@@ -1203,6 +1248,86 @@ function import_database_files
             fi
         fi
 
+        if [[ $PLAYER_BOTS_ENABLED == "true" ]]; then
+            if [[ ! -d $ROOT/source/modules/mod-playerbots/sql/characters ]] || [[ ! -d $ROOT/source/modules/mod-playerbots/sql/world ]]; then
+                printf "${COLOR_RED}The playerbots module is enabled but the files aren't where they should be.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram $ERROR_IMPORT_DATABASE
+                exit $?
+            fi
+
+            if [[ `ls -1 $ROOT/source/modules/mod-playerbots/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $ROOT/source/modules/mod-playerbots/sql/characters/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_CHARACTERS -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram $ERROR_IMPORT_DATABASE
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram $ERROR_IMPORT_DATABASE
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+
+            if [[ `ls -1 $ROOT/source/modules/mod-playerbots/sql/playerbots/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $ROOT/source/modules/mod-playerbots/sql/playerbots/base/*.sql; do
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $PLAYER_BOTS_DATABASE -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $PLAYER_BOTS_DATABASE < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram $ERROR_IMPORT_DATABASE
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+
+            if [[ `ls -1 $ROOT/source/modules/mod-playerbots/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $ROOT/source/modules/mod-playerbots/sql/world/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                        continue;
+                    fi
+
+                    printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram $ERROR_IMPORT_DATABASE
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram $ERROR_IMPORT_DATABASE
+                        rm -rf $MYSQL_CNF
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
         if [[ $RECRUIT_A_FRIEND_ENABLED == "true" ]]; then
             if [[ ! -d $ROOT/source/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
                 printf "${COLOR_RED}The recruit-a-friend module is enabled but the files aren't where they should be.${COLOR_END}\n"
@@ -1634,6 +1759,57 @@ function set_config
 
             if [[ -f $ROOT/source/etc/modules/mod_recruitafriend.conf ]]; then
                 rm -rf $ROOT/source/etc/modules/mod_recruitafriend.conf
+            fi
+        fi
+
+        if [[ $PLAYER_BOTS_ENABLED == "true" ]]; then
+            if [[ ! -f $ROOT/source/etc/modules/playerbots.conf.dist ]]; then
+                printf "${COLOR_RED}The config file playerbots.conf.dist is missing.${COLOR_END}\n"
+                printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+                notify_telegram $ERROR_UPDATE_CONFIG
+                exit $?
+            fi
+
+            printf "${COLOR_ORANGE}Updating playerbots.conf${COLOR_END}\n"
+
+            cp $ROOT/source/etc/modules/playerbots.conf.dist $ROOT/source/etc/modules/playerbots.conf
+
+            sed -i 's/AiPlayerbot.MinRandomBots =.*/AiPlayerbot.MinRandomBots = '$PLAYER_BOTS_RANDOM_BOTS'/g' $ROOT/source/etc/modules/playerbots.conf
+            sed -i 's/AiPlayerbot.MaxRandomBots =.*/AiPlayerbot.MaxRandomBots = '$PLAYER_BOTS_RANDOM_BOTS'/g' $ROOT/source/etc/modules/playerbots.conf
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+                sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 60/g' $ROOT/source/etc/modules/playerbots.conf
+            elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 70/g' $ROOT/source/etc/modules/playerbots.conf
+            else
+                sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 80/g' $ROOT/source/etc/modules/playerbots.conf
+            fi
+            sed -i 's/AiPlayerbot.RandomBotAccountCount =.*/AiPlayerbot.RandomBotAccountCount = '$PLAYER_BOTS_RANDOM_BOT_ACCOUNTS'/g' $ROOT/source/etc/modules/playerbots.conf
+            sed -i 's/AiPlayerbot.DisableRandomLevels =.*/AiPlayerbot.DisableRandomLevels = 1/g' $ROOT/source/etc/modules/playerbots.conf
+            sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = 1/g' $ROOT/source/etc/modules/playerbots.conf
+            sed -i 's/AiPlayerbot.RandomBotGroupNearby =.*/AiPlayerbot.RandomBotGroupNearby = 1/g' $ROOT/source/etc/modules/playerbots.conf
+            sed -i 's/AiPlayerbot.EquipmentPersistence =.*/AiPlayerbot.EquipmentPersistence = 1/g' $ROOT/source/etc/modules/playerbots.conf
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+                sed -i 's/AiPlayerbot.EquipmentPersistenceLevel =.*/AiPlayerbot.EquipmentPersistenceLevel = 60/g' $ROOT/source/etc/modules/playerbots.conf
+            elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/AiPlayerbot.EquipmentPersistenceLevel =.*/AiPlayerbot.EquipmentPersistenceLevel = 70/g' $ROOT/source/etc/modules/playerbots.conf
+            else
+                sed -i 's/AiPlayerbot.EquipmentPersistenceLevel =.*/AiPlayerbot.EquipmentPersistenceLevel = 80/g' $ROOT/source/etc/modules/playerbots.conf
+            fi
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+                sed -i 's/AiPlayerbot.RandomBotMaps =.*/AiPlayerbot.RandomBotMaps = 0,1/g' $ROOT/source/etc/modules/playerbots.conf
+            elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/AiPlayerbot.RandomBotMaps =.*/AiPlayerbot.RandomBotMaps = 0,1,530/g' $ROOT/source/etc/modules/playerbots.conf
+            else
+                sed -i 's/AiPlayerbot.RandomBotMaps =.*/AiPlayerbot.RandomBotMaps = 0,1,530,571/g' $ROOT/source/etc/modules/playerbots.conf
+            fi
+            sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$MYSQL_HOSTNAME';'$MYSQL_PORT';'$MYSQL_USERNAME';'$MYSQL_PASSWORD';'$PLAYER_BOTS_DATABASE'"/g' $ROOT/source/etc/modules/playerbots.conf
+        else
+            if [[ -f $ROOT/source/etc/modules/playerbots.conf.dist ]]; then
+                rm -rf $ROOT/source/etc/modules/playerbots.conf.dist
+            fi
+
+            if [[ -f $ROOT/source/etc/modules/playerbots.conf ]]; then
+                rm -rf $ROOT/source/etc/modules/playerbots.conf
             fi
         fi
 
