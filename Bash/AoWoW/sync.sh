@@ -40,6 +40,7 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "MYSQL_DATABASES_WORLD=\"acore_world\"" >> $ROOT/config.sh
     echo "SOURCE_REPOSITORY=\"https://github.com/azerothcore/azerothcore-wotlk.git\"" >> $ROOT/config.sh
     echo "SOURCE_BRANCH=\"master\"" >> $ROOT/config.sh
+    echo "GROUP_QUESTS_ENABLED=\"false\"" >> $ROOT/config.sh
     echo "AOWOW_LOCATION=\"/var/www/html/database\"" >> $ROOT/config.sh
     exit $?
 fi
@@ -104,6 +105,35 @@ function get_source
         git submodule update
         if [[ $? -ne 0 ]]; then
             exit $?
+        fi
+    fi
+
+    if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
+        if [[ ! -d $ROOT/source/modules/mod-groupquests ]]; then
+            git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $ROOT/source/modules/mod-groupquests
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        else
+            cd $ROOT/source/modules/mod-groupquests
+
+            git pull
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+
+            git reset --hard origin/master
+            if [[ $? -ne 0 ]]; then
+                exit $?
+            fi
+        fi
+    else
+        if [[ -d $ROOT/source/modules/mod-groupquests ]]; then
+            rm -rf $ROOT/source/modules/mod-groupquests
+
+            if [[ -d $ROOT/source/build ]]; then
+                rm -rf $ROOT/source/build
+            fi
         fi
     fi
 }
@@ -215,6 +245,39 @@ function import_database
                 exit $?
             fi
         done
+    fi
+
+    if [[ $GROUP_QUESTS_ENABLED == "true" ]]; then
+        if [[ ! -d $ROOT/source/modules/mod-groupquests/data/sql/db-world/base ]]; then
+            printf "${COLOR_RED}The group quests module is enabled but the files aren't where they should be.${COLOR_END}\n"
+            printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
+            exit $?
+        fi
+
+        if [[ `ls -1 $ROOT/source/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/source/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
+                FILENAME=$(basename $f)
+                HASH=($(sha1sum $f))
+
+                if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                    printf "${COLOR_ORANGE}Skipping "$(basename $f)"${COLOR_END}\n"
+                    continue;
+                fi
+
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                if [[ $? -ne 0 ]]; then
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
     fi
 
     if [[ ! -f $AOWOW_LOCATION/setup/spell_learn_spell.sql ]]; then
