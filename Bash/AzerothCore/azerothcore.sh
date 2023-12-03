@@ -129,7 +129,7 @@ function install_packages
             apt-get --yes update
         fi
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_INSTALL_PACKAGES
+            notify_telegram "$ERROR_INSTALL_PACKAGES"
             exit $?
         fi
 
@@ -139,7 +139,7 @@ function install_packages
             apt-get --yes install ${INSTALL[*]}
         fi
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_INSTALL_PACKAGES
+            notify_telegram "$ERROR_INSTALL_PACKAGES"
             exit $?
         fi
     fi
@@ -152,7 +152,7 @@ function get_source
     if [[ ! -d $ROOT/source ]]; then
         git clone --recursive --depth 1 --branch $SOURCE_BRANCH $SOURCE_REPOSITORY $ROOT/source
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_DOWNLOAD_SOURCE
+            notify_telegram "$ERROR_DOWNLOAD_SOURCE"
             exit $?
         fi
     else
@@ -160,19 +160,19 @@ function get_source
 
         git pull
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_UPDATE_SOURCE
+            notify_telegram "$ERROR_UPDATE_SOURCE"
             exit $?
         fi
 
         git reset --hard origin/$SOURCE_BRANCH
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_UPDATE_SOURCE
+            notify_telegram "$ERROR_UPDATE_SOURCE"
             exit $?
         fi
 
         git submodule update
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_UPDATE_SOURCE
+            notify_telegram "$ERROR_UPDATE_SOURCE"
             exit $?
         fi
     fi
@@ -182,7 +182,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-accountbound ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-accountbound.git $ROOT/source/modules/mod-accountbound
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-accountbound"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-accountbound"
                     exit $?
                 fi
             else
@@ -190,13 +190,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-accountbound"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-accountbound"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-accountbound"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-accountbound"
                     exit $?
                 fi
             fi
@@ -214,7 +214,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-ah-bot ]]; then
                 git clone --depth 1 --branch master https://github.com/azerothcore/mod-ah-bot.git $ROOT/source/modules/mod-ah-bot
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-ah-bot"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-ah-bot"
                     exit $?
                 fi
             else
@@ -222,13 +222,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-ah-bot"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-ah-bot"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-ah-bot"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-ah-bot"
                     exit $?
                 fi
             fi
@@ -246,7 +246,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-appreciation ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-appreciation.git $ROOT/source/modules/mod-appreciation
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-assistant"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-assistant"
                     exit $?
                 fi
             else
@@ -254,13 +254,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-assistant"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-assistant"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-assistant"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-assistant"
                     exit $?
                 fi
             fi
@@ -278,7 +278,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-assistant ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-assistant.git $ROOT/source/modules/mod-assistant
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-assistant"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-assistant"
                     exit $?
                 fi
             else
@@ -286,13 +286,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-assistant"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-assistant"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-assistant"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-assistant"
                     exit $?
                 fi
             fi
@@ -310,7 +310,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-guildfunds ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-guildfunds.git $ROOT/source/modules/mod-guildfunds
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-guildfunds"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-guildfunds"
                     exit $?
                 fi
             else
@@ -318,13 +318,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-guildfunds"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-guildfunds"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-guildfunds"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-guildfunds"
                     exit $?
                 fi
             fi
@@ -342,7 +342,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-groupquests ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-groupquests.git $ROOT/source/modules/mod-groupquests
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-groupquests"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-groupquests"
                     exit $?
                 fi
             else
@@ -350,13 +350,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-groupquests"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-groupquests"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-groupquests"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-groupquests"
                     exit $?
                 fi
             fi
@@ -374,7 +374,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-junk-to-gold ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-junk-to-gold.git $ROOT/source/modules/mod-junk-to-gold
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-junk-to-gold"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-junk-to-gold"
                     exit $?
                 fi
             else
@@ -382,13 +382,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-junk-to-gold"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-junk-to-gold"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-junk-to-gold"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-junk-to-gold"
                     exit $?
                 fi
             fi
@@ -406,7 +406,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-learnspells ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $ROOT/source/modules/mod-learnspells
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-learnspells"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-learnspells"
                     exit $?
                 fi
             else
@@ -414,13 +414,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-learnspells"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-learnspells"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-learnspells"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-learnspells"
                     exit $?
                 fi
             fi
@@ -438,7 +438,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-recruitafriend ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-recruitafriend.git $ROOT/source/modules/mod-recruitafriend
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-recruitafriend"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-recruitafriend"
                     exit $?
                 fi
             else
@@ -446,13 +446,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-recruitafriend"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-recruitafriend"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-recruitafriend"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-recruitafriend"
                     exit $?
                 fi
             fi
@@ -470,7 +470,7 @@ function get_source
             if [[ ! -d $ROOT/source/modules/mod-weekendbonus ]]; then
                 git clone --depth 1 --branch master https://github.com/noisiver/mod-weekendbonus.git $ROOT/source/modules/mod-weekendbonus
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_DOWNLOAD_SOURCE_MODULE" mod-weekendbonus"
+                    notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-weekendbonus"
                     exit $?
                 fi
             else
@@ -478,13 +478,13 @@ function get_source
 
                 git pull
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-weekendbonus"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-weekendbonus"
                     exit $?
                 fi
 
                 git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram ""$ERROR_UPDATE_SOURCE_MODULE" mod-weekendbonus"
+                    notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-weekendbonus"
                     exit $?
                 fi
             fi
@@ -519,7 +519,7 @@ function compile_source
     for i in {1..2}; do
         cmake ../ -DCMAKE_INSTALL_PREFIX=$ROOT/source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$APPS_BUILD"
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_COMPILE_SOURCE
+            notify_telegram "$ERROR_COMPILE_SOURCE"
             exit $?
         fi
 
@@ -528,7 +528,7 @@ function compile_source
             if [[ $i == 1 ]]; then
                 make clean
             else
-                notify_telegram $ERROR_COMPILE_SOURCE
+                notify_telegram "$ERROR_COMPILE_SOURCE"
                 exit $?
             fi
         else
@@ -538,7 +538,7 @@ function compile_source
 
     make install
     if [[ $? -ne 0 ]]; then
-        notify_telegram $ERROR_COMPILE_SOURCE
+        notify_telegram "$ERROR_COMPILE_SOURCE"
         exit $?
     fi
 
@@ -626,13 +626,13 @@ function get_client_files
             curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $ROOT/source/bin/data.zip
             if [[ $? -ne 0 ]]; then
                 rm -rf $ROOT/source/azerothcore/bin/data.zip
-                notify_telegram $ERROR_DOWNLOAD_CLIENT_DATA
+                notify_telegram "$ERROR_DOWNLOAD_CLIENT_DATA"
                 exit $?
             fi
 
             unzip -o "$ROOT/source/bin/data.zip" -d "$ROOT/source/bin/"
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_DOWNLOAD_CLIENT_DATA
+                notify_telegram "$ERROR_DOWNLOAD_CLIENT_DATA"
                 exit $?
             fi
 
@@ -658,7 +658,7 @@ function import_database_files
 
     if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_AUTH'"` ]]; then
         printf "${COLOR_RED}The database named $MYSQL_DATABASES_AUTH is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
-        notify_telegram $ERROR_IMPORT_DATABASE
+        notify_telegram "$ERROR_IMPORT_DATABASE"
         rm -rf $MYSQL_CNF
         exit $?
     fi
@@ -666,14 +666,14 @@ function import_database_files
     if [[ $1 == "world" ]] || [[ $1 == "both" ]]; then
         if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_CHARACTERS'"` ]]; then
             printf "${COLOR_RED}The database named $MYSQL_DATABASES_CHARACTERS is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
-            notify_telegram $ERROR_IMPORT_DATABASE
+            notify_telegram "$ERROR_IMPORT_DATABASE"
             rm -rf $MYSQL_CNF
             exit $?
         fi
 
         if [[ -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names -e "SHOW DATABASES LIKE '$MYSQL_DATABASES_WORLD'"` ]] && [[ $1 == "world" || $1 == "both" ]]; then
             printf "${COLOR_RED}The database named $MYSQL_DATABASES_WORLD is inaccessible by the user named $MYSQL_USERNAME.${COLOR_END}\n"
-            notify_telegram $ERROR_IMPORT_DATABASE
+            notify_telegram "$ERROR_IMPORT_DATABASE"
             rm -rf $MYSQL_CNF
             exit $?
         fi
@@ -682,7 +682,7 @@ function import_database_files
     if [[ ! -d $ROOT/source/data/sql/base/db_auth ]] || [[ ! -d $ROOT/source/data/sql/updates/db_auth ]] || [[ ! -d $ROOT/source/data/sql/custom/db_auth ]]; then
         printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
         printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-        notify_telegram $ERROR_IMPORT_DATABASE
+        notify_telegram "$ERROR_IMPORT_DATABASE"
         rm -rf $MYSQL_CNF
         exit $?
     fi
@@ -691,7 +691,7 @@ function import_database_files
         if [[ ! -d $ROOT/source/data/sql/base/db_characters ]] || [[ ! -d $ROOT/source/data/sql/updates/db_characters ]] || [[ ! -d $ROOT/source/data/sql/custom/db_characters ]] || [[ ! -d $ROOT/source/data/sql/base/db_world ]] || [[ ! -d $ROOT/source/data/sql/updates/db_world ]] || [[ ! -d $ROOT/source/data/sql/custom/db_world ]]; then
             printf "${COLOR_RED}There are no database files where there should be.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-            notify_telegram $ERROR_IMPORT_DATABASE
+            notify_telegram "$ERROR_IMPORT_DATABASE"
             rm -rf $MYSQL_CNF
             exit $?
         fi
@@ -700,7 +700,7 @@ function import_database_files
     if [[ ! -d $ROOT/sql/auth ]]; then
         mkdir -p $ROOT/sql/auth
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_IMPORT_DATABASE
+            notify_telegram "$ERROR_IMPORT_DATABASE"
             exit $?
         fi
     fi
@@ -709,7 +709,7 @@ function import_database_files
         if [[ ! -d $ROOT/sql/characters ]]; then
             mkdir -p $ROOT/sql/characters
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 exit $?
             fi
         fi
@@ -717,7 +717,7 @@ function import_database_files
         if [[ ! -d $ROOT/sql/world ]]; then
             mkdir -p $ROOT/sql/world
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 exit $?
             fi
         fi
@@ -733,7 +733,7 @@ function import_database_files
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -756,14 +756,14 @@ function import_database_files
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
 
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -783,14 +783,14 @@ function import_database_files
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
 
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -802,7 +802,7 @@ function import_database_files
             printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -820,7 +820,7 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -843,14 +843,14 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -870,14 +870,14 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -889,7 +889,7 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -906,7 +906,7 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -929,14 +929,14 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -956,14 +956,14 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -975,7 +975,7 @@ function import_database_files
                 printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_IMPORT_DATABASE
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
                     exit $?
                 fi
@@ -986,7 +986,7 @@ function import_database_files
             if [[ ! -d $ROOT/source/modules/mod-accountbound/data/sql/db-auth/base ]] || [[ ! -d $ROOT/source/modules/mod-accountbound/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The account bound module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 exit $?
             fi
 
@@ -1003,14 +1003,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -1030,25 +1030,18 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
                 done
-            fi
-
-            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$AHBOT_MIN_ITEMS', maxitems='$AHBOT_MAX_ITEMS'"
-            if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
-                rm -rf $MYSQL_CNF
-                exit $?
             fi
         fi
 
@@ -1056,7 +1049,7 @@ function import_database_files
             if [[ ! -d $ROOT/source/modules/mod-ah-bot/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The auction house bot module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 exit $?
             fi
 
@@ -1073,14 +1066,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -1089,7 +1082,7 @@ function import_database_files
 
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "UPDATE mod_auctionhousebot SET minitems='$AHBOT_MIN_ITEMS', maxitems='$AHBOT_MAX_ITEMS'"
             if [[ $? -ne 0 ]]; then
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 rm -rf $MYSQL_CNF
                 exit $?
             fi
@@ -1099,7 +1092,7 @@ function import_database_files
             if [[ ! -d $ROOT/source/modules/mod-appreciation/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The appreciation module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 exit $?
             fi
 
@@ -1116,14 +1109,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -1135,7 +1128,7 @@ function import_database_files
             if [[ ! -d $ROOT/source/modules/mod-assistant/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The assistant module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 exit $?
             fi
 
@@ -1152,14 +1145,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -1171,7 +1164,7 @@ function import_database_files
             if [[ ! -d $ROOT/source/modules/mod-groupquests/data/sql/db-world/base ]]; then
                 printf "${COLOR_RED}The group quests module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 exit $?
             fi
 
@@ -1188,14 +1181,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -1207,7 +1200,7 @@ function import_database_files
             if [[ ! -d $ROOT/source/modules/mod-recruitafriend/data/sql/db-auth/base ]]; then
                 printf "${COLOR_RED}The recruit-a-friend module is enabled but the files aren't where they should be.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_IMPORT_DATABASE
+                notify_telegram "$ERROR_IMPORT_DATABASE"
                 exit $?
             fi
 
@@ -1224,14 +1217,14 @@ function import_database_files
                     printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
 
                     mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram $ERROR_IMPORT_DATABASE
+                        notify_telegram "$ERROR_IMPORT_DATABASE"
                         rm -rf $MYSQL_CNF
                         exit $?
                     fi
@@ -1242,7 +1235,7 @@ function import_database_files
         printf "${COLOR_ORANGE}Adding to the realmlist (id: $WORLD_ID, name: $WORLD_NAME, address $WORLD_ADDRESS, port $WORLD_PORT)${COLOR_END}\n"
         mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM realmlist WHERE id='$WORLD_ID';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$WORLD_ID', '$WORLD_NAME', '$WORLD_ADDRESS', '$WORLD_ADDRESS', '255.255.255.0', '$WORLD_PORT')"
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_IMPORT_DATABASE
+            notify_telegram "$ERROR_IMPORT_DATABASE"
             rm -rf $MYSQL_CNF
             exit $?
         fi
@@ -1250,7 +1243,7 @@ function import_database_files
         printf "${COLOR_ORANGE}Updating message of the day${COLOR_END}\n"
         mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_AUTH -e "DELETE FROM motd WHERE realmid='$WORLD_ID';INSERT INTO motd (realmid, text) VALUES ('$WORLD_ID', '$WORLD_MOTD')"
         if [[ $? -ne 0 ]]; then
-            notify_telegram $ERROR_IMPORT_DATABASE
+            notify_telegram "$ERROR_IMPORT_DATABASE"
             rm -rf $MYSQL_CNF
             exit $?
         fi
@@ -1275,7 +1268,7 @@ function copy_dbc_files
                 printf "${COLOR_ORANGE}Copying "$(basename $f)"${COLOR_END}\n"
                 cp $f $ROOT/source/bin/dbc/$(basename $f)
                 if [[ $? -ne 0 ]]; then
-                    notify_telegram $ERROR_COPY_CUSTOM_DBC
+                    notify_telegram "$ERROR_COPY_CUSTOM_DBC"
                     exit $?
                 fi
             done
@@ -1297,7 +1290,7 @@ function set_config
         if [[ ! -f $ROOT/source/etc/authserver.conf.dist ]]; then
             printf "${COLOR_RED}The config file authserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-            notify_telegram $ERROR_UPDATE_CONFIG
+            notify_telegram "$ERROR_UPDATE_CONFIG"
             exit $?
         fi
 
@@ -1313,7 +1306,7 @@ function set_config
         if [[ ! -f $ROOT/source/etc/worldserver.conf.dist ]]; then
             printf "${COLOR_RED}The config file worldserver.conf.dist is missing.${COLOR_END}\n"
             printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-            notify_telegram $ERROR_UPDATE_CONFIG
+            notify_telegram "$ERROR_UPDATE_CONFIG"
             exit $?
         fi
 
@@ -1408,7 +1401,7 @@ function set_config
             if [[ ! -f $ROOT/source/etc/modules/mod_accountbound.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_accountbound.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_UPDATE_CONFIG
+                notify_telegram "$ERROR_UPDATE_CONFIG"
                 exit $?
             fi
 
@@ -1431,7 +1424,7 @@ function set_config
             if [[ ! -f $ROOT/source/etc/modules/mod_ahbot.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_ahbot.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_UPDATE_CONFIG
+                notify_telegram "$ERROR_UPDATE_CONFIG"
                 exit $?
             fi
 
@@ -1459,7 +1452,7 @@ function set_config
             if [[ ! -f $ROOT/source/etc/modules/mod_appreciation.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_appreciation.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_UPDATE_CONFIG
+                notify_telegram "$ERROR_UPDATE_CONFIG"
                 exit $?
             fi
 
@@ -1493,7 +1486,7 @@ function set_config
             if [[ ! -f $ROOT/source/etc/modules/mod_assistant.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_assistant.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_UPDATE_CONFIG
+                notify_telegram "$ERROR_UPDATE_CONFIG"
                 exit $?
             fi
 
@@ -1558,7 +1551,7 @@ function set_config
             if [[ ! -f $ROOT/source/etc/modules/mod_guildfunds.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_guildfunds.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_UPDATE_CONFIG
+                notify_telegram "$ERROR_UPDATE_CONFIG"
                 exit $?
             fi
 
@@ -1582,7 +1575,7 @@ function set_config
             if [[ ! -f $ROOT/source/etc/modules/mod_learnspells.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_learnspells.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_UPDATE_CONFIG
+                notify_telegram "$ERROR_UPDATE_CONFIG"
                 exit $?
             fi
 
@@ -1613,7 +1606,7 @@ function set_config
             if [[ ! -f $ROOT/source/etc/modules/mod_recruitafriend.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_recruitafriend.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_UPDATE_CONFIG
+                notify_telegram "$ERROR_UPDATE_CONFIG"
                 exit $?
             fi
 
@@ -1641,7 +1634,7 @@ function set_config
             if [[ ! -f $ROOT/source/etc/modules/mod_weekendbonus.conf.dist ]]; then
                 printf "${COLOR_RED}The config file mod_weekendbonus.conf.dist is missing.${COLOR_END}\n"
                 printf "${COLOR_RED}Please make sure to install the server first.${COLOR_END}\n"
-                notify_telegram $ERROR_UPDATE_CONFIG
+                notify_telegram "$ERROR_UPDATE_CONFIG"
                 exit $?
             fi
 
