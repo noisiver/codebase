@@ -158,13 +158,13 @@ function get_source
     else
         cd $ROOT/source
 
-        git pull
+        git reset --hard origin/$SOURCE_BRANCH
         if [[ $? -ne 0 ]]; then
             notify_telegram "$ERROR_UPDATE_SOURCE"
             exit $?
         fi
 
-        git reset --hard origin/$SOURCE_BRANCH
+        git pull
         if [[ $? -ne 0 ]]; then
             notify_telegram "$ERROR_UPDATE_SOURCE"
             exit $?
@@ -188,13 +188,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-accountbound
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-accountbound"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-accountbound"
                     exit $?
@@ -220,13 +220,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-ah-bot
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-ah-bot"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-ah-bot"
                     exit $?
@@ -252,13 +252,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-appreciation
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-assistant"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-assistant"
                     exit $?
@@ -284,13 +284,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-assistant
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-assistant"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-assistant"
                     exit $?
@@ -316,13 +316,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-guildfunds
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-guildfunds"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-guildfunds"
                     exit $?
@@ -348,13 +348,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-groupquests
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-groupquests"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-groupquests"
                     exit $?
@@ -380,13 +380,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-junk-to-gold
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-junk-to-gold"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-junk-to-gold"
                     exit $?
@@ -404,7 +404,11 @@ function get_source
 
         if [[ $LEARN_SPELLS_ENABLED == "true" ]]; then
             if [[ ! -d $ROOT/source/modules/mod-learnspells ]]; then
-                git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $ROOT/source/modules/mod-learnspells
+                if [[ $PROGRESSION_ACTIVE_PATCH -lt 21 ]]; then
+                    git clone --depth 1 --branch progression https://github.com/noisiver/mod-learnspells.git $ROOT/source/modules/mod-learnspells
+                else
+                    git clone --depth 1 --branch master https://github.com/noisiver/mod-learnspells.git $ROOT/source/modules/mod-learnspells
+                fi
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_DOWNLOAD_SOURCE_MODULE mod-learnspells"
                     exit $?
@@ -412,13 +416,17 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-learnspells
 
-                git pull
+                if [[ $PROGRESSION_ACTIVE_PATCH -lt 21 ]]; then
+                    git reset --hard origin/progression
+                else
+                    git reset --hard origin/master
+                fi
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-learnspells"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-learnspells"
                     exit $?
@@ -444,13 +452,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-recruitafriend
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-recruitafriend"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-recruitafriend"
                     exit $?
@@ -476,13 +484,13 @@ function get_source
             else
                 cd $ROOT/source/modules/mod-weekendbonus
 
-                git pull
+                git reset --hard origin/master
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-weekendbonus"
                     exit $?
                 fi
 
-                git reset --hard origin/master
+                git pull
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_UPDATE_SOURCE_MODULE mod-weekendbonus"
                     exit $?
@@ -1494,11 +1502,12 @@ function set_config
 
             cp $ROOT/source/etc/modules/mod_assistant.conf.dist $ROOT/source/etc/modules/mod_assistant.conf
 
-            sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' $ROOT/source/etc/modules/mod_assistant.conf
             if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' $ROOT/source/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' $ROOT/source/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' $ROOT/source/etc/modules/mod_assistant.conf
             else
+                sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 1/g' $ROOT/source/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' $ROOT/source/etc/modules/mod_assistant.conf
                 sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' $ROOT/source/etc/modules/mod_assistant.conf
             fi
@@ -1587,9 +1596,18 @@ function set_config
             sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = 1/g' $ROOT/source/etc/modules/mod_learnspells.conf
             sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = 1/g' $ROOT/source/etc/modules/mod_learnspells.conf
             sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = 1/g' $ROOT/source/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 0/g' $ROOT/source/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 0/g' $ROOT/source/etc/modules/mod_learnspells.conf
-            sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 0/g' $ROOT/source/etc/modules/mod_learnspells.conf
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+                sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 0/g' $ROOT/source/etc/modules/mod_learnspells.conf
+                sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 0/g' $ROOT/source/etc/modules/mod_learnspells.conf
+            else
+                sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 1/g' $ROOT/source/etc/modules/mod_learnspells.conf
+                sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 1/g' $ROOT/source/etc/modules/mod_learnspells.conf
+            fi
+            if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 0/g' $ROOT/source/etc/modules/mod_learnspells.conf
+            else
+                sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 1/g' $ROOT/source/etc/modules/mod_learnspells.conf
+            fi
             sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = 0/g' $ROOT/source/etc/modules/mod_learnspells.conf
             sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = 0/g' $ROOT/source/etc/modules/mod_learnspells.conf
         else

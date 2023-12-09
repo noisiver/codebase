@@ -117,12 +117,12 @@ function get_source
     else
         cd $ROOT/source
 
-        git pull
+        git reset --hard origin/$SOURCE_BRANCH
         if [[ $? -ne 0 ]]; then
             exit $?
         fi
 
-        git reset --hard origin/$SOURCE_BRANCH
+        git pull
         if [[ $? -ne 0 ]]; then
             exit $?
         fi
