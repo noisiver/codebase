@@ -669,7 +669,7 @@ function get_client_files
 
             curl -f -L https://github.com/wowgaming/client-data/releases/download/v${AVAILABLE_VERSION}/data.zip -o $ROOT/source/bin/data.zip
             if [[ $? -ne 0 ]]; then
-                rm -rf $ROOT/source/azerothcore/bin/data.zip
+                rm -rf $ROOT/source/bin/data.zip
                 notify_telegram "$ERROR_DOWNLOAD_CLIENT_DATA"
                 exit $?
             fi
@@ -1594,18 +1594,18 @@ function set_config
             cp $ROOT/source/etc/modules/mod_appreciation.conf.dist $ROOT/source/etc/modules/mod_appreciation.conf
 
             if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
-                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $ROOT/source/etc/modules/mod_appreciation.conf
             elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $ROOT/source/etc/modules/mod_appreciation.conf
             else
-                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $ROOT/source/etc/modules/mod_appreciation.conf
             fi
             if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
+                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $ROOT/source/etc/modules/mod_appreciation.conf
             else
-                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf
+                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $ROOT/source/etc/modules/mod_appreciation.conf
             fi
-            sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $ROOT/source/azerothcore/etc/modules/mod_appreciation.conf        else
+            sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $ROOT/source/etc/modules/mod_appreciation.conf
             if [[ -f $ROOT/source/etc/modules/mod_appreciation.conf.dist ]]; then
                 rm -rf $ROOT/source/etc/modules/mod_appreciation.conf.dist
             fi
