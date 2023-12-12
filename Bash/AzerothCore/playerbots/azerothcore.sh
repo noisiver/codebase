@@ -1462,9 +1462,9 @@ function set_config
         sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' $ROOT/source/etc/worldserver.conf
         sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 1/g' $ROOT/source/etc/worldserver.conf
         sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' $ROOT/source/etc/worldserver.conf
+        sed -i 's/Warden.Enabled =.*/Warden.Enabled = 0/g' $ROOT/source/etc/worldserver.conf
         if [[ $PRELOAD_MAP_GRIDS == "true" ]]; then
             sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 1/g' $ROOT/source/etc/worldserver.conf
-            sed -i 's/GridUnload =.*/GridUnload = 0/g' $ROOT/source/etc/worldserver.conf
 
             if [[ $SET_CREATURES_ACTIVE == "true" ]]; then
                 sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 1/g' $ROOT/source/etc/worldserver.conf
@@ -1474,7 +1474,6 @@ function set_config
         else
             sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = 0/g' $ROOT/source/etc/worldserver.conf
             sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = 0/g' $ROOT/source/etc/worldserver.conf
-            sed -i 's/GridUnload =.*/GridUnload = 1/g' $ROOT/source/etc/worldserver.conf
         fi
         sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' $ROOT/source/etc/worldserver.conf
         sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' $ROOT/source/etc/worldserver.conf
@@ -1499,7 +1498,7 @@ function set_config
         sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = 1/g' $ROOT/source/etc/worldserver.conf
         sed -i 's/Progression.Patch =.*/Progression.Patch = '$PROGRESSION_ACTIVE_PATCH'/g' $ROOT/source/etc/worldserver.conf
         sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$PROGRESSION_ICECROWN_CITADEL_AURA'/g' $ROOT/source/etc/worldserver.conf
-        sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' $ROOT/source/etc/worldserver.conf
+        sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 0/g' $ROOT/source/etc/worldserver.conf
         sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' $ROOT/source/etc/worldserver.conf
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' $ROOT/source/etc/worldserver.conf
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' $ROOT/source/etc/worldserver.conf
@@ -1594,18 +1593,17 @@ function set_config
             cp $ROOT/source/etc/modules/mod_appreciation.conf.dist $ROOT/source/etc/modules/mod_appreciation.conf
 
             if [[ $PROGRESSION_ACTIVE_PATCH -lt 12 ]]; then
+                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $ROOT/source/etc/modules/mod_appreciation.conf
                 sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' $ROOT/source/etc/modules/mod_appreciation.conf
             elif [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
+                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $ROOT/source/etc/modules/mod_appreciation.conf
                 sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' $ROOT/source/etc/modules/mod_appreciation.conf
             else
+                sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $ROOT/source/etc/modules/mod_appreciation.conf
                 sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' $ROOT/source/etc/modules/mod_appreciation.conf
             fi
-            if [[ $PROGRESSION_ACTIVE_PATCH -lt 17 ]]; then
-                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 60/g' $ROOT/source/etc/modules/mod_appreciation.conf
-            else
-                sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = 70/g' $ROOT/source/etc/modules/mod_appreciation.conf
-            fi
             sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' $ROOT/source/etc/modules/mod_appreciation.conf
+        else
             if [[ -f $ROOT/source/etc/modules/mod_appreciation.conf.dist ]]; then
                 rm -rf $ROOT/source/etc/modules/mod_appreciation.conf.dist
             fi
