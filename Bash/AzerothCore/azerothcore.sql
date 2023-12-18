@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `settings`;
-CREATE TABLE `settings` (
+DROP TABLE IF EXISTS `realm_settings`;
+CREATE TABLE `realm_settings` (
 	`id` INT(10) NOT NULL DEFAULT '-1',
 	-- `node` INT(10) NOT NULL DEFAULT '-1',
 	`setting` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
@@ -11,8 +11,8 @@ COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;
 
--- INSERT INTO `settings` (`id`, `node`, `setting`, `value`, `comment`) VALUES
-INSERT INTO `settings` (`id`, `setting`, `value`, `comment`) VALUES
+-- INSERT INTO `realm_settings` (`id`, `node`, `setting`, `value`, `comment`) VALUES
+INSERT INTO `realm_settings` (`id`, `setting`, `value`, `comment`) VALUES
 (-1, 'build.auth', 'true', 'Build auth server'),
 (-1, 'build.world', 'true', 'Build world server'),
 (-1, 'database.auth', 'acore_auth', 'Name of the auth database'),
