@@ -69,7 +69,7 @@ if [[ ! -f $ROOT/config.sh ]]; then
     echo "LEARN_SPELLS_ENABLED=\"false\"" >> config.sh
     echo "RECRUIT_A_FRIEND_ENABLED=\"false\"" >> config.sh
     echo "WEEKEND_BONUS_ENABLED=\"false\"" >> config.sh
-    echo "# Eastern Kingdoms, Kalimdor, Outland, Northrend and Deeprun Tram: 0,1,369,530,571" >> $ROOT/config.sh
+    echo "# Eastern Kingdoms, Kalimdor, Outland, Northrend, Deeprun Tram and DK area: 0,1,369,530,571,609" >> $ROOT/config.sh
     echo "# All dungeon, raid, battleground and arena maps: 30,33,34,36,43,44,47,48,70,90,109,129,169,189,209,229,230,249,269,289,309,329,349,389,409,429,469,489,509,529,531,532,533,534,540,542,543,544,545,546,547,548,550,552,553,554,555,556,557,558,559,560,562,564,565,566,568,572,574,575,576,578,580,585,595,598,599,600,601,602,603,604,607,608,615,616,617,618,619,624,628,631,632,649,650,658,668,724" >> $ROOT/config.sh
     echo "AVAILABLE_MAPS=\"\"" >> $ROOT/config.sh
     echo "# DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING" >> $ROOT/config.sh
@@ -852,17 +852,6 @@ function import_database_files
         done
     fi
 
-    if [[ `ls -1 $ROOT/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $ROOT/sql/characters/*.sql; do
-            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
-            if [[ $? -ne 0 ]]; then
-                rm -rf $MYSQL_CNF
-                exit $?
-            fi
-        done
-    fi
-
     if [[ `ls -1 $ROOT/source/azerothcore/data/sql/base/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
         for f in $ROOT/source/azerothcore/data/sql/base/db_world/*.sql; do
             if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
@@ -925,17 +914,6 @@ function import_database_files
             fi
 
             mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
-            if [[ $? -ne 0 ]]; then
-                rm -rf $MYSQL_CNF
-                exit $?
-            fi
-        done
-    fi
-
-    if [[ `ls -1 $ROOT/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $ROOT/sql/world/*.sql; do
-            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
             if [[ $? -ne 0 ]]; then
                 rm -rf $MYSQL_CNF
                 exit $?
@@ -1182,6 +1160,30 @@ function import_database_files
                 fi
             done
         fi
+    fi
+
+    if [[ `ls -1 $ROOT/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/sql/characters/*.sql; do
+            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "$ERROR_IMPORT_DATABASE"
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+        done
+    fi
+
+    if [[ `ls -1 $ROOT/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+        for f in $ROOT/sql/world/*.sql; do
+            printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+            mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "$ERROR_IMPORT_DATABASE"
+                rm -rf $MYSQL_CNF
+                exit $?
+            fi
+        done
     fi
 
     printf "${COLOR_ORANGE}Adding to the realmlist (id: $WORLD_ID, name: $WORLD_NAME, address $WORLD_ADDRESS, port $WORLD_PORT)${COLOR_END}\n"

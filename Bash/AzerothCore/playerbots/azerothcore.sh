@@ -937,18 +937,6 @@ function import_database_files
             done
         fi
 
-        if [[ `ls -1 $ROOT/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $ROOT/sql/characters/*.sql; do
-                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "$ERROR_IMPORT_DATABASE"
-                    rm -rf $MYSQL_CNF
-                    exit $?
-                fi
-            done
-        fi
-
         if [[ `ls -1 $ROOT/source/data/sql/base/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             for f in $ROOT/source/data/sql/base/db_world/*.sql; do
                 if [[ ! -z `mysql --defaults-extra-file=$MYSQL_CNF --skip-column-names $MYSQL_DATABASES_WORLD -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
@@ -1015,18 +1003,6 @@ function import_database_files
                 fi
 
                 mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "$ERROR_IMPORT_DATABASE"
-                    rm -rf $MYSQL_CNF
-                    exit $?
-                fi
-            done
-        fi
-
-        if [[ `ls -1 $ROOT/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $ROOT/sql/world/*.sql; do
-                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
-                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "$ERROR_IMPORT_DATABASE"
                     rm -rf $MYSQL_CNF
@@ -1363,6 +1339,30 @@ function import_database_files
                     fi
                 done
             fi
+        fi
+
+        if [[ `ls -1 $ROOT/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/sql/characters/*.sql; do
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_CHARACTERS < $f
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
+        fi
+
+        if [[ `ls -1 $ROOT/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $ROOT/sql/world/*.sql; do
+                printf "${COLOR_ORANGE}Importing "$(basename $f)"${COLOR_END}\n"
+                mysql --defaults-extra-file=$MYSQL_CNF $MYSQL_DATABASES_WORLD < $f
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "$ERROR_IMPORT_DATABASE"
+                    rm -rf $MYSQL_CNF
+                    exit $?
+                fi
+            done
         fi
 
         printf "${COLOR_ORANGE}Adding to the realmlist (id: $WORLD_ID, name: $WORLD_NAME, address $WORLD_ADDRESS, port $WORLD_PORT)${COLOR_END}\n"
