@@ -191,7 +191,10 @@ function get_settings
             "module.playerbots.start_level") module_playerbots_start_level="$value";;
             "module.progression") module_progression="$value";;
             "module.progression.aura") module_progression_aura="$value";;
+            "module.progression.enforce.dungeonfinder") module_progression_enforce_dungeonfinder="$value";;
+            "module.progression.enforce.questinfo") module_progression_enforce_questinfo="$value";;
             "module.progression.patch") module_progression_patch="$value";;
+            "module.progression.reset") module_progression_reset="$value";;
             "module.recruitafriend") module_recruitafriend="$value";;
             "module.recruitafriend.account_age") module_recruitafriend_account_age="$value";;
             "module.recruitafriend.celestial_steed") module_recruitafriend_celestial_steed="$value";;
@@ -230,7 +233,7 @@ function get_settings
         fi
     done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1) # WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1
 
-    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_patch || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
+    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
         if [[ -z $build_world ]]; then printf "${color_red}build.world is not set in the settings${color_end}\n"; fi
         if [[ -z $database_auth ]]; then printf "${color_red}database.auth is not set in the settings${color_end}\n"; fi
@@ -294,7 +297,10 @@ function get_settings
         if [[ -z $module_playerbots_start_level ]]; then printf "${color_red}module.playerbots.start_level is not set in the settings${color_end}\n"; fi
         if [[ -z $module_progression ]]; then printf "${color_red}module.progression is not set in the settings${color_end}\n"; fi
         if [[ -z $module_progression_aura ]]; then printf "${color_red}module.progression.aura is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_progression_enforce_dungeonfinder ]]; then printf "${color_red}module.progression.enforce.dungeonfinder is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_progression_enforce_questinfo ]]; then printf "${color_red}module.progression.enforce.questinfo is not set in the settings${color_end}\n"; fi
         if [[ -z $module_progression_patch ]]; then printf "${color_red}module.progression.patch is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_progression_reset ]]; then printf "${color_red}module.progression.reset is not set in the settings${color_end}\n"; fi
         if [[ -z $module_recruitafriend ]]; then printf "${color_red}module.recruitafriend is not set in the settings${color_end}\n"; fi
         if [[ -z $module_recruitafriend_account_age ]]; then printf "${color_red}module.recruitafriend.account_age is not set in the settings${color_end}\n"; fi
         if [[ -z $module_recruitafriend_celestial_steed ]]; then printf "${color_red}module.recruitafriend.celestial_steed is not set in the settings${color_end}\n"; fi
@@ -1404,6 +1410,15 @@ function import_database_files
                 exit $?
             fi
 
+            if [[ "$module_progression_reset" == "true" ]]; then
+                mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name LIKE 'patch_%'"
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+            fi
+
             if [[ "$module_progression_patch" -ge "0" ]]; then
                 if [[ `ls -1 $root/source/modules/mod-progression/src/patch_01-3_0/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
                     for f in $root/source/modules/mod-progression/src/patch_01-3_0/sql/*.sql; do
@@ -1860,8 +1875,15 @@ function set_config
 
             cp "$root/source/etc/modules/mod_progression.conf.dist" "$root/source/etc/modules/mod_progression.conf"
 
+            [ "$module_progression_enforce_dungeonfinder" == "true" ] && module_progression_enforce_dungeonfinder0="1" || module_progression_enforce_dungeonfinder0="0"
+            [ "$module_progression_enforce_questinfo" == "true" ] && module_progression_enforce_questinfo0="1" || module_progression_enforce_questinfo0="0"
+            [ "$module_progression_reset" == "true" ] && module_progression_reset0="1" || module_progression_reset0="0"
+
             sed -i 's/Progression.Patch =.*/Progression.Patch = '$module_progression_patch'/g' "$root/source/etc/modules/mod_progression.conf"
             sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$module_progression_aura'/g' "$root/source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = '$module_progression_enforce_questinfo0'/g' "$root/source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = '$module_progression_enforce_dungeonfinder0'/g' "$root/source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.Reset =.*/Progression.Reset = '$module_progression_reset0'/g' "$root/source/etc/modules/mod_progression.conf"
         fi
 
         if [[ "$module_recruitafriend" == "true" ]]; then
