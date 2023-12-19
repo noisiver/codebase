@@ -92,9 +92,9 @@ function install_mysql_client
         fi
 
         if [[ $EUID != 0 ]]; then
-            sudo apt-get --yes install ${install[*]}
+            sudo apt-get --yes install mysql-client
         else
-            apt-get --yes install ${install[*]}
+            apt-get --yes install mysql-client
         fi
         if [[ $? != 0 ]]; then
             notify_telegram "An error occurred while trying to install the required packages"
