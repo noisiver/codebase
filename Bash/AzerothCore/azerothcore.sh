@@ -610,7 +610,7 @@ function get_source
             fi
         fi
 
-        : 'if [[ "$module_progression" == "true" ]]; then
+        if [[ "$module_progression" == "true" ]]; then
             if [[ ! -d "$root/source/modules/mod-progression" ]]; then
                 git clone --depth 1 --branch master "https://github.com/noisiver/mod-progression.git" "$root/source/modules/mod-progression"
                 if [[ $? != 0 ]]; then
@@ -640,7 +640,7 @@ function get_source
                     rm -rf "$root/source/build"
                 fi
             fi
-        fi'
+        fi
 
         if [[ "$module_recruitafriend" == "true" ]]; then
             if [[ ! -d "$root/source/modules/mod-recruitafriend" ]]; then
