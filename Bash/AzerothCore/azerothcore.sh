@@ -202,6 +202,7 @@ function get_settings
             "module.recruitafriend.reward_days") module_recruitafriend_reward_days="$value";;
             "module.recruitafriend.swift_zhevra") module_recruitafriend_swift_zhevra="$value";;
             "module.recruitafriend.touring_rocket") module_recruitafriend_touring_rocket="$value";;
+            "module.skip_dk_starting_area") module_skip_dk_starting_area="$value";;
             "module.weekendbonus") module_weekendbonus="$value";;
             "module.weekendbonus.multiplier.experience") module_weekendbonus_multiplier_experience="$value";;
             "module.weekendbonus.multiplier.money") module_weekendbonus_multiplier_money="$value";;
@@ -233,7 +234,7 @@ function get_settings
         fi
     done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1) # WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1
 
-    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
+    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
         if [[ -z $build_world ]]; then printf "${color_red}build.world is not set in the settings${color_end}\n"; fi
         if [[ -z $database_auth ]]; then printf "${color_red}database.auth is not set in the settings${color_end}\n"; fi
@@ -308,6 +309,7 @@ function get_settings
         if [[ -z $module_recruitafriend_reward_days ]]; then printf "${color_red}module.recruitafriend.reward_days is not set in the settings${color_end}\n"; fi
         if [[ -z $module_recruitafriend_swift_zhevra ]]; then printf "${color_red}module.recruitafriend.swift_zhevra is not set in the settings${color_end}\n"; fi
         if [[ -z $module_recruitafriend_touring_rocket ]]; then printf "${color_red}module.recruitafriend.touring_rocket is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_skip_dk_starting_area ]]; then printf "${color_red}module.skip_dk_starting_area is not set in the settings${color_end}\n"; fi
         if [[ -z $module_weekendbonus ]]; then printf "${color_red}module.weekendbonus is not set in the settings${color_end}\n"; fi
         if [[ -z $module_weekendbonus_multiplier_experience ]]; then printf "${color_red}module.weekendbonus.multiplier.experience is not set in the settings${color_end}\n"; fi
         if [[ -z $module_weekendbonus_multiplier_money ]]; then printf "${color_red}module.weekendbonus.multiplier.money is not set in the settings${color_end}\n"; fi
@@ -667,6 +669,38 @@ function get_source
         else
             if [[ -d "$root/source/modules/mod-recruitafriend" ]]; then
                 rm -rf "$root/source/modules/mod-recruitafriend"
+
+                if [[ -d "$root/source/build" ]]; then
+                    rm -rf "$root/source/build"
+                fi
+            fi
+        fi
+
+        if [[ "$module_skip_dk_starting_area" == "true" ]]; then
+            if [[ ! -d "$root/source/modules/mod-skip-dk-starting-area" ]]; then
+                git clone --depth 1 --branch master "https://github.com/azerothcore/mod-skip-dk-starting-area.git" "$root/source/modules/mod-skip-dk-starting-area"
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-skip-dk-starting-area"
+                    exit $?
+                fi
+            else
+                cd "$root/source/modules/mod-skip-dk-starting-area"
+
+                git reset --hard origin/master
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-skip-dk-starting-area"
+                    exit $?
+                fi
+
+                git pull
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-skip-dk-starting-area"
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d "$root/source/modules/mod-skip-dk-starting-area" ]]; then
+                rm -rf "$root/source/modules/mod-skip-dk-starting-area"
 
                 if [[ -d "$root/source/build" ]]; then
                     rm -rf "$root/source/build"
@@ -1602,6 +1636,43 @@ function import_database_files
             fi
         fi
 
+        if [[ "$module_skip_dk_starting_area" == "true" ]]; then
+            if [[ ! -d "$root/source/modules/mod-skip-dk-starting-area/sql/world" ]]; then
+                printf "${color_red}The skip dk starting area module is enabled but the files aren't where they should be${color_end}\n"
+                printf "${color_red}Please make sure to install the server first${color_end}\n"
+                notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
+                rm -rf "$mysql_cnf"
+                exit $?
+            fi
+
+            if [[ `ls -1 $root/source/modules/mod-skip-dk-starting-area/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $root/source/modules/mod-skip-dk-starting-area/sql/world/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                        continue;
+                    fi
+
+                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                    mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
+                        rm -rf "$mysql_cnf"
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
+                        rm -rf "$mysql_cnf"
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
         if [[ `ls -1 $root/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
             for f in $root/sql/characters/*.sql; do
                 printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
@@ -1908,6 +1979,19 @@ function set_config
             sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$module_recruitafriend_swift_zhevra0'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
             sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$module_recruitafriend_touring_rocket0'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
             sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = '$module_recruitafriend_celestial_steed0'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
+        fi
+
+        if [[ "$module_skip_dk_starting_area" == "true" ]]; then
+            if [[ ! -f "$root/source/etc/modules/SkipDKModule.conf.dist" ]]; then
+                printf "${color_red}The config file SkipDKModule.conf.dist is missing.${color_end}\n"
+                printf "${color_red}Please make sure to install the server first.${color_end}\n"
+                notify_telegram "An error occurred while trying to update the config files of mod-skip-dk-starting-area"
+                exit $?
+            fi
+
+            printf "${color_orange}Updating SkipDKModule.conf${color_end}\n"
+
+            cp "$root/source/etc/modules/SkipDKModule.conf.dist" "$root/source/etc/modules/SkipDKModule.conf"
         fi
 
         if [[ "$module_weekendbonus" == "true" ]]; then

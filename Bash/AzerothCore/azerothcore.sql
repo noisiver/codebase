@@ -87,6 +87,7 @@ INSERT INTO `realm_settings` (`id`, `setting`, `value`, `comment`) VALUES
 (-1, 'module.recruitafriend.reward_days', '30', 'This defines the amount of days since the referral that is required before the accounts receive special rewards'),
 (-1, 'module.recruitafriend.swift_zhevra', 'true', 'Give the player the Swift Zhevra mount'),
 (-1, 'module.recruitafriend.touring_rocket', 'true', 'Give the player the X-53 Touring Rocket mount'),
+(-1, 'module.skip_dk_starting_area', 'false', 'Enable the skip dk starting area module'),
 (-1, 'module.weekendbonus', 'false', 'Enable the weekend bonus module'),
 (-1, 'module.weekendbonus.multiplier.experience', '2.0', 'The multiplier for experience rate during weekends'),
 (-1, 'module.weekendbonus.multiplier.money', '2.0', 'The multiplier for money rate during weekends'),
