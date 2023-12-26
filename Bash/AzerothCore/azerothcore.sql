@@ -108,6 +108,8 @@ INSERT INTO `realm_settings` (`id`, `setting`, `value`, `comment`) VALUES
 (-1, 'world.quest_in_raid', 'false', 'Allow non-raid quests to be completed while in a raid group'),
 (-1, 'world.raid_min_level', '10', 'The minimum level required to join a raid group'),
 (-1, 'world.rate.experience', '1', 'Multiplier of all experience rates outside battlegrounds'),
+(-1, 'world.rate.money', '1', 'Multiplier for money looted'),
+(-1, 'world.rate.reputation', '1', 'Multiplier for reputation gained'),
 (-1, 'world.realm_zone', '1', 'Set allowed alphabet in character names etc'),
 (-1, 'world.set_creatures_active', 'false', 'Set all creatures with waypoints active'),
 (-1, 'world.type', '0', 'Realm type'),
