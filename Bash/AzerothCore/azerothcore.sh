@@ -145,6 +145,13 @@ function get_settings
             "module.ah_bot.max_item_level") module_ah_bot_max_item_level="$value";;
             "module.ah_bot.sell_items") module_ah_bot_sell_items="$value";;
             "module.ah_bot.use_buyprice") module_ah_bot_use_buyprice="$value";;
+            "module.appreciation") module_appreciation="$value";;
+            "module.appreciation.level_boost") module_appreciation_level_boost="$value";;
+            "module.appreciation.level_boost.included_copper") module_appreciation_level_boost_included_copper="$value";;
+            "module.appreciation.level_boost.level") module_appreciation_level_boost_level="$value";;
+            "module.appreciation.require_certificate") module_appreciation_require_certificate="$value";;
+            "module.appreciation.reward_at_max_level") module_appreciation_reward_at_max_level="$value";;
+            "module.appreciation.unlock_continents") module_appreciation_unlock_continents="$value";;
             "module.assistant") module_assistant="$value";;
             "module.assistant.fp.tbc") module_assistant_fp_tbc="$value";;
             "module.assistant.fp.tbc.cost") module_assistant_fp_tbc_cost="$value";;
@@ -236,7 +243,7 @@ function get_settings
         fi
     done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1) # WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1
 
-    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_rate_money || -z $world_rate_reputation || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
+    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_appreciation || -z $module_appreciation_level_boost || -z $module_appreciation_level_boost_included_copper || -z $module_appreciation_level_boost_level || -z $module_appreciation_require_certificate || -z $module_appreciation_reward_at_max_level || -z $module_appreciation_unlock_continents || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_rate_money || -z $world_rate_reputation || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
         if [[ -z $build_world ]]; then printf "${color_red}build.world is not set in the settings${color_end}\n"; fi
         if [[ -z $database_auth ]]; then printf "${color_red}database.auth is not set in the settings${color_end}\n"; fi
@@ -254,6 +261,13 @@ function get_settings
         if [[ -z $module_ah_bot_max_item_level ]]; then printf "${color_red}module.ah_bot.max_item_level is not set in the settings${color_end}\n"; fi
         if [[ -z $module_ah_bot_sell_items ]]; then printf "${color_red}module.ah_bot.sell_items is not set in the settings${color_end}\n"; fi
         if [[ -z $module_ah_bot_use_buyprice ]]; then printf "${color_red}module.ah_bot.use_buyprice is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_appreciation ]]; then printf "${color_red}module.appreciation is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_appreciation_level_boost ]]; then printf "${color_red}module.appreciation.level_boost is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_appreciation_level_boost_included_copper ]]; then printf "${color_red}module.appreciation.level_boost.included_copper is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_appreciation_level_boost_level ]]; then printf "${color_red}module.appreciation.level_boost.level is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_appreciation_require_certificate ]]; then printf "${color_red}module.appreciation.require_certificate is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_appreciation_reward_at_max_level ]]; then printf "${color_red}module.appreciation.reward_at_max_level is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_appreciation_unlock_continents ]]; then printf "${color_red}module.appreciation.unlock_continents is not set in the settings${color_end}\n"; fi
         if [[ -z $module_assistant ]]; then printf "${color_red}module.assistant is not set in the settings${color_end}\n"; fi
         if [[ -z $module_assistant_fp_tbc ]]; then printf "${color_red}module.assistant.fp.tbc is not set in the settings${color_end}\n"; fi
         if [[ -z $module_assistant_fp_tbc_cost ]]; then printf "${color_red}module.assistant.fp.tbc.cost is not set in the settings${color_end}\n"; fi
@@ -441,6 +455,38 @@ function get_source
         else
             if [[ -d "$root/source/modules/mod-ah-bot" ]]; then
                 rm -rf "$root/source/modules/mod-ah-bot"
+
+                if [[ -d "$root/source/build" ]]; then
+                    rm -rf "$root/source/build"
+                fi
+            fi
+        fi
+
+        if [[ "$module_appreciation" == "true" ]]; then
+            if [[ ! -d "$root/source/modules/mod-appreciation" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-appreciation.git" "$root/source/modules/mod-appreciation"
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-appreciation"
+                    exit $?
+                fi
+            else
+                cd "$root/source/modules/mod-appreciation"
+
+                git reset --hard origin/master
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-appreciation"
+                    exit $?
+                fi
+
+                git pull
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-appreciation"
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d "$root/source/modules/mod-appreciation" ]]; then
+                rm -rf "$root/source/modules/mod-appreciation"
 
                 if [[ -d "$root/source/build" ]]; then
                     rm -rf "$root/source/build"
@@ -1284,6 +1330,43 @@ function import_database_files
             fi
         fi
 
+        if [[ "$module_appreciation" == "true" ]]; then
+            if [[ ! -d "$root/source/modules/mod-appreciation/data/sql/db-world/base" ]]; then
+                printf "${color_red}The appreciation module is enabled but the files aren't where they should be${color_end}\n"
+                printf "${color_red}Please make sure to install the server first${color_end}\n"
+                notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
+                rm -rf "$mysql_cnf"
+                exit $?
+            fi
+
+            if [[ `ls -1 $root/source/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $root/source/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                        continue;
+                    fi
+
+                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                    mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
+                        rm -rf "$mysql_cnf"
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
+                        rm -rf "$mysql_cnf"
+                        exit $?
+                    fi
+                done
+            fi
+        fi
+
         if [[ "$module_assistant" == "true" ]]; then
             if [[ ! -d "$root/source/modules/mod-assistant/data/sql/db-world/base" ]]; then
                 printf "${color_red}The assistant module is enabled but the files aren't where they should be${color_end}\n"
@@ -1801,6 +1884,8 @@ function set_config
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' "$root/source/etc/worldserver.conf"
         sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' "$root/source/etc/worldserver.conf"
         sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$root/source/etc/worldserver.conf"
+        #sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$root/source/etc/worldserver.conf"
+        #sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$root/source/etc/worldserver.conf"
 
         if [[ "$module_ah_bot" == "true" ]]; then
             if [[ ! -f "$root/source/etc/modules/mod_ahbot.conf.dist" ]]; then
@@ -1826,6 +1911,31 @@ function set_config
             sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = '$module_ah_bot_character'/g' "$root/source/etc/modules/mod_ahbot.conf"
             sed -i 's/AuctionHouseBot.ItemsPerCycle =.*/AuctionHouseBot.ItemsPerCycle = '$module_ah_bot_items_per_cycle'/g' "$root/source/etc/modules/mod_ahbot.conf"
             sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$module_ah_bot_max_item_level'/g' "$root/source/etc/modules/mod_ahbot.conf"
+        fi
+
+        if [[ "$module_appreciation" == "true" ]]; then
+            if [[ ! -f "$root/source/etc/modules/mod_appreciation.conf.dist" ]]; then
+                printf "${color_red}The config file mod_appreciation.conf.dist is missing.${color_end}\n"
+                printf "${color_red}Please make sure to install the server first.${color_end}\n"
+                notify_telegram "An error occurred while trying to update the config files of mod-appreciation"
+                exit $?
+            fi
+
+            printf "${color_orange}Updating mod_appreciation.conf${color_end}\n"
+
+            cp "$root/source/etc/modules/mod_appreciation.conf.dist" "$root/source/etc/modules/mod_appreciation.conf"
+
+            [ "$module_appreciation_require_certificate" == "true" ] && module_appreciation_require_certificate0="1" || module_appreciation_require_certificate0="0"
+            [ "$module_appreciation_level_boost" == "true" ] && module_appreciation_level_boost0="1" || module_appreciation_level_boost0="0"
+            [ "$module_appreciation_unlock_continents" == "true" ] && module_appreciation_unlock_continents0="1" || module_appreciation_unlock_continents0="0"
+            [ "$module_appreciation_reward_at_max_level" == "true" ] && module_appreciation_reward_at_max_level0="1" || module_appreciation_reward_at_max_level0="0"
+
+            sed -i 's/Appreciation.RequireCertificate.Enabled =.*/Appreciation.RequireCertificate.Enabled = '$module_appreciation_require_certificate0'/g' "$root/source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.LevelBoost.Enabled =.*/Appreciation.LevelBoost.Enabled = '$module_appreciation_level_boost0'/g' "$root/source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = '$module_appreciation_level_boost_level'/g' "$root/source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = '$module_appreciation_level_boost_included_copper'/g' "$root/source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.UnlockContinents.Enabled =.*/Appreciation.UnlockContinents.Enabled = '$module_appreciation_unlock_continents0'/g' "$root/source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = '$module_appreciation_reward_at_max_level0'/g' "$root/source/etc/modules/mod_appreciation.conf"
         fi
 
         if [[ "$module_assistant" == "true" ]]; then
