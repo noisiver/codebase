@@ -34,6 +34,7 @@ color_white="\e[1;37m"
 color_end="\e[0m"
 
 root=$(pwd)
+source="$root/source"
 mysql_cnf="$root/mysql.cnf"
 telegram_inf="$root/telegram"
 
@@ -43,11 +44,19 @@ mysql_username="acore"
 mysql_password="acore"
 mysql_database="acore_auth"
 id=1
-#node=-1
+node=1
 
 function install_packages
 {
-    packages=("git" "cmake" "make" "gcc" "clang" "screen" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libboost1.74-all-dev" "libmysqlclient-dev" "mysql-client")
+    packages=("git" "screen")
+
+    if [[ "$world_cluster" == "true" ]]; then
+        packages+=("golang-go" "redis")
+    fi
+
+    if [[ "$world_cluster" == "false" || "$build_world" == "true" ]]; then
+        packages+=("cmake" "make" "gcc" "clang" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libboost1.74-all-dev" "libmysqlclient-dev" "mysql-client")
+    fi
 
     for p in "${packages[@]}"; do
         if [[ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
@@ -219,6 +228,11 @@ function get_settings
             "telegram.chat_id") telegram_chat_id="$value";;
             "telegram.token") telegram_token="$value";;
             "world.address") world_address="$value";;
+            "world.cluster") world_cluster="$value";;
+            "world.cluster.auth_address") world_cluster_auth_address="$value";;
+            "world.cluster.maps") world_cluster_maps="$value";;
+            "world.cluster.node_address") world_cluster_node_address="$value";;
+            "world.cluster.port") world_cluster_port="$value";;
             "world.data_version") world_data_version="$value";;
             "world.expansion") world_expansion="$value";;
             "world.leave_group_on_logout") world_leave_group_on_logout="$value";;
@@ -241,9 +255,9 @@ function get_settings
         if [[ ! -z $setting && ! -z $value && -z $unknown ]]; then
             printf "${color_orange}$setting has been set to $value${color_end}\n"
         fi
-    done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1) # WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1
+    done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1)
 
-    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_appreciation || -z $module_appreciation_level_boost || -z $module_appreciation_level_boost_included_copper || -z $module_appreciation_level_boost_level || -z $module_appreciation_require_certificate || -z $module_appreciation_reward_at_max_level || -z $module_appreciation_unlock_continents || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_rate_money || -z $world_rate_reputation || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
+    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_appreciation || -z $module_appreciation_level_boost || -z $module_appreciation_level_boost_included_copper || -z $module_appreciation_level_boost_level || -z $module_appreciation_require_certificate || -z $module_appreciation_reward_at_max_level || -z $module_appreciation_unlock_continents || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_cluster_port || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_rate_money || -z $world_rate_reputation || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
         if [[ -z $build_world ]]; then printf "${color_red}build.world is not set in the settings${color_end}\n"; fi
         if [[ -z $database_auth ]]; then printf "${color_red}database.auth is not set in the settings${color_end}\n"; fi
@@ -335,6 +349,11 @@ function get_settings
         if [[ -z $telegram_chat_id ]]; then printf "${color_red}telegram.chat_id is not set in the settings${color_end}\n"; fi
         if [[ -z $telegram_token ]]; then printf "${color_red}telegram.token is not set in the settings${color_end}\n"; fi
         if [[ -z $world_address ]]; then printf "${color_red}world.address is not set in the settings${color_end}\n"; fi
+        if [[ -z $world_cluster ]]; then printf "${color_red}world.cluster is not set in the settings${color_end}\n"; fi
+        if [[ -z $world_cluster_auth_address ]]; then printf "${color_red}world.cluster.auth_address is not set in the settings${color_end}\n"; fi
+        if [[ -z $world_cluster_maps ]]; then printf "${color_red}world.cluster.maps is not set in the settings${color_end}\n"; fi
+        if [[ -z $world_cluster_node_address ]]; then printf "${color_red}world.cluster.node_address is not set in the settings${color_end}\n"; fi
+        if [[ -z $world_cluster_port ]]; then printf "${color_red}world.cluster.port is not set in the settings${color_end}\n"; fi
         if [[ -z $world_data_version ]]; then printf "${color_red}world.data_version is not set in the settings${color_end}\n"; fi
         if [[ -z $world_expansion ]]; then printf "${color_red}world.expansion is not set in the settings${color_end}\n"; fi
         if [[ -z $world_leave_group_on_logout ]]; then printf "${color_red}world.leave_group_on_logout is not set in the settings${color_end}\n"; fi
@@ -380,6 +399,10 @@ function get_settings
     elif [[ $patch  -eq 2 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 245 ]]; then
         module_ah_bot_max_item_level="245"
     fi
+
+    if [[ "$world_cluster" == "true" ]]; then
+        source="$root/source/azerothcore"
+    fi
 }
 
 function notify_telegram
@@ -393,7 +416,11 @@ function notify_telegram
     fi
 
     if [[ ! -z $telegram_chat_id && ! -z $telegram_token && $telegram_chat_id != "0" && $telegram_token != "0" ]]; then
-        curl -s -X POST https://api.telegram.org/bot$telegram_token/sendMessage -d chat_id=$telegram_chat_id -d text="[$world_name (ID: $id)]: $1" > /dev/null
+        if [[ "$world_cluster" == "true" ]]; then
+            curl -s -X POST https://api.telegram.org/bot$telegram_token/sendMessage -d chat_id=$telegram_chat_id -d text="[$world_name (id: $id, node: $node)]: $1" > /dev/null
+        else
+            curl -s -X POST https://api.telegram.org/bot$telegram_token/sendMessage -d chat_id=$telegram_chat_id -d text="[$world_name (id: $id)]: $1" > /dev/null
+        fi
     fi
 }
 
@@ -401,44 +428,76 @@ function get_source
 {
     printf "${color_green}Downloading the source code...${color_end}\n"
 
-    if [[ ! -d $root/source ]]; then
-        git clone --recursive --depth 1 --branch $git_branch "https://github.com/$git_repository" "$root/source"
-        if [[ $? != 0 ]]; then
-            notify_telegram "An error occurred while trying to download the source code"
-            exit $?
-        fi
-    else
-        cd $root/source
+    if [[ "$world_cluster" == "true" ]]; then
+        if [[ ! -d "$root/source/tocloud9" ]]; then
+            git clone --recursive --depth 1 --branch master "https://github.com/walkline/ToCloud9.git" "$root/source/tocloud9"
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to download the source code"
+                exit $?
+            fi
+        else
+            cd "$root/source/tocloud9"
 
-        git reset --hard origin/$git_branch
-        if [[ $? != 0 ]]; then
-            notify_telegram "An error occurred while trying to update the source code"
-            exit $?
-        fi
+            git reset --hard origin/master
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to update the source code"
+                exit $?
+            fi
 
-        git pull
-        if [[ $? != 0 ]]; then
-            notify_telegram "An error occurred while trying to update the source code"
-            exit $?
-        fi
+            git pull
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to update the source code"
+                exit $?
+            fi
 
-        git submodule update
-        if [[ $? != 0 ]]; then
-            notify_telegram "An error occurred while trying to update the source code"
-            exit $?
+            git submodule update
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to update the source code"
+                exit $?
+            fi
+        fi
+    fi
+
+    if [[ "$world_cluster" == "false" ]] || [[ "$build_world" == "true" ]]; then
+        if [[ ! -d "$source" ]]; then
+            git clone --recursive --depth 1 --branch $git_branch "https://github.com/$git_repository" "$source"
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to download the source code"
+                exit $?
+            fi
+        else
+            cd "$source"
+
+            git reset --hard origin/$git_branch
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to update the source code"
+                exit $?
+            fi
+
+            git pull
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to update the source code"
+                exit $?
+            fi
+
+            git submodule update
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to update the source code"
+                exit $?
+            fi
         fi
     fi
 
     if [[ "$build_world" == "true" ]]; then
         if [[ "$module_ah_bot" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-ah-bot" ]]; then
-                git clone --depth 1 --branch noisiver "https://github.com/noisiver/mod-ah-bot.git" "$root/source/modules/mod-ah-bot"
+            if [[ ! -d "$source/modules/mod-ah-bot" ]]; then
+                git clone --depth 1 --branch noisiver "https://github.com/noisiver/mod-ah-bot.git" "$source/modules/mod-ah-bot"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-ah-bot"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-ah-bot"
+                cd "$source/modules/mod-ah-bot"
 
                 git reset --hard origin/noisiver
                 if [[ $? != 0 ]]; then
@@ -453,24 +512,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-ah-bot" ]]; then
-                rm -rf "$root/source/modules/mod-ah-bot"
+            if [[ -d "$source/modules/mod-ah-bot" ]]; then
+                rm -rf "$source/modules/mod-ah-bot"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_appreciation" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-appreciation" ]]; then
-                git clone --depth 1 --branch master "https://github.com/noisiver/mod-appreciation.git" "$root/source/modules/mod-appreciation"
+            if [[ ! -d "$source/modules/mod-appreciation" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-appreciation.git" "$source/modules/mod-appreciation"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-appreciation"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-appreciation"
+                cd "$source/modules/mod-appreciation"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -485,24 +544,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-appreciation" ]]; then
-                rm -rf "$root/source/modules/mod-appreciation"
+            if [[ -d "$source/modules/mod-appreciation" ]]; then
+                rm -rf "$source/modules/mod-appreciation"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_assistant" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-assistant" ]]; then
-                git clone --depth 1 --branch master "https://github.com/noisiver/mod-assistant.git" "$root/source/modules/mod-assistant"
+            if [[ ! -d "$source/modules/mod-assistant" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-assistant.git" "$source/modules/mod-assistant"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-assistant"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-assistant"
+                cd "$source/modules/mod-assistant"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -517,24 +576,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-assistant" ]]; then
-                rm -rf "$root/source/modules/mod-assistant"
+            if [[ -d "$source/modules/mod-assistant" ]]; then
+                rm -rf "$source/modules/mod-assistant"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_groupquests" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-groupquests" ]]; then
-                git clone --depth 1 --branch master "https://github.com/noisiver/mod-groupquests.git" "$root/source/modules/mod-groupquests"
+            if [[ ! -d "$source/modules/mod-groupquests" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-groupquests.git" "$source/modules/mod-groupquests"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-groupquests"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-groupquests"
+                cd "$source/modules/mod-groupquests"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -549,24 +608,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-groupquests" ]]; then
-                rm -rf "$root/source/modules/mod-groupquests"
+            if [[ -d "$source/modules/mod-groupquests" ]]; then
+                rm -rf "$source/modules/mod-groupquests"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_junktogold" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-junk-to-gold" ]]; then
-                git clone --depth 1 --branch master "https://github.com/noisiver/mod-junk-to-gold.git" "$root/source/modules/mod-junk-to-gold"
+            if [[ ! -d "$source/modules/mod-junk-to-gold" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-junk-to-gold.git" "$source/modules/mod-junk-to-gold"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-junk-to-gold"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-junk-to-gold"
+                cd "$source/modules/mod-junk-to-gold"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -581,28 +640,28 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-junk-to-gold" ]]; then
-                rm -rf "$root/source/modules/mod-junk-to-gold"
+            if [[ -d "$source/modules/mod-junk-to-gold" ]]; then
+                rm -rf "$source/modules/mod-junk-to-gold"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_learnspells" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-learnspells" ]]; then
+            if [[ ! -d "$source/modules/mod-learnspells" ]]; then
                 if [[ $patch -lt 4 ]]; then
-                    git clone --depth 1 --branch progression "https://github.com/noisiver/mod-learnspells.git" "$root/source/modules/mod-learnspells"
+                    git clone --depth 1 --branch progression "https://github.com/noisiver/mod-learnspells.git" "$source/modules/mod-learnspells"
                 else
-                    git clone --depth 1 --branch master "https://github.com/noisiver/mod-learnspells.git" "$root/source/modules/mod-learnspells"
+                    git clone --depth 1 --branch master "https://github.com/noisiver/mod-learnspells.git" "$source/modules/mod-learnspells"
                 fi
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-learnspells"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-learnspells"
+                cd "$source/modules/mod-learnspells"
 
                 if [[ $patch -lt 4 ]]; then
                     git reset --hard origin/progression
@@ -621,24 +680,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-learnspells" ]]; then
-                rm -rf "$root/source/modules/mod-learnspells"
+            if [[ -d "$source/modules/mod-learnspells" ]]; then
+                rm -rf "$source/modules/mod-learnspells"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_playerbots" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-playerbots" ]]; then
-                git clone --depth 1 --branch master "https://github.com/liyunfan1223/mod-playerbots.git" "$root/source/modules/mod-playerbots"
+            if [[ ! -d "$source/modules/mod-playerbots" ]]; then
+                git clone --depth 1 --branch master "https://github.com/liyunfan1223/mod-playerbots.git" "$source/modules/mod-playerbots"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-playerbots"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-playerbots"
+                cd "$source/modules/mod-playerbots"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -653,24 +712,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-playerbots" ]]; then
-                rm -rf "$root/source/modules/mod-playerbots"
+            if [[ -d "$source/modules/mod-playerbots" ]]; then
+                rm -rf "$source/modules/mod-playerbots"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_progression" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-progression" ]]; then
-                git clone --depth 1 --branch master "https://github.com/noisiver/mod-progression.git" "$root/source/modules/mod-progression"
+            if [[ ! -d "$source/modules/mod-progression" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-progression.git" "$source/modules/mod-progression"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-progression"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-progression"
+                cd "$source/modules/mod-progression"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -685,24 +744,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-progression" ]]; then
-                rm -rf "$root/source/modules/mod-progression"
+            if [[ -d "$source/modules/mod-progression" ]]; then
+                rm -rf "$source/modules/mod-progression"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_recruitafriend" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-recruitafriend" ]]; then
-                git clone --depth 1 --branch master "https://github.com/noisiver/mod-recruitafriend.git" "$root/source/modules/mod-recruitafriend"
+            if [[ ! -d "$source/modules/mod-recruitafriend" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-recruitafriend.git" "$source/modules/mod-recruitafriend"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-recruitafriend"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-recruitafriend"
+                cd "$source/modules/mod-recruitafriend"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -717,24 +776,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-recruitafriend" ]]; then
-                rm -rf "$root/source/modules/mod-recruitafriend"
+            if [[ -d "$source/modules/mod-recruitafriend" ]]; then
+                rm -rf "$source/modules/mod-recruitafriend"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_skip_dk_starting_area" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-skip-dk-starting-area" ]]; then
-                git clone --depth 1 --branch master "https://github.com/azerothcore/mod-skip-dk-starting-area.git" "$root/source/modules/mod-skip-dk-starting-area"
+            if [[ ! -d "$source/modules/mod-skip-dk-starting-area" ]]; then
+                git clone --depth 1 --branch master "https://github.com/azerothcore/mod-skip-dk-starting-area.git" "$source/modules/mod-skip-dk-starting-area"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-skip-dk-starting-area"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-skip-dk-starting-area"
+                cd "$source/modules/mod-skip-dk-starting-area"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -749,24 +808,24 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-skip-dk-starting-area" ]]; then
-                rm -rf "$root/source/modules/mod-skip-dk-starting-area"
+            if [[ -d "$source/modules/mod-skip-dk-starting-area" ]]; then
+                rm -rf "$source/modules/mod-skip-dk-starting-area"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
 
         if [[ "$module_weekendbonus" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-weekendbonus" ]]; then
-                git clone --depth 1 --branch master "https://github.com/noisiver/mod-weekendbonus.git" "$root/source/modules/mod-weekendbonus"
+            if [[ ! -d "$source/modules/mod-weekendbonus" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-weekendbonus.git" "$source/modules/mod-weekendbonus"
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to download the source code of mod-weekendbonus"
                     exit $?
                 fi
             else
-                cd "$root/source/modules/mod-weekendbonus"
+                cd "$source/modules/mod-weekendbonus"
 
                 git reset --hard origin/master
                 if [[ $? != 0 ]]; then
@@ -781,11 +840,11 @@ function get_source
                 fi
             fi
         else
-            if [[ -d "$root/source/modules/mod-weekendbonus" ]]; then
-                rm -rf "$root/source/modules/mod-weekendbonus"
+            if [[ -d "$source/modules/mod-weekendbonus" ]]; then
+                rm -rf "$source/modules/mod-weekendbonus"
 
-                if [[ -d "$root/source/build" ]]; then
-                    rm -rf "$root/source/build"
+                if [[ -d "$source/build" ]]; then
+                    rm -rf "$source/build"
                 fi
             fi
         fi
@@ -798,85 +857,293 @@ function compile_source
 {
     printf "${color_green}Compiling the source code...${color_end}\n"
 
-    mkdir -p "$root/source/build" && cd "$_"
+    if [[ "$world_cluster" == "true" ]]; then
+        if [[ "$build_auth" == "true" ]]; then
+            cd "$root/source/tocloud9"
 
-    if [[ "$build_auth" == "true" && "$build_world" == "true" ]]; then
-        apps="all"
-    elif [[ "$build_auth" == "true" && "$build_world" != "true" ]]; then
-        apps="auth-only"
-    elif [[ "$build_auth" != "true" && "$build_world" == "true" ]]; then
-        apps="world-only"
+            printf "${color_orange}Building authserver${color_end}\n"
+            go build -o bin/authserver apps/authserver/cmd/authserver/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            printf "${color_orange}Building charserver${color_end}\n"
+            go build -o bin/charserver apps/charserver/cmd/charserver/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            printf "${color_orange}Building chatserver${color_end}\n"
+            go build -o bin/chatserver apps/chatserver/cmd/chatserver/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            printf "${color_orange}Building game-load-balancer${color_end}\n"
+            go build -o bin/game-load-balancer apps/game-load-balancer/cmd/game-load-balancer/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            printf "${color_orange}Building servers-registry${color_end}\n"
+            go build -o bin/servers-registry apps/servers-registry/cmd/servers-registry/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            printf "${color_orange}Building groupserver${color_end}\n"
+            go build -o bin/groupserver apps/groupserver/cmd/groupserver/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            printf "${color_orange}Building guidserver${color_end}\n"
+            go build -o bin/guidserver apps/guidserver/cmd/guidserver/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            printf "${color_orange}Building guildserver${color_end}\n"
+            go build -o bin/guildserver apps/guildserver/cmd/guildserver/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            printf "${color_orange}Building mailserver${color_end}\n"
+            go build -o bin/mailserver apps/mailserver/cmd/mailserver/main.go
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile nats-server.log -dmS nats-server ./nats-server.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile servers-registry.log -dmS servers-registry ./servers-registry.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile guidserver.log -dmS guidserver ./guidserver.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile authserver.log -dmS authserver ./authserver.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile charserver.log -dmS charserver ./charserver.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile chatserver.log -dmS chatserver ./chatserver.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile game-load-balancer.log -dmS game-load-balancer ./game-load-balancer.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile groupserver.log -dmS groupserver ./groupserver.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile guildserver.log -dmS guildserver ./guildserver.sh" >> $root/source/tocloud9/bin/start.sh
+            echo "screen -L -Logfile mailserver.log -dmS mailserver ./mailserver.sh" >> $root/source/tocloud9/bin/start.sh
+            chmod +x $root/source/tocloud9/bin/start.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/nats-server.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/nats-server.sh
+            echo "    nats-server" >> $root/source/tocloud9/bin/nats-server.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/nats-server.sh
+            echo "done" >> $root/source/tocloud9/bin/nats-server.sh
+            chmod +x $root/source/tocloud9/bin/nats-server.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/servers-registry.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/servers-registry.sh
+            echo "    ./servers-registry" >> $root/source/tocloud9/bin/servers-registry.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/servers-registry.sh
+            echo "done" >> $root/source/tocloud9/bin/servers-registry.sh
+            chmod +x $root/source/tocloud9/bin/servers-registry.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/guidserver.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/guidserver.sh
+            echo "    ./guidserver" >> $root/source/tocloud9/bin/guidserver.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/guidserver.sh
+            echo "done" >> $root/source/tocloud9/bin/guidserver.sh
+            chmod +x $root/source/tocloud9/bin/guidserver.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/authserver.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/authserver.sh
+            echo "    ./authserver" >> $root/source/tocloud9/bin/authserver.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/authserver.sh
+            echo "done" >> $root/source/tocloud9/bin/authserver.sh
+            chmod +x $root/source/tocloud9/bin/authserver.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/charserver.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/charserver.sh
+            echo "    ./charserver" >> $root/source/tocloud9/bin/charserver.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/charserver.sh
+            echo "done" >> $root/source/tocloud9/bin/charserver.sh
+            chmod +x $root/source/tocloud9/bin/charserver.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/chatserver.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/chatserver.sh
+            echo "    ./chatserver" >> $root/source/tocloud9/bin/chatserver.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/chatserver.sh
+            echo "done" >> $root/source/tocloud9/bin/chatserver.sh
+            chmod +x $root/source/tocloud9/bin/chatserver.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/game-load-balancer.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/game-load-balancer.sh
+            echo "    ./game-load-balancer" >> $root/source/tocloud9/bin/game-load-balancer.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/game-load-balancer.sh
+            echo "done" >> $root/source/tocloud9/bin/game-load-balancer.sh
+            chmod +x $root/source/tocloud9/bin/game-load-balancer.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/guildserver.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/guildserver.sh
+            echo "    ./groupserver" >> $root/source/tocloud9/bin/guildserver.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/guildserver.sh
+            echo "done" >> $root/source/tocloud9/bin/guildserver.sh
+            chmod +x $root/source/tocloud9/bin/guildserver.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/guildserver.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/guildserver.sh
+            echo "    ./guildserver" >> $root/source/tocloud9/bin/guildserver.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/guildserver.sh
+            echo "done" >> $root/source/tocloud9/bin/guildserver.sh
+            chmod +x $root/source/tocloud9/bin/guildserver.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/mailserver.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/mailserver.sh
+            echo "    ./mailserver" >> $root/source/tocloud9/bin/mailserver.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/mailserver.sh
+            echo "done" >> $root/source/tocloud9/bin/mailserver.sh
+            chmod +x $root/source/tocloud9/bin/mailserver.sh
+
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"nats-server\" quit && pkill \"nats-server\"" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"servers-registry\" quit" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"guidserver\" quit" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"authserver\" quit" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"charserver\" quit" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"chatserver\" quit" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"game-load-balancer\" quit" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"groupserver\" quit" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"guildserver\" quit" >> $root/source/tocloud9/bin/stop.sh
+            echo "screen -X -S \"mailserver\" quit" >> $root/source/tocloud9/bin/stop.sh
+            chmod +x $root/source/tocloud9/bin/stop.sh
+        fi
+
+        if [[ "$build_world" == "true" ]]; then
+            cd "$root/source/tocloud9"
+
+            printf "${color_orange}Building libsidecar${color_end}\n"
+            go build -o bin/libsidecar.so -buildmode=c-shared ./game-server/libsidecar/
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            cp "$root/source/tocloud9/bin/libsidecar.so" "$root/source/azerothcore/deps/libsidecar/libsidecar.so"
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            if [[ $EUID != 0 ]]; then
+                sudo cp "$root/source/tocloud9/bin/libsidecar.so" "/usr/lib/libsidecar.so"
+            else
+                cp "$root/source/tocloud9/bin/libsidecar.so" "/usr/lib/libsidecar.so"
+            fi
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+        fi
     fi
 
-    for i in {1..2}; do
-        cmake ../ -DCMAKE_INSTALL_PREFIX=$root/source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$apps"
+    if [[ "$world_cluster" == "false" ]] || [[ "$build_world" == "true" ]]; then
+        mkdir -p "$source/build" && cd "$_"
+
+        if [[ "$build_auth" == "true" && "$build_world" == "true" ]]; then
+            apps="all"
+        elif [[ "$build_auth" == "true" && "$build_world" != "true" ]]; then
+            apps="auth-only"
+        elif [[ "$build_auth" != "true" && "$build_world" == "true" ]]; then
+            apps="world-only"
+        fi
+
+        for i in {1..2}; do
+            if [[ "$world_cluster" == "true" ]]; then
+                cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="world-only" -DUSE_REAL_LIBSIDECAR=ON
+            else
+                cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$apps"
+            fi
+
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to compile the source code"
+                exit $?
+            fi
+
+            make -j $(nproc)
+            if [[ $? -ne 0 ]]; then
+                if [[ $i == 1 ]]; then
+                    make clean
+                else
+                    notify_telegram "An error occurred while trying to compile the source code"
+                    exit $?
+                fi
+            else
+                break
+            fi
+        done
+
+        make install
         if [[ $? -ne 0 ]]; then
             notify_telegram "An error occurred while trying to compile the source code"
             exit $?
         fi
 
-        make -j $(nproc)
-        if [[ $? -ne 0 ]]; then
-            if [[ $i == 1 ]]; then
-                make clean
-            else
-                notify_telegram "An error occurred while trying to compile the source code"
-                exit $?
-            fi
+        echo "#!/bin/bash" > "$source/bin/start.sh"
+        echo "#!/bin/bash" > "$source/bin/stop.sh"
+
+        if [[ "$world_cluster" == "false" && "$build_auth" == "true" ]]; then
+            echo "screen -AmdS auth ./auth.sh" >> "$source/bin/start.sh"
+            echo "screen -X -S \"auth\" quit" >> "$source/bin/stop.sh"
+
+            echo "#!/bin/bash" > "$source/bin/auth.sh"
+            echo "while :; do" >> "$source/bin/auth.sh"
+            echo "  ./authserver" >> "$source/bin/auth.sh"
+            echo "  sleep 5" >> "$source/bin/auth.sh"
+            echo "done" >> "$source/bin/auth.sh"
+
+            chmod +x "$source/bin/auth.sh"
         else
-            break
+            if [[ -f "$source/bin/auth.sh" ]]; then
+                rm -rf "$source/bin/auth.sh"
+            fi
         fi
-    done
 
-    make install
-    if [[ $? -ne 0 ]]; then
-        notify_telegram "An error occurred while trying to compile the source code"
-        exit $?
-    fi
+        if [[ "$build_world" == "true" ]]; then
+            echo "TIME=\$(date +%s)" >> "$source/bin/start.sh"
+            if [[ "$world_cluster" == "true" ]]; then
+                echo "screen -L -Logfile \$TIME.log -AmdS world-$id-$node ./world.sh" >> "$source/bin/start.sh"
+                echo "screen -X -S \"world-$id-$node\" quit" >> "$source/bin/stop.sh"
+            else
+                echo "screen -L -Logfile \$TIME.log -AmdS world-$id ./world.sh" >> "$source/bin/start.sh"
+                echo "screen -X -S \"world-$id\" quit" >> "$source/bin/stop.sh"
+            fi
 
-    echo "#!/bin/bash" > "$root/source/bin/start.sh"
-    echo "#!/bin/bash" > "$root/source/bin/stop.sh"
+            echo "#!/bin/bash" > "$source/bin/world.sh"
+            echo "while :; do" >> "$source/bin/world.sh"
+            if [[ "$world_cluster" == "true" ]]; then
+                echo "  TC9_CONFIG_FILE=$source/bin/config.yml AC_WORLD_SERVER_PORT="$world_cluster_port" ./worldserver" >> "$source/bin/world.sh"
+            else
+                echo "  ./worldserver" >> "$source/bin/world.sh"
+            fi
+            echo "  if [[ \$? == 0 ]]; then" >> "$source/bin/world.sh"
+            echo "    break" >> "$source/bin/world.sh"
+            echo "  fi" >> "$source/bin/world.sh"
+            echo "  sleep 5" >> "$source/bin/world.sh"
+            echo "done" >> "$source/bin/world.sh"
 
-    if [[ "$build_auth" == "true" ]]; then
-        echo "screen -AmdS auth ./auth.sh" >> "$root/source/bin/start.sh"
-        echo "screen -X -S \"auth\" quit" >> "$root/source/bin/stop.sh"
-
-        echo "#!/bin/bash" > "$root/source/bin/auth.sh"
-        echo "while :; do" >> "$root/source/bin/auth.sh"
-        echo "  ./authserver" >> "$root/source/bin/auth.sh"
-        echo "  sleep 5" >> "$root/source/bin/auth.sh"
-        echo "done" >> "$root/source/bin/auth.sh"
-
-        chmod +x "$root/source/bin/auth.sh"
-    else
-        if [[ -f "$root/source/bin/auth.sh" ]]; then
-            rm -rf "$root/source/bin/auth.sh"
+            chmod +x "$source/bin/world.sh"
+        else
+            if [[ -f "$source/bin/world.sh" ]]; then
+                rm -rf "$source/bin/world.sh"
+            fi
         fi
+
+        chmod +x "$source/bin/start.sh"
+        chmod +x "$source/bin/stop.sh"
     fi
-
-    if [[ "$build_world" == "true" ]]; then
-        echo "TIME=\$(date +%s)" >> "$root/source/bin/start.sh"
-        echo "screen -L -Logfile \$TIME.log -AmdS world-$id ./world.sh" >> "$root/source/bin/start.sh"
-        echo "screen -X -S \"world-$id\" quit" >> "$root/source/bin/stop.sh"
-
-        echo "#!/bin/bash" > "$root/source/bin/world.sh"
-        echo "while :; do" >> "$root/source/bin/world.sh"
-        echo "  ./worldserver" >> "$root/source/bin/world.sh"
-        echo "  if [[ \$? == 0 ]]; then" >> "$root/source/bin/world.sh"
-        echo "    break" >> "$root/source/bin/world.sh"
-        echo "  fi" >> "$root/source/bin/world.sh"
-        echo "  sleep 5" >> "$root/source/bin/world.sh"
-        echo "done" >> "$root/source/bin/world.sh"
-
-        chmod +x "$root/source/bin/world.sh"
-    else
-        if [[ -f "$root/source/bin/world.sh" ]]; then
-            rm -rf "$root/source/bin/world.sh"
-        fi
-    fi
-
-    chmod +x "$root/source/bin/start.sh"
-    chmod +x "$root/source/bin/stop.sh"
 
     printf "${color_green}Finished compiling the source code...${color_end}\n"
 }
@@ -886,42 +1153,42 @@ function get_client_files
     if [[ "$build_world" == "true" ]]; then
         version=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
 
-        if [[ "$world_data_version" == "0" || "$world_data_version" != "$version" || ! -d $root/source/bin/Cameras || ! -d $root/source/bin/dbc || ! -d $root/source/bin/maps || ! -d $root/source/bin/mmaps || ! -d $root/source/bin/vmaps ]]; then
+        if [[ "$world_data_version" == "0" || "$world_data_version" != "$version" || ! -d "$source/bin/Cameras" || ! -d "$source/bin/dbc" || ! -d "$source/bin/maps" || ! -d "$source/bin/mmaps" || ! -d "$source/bin/vmaps" ]]; then
             printf "${color_green}Downloading the client data files...${color_end}\n"
 
-            if [[ -f "$root/source/bin/data.zip" ]]; then
-                rm -rf "$root/source/bin/data.zip"
+            if [[ -f "$source/bin/data.zip" ]]; then
+                rm -rf "$source/bin/data.zip"
             fi
-            if [[ -d "$root/source/bin/Cameras" ]]; then
-                rm -rf "$root/source/bin/Cameras"
+            if [[ -d "$source/bin/Cameras" ]]; then
+                rm -rf "$source/bin/Cameras"
             fi
-            if [[ -d "$root/source/bin/dbc" ]]; then
-                rm -rf "$root/source/bin/dbc"
+            if [[ -d "$source/bin/dbc" ]]; then
+                rm -rf "$source/bin/dbc"
             fi
-            if [[ -d "$root/source/bin/maps" ]]; then
-                rm -rf "$root/source/bin/maps"
+            if [[ -d "$source/bin/maps" ]]; then
+                rm -rf "$source/bin/maps"
             fi
-            if [[ -d "$root/source/bin/mmaps" ]]; then
-                rm -rf "$root/source/bin/mmaps"
+            if [[ -d "$source/bin/mmaps" ]]; then
+                rm -rf "$source/bin/mmaps"
             fi
-            if [[ -d "$root/source/bin/vmaps" ]]; then
-                rm -rf "$root/source/bin/vmaps"
+            if [[ -d "$source/bin/vmaps" ]]; then
+                rm -rf "$source/bin/vmaps"
             fi
 
-            curl -f -L "https://github.com/wowgaming/client-data/releases/download/v${version}/data.zip" -o "$root/source/bin/data.zip"
+            curl -f -L "https://github.com/wowgaming/client-data/releases/download/v${version}/data.zip" -o "$source/bin/data.zip"
             if [[ $? -ne 0 ]]; then
-                rm -rf "$root/source/bin/data.zip"
+                rm -rf "$source/bin/data.zip"
                 notify_telegram "An error occurred while trying to download the client data files"
                 exit $?
             fi
 
-            unzip -o "$root/source/bin/data.zip" -d "$root/source/bin/"
+            unzip -o "$source/bin/data.zip" -d "$source/bin/"
             if [[ $? -ne 0 ]]; then
                 notify_telegram "An error occurred while trying to download the client data files"
                 exit $?
             fi
 
-            rm -rf "$root/source/bin/data.zip"
+            rm -rf "$source/bin/data.zip"
 
             echo "[client]" > "$mysql_cnf"
             echo "host=\"$mysql_hostname\"" >> "$mysql_cnf"
@@ -955,7 +1222,7 @@ function copy_dbc_files
         if [[ `ls -1 $root/dbc/*.dbc 2>/dev/null | wc -l` -gt 0 ]]; then
             for f in $root/dbc/*.dbc; do
                 printf "${color_orange}Copying "$(basename $f)"${color_end}\n"
-                cp "$f" "$root/source/bin/dbc/$(basename $f)"
+                cp "$f" "$source/bin/dbc/$(basename $f)"
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to copy custom dbc files"
                     exit $?
@@ -975,178 +1242,102 @@ function import_database_files
 {
     printf "${color_green}Importing the database files...${color_end}\n"
 
-    echo "[client]" > "$mysql_cnf"
-    echo "host=\"$mysql_hostname\"" >> "$mysql_cnf"
-    echo "port=\"$mysql_port\"" >> "$mysql_cnf"
-    echo "user=\"$mysql_username\"" >> "$mysql_cnf"
-    echo "password=\"$mysql_password\"" >> "$mysql_cnf"
+    if [[ "$world_cluster" == "false" || "$build_world" == "true" ]]; then
+        echo "[client]" > "$mysql_cnf"
+        echo "host=\"$mysql_hostname\"" >> "$mysql_cnf"
+        echo "port=\"$mysql_port\"" >> "$mysql_cnf"
+        echo "user=\"$mysql_username\"" >> "$mysql_cnf"
+        echo "password=\"$mysql_password\"" >> "$mysql_cnf"
 
-    if [[ -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names -e "SHOW DATABASES LIKE '$database_auth'"` ]]; then
-        printf "${color_red}The database named $database_auth is inaccessible by the user named $mysql_username${color_end}\n"
-        notify_telegram "An error occurred while trying to import the database files"
-        rm -rf "$mysql_cnf"
-        exit $?
-    fi
-
-    if [[ "$build_world" == "true" ]]; then
-        if [[ -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names -e "SHOW DATABASES LIKE '$database_characters'"` ]]; then
-            printf "${color_red}The database named $database_characters is inaccessible by the user named $mysql_username${color_end}\n"
+        if [[ -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names -e "SHOW DATABASES LIKE '$database_auth'"` ]]; then
+            printf "${color_red}The database named $database_auth is inaccessible by the user named $mysql_username${color_end}\n"
             notify_telegram "An error occurred while trying to import the database files"
             rm -rf "$mysql_cnf"
             exit $?
         fi
 
-        if [[ -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names -e "SHOW DATABASES LIKE '$database_world'"` ]] && [[ $1 == "world" || $1 == "both" ]]; then
-            printf "${color_red}The database named $database_world is inaccessible by the user named $mysql_username${color_end}\n"
-            notify_telegram "An error occurred while trying to import the database files"
-            rm -rf "$mysql_cnf"
-            exit $?
+        if [[ "$build_world" == "true" ]]; then
+            if [[ -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names -e "SHOW DATABASES LIKE '$database_characters'"` ]]; then
+                printf "${color_red}The database named $database_characters is inaccessible by the user named $mysql_username${color_end}\n"
+                notify_telegram "An error occurred while trying to import the database files"
+                rm -rf "$mysql_cnf"
+                exit $?
+            fi
+
+            if [[ -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names -e "SHOW DATABASES LIKE '$database_world'"` ]] && [[ $1 == "world" || $1 == "both" ]]; then
+                printf "${color_red}The database named $database_world is inaccessible by the user named $mysql_username${color_end}\n"
+                notify_telegram "An error occurred while trying to import the database files"
+                rm -rf "$mysql_cnf"
+                exit $?
+            fi
         fi
-    fi
 
-    if [[ ! -d "$root/source/data/sql/base/db_auth" ]] || [[ ! -d "$root/source/data/sql/updates/db_auth" ]] || [[ ! -d "$root/source/data/sql/custom/db_auth" ]]; then
-        printf "${color_red}There are no database files where there should be${color_end}\n"
-        printf "${color_red}Please make sure to install the server first${color_end}\n"
-        notify_telegram "An error occurred while trying to import the database files"
-        rm -rf "$mysql_cnf"
-        exit $?
-    fi
-
-    if [[ "$build_world" == "true" ]]; then
-        if [[ ! -d "$root/source/data/sql/base/db_characters" ]] || [[ ! -d "$root/source/data/sql/updates/db_characters" ]] || [[ ! -d "$root/source/data/sql/custom/db_characters" ]] || [[ ! -d "$root/source/data/sql/base/db_world" ]] || [[ ! -d "$root/source/data/sql/updates/db_world" ]] || [[ ! -d "$root/source/data/sql/custom/db_world" ]]; then
+        if [[ ! -d "$source/data/sql/base/db_auth" ]] || [[ ! -d "$source/data/sql/updates/db_auth" ]] || [[ ! -d "$source/data/sql/custom/db_auth" ]]; then
             printf "${color_red}There are no database files where there should be${color_end}\n"
             printf "${color_red}Please make sure to install the server first${color_end}\n"
             notify_telegram "An error occurred while trying to import the database files"
             rm -rf "$mysql_cnf"
             exit $?
         fi
-    fi
 
-    if [[ ! -d "$root/sql/auth" ]]; then
-        mkdir -p "$root/sql/auth"
-        if [[ $? -ne 0 ]]; then
-            notify_telegram "An error occurred while trying to import the database files"
-            rm -rf "$mysql_cnf"
-            exit $?
-        fi
-    fi
-
-    if [[ "$build_world" == "true" ]]; then
-        if [[ ! -d "$root/sql/characters" ]]; then
-            mkdir -p "$root/sql/characters"
-            if [[ $? -ne 0 ]]; then
+        if [[ "$build_world" == "true" ]]; then
+            if [[ ! -d "$source/data/sql/base/db_characters" ]] || [[ ! -d "$source/data/sql/updates/db_characters" ]] || [[ ! -d "$source/data/sql/custom/db_characters" ]] || [[ ! -d "$source/data/sql/base/db_world" ]] || [[ ! -d "$source/data/sql/updates/db_world" ]] || [[ ! -d "$source/data/sql/custom/db_world" ]]; then
+                printf "${color_red}There are no database files where there should be${color_end}\n"
+                printf "${color_red}Please make sure to install the server first${color_end}\n"
                 notify_telegram "An error occurred while trying to import the database files"
                 rm -rf "$mysql_cnf"
                 exit $?
             fi
         fi
 
-        if [[ ! -d "$root/sql/world" ]]; then
-            mkdir -p "$root/sql/world"
+        if [[ ! -d "$root/sql/auth" ]]; then
+            mkdir -p "$root/sql/auth"
             if [[ $? -ne 0 ]]; then
                 notify_telegram "An error occurred while trying to import the database files"
                 rm -rf "$mysql_cnf"
                 exit $?
             fi
         fi
-    fi
 
-    if [[ `ls -1 $root/source/data/sql/base/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $root/source/data/sql/base/db_auth/*.sql; do
-            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_auth -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
-                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                continue;
+        if [[ "$build_world" == "true" ]]; then
+            if [[ ! -d "$root/sql/characters" ]]; then
+                mkdir -p "$root/sql/characters"
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
             fi
 
-            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-            mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
-            if [[ $? -ne 0 ]]; then
-                notify_telegram "An error occurred while trying to import the database files"
-                rm -rf "$mysql_cnf"
-                exit $?
+            if [[ ! -d "$root/sql/world" ]]; then
+                mkdir -p "$root/sql/world"
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
             fi
-        done
-    else
-        printf "${color_red}The required files for the auth database are missing${color_end}\n"
-        printf "${color_red}Please make sure to install the server first${color_end}\n"
-    fi
+        fi
 
-    if [[ `ls -1 $root/source/data/sql/updates/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $root/source/data/sql/updates/db_auth/*.sql; do
-            FILENAME=$(basename $f)
-            HASH=($(sha1sum $f))
+        if [[ "$world_cluster" == "true" ]]; then
+            cp "$root/source/tocloud9/sql/characters/mysql/000001_create_guild_invites_table.up.sql" "$source/data/sql/custom/db_characters/000001_create_guild_invites_table.up.sql"
+            cp "$root/source/tocloud9/sql/characters/mysql/000002_add_auto_increment_to_mail.up.sql" "$source/data/sql/custom/db_characters/000002_add_auto_increment_to_mail.up.sql"
+            cp "$root/source/tocloud9/sql/characters/mysql/000003_create_group_invites_table.up.sql" "$source/data/sql/custom/db_characters/000003_create_group_invites_table.up.sql"
+        else
+            rm -rf "$source/data/sql/custom/db_characters/000001_create_guild_invites_table.up.sql"
+            rm -rf "$source/data/sql/custom/db_characters/000002_add_auto_increment_to_mail.up.sql"
+            rm -rf "$source/data/sql/custom/db_characters/000003_create_group_invites_table.up.sql"
+        fi
 
-            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_auth -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                continue;
-            fi
-
-            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-            mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
-            if [[ $? -ne 0 ]]; then
-                notify_telegram "An error occurred while trying to import the database files"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
-            if [[ $? -ne 0 ]]; then
-                notify_telegram "An error occurred while trying to import the database files"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-        done
-    fi
-
-    if [[ `ls -1 $root/source/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $root/source/data/sql/custom/db_auth/*.sql; do
-            FILENAME=$(basename $f)
-            HASH=($(sha1sum $f))
-
-            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_auth -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                continue;
-            fi
-
-            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-            mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
-            if [[ $? -ne 0 ]]; then
-                notify_telegram "An error occurred while trying to import the database files"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
-            if [[ $? -ne 0 ]]; then
-                notify_telegram "An error occurred while trying to import the database files"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-        done
-    fi
-
-    if [[ `ls -1 $root/sql/auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-        for f in $root/sql/auth/*.sql; do
-            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-            mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
-            if [[ $? -ne 0 ]]; then
-                notify_telegram "An error occurred while trying to import the database files"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-        done
-    fi
-
-    if [[ "$build_world" == "true" ]]; then
-        if [[ `ls -1 $root/source/data/sql/base/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $root/source/data/sql/base/db_characters/*.sql; do
-                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_characters -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
+        if [[ `ls -1 $source/data/sql/base/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $source/data/sql/base/db_auth/*.sql; do
+                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_auth -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                     printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
                     continue;
                 fi
 
                 printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
+                mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to import the database files"
                     rm -rf "$mysql_cnf"
@@ -1154,29 +1345,29 @@ function import_database_files
                 fi
             done
         else
-            printf "${color_red}The required files for the characters database are missing${color_end}\n"
+            printf "${color_red}The required files for the auth database are missing${color_end}\n"
             printf "${color_red}Please make sure to install the server first${color_end}\n"
         fi
 
-        if [[ `ls -1 $root/source/data/sql/updates/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $root/source/data/sql/updates/db_characters/*.sql; do
+        if [[ `ls -1 $source/data/sql/updates/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $source/data/sql/updates/db_auth/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
-                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_characters -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_auth -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
                     printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
                     continue;
                 fi
 
                 printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
+                mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to import the database files"
                     rm -rf "$mysql_cnf"
                     exit $?
                 fi
 
-                mysql --defaults-extra-file=$mysql_cnf $database_characters -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to import the database files"
                     rm -rf "$mysql_cnf"
@@ -1185,25 +1376,25 @@ function import_database_files
             done
         fi
 
-        if [[ `ls -1 $root/source/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $root/source/data/sql/custom/db_characters/*.sql; do
+        if [[ `ls -1 $source/data/sql/custom/db_auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $source/data/sql/custom/db_auth/*.sql; do
                 FILENAME=$(basename $f)
                 HASH=($(sha1sum $f))
 
-                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_characters -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_auth -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
                     printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
                     continue;
                 fi
 
                 printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
+                mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to import the database files"
                     rm -rf "$mysql_cnf"
                     exit $?
                 fi
 
-                mysql --defaults-extra-file=$mysql_cnf $database_characters -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to import the database files"
                     rm -rf "$mysql_cnf"
@@ -1212,45 +1403,10 @@ function import_database_files
             done
         fi
 
-        if [[ `ls -1 $root/source/data/sql/base/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $root/source/data/sql/base/db_world/*.sql; do
-                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
-                    printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                    continue;
-                fi
-
+        if [[ `ls -1 $root/sql/auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+            for f in $root/sql/auth/*.sql; do
                 printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to import the database files"
-                    rm -rf "$mysql_cnf"
-                    exit $?
-                fi
-            done
-        else
-            printf "${color_red}The required files for the world database are missing${color_end}\n"
-            printf "${color_red}Please make sure to install the server first${color_end}\n"
-        fi
-
-        if [[ `ls -1 $root/source/data/sql/updates/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $root/source/data/sql/updates/db_world/*.sql; do
-                FILENAME=$(basename $f)
-                HASH=($(sha1sum $f))
-
-                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                    printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                    continue;
-                fi
-
-                printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to import the database files"
-                    rm -rf "$mysql_cnf"
-                    exit $?
-                fi
-
-                mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to import the database files"
                     rm -rf "$mysql_cnf"
@@ -1259,199 +1415,29 @@ function import_database_files
             done
         fi
 
-        if [[ `ls -1 $root/source/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $root/source/data/sql/custom/db_world/*.sql; do
-                FILENAME=$(basename $f)
-                HASH=($(sha1sum $f))
-
-                if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                    printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                    continue;
-                fi
-
-                printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to import the database files"
-                    rm -rf "$mysql_cnf"
-                    exit $?
-                fi
-
-                mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to import the database files"
-                    rm -rf "$mysql_cnf"
-                    exit $?
-                fi
-            done
-        fi
-
-        if [[ "$module_ah_bot" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-ah-bot/data/sql/db-world/base" ]]; then
-                printf "${color_red}The auction house bot module is enabled but the files aren't where they should be${color_end}\n"
-                printf "${color_red}Please make sure to install the server first${color_end}\n"
-                notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            if [[ `ls -1 $root/source/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+        if [[ "$build_world" == "true" ]]; then
+            if [[ `ls -1 $source/data/sql/base/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/data/sql/base/db_characters/*.sql; do
+                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_characters -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
                         printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
                         continue;
                     fi
 
                     printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                    mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                    mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
-
-                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
                 done
-            fi
-
-            mysql --defaults-extra-file=$mysql_cnf $database_world -e "UPDATE mod_auctionhousebot SET minitems='$module_ah_bot_max_item_level', maxitems='$module_ah_bot_max_item_level'"
-            if [[ $? -ne 0 ]]; then
-                notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-        fi
-
-        if [[ "$module_appreciation" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-appreciation/data/sql/db-world/base" ]]; then
-                printf "${color_red}The appreciation module is enabled but the files aren't where they should be${color_end}\n"
+            else
+                printf "${color_red}The required files for the characters database are missing${color_end}\n"
                 printf "${color_red}Please make sure to install the server first${color_end}\n"
-                notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
-                rm -rf "$mysql_cnf"
-                exit $?
             fi
 
-            if [[ `ls -1 $root/source/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                        continue;
-                    fi
-
-                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                    mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
-
-                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
-                done
-            fi
-        fi
-
-        if [[ "$module_assistant" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-assistant/data/sql/db-world/base" ]]; then
-                printf "${color_red}The assistant module is enabled but the files aren't where they should be${color_end}\n"
-                printf "${color_red}Please make sure to install the server first${color_end}\n"
-                notify_telegram "An error occurred while trying to import the database files of mod-assistant"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            if [[ `ls -1 $root/source/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-assistant/data/sql/db-world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                        continue;
-                    fi
-
-                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                    mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-assistant"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
-
-                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-assistant"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
-                done
-            fi
-        fi
-
-        if [[ "$module_groupquests" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-groupquests/data/sql/db-world/base" ]]; then
-                printf "${color_red}The group quests module is enabled but the files aren't where they should be${color_end}\n"
-                printf "${color_red}Please make sure to install the server first${color_end}\n"
-                notify_telegram "An error occurred while trying to import the database files of mod-groupquests"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            if [[ `ls -1 $root/source/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                        continue;
-                    fi
-
-                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                    mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-groupquests"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
-
-                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-groupquests"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
-                done
-            fi
-        fi
-
-        if [[ "$module_playerbots" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-playerbots/sql/characters" ]] || [[ ! -d "$root/source/modules/mod-playerbots/sql/playerbots/base" ]] || [[ ! -d "$root/source/modules/mod-playerbots/sql/world" ]]; then
-                printf "${color_red}The playerbots module is enabled but the files aren't where they should be${color_end}\n"
-                printf "${color_red}Please make sure to install the server first${color_end}\n"
-                notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            if [[ `ls -1 $root/source/modules/mod-playerbots/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-playerbots/sql/characters/*.sql; do
+            if [[ `ls -1 $source/data/sql/updates/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/data/sql/updates/db_characters/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -1463,39 +1449,69 @@ function import_database_files
                     printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
                     mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
 
-                    mysql --defaults-extra-file=$mysql_cnf $database_characters -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    mysql --defaults-extra-file=$mysql_cnf $database_characters -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
                 done
             fi
 
-            if [[ `ls -1 $root/source/modules/mod-playerbots/sql/playerbots/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-playerbots/sql/playerbots/base/*.sql; do
-                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_playerbots -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
+            if [[ `ls -1 $source/data/sql/custom/db_characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/data/sql/custom/db_characters/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_characters -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
                         printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
                         continue;
                     fi
 
                     printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                    mysql --defaults-extra-file=$mysql_cnf $database_playerbots < $f
+                    mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf "$mysql_cnf"
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$mysql_cnf $database_characters -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
                 done
             fi
 
-            if [[ `ls -1 $root/source/modules/mod-playerbots/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-playerbots/sql/world/*.sql; do
+            if [[ `ls -1 $source/data/sql/base/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/data/sql/base/db_world/*.sql; do
+                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
+                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                        continue;
+                    fi
+
+                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                    mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf "$mysql_cnf"
+                        exit $?
+                    fi
+                done
+            else
+                printf "${color_red}The required files for the world database are missing${color_end}\n"
+                printf "${color_red}Please make sure to install the server first${color_end}\n"
+            fi
+
+            if [[ `ls -1 $source/data/sql/updates/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/data/sql/updates/db_world/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -1507,301 +1523,566 @@ function import_database_files
                     printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
                     mysql --defaults-extra-file=$mysql_cnf $database_world < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
 
-                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
                 done
             fi
-        fi
 
-        if [[ "$module_progression" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-progression/src/patch_01-3_0/sql" ]] || [[ ! -d "$root/source/modules/mod-progression/src/patch_02-3_1/sql" ]] || [[ ! -d "$root/source/modules/mod-progression/src/patch_03-3_2/sql" ]] || [[ ! -d "$root/source/modules/mod-progression/src/patch_04-3_3/sql" ]] || [[ ! -d "$root/source/modules/mod-progression/src/patch_05-3_3_5/sql" ]]; then
-                printf "${color_red}The progression module is enabled but the files aren't where they should be${color_end}\n"
-                printf "${color_red}Please make sure to install the server first${color_end}\n"
-                notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                rm -rf "$mysql_cnf"
-                exit $?
+            if [[ `ls -1 $source/data/sql/custom/db_world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/data/sql/custom/db_world/*.sql; do
+                    FILENAME=$(basename $f)
+                    HASH=($(sha1sum $f))
+
+                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                        continue;
+                    fi
+
+                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                    mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf "$mysql_cnf"
+                        exit $?
+                    fi
+
+                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'RELEASED')"
+                    if [[ $? -ne 0 ]]; then
+                        notify_telegram "An error occurred while trying to import the database files"
+                        rm -rf "$mysql_cnf"
+                        exit $?
+                    fi
+                done
             fi
 
-            if [[ "$module_progression_reset" == "true" ]]; then
-                mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name LIKE 'patch_%'"
+            if [[ "$module_ah_bot" == "true" ]]; then
+                if [[ ! -d "$source/modules/mod-ah-bot/data/sql/db-world/base" ]]; then
+                    printf "${color_red}The auction house bot module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
+                    notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+
+                if [[ `ls -1 $source/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+
+                mysql --defaults-extra-file=$mysql_cnf $database_world -e "UPDATE mod_auctionhousebot SET minitems='$module_ah_bot_max_item_level', maxitems='$module_ah_bot_max_item_level'"
                 if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+            fi
+
+            if [[ "$module_appreciation" == "true" ]]; then
+                if [[ ! -d "$source/modules/mod-appreciation/data/sql/db-world/base" ]]; then
+                    printf "${color_red}The appreciation module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
+                    notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+
+                if [[ `ls -1 $source/modules/mod-appreciation/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-appreciation/data/sql/db-world/base/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ "$module_assistant" == "true" ]]; then
+                if [[ ! -d "$source/modules/mod-assistant/data/sql/db-world/base" ]]; then
+                    printf "${color_red}The assistant module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
+                    notify_telegram "An error occurred while trying to import the database files of mod-assistant"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+
+                if [[ `ls -1 $source/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-assistant/data/sql/db-world/base/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-assistant"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-assistant"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ "$module_groupquests" == "true" ]]; then
+                if [[ ! -d "$source/modules/mod-groupquests/data/sql/db-world/base" ]]; then
+                    printf "${color_red}The group quests module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
+                    notify_telegram "An error occurred while trying to import the database files of mod-groupquests"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+
+                if [[ `ls -1 $source/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-groupquests"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-groupquests"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ "$module_playerbots" == "true" ]]; then
+                if [[ ! -d "$source/modules/mod-playerbots/sql/characters" ]] || [[ ! -d "$source/modules/mod-playerbots/sql/playerbots/base" ]] || [[ ! -d "$source/modules/mod-playerbots/sql/world" ]]; then
+                    printf "${color_red}The playerbots module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
+                    notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+
+                if [[ `ls -1 $source/modules/mod-playerbots/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-playerbots/sql/characters/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_characters -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_characters -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+
+                if [[ `ls -1 $source/modules/mod-playerbots/sql/playerbots/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-playerbots/sql/playerbots/base/*.sql; do
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_playerbots -e "SHOW TABLES LIKE '$(basename $f .sql)'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_playerbots < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+
+                if [[ `ls -1 $source/modules/mod-playerbots/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-playerbots/sql/world/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-playerbots"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ "$module_progression" == "true" ]]; then
+                if [[ ! -d "$source/modules/mod-progression/src/patch_01-3_0/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_02-3_1/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_03-3_2/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_04-3_3/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_05-3_3_5/sql" ]]; then
+                    printf "${color_red}The progression module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
                     notify_telegram "An error occurred while trying to import the database files of mod-progression"
                     rm -rf "$mysql_cnf"
                     exit $?
                 fi
-            fi
 
-            if [[ "$module_progression_patch" -ge "0" ]]; then
-                if [[ `ls -1 $root/source/modules/mod-progression/src/patch_01-3_0/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                    for f in $root/source/modules/mod-progression/src/patch_01-3_0/sql/*.sql; do
-                        FILENAME=$(basename $f)
-                        HASH=($(sha1sum $f))
-
-                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                            continue;
-                        fi
-
-                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-
-                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-                    done
-                fi
-            fi
-
-            if [[ "$module_progression_patch" -ge "1" ]]; then
-                if [[ `ls -1 $root/source/modules/mod-progression/src/patch_02-3_1/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                    for f in $root/source/modules/mod-progression/src/patch_02-3_1/sql/*.sql; do
-                        FILENAME=$(basename $f)
-                        HASH=($(sha1sum $f))
-
-                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                            continue;
-                        fi
-
-                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-
-                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-                    done
-                fi
-            fi
-
-            if [[ "$module_progression_patch" -ge "2" ]]; then
-                if [[ `ls -1 $root/source/modules/mod-progression/src/patch_03-3_2/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                    for f in $root/source/modules/mod-progression/src/patch_03-3_2/sql/*.sql; do
-                        FILENAME=$(basename $f)
-                        HASH=($(sha1sum $f))
-
-                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                            continue;
-                        fi
-
-                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-
-                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-                    done
-                fi
-            fi
-
-            if [[ "$module_progression_patch" -ge "3" ]]; then
-                if [[ `ls -1 $root/source/modules/mod-progression/src/patch_04-3_3/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                    for f in $root/source/modules/mod-progression/src/patch_04-3_3/sql/*.sql; do
-                        FILENAME=$(basename $f)
-                        HASH=($(sha1sum $f))
-
-                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                            continue;
-                        fi
-
-                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-
-                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-                    done
-                fi
-            fi
-
-            if [[ "$module_progression_patch" -ge "4" ]]; then
-                if [[ `ls -1 $root/source/modules/mod-progression/src/patch_05-3_3_5/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                    for f in $root/source/modules/mod-progression/src/patch_05-3_3_5/sql/*.sql; do
-                        FILENAME=$(basename $f)
-                        HASH=($(sha1sum $f))
-
-                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                            continue;
-                        fi
-
-                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-
-                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                        if [[ $? -ne 0 ]]; then
-                            notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                            rm -rf "$mysql_cnf"
-                            exit $?
-                        fi
-                    done
-                fi
-            fi
-        fi
-
-        if [[ "$module_recruitafriend" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-recruitafriend/data/sql/db-auth/base" ]]; then
-                printf "${color_red}The recruit-a-friend module is enabled but the files aren't where they should be${color_end}\n"
-                printf "${color_red}Please make sure to install the server first${color_end}\n"
-                notify_telegram "An error occurred while trying to import the database files of mod-recruitafriend"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            if [[ `ls -1 $root/source/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_auth -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                        continue;
-                    fi
-
-                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                    mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
+                if [[ "$module_progression_reset" == "true" ]]; then
+                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name LIKE 'patch_%'"
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-recruitafriend"
+                        notify_telegram "An error occurred while trying to import the database files of mod-progression"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
+                fi
 
-                    mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                if [[ "$module_progression_patch" -ge "0" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_01-3_0/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_01-3_0/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "1" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_02-3_1/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_02-3_1/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "2" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_03-3_2/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_03-3_2/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "3" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_04-3_3/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_04-3_3/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "4" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_05-3_3_5/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_05-3_3_5/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+            fi
+
+            if [[ "$module_recruitafriend" == "true" ]]; then
+                if [[ ! -d "$source/modules/mod-recruitafriend/data/sql/db-auth/base" ]]; then
+                    printf "${color_red}The recruit-a-friend module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
+                    notify_telegram "An error occurred while trying to import the database files of mod-recruitafriend"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+
+                if [[ `ls -1 $source/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_auth -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_auth < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-recruitafriend"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-recruitafriend"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ "$module_skip_dk_starting_area" == "true" ]]; then
+                if [[ ! -d "$source/modules/mod-skip-dk-starting-area/sql/world" ]]; then
+                    printf "${color_red}The skip dk starting area module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
+                    notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+
+                if [[ `ls -1 $source/modules/mod-skip-dk-starting-area/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-skip-dk-starting-area/sql/world/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ `ls -1 $root/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $root/sql/characters/*.sql; do
+                    printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                    mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-recruitafriend"
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
                 done
             fi
-        fi
 
-        if [[ "$module_skip_dk_starting_area" == "true" ]]; then
-            if [[ ! -d "$root/source/modules/mod-skip-dk-starting-area/sql/world" ]]; then
-                printf "${color_red}The skip dk starting area module is enabled but the files aren't where they should be${color_end}\n"
-                printf "${color_red}Please make sure to install the server first${color_end}\n"
-                notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            if [[ `ls -1 $root/source/modules/mod-skip-dk-starting-area/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $root/source/modules/mod-skip-dk-starting-area/sql/world/*.sql; do
-                    FILENAME=$(basename $f)
-                    HASH=($(sha1sum $f))
-
-                    if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
-                        printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
-                        continue;
-                    fi
-
+            if [[ `ls -1 $root/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $root/sql/world/*.sql; do
                     printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
                     mysql --defaults-extra-file=$mysql_cnf $database_world < $f
                     if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
-
-                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
+                        notify_telegram "An error occurred while trying to import the database files"
                         rm -rf "$mysql_cnf"
                         exit $?
                     fi
                 done
             fi
+
+            printf "${color_orange}Adding to the realmlist (id: $id, name: $world_name, address $world_address, port $world_port)${color_end}\n"
+            mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM realmlist WHERE id='$id';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$id', '$world_name', '$world_address', '$world_address', '255.255.255.0', '$world_port')"
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to update the realm list"
+                rm -rf "$mysql_cnf"
+                exit $?
+            fi
+
+            printf "${color_orange}Updating message of the day${color_end}\n"
+            mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM motd WHERE realmid='$id';INSERT INTO motd (realmid, text) VALUES ('$id', '$world_motd')"
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to update message of the day"
+                rm -rf "$mysql_cnf"
+                exit $?
+            fi
         fi
 
-        if [[ `ls -1 $root/sql/characters/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $root/sql/characters/*.sql; do
-                printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                mysql --defaults-extra-file=$mysql_cnf $database_characters < $f
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to import the database files"
-                    rm -rf "$mysql_cnf"
-                    exit $?
-                fi
-            done
-        fi
-
-        if [[ `ls -1 $root/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-            for f in $root/sql/world/*.sql; do
-                printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
-                mysql --defaults-extra-file=$mysql_cnf $database_world < $f
-                if [[ $? -ne 0 ]]; then
-                    notify_telegram "An error occurred while trying to import the database files"
-                    rm -rf "$mysql_cnf"
-                    exit $?
-                fi
-            done
-        fi
-
-        printf "${color_orange}Adding to the realmlist (id: $id, name: $world_name, address $world_address, port $world_port)${color_end}\n"
-        mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM realmlist WHERE id='$id';INSERT INTO realmlist (id, name, address, localAddress, localSubnetMask, port) VALUES ('$id', '$world_name', '$world_address', '$world_address', '255.255.255.0', '$world_port')"
-        if [[ $? -ne 0 ]]; then
-            notify_telegram "An error occurred while trying to update the realm list"
-            rm -rf "$mysql_cnf"
-            exit $?
-        fi
-
-        printf "${color_orange}Updating message of the day${color_end}\n"
-        mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM motd WHERE realmid='$id';INSERT INTO motd (realmid, text) VALUES ('$id', '$world_motd')"
-        if [[ $? -ne 0 ]]; then
-            notify_telegram "An error occurred while trying to update message of the day"
-            rm -rf "$mysql_cnf"
-            exit $?
-        fi
+        rm -rf "$mysql_cnf"
+    else
+        printf "${color_orange}Skipping process due to cluster being enabled and world server being disabled${color_end}\n"
     fi
-
-    rm -rf "$mysql_cnf"
 
     printf "${color_green}Finished importing the database files..${color_end}\n"
 }
@@ -1810,8 +2091,61 @@ function set_config
 {
     printf "${color_green}Updating the config files...${color_end}\n"
 
-    if [[ "$build_auth" == "true" ]]; then
-        if [[ ! -f "$root/source/etc/authserver.conf.dist" ]]; then
+    if [[ "$world_cluster" == "true" ]]; then
+        if [[ "$build_auth" == "true" ]]; then
+            if [[ ! -f "$root/source/tocloud9/config.yml.example" ]]; then
+                printf "${color_red}The config file config.yml.example is missing.${color_end}\n"
+                printf "${color_red}Please make sure to install the server first.${color_end}\n"
+                notify_telegram "An error occurred while trying to update the config files"
+                exit $?
+            fi
+
+            printf "${color_orange}Updating config.yml${color_end}\n"
+
+            cp "$root/source/tocloud9/config.yml.example" "$root/source/tocloud9/bin/config.yml"
+
+            sed -i 's/  auth: \&defaultAuthDB.*/  auth: \&defaultAuthDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_auth'"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  characters: \&defaultCharactersDB.*/  characters: \&defaultCharactersDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_characters'"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_world'"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$world_cluster_node_address':8999/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$world_cluster_node_address':8991"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$world_cluster_node_address':8992"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$world_cluster_node_address':8995"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$world_cluster_node_address':8997"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  preferredHostname:.*/  preferredHostname: "'$world_cluster_node_address'"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_node_address':8996"/g' $root/source/tocloud9/bin/config.yml
+        fi
+
+        if [[ "$build_world" == "true" ]]; then
+            if [[ ! -f "$root/source/tocloud9/config.yml.example" ]]; then
+                printf "${color_red}The config file config.yml.example is missing.${color_end}\n"
+                printf "${color_red}Please make sure to install the server first.${color_end}\n"
+                notify_telegram "An error occurred while trying to update the config files"
+                exit $?
+            fi
+
+            printf "${color_orange}Updating config.yml${color_end}\n"
+
+            cp "$root/source/tocloud9/config.yml.example" "$root/source/azerothcore/bin/config.yml"
+
+            sed -i 's/  auth: \&defaultAuthDB.*/  auth: \&defaultAuthDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_auth'"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  characters: \&defaultCharactersDB.*/  characters: \&defaultCharactersDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_characters'"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_world'"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/nats: \&defaultNatsUrl.*/nats: \&defaultNatsUrl "nats:\/\/'$world_cluster_auth_address':4222"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$world_cluster_auth_address':8999/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$world_cluster_auth_address':8991"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$world_cluster_auth_address':8992"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$world_cluster_auth_address':8995"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$world_cluster_auth_address':8997"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  preferredHostname:.*/  preferredHostname: "'$world_cluster_node_address'"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_auth_address':8996"/g' $root/source/azerothcore/bin/config.yml
+        fi
+    fi
+
+    if [[ "$world_cluster" == "false" && "$build_auth" == "true" ]]; then
+        if [[ ! -f "$source/etc/authserver.conf.dist" ]]; then
             printf "${color_red}The config file authserver.conf.dist is missing.${color_end}\n"
             printf "${color_red}Please make sure to install the server first.${color_end}\n"
             notify_telegram "An error occurred while trying to update the config files"
@@ -1820,14 +2154,14 @@ function set_config
 
         printf "${color_orange}Updating authserver.conf${color_end}\n"
 
-        cp "$root/source/etc/authserver.conf.dist" "$root/source/etc/authserver.conf"
+        cp "$source/etc/authserver.conf.dist" "$source/etc/authserver.conf"
 
-        sed -i 's/LoginDatabaseInfo =.*/LoginDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_auth'"/g' "$root/source/etc/authserver.conf"
-        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' "$root/source/etc/authserver.conf"
+        sed -i 's/LoginDatabaseInfo =.*/LoginDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_auth'"/g' "$source/etc/authserver.conf"
+        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' "$source/etc/authserver.conf"
     fi
 
     if [[ "$build_world" == "true" ]]; then
-        if [[ ! -f "$root/source/etc/worldserver.conf.dist" ]]; then
+        if [[ ! -f "$source/etc/worldserver.conf.dist" ]]; then
             printf "${color_red}The config file worldserver.conf.dist is missing.${color_end}\n"
             printf "${color_red}Please make sure to install the server first.${color_end}\n"
             notify_telegram "An error occurred while trying to update the config files"
@@ -1836,59 +2170,67 @@ function set_config
 
         printf "${color_orange}Updating worldserver.conf${color_end}\n"
 
-        cp "$root/source/etc/worldserver.conf.dist" "$root/source/etc/worldserver.conf"
+        cp "$source/etc/worldserver.conf.dist" "$source/etc/worldserver.conf"
 
         [ "$world_quest_in_raid" == "true" ] && world_quest_in_raid0="1" || world_quest_in_raid0="0"
         [ "$world_warden" == "true" ] && world_warden0="1" || world_warden0="0"
         [ "$world_leave_group_on_logout" == "true" ] && world_leave_group_on_logout0="1" || world_leave_group_on_logout0="0"
 
-        sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_auth'"/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_world'"/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_characters'"/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/RealmID =.*/RealmID = '$id'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/WorldServerPort =.*/WorldServerPort = '$world_port'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GameType =.*/GameType = '$world_type'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/RealmZone =.*/RealmZone = '$world_realm_zone'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Expansion =.*/Expansion = '$world_expansion'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/PlayerLimit =.*/PlayerLimit = '$world_player_limit'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = '$world_quest_in_raid0'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$world_warden0'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$world_preload_grids'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$world_set_creatures_active'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = '$world_rate_experience'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = '$world_rate_experience'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = '$world_rate_experience'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = '$world_rate_experience'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = '$world_rate_experience'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = '$world_rate_money'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Rate.Reputation.Gain =.*/Rate.Reputation.Gain = '$world_rate_reputation'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.Visible =.*/GM.Visible = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.Chat =.*/GM.Chat = 1/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = 1/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.StartLevel = .*/GM.StartLevel = 1/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$world_leave_group_on_logout0'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = '$world_raid_min_level'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' "$root/source/etc/worldserver.conf"
-        sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$root/source/etc/worldserver.conf"
-        #sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$root/source/etc/worldserver.conf"
-        #sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$root/source/etc/worldserver.conf"
+        sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_auth'"/g' "$source/etc/worldserver.conf"
+        sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_world'"/g' "$source/etc/worldserver.conf"
+        sed -i 's/CharacterDatabaseInfo =.*/CharacterDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_characters'"/g' "$source/etc/worldserver.conf"
+        sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/RealmID =.*/RealmID = '$id'/g' "$source/etc/worldserver.conf"
+        sed -i 's/WorldServerPort =.*/WorldServerPort = '$world_port'/g' "$source/etc/worldserver.conf"
+        sed -i 's/GameType =.*/GameType = '$world_type'/g' "$source/etc/worldserver.conf"
+        sed -i 's/RealmZone =.*/RealmZone = '$world_realm_zone'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Expansion =.*/Expansion = '$world_expansion'/g' "$source/etc/worldserver.conf"
+        sed -i 's/PlayerLimit =.*/PlayerLimit = '$world_player_limit'/g' "$source/etc/worldserver.conf"
+        sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' "$source/etc/worldserver.conf"
+        sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' "$source/etc/worldserver.conf"
+        sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' "$source/etc/worldserver.conf"
+        sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = '$world_quest_in_raid0'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$world_warden0'/g' "$source/etc/worldserver.conf"
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$world_preload_grids'/g' "$source/etc/worldserver.conf"
+        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$world_set_creatures_active'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = '$world_rate_money'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.Reputation.Gain =.*/Rate.Reputation.Gain = '$world_rate_reputation'/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.Visible =.*/GM.Visible = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.Chat =.*/GM.Chat = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.WhisperingTo =.*/GM.WhisperingTo = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.InGMList.Level =.*/GM.InGMList.Level = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.InWhoList.Level =.*/GM.InWhoList.Level = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.StartLevel = .*/GM.StartLevel = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$world_leave_group_on_logout0'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = '$world_raid_min_level'/g' "$source/etc/worldserver.conf"
+        sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' "$source/etc/worldserver.conf"
+        sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' "$source/etc/worldserver.conf"
+        sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
+        #sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$source/etc/worldserver.conf"
+        #sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$source/etc/worldserver.conf"
+        if [[ "$world_cluster" == "true" ]]; then
+            sed -i 's/Cluster.Enabled=.*/Cluster.Enabled=1/g' "$source/etc/worldserver.conf"
+            if [[ "$world_cluster_maps" == "all" ]]; then
+                sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps=""/g' "$source/etc/worldserver.conf"
+            else
+                sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps="'$world_cluster_maps'"/g' "$source/etc/worldserver.conf"
+            fi
+        fi
 
         if [[ "$module_ah_bot" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/mod_ahbot.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/mod_ahbot.conf.dist" ]]; then
                 printf "${color_red}The config file mod_ahbot.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-ah-bot"
@@ -1897,24 +2239,24 @@ function set_config
 
             printf "${color_orange}Updating mod_ahbot.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/mod_ahbot.conf.dist" "$root/source/etc/modules/mod_ahbot.conf"
+            cp "$source/etc/modules/mod_ahbot.conf.dist" "$source/etc/modules/mod_ahbot.conf"
 
             [ "$module_ah_bot_sell_items" == "true" ] && module_ah_bot_sell_items0="1" || module_ah_bot_sell_items="0"
             [ "$module_ah_bot_buy_items" == "true" ] && module_ah_bot_buy_items0="1" || module_ah_bot_buy_items0="0"
             [ "$module_ah_bot_use_buyprice" == "true" ] && module_ah_bot_use_buyprice0="0" || module_ah_bot_use_buyprice0="1"
 
-            sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = '$module_ah_bot_sell_items0'/g' "$root/source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = '$module_ah_bot_buy_items0'/g' "$root/source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.UseBuyPriceForSeller =.*/AuctionHouseBot.UseBuyPriceForSeller = '$module_ah_bot_use_buyprice0'/g' "$root/source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = '$module_ah_bot_use_buyprice0'/g' "$root/source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = '$module_ah_bot_account'/g' "$root/source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = '$module_ah_bot_character'/g' "$root/source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.ItemsPerCycle =.*/AuctionHouseBot.ItemsPerCycle = '$module_ah_bot_items_per_cycle'/g' "$root/source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$module_ah_bot_max_item_level'/g' "$root/source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = '$module_ah_bot_sell_items0'/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = '$module_ah_bot_buy_items0'/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.UseBuyPriceForSeller =.*/AuctionHouseBot.UseBuyPriceForSeller = '$module_ah_bot_use_buyprice0'/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = '$module_ah_bot_use_buyprice0'/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = '$module_ah_bot_account'/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = '$module_ah_bot_character'/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.ItemsPerCycle =.*/AuctionHouseBot.ItemsPerCycle = '$module_ah_bot_items_per_cycle'/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$module_ah_bot_max_item_level'/g' "$source/etc/modules/mod_ahbot.conf"
         fi
 
         if [[ "$module_appreciation" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/mod_appreciation.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/mod_appreciation.conf.dist" ]]; then
                 printf "${color_red}The config file mod_appreciation.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-appreciation"
@@ -1923,23 +2265,23 @@ function set_config
 
             printf "${color_orange}Updating mod_appreciation.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/mod_appreciation.conf.dist" "$root/source/etc/modules/mod_appreciation.conf"
+            cp "$source/etc/modules/mod_appreciation.conf.dist" "$source/etc/modules/mod_appreciation.conf"
 
             [ "$module_appreciation_require_certificate" == "true" ] && module_appreciation_require_certificate0="1" || module_appreciation_require_certificate0="0"
             [ "$module_appreciation_level_boost" == "true" ] && module_appreciation_level_boost0="1" || module_appreciation_level_boost0="0"
             [ "$module_appreciation_unlock_continents" == "true" ] && module_appreciation_unlock_continents0="1" || module_appreciation_unlock_continents0="0"
             [ "$module_appreciation_reward_at_max_level" == "true" ] && module_appreciation_reward_at_max_level0="1" || module_appreciation_reward_at_max_level0="0"
 
-            sed -i 's/Appreciation.RequireCertificate.Enabled =.*/Appreciation.RequireCertificate.Enabled = '$module_appreciation_require_certificate0'/g' "$root/source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.LevelBoost.Enabled =.*/Appreciation.LevelBoost.Enabled = '$module_appreciation_level_boost0'/g' "$root/source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = '$module_appreciation_level_boost_level'/g' "$root/source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = '$module_appreciation_level_boost_included_copper'/g' "$root/source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.UnlockContinents.Enabled =.*/Appreciation.UnlockContinents.Enabled = '$module_appreciation_unlock_continents0'/g' "$root/source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = '$module_appreciation_reward_at_max_level0'/g' "$root/source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.RequireCertificate.Enabled =.*/Appreciation.RequireCertificate.Enabled = '$module_appreciation_require_certificate0'/g' "$source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.LevelBoost.Enabled =.*/Appreciation.LevelBoost.Enabled = '$module_appreciation_level_boost0'/g' "$source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = '$module_appreciation_level_boost_level'/g' "$source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = '$module_appreciation_level_boost_included_copper'/g' "$source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.UnlockContinents.Enabled =.*/Appreciation.UnlockContinents.Enabled = '$module_appreciation_unlock_continents0'/g' "$source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = '$module_appreciation_reward_at_max_level0'/g' "$source/etc/modules/mod_appreciation.conf"
         fi
 
         if [[ "$module_assistant" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/mod_assistant.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/mod_assistant.conf.dist" ]]; then
                 printf "${color_red}The config file mod_assistant.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-assistant"
@@ -1948,7 +2290,7 @@ function set_config
 
             printf "${color_orange}Updating mod_assistant.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/mod_assistant.conf.dist" "$root/source/etc/modules/mod_assistant.conf"
+            cp "$source/etc/modules/mod_assistant.conf.dist" "$source/etc/modules/mod_assistant.conf"
 
             [ "$module_assistant_vendor_heirlooms" == "true" ] && module_assistant_vendor_heirlooms0="1" || module_assistant_vendor_heirlooms0="0"
             [ "$module_assistant_vendor_glyphs" == "true" ] && module_assistant_vendor_glyphs0="1" || module_assistant_vendor_glyphs0="0"
@@ -1965,36 +2307,36 @@ function set_config
             [ "$module_assistant_professions_master" == "true" ] && module_assistant_professions_master0="1" || module_assistant_professions_master0="0"
             [ "$module_assistant_professions_grand_master" == "true" ] && module_assistant_professions_grand_master0="1" || module_assistant_professions_grand_master0="0"
 
-            sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = '$module_assistant_vendor_heirlooms0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = '$module_assistant_vendor_glyphs0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = '$module_assistant_vendor_gems0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = '$module_assistant_vendor_containers0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = '$module_assistant_utilities0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = '$module_assistant_fp_vanilla0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = '$module_assistant_fp_vanilla_required_level'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = '$module_assistant_fp_vanilla_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = '$module_assistant_fp_tbc0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = '$module_assistant_fp_tbc_required_level'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = '$module_assistant_fp_tbc_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = '$module_assistant_fp_wotlk0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = '$module_assistant_fp_wotlk_required_level'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = '$module_assistant_fp_wotlk_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = '$module_assistant_professions_apprentice0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = '$module_assistant_professions_apprentice_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = '$module_assistant_professions_journeyman0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = '$module_assistant_professions_journeyman_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = '$module_assistant_professions_expert0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = '$module_assistant_professions_expert_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = '$module_assistant_professions_artisan0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = '$module_assistant_professions_artisan_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = '$module_assistant_professions_master0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = '$module_assistant_professions_master_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = '$module_assistant_professions_grand_master0'/g' "$root/source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = '$module_assistant_professions_grand_master_cost'/g' "$root/source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = '$module_assistant_vendor_heirlooms0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = '$module_assistant_vendor_glyphs0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = '$module_assistant_vendor_gems0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = '$module_assistant_vendor_containers0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = '$module_assistant_utilities0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = '$module_assistant_fp_vanilla0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = '$module_assistant_fp_vanilla_required_level'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = '$module_assistant_fp_vanilla_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = '$module_assistant_fp_tbc0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = '$module_assistant_fp_tbc_required_level'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = '$module_assistant_fp_tbc_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = '$module_assistant_fp_wotlk0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = '$module_assistant_fp_wotlk_required_level'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = '$module_assistant_fp_wotlk_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = '$module_assistant_professions_apprentice0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = '$module_assistant_professions_apprentice_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = '$module_assistant_professions_journeyman0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = '$module_assistant_professions_journeyman_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = '$module_assistant_professions_expert0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = '$module_assistant_professions_expert_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = '$module_assistant_professions_artisan0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = '$module_assistant_professions_artisan_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = '$module_assistant_professions_master0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = '$module_assistant_professions_master_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = '$module_assistant_professions_grand_master0'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = '$module_assistant_professions_grand_master_cost'/g' "$source/etc/modules/mod_assistant.conf"
         fi
 
         if [[ "$module_learnspells" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/mod_learnspells.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/mod_learnspells.conf.dist" ]]; then
                 printf "${color_red}The config file mod_learnspells.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-learnspells"
@@ -2003,7 +2345,7 @@ function set_config
 
             printf "${color_orange}Updating mod_learnspells.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/mod_learnspells.conf.dist" "$root/source/etc/modules/mod_learnspells.conf"
+            cp "$source/etc/modules/mod_learnspells.conf.dist" "$source/etc/modules/mod_learnspells.conf"
 
             [ "$module_learnspells_class_spells" == "true" ] && module_learnspells_class_spells0="1" || module_learnspells_class_spells0="0"
             [ "$module_learnspells_talent_ranks" == "true" ] && module_learnspells_talent_ranks0="1" || module_learnspells_talent_ranks0="0"
@@ -2015,19 +2357,19 @@ function set_config
             [ "$module_learnspells_riding_artisan" == "true" ] && module_learnspells_riding_artisan0="1" || module_learnspells_riding_artisan0="0"
             [ "$module_learnspells_riding_cold_weather_flying" == "true" ] && module_learnspells_riding_cold_weather_flying0="1" || module_learnspells_riding_cold_weather_flying0="0"
 
-            sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = '$module_learnspells_class_spells0'/g' "$root/source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = '$module_learnspells_talent_ranks0'/g' "$root/source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = '$module_learnspells_proficiencies0'/g' "$root/source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = '$module_learnspells_quest_spells0'/g' "$root/source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = '$module_learnspells_riding_apprentice0'/g' "$root/source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = '$module_learnspells_riding_journeyman0'/g' "$root/source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = '$module_learnspells_riding_expert0'/g' "$root/source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = '$module_learnspells_riding_artisan0'/g' "$root/source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = '$module_learnspells_riding_cold_weather_flying0'/g' "$root/source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = '$module_learnspells_class_spells0'/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = '$module_learnspells_talent_ranks0'/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = '$module_learnspells_proficiencies0'/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = '$module_learnspells_quest_spells0'/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = '$module_learnspells_riding_apprentice0'/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = '$module_learnspells_riding_journeyman0'/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = '$module_learnspells_riding_expert0'/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = '$module_learnspells_riding_artisan0'/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = '$module_learnspells_riding_cold_weather_flying0'/g' "$source/etc/modules/mod_learnspells.conf"
         fi
 
         if [[ "$module_playerbots" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/playerbots.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/playerbots.conf.dist" ]]; then
                 printf "${color_red}The config file playerbots.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-playerbots"
@@ -2036,22 +2378,22 @@ function set_config
 
             printf "${color_orange}Updating playerbots.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/playerbots.conf.dist" "$root/source/etc/modules/playerbots.conf"
+            cp "$source/etc/modules/playerbots.conf.dist" "$source/etc/modules/playerbots.conf"
 
             [ "$module_playerbots_random_level" == "true" ] && module_playerbots_random_level0="0" || module_playerbots_random_level0="1"
 
-            sed -i 's/AiPlayerbot.MinRandomBots =.*/AiPlayerbot.MinRandomBots = '$module_playerbots_bots'/g' "$root/source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.MaxRandomBots =.*/AiPlayerbot.MaxRandomBots = '$module_playerbots_bots'/g' "$root/source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.RandomBotAccountCount =.*/AiPlayerbot.RandomBotAccountCount = '$module_playerbots_accounts'/g' "$root/source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.DisableRandomLevels =.*/AiPlayerbot.DisableRandomLevels = '$module_playerbots_random_level0'/g' "$root/source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = '$module_playerbots_start_level'/g' "$root/source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.PvpProhibitedZoneIds =.*/AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298"/g' "$root/source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.MinRandomBots =.*/AiPlayerbot.MinRandomBots = '$module_playerbots_bots'/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.MaxRandomBots =.*/AiPlayerbot.MaxRandomBots = '$module_playerbots_bots'/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotAccountCount =.*/AiPlayerbot.RandomBotAccountCount = '$module_playerbots_accounts'/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.DisableRandomLevels =.*/AiPlayerbot.DisableRandomLevels = '$module_playerbots_random_level0'/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = '$module_playerbots_start_level'/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.PvpProhibitedZoneIds =.*/AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298"/g' "$source/etc/modules/playerbots.conf"
 
-            sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$root/source/etc/modules/playerbots.conf"
+            sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$source/etc/modules/playerbots.conf"
         fi
 
         if [[ "$module_progression" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/mod_progression.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/mod_progression.conf.dist" ]]; then
                 printf "${color_red}The config file mod_progression.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-progression"
@@ -2060,21 +2402,21 @@ function set_config
 
             printf "${color_orange}Updating mod_progression.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/mod_progression.conf.dist" "$root/source/etc/modules/mod_progression.conf"
+            cp "$source/etc/modules/mod_progression.conf.dist" "$source/etc/modules/mod_progression.conf"
 
             [ "$module_progression_enforce_dungeonfinder" == "true" ] && module_progression_enforce_dungeonfinder0="1" || module_progression_enforce_dungeonfinder0="0"
             [ "$module_progression_enforce_questinfo" == "true" ] && module_progression_enforce_questinfo0="1" || module_progression_enforce_questinfo0="0"
             [ "$module_progression_reset" == "true" ] && module_progression_reset0="1" || module_progression_reset0="0"
 
-            sed -i 's/Progression.Patch =.*/Progression.Patch = '$module_progression_patch'/g' "$root/source/etc/modules/mod_progression.conf"
-            sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$module_progression_aura'/g' "$root/source/etc/modules/mod_progression.conf"
-            sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = '$module_progression_enforce_questinfo0'/g' "$root/source/etc/modules/mod_progression.conf"
-            sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = '$module_progression_enforce_dungeonfinder0'/g' "$root/source/etc/modules/mod_progression.conf"
-            sed -i 's/Progression.Reset =.*/Progression.Reset = '$module_progression_reset0'/g' "$root/source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.Patch =.*/Progression.Patch = '$module_progression_patch'/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$module_progression_aura'/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = '$module_progression_enforce_questinfo0'/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = '$module_progression_enforce_dungeonfinder0'/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.Reset =.*/Progression.Reset = '$module_progression_reset0'/g' "$source/etc/modules/mod_progression.conf"
         fi
 
         if [[ "$module_recruitafriend" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/mod_recruitafriend.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/mod_recruitafriend.conf.dist" ]]; then
                 printf "${color_red}The config file mod_recruitafriend.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-recruitafriend"
@@ -2083,22 +2425,22 @@ function set_config
 
             printf "${color_orange}Updating mod_recruitafriend.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/mod_recruitafriend.conf.dist" "$root/source/etc/modules/mod_recruitafriend.conf"
+            cp "$source/etc/modules/mod_recruitafriend.conf.dist" "$source/etc/modules/mod_recruitafriend.conf"
 
             [ "$module_recruitafriend_swift_zhevra" == "true" ] && module_recruitafriend_swift_zhevra0="1" || module_recruitafriend_swift_zhevra0="0"
             [ "$module_recruitafriend_touring_rocket" == "true" ] && module_recruitafriend_touring_rocket0="1" || module_recruitafriend_touring_rocket0="0"
             [ "$module_recruitafriend_celestial_steed" == "true" ] && module_recruitafriend_celestial_steed0="1" || module_recruitafriend_celestial_steed0="0"
 
-            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$module_recruitafriend_duration'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = '$module_recruitafriend_account_age'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$module_recruitafriend_reward_days'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$module_recruitafriend_swift_zhevra0'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$module_recruitafriend_touring_rocket0'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = '$module_recruitafriend_celestial_steed0'/g' "$root/source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$module_recruitafriend_duration'/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = '$module_recruitafriend_account_age'/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$module_recruitafriend_reward_days'/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$module_recruitafriend_swift_zhevra0'/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$module_recruitafriend_touring_rocket0'/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = '$module_recruitafriend_celestial_steed0'/g' "$source/etc/modules/mod_recruitafriend.conf"
         fi
 
         if [[ "$module_skip_dk_starting_area" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/SkipDKModule.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/SkipDKModule.conf.dist" ]]; then
                 printf "${color_red}The config file SkipDKModule.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-skip-dk-starting-area"
@@ -2107,13 +2449,13 @@ function set_config
 
             printf "${color_orange}Updating SkipDKModule.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/SkipDKModule.conf.dist" "$root/source/etc/modules/SkipDKModule.conf"
+            cp "$source/etc/modules/SkipDKModule.conf.dist" "$source/etc/modules/SkipDKModule.conf"
 
-            sed -i 's/Skip.Deathknight.Starter.Announce.enable =.*/Skip.Deathknight.Starter.Announce.enable = 0/g' "$root/source/etc/modules/SkipDKModule.conf"
+            sed -i 's/Skip.Deathknight.Starter.Announce.enable =.*/Skip.Deathknight.Starter.Announce.enable = 0/g' "$source/etc/modules/SkipDKModule.conf"
         fi
 
         if [[ "$module_weekendbonus" == "true" ]]; then
-            if [[ ! -f "$root/source/etc/modules/mod_weekendbonus.conf.dist" ]]; then
+            if [[ ! -f "$source/etc/modules/mod_weekendbonus.conf.dist" ]]; then
                 printf "${color_red}The config file mod_weekendbonus.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-weekendbonus"
@@ -2122,13 +2464,13 @@ function set_config
 
             printf "${color_orange}Updating mod_weekendbonus.conf${color_end}\n"
 
-            cp "$root/source/etc/modules/mod_weekendbonus.conf.dist" "$root/source/etc/modules/mod_weekendbonus.conf"
+            cp "$source/etc/modules/mod_weekendbonus.conf.dist" "$source/etc/modules/mod_weekendbonus.conf"
 
-            sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = '$module_weekendbonus_multiplier_experience'/g' "$root/source/etc/modules/mod_weekendbonus.conf"
-            sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = '$module_weekendbonus_multiplier_money'/g' "$root/source/etc/modules/mod_weekendbonus.conf"
-            sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = '$module_weekendbonus_multiplier_professions'/g' "$root/source/etc/modules/mod_weekendbonus.conf"
-            sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = '$module_weekendbonus_multiplier_reputation'/g' "$root/source/etc/modules/mod_weekendbonus.conf"
-            sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = '$module_weekendbonus_multiplier_proficiencies'/g' "$root/source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = '$module_weekendbonus_multiplier_experience'/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = '$module_weekendbonus_multiplier_money'/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = '$module_weekendbonus_multiplier_professions'/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = '$module_weekendbonus_multiplier_reputation'/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = '$module_weekendbonus_multiplier_proficiencies'/g' "$source/etc/modules/mod_weekendbonus.conf"
         fi
     fi
 
@@ -2139,21 +2481,36 @@ function start_server
 {
     printf "${color_green}Starting the server...${color_end}\n"
 
-    if [[ ! -f "$root/source/bin/start.sh" ]] || [[ ! -f "$root/source/bin/stop.sh" ]]; then
-        printf "${color_red}The required binaries are missing${color_end}\n"
-        printf "${color_red}Please make sure to install the server first${color_end}\n"
-    else
-        if [[ ! -z `screen -list | grep -E "auth"` && -f "$root/source/bin/auth.sh" ]] || [[ ! -z `screen -list | grep -E "world-$id"` && -f "$root/source/bin/world.sh" ]]; then
-            printf "${color_red}The server is already running${color_end}\n"
+    if [[ "$world_cluster" == "true" && "$build_auth" == "true" ]]; then
+        if [[ ! -f "$root/source/tocloud9/bin/start.sh" ]] || [[ ! -f "$root/source/tocloud9/bin/stop.sh" ]]; then
+            printf "${color_red}The required binaries are missing${color_end}\n"
+            printf "${color_red}Please make sure to install the server first${color_end}\n"
         else
-            cd "$root/source/bin" && ./start.sh
-
-            if [[ ! -z `screen -list | grep -E "auth"` && -f "$root/source/bin/auth.sh" ]]; then
-                printf "${color_orange}To access the screen of the authserver, use the command ${color_blue}screen -r auth${color_orange}${color_end}\n"
+            if [[ ! -z `screen -list | grep -E "nats-server"` ]] || [[ ! -z `screen -list | grep -E "servers-registry"` ]] || [[ ! -z `screen -list | grep -E "guidserver"` ]] || [[ ! -z `screen -list | grep -E "authserver"` ]] || [[ ! -z `screen -list | grep -E "charserver"` ]] || [[ ! -z `screen -list | grep -E "chatserver"` ]] || [[ ! -z `screen -list | grep -E "game-load-balancer"` ]] || [[ ! -z `screen -list | grep -E "groupserver"` ]] || [[ ! -z `screen -list | grep -E "guildserver"` ]] || [[ ! -z `screen -list | grep -E "mailserver"` ]]; then
+                printf "${color_red}The server is already running.${color_end}\n"
+            else
+                cd "$root/source/tocloud9/bin" && ./start.sh
             fi
+        fi
+    fi
 
-            if [[ ! -z `screen -list | grep -E "world-$id"` && -f "$root/source/bin/world.sh" ]]; then
-                printf "${color_orange}To access the screen of the worldserver, use the command ${color_blue}screen -r world-$id${color_orange}${color_end}\n"
+    if [[ "$world_cluster" == "false" || "$build_world" == "true" ]]; then
+        if [[ ! -f "$source/bin/start.sh" ]] || [[ ! -f "$source/bin/stop.sh" ]]; then
+            printf "${color_red}The required binaries are missing${color_end}\n"
+            printf "${color_red}Please make sure to install the server first${color_end}\n"
+        else
+            if [[ ! -z `screen -list | grep -E "auth"` && -f "$source/bin/auth.sh" ]] || [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" ]]; then
+                printf "${color_red}The server is already running${color_end}\n"
+            else
+                cd "$source/bin" && ./start.sh
+
+                if [[ ! -z `screen -list | grep -E "auth"` && -f "$source/bin/auth.sh" ]]; then
+                    printf "${color_orange}To access the screen of the authserver, use the command ${color_blue}screen -r auth${color_orange}${color_end}\n"
+                fi
+
+                if [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" ]]; then
+                    printf "${color_orange}To access the screen of the worldserver, use the command ${color_blue}screen -r world-$id${color_orange}${color_end}\n"
+                fi
             fi
         fi
     fi
@@ -2165,27 +2522,39 @@ function stop_server
 {
     printf "${color_green}Stopping the server...${color_end}\n"
 
-    if [[ -z `screen -list | grep -E "auth"` || ! -f "$root/source/bin/auth.sh" ]] && [[ -z `screen -list | grep -E "world-$id"` || ! -f "$root/source/bin/world.sh" ]]; then
-        printf "${color_red}The server is not running${color_end}\n"
-    else
-        if [[ ! -z `screen -list | grep -E "world-$id"` && -f "$root/source/bin/world.sh" ]]; then
-            printf "${color_orange}Telling the world server to shut down${color_end}\n"
-
-            PID=$(screen -ls | grep -oE "[0-9]+\.world-$id" | sed -e "s/\..*$//g")
-
-            if [[ $PID != "" ]]; then
-                if [[ $1 == "restart" ]]; then
-                    screen -S world-$id -p 0 -X stuff "server restart 10^m"
-                else
-                    screen -S world-$id -p 0 -X stuff "server shutdown 10^m"
-                fi
-
-                timeout 30 tail --pid=$PID -f /dev/null
+    if [[ "$world_cluster" == "true" && "$build_auth" == "true" ]]; then
+        if [[ -z `screen -list | grep -E "nats-server"` ]] && [[ -z `screen -list | grep -E "servers-registry"` ]] && [[ -z `screen -list | grep -E "guidserver"` ]] && [[ -z `screen -list | grep -E "authserver"` ]] && [[ -z `screen -list | grep -E "charserver"` ]] && [[ -z `screen -list | grep -E "chatserver"` ]] && [[ -z `screen -list | grep -E "game-load-balancer"` ]] && [[ -z `screen -list | grep -E "groupserver"` ]] && [[ -z `screen -list | grep -E "guildserver"` ]] && [[ -z `screen -list | grep -E "mailserver"` ]]; then
+            printf "${color_red}The server is not running.${color_end}\n"
+        else
+            if [[ -f "$root/source/tocloud9/bin/stop.sh" ]]; then
+                cd "$root/source/tocloud9/bin" && ./stop.sh
             fi
         fi
+    fi
 
-        if [[ -f "$root/source/bin/stop.sh" ]]; then
-            cd "$root/source/bin" && ./stop.sh
+    if [[ "$world_cluster" == "false" || "$build_world" == "true" ]]; then
+        if [[ -z `screen -list | grep -E "auth"` || ! -f "$source/bin/auth.sh" ]] && [[ -z `screen -list | grep -E "world-$id"` || ! -f "$source/bin/world.sh" ]]; then
+            printf "${color_red}The server is not running${color_end}\n"
+        else
+            if [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" ]]; then
+                printf "${color_orange}Telling the world server to shut down${color_end}\n"
+
+                PID=$(screen -ls | grep -oE "[0-9]+\.world-$id" | sed -e "s/\..*$//g")
+
+                if [[ $PID != "" ]]; then
+                    if [[ $1 == "restart" ]]; then
+                        screen -S world-$id -p 0 -X stuff "server restart 10^m"
+                    else
+                        screen -S world-$id -p 0 -X stuff "server shutdown 10^m"
+                    fi
+
+                    timeout 30 tail --pid=$PID -f /dev/null
+                fi
+            fi
+
+            if [[ -f "$source/bin/stop.sh" ]]; then
+                cd "$source/bin" && ./stop.sh
+            fi
         fi
     fi
 
