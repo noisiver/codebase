@@ -232,7 +232,7 @@ function get_settings
             "world.cluster.auth_address") world_cluster_auth_address="$value";;
             "world.cluster.maps") world_cluster_maps="$value";;
             "world.cluster.node_address") world_cluster_node_address="$value";;
-            "world.data_version") world_data_version="$value";;
+            "world.data_directory") world_data_directory="$value";;
             "world.expansion") world_expansion="$value";;
             "world.leave_group_on_logout") world_leave_group_on_logout="$value";;
             "world.motd") world_motd="$value";;
@@ -256,7 +256,7 @@ function get_settings
         fi
     done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC, node DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1)
 
-    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_appreciation || -z $module_appreciation_level_boost || -z $module_appreciation_level_boost_included_copper || -z $module_appreciation_level_boost_level || -z $module_appreciation_require_certificate || -z $module_appreciation_reward_at_max_level || -z $module_appreciation_unlock_continents || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_rate_money || -z $world_rate_reputation || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
+    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_appreciation || -z $module_appreciation_level_boost || -z $module_appreciation_level_boost_included_copper || -z $module_appreciation_level_boost_level || -z $module_appreciation_require_certificate || -z $module_appreciation_reward_at_max_level || -z $module_appreciation_unlock_continents || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_data_directory || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_rate_money || -z $world_rate_reputation || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
         if [[ -z $build_world ]]; then printf "${color_red}build.world is not set in the settings${color_end}\n"; fi
         if [[ -z $database_auth ]]; then printf "${color_red}database.auth is not set in the settings${color_end}\n"; fi
@@ -352,7 +352,7 @@ function get_settings
         if [[ -z $world_cluster_auth_address ]]; then printf "${color_red}world.cluster.auth_address is not set in the settings${color_end}\n"; fi
         if [[ -z $world_cluster_maps ]]; then printf "${color_red}world.cluster.maps is not set in the settings${color_end}\n"; fi
         if [[ -z $world_cluster_node_address ]]; then printf "${color_red}world.cluster.node_address is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_data_version ]]; then printf "${color_red}world.data_version is not set in the settings${color_end}\n"; fi
+        if [[ -z $world_data_directory ]]; then printf "${color_red}world.data_directory is not set in the settings${color_end}\n"; fi
         if [[ -z $world_expansion ]]; then printf "${color_red}world.expansion is not set in the settings${color_end}\n"; fi
         if [[ -z $world_leave_group_on_logout ]]; then printf "${color_red}world.leave_group_on_logout is not set in the settings${color_end}\n"; fi
         if [[ -z $world_motd ]]; then printf "${color_red}world.motd is not set in the settings${color_end}\n"; fi
@@ -1153,57 +1153,60 @@ function get_client_files
     if [[ "$build_world" == "true" ]]; then
         version=$(git ls-remote --tags --sort="v:refname" https://github.com/wowgaming/client-data.git | tail -n1 | cut --delimiter='/' --fields=3 | sed 's/v//')
 
-        if [[ "$world_data_version" == "0" || "$world_data_version" != "$version" || ! -d "$source/bin/Cameras" || ! -d "$source/bin/dbc" || ! -d "$source/bin/maps" || ! -d "$source/bin/mmaps" || ! -d "$source/bin/vmaps" ]]; then
+        if [[ "$world_data_directory" == "." ]]; then
+            world_data_directory="$source/bin"
+        elif [[ "$world_data_directory" == ./* ]]; then
+            world_data_directory="$source/bin/"${world_data_directory:2}""
+        fi
+
+        if [[ ! -d "$world_data_directory" ]]; then
+            mkdir -p "$world_data_directory"
+        fi
+
+        if [[ -f "$world_data_directory/data.version" ]]; then
+            world_data_version=$(<$world_data_directory/data.version)
+        else
+            world_data_version="0"
+        fi
+
+        if [[ "$world_data_version" == "0" || "$world_data_version" != "$version" || ! -d "$world_data_directory/Cameras" || ! -d "$world_data_directory/dbc" || ! -d "$world_data_directory/maps" || ! -d "$world_data_directory/mmaps" || ! -d "$world_data_directory/vmaps" ]]; then
             printf "${color_green}Downloading the client data files...${color_end}\n"
 
-            if [[ -f "$source/bin/data.zip" ]]; then
-                rm -rf "$source/bin/data.zip"
+            if [[ -f "$world_data_directory/data.zip" ]]; then
+                rm -rf "$world_data_directory/data.zip"
             fi
-            if [[ -d "$source/bin/Cameras" ]]; then
-                rm -rf "$source/bin/Cameras"
+            if [[ -d "$world_data_directory/Cameras" ]]; then
+                rm -rf "$world_data_directory/Cameras"
             fi
-            if [[ -d "$source/bin/dbc" ]]; then
-                rm -rf "$source/bin/dbc"
+            if [[ -d "$world_data_directory/dbc" ]]; then
+                rm -rf "$world_data_directory/dbc"
             fi
-            if [[ -d "$source/bin/maps" ]]; then
-                rm -rf "$source/bin/maps"
+            if [[ -d "$world_data_directory/maps" ]]; then
+                rm -rf "$world_data_directory/maps"
             fi
-            if [[ -d "$source/bin/mmaps" ]]; then
-                rm -rf "$source/bin/mmaps"
+            if [[ -d "$world_data_directory/mmaps" ]]; then
+                rm -rf "$world_data_directory/mmaps"
             fi
-            if [[ -d "$source/bin/vmaps" ]]; then
-                rm -rf "$source/bin/vmaps"
+            if [[ -d "$world_data_directory/vmaps" ]]; then
+                rm -rf "$world_data_directory/vmaps"
             fi
 
-            curl -f -L "https://github.com/wowgaming/client-data/releases/download/v${version}/data.zip" -o "$source/bin/data.zip"
+            curl -f -L "https://github.com/wowgaming/client-data/releases/download/v${version}/data.zip" -o "$world_data_directory/data.zip"
             if [[ $? -ne 0 ]]; then
-                rm -rf "$source/bin/data.zip"
+                rm -rf "$world_data_directory/data.zip"
                 notify_telegram "An error occurred while trying to download the client data files"
                 exit $?
             fi
 
-            unzip -o "$source/bin/data.zip" -d "$source/bin/"
+            unzip -o "$world_data_directory/data.zip" -d "$world_data_directory/"
             if [[ $? -ne 0 ]]; then
                 notify_telegram "An error occurred while trying to download the client data files"
                 exit $?
             fi
 
-            rm -rf "$source/bin/data.zip"
+            rm -rf "$world_data_directory/data.zip"
 
-            echo "[client]" > "$mysql_cnf"
-            echo "host=\"$mysql_hostname\"" >> "$mysql_cnf"
-            echo "port=\"$mysql_port\"" >> "$mysql_cnf"
-            echo "user=\"$mysql_username\"" >> "$mysql_cnf"
-            echo "password=\"$mysql_password\"" >> "$mysql_cnf"
-
-            mysql --defaults-extra-file=$mysql_cnf $mysql_database -e "DELETE FROM realm_settings WHERE id='$id' AND node='$node' AND setting='world.data_version';INSERT INTO realm_settings (id, node, setting, value, comment) VALUES ('$id', '$node', 'world.data_version', '$version', 'The installed client data version')"
-            if [[ $? -ne 0 ]]; then
-                notify_telegram "An error occurred while trying to download the client data files"
-                rm -rf "$mysql_cnf"
-                exit $?
-            fi
-
-            rm -rf "$mysql_cnf"
+            echo "$version" > "$world_data_directory/data.version"
 
             printf "${color_green}Finished downloading the client data files...${color_end}\n"
         fi
@@ -2218,6 +2221,8 @@ function set_config
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' "$source/etc/worldserver.conf"
         sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' "$source/etc/worldserver.conf"
         sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
+        data_directory=$(echo "$world_data_directory" | sed 's#/#\\/#g')
+        sed -i 's/DataDir =.*/DataDir = "'"$data_directory"'"/g' "$source/etc/worldserver.conf"
         #sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$source/etc/worldserver.conf"
         #sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$source/etc/worldserver.conf"
         if [[ "$world_cluster" == "true" ]]; then
@@ -2388,6 +2393,7 @@ function set_config
             sed -i 's/AiPlayerbot.DisableRandomLevels =.*/AiPlayerbot.DisableRandomLevels = '$module_playerbots_random_level0'/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = '$module_playerbots_start_level'/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.PvpProhibitedZoneIds =.*/AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298"/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.AutoTeleportForLevel =.*/AiPlayerbot.AutoTeleportForLevel = 0/g' "$source/etc/modules/playerbots.conf"
 
             sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$source/etc/modules/playerbots.conf"
         fi
