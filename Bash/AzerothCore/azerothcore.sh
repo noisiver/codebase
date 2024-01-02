@@ -255,7 +255,7 @@ function get_settings
         if [[ ! -z $setting && ! -z $value && -z $unknown ]]; then
             printf "${color_orange}$setting has been set to $value${color_end}\n"
         fi
-    done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1)
+    done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC, node DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1)
 
     if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_appreciation || -z $module_appreciation_level_boost || -z $module_appreciation_level_boost_included_copper || -z $module_appreciation_level_boost_level || -z $module_appreciation_require_certificate || -z $module_appreciation_reward_at_max_level || -z $module_appreciation_unlock_continents || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_cluster_port || -z $world_data_version || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_rate_money || -z $world_rate_reputation || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
@@ -1037,10 +1037,12 @@ function compile_source
                 exit $?
             fi
 
-            if [[ $EUID != 0 ]]; then
-                sudo cp "$root/source/tocloud9/bin/libsidecar.so" "/usr/lib/libsidecar.so"
-            else
-                cp "$root/source/tocloud9/bin/libsidecar.so" "/usr/lib/libsidecar.so"
+            if [[ ! -f "/usr/lib/libsidecar.so" ]]; then
+                if [[ $EUID != 0 ]]; then
+                    sudo cp "$root/source/tocloud9/bin/libsidecar.so" "/usr/lib/libsidecar.so"
+                else
+                    cp "$root/source/tocloud9/bin/libsidecar.so" "/usr/lib/libsidecar.so"
+                fi
             fi
             if [[ $? -ne 0 ]]; then
                 notify_telegram "An error occurred while trying to compile the source code"
@@ -1124,7 +1126,7 @@ function compile_source
             echo "#!/bin/bash" > "$source/bin/world.sh"
             echo "while :; do" >> "$source/bin/world.sh"
             if [[ "$world_cluster" == "true" ]]; then
-                echo "  TC9_CONFIG_FILE=$source/bin/config.yml AC_WORLD_SERVER_PORT="$world_cluster_port" ./worldserver" >> "$source/bin/world.sh"
+                echo "  TC9_CONFIG_FILE=$source/bin/config.yml AC_WORLD_SERVER_PORT="$world_cluster_port" GRPC_PORT="$(($node+9500))" ./worldserver" >> "$source/bin/world.sh"
             else
                 echo "  ./worldserver" >> "$source/bin/world.sh"
             fi
@@ -1196,7 +1198,7 @@ function get_client_files
             echo "user=\"$mysql_username\"" >> "$mysql_cnf"
             echo "password=\"$mysql_password\"" >> "$mysql_cnf"
 
-            mysql --defaults-extra-file=$mysql_cnf $mysql_database -e "DELETE FROM realm_settings WHERE id='$id' AND setting='world.data_version';INSERT INTO realm_settings (id, setting, value, comment) VALUES ('$id', 'world.data_version', '$version', 'The installed client data version')"
+            mysql --defaults-extra-file=$mysql_cnf $mysql_database -e "DELETE FROM realm_settings WHERE id='$id' AND node='$node' AND setting='world.data_version';INSERT INTO realm_settings (id, node, setting, value, comment) VALUES ('$id', '$node', 'world.data_version', '$version', 'The installed client data version')"
             if [[ $? -ne 0 ]]; then
                 notify_telegram "An error occurred while trying to download the client data files"
                 rm -rf "$mysql_cnf"
@@ -2499,7 +2501,9 @@ function start_server
             printf "${color_red}The required binaries are missing${color_end}\n"
             printf "${color_red}Please make sure to install the server first${color_end}\n"
         else
-            if [[ ! -z `screen -list | grep -E "auth"` && -f "$source/bin/auth.sh" ]] || [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" ]]; then
+            if [[ ! -z `screen -list | grep -E "world-$id-$node"` && -f "$source/bin/world.sh" && "$world_cluster" == "true" ]]; then
+                printf "${color_red}The server is already running${color_end}\n"
+            elif [[ ! -z `screen -list | grep -E "auth"` && -f "$source/bin/auth.sh" ]] || [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" && "$world_cluster" == "false" ]]; then
                 printf "${color_red}The server is already running${color_end}\n"
             else
                 cd "$source/bin" && ./start.sh
@@ -2508,7 +2512,9 @@ function start_server
                     printf "${color_orange}To access the screen of the authserver, use the command ${color_blue}screen -r auth${color_orange}${color_end}\n"
                 fi
 
-                if [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" ]]; then
+                if [[ ! -z `screen -list | grep -E "world-$id-$node"` && -f "$source/bin/world.sh" && "$world_cluster" == "true" ]]; then
+                    printf "${color_orange}To access the screen of the worldserver, use the command ${color_blue}screen -r world-$id-$node${color_orange}${color_end}\n"
+                elif [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" && "$world_cluster" == "false" ]]; then
                     printf "${color_orange}To access the screen of the worldserver, use the command ${color_blue}screen -r world-$id${color_orange}${color_end}\n"
                 fi
             fi
@@ -2536,16 +2542,28 @@ function stop_server
         if [[ -z `screen -list | grep -E "auth"` || ! -f "$source/bin/auth.sh" ]] && [[ -z `screen -list | grep -E "world-$id"` || ! -f "$source/bin/world.sh" ]]; then
             printf "${color_red}The server is not running${color_end}\n"
         else
-            if [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" ]]; then
+            if [[ ! -z `screen -list | grep -E "world-$id"` && -f "$source/bin/world.sh" && "$world_cluster" == "false" ]] || [[ ! -z `screen -list | grep -E "world-$id-$node"` && -f "$source/bin/world.sh" && "$world_cluster" == "true" ]]; then
                 printf "${color_orange}Telling the world server to shut down${color_end}\n"
 
-                PID=$(screen -ls | grep -oE "[0-9]+\.world-$id" | sed -e "s/\..*$//g")
+                if [[ "$world_cluster" == "true" ]]; then
+                    PID=$(screen -ls | grep -oE "[0-9]+\.world-$id-$node" | sed -e "s/\..*$//g")
+                else
+                    PID=$(screen -ls | grep -oE "[0-9]+\.world-$id" | sed -e "s/\..*$//g")
+                fi
 
                 if [[ $PID != "" ]]; then
                     if [[ $1 == "restart" ]]; then
-                        screen -S world-$id -p 0 -X stuff "server restart 10^m"
+                        if [[ "$world_cluster" == "true" ]]; then
+                            screen -S world-$id-$node -p 0 -X stuff "server restart 10^m"
+                        else
+                            screen -S world-$id-$node -p 0 -X stuff "server restart 10^m"
+                        fi
                     else
-                        screen -S world-$id -p 0 -X stuff "server shutdown 10^m"
+                        if [[ "$world_cluster" == "true" ]]; then
+                            screen -S world-$id-$node -p 0 -X stuff "server shutdown 10^m"
+                        else
+                            screen -S world-$id -p 0 -X stuff "server shutdown 10^m"
+                        fi
                     fi
 
                     timeout 30 tail --pid=$PID -f /dev/null
