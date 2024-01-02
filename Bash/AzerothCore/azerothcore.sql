@@ -107,7 +107,6 @@ INSERT INTO `realm_settings` (`id`, `node`, `setting`, `value`, `comment`) VALUE
 (-1, -1, 'world.cluster.auth_address', '127.0.0.1', 'Address of the auth server'),
 (-1, -1, 'world.cluster.maps', 'all', 'The maps enabled for the node'),
 (-1, -1, 'world.cluster.node_address', '127.0.0.1', 'Address of the node'),
-(-1, -1, 'world.cluster.port', '9644', 'The port used by the world server while in a cluster'),
 (-1, -1, 'world.data_version', '0', 'The installed client data version'),
 (-1, -1, 'world.expansion', '2', 'The active expansion'),
 (-1, -1, 'world.leave_group_on_logout', 'true', 'Leave group when logging out'),
