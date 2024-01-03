@@ -984,12 +984,12 @@ function compile_source
             echo "done" >> $root/source/tocloud9/bin/game-load-balancer.sh
             chmod +x $root/source/tocloud9/bin/game-load-balancer.sh
 
-            echo "#!/bin/bash" > $root/source/tocloud9/bin/guildserver.sh
-            echo "while :; do" >> $root/source/tocloud9/bin/guildserver.sh
-            echo "    ./groupserver" >> $root/source/tocloud9/bin/guildserver.sh
-            echo "    sleep 5" >> $root/source/tocloud9/bin/guildserver.sh
-            echo "done" >> $root/source/tocloud9/bin/guildserver.sh
-            chmod +x $root/source/tocloud9/bin/guildserver.sh
+            echo "#!/bin/bash" > $root/source/tocloud9/bin/groupserver.sh
+            echo "while :; do" >> $root/source/tocloud9/bin/groupserver.sh
+            echo "    ./groupserver" >> $root/source/tocloud9/bin/groupserver.sh
+            echo "    sleep 5" >> $root/source/tocloud9/bin/groupserver.sh
+            echo "done" >> $root/source/tocloud9/bin/groupserver.sh
+            chmod +x $root/source/tocloud9/bin/groupserver.sh
 
             echo "#!/bin/bash" > $root/source/tocloud9/bin/guildserver.sh
             echo "while :; do" >> $root/source/tocloud9/bin/guildserver.sh
