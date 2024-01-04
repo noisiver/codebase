@@ -512,10 +512,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-ah-bot" ]]; then
                 rm -rf "$source/modules/mod-ah-bot"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -544,10 +540,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-appreciation" ]]; then
                 rm -rf "$source/modules/mod-appreciation"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -576,10 +568,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-assistant" ]]; then
                 rm -rf "$source/modules/mod-assistant"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -608,10 +596,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-groupquests" ]]; then
                 rm -rf "$source/modules/mod-groupquests"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -640,10 +624,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-junk-to-gold" ]]; then
                 rm -rf "$source/modules/mod-junk-to-gold"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -680,10 +660,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-learnspells" ]]; then
                 rm -rf "$source/modules/mod-learnspells"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -712,10 +688,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-playerbots" ]]; then
                 rm -rf "$source/modules/mod-playerbots"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -744,10 +716,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-progression" ]]; then
                 rm -rf "$source/modules/mod-progression"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -776,10 +744,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-recruitafriend" ]]; then
                 rm -rf "$source/modules/mod-recruitafriend"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -808,10 +772,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-skip-dk-starting-area" ]]; then
                 rm -rf "$source/modules/mod-skip-dk-starting-area"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
 
@@ -840,10 +800,6 @@ function get_source
         else
             if [[ -d "$source/modules/mod-weekendbonus" ]]; then
                 rm -rf "$source/modules/mod-weekendbonus"
-
-                if [[ -d "$source/build" ]]; then
-                    rm -rf "$source/build"
-                fi
             fi
         fi
     fi
@@ -1124,7 +1080,7 @@ function compile_source
             echo "#!/bin/bash" > "$source/bin/world.sh"
             echo "while :; do" >> "$source/bin/world.sh"
             if [[ "$world_cluster" == "true" ]]; then
-                echo "  TC9_CONFIG_FILE=$source/bin/config.yml AC_WORLD_SERVER_PORT="$(($node+9643))" GRPC_PORT="$(($node+9500))" ./worldserver" >> "$source/bin/world.sh"
+                echo "  TC9_CONFIG_FILE=$source/bin/config.yml AC_WORLD_SERVER_PORT="$(($node+9643))" GRPC_PORT="$(($node+9500))" HEALTH_CHECK_PORT="$(($node+8900))" ./worldserver" >> "$source/bin/world.sh"
             else
                 echo "  ./worldserver" >> "$source/bin/world.sh"
             fi
