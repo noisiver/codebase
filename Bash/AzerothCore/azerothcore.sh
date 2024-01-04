@@ -2067,13 +2067,14 @@ function set_config
             sed -i 's/  characters: \&defaultCharactersDB.*/  characters: \&defaultCharactersDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_characters'"/g' $root/source/tocloud9/bin/config.yml
             sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_world'"/g' $root/source/tocloud9/bin/config.yml
             sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $root/source/tocloud9/bin/config.yml
-            sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$world_cluster_node_address':8999/g' $root/source/tocloud9/bin/config.yml
-            sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$world_cluster_node_address':8991"/g' $root/source/tocloud9/bin/config.yml
-            sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$world_cluster_node_address':8992"/g' $root/source/tocloud9/bin/config.yml
-            sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$world_cluster_node_address':8995"/g' $root/source/tocloud9/bin/config.yml
-            sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$world_cluster_node_address':8997"/g' $root/source/tocloud9/bin/config.yml
-            sed -i 's/  preferredHostname:.*/  preferredHostname: "'$world_cluster_node_address'"/g' $root/source/tocloud9/bin/config.yml
-            sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_node_address':8996"/g' $root/source/tocloud9/bin/config.yml
+            #sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$world_cluster_node_address':8999/g' $root/source/tocloud9/bin/config.yml
+            #sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$world_cluster_node_address':8991"/g' $root/source/tocloud9/bin/config.yml
+            #sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$world_cluster_node_address':8992"/g' $root/source/tocloud9/bin/config.yml
+            #sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$world_cluster_node_address':8995"/g' $root/source/tocloud9/bin/config.yml
+            #sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$world_cluster_node_address':8997"/g' $root/source/tocloud9/bin/config.yml
+            #sed -i 's/  groupServiceAddress:.*/  groupServiceAddress: "'$world_cluster_node_address':8998"/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  preferredHostname:.*/  preferredHostname: '$world_cluster_node_address'/g' $root/source/tocloud9/bin/config.yml
+            #sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_node_address':8996"/g' $root/source/tocloud9/bin/config.yml
         fi
 
         if [[ "$build_world" == "true" ]]; then
@@ -2093,13 +2094,14 @@ function set_config
             sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_world'"/g' $root/source/azerothcore/bin/config.yml
             sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $root/source/azerothcore/bin/config.yml
             sed -i 's/nats: \&defaultNatsUrl.*/nats: \&defaultNatsUrl "nats:\/\/'$world_cluster_auth_address':4222"/g' $root/source/azerothcore/bin/config.yml
-            sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$world_cluster_auth_address':8999/g' $root/source/azerothcore/bin/config.yml
-            sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$world_cluster_auth_address':8991"/g' $root/source/azerothcore/bin/config.yml
-            sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$world_cluster_auth_address':8992"/g' $root/source/azerothcore/bin/config.yml
-            sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$world_cluster_auth_address':8995"/g' $root/source/azerothcore/bin/config.yml
-            sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$world_cluster_auth_address':8997"/g' $root/source/azerothcore/bin/config.yml
-            sed -i 's/  preferredHostname:.*/  preferredHostname: "'$world_cluster_node_address'"/g' $root/source/azerothcore/bin/config.yml
-            sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_auth_address':8996"/g' $root/source/azerothcore/bin/config.yml
+            #sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$world_cluster_auth_address':8999/g' $root/source/azerothcore/bin/config.yml
+            #sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$world_cluster_auth_address':8991"/g' $root/source/azerothcore/bin/config.yml
+            #sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$world_cluster_auth_address':8992"/g' $root/source/azerothcore/bin/config.yml
+            #sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$world_cluster_auth_address':8995"/g' $root/source/azerothcore/bin/config.yml
+            #sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$world_cluster_auth_address':8997"/g' $root/source/azerothcore/bin/config.yml
+            #sed -i 's/  groupServiceAddress:.*/  groupServiceAddress: "'$world_cluster_node_address':8998"/g' $root/source/azerothcore/bin/config.yml
+            #sed -i 's/  preferredHostname:.*/  preferredHostname: '$world_cluster_node_address'/g' $root/source/azerothcore/bin/config.yml
+            #sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_auth_address':8996"/g' $root/source/azerothcore/bin/config.yml
         fi
     fi
 
@@ -2350,6 +2352,7 @@ function set_config
             sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = '$module_playerbots_start_level'/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.PvpProhibitedZoneIds =.*/AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298"/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.AutoTeleportForLevel =.*/AiPlayerbot.AutoTeleportForLevel = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.KillXPRate =.*/AiPlayerbot.KillXPRate = 1/g' "$source/etc/modules/playerbots.conf"
 
             sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$source/etc/modules/playerbots.conf"
         fi
