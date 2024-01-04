@@ -85,6 +85,48 @@ function install_packages
             exit $?
         fi
     fi
+
+    if [[ "$world_cluster" == "true" && "$build_auth" == "true" ]]; then
+        if ! [ -x "$(command -v nats-server)" ]; then
+            if [[ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
+                if [[ $EUID != 0 ]]; then
+                    sudo apt-get --yes update
+                else
+                    apt-get --yes update
+                fi
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to install the required packages"
+                    exit $?
+                fi
+
+                if [[ $EUID != 0 ]]; then
+                    sudo apt-get --yes install curl
+                else
+                    apt-get --yes install curl
+                fi
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to install the required packages"
+                    exit $?
+                fi
+            fi
+
+            curl -L "https://github.com/nats-io/nats-server/releases/download/v2.10.7/nats-server-v2.10.7-amd64.deb" -o "$root/nats-server-v2.10.7-amd64.deb"
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to install the required packages"
+                exit $?
+            fi
+
+            if [[ $EUID != 0 ]]; then
+                sudo dpkg -i "$root/nats-server-v2.10.7-amd64.deb"
+            else
+                dpkg -i "$root/nats-server-v2.10.7-amd64.deb"
+            fi
+            if [[ $? != 0 ]]; then
+                notify_telegram "An error occurred while trying to install the required packages"
+                exit $?
+            fi
+        fi
+    fi
 }
 
 function install_mysql_client
@@ -2094,14 +2136,14 @@ function set_config
             sed -i 's/  world: \&defaultWorldDB.*/  world: \&defaultWorldDB "'$mysql_username':'$mysql_password'@tcp('$mysql_hostname':'$mysql_port')\/'$database_world'"/g' $root/source/azerothcore/bin/config.yml
             sed -i 's/  schemaType: \&defaultSchemaType.*/  schemaType: \&defaultSchemaType "ac"/g' $root/source/azerothcore/bin/config.yml
             sed -i 's/nats: \&defaultNatsUrl.*/nats: \&defaultNatsUrl "nats:\/\/'$world_cluster_auth_address':4222"/g' $root/source/azerothcore/bin/config.yml
-            #sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: '$world_cluster_auth_address':8999/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  serversRegistryServiceAddress:.*/  serversRegistryServiceAddress: "'$world_cluster_auth_address':8999"/g' $root/source/azerothcore/bin/config.yml
             #sed -i 's/  charactersServiceAddress:.*/  charactersServiceAddress: "'$world_cluster_auth_address':8991"/g' $root/source/azerothcore/bin/config.yml
             #sed -i 's/  chatServiceAddress:.*/  chatServiceAddress: "'$world_cluster_auth_address':8992"/g' $root/source/azerothcore/bin/config.yml
             #sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$world_cluster_auth_address':8995"/g' $root/source/azerothcore/bin/config.yml
             #sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$world_cluster_auth_address':8997"/g' $root/source/azerothcore/bin/config.yml
             #sed -i 's/  groupServiceAddress:.*/  groupServiceAddress: "'$world_cluster_node_address':8998"/g' $root/source/azerothcore/bin/config.yml
-            #sed -i 's/  preferredHostname:.*/  preferredHostname: '$world_cluster_node_address'/g' $root/source/azerothcore/bin/config.yml
-            #sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_auth_address':8996"/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  preferredHostname:.*/  preferredHostname: '$world_cluster_node_address'/g' $root/source/azerothcore/bin/config.yml
+            sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_auth_address':8996"/g' $root/source/azerothcore/bin/config.yml
         fi
     fi
 
