@@ -44,17 +44,17 @@ color_white="\e[1;37m"
 color_end="\e[0m"
 
 root=$(pwd)
-source="$root/source"
-mysql_cnf="$root/mysql.cnf"
-telegram_inf="$root/telegram"
+source="$root/source" # Do not edit
+mysql_cnf="$root/mysql.cnf" # Do not edit
+telegram_inf="$root/telegram" # Do not edit
 
-mysql_hostname="127.0.0.1"
-mysql_port="3306"
-mysql_username="acore"
-mysql_password="acore"
-mysql_database="acore_auth"
-id=1
-node=1
+mysql_hostname="127.0.0.1" # This is the hostname of the mysql database
+mysql_port="3306" # This is the port of the mysql database
+mysql_username="acore" # This is the username the script will use when importing database files and also write it to any config files
+mysql_password="acore" # This is the username the script will use when importing database files and also write it to any config files
+mysql_database="acore_auth" # This is the name of the database that holds the SQL data provided with this script
+id=1 # This is realm id
+node=1 # This is node id
 
 function install_packages
 {
@@ -2125,7 +2125,7 @@ function set_config
             #sed -i 's/  guildsServiceAddress:.*/  guildsServiceAddress: "'$world_cluster_node_address':8995"/g' $root/source/tocloud9/bin/config.yml
             #sed -i 's/  mailServiceAddress:.*/  mailServiceAddress: "'$world_cluster_node_address':8997"/g' $root/source/tocloud9/bin/config.yml
             #sed -i 's/  groupServiceAddress:.*/  groupServiceAddress: "'$world_cluster_node_address':8998"/g' $root/source/tocloud9/bin/config.yml
-            sed -i 's/  preferredHostname:.*/  preferredHostname: '$world_cluster_node_address'/g' $root/source/tocloud9/bin/config.yml
+            sed -i 's/  preferredHostname:.*/  preferredHostname: '$world_cluster_auth_address'/g' $root/source/tocloud9/bin/config.yml
             #sed -i 's/  guidProviderServiceAddress:.*/  guidProviderServiceAddress: "'$world_cluster_node_address':8996"/g' $root/source/tocloud9/bin/config.yml
         fi
 
