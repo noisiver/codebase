@@ -1,16 +1,6 @@
 #!/bin/bash
 distribution=("ubuntu22.04" "debian12")
 
-# Debian 12 required me to manually install mysql
-# The reasoning behind this is that the nested queries that azerothcore use is not mariadb-friendly
-# I used these commands to be able to install mysql:
-# apt update && apt install -y wget
-# wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb
-# apt install -y ./mysql-apt-config_0.8.29-1_all.deb
-# Followed the instructions and made sure that mysql server and connectors were enabled
-# apt update && apt install -y mysql-server
-# The script works after setting that up
-
 if [[ -f /etc/os-release ]]; then
     . /etc/os-release
     os=$ID
