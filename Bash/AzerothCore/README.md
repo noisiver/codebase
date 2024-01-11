@@ -123,13 +123,13 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `module.weekendbonus.multiplier.professions`: This is a multiplier for profession skill ups on weekends
 - `module.weekendbonus.multiplier.proficiencies`: This is a multiplier for weapon and defense skill ups on weekends
 - `module.weekendbonus.multiplier.reputation`: This is a multiplier for reputation earned on weekends
-- `telegram.chat_id`: 
-- `telegram.token`: 
+- `telegram.chat_id`: Can be set to **0** or a chat id provided by Telegram. Setting either this or token to **0** will disable Telegram It is used to send messages using Telegram if errors occur
+- `telegram.token`: Can be set to **0** or a token provided by Telegram. Setting either this or chat_id to **0** will disable Telegram. It is used to send messages using Telegram if errors occur
 - `world.address`: This is the address used to connect to the world server from the client
 - `world.cluster`: Can be set to **true** or **false** and determines if cluster should be enabled. This requires a special fork of AzerothCore and is intended for advanced users
-- `world.cluster.auth_address`: 
-- `world.cluster.maps`: 
-- `world.cluster.node_address`: 
+- `world.cluster.auth_address`: This is the address of the node running the ToCloud9 services. The game client has to be able to connect to it
+- `world.cluster.maps`: Can be set to **all** or map ids separated by a comma and determines what maps are enabled on a cluster node. Example: **0,1,369,530,571,609**
+- `world.cluster.node_address`: This is the address of the node. The game client has to be able to connect to it
 - `world.data_directory`: This is the path where client data files will be stored. Never finish this with a slash! Can be set to current directory by using a single period (**.**) or a folder called data inside the current directory (**./data**) or use an absolute path (**/home/acore/data**)
 - `world.expansion`: Can be set to **0**, **1** or **2** and determines the expansion used
 - `world.leave_group_on_logout`: Can be set to **true** or **false** and determines if players should leave groups when logging out
