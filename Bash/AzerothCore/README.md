@@ -1,5 +1,5 @@
 # Information
-The purpose of this script is to fully manage realms running using AzerothCore. A few commands will perform every step of the setup of a realm. It supports running as a regular realm but also running a cluster, running multiple realms or nodes on a single system etc.
+The purpose of this script is to fully manage realms running using AzerothCore. A few commands will perform every step of the setup of a realm. It supports running as a regular realm or as a cluster, running multiple realms or nodes on a single system etc.
 
 The steps included with this script are as follows.
 - Install, and update, authserver and worldserver along with any enabled modules.
@@ -11,6 +11,8 @@ The steps included with this script are as follows.
 - Start and shut down the compiled binaries.
 
 It's possible to add modules on top of what is supported by this script but you'll have to manage config and database files yourself. The script disabled the autoupdater and won't handle files it doesn't know to look for.
+
+To automate the process of copying custom dbc files they need to be placed in a folder called `dbc` in the same folder as the script. The same is true for custom sql files except they need be placed in `sql/auth`, `sql/characters` or `sql/world` depending on the database they should be executed on. The folders will be created by the script when using related parameters.
 
 # Supported distributions
 The script supports Ubuntu 22.04 and Debian 12.
@@ -159,3 +161,5 @@ The script accepts the parameters listed below. For clarification I'm including 
 - `./azerothcore.sh stop`: Stop the compiled binaries if they are running
 - `./azerothcore.sh restart`: Stop and then start the compiled binaries
 - `./azerothcore.sh all`: Run through all of the parameters listed above except `restart`
+
+Running the script without any parameters will print a list of the parameters too.
