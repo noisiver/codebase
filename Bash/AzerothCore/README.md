@@ -86,6 +86,29 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `module.assistant.vendor.gems`: Can be set to **true** or **false** and determines if players can obtain gems from the assistant
 - `module.assistant.vendor.glyphs`: Can be set to **true** or **false** and determines if players can obtain glyphs from the assistant
 - `module.assistant.vendor.heirlooms`: Can be set to **true** or **false** and determines if players can obtain heirlooms from the assistant
+- `module.groupquests`: Can be set to **true** or **false** and enables the group quests module
+- `module.junktogold`: Can be set to **true** or **false** and enables the junk-to-gold module
+- `module.learnspells`: Can be set to **true** or **false** and enables the learn spells module
+- `module.learnspells.class_spells`: Can be set to **true** or **false** and determines if players will learn class spells
+- `module.learnspells.proficiencies`: Can be set to **true** or **false** and determines if players will proficiencies
+- `module.learnspells.quest_spells`: Can be set to **true** or **false** and determines if players will learn spells normally obtained from quests
+- `module.learnspells.riding.apprentice`: Can be set to **true** or **false** and determines if players will learn apprentice riding and mounts
+- `module.learnspells.riding.artisan`: Can be set to **true** or **false** and determines if players will learn artisan riding and mounts
+- `module.learnspells.riding.cold_weather_flying`: Can be set to **true** or **false** and determines if players will learn cold weather flying
+- `module.learnspells.riding.expert`: Can be set to **true** or **false** and determines if players will learn expert riding and mounts
+- `module.learnspells.riding.journeyman`: Can be set to **true** or **false** and determines if players will learn journeyman riding and mounts
+- `module.learnspells.talent_ranks`: Can be set to **true** or **false** and determines if players will learn talent ranks
+- `module.playerbots`: Can be set to **true** or **false** and enables the playerbots module
+- `module.playerbots.accounts`: This is the amount of random bot accounts to create
+- `module.playerbots.bots`: This is the amount of random bots to log into the world
+- `module.playerbots.random_level`: Can be set to **true** or **false** and determines if random bots will be set to random levels
+- `module.playerbots.start_level`: This is the starting level for random bots if random_level is set to **false**
+- `module.progression`: Can be set to **true** or **false** and enables the progression module
+- `module.progression.aura`: Can be set to **0**, **1**, **2**, **3** or **4** and determines the aura used inside Icecrown Citadel
+- `module.progression.enforce.dungeonfinder`: Can be set to **true** or **false** and determines if the dungeon finder is disabled before patch 3.3
+- `module.progression.enforce.questinfo`: Can be set to **true** or **false** and determines if the quest-related information in tooltips and on the map is disabled before patch 3.3
+- `module.progression.patch`: Can be set to **0**, **1**, **2**, **3** or **4** and determines the patch used
+- `module.progression.reset`: Can be set to **true** or **false** and determines if all SQL files from the progression module should be imported every time
 
 # Parameters
 The script accepts the parameters listed below. For clarification I'm including the full command for running the script with each parameter. Some of them have multiple possible words to use so if a slash is used to separate words then any of the words can be used but not all of them combined.
