@@ -130,7 +130,7 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `world.cluster.auth_address`: 
 - `world.cluster.maps`: 
 - `world.cluster.node_address`: 
-- `world.data_directory`: This is the path where client data files will be stored. Never finish this with a slash! Examples: **/home/acore/data** or **.** or **./data**
+- `world.data_directory`: This is the path where client data files will be stored. Never finish this with a slash! Examples: **.** or **./data** or **/home/acore/data**
 - `world.expansion`: Can be set to **0**, **1** or **2** and determines the expansion used
 - `world.leave_group_on_logout`: Can be set to **true** or **false** and determines if players should leave groups when logging out
 - `world.motd`: This is the message shown to players when entering the world
