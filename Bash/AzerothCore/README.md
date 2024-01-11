@@ -54,7 +54,7 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `module.ah_bot.use_buyprice`: Can be set to **true** or **false** and determines if the bot should use buyprice instead of sellprice from item templates when selling items
 - `module.appreciation`: Can be set to **true** or **false** and enables the appreciation module
 - `module.appreciation.level_boost`: Can be set to **true** or **false** and determines if players can get level boosts from the npc
-- `module.appreciation.level_boost.included_copper`: Defines how much copper the player will receive when performing a level boost
+- `module.appreciation.level_boost.included_copper`: This is how much copper the player will receive when performing a level boost
 - `module.appreciation.level_boost.level`: Can be set to **60**, **70** or **80** and defines the level the player will be given when performing a level boost
 - `module.appreciation.require_certificate` Can be set to **true** or **false** and determines if players need a *Token of Appreciation* to use any of the services provided by the npc
 - `module.appreciation.reward_at_max_level`: Can be set to **true** or **false** and determines if players should be rewarded with a *Token of Appreciation* when reaching max level
@@ -108,7 +108,45 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `module.progression.enforce.dungeonfinder`: Can be set to **true** or **false** and determines if the dungeon finder is disabled before patch 3.3
 - `module.progression.enforce.questinfo`: Can be set to **true** or **false** and determines if the quest-related information in tooltips and on the map is disabled before patch 3.3
 - `module.progression.patch`: Can be set to **0**, **1**, **2**, **3** or **4** and determines the patch used
-- `module.progression.reset`: Can be set to **true** or **false** and determines if all SQL files from the progression module should be imported every time
+- `module.progression.reset`: Can be set to **true** or **false** and determines if database files from the progression module should be imported every time
+- `module.recruitafriend`: Can be set to **true** or **false** and enables the recruit-a-friend module
+- `module.recruitafriend.account_age`: This is how many days since account creation it can be recruited
+- `module.recruitafriend.celestial_steed`: Can be set to **true** or **false** and determines if players should be rewarded with the Celestial Steed mount for recruiting players
+- `module.recruitafriend.duration`: This is the amount of days that a referral stays active
+- `module.recruitafriend.reward_days`: This is the amount of days since recruiting a player both accounts are given rewards
+- `module.recruitafriend.swift_zhevra`: Can be set to **true** or **false** and determines if players should be rewarded with the Swift Zhevra mount for recruiting players
+- `module.recruitafriend.touring_rocket`: Can be set to **true** or **false** and determines if players should be rewarded with the X-53 Touring Rocket mount for recruiting players
+- `module.skip_dk_starting_area`: Can be set to **true** or **false** and enables the skip-dk-starting-area module
+- `module.weekendbonus`: Can be set to **true** or **false** and enables the weekend-bonus module
+- `module.weekendbonus.multiplier.experience`: This is a multiplier for experience points earned on weekends
+- `module.weekendbonus.multiplier.money`: This is a multiplier for money looted and earned from quests on weekends
+- `module.weekendbonus.multiplier.professions`: This is a multiplier for profession skill ups on weekends
+- `module.weekendbonus.multiplier.proficiencies`: This is a multiplier for weapon and defense skill ups on weekends
+- `module.weekendbonus.multiplier.reputation`: This is a multiplier for reputation earned on weekends
+- `telegram.chat_id`: 
+- `telegram.token`: 
+- `world.address`: This is the address used to connect to the world server from the client
+- `world.cluster`: Can be set to **true** or **false** and determines if cluster should be enabled. This requires a special fork of AzerothCore and is intended for advanced users
+- `world.cluster.auth_address`: 
+- `world.cluster.maps`: 
+- `world.cluster.node_address`: 
+- `world.data_directory`: This is the path where client data files will be stored. Never finish this with a slash! Examples: **/home/acore/data** or **.** or **./data**
+- `world.expansion`: Can be set to **0**, **1** or **2** and determines the expansion used
+- `world.leave_group_on_logout`: Can be set to **true** or **false** and determines if players should leave groups when logging out
+- `world.motd`: This is the message shown to players when entering the world
+- `world.name`: This is the name of the realm as shown in the realm selection list and on the character selection screen
+- `world.player_limit`: This is the max amount of players that can be logged in at the same time
+- `world.port`: This is the port used by the world server
+- `world.preload_grids`: Can be set to **true** or **false** and determines if map grids should be loaded into memory on startup
+- `world.quest_in_raid`: Can be set to **true** or **false** and determines if players can complete all quests while in a raid group
+- `world.raid_min_level`: This is the minimum level required to join raid groups
+- `world.rate.experience`: This is a multiplier for experience points gained
+- `world.rate.money`: This is a multiplier for money looted and earned from quests
+- `world.rate.reputation`: This is a multiplier for reputation gained
+- `world.realm_zone`: This determines the zone of the realm. As an example **1** is Development, **2** is United States
+- `world.set_creatures_active`: Can be set to **true** or **false** and determines if creatures with waypoints should be set as active on startup
+- `world.type`: This determines the game type of the realm. As an example **0** is Normal and **1** is PvP
+- `world.warden`: Can be set to **true** or **false** and determines if the warden anti-cheat system will be used
 
 # Parameters
 The script accepts the parameters listed below. For clarification I'm including the full command for running the script with each parameter. Some of them have multiple possible words to use so if a slash is used to separate words then any of the words can be used but not all of them combined.
