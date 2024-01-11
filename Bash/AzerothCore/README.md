@@ -59,6 +59,33 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `module.appreciation.require_certificate` Can be set to **true** or **false** and determines if players need a *Token of Appreciation* to use any of the services provided by the npc
 - `module.appreciation.reward_at_max_level`: Can be set to **true** or **false** and determines if players should be rewarded with a *Token of Appreciation* when reaching max level
 - `module.appreciation.unlock_continents`: Can be set to **true** or **false** and determines if players can unlock flight paths from the npc
+- `module.assistant`: Can be set to **true** or **false** and enables the assistant module
+- `module.assistant.fp.tbc`: Can be set to **true** or **false** and determines if players can unlock flight paths in Outland via the assistant
+- `module.assistant.fp.tbc.cost`: This is the amount of copper required to unlock flight paths in Outland via the assistant
+- `module.assistant.fp.tbc.required_level`: This is the level required to unlock flight paths in Outland via the assistant
+- `module.assistant.fp.vanilla`: Can be set to **true** or **false** and determines if players can unlock flight paths in Eastern Kingdoms and Kalimdor via the assistant
+- `module.assistant.fp.vanilla.cost`: This is the amount of copper required to unlock flight paths in Eastern Kingdoms and Kalimdor via the assistant
+- `module.assistant.fp.vanilla.required_level`: This is the level required to unlock flight paths in Eastern Kingdoms and Kalimdor via the assistant
+- `module.assistant.fp.wotlk`: Can be set to **true** or **false** and determines if players can unlock flight paths in Northrend via the assistant
+- `module.assistant.fp.wotlk.cost`: This is the amount of copper required to unlock flight paths in Northrend via the assistant
+- `module.assistant.fp.wotlk.required_level`: This is the level required to unlock flight paths in Northrend via the assistant
+- `module.assistant.professions.apprentice`: Can be set to **true** or **false** and determines if players can boost their professions up to a skill value of 75
+- `module.assistant.professions.apprentice.cost`: This is the amount of copper required to boost a profession to a skill value of 75
+- `module.assistant.professions.artisan`: Can be set to **true** or **false** and determines if players can boost their professions up to a skill value of 300
+- `module.assistant.professions.artisan.cost`: This is the amount of copper required to boost a profession to a skill value of 300
+- `module.assistant.professions.expert`: Can be set to **true** or **false** and determines if players can boost their professions up to a skill value of 225
+- `module.assistant.professions.expert.cost`: This is the amount of copper required to boost a profession to a skill value of 225
+- `module.assistant.professions.grand_master`: Can be set to **true** or **false** and determines if players can boost their professions up to a skill value of 450
+- `module.assistant.professions.grand_master.cost`: This is the amount of copper required to boost a profession to a skill value of 450
+- `module.assistant.professions.journeyman`: Can be set to **true** or **false** and determines if players can boost their professions up to a skill value of 150
+- `module.assistant.professions.journeyman.cost`: This is the amount of copper required to boost a profession to a skill value of 150
+- `module.assistant.professions.master`: Can be set to **true** or **false** and determines if players can boost their professions up to a skill value of 375
+- `module.assistant.professions.master.cost`: This is the amount of copper required to boost a profession to a skill value of 375
+- `module.assistant.utilities`: Can be set to **true** or **false** and determines if players can obtain various features from the assistant, such as name change and faction change
+- `module.assistant.vendor.containers`: Can be set to **true** or **false** and determines if players can obtain bags and quivers from the assistant
+- `module.assistant.vendor.gems`: Can be set to **true** or **false** and determines if players can obtain gems from the assistant
+- `module.assistant.vendor.glyphs`: Can be set to **true** or **false** and determines if players can obtain glyphs from the assistant
+- `module.assistant.vendor.heirlooms`: Can be set to **true** or **false** and determines if players can obtain heirlooms from the assistant
 
 # Parameters
 The script accepts the parameters listed below. For clarification I'm including the full command for running the script with each parameter. Some of them have multiple possible words to use so if a slash is used to separate words then any of the words can be used but not all of them combined.
