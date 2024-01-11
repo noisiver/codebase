@@ -44,7 +44,7 @@ mysql_username="acore" # This is the username the script will use when importing
 mysql_password="acore" # This is the username the script will use when importing database files and also write it to any config files
 mysql_database="acore_auth" # This is the name of the database that holds the SQL data provided with this script
 id=1 # This is realm id
-node=1 # This is node id
+node=1 # This is node id. Ignore if not using cluster
 
 function install_packages
 {

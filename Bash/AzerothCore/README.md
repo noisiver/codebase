@@ -17,7 +17,7 @@ The script supports Ubuntu 22.04 and Debian 12.
 
 If you're using Ubuntu 22.04 you can safely ignore these instructions.
 
-Debian 12 requires you to manually install `mysql-apt-config` before running this script in order to function. This is because although MariaDB is supported by AzerothCore it has several issues and isn't worth the trouble. It's a simple process and I'm including the specific steps below. The instructions include removing anything related to MariaDB so if you have a database server running you should perform a backup of any data you want to keep.
+Debian 12 requires you to manually install `mysql-apt-config` before running this script. This is because although MariaDB is supported by AzerothCore it has several issues and isn't worth the trouble. It's a simple process and I'm including the specific steps below. It does include removing anything related to MariaDB so if you already have a server running you should export any data you wanna keep first.
 
 If you're running this as root you can remove all occurrences of `sudo`.
 
@@ -31,9 +31,9 @@ If you're running this as root you can remove all occurrences of `sudo`.
 If you want to run the database server on this machine you can run `sudo apt install --yes mysql-server` now.
 
 # Config
-The script will load config options from a mysql database. By default it will connect to a database server on 127.0.0.1 with the username and password both being acore. These values and the realm id are the only options set inside the script itself. When using a cluster the node id is also used but if you're not using that there's no need to change it. These settings are also what the script uses when importing database files and what it writes to the config files. I choose to import the SQL file provided with this script to acore_auth and update accordingly.
+The script will load config options from a mysql database. By default it will connect to a database server on 127.0.0.1 with the username and password both being acore. These options and the realm id are the only options set inside the script itself. When using a cluster the node id is also used but if you're not using that there's no need to change it. These options are also what the script uses when importing database files and what it writes to the config files. I recommend importing the included SQL file to acore_auth.
 
-The table created with the provided SQL file might seem overwhelming but is actually quite simple. The id column defines the realm id, node is the node id, setting is which setting and value is the value of the setting. If id or node is set to -1 it will be applied to any realm that doesn't have a setting set with the realm and node id. It's not possible to remove any rows from the created table or the script will fail. All realms need every option even if you don't change them. Below is a description of each setting and how they're used.
+The table created might seem overwhelming but is actually quite simple. The id column defines the realm id, node is the node id, setting is which setting and value is the value of the setting. If id or node is set to -1 it will be applied to any realm that doesn't have a setting set with the realm and node id. Every realms needs to include every setting even if you don't change them. The script will fail if any setting is missing. Below is a description of each setting.
 
 - `build.auth`: Can be set to **true** or **false** and determines if authserver should be built when running the script
 - `build.world`: Can be set to **true** or **false** and determines if worldserver should be built when running the script
@@ -52,7 +52,7 @@ The table created with the provided SQL file might seem overwhelming but is actu
 - `module.ah_bot.max_item_level`: This is the higest item level of items that the bot will put up for sale
 - `module.ah_bot.sell_items`: Can be set to **true** or **false** and determines if the bot should sell items
 - `module.ah_bot.use_buyprice`: Can be set to **true** or **false** and determines if the bot should use buyprice instead of sellprice from item templates when selling items
-- `module.appreciation`: Can be set to **true** or **false** and enabled the appreciation module
+- `module.appreciation`: Can be set to **true** or **false** and enables the appreciation module
 - `module.appreciation.level_boost`: Can be set to **true** or **false** and determines if players can get level boosts from the npc
 - `module.appreciation.level_boost.included_copper`: Defines how much copper the player will receive when performing a level boost
 - `module.appreciation.level_boost.level`: Can be set to **60**, **70** or **80** and defines the level the player will be given when performing a level boost
