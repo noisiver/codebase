@@ -1,6 +1,8 @@
 # Information
 The purpose of this script is to fully manage realms running using AzerothCore. A few commands will perform every step of the setup of a realm. It supports running as a regular realm or as a cluster, running multiple realms or nodes on a single system etc.
 
+The script will not manage the database server nor will it create the databases or the mysql user.
+
 The steps included with this script are as follows.
 - Install, and update, authserver and worldserver along with any enabled modules.
 - Download, and update, client data files. It will automatically get the latest available version and update if needed.
