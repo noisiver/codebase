@@ -46,7 +46,7 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `database.playerbots`: This is the name of the playerbots database used by AzerothCore. If the playerbots module isn't enabled this can safely be ignored
 - `database.world`: This is the name of the world database used by AzerothCore
 - `git.branch`: This is the name of the branch for the set github repository. This is an option for advanced users
-- `git.repository`: This is the name of the github repository to use. It's not the full url but only includes the username and repository name. A url of `https://github.com/azerothcore/azerothcore-wotlk` mean the value of this setting is `azerothcore/azerothcore-wotlk`. This is an option for advanced users
+- `git.repository`: This is the name of the github repository to use. It's not the full url but only includes the organization/username and repository name. A url of `https://github.com/azerothcore/azerothcore-wotlk` mean the value of this setting is `azerothcore/azerothcore-wotlk`. This is an option for advanced users
 - `module.ah_bot`: Can be set to **true** or **false** and enables the auction house bot module
 - `module.ah_bot.account`: This is the account id used by the auction house bot
 - `module.ah_bot.buy_items`: Can be set to **true** or **false** and determines if the bot should buy items that players put up for sale
