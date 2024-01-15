@@ -127,7 +127,7 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `module.weekendbonus.multiplier.professions`: This is a multiplier for profession skill ups on weekends
 - `module.weekendbonus.multiplier.proficiencies`: This is a multiplier for weapon and defense skill ups on weekends
 - `module.weekendbonus.multiplier.reputation`: This is a multiplier for reputation earned on weekends
-- `telegram.chat_id`: Can be set to **0** or a chat id provided by Telegram. Setting either this or token to **0** will disable Telegram It is used to send messages using Telegram if errors occur
+- `telegram.chat_id`: Can be set to **0** or a chat id provided by Telegram. Setting either this or token to **0** will disable Telegram. It is used to send messages using Telegram if errors occur
 - `telegram.token`: Can be set to **0** or a token provided by Telegram. Setting either this or chat_id to **0** will disable Telegram. It is used to send messages using Telegram if errors occur
 - `world.address`: This is the address used to connect to the world server from the client
 - `world.cluster`: Can be set to **true** or **false** and determines if cluster should be enabled. This requires a special fork of AzerothCore and is intended for advanced users
@@ -165,3 +165,5 @@ The script accepts the parameters listed below. For clarification I'm including 
 - `./azerothcore.sh all`: Run through all of the parameters listed above except `restart`
 
 Running the script without any parameters will print a list of the parameters too.
+
+The `stop` and `restart` parameters will send a shutdown command to the world server to allow it to shut itself down. The script then gives the server 30 seconds to shut down before it kills the process.
