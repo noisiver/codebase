@@ -1223,7 +1223,7 @@ function copy_dbc_files
         if [[ `ls -1 $root/dbc/*.dbc 2>/dev/null | wc -l` -gt 0 ]]; then
             for f in $root/dbc/*.dbc; do
                 printf "${color_orange}Copying "$(basename $f)"${color_end}\n"
-                cp "$f" "$source/bin/dbc/$(basename $f)"
+                cp "$f" "$world_data_directory/dbc/$(basename $f)"
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to copy custom dbc files"
                     exit $?
