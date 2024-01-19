@@ -2459,6 +2459,8 @@ function set_config
             cp "$source/etc/modules/SkipDKModule.conf.dist" "$source/etc/modules/SkipDKModule.conf"
 
             sed -i 's/Skip.Deathknight.Starter.Announce.enable =.*/Skip.Deathknight.Starter.Announce.enable = 0/g' "$source/etc/modules/SkipDKModule.conf"
+            sed -i 's/Skip.Deathknight.Starter.Enable =.*/Skip.Deathknight.Starter.Enable = 0/g' "$source/etc/modules/SkipDKModule.conf"
+            sed -i 's/Skip.Deathknight.Optional.Enable =.*/Skip.Deathknight.Optional.Enable = 1/g' "$source/etc/modules/SkipDKModule.conf"
         fi
 
         if [[ "$module_weekendbonus" == "true" ]]; then
