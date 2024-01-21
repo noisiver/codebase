@@ -432,11 +432,11 @@ function get_settings
         exit $?
     fi
 
-    if [[ $patch  -eq 0 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 213 ]]; then
+    if [[ $patch  -eq 17 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 213 ]]; then
         module_ah_bot_max_item_level="213"
-    elif [[ $patch  -eq 1 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 226 ]]; then
+    elif [[ $patch  -eq 18 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 226 ]]; then
         module_ah_bot_max_item_level="226"
-    elif [[ $patch  -eq 2 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 245 ]]; then
+    elif [[ $patch  -eq 19 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 245 ]]; then
         module_ah_bot_max_item_level="245"
     fi
 
@@ -671,7 +671,7 @@ function get_source
 
         if [[ "$module_learnspells" == "true" ]]; then
             if [[ ! -d "$source/modules/mod-learnspells" ]]; then
-                if [[ $patch -lt 4 ]]; then
+                if [[ $patch -lt 21 ]]; then
                     git clone --depth 1 --branch progression "https://github.com/noisiver/mod-learnspells.git" "$source/modules/mod-learnspells"
                 else
                     git clone --depth 1 --branch master "https://github.com/noisiver/mod-learnspells.git" "$source/modules/mod-learnspells"
@@ -683,7 +683,7 @@ function get_source
             else
                 cd "$source/modules/mod-learnspells"
 
-                if [[ $patch -lt 4 ]]; then
+                if [[ $patch -lt 21 ]]; then
                     git reset --hard origin/progression
                 else
                     git reset --hard origin/master
@@ -1802,7 +1802,7 @@ function import_database_files
             fi
 
             if [[ "$module_progression" == "true" ]]; then
-                if [[ ! -d "$source/modules/mod-progression/src/patch_01-3_0/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_02-3_1/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_03-3_2/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_04-3_3/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_05-3_3_5/sql" ]]; then
+                if [[ ! -d "$source/modules/mod-progression/src/patch_00-1_1/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_01-1_2/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_02-1_3/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_03-1_4/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_04-1_5/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_05-1_6/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_06-1_7/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_07-1_8/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_08-1_9/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_09-1_10/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_10-1_11/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_11-1_12/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_12-2_0/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_13-2_1/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_14-2_2/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_15-2_3/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_16-2_4/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_17-3_0/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_18-3_1/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_19-3_2/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_20-3_3/sql" ]] || [[ ! -d "$source/modules/mod-progression/src/patch_21-3_3_5/sql" ]]; then
                     printf "${color_red}The progression module is enabled but the files aren't where they should be${color_end}\n"
                     printf "${color_red}Please make sure to install the server first${color_end}\n"
                     notify_telegram "An error occurred while trying to import the database files of mod-progression"
@@ -1820,8 +1820,8 @@ function import_database_files
                 fi
 
                 if [[ "$module_progression_patch" -ge "0" ]]; then
-                    if [[ `ls -1 $source/modules/mod-progression/src/patch_01-3_0/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                        for f in $source/modules/mod-progression/src/patch_01-3_0/sql/*.sql; do
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_00-1_1/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_00-1_1/sql/*.sql; do
                             FILENAME=$(basename $f)
                             HASH=($(sha1sum $f))
 
@@ -1849,8 +1849,8 @@ function import_database_files
                 fi
 
                 if [[ "$module_progression_patch" -ge "1" ]]; then
-                    if [[ `ls -1 $source/modules/mod-progression/src/patch_02-3_1/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                        for f in $source/modules/mod-progression/src/patch_02-3_1/sql/*.sql; do
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_01-1_2/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_01-1_2/sql/*.sql; do
                             FILENAME=$(basename $f)
                             HASH=($(sha1sum $f))
 
@@ -1878,8 +1878,8 @@ function import_database_files
                 fi
 
                 if [[ "$module_progression_patch" -ge "2" ]]; then
-                    if [[ `ls -1 $source/modules/mod-progression/src/patch_03-3_2/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                        for f in $source/modules/mod-progression/src/patch_03-3_2/sql/*.sql; do
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_02-1_3/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_02-1_3/sql/*.sql; do
                             FILENAME=$(basename $f)
                             HASH=($(sha1sum $f))
 
@@ -1907,8 +1907,8 @@ function import_database_files
                 fi
 
                 if [[ "$module_progression_patch" -ge "3" ]]; then
-                    if [[ `ls -1 $source/modules/mod-progression/src/patch_04-3_3/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                        for f in $source/modules/mod-progression/src/patch_04-3_3/sql/*.sql; do
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_03-1_4/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_03-1_4/sql/*.sql; do
                             FILENAME=$(basename $f)
                             HASH=($(sha1sum $f))
 
@@ -1936,8 +1936,501 @@ function import_database_files
                 fi
 
                 if [[ "$module_progression_patch" -ge "4" ]]; then
-                    if [[ `ls -1 $source/modules/mod-progression/src/patch_05-3_3_5/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                        for f in $source/modules/mod-progression/src/patch_05-3_3_5/sql/*.sql; do
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_04-1_5/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_04-1_5/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "5" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_05-1_6/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_05-1_6/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "6" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_06-1_7/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_06-1_7/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "7" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_07-1_8/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_07-1_8/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "8" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_08-1_9/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_08-1_9/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "9" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_09-1_10/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_09-1_10/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "10" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_10-1_11/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_10-1_11/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "11" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_11-1_12/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_11-1_12/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "12" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_12-2_0/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_12-2_0/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "13" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_13-2_1/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_13-2_1/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "14" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_14-2_2/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_14-2_2/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "15" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_15-2_3/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_15-2_3/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "16" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_16-2_4/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_16-2_4/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "17" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_17-3_0/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_17-3_0/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "18" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_18-3_1/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_18-3_1/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "19" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_19-3_2/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_19-3_2/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "20" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_20-3_3/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_20-3_3/sql/*.sql; do
+                            FILENAME=$(basename $f)
+                            HASH=($(sha1sum $f))
+
+                            if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                                printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                                continue;
+                            fi
+
+                            printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                            mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+
+                            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                            if [[ $? -ne 0 ]]; then
+                                notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                                rm -rf "$mysql_cnf"
+                                exit $?
+                            fi
+                        done
+                    fi
+                fi
+
+                if [[ "$module_progression_patch" -ge "21" ]]; then
+                    if [[ `ls -1 $source/modules/mod-progression/src/patch_21-3_3_5/sql/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                        for f in $source/modules/mod-progression/src/patch_21-3_3_5/sql/*.sql; do
                             FILENAME=$(basename $f)
                             HASH=($(sha1sum $f))
 

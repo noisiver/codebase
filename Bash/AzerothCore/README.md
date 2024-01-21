@@ -111,7 +111,7 @@ The table created might seem overwhelming but is actually quite simple. The id c
 - `module.progression.aura`: Can be set to **0**, **1**, **2**, **3** or **4** and determines the aura used inside Icecrown Citadel
 - `module.progression.enforce.dungeonfinder`: Can be set to **true** or **false** and determines if the dungeon finder is disabled before patch 3.3
 - `module.progression.enforce.questinfo`: Can be set to **true** or **false** and determines if the quest-related information in tooltips and on the map is disabled before patch 3.3
-- `module.progression.patch`: Can be set to **0**, **1**, **2**, **3** or **4** and determines the patch used
+- `module.progression.patch`: Can be set to any number ranging from **0** to **21** and determines the patch used
 - `module.progression.reset`: Can be set to **true** or **false** and determines if database files from the progression module should be imported every time
 - `module.recruitafriend`: Can be set to **true** or **false** and enables the recruit-a-friend module
 - `module.recruitafriend.account_age`: This is how many days since account creation it can be recruited
