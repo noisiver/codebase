@@ -2897,6 +2897,14 @@ function set_config
             sed -i 's/AiPlayerbot.AutoTeleportForLevel =.*/AiPlayerbot.AutoTeleportForLevel = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.KillXPRate =.*/AiPlayerbot.KillXPRate = 1/g' "$source/etc/modules/playerbots.conf"
 
+            if [[ $patch -lt 12 ]]; then
+                sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 60/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.RandomBotMaps =.*/AiPlayerbot.RandomBotMaps = 0,1/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $patch -lt 17 ]]; then
+                sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 70/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.RandomBotMaps =.*/AiPlayerbot.RandomBotMaps = 0,1,530/g' "$source/etc/modules/playerbots.conf"
+            fi
+
             sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$source/etc/modules/playerbots.conf"
         fi
 
