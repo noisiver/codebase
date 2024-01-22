@@ -45,6 +45,7 @@ mysql_password="acore" # This is the username the script will use when importing
 mysql_database="acore_auth" # This is the name of the database that holds the SQL data provided with this script
 id=1 # This is realm id
 node=1 # This is node id. Ignore if not using cluster
+use_mysql="true" # Set to false if you rather use mariadb
 
 function install_packages
 {
@@ -55,7 +56,13 @@ function install_packages
     fi
 
     if [[ "$world_cluster" == "false" || "$build_world" == "true" ]]; then
-        packages+=("cmake" "make" "gcc" "clang" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libboost1.74-all-dev" "libmysqlclient-dev" "mysql-client")
+        packages+=("cmake" "make" "gcc" "clang" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libboost1.74-all-dev")
+    fi
+
+    if [[ "$use_mysql" == "true" ]]; then
+        packages+=("libmysqlclient-dev" "mysql-client")
+    else
+        packages+=("libmariadb-dev-compat" "mariadb-client")
     fi
 
     for p in "${packages[@]}"; do
@@ -131,7 +138,13 @@ function install_packages
 
 function install_mysql_client
 {
-    if [[ $(dpkg-query -W -f='${Status}' mysql-client 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
+    if [[ "$use_mysql" == "true" ]]; then
+        package="mysql-client"
+    else
+        package="mariadb-client"
+    fi
+
+    if [[ $(dpkg-query -W -f='${Status}' $package 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
         if [[ $EUID != 0 ]]; then
             sudo apt-get --yes update
         else
@@ -143,9 +156,9 @@ function install_mysql_client
         fi
 
         if [[ $EUID != 0 ]]; then
-            sudo apt-get --yes install mysql-client
+            sudo apt-get --yes install $package
         else
-            apt-get --yes install mysql-client
+            apt-get --yes install $package
         fi
         if [[ $? != 0 ]]; then
             notify_telegram "An error occurred while trying to install the required packages"
