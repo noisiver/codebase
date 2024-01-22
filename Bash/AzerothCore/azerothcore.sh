@@ -432,12 +432,20 @@ function get_settings
         exit $?
     fi
 
-    if [[ $patch  -eq 17 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 213 ]]; then
+    if [[ $patch -lt 12 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 92 ]]; then
+        module_ah_bot_max_item_level="92"
+    elif [[ $patch -lt 17 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 164 ]]; then
+        module_ah_bot_max_item_level="164"
+    elif [[ $patch  -lt 18 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 213 ]]; then
         module_ah_bot_max_item_level="213"
-    elif [[ $patch  -eq 18 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 226 ]]; then
+    elif [[ $patch  -lt 19 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 226 ]]; then
         module_ah_bot_max_item_level="226"
-    elif [[ $patch  -eq 19 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 245 ]]; then
+    elif [[ $patch  -lt 20 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 245 ]]; then
         module_ah_bot_max_item_level="245"
+    fi
+
+    if [[ $patch -lt 17 ]]; then
+        module_recruitafriend="false"
     fi
 
     if [[ "$world_cluster" == "true" ]]; then
