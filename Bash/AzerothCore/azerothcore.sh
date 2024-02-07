@@ -1622,7 +1622,7 @@ function import_database_files
                     done
                 fi
 
-                mysql --defaults-extra-file=$mysql_cnf $database_world -e "UPDATE mod_auctionhousebot SET minitems='$module_ah_bot_max_item_level', maxitems='$module_ah_bot_max_item_level'"
+                mysql --defaults-extra-file=$mysql_cnf $database_world -e "UPDATE mod_auctionhousebot SET minitems='$module_ah_bot_items', maxitems='$module_ah_bot_items'"
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
                     rm -rf "$mysql_cnf"
@@ -3085,7 +3085,7 @@ function stop_server
                         if [[ "$world_cluster" == "true" ]]; then
                             screen -S world-$id-$node -p 0 -X stuff "server restart 10^m"
                         else
-                            screen -S world-$id-$node -p 0 -X stuff "server restart 10^m"
+                            screen -S world-$id -p 0 -X stuff "server restart 10^m"
                         fi
                     else
                         if [[ "$world_cluster" == "true" ]]; then
