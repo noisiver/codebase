@@ -88,7 +88,7 @@ function backup_database
             exit $?
         fi
 
-        DATABASES="$(mysql --defaults-extra-file=$MYSQL_CNF -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'sys'", "'phpmyadmin'", "'aowow'") AND SCHEMA_NAME NOT LIKE "'%world%'"')"
+        DATABASES="$(mysql --defaults-extra-file=$MYSQL_CNF -Bse 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME NOT IN ("'information_schema'", "'mysql'", "'performance_schema'", "'sys'", "'phpmyadmin'", "'aowow'") AND SCHEMA_NAME NOT LIKE "'%world%'" AND SCHEMA_NAME NOT LIKE "'%playerbots%'"')"
 
         for DATABASE in $DATABASES; do
             printf "${COLOR_ORANGE}Backing up database $DATABASE${COLOR_END}\n"
