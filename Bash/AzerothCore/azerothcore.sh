@@ -1143,7 +1143,11 @@ function compile_source
             echo "#!/bin/bash" > "$source/bin/world.sh"
             echo "while :; do" >> "$source/bin/world.sh"
             if [[ "$world_cluster" == "true" ]]; then
-                echo "  TC9_CONFIG_FILE=$source/bin/config.yml AC_WORLD_SERVER_PORT="$(($node+9643))" GRPC_PORT="$(($node+9500))" HEALTH_CHECK_PORT="$(($node+8900))" ./worldserver" >> "$source/bin/world.sh"
+                if [[ "$world_cluster_maps" == "all" ]]; then
+                    echo "  TC9_CONFIG_FILE=$source/bin/config.yml AC_CLUSTER_ENABLED=1 AC_WORLD_SERVER_PORT="$(($node+9643))" GRPC_PORT="$(($node+9500))" HEALTH_CHECK_PORT="$(($node+8900))" ./worldserver" >> "$source/bin/world.sh"
+                else
+                    echo "  TC9_CONFIG_FILE=$source/bin/config.yml AC_CLUSTER_ENABLED=1 AC_CLUSTER_AVAILABLE_MAPS=$world_cluster_maps AC_WORLD_SERVER_PORT="$(($node+9643))" GRPC_PORT="$(($node+9500))" HEALTH_CHECK_PORT="$(($node+8900))" ./worldserver" >> "$source/bin/world.sh"
+                fi
             else
                 echo "  ./worldserver" >> "$source/bin/world.sh"
             fi
@@ -2739,14 +2743,45 @@ function set_config
         sed -i 's/DataDir =.*/DataDir = "'"$data_directory"'"/g' "$source/etc/worldserver.conf"
         #sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$source/etc/worldserver.conf"
         #sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$source/etc/worldserver.conf"
-        if [[ "$world_cluster" == "true" ]]; then
-            sed -i 's/Cluster.Enabled=.*/Cluster.Enabled=1/g' "$source/etc/worldserver.conf"
-            if [[ "$world_cluster_maps" == "all" ]]; then
-                sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps=""/g' "$source/etc/worldserver.conf"
+
+        sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
+
+        sed -i 's/NpcBot.Botgiver.FilterRaces = .*/NpcBot.Botgiver.FilterRaces = 1/g' "$source/etc/worldserver.conf"
+        if [[ "$module_progression_patch" -ge "19" ]]; then
+            sed -i 's/NpcBot.MountLevel.60  = .*/NpcBot.MountLevel.60  = 20/g' "$source/etc/worldserver.conf"
+            sed -i 's/NpcBot.MountLevel.100 = .*/NpcBot.MountLevel.100 = 40/g' "$source/etc/worldserver.conf"
+        else
+            if [[ "$module_progression_patch" -ge "16" ]]; then
+                sed -i 's/NpcBot.MountLevel.60  = .*/NpcBot.MountLevel.60  = 30/g' "$source/etc/worldserver.conf"
             else
-                sed -i 's/Cluster.AvailableMaps=.*/Cluster.AvailableMaps="'$world_cluster_maps'"/g' "$source/etc/worldserver.conf"
+                sed -i 's/NpcBot.MountLevel.60  = .*/NpcBot.MountLevel.60  = 40/g' "$source/etc/worldserver.conf"
             fi
+            sed -i 's/NpcBot.MountLevel.100 = .*/NpcBot.MountLevel.100 = 60/g' "$source/etc/worldserver.conf"
         fi
+        sed -i 's/NpcBot.HealTargetIconMask = .*/NpcBot.HealTargetIconMask = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.TankTargetIconMask = .*/NpcBot.TankTargetIconMask = 128/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.OffTankTargetIconMask = .*/NpcBot.OffTankTargetIconMask = 64/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.DPSTargetIconMask = .*/NpcBot.DPSTargetIconMask = 2/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.RangedDPSTargetIconMask = .*/NpcBot.RangedDPSTargetIconMask = 32/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.NoDPSTargetIconMask = .*/NpcBot.NoDPSTargetIconMask = 16/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Enable.Raid          = .*/NpcBot.Enable.Raid          = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Enable.BG            = .*/NpcBot.Enable.BG            = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Enable.Arena         = .*/NpcBot.Enable.Arena         = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Cost = .*/NpcBot.Cost = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.EngageDelay.DPS  = .*/NpcBot.EngageDelay.DPS  = 8000/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.EngageDelay.Heal = .*/NpcBot.EngageDelay.Heal = 3000/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.Blademaster.Enable       = .*/NpcBot.Classes.Blademaster.Enable       = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.ObsidianDestroyer.Enable = .*/NpcBot.Classes.ObsidianDestroyer.Enable = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.Archmage.Enable          = .*/NpcBot.Classes.Archmage.Enable          = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.Dreadlord.Enable         = .*/NpcBot.Classes.Dreadlord.Enable         = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.SpellBreaker.Enable      = .*/NpcBot.Classes.SpellBreaker.Enable      = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.DarkRanger.Enable        = .*/NpcBot.Classes.DarkRanger.Enable        = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.Necromancer.Enable       = .*/NpcBot.Classes.Necromancer.Enable       = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.SeaWitch.Enable          = .*/NpcBot.Classes.SeaWitch.Enable          = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.Classes.CryptLord.Enable         = .*/NpcBot.Classes.CryptLord.Enable         = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.EnrageOnDismiss = .*/NpcBot.EnrageOnDismiss = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.WanderingBots.BG.Enable = .*/NpcBot.WanderingBots.BG.Enable = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/NpcBot.HK.Achievements.Enable = .*/NpcBot.HK.Achievements.Enable = 1/g' "$source/etc/worldserver.conf"
 
         if [[ "$module_ah_bot" == "true" ]]; then
             if [[ ! -f "$source/etc/modules/mod_ahbot.conf.dist" ]]; then
