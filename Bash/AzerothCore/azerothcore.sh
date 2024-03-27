@@ -2743,6 +2743,9 @@ function set_config
         sed -i 's/DataDir =.*/DataDir = "'"$data_directory"'"/g' "$source/etc/worldserver.conf"
         #sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$source/etc/worldserver.conf"
         #sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$source/etc/worldserver.conf"
+        #sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 0/g' "$source/etc/worldserver.conf"
+        #sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 0/g' "$source/etc/worldserver.conf"
+        #sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 0/g' "$source/etc/worldserver.conf"
 
         sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
 
