@@ -445,19 +445,19 @@ function get_settings
         exit $?
     fi
 
-    if [[ $patch -lt 12 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 92 ]]; then
+    if [[ $module_progression_patch -lt 12 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 92 ]]; then
         module_ah_bot_max_item_level="92"
-    elif [[ $patch -lt 17 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 164 ]]; then
+    elif [[ $module_progression_patch -lt 17 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 164 ]]; then
         module_ah_bot_max_item_level="164"
-    elif [[ $patch  -lt 18 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 213 ]]; then
+    elif [[ $module_progression_patch  -lt 18 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 213 ]]; then
         module_ah_bot_max_item_level="213"
-    elif [[ $patch  -lt 19 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 226 ]]; then
+    elif [[ $module_progression_patch  -lt 19 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 226 ]]; then
         module_ah_bot_max_item_level="226"
-    elif [[ $patch  -lt 20 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 245 ]]; then
+    elif [[ $module_progression_patch  -lt 20 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 245 ]]; then
         module_ah_bot_max_item_level="245"
     fi
 
-    if [[ $patch -lt 17 ]]; then
+    if [[ $module_progression_patch -lt 17 ]]; then
         module_recruitafriend="false"
     fi
 
@@ -692,7 +692,7 @@ function get_source
 
         if [[ "$module_learnspells" == "true" ]]; then
             if [[ ! -d "$source/modules/mod-learnspells" ]]; then
-                if [[ $patch -lt 21 ]]; then
+                if [[ $module_progression_patch -lt 21 ]]; then
                     git clone --depth 1 --branch progression "https://github.com/noisiver/mod-learnspells.git" "$source/modules/mod-learnspells"
                 else
                     git clone --depth 1 --branch master "https://github.com/noisiver/mod-learnspells.git" "$source/modules/mod-learnspells"
@@ -704,7 +704,7 @@ function get_source
             else
                 cd "$source/modules/mod-learnspells"
 
-                if [[ $patch -lt 21 ]]; then
+                if [[ $module_progression_patch -lt 21 ]]; then
                     git reset --hard origin/progression
                 else
                     git reset --hard origin/master
@@ -2948,10 +2948,10 @@ function set_config
             sed -i 's/AiPlayerbot.AutoTeleportForLevel =.*/AiPlayerbot.AutoTeleportForLevel = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.KillXPRate =.*/AiPlayerbot.KillXPRate = 1/g' "$source/etc/modules/playerbots.conf"
 
-            if [[ $patch -lt 12 ]]; then
+            if [[ $module_progression_patch -lt 12 ]]; then
                 sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 60/g' "$source/etc/modules/playerbots.conf"
                 sed -i 's/AiPlayerbot.RandomBotMaps =.*/AiPlayerbot.RandomBotMaps = 0,1/g' "$source/etc/modules/playerbots.conf"
-            elif [[ $patch -lt 17 ]]; then
+            elif [[ $module_progression_patch -lt 17 ]]; then
                 sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 70/g' "$source/etc/modules/playerbots.conf"
                 sed -i 's/AiPlayerbot.RandomBotMaps =.*/AiPlayerbot.RandomBotMaps = 0,1,530/g' "$source/etc/modules/playerbots.conf"
             fi
