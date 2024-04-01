@@ -83,6 +83,7 @@ INSERT INTO `realm_settings` (`id`, `node`, `setting`, `value`) VALUES
 (-1, -1, 'module.progression.aura', '4'),
 (-1, -1, 'module.progression.enforce.dungeonfinder', 'true'),
 (-1, -1, 'module.progression.enforce.questinfo', 'true'),
+(-1, -1, 'module.progression.enforce.dualtalent', 'true'),
 (-1, -1, 'module.progression.patch', '21'),
 (-1, -1, 'module.progression.reset', 'false'),
 (-1, -1, 'module.recruitafriend', 'false'),
