@@ -1085,7 +1085,11 @@ function compile_source
             if [[ "$world_cluster" == "true" ]]; then
                 cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="world-only" -DUSE_REAL_LIBSIDECAR=ON
             else
-                cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$apps"
+                if [[ "$module_playerbots" == "true" ]]; then
+                    cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=0 -DSCRIPTS=static -DAPPS_BUILD="$apps"
+                else
+                    cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$apps"
+                fi
             fi
 
             if [[ $? -ne 0 ]]; then
