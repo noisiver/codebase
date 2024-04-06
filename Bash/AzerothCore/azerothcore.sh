@@ -3020,20 +3020,20 @@ function set_config
         fi
 
         if [[ "$module_skip_dk_starting_area" == "true" ]]; then
-            if [[ ! -f "$source/etc/modules/SkipDKModule.conf.dist" ]]; then
-                printf "${color_red}The config file SkipDKModule.conf.dist is missing.${color_end}\n"
+            if [[ ! -f "$source/etc/modules/skip_dk_module.conf.dist" ]]; then
+                printf "${color_red}The config file skip_dk_module.conf.dist is missing.${color_end}\n"
                 printf "${color_red}Please make sure to install the server first.${color_end}\n"
                 notify_telegram "An error occurred while trying to update the config files of mod-skip-dk-starting-area"
                 exit $?
             fi
 
-            printf "${color_orange}Updating SkipDKModule.conf${color_end}\n"
+            printf "${color_orange}Updating skip_dk_module.conf${color_end}\n"
 
-            cp "$source/etc/modules/SkipDKModule.conf.dist" "$source/etc/modules/SkipDKModule.conf"
+            cp "$source/etc/modules/skip_dk_module.conf.dist" "$source/etc/modules/skip_dk_module.conf"
 
-            sed -i 's/Skip.Deathknight.Starter.Announce.enable =.*/Skip.Deathknight.Starter.Announce.enable = 0/g' "$source/etc/modules/SkipDKModule.conf"
-            sed -i 's/Skip.Deathknight.Starter.Enable =.*/Skip.Deathknight.Starter.Enable = 0/g' "$source/etc/modules/SkipDKModule.conf"
-            sed -i 's/Skip.Deathknight.Optional.Enable =.*/Skip.Deathknight.Optional.Enable = 1/g' "$source/etc/modules/SkipDKModule.conf"
+            sed -i 's/Skip.Deathknight.Starter.Announce.enable =.*/Skip.Deathknight.Starter.Announce.enable = 0/g' "$source/etc/modules/skip_dk_module.conf"
+            sed -i 's/Skip.Deathknight.Starter.Enable =.*/Skip.Deathknight.Starter.Enable = 0/g' "$source/etc/modules/skip_dk_module.conf"
+            sed -i 's/Skip.Deathknight.Optional.Enable =.*/Skip.Deathknight.Optional.Enable = 1/g' "$source/etc/modules/skip_dk_module.conf"
         fi
 
         if [[ "$module_weekendbonus" == "true" ]]; then
