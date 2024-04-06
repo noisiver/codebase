@@ -2523,7 +2523,7 @@ function import_database_files
             fi
 
             if [[ "$module_skip_dk_starting_area" == "true" ]]; then
-                if [[ ! -d "$source/modules/mod-skip-dk-starting-area/sql/world" ]]; then
+                if [[ ! -d "$source/modules/mod-skip-dk-starting-area/data/sql/db-world" ]]; then
                     printf "${color_red}The skip dk starting area module is enabled but the files aren't where they should be${color_end}\n"
                     printf "${color_red}Please make sure to install the server first${color_end}\n"
                     notify_telegram "An error occurred while trying to import the database files of mod-skip-dk-starting-area"
@@ -2531,8 +2531,8 @@ function import_database_files
                     exit $?
                 fi
 
-                if [[ `ls -1 $source/modules/mod-skip-dk-starting-area/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                    for f in $source/modules/mod-skip-dk-starting-area/sql/world/*.sql; do
+                if [[ `ls -1 $source/modules/mod-skip-dk-starting-area/data/sql/db-world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-skip-dk-starting-area/data/sql/db-world/*.sql; do
                         FILENAME=$(basename $f)
                         HASH=($(sha1sum $f))
 
@@ -2960,6 +2960,8 @@ function set_config
                 sed -i 's/AiPlayerbot.RandomBotMaps =.*/AiPlayerbot.RandomBotMaps = 0,1,530/g' "$source/etc/modules/playerbots.conf"
                 sed -i 's/AiPlayerbot.EquipmentPersistenceLevel =.*/AiPlayerbot.EquipmentPersistenceLevel = 70/g' "$source/etc/modules/playerbots.conf"
             fi
+
+            sed -i 's/AiPlayerbot.AutoPickReward =.*/AiPlayerbot.AutoPickReward = yes/g' "$source/etc/modules/playerbots.conf"
 
             sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$source/etc/modules/playerbots.conf"
         fi
