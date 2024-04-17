@@ -52,7 +52,7 @@ function install_packages
     packages=("git" "screen")
 
     if [[ "$world_cluster" == "true" ]]; then
-        packages+=("golang-go" "redis")
+        packages+=("redis")
     fi
 
     if [[ "$world_cluster" == "false" || "$build_world" == "true" ]]; then
@@ -2702,6 +2702,8 @@ function set_config
         [ "$world_quest_in_raid" == "true" ] && world_quest_in_raid0="1" || world_quest_in_raid0="0"
         [ "$world_warden" == "true" ] && world_warden0="1" || world_warden0="0"
         [ "$world_leave_group_on_logout" == "true" ] && world_leave_group_on_logout0="1" || world_leave_group_on_logout0="0"
+        [ "$world_preload_grids" == "true" ] && world_preload_grids0="1" || world_preload_grids0="0"
+        [ "$world_set_creatures_active" == "true" ] && world_set_creatures_active0="1" || world_set_creatures_active0="0"
 
         sed -i 's/LoginDatabaseInfo     =.*/LoginDatabaseInfo     = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_auth'"/g' "$source/etc/worldserver.conf"
         sed -i 's/WorldDatabaseInfo     =.*/WorldDatabaseInfo     = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_world'"/g' "$source/etc/worldserver.conf"
@@ -2719,8 +2721,8 @@ function set_config
         sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = '$world_quest_in_raid0'/g' "$source/etc/worldserver.conf"
         sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$world_warden0'/g' "$source/etc/worldserver.conf"
-        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$world_preload_grids'/g' "$source/etc/worldserver.conf"
-        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$world_set_creatures_active'/g' "$source/etc/worldserver.conf"
+        sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$world_preload_grids0'/g' "$source/etc/worldserver.conf"
+        sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$world_set_creatures_active0'/g' "$source/etc/worldserver.conf"
         sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
@@ -2966,6 +2968,7 @@ function set_config
             fi
 
             sed -i 's/AiPlayerbot.AutoPickReward =.*/AiPlayerbot.AutoPickReward = yes/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.AutoAvoidAoe =.*/AiPlayerbot.AutoAvoidAoe = 1/g' "$source/etc/modules/playerbots.conf"
 
             sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$source/etc/modules/playerbots.conf"
         fi
