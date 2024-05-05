@@ -201,86 +201,21 @@ function get_settings
             "git.branch") git_branch="$value";;
             "git.repository") git_repository="$value";;
             "module.ah_bot") module_ah_bot="$value";;
-            "module.ah_bot.account") module_ah_bot_account="$value";;
-            "module.ah_bot.buy_items") module_ah_bot_buy_items="$value";;
-            "module.ah_bot.character") module_ah_bot_character="$value";;
-            "module.ah_bot.items") module_ah_bot_items="$value";;
-            "module.ah_bot.items_per_cycle") module_ah_bot_items_per_cycle="$value";;
-            "module.ah_bot.max_item_level") module_ah_bot_max_item_level="$value";;
-            "module.ah_bot.sell_items") module_ah_bot_sell_items="$value";;
-            "module.ah_bot.use_buyprice") module_ah_bot_use_buyprice="$value";;
             "module.appreciation") module_appreciation="$value";;
-            "module.appreciation.level_boost") module_appreciation_level_boost="$value";;
-            "module.appreciation.level_boost.included_copper") module_appreciation_level_boost_included_copper="$value";;
             "module.appreciation.level_boost.level") module_appreciation_level_boost_level="$value";;
-            "module.appreciation.require_certificate") module_appreciation_require_certificate="$value";;
-            "module.appreciation.reward_at_max_level") module_appreciation_reward_at_max_level="$value";;
-            "module.appreciation.unlock_continents") module_appreciation_unlock_continents="$value";;
             "module.assistant") module_assistant="$value";;
-            "module.assistant.fp.tbc") module_assistant_fp_tbc="$value";;
-            "module.assistant.fp.tbc.cost") module_assistant_fp_tbc_cost="$value";;
-            "module.assistant.fp.tbc.required_level") module_assistant_fp_tbc_required_level="$value";;
-            "module.assistant.fp.vanilla") module_assistant_fp_vanilla="$value";;
-            "module.assistant.fp.vanilla.cost") module_assistant_fp_vanilla_cost="$value";;
-            "module.assistant.fp.vanilla.required_level") module_assistant_fp_vanilla_required_level="$value";;
-            "module.assistant.fp.wotlk") module_assistant_fp_wotlk="$value";;
-            "module.assistant.fp.wotlk.cost") module_assistant_fp_wotlk_cost="$value";;
-            "module.assistant.fp.wotlk.required_level") module_assistant_fp_wotlk_required_level="$value";;
-            "module.assistant.professions.apprentice") module_assistant_professions_apprentice="$value";;
-            "module.assistant.professions.apprentice.cost") module_assistant_professions_apprentice_cost="$value";;
-            "module.assistant.professions.artisan") module_assistant_professions_artisan="$value";;
-            "module.assistant.professions.artisan.cost") module_assistant_professions_artisan_cost="$value";;
-            "module.assistant.professions.expert") module_assistant_professions_expert="$value";;
-            "module.assistant.professions.expert.cost") module_assistant_professions_expert_cost="$value";;
-            "module.assistant.professions.grand_master") module_assistant_professions_grand_master="$value";;
-            "module.assistant.professions.grand_master.cost") module_assistant_professions_grand_master_cost="$value";;
-            "module.assistant.professions.journeyman") module_assistant_professions_journeyman="$value";;
-            "module.assistant.professions.journeyman.cost") module_assistant_professions_journeyman_cost="$value";;
-            "module.assistant.professions.master") module_assistant_professions_master="$value";;
-            "module.assistant.professions.master.cost") module_assistant_professions_master_cost="$value";;
-            "module.assistant.utilities") module_assistant_utilities="$value";;
-            "module.assistant.vendor.containers") module_assistant_vendor_containers="$value";;
-            "module.assistant.vendor.gems") module_assistant_vendor_gems="$value";;
-            "module.assistant.vendor.glyphs") module_assistant_vendor_glyphs="$value";;
-            "module.assistant.vendor.heirlooms") module_assistant_vendor_heirlooms="$value";;
             "module.groupquests") module_groupquests="$value";;
             "module.junktogold") module_junktogold="$value";;
             "module.learnspells") module_learnspells="$value";;
-            "module.learnspells.class_spells") module_learnspells_class_spells="$value";;
-            "module.learnspells.proficiencies") module_learnspells_proficiencies="$value";;
-            "module.learnspells.quest_spells") module_learnspells_quest_spells="$value";;
-            "module.learnspells.riding.apprentice") module_learnspells_riding_apprentice="$value";;
-            "module.learnspells.riding.artisan") module_learnspells_riding_artisan="$value";;
-            "module.learnspells.riding.cold_weather_flying") module_learnspells_riding_cold_weather_flying="$value";;
-            "module.learnspells.riding.expert") module_learnspells_riding_expert="$value";;
-            "module.learnspells.riding.journeyman") module_learnspells_riding_journeyman="$value";;
-            "module.learnspells.talent_ranks") module_learnspells_talent_ranks="$value";;
             "module.playerbots") module_playerbots="$value";;
             "module.playerbots.accounts") module_playerbots_accounts="$value";;
             "module.playerbots.bots") module_playerbots_bots="$value";;
-            "module.playerbots.random_level") module_playerbots_random_level="$value";;
-            "module.playerbots.start_level") module_playerbots_start_level="$value";;
             "module.progression") module_progression="$value";;
             "module.progression.aura") module_progression_aura="$value";;
-            "module.progression.enforce.dualtalent") module_progression_enforce_dualtalent="$value";;
-            "module.progression.enforce.dungeonfinder") module_progression_enforce_dungeonfinder="$value";;
-            "module.progression.enforce.questinfo") module_progression_enforce_questinfo="$value";;
             "module.progression.patch") module_progression_patch="$value";;
-            "module.progression.reset") module_progression_reset="$value";;
             "module.recruitafriend") module_recruitafriend="$value";;
-            "module.recruitafriend.account_age") module_recruitafriend_account_age="$value";;
-            "module.recruitafriend.celestial_steed") module_recruitafriend_celestial_steed="$value";;
-            "module.recruitafriend.duration") module_recruitafriend_duration="$value";;
-            "module.recruitafriend.reward_days") module_recruitafriend_reward_days="$value";;
-            "module.recruitafriend.swift_zhevra") module_recruitafriend_swift_zhevra="$value";;
-            "module.recruitafriend.touring_rocket") module_recruitafriend_touring_rocket="$value";;
             "module.skip_dk_starting_area") module_skip_dk_starting_area="$value";;
             "module.weekendbonus") module_weekendbonus="$value";;
-            "module.weekendbonus.multiplier.experience") module_weekendbonus_multiplier_experience="$value";;
-            "module.weekendbonus.multiplier.money") module_weekendbonus_multiplier_money="$value";;
-            "module.weekendbonus.multiplier.professions") module_weekendbonus_multiplier_professions="$value";;
-            "module.weekendbonus.multiplier.proficiencies") module_weekendbonus_multiplier_proficiencies="$value";;
-            "module.weekendbonus.multiplier.reputation") module_weekendbonus_multiplier_reputation="$value";;
             "telegram.chat_id") telegram_chat_id="$value";;
             "telegram.token") telegram_token="$value";;
             "world.address") world_address="$value";;
@@ -289,21 +224,10 @@ function get_settings
             "world.cluster.maps") world_cluster_maps="$value";;
             "world.cluster.node_address") world_cluster_node_address="$value";;
             "world.data_directory") world_data_directory="$value";;
-            "world.expansion") world_expansion="$value";;
-            "world.leave_group_on_logout") world_leave_group_on_logout="$value";;
-            "world.motd") world_motd="$value";;
             "world.name") world_name="$value";;
-            "world.player_limit") world_player_limit="$value";;
             "world.port") world_port="$value";;
             "world.preload_grids") world_preload_grids="$value";;
-            "world.quest_in_raid") world_quest_in_raid="$value";;
-            "world.raid_min_level") world_raid_min_level="$value";;
-            "world.rate.experience") world_rate_experience="$value";;
-            "world.rate.money") world_rate_money="$value";;
-            "world.rate.reputation") world_rate_reputation="$value";;
-            "world.realm_zone") world_realm_zone="$value";;
             "world.set_creatures_active") world_set_creatures_active="$value";;
-            "world.type") world_type="$value";;
             "world.warden") world_warden="$value";;
             *) unknown="true"
         esac
@@ -312,7 +236,7 @@ function get_settings
         fi
     done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC, node DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1)
 
-    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_ah_bot_account || -z $module_ah_bot_buy_items || -z $module_ah_bot_character || -z $module_ah_bot_items || -z $module_ah_bot_items_per_cycle || -z $module_ah_bot_max_item_level || -z $module_ah_bot_sell_items || -z $module_ah_bot_use_buyprice || -z $module_appreciation || -z $module_appreciation_level_boost || -z $module_appreciation_level_boost_included_copper || -z $module_appreciation_level_boost_level || -z $module_appreciation_require_certificate || -z $module_appreciation_reward_at_max_level || -z $module_appreciation_unlock_continents || -z $module_assistant || -z $module_assistant_fp_tbc || -z $module_assistant_fp_tbc_cost || -z $module_assistant_fp_tbc_required_level || -z $module_assistant_fp_vanilla || -z $module_assistant_fp_vanilla_cost || -z $module_assistant_fp_vanilla_required_level || -z $module_assistant_fp_wotlk || -z $module_assistant_fp_wotlk_cost || -z $module_assistant_fp_wotlk_required_level || -z $module_assistant_professions_apprentice || -z $module_assistant_professions_apprentice_cost || -z $module_assistant_professions_artisan || -z $module_assistant_professions_artisan_cost || -z $module_assistant_professions_expert || -z $module_assistant_professions_expert_cost || -z $module_assistant_professions_grand_master || -z $module_assistant_professions_grand_master_cost || -z $module_assistant_professions_journeyman || -z $module_assistant_professions_journeyman_cost || -z $module_assistant_professions_master || -z $module_assistant_professions_master_cost || -z $module_assistant_utilities || -z $module_assistant_vendor_containers || -z $module_assistant_vendor_gems || -z $module_assistant_vendor_glyphs || -z $module_assistant_vendor_heirlooms || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_learnspells_class_spells || -z $module_learnspells_proficiencies || -z $module_learnspells_quest_spells || -z $module_learnspells_riding_apprentice || -z $module_learnspells_riding_artisan || -z $module_learnspells_riding_cold_weather_flying || -z $module_learnspells_riding_expert || -z $module_learnspells_riding_journeyman || -z $module_learnspells_talent_ranks || -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_playerbots_random_level || -z $module_playerbots_start_level || -z $module_progression || -z $module_progression_aura || -z $module_progression_enforce_dualtalent || -z $module_progression_enforce_dungeonfinder || -z $module_progression_enforce_questinfo || -z $module_progression_patch || -z $module_progression_reset || -z $module_recruitafriend || -z $module_recruitafriend_account_age || -z $module_recruitafriend_celestial_steed || -z $module_recruitafriend_duration || -z $module_recruitafriend_reward_days || -z $module_recruitafriend_swift_zhevra || -z $module_recruitafriend_touring_rocket || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $module_weekendbonus_multiplier_experience || -z $module_weekendbonus_multiplier_money || -z $module_weekendbonus_multiplier_professions || -z $module_weekendbonus_multiplier_proficiencies || -z $module_weekendbonus_multiplier_reputation || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_data_directory || -z $world_expansion || -z $world_leave_group_on_logout || -z $world_motd || -z $world_name || -z $world_player_limit || -z $world_port || -z $world_preload_grids || -z $world_quest_in_raid || -z $world_raid_min_level || -z $world_rate_experience || -z $world_rate_money || -z $world_rate_reputation || -z $world_realm_zone || -z $world_set_creatures_active || -z $world_type || -z $world_warden ]]; then
+    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_appreciation || -z $module_appreciation_level_boost_level || -z $module_assistant || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_progression || -z $module_progression_aura || -z $module_progression_patch || -z $module_recruitafriend || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_data_directory || -z $world_name || -z $world_port || -z $world_preload_grids || -z $world_set_creatures_active || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
         if [[ -z $build_world ]]; then printf "${color_red}build.world is not set in the settings${color_end}\n"; fi
         if [[ -z $database_auth ]]; then printf "${color_red}database.auth is not set in the settings${color_end}\n"; fi
@@ -322,86 +246,21 @@ function get_settings
         if [[ -z $git_branch ]]; then printf "${color_red}git.branch is not set in the settings${color_end}\n"; fi
         if [[ -z $git_repository ]]; then printf "${color_red}git.repository is not set in the settings${color_end}\n"; fi
         if [[ -z $module_ah_bot ]]; then printf "${color_red}module.ah_bot is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_ah_bot_account ]]; then printf "${color_red}module.ah_bot.account is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_ah_bot_buy_items ]]; then printf "${color_red}module.ah_bot.buy_items is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_ah_bot_character ]]; then printf "${color_red}module.ah_bot.character is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_ah_bot_items ]]; then printf "${color_red}module.ah_bot.items is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_ah_bot_items_per_cycle ]]; then printf "${color_red}module.ah_bot.items_per_cycle is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_ah_bot_max_item_level ]]; then printf "${color_red}module.ah_bot.max_item_level is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_ah_bot_sell_items ]]; then printf "${color_red}module.ah_bot.sell_items is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_ah_bot_use_buyprice ]]; then printf "${color_red}module.ah_bot.use_buyprice is not set in the settings${color_end}\n"; fi
         if [[ -z $module_appreciation ]]; then printf "${color_red}module.appreciation is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_appreciation_level_boost ]]; then printf "${color_red}module.appreciation.level_boost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_appreciation_level_boost_included_copper ]]; then printf "${color_red}module.appreciation.level_boost.included_copper is not set in the settings${color_end}\n"; fi
         if [[ -z $module_appreciation_level_boost_level ]]; then printf "${color_red}module.appreciation.level_boost.level is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_appreciation_require_certificate ]]; then printf "${color_red}module.appreciation.require_certificate is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_appreciation_reward_at_max_level ]]; then printf "${color_red}module.appreciation.reward_at_max_level is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_appreciation_unlock_continents ]]; then printf "${color_red}module.appreciation.unlock_continents is not set in the settings${color_end}\n"; fi
         if [[ -z $module_assistant ]]; then printf "${color_red}module.assistant is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_tbc ]]; then printf "${color_red}module.assistant.fp.tbc is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_tbc_cost ]]; then printf "${color_red}module.assistant.fp.tbc.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_tbc_required_level ]]; then printf "${color_red}module.assistant.fp.tbc.required_level is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_vanilla ]]; then printf "${color_red}module.assistant.fp.vanilla is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_vanilla_cost ]]; then printf "${color_red}module.assistant.fp.vanilla.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_vanilla_required_level ]]; then printf "${color_red}module.assistant.fp.vanilla.required_level is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_wotlk ]]; then printf "${color_red}module.assistant.fp.wotlk is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_wotlk_cost ]]; then printf "${color_red}module.assistant.fp.wotlk.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_fp_wotlk_required_level ]]; then printf "${color_red}module.assistant.fp.wotlk.required_level is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_apprentice ]]; then printf "${color_red}module.assistant.professions.apprentice is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_apprentice_cost ]]; then printf "${color_red}module.assistant.professions.apprentice.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_artisan ]]; then printf "${color_red}module.assistant.professions.artisan is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_artisan_cost ]]; then printf "${color_red}module.assistant.professions.artisan.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_expert ]]; then printf "${color_red}module.assistant.professions.expert is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_expert_cost ]]; then printf "${color_red}module.assistant.professions.expert.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_grand_master ]]; then printf "${color_red}module.assistant.professions.grand_master is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_grand_master_cost ]]; then printf "${color_red}module.assistant.professions.grand_master.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_journeyman ]]; then printf "${color_red}module.assistant.professions.journeyman is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_journeyman_cost ]]; then printf "${color_red}module.assistant.professions.journeyman.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_master ]]; then printf "${color_red}module.assistant.professions.master is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_professions_master_cost ]]; then printf "${color_red}module.assistant.professions.master.cost is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_utilities ]]; then printf "${color_red}module.assistant.utilities is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_vendor_containers ]]; then printf "${color_red}module.assistant.vendor.containers is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_vendor_gems ]]; then printf "${color_red}module.assistant.vendor.gems is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_vendor_glyphs ]]; then printf "${color_red}module.assistant.vendor.glyphs is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_assistant_vendor_heirlooms ]]; then printf "${color_red}module.assistant.vendor.heirlooms is not set in the settings${color_end}\n"; fi
         if [[ -z $module_groupquests ]]; then printf "${color_red}module.groupquests is not set in the settings${color_end}\n"; fi
         if [[ -z $module_junktogold ]]; then printf "${color_red}module.junktogold is not set in the settings${color_end}\n"; fi
         if [[ -z $module_learnspells ]]; then printf "${color_red}module.learnspells is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_class_spells ]]; then printf "${color_red}module.learnspells.class_spells is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_proficiencies ]]; then printf "${color_red}module.learnspells.proficiencies is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_quest_spells ]]; then printf "${color_red}module.learnspells.quest_spells is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_riding_apprentice ]]; then printf "${color_red}module.learnspells.riding.apprentice is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_riding_artisan ]]; then printf "${color_red}module.learnspells.riding.artisan is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_riding_cold_weather_flying ]]; then printf "${color_red}module.learnspells.riding.cold_weather_flying is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_riding_expert ]]; then printf "${color_red}module.learnspells.riding.expert is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_riding_journeyman ]]; then printf "${color_red}module.learnspells.riding.journeyman is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_learnspells_talent_ranks ]]; then printf "${color_red}module.learnspells.talent_ranks is not set in the settings${color_end}\n"; fi
         if [[ -z $module_playerbots ]]; then printf "${color_red}module.playerbots is not set in the settings${color_end}\n"; fi
         if [[ -z $module_playerbots_accounts ]]; then printf "${color_red}module.playerbots.accounts is not set in the settings${color_end}\n"; fi
         if [[ -z $module_playerbots_bots ]]; then printf "${color_red}module.playerbots.bots is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_playerbots_random_level ]]; then printf "${color_red}module.playerbots.random_level is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_playerbots_start_level ]]; then printf "${color_red}module.playerbots.start_level is not set in the settings${color_end}\n"; fi
         if [[ -z $module_progression ]]; then printf "${color_red}module.progression is not set in the settings${color_end}\n"; fi
         if [[ -z $module_progression_aura ]]; then printf "${color_red}module.progression.aura is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_progression_enforce_dualtalent ]]; then printf "${color_red}module.progression.enforce.dualtalent is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_progression_enforce_dungeonfinder ]]; then printf "${color_red}module.progression.enforce.dungeonfinder is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_progression_enforce_questinfo ]]; then printf "${color_red}module.progression.enforce.questinfo is not set in the settings${color_end}\n"; fi
         if [[ -z $module_progression_patch ]]; then printf "${color_red}module.progression.patch is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_progression_reset ]]; then printf "${color_red}module.progression.reset is not set in the settings${color_end}\n"; fi
         if [[ -z $module_recruitafriend ]]; then printf "${color_red}module.recruitafriend is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_recruitafriend_account_age ]]; then printf "${color_red}module.recruitafriend.account_age is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_recruitafriend_celestial_steed ]]; then printf "${color_red}module.recruitafriend.celestial_steed is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_recruitafriend_duration ]]; then printf "${color_red}module.recruitafriend.duration is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_recruitafriend_reward_days ]]; then printf "${color_red}module.recruitafriend.reward_days is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_recruitafriend_swift_zhevra ]]; then printf "${color_red}module.recruitafriend.swift_zhevra is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_recruitafriend_touring_rocket ]]; then printf "${color_red}module.recruitafriend.touring_rocket is not set in the settings${color_end}\n"; fi
         if [[ -z $module_skip_dk_starting_area ]]; then printf "${color_red}module.skip_dk_starting_area is not set in the settings${color_end}\n"; fi
         if [[ -z $module_weekendbonus ]]; then printf "${color_red}module.weekendbonus is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_weekendbonus_multiplier_experience ]]; then printf "${color_red}module.weekendbonus.multiplier.experience is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_weekendbonus_multiplier_money ]]; then printf "${color_red}module.weekendbonus.multiplier.money is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_weekendbonus_multiplier_professions ]]; then printf "${color_red}module.weekendbonus.multiplier.professions is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_weekendbonus_multiplier_proficiencies ]]; then printf "${color_red}module.weekendbonus.multiplier.proficiencies is not set in the settings${color_end}\n"; fi
-        if [[ -z $module_weekendbonus_multiplier_reputation ]]; then printf "${color_red}module.weekendbonus.multiplier.reputation is not set in the settings${color_end}\n"; fi
         if [[ -z $telegram_chat_id ]]; then printf "${color_red}telegram.chat_id is not set in the settings${color_end}\n"; fi
         if [[ -z $telegram_token ]]; then printf "${color_red}telegram.token is not set in the settings${color_end}\n"; fi
         if [[ -z $world_address ]]; then printf "${color_red}world.address is not set in the settings${color_end}\n"; fi
@@ -410,22 +269,11 @@ function get_settings
         if [[ -z $world_cluster_maps ]]; then printf "${color_red}world.cluster.maps is not set in the settings${color_end}\n"; fi
         if [[ -z $world_cluster_node_address ]]; then printf "${color_red}world.cluster.node_address is not set in the settings${color_end}\n"; fi
         if [[ -z $world_data_directory ]]; then printf "${color_red}world.data_directory is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_expansion ]]; then printf "${color_red}world.expansion is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_leave_group_on_logout ]]; then printf "${color_red}world.leave_group_on_logout is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_motd ]]; then printf "${color_red}world.motd is not set in the settings${color_end}\n"; fi
         if [[ -z $world_name ]]; then printf "${color_red}world.name is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_player_limit ]]; then printf "${color_red}world.player_limit is not set in the settings${color_end}\n"; fi
         if [[ -z $world_port ]]; then printf "${color_red}world.port is not set in the settings${color_end}\n"; fi
         if [[ -z $world_preload_grids ]]; then printf "${color_red}world.preload_grids is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_quest_in_raid ]]; then printf "${color_red}world.quest_in_raid is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_raid_min_level ]]; then printf "${color_red}world.raid_min_level is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_rate_experience ]]; then printf "${color_red}world.rate.experience is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_rate_money ]]; then printf "${color_red}world.rate.money is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_rate_reputation ]]; then printf "${color_red}world.rate.reputation is not set in the settings${color_end}\n"; fi
         if [[ -z $world_set_creatures_active ]]; then printf "${color_red}world.set_creatures_active is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_type ]]; then printf "${color_red}world.type is not set in the settings${color_end}\n"; fi
         if [[ -z $world_warden ]]; then printf "${color_red}world.warden is not set in the settings${color_end}\n"; fi
-        if [[ -z $world_realm_zone ]]; then printf "${color_red}world.realm_zone is not set in the settings${color_end}\n"; fi
         error="true"
     fi
 
@@ -445,18 +293,6 @@ function get_settings
     if [[ $error == "true" ]]; then
         notify_telegram "An error occurred while trying to load settings from the database"
         exit $?
-    fi
-
-    if [[ $module_progression_patch -lt 12 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 92 ]]; then
-        module_ah_bot_max_item_level="92"
-    elif [[ $module_progression_patch -lt 17 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 164 ]]; then
-        module_ah_bot_max_item_level="164"
-    elif [[ $module_progression_patch  -lt 18 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 213 ]]; then
-        module_ah_bot_max_item_level="213"
-    elif [[ $module_progression_patch  -lt 19 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 226 ]]; then
-        module_ah_bot_max_item_level="226"
-    elif [[ $module_progression_patch  -lt 20 ]] && [[ $module_ah_bot_max_item_level -eq 0 || $module_ah_bot_max_item_level -gt 245 ]]; then
-        module_ah_bot_max_item_level="245"
     fi
 
     if [[ $module_progression_patch -lt 17 ]]; then
@@ -1632,7 +1468,7 @@ function import_database_files
                     done
                 fi
 
-                mysql --defaults-extra-file=$mysql_cnf $database_world -e "UPDATE mod_auctionhousebot SET minitems='$module_ah_bot_items', maxitems='$module_ah_bot_items'"
+                mysql --defaults-extra-file=$mysql_cnf $database_world -e "UPDATE mod_auctionhousebot SET minitems=25000, maxitems=25000"
                 if [[ $? -ne 0 ]]; then
                     notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
                     rm -rf "$mysql_cnf"
@@ -1841,13 +1677,11 @@ function import_database_files
                     exit $?
                 fi
 
-                if [[ "$module_progression_reset" == "true" ]]; then
-                    mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name LIKE 'patch_%'"
-                    if [[ $? -ne 0 ]]; then
-                        notify_telegram "An error occurred while trying to import the database files of mod-progression"
-                        rm -rf "$mysql_cnf"
-                        exit $?
-                    fi
+                mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name LIKE 'patch_%'"
+                if [[ $? -ne 0 ]]; then
+                    notify_telegram "An error occurred while trying to import the database files of mod-progression"
+                    rm -rf "$mysql_cnf"
+                    exit $?
                 fi
 
                 if [[ "$module_progression_patch" -ge "0" ]]; then
@@ -2596,7 +2430,7 @@ function import_database_files
             fi
 
             printf "${color_orange}Updating message of the day${color_end}\n"
-            mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM motd WHERE realmid='$id';INSERT INTO motd (realmid, text) VALUES ('$id', '$world_motd')"
+            mysql --defaults-extra-file=$mysql_cnf $database_auth -e "DELETE FROM motd WHERE realmid='$id';INSERT INTO motd (realmid, text) VALUES ('$id', 'Welcome to $world_name.')"
             if [[ $? -ne 0 ]]; then
                 notify_telegram "An error occurred while trying to update message of the day"
                 rm -rf "$mysql_cnf"
@@ -2699,9 +2533,7 @@ function set_config
 
         cp "$source/etc/worldserver.conf.dist" "$source/etc/worldserver.conf"
 
-        [ "$world_quest_in_raid" == "true" ] && world_quest_in_raid0="1" || world_quest_in_raid0="0"
         [ "$world_warden" == "true" ] && world_warden0="1" || world_warden0="0"
-        [ "$world_leave_group_on_logout" == "true" ] && world_leave_group_on_logout0="1" || world_leave_group_on_logout0="0"
         [ "$world_preload_grids" == "true" ] && world_preload_grids0="1" || world_preload_grids0="0"
         [ "$world_set_creatures_active" == "true" ] && world_set_creatures_active0="1" || world_set_creatures_active0="0"
 
@@ -2711,26 +2543,26 @@ function set_config
         sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/RealmID =.*/RealmID = '$id'/g' "$source/etc/worldserver.conf"
         sed -i 's/WorldServerPort =.*/WorldServerPort = '$world_port'/g' "$source/etc/worldserver.conf"
-        sed -i 's/GameType =.*/GameType = '$world_type'/g' "$source/etc/worldserver.conf"
-        sed -i 's/RealmZone =.*/RealmZone = '$world_realm_zone'/g' "$source/etc/worldserver.conf"
-        sed -i 's/Expansion =.*/Expansion = '$world_expansion'/g' "$source/etc/worldserver.conf"
-        sed -i 's/PlayerLimit =.*/PlayerLimit = '$world_player_limit'/g' "$source/etc/worldserver.conf"
+        sed -i 's/GameType =.*/GameType = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/RealmZone =.*/RealmZone = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/Expansion =.*/Expansion = 2/g' "$source/etc/worldserver.conf"
+        sed -i 's/PlayerLimit =.*/PlayerLimit = 1000/g' "$source/etc/worldserver.conf"
         sed -i 's/StrictPlayerNames =.*/StrictPlayerNames = 3/g' "$source/etc/worldserver.conf"
         sed -i 's/StrictCharterNames =.*/StrictCharterNames = 3/g' "$source/etc/worldserver.conf"
         sed -i 's/StrictPetNames =.*/StrictPetNames = 3/g' "$source/etc/worldserver.conf"
         sed -i 's/AllowPlayerCommands =.*/AllowPlayerCommands = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = '$world_quest_in_raid0'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Quests.IgnoreRaid =.*/Quests.IgnoreRaid = 1/g' "$source/etc/worldserver.conf"
         sed -i 's/Warden.Enabled =.*/Warden.Enabled = '$world_warden0'/g' "$source/etc/worldserver.conf"
         sed -i 's/PreloadAllNonInstancedMapGrids =.*/PreloadAllNonInstancedMapGrids = '$world_preload_grids0'/g' "$source/etc/worldserver.conf"
         sed -i 's/SetAllCreaturesWithWaypointMovementActive =.*/SetAllCreaturesWithWaypointMovementActive = '$world_set_creatures_active0'/g' "$source/etc/worldserver.conf"
         sed -i 's/Minigob.Manabonk.Enable =.*/Minigob.Manabonk.Enable = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
-        sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = '$world_rate_experience'/g' "$source/etc/worldserver.conf"
-        sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = '$world_rate_money'/g' "$source/etc/worldserver.conf"
-        sed -i 's/Rate.Reputation.Gain =.*/Rate.Reputation.Gain = '$world_rate_reputation'/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Kill      =.*/Rate.XP.Kill      = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Quest     =.*/Rate.XP.Quest     = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Quest.DF  =.*/Rate.XP.Quest.DF  = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Explore   =.*/Rate.XP.Explore   = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.XP.Pet       =.*/Rate.XP.Pet       = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.Drop.Money                 =.*/Rate.Drop.Money                 = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.Reputation.Gain =.*/Rate.Reputation.Gain = 1/g' "$source/etc/worldserver.conf"
         sed -i 's/GM.LoginState =.*/GM.LoginState = 1/g' "$source/etc/worldserver.conf"
         sed -i 's/GM.Visible =.*/GM.Visible = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/GM.Chat =.*/GM.Chat = 1/g' "$source/etc/worldserver.conf"
@@ -2741,19 +2573,19 @@ function set_config
         sed -i 's/GM.AllowInvite =.*/GM.AllowInvite = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/GM.AllowFriend =.*/GM.AllowFriend = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/GM.LowerSecurity =.*/GM.LowerSecurity = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = '$world_leave_group_on_logout0'/g' "$source/etc/worldserver.conf"
-        sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = '$world_raid_min_level'/g' "$source/etc/worldserver.conf"
+        sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = 1/g' "$source/etc/worldserver.conf"
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' "$source/etc/worldserver.conf"
         sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' "$source/etc/worldserver.conf"
         sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
         data_directory=$(echo "$world_data_directory" | sed 's#/#\\/#g')
         sed -i 's/DataDir =.*/DataDir = "'"$data_directory"'"/g' "$source/etc/worldserver.conf"
-        #sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$source/etc/worldserver.conf"
         #sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$source/etc/worldserver.conf"
-        #sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 0/g' "$source/etc/worldserver.conf"
-        #sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 0/g' "$source/etc/worldserver.conf"
-        #sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 0/g' "$source/etc/worldserver.conf"
 
         sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
 
@@ -2806,18 +2638,27 @@ function set_config
 
             cp "$source/etc/modules/mod_ahbot.conf.dist" "$source/etc/modules/mod_ahbot.conf"
 
-            [ "$module_ah_bot_sell_items" == "true" ] && module_ah_bot_sell_items0="1" || module_ah_bot_sell_items="0"
-            [ "$module_ah_bot_buy_items" == "true" ] && module_ah_bot_buy_items0="1" || module_ah_bot_buy_items0="0"
-            [ "$module_ah_bot_use_buyprice" == "true" ] && module_ah_bot_use_buyprice0="0" || module_ah_bot_use_buyprice0="1"
+            sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = 1/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = 1/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.UseBuyPriceForSeller =.*/AuctionHouseBot.UseBuyPriceForSeller = 0/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = 0/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = 1/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = 1/g' "$source/etc/modules/mod_ahbot.conf"
+            sed -i 's/AuctionHouseBot.ItemsPerCycle =.*/AuctionHouseBot.ItemsPerCycle = 200/g' "$source/etc/modules/mod_ahbot.conf"
 
-            sed -i 's/AuctionHouseBot.EnableSeller =.*/AuctionHouseBot.EnableSeller = '$module_ah_bot_sell_items0'/g' "$source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.EnableBuyer =.*/AuctionHouseBot.EnableBuyer = '$module_ah_bot_buy_items0'/g' "$source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.UseBuyPriceForSeller =.*/AuctionHouseBot.UseBuyPriceForSeller = '$module_ah_bot_use_buyprice0'/g' "$source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.UseBuyPriceForBuyer =.*/AuctionHouseBot.UseBuyPriceForBuyer = '$module_ah_bot_use_buyprice0'/g' "$source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.Account =.*/AuctionHouseBot.Account = '$module_ah_bot_account'/g' "$source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = '$module_ah_bot_character'/g' "$source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.ItemsPerCycle =.*/AuctionHouseBot.ItemsPerCycle = '$module_ah_bot_items_per_cycle'/g' "$source/etc/modules/mod_ahbot.conf"
-            sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = '$module_ah_bot_max_item_level'/g' "$source/etc/modules/mod_ahbot.conf"
+            if [[ $module_progression_patch -lt 12 ]]; then
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 92/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch -lt 17 ]]; then
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 164/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch  -lt 18 ]]; then
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 213/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch  -lt 19 ]]; then
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 226/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch  -lt 20 ]]; then
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 245/g' "$source/etc/modules/mod_ahbot.conf"
+            else
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 0/g' "$source/etc/modules/mod_ahbot.conf"
+            fi
         fi
 
         if [[ "$module_appreciation" == "true" ]]; then
@@ -2832,17 +2673,20 @@ function set_config
 
             cp "$source/etc/modules/mod_appreciation.conf.dist" "$source/etc/modules/mod_appreciation.conf"
 
-            [ "$module_appreciation_require_certificate" == "true" ] && module_appreciation_require_certificate0="1" || module_appreciation_require_certificate0="0"
-            [ "$module_appreciation_level_boost" == "true" ] && module_appreciation_level_boost0="1" || module_appreciation_level_boost0="0"
-            [ "$module_appreciation_unlock_continents" == "true" ] && module_appreciation_unlock_continents0="1" || module_appreciation_unlock_continents0="0"
-            [ "$module_appreciation_reward_at_max_level" == "true" ] && module_appreciation_reward_at_max_level0="1" || module_appreciation_reward_at_max_level0="0"
-
-            sed -i 's/Appreciation.RequireCertificate.Enabled =.*/Appreciation.RequireCertificate.Enabled = '$module_appreciation_require_certificate0'/g' "$source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.LevelBoost.Enabled =.*/Appreciation.LevelBoost.Enabled = '$module_appreciation_level_boost0'/g' "$source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.RequireCertificate.Enabled =.*/Appreciation.RequireCertificate.Enabled = 1/g' "$source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.LevelBoost.Enabled =.*/Appreciation.LevelBoost.Enabled = 1/g' "$source/etc/modules/mod_appreciation.conf"
             sed -i 's/Appreciation.LevelBoost.TargetLevel =.*/Appreciation.LevelBoost.TargetLevel = '$module_appreciation_level_boost_level'/g' "$source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = '$module_appreciation_level_boost_included_copper'/g' "$source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.UnlockContinents.Enabled =.*/Appreciation.UnlockContinents.Enabled = '$module_appreciation_unlock_continents0'/g' "$source/etc/modules/mod_appreciation.conf"
-            sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = '$module_appreciation_reward_at_max_level0'/g' "$source/etc/modules/mod_appreciation.conf"
+
+            if [[ "$module_appreciation_level_boost_level" == "60" ]]; then
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 2500000/g' "$source/etc/modules/mod_appreciation.conf"
+            elif [[ "$module_appreciation_level_boost_level" == "70" ]]; then
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 5000000/g' "$source/etc/modules/mod_appreciation.conf"
+            elif [[ "$module_appreciation_level_boost_level" == "80" ]]; then
+                sed -i 's/Appreciation.LevelBoost.IncludedCopper =.*/Appreciation.LevelBoost.IncludedCopper = 10000000/g' "$source/etc/modules/mod_appreciation.conf"
+            fi
+
+            sed -i 's/Appreciation.UnlockContinents.Enabled =.*/Appreciation.UnlockContinents.Enabled = 1/g' "$source/etc/modules/mod_appreciation.conf"
+            sed -i 's/Appreciation.RewardAtMaxLevel.Enabled =.*/Appreciation.RewardAtMaxLevel.Enabled = 1/g' "$source/etc/modules/mod_appreciation.conf"
         fi
 
         if [[ "$module_assistant" == "true" ]]; then
@@ -2857,47 +2701,63 @@ function set_config
 
             cp "$source/etc/modules/mod_assistant.conf.dist" "$source/etc/modules/mod_assistant.conf"
 
-            [ "$module_assistant_vendor_heirlooms" == "true" ] && module_assistant_vendor_heirlooms0="1" || module_assistant_vendor_heirlooms0="0"
-            [ "$module_assistant_vendor_glyphs" == "true" ] && module_assistant_vendor_glyphs0="1" || module_assistant_vendor_glyphs0="0"
-            [ "$module_assistant_vendor_gems" == "true" ] && module_assistant_vendor_gems0="1" || module_assistant_vendor_gems0="0"
-            [ "$module_assistant_vendor_containers" == "true" ] && module_assistant_vendor_containers0="1" || module_assistant_vendor_containers0="0"
-            [ "$module_assistant_utilities" == "true" ] && module_assistant_utilities0="1" || module_assistant_utilities0="0"
-            [ "$module_assistant_fp_vanilla" == "true" ] && module_assistant_fp_vanilla0="1" || module_assistant_fp_vanilla0="0"
-            [ "$module_assistant_fp_tbc" == "true" ] && module_assistant_fp_tbc0="1" || module_assistant_fp_tbc0="0"
-            [ "$module_assistant_fp_wotlk" == "true" ] && module_assistant_fp_wotlk0="1" || module_assistant_fp_wotlk0="0"
-            [ "$module_assistant_professions_apprentice" == "true" ] && module_assistant_professions_apprentice0="1" || module_assistant_professions_apprentice0="0"
-            [ "$module_assistant_professions_journeyman" == "true" ] && module_assistant_professions_journeyman0="1" || module_assistant_professions_journeyman0="0"
-            [ "$module_assistant_professions_expert" == "true" ] && module_assistant_professions_expert0="1" || module_assistant_professions_expert0="0"
-            [ "$module_assistant_professions_artisan" == "true" ] && module_assistant_professions_artisan0="1" || module_assistant_professions_artisan0="0"
-            [ "$module_assistant_professions_master" == "true" ] && module_assistant_professions_master0="1" || module_assistant_professions_master0="0"
-            [ "$module_assistant_professions_grand_master" == "true" ] && module_assistant_professions_grand_master0="1" || module_assistant_professions_grand_master0="0"
+            if [[ $module_progression_patch -lt 17 ]]; then
+                sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' "$source/etc/modules/mod_assistant.conf"
+                sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' "$source/etc/modules/mod_assistant.conf"
+                sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' "$source/etc/modules/mod_assistant.conf"
+            else
+                sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' "$source/etc/modules/mod_assistant.conf"
+                sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' "$source/etc/modules/mod_assistant.conf"
+                sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' "$source/etc/modules/mod_assistant.conf"
+            fi
 
-            sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = '$module_assistant_vendor_heirlooms0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = '$module_assistant_vendor_glyphs0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = '$module_assistant_vendor_gems0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = '$module_assistant_vendor_containers0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = '$module_assistant_utilities0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = '$module_assistant_fp_vanilla0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = '$module_assistant_fp_vanilla_required_level'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = '$module_assistant_fp_vanilla_cost'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = '$module_assistant_fp_tbc0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = '$module_assistant_fp_tbc_required_level'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = '$module_assistant_fp_tbc_cost'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = '$module_assistant_fp_wotlk0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = '$module_assistant_fp_wotlk_required_level'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = '$module_assistant_fp_wotlk_cost'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = '$module_assistant_professions_apprentice0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = '$module_assistant_professions_apprentice_cost'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = '$module_assistant_professions_journeyman0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = '$module_assistant_professions_journeyman_cost'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = '$module_assistant_professions_expert0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = '$module_assistant_professions_expert_cost'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = '$module_assistant_professions_artisan0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = '$module_assistant_professions_artisan_cost'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = '$module_assistant_professions_master0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = '$module_assistant_professions_master_cost'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = '$module_assistant_professions_grand_master0'/g' "$source/etc/modules/mod_assistant.conf"
-            sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = '$module_assistant_professions_grand_master_cost'/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = 1/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Utilities.Enabled            =.*/Assistant.Utilities.Enabled            = 1/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.Vanilla.Enabled                  =.*/Assistant.FlightPaths.Vanilla.Enabled                  = 1/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.Vanilla.RequiredLevel            =.*/Assistant.FlightPaths.Vanilla.RequiredLevel            = 60/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.Vanilla.Cost                     =.*/Assistant.FlightPaths.Vanilla.Cost                     = 250000/g' "$source/etc/modules/mod_assistant.conf"
+
+            if [[ $module_progression_patch -lt 12 ]]; then
+                sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 0/g' "$source/etc/modules/mod_assistant.conf"
+            else
+                sed -i 's/Assistant.FlightPaths.BurningCrusade.Enabled           =.*/Assistant.FlightPaths.BurningCrusade.Enabled           = 1/g' "$source/etc/modules/mod_assistant.conf"
+            fi
+
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.RequiredLevel     =.*/Assistant.FlightPaths.BurningCrusade.RequiredLevel     = 70/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.BurningCrusade.Cost              =.*/Assistant.FlightPaths.BurningCrusade.Cost              = 1000000/g' "$source/etc/modules/mod_assistant.conf"
+
+            if [[ $module_progression_patch -lt 17 ]]; then
+                sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 0/g' "$source/etc/modules/mod_assistant.conf"
+            else
+                sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       =.*/Assistant.FlightPaths.WrathOfTheLichKing.Enabled       = 1/g' "$source/etc/modules/mod_assistant.conf"
+            fi
+
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel =.*/Assistant.FlightPaths.WrathOfTheLichKing.RequiredLevel = 80/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.FlightPaths.WrathOfTheLichKing.Cost          =.*/Assistant.FlightPaths.WrathOfTheLichKing.Cost          = 2500000/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Apprentice.Enabled  =.*/Assistant.Professions.Apprentice.Enabled  = 1/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Apprentice.Cost     =.*/Assistant.Professions.Apprentice.Cost     = 1000000/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Journeyman.Enabled  =.*/Assistant.Professions.Journeyman.Enabled  = 1/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Journeyman.Cost     =.*/Assistant.Professions.Journeyman.Cost     = 2500000/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Expert.Enabled      =.*/Assistant.Professions.Expert.Enabled      = 1/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Expert.Cost         =.*/Assistant.Professions.Expert.Cost         = 5000000/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Artisan.Enabled     =.*/Assistant.Professions.Artisan.Enabled     = 1/g' "$source/etc/modules/mod_assistant.conf"
+            sed -i 's/Assistant.Professions.Artisan.Cost        =.*/Assistant.Professions.Artisan.Cost        = 7500000/g' "$source/etc/modules/mod_assistant.conf"
+
+            if [[ $module_progression_patch -lt 12 ]]; then
+                sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = 0/g' "$source/etc/modules/mod_assistant.conf"
+            else
+                sed -i 's/Assistant.Professions.Master.Enabled      =.*/Assistant.Professions.Master.Enabled      = 1/g' "$source/etc/modules/mod_assistant.conf"
+            fi
+
+            sed -i 's/Assistant.Professions.Master.Cost         =.*/Assistant.Professions.Master.Cost         = 12500000/g' "$source/etc/modules/mod_assistant.conf"
+
+            if [[ $module_progression_patch -lt 12 ]]; then
+                sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = 0/g' "$source/etc/modules/mod_assistant.conf"
+            else
+                sed -i 's/Assistant.Professions.GrandMaster.Enabled =.*/Assistant.Professions.GrandMaster.Enabled = 1/g' "$source/etc/modules/mod_assistant.conf"
+            fi
+
+            sed -i 's/Assistant.Professions.GrandMaster.Cost    =.*/Assistant.Professions.GrandMaster.Cost    = 25000000/g' "$source/etc/modules/mod_assistant.conf"
         fi
 
         if [[ "$module_learnspells" == "true" ]]; then
@@ -2912,25 +2772,27 @@ function set_config
 
             cp "$source/etc/modules/mod_learnspells.conf.dist" "$source/etc/modules/mod_learnspells.conf"
 
-            [ "$module_learnspells_class_spells" == "true" ] && module_learnspells_class_spells0="1" || module_learnspells_class_spells0="0"
-            [ "$module_learnspells_talent_ranks" == "true" ] && module_learnspells_talent_ranks0="1" || module_learnspells_talent_ranks0="0"
-            [ "$module_learnspells_proficiencies" == "true" ] && module_learnspells_proficiencies0="1" || module_learnspells_proficiencies0="0"
-            [ "$module_learnspells_quest_spells" == "true" ] && module_learnspells_quest_spells0="1" || module_learnspells_quest_spells0="0"
-            [ "$module_learnspells_riding_apprentice" == "true" ] && module_learnspells_riding_apprentice0="1" || module_learnspells_riding_apprentice0="0"
-            [ "$module_learnspells_riding_journeyman" == "true" ] && module_learnspells_riding_journeyman0="1" || module_learnspells_riding_journeyman0="0"
-            [ "$module_learnspells_riding_expert" == "true" ] && module_learnspells_riding_expert0="1" || module_learnspells_riding_expert0="0"
-            [ "$module_learnspells_riding_artisan" == "true" ] && module_learnspells_riding_artisan0="1" || module_learnspells_riding_artisan0="0"
-            [ "$module_learnspells_riding_cold_weather_flying" == "true" ] && module_learnspells_riding_cold_weather_flying0="1" || module_learnspells_riding_cold_weather_flying0="0"
+            sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = 1/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = 1/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = 1/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = 1/g' "$source/etc/modules/mod_learnspells.conf"
 
-            sed -i 's/LearnSpells.ClassSpells =.*/LearnSpells.ClassSpells = '$module_learnspells_class_spells0'/g' "$source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.TalentRanks =.*/LearnSpells.TalentRanks = '$module_learnspells_talent_ranks0'/g' "$source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Proficiencies =.*/LearnSpells.Proficiencies = '$module_learnspells_proficiencies0'/g' "$source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.SpellsFromQuests =.*/LearnSpells.SpellsFromQuests = '$module_learnspells_quest_spells0'/g' "$source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = '$module_learnspells_riding_apprentice0'/g' "$source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = '$module_learnspells_riding_journeyman0'/g' "$source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = '$module_learnspells_riding_expert0'/g' "$source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = '$module_learnspells_riding_artisan0'/g' "$source/etc/modules/mod_learnspells.conf"
-            sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = '$module_learnspells_riding_cold_weather_flying0'/g' "$source/etc/modules/mod_learnspells.conf"
+            if [[ $module_progression_patch -lt 12 ]]; then
+                sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 0/g' "$source/etc/modules/mod_learnspells.conf"
+                sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 0/g' "$source/etc/modules/mod_learnspells.conf"
+            else
+                sed -i 's/LearnSpells.Riding.Apprentice =.*/LearnSpells.Riding.Apprentice = 1/g' "$source/etc/modules/mod_learnspells.conf"
+                sed -i 's/LearnSpells.Riding.Journeyman =.*/LearnSpells.Riding.Journeyman = 1/g' "$source/etc/modules/mod_learnspells.conf"
+            fi
+
+            if [[ $module_progression_patch -lt 17 ]]; then
+                sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 0/g' "$source/etc/modules/mod_learnspells.conf"
+            else
+                sed -i 's/LearnSpells.Riding.Expert =.*/LearnSpells.Riding.Expert = 1/g' "$source/etc/modules/mod_learnspells.conf"
+            fi
+
+            sed -i 's/LearnSpells.Riding.Artisan =.*/LearnSpells.Riding.Artisan = 0/g' "$source/etc/modules/mod_learnspells.conf"
+            sed -i 's/LearnSpells.Riding.ColdWeatherFlying =.*/LearnSpells.Riding.ColdWeatherFlying = 0/g' "$source/etc/modules/mod_learnspells.conf"
         fi
 
         if [[ "$module_playerbots" == "true" ]]; then
@@ -2945,14 +2807,12 @@ function set_config
 
             cp "$source/etc/modules/playerbots.conf.dist" "$source/etc/modules/playerbots.conf"
 
-            [ "$module_playerbots_random_level" == "true" ] && module_playerbots_random_level0="0" || module_playerbots_random_level0="1"
-
             sed -i 's/AiPlayerbot.MinRandomBots =.*/AiPlayerbot.MinRandomBots = '$module_playerbots_bots'/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.MaxRandomBots =.*/AiPlayerbot.MaxRandomBots = '$module_playerbots_bots'/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.RandomBotAccountCount =.*/AiPlayerbot.RandomBotAccountCount = '$module_playerbots_accounts'/g' "$source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.DisableRandomLevels =.*/AiPlayerbot.DisableRandomLevels = '$module_playerbots_random_level0'/g' "$source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = '$module_playerbots_start_level'/g' "$source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.PvpProhibitedZoneIds =.*/AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298"/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.DisableRandomLevels =.*/AiPlayerbot.DisableRandomLevels = 1/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = 1/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.PvpProhibitedZoneIds =.*/AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298,4395"/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.AutoTeleportForLevel =.*/AiPlayerbot.AutoTeleportForLevel = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.KillXPRate =.*/AiPlayerbot.KillXPRate = 1/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.EquipmentPersistence =.*/AiPlayerbot.EquipmentPersistence = 1/g' "$source/etc/modules/playerbots.conf"
@@ -2985,17 +2845,12 @@ function set_config
 
             cp "$source/etc/modules/mod_progression.conf.dist" "$source/etc/modules/mod_progression.conf"
 
-            [ "$module_progression_enforce_dualtalent" == "true" ] && module_progression_enforce_dualtalent0="1" || module_progression_enforce_dualtalent0="0"
-            [ "$module_progression_enforce_dungeonfinder" == "true" ] && module_progression_enforce_dungeonfinder0="1" || module_progression_enforce_dungeonfinder0="0"
-            [ "$module_progression_enforce_questinfo" == "true" ] && module_progression_enforce_questinfo0="1" || module_progression_enforce_questinfo0="0"
-            [ "$module_progression_reset" == "true" ] && module_progression_reset0="1" || module_progression_reset0="0"
-
             sed -i 's/Progression.Patch =.*/Progression.Patch = '$module_progression_patch'/g' "$source/etc/modules/mod_progression.conf"
             sed -i 's/Progression.IcecrownCitadel.Aura =.*/Progression.IcecrownCitadel.Aura = '$module_progression_aura'/g' "$source/etc/modules/mod_progression.conf"
-            sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = '$module_progression_enforce_questinfo0'/g' "$source/etc/modules/mod_progression.conf"
-            sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = '$module_progression_enforce_dungeonfinder0'/g' "$source/etc/modules/mod_progression.conf"
-            sed -i 's/Progression.DualTalent.Enforced =.*/Progression.DualTalent.Enforced = '$module_progression_enforce_dualtalent0'/g' "$source/etc/modules/mod_progression.conf"
-            sed -i 's/Progression.Reset =.*/Progression.Reset = '$module_progression_reset0'/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.QuestInfo.Enforced =.*/Progression.QuestInfo.Enforced = 1/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.DualTalent.Enforced =.*/Progression.DualTalent.Enforced = 1/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.Reset =.*/Progression.Reset = 1/g' "$source/etc/modules/mod_progression.conf"
         fi
 
         if [[ "$module_recruitafriend" == "true" ]]; then
@@ -3010,16 +2865,12 @@ function set_config
 
             cp "$source/etc/modules/mod_recruitafriend.conf.dist" "$source/etc/modules/mod_recruitafriend.conf"
 
-            [ "$module_recruitafriend_swift_zhevra" == "true" ] && module_recruitafriend_swift_zhevra0="1" || module_recruitafriend_swift_zhevra0="0"
-            [ "$module_recruitafriend_touring_rocket" == "true" ] && module_recruitafriend_touring_rocket0="1" || module_recruitafriend_touring_rocket0="0"
-            [ "$module_recruitafriend_celestial_steed" == "true" ] && module_recruitafriend_celestial_steed0="1" || module_recruitafriend_celestial_steed0="0"
-
-            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = '$module_recruitafriend_duration'/g' "$source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = '$module_recruitafriend_account_age'/g' "$source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = '$module_recruitafriend_reward_days'/g' "$source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = '$module_recruitafriend_swift_zhevra0'/g' "$source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = '$module_recruitafriend_touring_rocket0'/g' "$source/etc/modules/mod_recruitafriend.conf"
-            sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = '$module_recruitafriend_celestial_steed0'/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Duration =.*/RecruitAFriend.Duration = 0/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.MaxAccountAge =.*/RecruitAFriend.MaxAccountAge = 0/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Rewards.Days =.*/RecruitAFriend.Rewards.Days = 30/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Rewards.SwiftZhevra =.*/RecruitAFriend.Rewards.SwiftZhevra = 1/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Rewards.TouringRocket =.*/RecruitAFriend.Rewards.TouringRocket = 1/g' "$source/etc/modules/mod_recruitafriend.conf"
+            sed -i 's/RecruitAFriend.Rewards.CelestialSteed =.*/RecruitAFriend.Rewards.CelestialSteed = 1/g' "$source/etc/modules/mod_recruitafriend.conf"
         fi
 
         if [[ "$module_skip_dk_starting_area" == "true" ]]; then
@@ -3051,11 +2902,11 @@ function set_config
 
             cp "$source/etc/modules/mod_weekendbonus.conf.dist" "$source/etc/modules/mod_weekendbonus.conf"
 
-            sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = '$module_weekendbonus_multiplier_experience'/g' "$source/etc/modules/mod_weekendbonus.conf"
-            sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = '$module_weekendbonus_multiplier_money'/g' "$source/etc/modules/mod_weekendbonus.conf"
-            sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = '$module_weekendbonus_multiplier_professions'/g' "$source/etc/modules/mod_weekendbonus.conf"
-            sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = '$module_weekendbonus_multiplier_reputation'/g' "$source/etc/modules/mod_weekendbonus.conf"
-            sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = '$module_weekendbonus_multiplier_proficiencies'/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Experience =.*/WeekendBonus.Multiplier.Experience = 2/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Money =.*/WeekendBonus.Multiplier.Money = 2/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Professions =.*/WeekendBonus.Multiplier.Professions = 2/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Reputation =.*/WeekendBonus.Multiplier.Reputation = 2/g' "$source/etc/modules/mod_weekendbonus.conf"
+            sed -i 's/WeekendBonus.Multiplier.Proficiencies =.*/WeekendBonus.Multiplier.Proficiencies = 2/g' "$source/etc/modules/mod_weekendbonus.conf"
         fi
     fi
 
