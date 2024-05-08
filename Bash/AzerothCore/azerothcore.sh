@@ -2706,9 +2706,9 @@ function set_config
                 sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' "$source/etc/modules/mod_assistant.conf"
                 sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' "$source/etc/modules/mod_assistant.conf"
             else
-                sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 0/g' "$source/etc/modules/mod_assistant.conf"
-                sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 0/g' "$source/etc/modules/mod_assistant.conf"
-                sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 0/g' "$source/etc/modules/mod_assistant.conf"
+                sed -i 's/Assistant.Heirlooms.Enabled  =.*/Assistant.Heirlooms.Enabled  = 1/g' "$source/etc/modules/mod_assistant.conf"
+                sed -i 's/Assistant.Glyphs.Enabled     =.*/Assistant.Glyphs.Enabled     = 1/g' "$source/etc/modules/mod_assistant.conf"
+                sed -i 's/Assistant.Gems.Enabled       =.*/Assistant.Gems.Enabled       = 1/g' "$source/etc/modules/mod_assistant.conf"
             fi
 
             sed -i 's/Assistant.Containers.Enabled =.*/Assistant.Containers.Enabled = 1/g' "$source/etc/modules/mod_assistant.conf"
