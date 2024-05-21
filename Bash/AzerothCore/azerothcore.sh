@@ -203,6 +203,7 @@ function get_settings
             "module.ah_bot") module_ah_bot="$value";;
             "module.appreciation") module_appreciation="$value";;
             "module.appreciation.level_boost.level") module_appreciation_level_boost_level="$value";;
+            "module.archmage_timear") module_archmage_timear="$value";;
             "module.assistant") module_assistant="$value";;
             "module.groupquests") module_groupquests="$value";;
             "module.junktogold") module_junktogold="$value";;
@@ -236,7 +237,7 @@ function get_settings
         fi
     done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC, node DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1)
 
-    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_appreciation || -z $module_appreciation_level_boost_level || -z $module_assistant || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_progression || -z $module_progression_aura || -z $module_progression_patch || -z $module_recruitafriend || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_data_directory || -z $world_name || -z $world_port || -z $world_preload_grids || -z $world_set_creatures_active || -z $world_warden ]]; then
+    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_appreciation || -z $module_appreciation_level_boost_level || -z $module_archmage_timear || -z $module_assistant || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_progression || -z $module_progression_aura || -z $module_progression_patch || -z $module_recruitafriend || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_data_directory || -z $world_name || -z $world_port || -z $world_preload_grids || -z $world_set_creatures_active || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
         if [[ -z $build_world ]]; then printf "${color_red}build.world is not set in the settings${color_end}\n"; fi
         if [[ -z $database_auth ]]; then printf "${color_red}database.auth is not set in the settings${color_end}\n"; fi
@@ -248,6 +249,7 @@ function get_settings
         if [[ -z $module_ah_bot ]]; then printf "${color_red}module.ah_bot is not set in the settings${color_end}\n"; fi
         if [[ -z $module_appreciation ]]; then printf "${color_red}module.appreciation is not set in the settings${color_end}\n"; fi
         if [[ -z $module_appreciation_level_boost_level ]]; then printf "${color_red}module.appreciation.level_boost.level is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_archmage_timear ]]; then printf "${color_red}module.archmage_timear is not set in the settings${color_end}\n"; fi
         if [[ -z $module_assistant ]]; then printf "${color_red}module.assistant is not set in the settings${color_end}\n"; fi
         if [[ -z $module_groupquests ]]; then printf "${color_red}module.groupquests is not set in the settings${color_end}\n"; fi
         if [[ -z $module_junktogold ]]; then printf "${color_red}module.junktogold is not set in the settings${color_end}\n"; fi
@@ -441,6 +443,34 @@ function get_source
         else
             if [[ -d "$source/modules/mod-appreciation" ]]; then
                 rm -rf "$source/modules/mod-appreciation"
+            fi
+        fi
+
+        if [[ "$module_archmage_timear" == "true" ]] && [[ "$module_progression" == "false" ]]; then
+            if [[ ! -d "$source/modules/mod-archmage-timear" ]]; then
+                git clone --depth 1 --branch master "https://github.com/noisiver/mod-archmage-timear.git" "$source/modules/mod-archmage-timear"
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-archmage-timear"
+                    exit $?
+                fi
+            else
+                cd "$source/modules/mod-archmage-timear"
+
+                git reset --hard origin/master
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-archmage-timear"
+                    exit $?
+                fi
+
+                git pull
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-archmage-timear"
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d "$source/modules/mod-archmage-timear" ]]; then
+                rm -rf "$source/modules/mod-archmage-timear"
             fi
         fi
 
@@ -1506,6 +1536,43 @@ function import_database_files
                         mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
                         if [[ $? -ne 0 ]]; then
                             notify_telegram "An error occurred while trying to import the database files of mod-appreciation"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+                    done
+                fi
+            fi
+
+            if [[ "$module_archmage_timear" == "true" ]] && [[ "$module_progression" == "false" ]]; then
+                if [[ ! -d "$source/modules/mod-archmage-timear/data/sql/db-world/base" ]]; then
+                    printf "${color_red}The archmage timear module is enabled but the files aren't where they should be${color_end}\n"
+                    printf "${color_red}Please make sure to install the server first${color_end}\n"
+                    notify_telegram "An error occurred while trying to import the database files of mod-archmage-timear"
+                    rm -rf "$mysql_cnf"
+                    exit $?
+                fi
+
+                if [[ `ls -1 $source/modules/mod-archmage-timear/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                    for f in $source/modules/mod-archmage-timear/data/sql/db-world/base/*.sql; do
+                        FILENAME=$(basename $f)
+                        HASH=($(sha1sum $f))
+
+                        if [[ ! -z `mysql --defaults-extra-file=$mysql_cnf --skip-column-names $database_world -e "SELECT * FROM updates WHERE name='$FILENAME' AND hash='${HASH^^}'"` ]]; then
+                            printf "${color_orange}Skipping "$(basename $f)"${color_end}\n"
+                            continue;
+                        fi
+
+                        printf "${color_orange}Importing "$(basename $f)"${color_end}\n"
+                        mysql --defaults-extra-file=$mysql_cnf $database_world < $f
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-archmage-timear"
+                            rm -rf "$mysql_cnf"
+                            exit $?
+                        fi
+
+                        mysql --defaults-extra-file=$mysql_cnf $database_world -e "DELETE FROM updates WHERE name='$(basename $f)';INSERT INTO updates (name, hash, state) VALUES ('$FILENAME', '${HASH^^}', 'CUSTOM')"
+                        if [[ $? -ne 0 ]]; then
+                            notify_telegram "An error occurred while trying to import the database files of mod-archmage-timear"
                             rm -rf "$mysql_cnf"
                             exit $?
                         fi
