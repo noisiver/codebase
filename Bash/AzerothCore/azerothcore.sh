@@ -205,6 +205,7 @@ function get_settings
             "module.appreciation.level_boost.level") module_appreciation_level_boost_level="$value";;
             "module.archmage_timear") module_archmage_timear="$value";;
             "module.assistant") module_assistant="$value";;
+            "module.eluna") module_eluna="$value";;
             "module.groupquests") module_groupquests="$value";;
             "module.junktogold") module_junktogold="$value";;
             "module.learnspells") module_learnspells="$value";;
@@ -237,7 +238,7 @@ function get_settings
         fi
     done <<<$(mysql --defaults-extra-file="$mysql_cnf" $mysql_database --skip-column-names -e "WITH s AS (SELECT id, node, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC, node DESC) nr FROM realm_settings WHERE (id = $id OR id = -1) AND (node = $node OR node = -1)) SELECT setting, value FROM s WHERE nr = 1;" 2>&1)
 
-    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_appreciation || -z $module_appreciation_level_boost_level || -z $module_archmage_timear || -z $module_assistant || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_progression || -z $module_progression_aura || -z $module_progression_patch || -z $module_recruitafriend || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_data_directory || -z $world_name || -z $world_port || -z $world_preload_grids || -z $world_set_creatures_active || -z $world_warden ]]; then
+    if [[ -z $build_auth || -z $build_world || -z $database_auth || -z $database_characters || -z $database_playerbots || -z $database_world || -z $git_branch || -z $git_repository || -z $module_ah_bot || -z $module_appreciation || -z $module_appreciation_level_boost_level || -z $module_archmage_timear || -z $module_assistant || -z $module_eluna || -z $module_groupquests || -z $module_junktogold || -z $module_learnspells|| -z $module_playerbots || -z $module_playerbots_accounts || -z $module_playerbots_bots || -z $module_progression || -z $module_progression_aura || -z $module_progression_patch || -z $module_recruitafriend || -z $module_skip_dk_starting_area || -z $module_weekendbonus || -z $telegram_chat_id || -z $telegram_token || -z $world_address || -z $world_cluster || -z $world_cluster_auth_address || -z $world_cluster_maps || -z $world_cluster_node_address || -z $world_data_directory || -z $world_name || -z $world_port || -z $world_preload_grids || -z $world_set_creatures_active || -z $world_warden ]]; then
         if [[ -z $build_auth ]]; then printf "${color_red}build.auth is not set in the settings${color_end}\n"; fi
         if [[ -z $build_world ]]; then printf "${color_red}build.world is not set in the settings${color_end}\n"; fi
         if [[ -z $database_auth ]]; then printf "${color_red}database.auth is not set in the settings${color_end}\n"; fi
@@ -251,6 +252,7 @@ function get_settings
         if [[ -z $module_appreciation_level_boost_level ]]; then printf "${color_red}module.appreciation.level_boost.level is not set in the settings${color_end}\n"; fi
         if [[ -z $module_archmage_timear ]]; then printf "${color_red}module.archmage_timear is not set in the settings${color_end}\n"; fi
         if [[ -z $module_assistant ]]; then printf "${color_red}module.assistant is not set in the settings${color_end}\n"; fi
+        if [[ -z $module_eluna ]]; then printf "${color_red}module.eluna is not set in the settings${color_end}\n"; fi
         if [[ -z $module_groupquests ]]; then printf "${color_red}module.groupquests is not set in the settings${color_end}\n"; fi
         if [[ -z $module_junktogold ]]; then printf "${color_red}module.junktogold is not set in the settings${color_end}\n"; fi
         if [[ -z $module_learnspells ]]; then printf "${color_red}module.learnspells is not set in the settings${color_end}\n"; fi
@@ -327,6 +329,8 @@ function notify_telegram
 
 function get_source
 {
+    SECONDS=0
+
     printf "${color_green}Downloading the source code...${color_end}\n"
 
     if [[ "$world_cluster" == "true" ]]; then
@@ -345,7 +349,7 @@ function get_source
                 exit $?
             fi
 
-            git pull
+            git fetch
             if [[ $? != 0 ]]; then
                 notify_telegram "An error occurred while trying to update the source code"
                 exit $?
@@ -375,7 +379,7 @@ function get_source
                 exit $?
             fi
 
-            git pull
+            git fetch
             if [[ $? != 0 ]]; then
                 notify_telegram "An error occurred while trying to update the source code"
                 exit $?
@@ -406,7 +410,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-ah-bot"
                     exit $?
@@ -434,7 +438,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-appreciation"
                     exit $?
@@ -462,7 +466,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-archmage-timear"
                     exit $?
@@ -490,7 +494,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-assistant"
                     exit $?
@@ -499,6 +503,34 @@ function get_source
         else
             if [[ -d "$source/modules/mod-assistant" ]]; then
                 rm -rf "$source/modules/mod-assistant"
+            fi
+        fi
+
+        if [[ "$module_eluna" == "true" ]]; then
+            if [[ ! -d "$source/modules/mod-eluna" ]]; then
+                git clone --depth 1 --branch master "https://github.com/azerothcore/mod-eluna.git" "$source/modules/mod-eluna"
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to download the source code of mod-eluna"
+                    exit $?
+                fi
+            else
+                cd "$source/modules/mod-eluna"
+
+                git reset --hard origin/master
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-eluna"
+                    exit $?
+                fi
+
+                git fetch
+                if [[ $? != 0 ]]; then
+                    notify_telegram "An error occurred while trying to update the source code of mod-eluna"
+                    exit $?
+                fi
+            fi
+        else
+            if [[ -d "$source/modules/mod-eluna" ]]; then
+                rm -rf "$source/modules/mod-eluna"
             fi
         fi
 
@@ -518,7 +550,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-groupquests"
                     exit $?
@@ -546,7 +578,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-junk-to-gold"
                     exit $?
@@ -582,7 +614,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-learnspells"
                     exit $?
@@ -610,7 +642,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-playerbots"
                     exit $?
@@ -638,7 +670,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-progression"
                     exit $?
@@ -666,7 +698,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-recruitafriend"
                     exit $?
@@ -694,7 +726,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-skip-dk-starting-area"
                     exit $?
@@ -722,7 +754,7 @@ function get_source
                     exit $?
                 fi
 
-                git pull
+                git fetch
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-weekendbonus"
                     exit $?
@@ -735,11 +767,14 @@ function get_source
         fi
     fi
 
+    printf "${color_orange}Finished after %02dh:%02dm:%02ds${color_end}\n" $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
     printf "${color_green}Finished downloading the source code...${color_end}\n"
 }
 
 function compile_source
 {
+    SECONDS=0
+
     printf "${color_green}Compiling the source code...${color_end}\n"
 
     if [[ "$world_cluster" == "true" ]]; then
@@ -952,7 +987,7 @@ function compile_source
                 cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="world-only" -DUSE_REAL_LIBSIDECAR=ON
             else
                 if [[ "$module_playerbots" == "true" ]]; then
-                    cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=0 -DSCRIPTS=static -DAPPS_BUILD="$apps"
+                    cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=0 -DSCRIPTS=static -DAPPS_BUILD="$apps" -DCMAKE_CXX_FLAGS="-w"
                 else
                     cmake ../ -DCMAKE_INSTALL_PREFIX=$source -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DSCRIPTS=static -DAPPS_BUILD="$apps"
                 fi
@@ -1040,6 +1075,7 @@ function compile_source
         chmod +x "$source/bin/stop.sh"
     fi
 
+    printf "${color_orange}Finished after %02dh:%02dm:%02ds${color_end}\n" $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
     printf "${color_green}Finished compiling the source code...${color_end}\n"
 }
 
@@ -1138,6 +1174,8 @@ function copy_dbc_files
 
 function import_database_files
 {
+    SECONDS=0
+
     printf "${color_green}Importing the database files...${color_end}\n"
 
     if [[ "$world_cluster" == "false" || "$build_world" == "true" ]]; then
@@ -2510,6 +2548,7 @@ function import_database_files
         printf "${color_orange}Skipping process due to cluster being enabled and world server being disabled${color_end}\n"
     fi
 
+    printf "${color_orange}Finished after %02dh:%02dm:%02ds${color_end}\n" $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
     printf "${color_green}Finished importing the database files..${color_end}\n"
 }
 

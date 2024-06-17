@@ -24,6 +24,7 @@ INSERT INTO `realm_settings` (`id`, `node`, `setting`, `value`) VALUES
 (-1, -1, 'module.appreciation.level_boost.level', '60'),
 (-1, -1, 'module.archmage_timear', 'false'),
 (-1, -1, 'module.assistant', 'false'),
+(-1, -1, 'module.eluna', 'false'),
 (-1, -1, 'module.groupquests', 'false'),
 (-1, -1, 'module.junktogold', 'false'),
 (-1, -1, 'module.learnspells', 'false'),
