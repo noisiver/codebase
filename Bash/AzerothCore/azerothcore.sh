@@ -349,7 +349,7 @@ function get_source
                 exit $?
             fi
 
-            git fetch
+            git pull
             if [[ $? != 0 ]]; then
                 notify_telegram "An error occurred while trying to update the source code"
                 exit $?
@@ -379,7 +379,7 @@ function get_source
                 exit $?
             fi
 
-            git fetch
+            git pull
             if [[ $? != 0 ]]; then
                 notify_telegram "An error occurred while trying to update the source code"
                 exit $?
@@ -410,7 +410,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-ah-bot"
                     exit $?
@@ -438,7 +438,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-appreciation"
                     exit $?
@@ -466,7 +466,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-archmage-timear"
                     exit $?
@@ -494,7 +494,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-assistant"
                     exit $?
@@ -522,7 +522,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-eluna"
                     exit $?
@@ -550,7 +550,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-groupquests"
                     exit $?
@@ -578,7 +578,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-junk-to-gold"
                     exit $?
@@ -614,7 +614,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-learnspells"
                     exit $?
@@ -642,7 +642,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-playerbots"
                     exit $?
@@ -670,7 +670,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-progression"
                     exit $?
@@ -698,7 +698,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-recruitafriend"
                     exit $?
@@ -726,7 +726,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-skip-dk-starting-area"
                     exit $?
@@ -754,7 +754,7 @@ function get_source
                     exit $?
                 fi
 
-                git fetch
+                git pull
                 if [[ $? != 0 ]]; then
                     notify_telegram "An error occurred while trying to update the source code of mod-weekendbonus"
                     exit $?
