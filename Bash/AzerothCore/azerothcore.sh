@@ -1172,6 +1172,38 @@ function copy_dbc_files
     printf "${color_green}Finished copying modified client data files...${color_end}\n"
 }
 
+function drop_database_tables
+{
+    SECONDS=0
+
+    printf "${color_green}Dropping the database tables...${color_end}\n"
+
+    if [[ "$build_world" == "true" ]]; then
+        echo "[client]" > "$mysql_cnf"
+        echo "host=\"$mysql_hostname\"" >> "$mysql_cnf"
+        echo "port=\"$mysql_port\"" >> "$mysql_cnf"
+        echo "user=\"$mysql_username\"" >> "$mysql_cnf"
+        echo "password=\"$mysql_password\"" >> "$mysql_cnf"
+
+        tables=$(mysql --defaults-extra-file=$mysql_cnf $database_world -e 'show tables' | awk '{print $1}' | grep -v '^Tables')
+        for t in $tables; do
+            printf "${color_orange}Dropping $t${color_end}\n"
+            mysql --defaults-extra-file=$mysql_cnf $database_world -e "DROP TABLE IF EXISTS $t"
+            if [[ $? -ne 0 ]]; then
+                notify_telegram "An error occurred while trying to drop the database tables"
+                rm -rf "$mysql_cnf"
+                exit $?
+            fi
+        done
+
+        printf "${color_orange}Finished after %02dh:%02dm:%02ds${color_end}\n" $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
+    else
+        printf "${color_orange}Skipping process due to world server being disabled${color_end}\n"
+    fi
+
+    printf "${color_green}Finished dropping the database tables..${color_end}\n"
+}
+
 function import_database_files
 {
     SECONDS=0
@@ -2544,11 +2576,12 @@ function import_database_files
         fi
 
         rm -rf "$mysql_cnf"
+
+        printf "${color_orange}Finished after %02dh:%02dm:%02ds${color_end}\n" $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
     else
         printf "${color_orange}Skipping process due to cluster being enabled and world server being disabled${color_end}\n"
     fi
 
-    printf "${color_orange}Finished after %02dh:%02dm:%02ds${color_end}\n" $(($SECONDS / 3600)) $((($SECONDS / 60) % 60)) $(($SECONDS % 60))
     printf "${color_green}Finished importing the database files..${color_end}\n"
 }
 
@@ -3126,6 +3159,7 @@ function parameters
     printf "${color_orange}database/db                      ${COLOR_WHITE}| ${color_blue}Import all files to the specified databases${color_end}\n"
     printf "${color_orange}config/conf/cfg/settings/options ${COLOR_WHITE}| ${color_blue}Updates all config files, including enabled modules, with options specified${color_end}\n"
     printf "${color_orange}dbc                              ${COLOR_WHITE}| ${color_blue}Copy modified client data files to the proper folder${color_end}\n"
+    printf "${color_orange}reset                            ${COLOR_WHITE}| ${color_blue}Drops all database tables from the world database${color_end}\n"
     printf "${color_orange}all                              ${COLOR_WHITE}| ${color_blue}Run all parameters listed above, as well as stop and start${color_end}\n"
     printf "${color_orange}start                            ${COLOR_WHITE}| ${color_blue}Starts the compiled processes, based off of the choice for compilation${color_end}\n"
     printf "${color_orange}stop                             ${COLOR_WHITE}| ${color_blue}Stops the compiled processes, based off of the choice for compilation${color_end}\n"
@@ -3157,6 +3191,8 @@ if [[ $# == 1 ]]; then
         set_config
     elif [[ "$1" == "dbc" ]]; then
         copy_dbc_files
+    elif [[ "$1" == "reset" ]]; then
+        drop_database_tables
     elif [[ "$1" == "all" ]]; then
         install_packages
         stop_server
