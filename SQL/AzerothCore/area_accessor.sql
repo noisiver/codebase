@@ -10,16 +10,14 @@ SET
 @MaxLevel := 30,
 @Faction  := 85,
 @NPCFlag  := 1,
-@Scale    := 1.0,
-@Rank     := 0,
 @Type     := 7,
 @TypeFlags := 0,
 @AIName := 'SmartAI',
 @FlagsExtra := 16777218;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry;
-INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `RegenHealth`, `AIName`, `flags_extra`) VALUES
-(@Entry, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
+INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `unit_class`, `unit_flags`, `type`, `type_flags`, `AIName`, `flags_extra`) VALUES
+(@Entry, @Name, @Title, @Icon, @GossipMenu, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 2, @Type, @TypeFlags, @AIName, @FlagsExtra);
 
 DELETE FROM `creature_template_model` WHERE `CreatureID`=@Entry;
 INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`, `DisplayScale`, `Probability`) VALUES
@@ -60,8 +58,8 @@ SET
 @Faction := 104;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+1;
-INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `RegenHealth`, `AIName`, `flags_extra`) VALUES
-(@Entry+1, @Name, @Title, @Icon, @GossipMenu+1, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
+INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `unit_class`, `unit_flags`, `type`, `type_flags`, `AIName`, `flags_extra`) VALUES
+(@Entry+1, @Name, @Title, @Icon, @GossipMenu+1, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 2, @Type, @TypeFlags, @AIName, @FlagsExtra);
 
 DELETE FROM `creature_template_model` WHERE `CreatureID`=@Entry+1;
 INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`, `DisplayScale`, `Probability`) VALUES
@@ -102,8 +100,8 @@ SET
 @Faction := 118;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+2;
-INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `RegenHealth`, `AIName`, `flags_extra`) VALUES
-(@Entry+2, @Name, @Title, @Icon, @GossipMenu+2, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
+INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `unit_class`, `unit_flags`, `type`, `type_flags`, `AIName`, `flags_extra`) VALUES
+(@Entry+2, @Name, @Title, @Icon, @GossipMenu+2, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 2, @Type, @TypeFlags, @AIName, @FlagsExtra);
 
 DELETE FROM `creature_template_model` WHERE `CreatureID`=@Entry+2;
 INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`, `DisplayScale`, `Probability`) VALUES
@@ -144,8 +142,8 @@ SET
 @Faction := 1604;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+3;
-INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `RegenHealth`, `AIName`, `flags_extra`) VALUES
-(@Entry+3, @Name, @Title, @Icon, @GossipMenu+3, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
+INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `unit_class`, `unit_flags`, `type`, `type_flags`, `AIName`, `flags_extra`) VALUES
+(@Entry+3, @Name, @Title, @Icon, @GossipMenu+3, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 2, @Type, @TypeFlags, @AIName, @FlagsExtra);
 
 DELETE FROM `creature_template_model` WHERE `CreatureID`=@Entry+3;
 INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`, `DisplayScale`, `Probability`) VALUES
@@ -186,8 +184,8 @@ SET
 @Faction := 12;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+4;
-INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `RegenHealth`, `AIName`, `flags_extra`) VALUES
-(@Entry+4, @Name, @Title, @Icon, @GossipMenu+4, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
+INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `unit_class`, `unit_flags`, `type`, `type_flags`, `AIName`, `flags_extra`) VALUES
+(@Entry+4, @Name, @Title, @Icon, @GossipMenu+4, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 2, @Type, @TypeFlags, @AIName, @FlagsExtra);
 
 DELETE FROM `creature_template_model` WHERE `CreatureID`=@Entry+4;
 INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`, `DisplayScale`, `Probability`) VALUES
@@ -228,8 +226,8 @@ SET
 @Faction := 55;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+5;
-INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `RegenHealth`, `AIName`, `flags_extra`) VALUES
-(@Entry+5, @Name, @Title, @Icon, @GossipMenu+5, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
+INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `unit_class`, `unit_flags`, `type`, `type_flags`, `AIName`, `flags_extra`) VALUES
+(@Entry+5, @Name, @Title, @Icon, @GossipMenu+5, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 2, @Type, @TypeFlags, @AIName, @FlagsExtra);
 
 DELETE FROM `creature_template_model` WHERE `CreatureID`=@Entry+5;
 INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`, `DisplayScale`, `Probability`) VALUES
@@ -270,8 +268,8 @@ SET
 @Faction := 80;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+6;
-INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `RegenHealth`, `AIName`, `flags_extra`) VALUES
-(@Entry+6, @Name, @Title, @Icon, @GossipMenu+6, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
+INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `unit_class`, `unit_flags`, `type`, `type_flags`, `AIName`, `flags_extra`) VALUES
+(@Entry+6, @Name, @Title, @Icon, @GossipMenu+6, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 2, @Type, @TypeFlags, @AIName, @FlagsExtra);
 
 DELETE FROM `creature_template_model` WHERE `CreatureID`=@Entry+6;
 INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`, `DisplayScale`, `Probability`) VALUES
@@ -312,8 +310,8 @@ SET
 @Faction := 1638;
 
 DELETE FROM `creature_template` WHERE `entry`=@Entry+7;
-INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `unit_class`, `unit_flags`, `type`, `type_flags`, `RegenHealth`, `AIName`, `flags_extra`) VALUES
-(@Entry+7, @Name, @Title, @Icon, @GossipMenu+7, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 1, @Scale, @Rank, 1, 2, @Type, @TypeFlags, 1, @AIName, @FlagsExtra);
+INSERT INTO `creature_template` (`entry`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `faction`, `npcflag`, `unit_class`, `unit_flags`, `type`, `type_flags`, `AIName`, `flags_extra`) VALUES
+(@Entry+7, @Name, @Title, @Icon, @GossipMenu+7, @MinLevel, @MaxLevel, @Faction, @NPCFlag, 1, 2, @Type, @TypeFlags, @AIName, @FlagsExtra);
 
 DELETE FROM `creature_template_model` WHERE `CreatureID`=@Entry+7;
 INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`, `DisplayScale`, `Probability`) VALUES
