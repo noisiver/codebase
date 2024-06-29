@@ -45,7 +45,6 @@ mysql_password="acore" # This is the username the script will use when importing
 mysql_database="acore_auth" # This is the name of the database that holds the SQL data provided with this script
 id=1 # This is realm id
 node=1 # This is node id. Ignore if not using cluster
-use_mysql="true" # Set to false if you rather use mariadb
 
 function install_packages
 {
@@ -56,13 +55,7 @@ function install_packages
     fi
 
     if [[ "$world_cluster" == "false" || "$build_world" == "true" ]]; then
-        packages+=("cmake" "make" "gcc" "clang" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libboost1.74-all-dev")
-    fi
-
-    if [[ "$use_mysql" == "true" ]]; then
-        packages+=("libmysqlclient-dev" "mysql-client")
-    else
-        packages+=("libmariadb-dev-compat" "mariadb-client")
+        packages+=("cmake" "make" "gcc" "clang" "curl" "unzip" "g++" "libssl-dev" "libbz2-dev" "libreadline-dev" "libncurses-dev" "libboost1.74-all-dev" "libmysqlclient-dev" "mysql-client")
     fi
 
     for p in "${packages[@]}"; do
@@ -138,13 +131,7 @@ function install_packages
 
 function install_mysql_client
 {
-    if [[ "$use_mysql" == "true" ]]; then
-        package="mysql-client"
-    else
-        package="mariadb-client"
-    fi
-
-    if [[ $(dpkg-query -W -f='${Status}' $package 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
+    if [[ $(dpkg-query -W -f='${Status}' mysql-client 2>/dev/null | grep -c "ok installed") -eq 0 ]]; then
         if [[ $EUID != 0 ]]; then
             sudo apt-get --yes update
         else
@@ -156,9 +143,9 @@ function install_mysql_client
         fi
 
         if [[ $EUID != 0 ]]; then
-            sudo apt-get --yes install $package
+            sudo apt-get --yes install mysql-client
         else
-            apt-get --yes install $package
+            apt-get --yes install mysql-client
         fi
         if [[ $? != 0 ]]; then
             notify_telegram "An error occurred while trying to install the required packages"
@@ -2968,6 +2955,104 @@ function set_config
 
             sed -i 's/AiPlayerbot.AutoPickReward =.*/AiPlayerbot.AutoPickReward = yes/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.AutoAvoidAoe =.*/AiPlayerbot.AutoAvoidAoe = 1/g' "$source/etc/modules/playerbots.conf"
+
+            if [[ $module_progression_patch -lt 17 ]]; then
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.1.0 =.*/AiPlayerbot.PremadeSpecGlyph.1.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.1.0.60 =.*/AiPlayerbot.PremadeSpecLink.1.0.60 = 302203212333510020201231/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.1.0.80 =.*/AiPlayerbot.PremadeSpecLink.1.0.80 = 302203212333510020201231-32505003002/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.1.1 =.*/AiPlayerbot.PremadeSpecGlyph.1.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.1.1.60 =.*/AiPlayerbot.PremadeSpecLink.1.1.60 = -3050530005003100531251/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.1.1.80 =.*/AiPlayerbot.PremadeSpecLink.1.1.80 = 3020330023-3050530005003100531251/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.1.2 =.*/AiPlayerbot.PremadeSpecGlyph.1.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.1.2.60 =.*/AiPlayerbot.PremadeSpecLink.1.2.60 = --253351225003212021331/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.1.2.80 =.*/AiPlayerbot.PremadeSpecLink.1.2.80 = 05-3205-253351225003212021331/g' "$source/etc/modules/playerbots.conf"
+
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.2.0 =.*/AiPlayerbot.PremadeSpecGlyph.2.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.2.0.60 =.*/AiPlayerbot.PremadeSpecLink.2.0.60 = 503501523220132531051/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.2.0.80 =.*/AiPlayerbot.PremadeSpecLink.2.0.80 = 503501523220132531051-5-052/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.2.1 =.*/AiPlayerbot.PremadeSpecGlyph.2.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.2.1.60 =.*/AiPlayerbot.PremadeSpecLink.2.1.60 = -55005135203152021331/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.2.1.80 =.*/AiPlayerbot.PremadeSpecLink.2.1.80 = -55005135203152021331-552002/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.2.2 =.*/AiPlayerbot.PremadeSpecGlyph.2.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.2.2.60 =.*/AiPlayerbot.PremadeSpecLink.2.2.60 = --052302502233313221331/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.2.2.65 =.*/AiPlayerbot.PremadeSpecLink.2.2.65 = 05-55-052302502233313221331/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.2.2.80 =.*/AiPlayerbot.PremadeSpecLink.2.2.80 = 05-55-052302502233313221331/g' "$source/etc/modules/playerbots.conf"
+
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.3.0 =.*/AiPlayerbot.PremadeSpecGlyph.3.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.3.0.60 =.*/AiPlayerbot.PremadeSpecLink.3.0.60 = 552002015050100531051/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.3.0.80 =.*/AiPlayerbot.PremadeSpecLink.3.0.80 = 552002015050100531051-00530503103/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.3.1 =.*/AiPlayerbot.PremadeSpecGlyph.3.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.3.1.60 =.*/AiPlayerbot.PremadeSpecLink.3.1.60 = -0353052312300132331351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.3.1.80 =.*/AiPlayerbot.PremadeSpecLink.3.1.80 = 5-0353052312300132331351-5000002/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.3.2 =.*/AiPlayerbot.PremadeSpecGlyph.3.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.3.2.60 =.*/AiPlayerbot.PremadeSpecLink.3.2.60 = --50000325000333305330351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.3.2.80 =.*/AiPlayerbot.PremadeSpecLink.3.2.80 = -005305001-50000325000333305330351/g' "$source/etc/modules/playerbots.conf"
+
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.4.0 =.*/AiPlayerbot.PremadeSpecGlyph.4.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.4.0.60 =.*/AiPlayerbot.PremadeSpecLink.4.0.60 = 025323005350102521031/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.4.0.80 =.*/AiPlayerbot.PremadeSpecLink.4.0.80 = 025323005350102521031-005005005003/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.4.1 =.*/AiPlayerbot.PremadeSpecGlyph.4.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.4.1.60 =.*/AiPlayerbot.PremadeSpecLink.4.1.60 = -02500510500350152231051/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.4.1.80 =.*/AiPlayerbot.PremadeSpecLink.4.1.80 = 005320005-02500510500350152231051/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.4.2 =.*/AiPlayerbot.PremadeSpecGlyph.4.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.4.2.60 =.*/AiPlayerbot.PremadeSpecLink.4.2.60 = --53202320303201210501351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.4.2.80 =.*/AiPlayerbot.PremadeSpecLink.4.2.80 = 0053231-3-53202320303201210501351/g' "$source/etc/modules/playerbots.conf"
+
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.5.0 =.*/AiPlayerbot.PremadeSpecGlyph.5.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.5.0.60 =.*/AiPlayerbot.PremadeSpecLink.5.0.60 = 0533203130300512331331/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.5.0.80 =.*/AiPlayerbot.PremadeSpecLink.5.0.80 = 0533203130300512331331-03550003/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.5.1 =.*/AiPlayerbot.PremadeSpecGlyph.5.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.5.1.60 =.*/AiPlayerbot.PremadeSpecLink.5.1.60 = -235050032302152530351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.5.1.80 =.*/AiPlayerbot.PremadeSpecLink.5.1.80 = 05032001-235050032302152530351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.5.2 =.*/AiPlayerbot.PremadeSpecGlyph.5.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.5.2.60 =.*/AiPlayerbot.PremadeSpecLink.5.2.60 = --3250230512230123231531/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.5.2.80 =.*/AiPlayerbot.PremadeSpecLink.5.2.80 = 0503202--3250230512230123231531/g' "$source/etc/modules/playerbots.conf"
+
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.7.0 =.*/AiPlayerbot.PremadeSpecGlyph.7.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.7.0.60 =.*/AiPlayerbot.PremadeSpecLink.7.0.60 = 5530001523213351331/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.7.0.80 =.*/AiPlayerbot.PremadeSpecLink.7.0.80 = 5530001523213351331-005050131/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.7.1 =.*/AiPlayerbot.PremadeSpecGlyph.7.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.7.1.60 =.*/AiPlayerbot.PremadeSpecLink.7.1.60 = -30505033005021333031111/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.7.1.80 =.*/AiPlayerbot.PremadeSpecLink.7.1.80 = 053030052-30505033005021333031111/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.7.2 =.*/AiPlayerbot.PremadeSpecGlyph.7.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.7.2.60 =.*/AiPlayerbot.PremadeSpecLink.7.2.60 = --50005331335310510321/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.7.2.80 =.*/AiPlayerbot.PremadeSpecLink.7.2.80 = -005050331-50005331335310510321/g' "$source/etc/modules/playerbots.conf"
+
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.8.0 =.*/AiPlayerbot.PremadeSpecGlyph.8.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.8.0.60 =.*/AiPlayerbot.PremadeSpecLink.8.0.60 = 2300052331003301503201251/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.8.0.80 =.*/AiPlayerbot.PremadeSpecLink.8.0.80 = 2300052331003301503201251-03-303303001/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.8.1 =.*/AiPlayerbot.PremadeSpecGlyph.8.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.8.1.60 =.*/AiPlayerbot.PremadeSpecLink.8.1.60 = -00550300123033300531231/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.8.1.80 =.*/AiPlayerbot.PremadeSpecLink.8.1.80 = 23000503310001-00550300123033300531231/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.8.2 =.*/AiPlayerbot.PremadeSpecGlyph.8.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.8.2.60 =.*/AiPlayerbot.PremadeSpecLink.8.2.60 = --05330033132031002321521/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.8.2.80 =.*/AiPlayerbot.PremadeSpecLink.8.2.80 = 2300252301--05330033132031002321521/g' "$source/etc/modules/playerbots.conf"
+
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.9.0 =.*/AiPlayerbot.PremadeSpecGlyph.9.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.9.0.60 =.*/AiPlayerbot.PremadeSpecLink.9.0.60 = 23500220012235102550031/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.9.0.70 =.*/AiPlayerbot.PremadeSpecLink.9.0.70 = 23500220012235102550031--5500000502/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.9.0.80 =.*/AiPlayerbot.PremadeSpecLink.9.0.80 = 23500220012235102550031--5500000502/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.9.1 =.*/AiPlayerbot.PremadeSpecGlyph.9.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.9.1.60 =.*/AiPlayerbot.PremadeSpecLink.9.1.60 = -0032233011352125301351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.9.1.70 =.*/AiPlayerbot.PremadeSpecLink.9.1.70 = -0032233011352125301351-55000005/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.9.1.80 =.*/AiPlayerbot.PremadeSpecLink.9.1.80 = -0032233011352125301351-55000005/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.9.2 =.*/AiPlayerbot.PremadeSpecGlyph.9.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.9.2.60 =.*/AiPlayerbot.PremadeSpecLink.9.2.60 = --052032052203310513351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.9.2.80 =.*/AiPlayerbot.PremadeSpecLink.9.2.80 = -03320030103-052032052203310513351/g' "$source/etc/modules/playerbots.conf"
+
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.11.0 =.*/AiPlayerbot.PremadeSpecGlyph.11.0 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.11.0.60 =.*/AiPlayerbot.PremadeSpecLink.11.0.60 = 503220312533133201051/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.11.0.80 =.*/AiPlayerbot.PremadeSpecLink.11.0.80 = 503220312533133201051--205003312/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.11.1 =.*/AiPlayerbot.PremadeSpecGlyph.11.1 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.11.1.60 =.*/AiPlayerbot.PremadeSpecLink.11.1.60 = -51323213032201035312001/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.11.1.80 =.*/AiPlayerbot.PremadeSpecLink.11.1.80 = -51323213032201035312001-205503012/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.11.2 =.*/AiPlayerbot.PremadeSpecGlyph.11.2 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.11.2.60 =.*/AiPlayerbot.PremadeSpecLink.11.2.60 = --230033312031522531351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.11.2.80 =.*/AiPlayerbot.PremadeSpecLink.11.2.80 = 05320021--230033312031522531351/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecGlyph.11.3 =.*/AiPlayerbot.PremadeSpecGlyph.11.3 = 0,0,0,0,0,0/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.11.3.60 =.*/AiPlayerbot.PremadeSpecLink.11.3.60 = -55320203232201005310031/g' "$source/etc/modules/playerbots.conf"
+                sed -i 's/AiPlayerbot.PremadeSpecLink.11.3.80 =.*/AiPlayerbot.PremadeSpecLink.11.3.80 = -55320203232201005310031-205503012/g' "$source/etc/modules/playerbots.conf"
+            fi
 
             sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$source/etc/modules/playerbots.conf"
         fi
