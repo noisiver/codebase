@@ -29,7 +29,6 @@ INSERT INTO `realm_settings` (`id`, `node`, `setting`, `value`) VALUES
 (-1, -1, 'module.junktogold', 'false'),
 (-1, -1, 'module.learnspells', 'false'),
 (-1, -1, 'module.playerbots', 'false'),
-(-1, -1, 'module.playerbots.accounts', '200'),
 (-1, -1, 'module.playerbots.bots', '50'),
 (-1, -1, 'module.progression', 'false'),
 (-1, -1, 'module.progression.aura', '4'),
