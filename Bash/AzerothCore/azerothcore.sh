@@ -2701,8 +2701,8 @@ function set_config
         sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = 1/g' "$source/etc/worldserver.conf"
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' "$source/etc/worldserver.conf"
-        sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' "$source/etc/worldserver.conf"
-        sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
+        sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 20/g' "$source/etc/worldserver.conf"
+        sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 200/g' "$source/etc/worldserver.conf"
         data_directory=$(echo "$world_data_directory" | sed 's#/#\\/#g')
         sed -i 's/DataDir =.*/DataDir = "'"$data_directory"'"/g' "$source/etc/worldserver.conf"
         sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$source/etc/worldserver.conf"
@@ -2710,45 +2710,6 @@ function set_config
         sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 0/g' "$source/etc/worldserver.conf"
-
-        sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
-
-        sed -i 's/NpcBot.Botgiver.FilterRaces = .*/NpcBot.Botgiver.FilterRaces = 1/g' "$source/etc/worldserver.conf"
-        if [[ "$module_progression_patch" -ge "19" ]]; then
-            sed -i 's/NpcBot.MountLevel.60  = .*/NpcBot.MountLevel.60  = 20/g' "$source/etc/worldserver.conf"
-            sed -i 's/NpcBot.MountLevel.100 = .*/NpcBot.MountLevel.100 = 40/g' "$source/etc/worldserver.conf"
-        else
-            if [[ "$module_progression_patch" -ge "16" ]]; then
-                sed -i 's/NpcBot.MountLevel.60  = .*/NpcBot.MountLevel.60  = 30/g' "$source/etc/worldserver.conf"
-            else
-                sed -i 's/NpcBot.MountLevel.60  = .*/NpcBot.MountLevel.60  = 40/g' "$source/etc/worldserver.conf"
-            fi
-            sed -i 's/NpcBot.MountLevel.100 = .*/NpcBot.MountLevel.100 = 60/g' "$source/etc/worldserver.conf"
-        fi
-        sed -i 's/NpcBot.HealTargetIconMask = .*/NpcBot.HealTargetIconMask = 1/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.TankTargetIconMask = .*/NpcBot.TankTargetIconMask = 128/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.OffTankTargetIconMask = .*/NpcBot.OffTankTargetIconMask = 64/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.DPSTargetIconMask = .*/NpcBot.DPSTargetIconMask = 2/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.RangedDPSTargetIconMask = .*/NpcBot.RangedDPSTargetIconMask = 32/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.NoDPSTargetIconMask = .*/NpcBot.NoDPSTargetIconMask = 16/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Enable.Raid          = .*/NpcBot.Enable.Raid          = 1/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Enable.BG            = .*/NpcBot.Enable.BG            = 1/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Enable.Arena         = .*/NpcBot.Enable.Arena         = 1/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Cost = .*/NpcBot.Cost = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.EngageDelay.DPS  = .*/NpcBot.EngageDelay.DPS  = 8000/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.EngageDelay.Heal = .*/NpcBot.EngageDelay.Heal = 3000/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.Blademaster.Enable       = .*/NpcBot.Classes.Blademaster.Enable       = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.ObsidianDestroyer.Enable = .*/NpcBot.Classes.ObsidianDestroyer.Enable = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.Archmage.Enable          = .*/NpcBot.Classes.Archmage.Enable          = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.Dreadlord.Enable         = .*/NpcBot.Classes.Dreadlord.Enable         = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.SpellBreaker.Enable      = .*/NpcBot.Classes.SpellBreaker.Enable      = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.DarkRanger.Enable        = .*/NpcBot.Classes.DarkRanger.Enable        = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.Necromancer.Enable       = .*/NpcBot.Classes.Necromancer.Enable       = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.SeaWitch.Enable          = .*/NpcBot.Classes.SeaWitch.Enable          = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.Classes.CryptLord.Enable         = .*/NpcBot.Classes.CryptLord.Enable         = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.EnrageOnDismiss = .*/NpcBot.EnrageOnDismiss = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.WanderingBots.BG.Enable = .*/NpcBot.WanderingBots.BG.Enable = 1/g' "$source/etc/worldserver.conf"
-        sed -i 's/NpcBot.HK.Achievements.Enable = .*/NpcBot.HK.Achievements.Enable = 1/g' "$source/etc/worldserver.conf"
 
         if [[ "$module_ah_bot" == "true" ]]; then
             if [[ ! -f "$source/etc/modules/mod_ahbot.conf.dist" ]]; then
@@ -2931,9 +2892,15 @@ function set_config
 
             cp "$source/etc/modules/playerbots.conf.dist" "$source/etc/modules/playerbots.conf"
 
+            if [[ $module_playerbots_bots -gt 0 ]]; then
+                module_playerbots_accounts=$(($module_playerbots_bots/9+1))
+            else
+                module_playerbots_accounts=0
+            fi
+
             sed -i 's/AiPlayerbot.MinRandomBots =.*/AiPlayerbot.MinRandomBots = '$(($module_playerbots_bots/2))'/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.MaxRandomBots =.*/AiPlayerbot.MaxRandomBots = '$module_playerbots_bots'/g' "$source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.RandomBotAccountCount =.*/AiPlayerbot.RandomBotAccountCount = '$(($module_playerbots_bots/9+1))'/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotAccountCount =.*/AiPlayerbot.RandomBotAccountCount = '$module_playerbots_accounts'/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.AllowPlayerBots =.*/AiPlayerbot.AllowPlayerBots = 1/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.DisableRandomLevels =.*/AiPlayerbot.DisableRandomLevels = 1/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = 1/g' "$source/etc/modules/playerbots.conf"
@@ -2976,6 +2943,8 @@ function set_config
             sed -i 's/Progression.DungeonFinder.Enforced =.*/Progression.DungeonFinder.Enforced = 1/g' "$source/etc/modules/mod_progression.conf"
             sed -i 's/Progression.DualTalent.Enforced =.*/Progression.DualTalent.Enforced = 1/g' "$source/etc/modules/mod_progression.conf"
             sed -i 's/Progression.Reset =.*/Progression.Reset = 1/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.Multiplier.Damage =.*/Progression.Multiplier.Damage = 0.8/g' "$source/etc/modules/mod_progression.conf"
+            sed -i 's/Progression.Multiplier.Healing =.*/Progression.Multiplier.Healing = 0.75/g' "$source/etc/modules/mod_progression.conf"
         fi
 
         if [[ "$module_recruitafriend" == "true" ]]; then
