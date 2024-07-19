@@ -1171,7 +1171,7 @@ function import_database_files
         fi
 
         if [[ "$module_ah_bot" == "true" ]]; then
-            if [[ ! -d "$source/modules/mod-ah-bot/data/sql/db-world/base" ]]; then
+            if [[ ! -d "$source/modules/mod-ah-bot/sql/world" ]]; then
                 printf "${color_red}The auction house bot module is enabled but the files aren't where they should be${color_end}\n"
                 printf "${color_red}Please make sure to install the server first${color_end}\n"
                 notify_telegram "An error occurred while trying to import the database files of mod-ah-bot"
@@ -1179,8 +1179,8 @@ function import_database_files
                 exit $?
             fi
 
-            if [[ `ls -1 $source/modules/mod-ah-bot/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $source/modules/mod-ah-bot/data/sql/db-world/base/*.sql; do
+            if [[ `ls -1 $source/modules/mod-ah-bot/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/modules/mod-ah-bot/sql/world/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -1289,7 +1289,7 @@ function import_database_files
         fi
 
         if [[ "$module_assistant" == "true" ]]; then
-            if [[ ! -d "$source/modules/mod-assistant/data/sql/db-world/base" ]]; then
+            if [[ ! -d "$source/modules/mod-assistant/sql/world" ]]; then
                 printf "${color_red}The assistant module is enabled but the files aren't where they should be${color_end}\n"
                 printf "${color_red}Please make sure to install the server first${color_end}\n"
                 notify_telegram "An error occurred while trying to import the database files of mod-assistant"
@@ -1297,8 +1297,8 @@ function import_database_files
                 exit $?
             fi
 
-            if [[ `ls -1 $source/modules/mod-assistant/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $source/modules/mod-assistant/data/sql/db-world/base/*.sql; do
+            if [[ `ls -1 $source/modules/mod-assistant/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/modules/mod-assistant/sql/world/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -1326,7 +1326,7 @@ function import_database_files
         fi
 
         if [[ "$module_groupquests" == "true" ]]; then
-            if [[ ! -d "$source/modules/mod-groupquests/data/sql/db-world/base" ]]; then
+            if [[ ! -d "$source/modules/mod-groupquests/sql/world" ]]; then
                 printf "${color_red}The group quests module is enabled but the files aren't where they should be${color_end}\n"
                 printf "${color_red}Please make sure to install the server first${color_end}\n"
                 notify_telegram "An error occurred while trying to import the database files of mod-groupquests"
@@ -1334,8 +1334,8 @@ function import_database_files
                 exit $?
             fi
 
-            if [[ `ls -1 $source/modules/mod-groupquests/data/sql/db-world/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $source/modules/mod-groupquests/data/sql/db-world/base/*.sql; do
+            if [[ `ls -1 $source/modules/mod-groupquests/sql/world/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/modules/mod-groupquests/sql/world/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -2099,7 +2099,7 @@ function import_database_files
         fi
 
         if [[ "$module_recruitafriend" == "true" ]]; then
-            if [[ ! -d "$source/modules/mod-recruitafriend/data/sql/db-auth/base" ]]; then
+            if [[ ! -d "$source/modules/mod-recruitafriend/sql/auth" ]]; then
                 printf "${color_red}The recruit-a-friend module is enabled but the files aren't where they should be${color_end}\n"
                 printf "${color_red}Please make sure to install the server first${color_end}\n"
                 notify_telegram "An error occurred while trying to import the database files of mod-recruitafriend"
@@ -2107,8 +2107,8 @@ function import_database_files
                 exit $?
             fi
 
-            if [[ `ls -1 $source/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
-                for f in $source/modules/mod-recruitafriend/data/sql/db-auth/base/*.sql; do
+            if [[ `ls -1 $source/modules/mod-recruitafriend/sql/auth/*.sql 2>/dev/null | wc -l` -gt 0 ]]; then
+                for f in $source/modules/mod-recruitafriend/sql/auth/*.sql; do
                     FILENAME=$(basename $f)
                     HASH=($(sha1sum $f))
 
@@ -2326,15 +2326,23 @@ function set_config
             sed -i 's/AuctionHouseBot.GUID =.*/AuctionHouseBot.GUID = 1/g' "$source/etc/modules/mod_ahbot.conf"
             sed -i 's/AuctionHouseBot.ItemsPerCycle =.*/AuctionHouseBot.ItemsPerCycle = 200/g' "$source/etc/modules/mod_ahbot.conf"
 
-            if [[ $module_progression_patch -lt 12 ]]; then
+            if [[ $module_progression_patch -lt 6 ]]; then # T1
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 66/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch -lt 7 ]]; then # T2
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 76/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch -lt 12 ]]; then # T3
                 sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 92/g' "$source/etc/modules/mod_ahbot.conf"
-            elif [[ $module_progression_patch -lt 17 ]]; then
-                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 164/g' "$source/etc/modules/mod_ahbot.conf"
-            elif [[ $module_progression_patch  -lt 18 ]]; then
+            elif [[ $module_progression_patch -lt 13 ]]; then # T4
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 120/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch -lt 14 ]]; then # T5
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 133/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch -lt 17 ]]; then # T6
+                sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 154/g' "$source/etc/modules/mod_ahbot.conf"
+            elif [[ $module_progression_patch  -lt 18 ]]; then # T7
                 sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 213/g' "$source/etc/modules/mod_ahbot.conf"
-            elif [[ $module_progression_patch  -lt 19 ]]; then
+            elif [[ $module_progression_patch  -lt 19 ]]; then # T8
                 sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 226/g' "$source/etc/modules/mod_ahbot.conf"
-            elif [[ $module_progression_patch  -lt 20 ]]; then
+            elif [[ $module_progression_patch  -lt 20 ]]; then # T9
                 sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 245/g' "$source/etc/modules/mod_ahbot.conf"
             else
                 sed -i 's/AuctionHouseBot.DisableItemsAboveLevel =.*/AuctionHouseBot.DisableItemsAboveLevel = 0/g' "$source/etc/modules/mod_ahbot.conf"
@@ -2507,6 +2515,8 @@ function set_config
             sed -i 's/AiPlayerbot.AllowSummonWhenMasterIsDead =.*/AiPlayerbot.AllowSummonWhenMasterIsDead = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.AllowSummonWhenBotIsDead =.*/AiPlayerbot.AllowSummonWhenBotIsDead = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.ReviveBotWhenSummoned =.*/AiPlayerbot.ReviveBotWhenSummoned = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.SayWhenCollectingItems =.*/AiPlayerbot.SayWhenCollectingItems = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.LimitGearExpansion =.*/AiPlayerbot.LimitGearExpansion = 1/g' "$source/etc/modules/playerbots.conf"
 
             if [[ $module_progression_patch -lt 12 ]]; then
                 sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 60/g' "$source/etc/modules/playerbots.conf"
