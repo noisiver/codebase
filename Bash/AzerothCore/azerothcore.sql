@@ -3,7 +3,7 @@ CREATE TABLE `realm_settings` (
 	`id` INT(10) NOT NULL DEFAULT '-1',
 	`setting` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
 	`value` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
-	PRIMARY KEY (`id`, `node`, `setting`) USING BTREE
+	PRIMARY KEY (`id`, `setting`) USING BTREE
 )
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB

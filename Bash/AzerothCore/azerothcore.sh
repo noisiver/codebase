@@ -2262,7 +2262,7 @@ function set_config
         sed -i 's/Updates.EnableDatabases =.*/Updates.EnableDatabases = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/RealmID =.*/RealmID = '$id'/g' "$source/etc/worldserver.conf"
         sed -i 's/WorldServerPort =.*/WorldServerPort = '$world_port'/g' "$source/etc/worldserver.conf"
-        sed -i 's/GameType =.*/GameType = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/GameType =.*/GameType = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/RealmZone =.*/RealmZone = 1/g' "$source/etc/worldserver.conf"
         sed -i 's/Expansion =.*/Expansion = 2/g' "$source/etc/worldserver.conf"
         sed -i 's/PlayerLimit =.*/PlayerLimit = 1000/g' "$source/etc/worldserver.conf"
@@ -2305,6 +2305,7 @@ function set_config
         sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/Daze.Enabled =.*/Daze.Enabled = 0/g' "$source/etc/worldserver.conf"
 
         if [[ "$module_ah_bot" == "true" ]]; then
             if [[ ! -f "$source/etc/modules/mod_ahbot.conf.dist" ]]; then
