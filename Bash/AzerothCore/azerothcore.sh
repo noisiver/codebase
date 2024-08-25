@@ -2548,7 +2548,6 @@ function set_config
             sed -i 's/AiPlayerbot.RandomBotTalk =.*/AiPlayerbot.RandomBotTalk = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.RandomBotGuildTalk =.*/AiPlayerbot.RandomBotGuildTalk = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.RandomBotNonCombatStrategies =.*/AiPlayerbot.RandomBotNonCombatStrategies ="+quest,+travel"/g' "$source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.KillXPRate =.*/AiPlayerbot.KillXPRate = 10000/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.SelfBotLevel =.*/AiPlayerbot.SelfBotLevel = 2/g' "$source/etc/modules/playerbots.conf"
 
             sed -i 's/AiPlayerbot.RandomBotArenaTeam2v2Count =.*/AiPlayerbot.RandomBotArenaTeam2v2Count = 10/g' "$source/etc/modules/playerbots.conf"
