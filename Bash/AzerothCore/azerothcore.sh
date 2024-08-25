@@ -689,8 +689,8 @@ function compile_source
 
         echo "#!/bin/bash" > "$source/bin/auth.sh"
         echo "while :; do" >> "$source/bin/auth.sh"
-        echo "  ./authserver" >> "$source/bin/auth.sh"
-        echo "  sleep 5" >> "$source/bin/auth.sh"
+        echo "    ./authserver" >> "$source/bin/auth.sh"
+        echo "    sleep 5" >> "$source/bin/auth.sh"
         echo "done" >> "$source/bin/auth.sh"
 
         chmod +x "$source/bin/auth.sh"
@@ -707,11 +707,11 @@ function compile_source
 
         echo "#!/bin/bash" > "$source/bin/world.sh"
         echo "while :; do" >> "$source/bin/world.sh"
-        echo "  ./worldserver" >> "$source/bin/world.sh"
-        echo "  if [[ \$? == 0 ]]; then" >> "$source/bin/world.sh"
-        echo "    break" >> "$source/bin/world.sh"
-        echo "  fi" >> "$source/bin/world.sh"
-        echo "  sleep 5" >> "$source/bin/world.sh"
+        echo "    nice -n -19 taskset -c 1,2,3 ./worldserver" >> "$source/bin/world.sh"
+        echo "    if [[ \$? == 0 ]]; then" >> "$source/bin/world.sh"
+        echo "      break" >> "$source/bin/world.sh"
+        echo "    fi" >> "$source/bin/world.sh"
+        echo "    sleep 5" >> "$source/bin/world.sh"
         echo "done" >> "$source/bin/world.sh"
 
         chmod +x "$source/bin/world.sh"
@@ -2295,17 +2295,28 @@ function set_config
         sed -i 's/LeaveGroupOnLogout.Enabled =.*/LeaveGroupOnLogout.Enabled = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Group.Raid.LevelRestriction =.*/Group.Raid.LevelRestriction = 1/g' "$source/etc/worldserver.conf"
         sed -i 's/DBC.EnforceItemAttributes =.*/DBC.EnforceItemAttributes = 0/g' "$source/etc/worldserver.conf"
-        sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(nproc)'/g' "$source/etc/worldserver.conf"
+        sed -i 's/MapUpdate.Threads =.*/MapUpdate.Threads = '$(($(nproc)*2))'/g' "$source/etc/worldserver.conf"
         sed -i 's/MinWorldUpdateTime =.*/MinWorldUpdateTime = 10/g' "$source/etc/worldserver.conf"
         sed -i 's/MapUpdateInterval =.*/MapUpdateInterval = 100/g' "$source/etc/worldserver.conf"
         data_directory=$(echo "$world_data_directory" | sed 's#/#\\/#g')
         sed -i 's/DataDir =.*/DataDir = "'"$data_directory"'"/g' "$source/etc/worldserver.conf"
         sed -i 's/CharacterCreating.MinLevelForHeroicCharacter =.*/CharacterCreating.MinLevelForHeroicCharacter = 0/g' "$source/etc/worldserver.conf"
-        #sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$source/etc/worldserver.conf"
+        sed -i 's/RecruitAFriend.MaxLevel =.*/RecruitAFriend.MaxLevel = 79/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.Rest.InGame                 =.*/Rate.Rest.InGame                 = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.Rest.Offline.InTavernOrCity =.*/Rate.Rest.Offline.InTavernOrCity = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Rate.Rest.Offline.InWilderness   =.*/Rate.Rest.Offline.InWilderness   = 0/g' "$source/etc/worldserver.conf"
         sed -i 's/Daze.Enabled =.*/Daze.Enabled = 0/g' "$source/etc/worldserver.conf"
+        sed -i 's/DungeonFinder.CastDeserter =.*/DungeonFinder.CastDeserter = 0/g' "$source/etc/worldserver.conf"
+
+        sed -i 's/Arena.MaxRatingDifference =.*/Arena.MaxRatingDifference = 1000/g' "$source/etc/worldserver.conf"
+        #sed -i 's/Arena.AutoDistributePoints =.*/Arena.AutoDistributePoints = 1/g' "$source/etc/worldserver.conf"
+        #sed -i 's/Arena.AutoDistributeInterval =.*/Arena.AutoDistributeInterval = 1/g' "$source/etc/worldserver.conf"
+        sed -i 's/Arena.ArenaWinRatingModifier1 =.*/Arena.ArenaWinRatingModifier1 = 75/g' "$source/etc/worldserver.conf"
+        sed -i 's/Arena.ArenaWinRatingModifier2 =.*/Arena.ArenaWinRatingModifier2 = 50/g' "$source/etc/worldserver.conf"
+        sed -i 's/Arena.ArenaLoseRatingModifier =.*/Arena.ArenaLoseRatingModifier = 25/g' "$source/etc/worldserver.conf"
+        sed -i 's/Arena.ArenaMatchmakerRatingModifier =.*/Arena.ArenaMatchmakerRatingModifier = 50/g' "$source/etc/worldserver.conf"
+        #sed -i 's/Battleground.QueueAnnouncer.Enable =.*/Battleground.QueueAnnouncer.Enable = 1/g' "$source/etc/worldserver.conf"
+        #sed -i 's/Arena.QueueAnnouncer.Enable =.*/Arena.QueueAnnouncer.Enable = 1/g' "$source/etc/worldserver.conf"
 
         if [[ "$module_ah_bot" == "true" ]]; then
             if [[ ! -f "$source/etc/modules/mod_ahbot.conf.dist" ]]; then
@@ -2508,7 +2519,6 @@ function set_config
             sed -i 's/AiPlayerbot.AllowPlayerBots =.*/AiPlayerbot.AllowPlayerBots = 1/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.DisableRandomLevels =.*/AiPlayerbot.DisableRandomLevels = 1/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.RandombotStartingLevel =.*/AiPlayerbot.RandombotStartingLevel = 1/g' "$source/etc/modules/playerbots.conf"
-            sed -i 's/AiPlayerbot.PvpProhibitedZoneIds =.*/AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298,4395"/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.AutoTeleportForLevel =.*/AiPlayerbot.AutoTeleportForLevel = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.KillXPRate =.*/AiPlayerbot.KillXPRate = 1/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.EquipmentPersistence =.*/AiPlayerbot.EquipmentPersistence = 1/g' "$source/etc/modules/playerbots.conf"
@@ -2517,7 +2527,9 @@ function set_config
             sed -i 's/AiPlayerbot.AllowSummonWhenBotIsDead =.*/AiPlayerbot.AllowSummonWhenBotIsDead = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.ReviveBotWhenSummoned =.*/AiPlayerbot.ReviveBotWhenSummoned = 0/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.SayWhenCollectingItems =.*/AiPlayerbot.SayWhenCollectingItems = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.LimitEnchantExpansion =.*/AiPlayerbot.LimitEnchantExpansion = 1/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.LimitGearExpansion =.*/AiPlayerbot.LimitGearExpansion = 1/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotUpdateInterval =.*/AiPlayerbot.RandomBotUpdateInterval = 5/g' "$source/etc/modules/playerbots.conf"
 
             if [[ $module_progression_patch -lt 12 ]]; then
                 sed -i 's/AiPlayerbot.RandomBotMaxLevel =.*/AiPlayerbot.RandomBotMaxLevel = 60/g' "$source/etc/modules/playerbots.conf"
@@ -2531,6 +2543,57 @@ function set_config
 
             sed -i 's/AiPlayerbot.AutoPickReward =.*/AiPlayerbot.AutoPickReward = yes/g' "$source/etc/modules/playerbots.conf"
             sed -i 's/AiPlayerbot.AutoAvoidAoe =.*/AiPlayerbot.AutoAvoidAoe = 1/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.TellWhenAvoidAoe =.*/AiPlayerbot.TellWhenAvoidAoe = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotGroupNearby =.*/AiPlayerbot.RandomBotGroupNearby = 1/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotTalk =.*/AiPlayerbot.RandomBotTalk = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotGuildTalk =.*/AiPlayerbot.RandomBotGuildTalk = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotNonCombatStrategies =.*/AiPlayerbot.RandomBotNonCombatStrategies ="+quest,+travel"/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.KillXPRate =.*/AiPlayerbot.KillXPRate = 10000/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.SelfBotLevel =.*/AiPlayerbot.SelfBotLevel = 2/g' "$source/etc/modules/playerbots.conf"
+
+            sed -i 's/AiPlayerbot.RandomBotArenaTeam2v2Count =.*/AiPlayerbot.RandomBotArenaTeam2v2Count = 10/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotArenaTeam3v3Count =.*/AiPlayerbot.RandomBotArenaTeam3v3Count = 10/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotArenaTeam5v5Count =.*/AiPlayerbot.RandomBotArenaTeam5v5Count = 35/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.RandomBotAutoJoinBG =.*/AiPlayerbot.RandomBotAutoJoinBG = 1/g' "$source/etc/modules/playerbots.conf"
+
+            sed -i 's/AiPlayerbot.AutoGearQualityLimit =.*/AiPlayerbot.AutoGearQualityLimit = 3/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.AutoGearScoreLimit =.*/AiPlayerbot.AutoGearScoreLimit = 187/g' "$source/etc/modules/playerbots.conf"
+
+            if [[ $module_progression_patch -lt 6 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 63/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 7 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 66/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 12 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 76/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 13 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 110/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 14 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 120/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 17 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 133/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 18 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 200/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 19 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 213/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 20 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 226/g' "$source/etc/modules/playerbots.conf"
+            elif [[ $module_progression_patch -lt 21 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearScoreLimit =.*/AiPlayerbot.RandomGearScoreLimit = 245/g' "$source/etc/modules/playerbots.conf"
+            fi
+
+            if [[ $module_progression_patch -lt 19 ]]; then
+                sed -i 's/AiPlayerbot.RandomGearQualityLimit =.*/AiPlayerbot.RandomGearQualityLimit = 3/g' "$source/etc/modules/playerbots.conf"
+            else
+                sed -i 's/AiPlayerbot.RandomGearQualityLimit =.*/AiPlayerbot.RandomGearQualityLimit = 4/g' "$source/etc/modules/playerbots.conf"
+            fi
+
+            sed -i 's/AiPlayerbot.CommandServerPort =.*/AiPlayerbot.CommandServerPort = 0/g' "$source/etc/modules/playerbots.conf"
+
+            sed -i 's/AiPlayerbot.RandomBotSuggestDungeons =.*/AiPlayerbot.RandomBotSuggestDungeons = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.ToxicLinksRepliesChance =.*/AiPlayerbot.ToxicLinksRepliesChance = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.ThunderfuryRepliesChance =.*/AiPlayerbot.ThunderfuryRepliesChance = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AiPlayerbot.GuildRepliesRate =.*/AiPlayerbot.GuildRepliesRate = 0/g' "$source/etc/modules/playerbots.conf"
+            sed -i 's/AIPlayerbot.GuildFeedback =.*/AIPlayerbot.GuildFeedback = 0/g' "$source/etc/modules/playerbots.conf"
 
             sed -i 's/PlayerbotsDatabaseInfo =.*/PlayerbotsDatabaseInfo = "'$mysql_hostname';'$mysql_port';'$mysql_username';'$mysql_password';'$database_playerbots'"/g' "$source/etc/modules/playerbots.conf"
         fi
