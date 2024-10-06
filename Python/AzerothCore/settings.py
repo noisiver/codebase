@@ -122,6 +122,8 @@ settings = {
     'module.playerbots.limit_gear_by_expansion': True,
     'module.playerbots.equipment_persistence.enabled': False,
     'module.playerbots.equipment_persistence.level': 80,
+    'module.playerbots.bots_active_alone': 100,
+    'module.playerbots.bots_active_alone_autoscale': True,
     'module.progression': False,
     'module.progression.aura': 4,
     'module.progression.patch': 21,

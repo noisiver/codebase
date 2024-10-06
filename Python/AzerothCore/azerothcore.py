@@ -994,10 +994,12 @@ def UpdateConfigs():
                 ['AiPlayerbot.GuildRepliesRate =', 'AiPlayerbot.GuildRepliesRate = 0'],
                 ['AIPlayerbot.GuildFeedback =', 'AIPlayerbot.GuildFeedback = 0'],
                 ['AiPlayerbot.EnableBroadcasts =', 'AiPlayerbot.EnableBroadcasts = 0'],
+                ['AiPlayerbot.AddClassCommand =', 'AiPlayerbot.AddClassCommand = 0'],
+                ['AiPlayerbot.AddClassAccountPoolSize =', 'AiPlayerbot.AddClassAccountPoolSize = 0'],
+                ['AiPlayerbot.BotActiveAlone =', f'AiPlayerbot.BotActiveAlone = {settings['module.playerbots.bots_active_alone']}'],
+                ['AiPlayerbot.botActiveAloneAutoScale =', f'AiPlayerbot.botActiveAloneAutoScale = {'1' if settings['module.playerbots.bots_active_alone_autoscale'] else '0'}'],
                 ['AiPlayerbot.DisableDeathKnightLogin =', f'AiPlayerbot.DisableDeathKnightLogin = {'1' if settings['world.expansion'] < 2 or settings['module.progression.patch'] < 17 else '0'}']
             ]
-
-            # ['AiPlayerbot.RandomBotUpdateInterval =', 'AiPlayerbot.RandomBotUpdateInterval = 1'],
             UpdateConfig(f'{path}/modules/playerbots.conf', replacements)
 
         if settings['module.progression']:
