@@ -770,7 +770,16 @@ def UpdateConfigs():
             ['Battleground.CastDeserter =', 'Battleground.CastDeserter = 0'],
             ['StrictChannelNames =', 'StrictChannelNames = 3'],
             ['Minigob.Manabonk.Enable =', 'Minigob.Manabonk.Enable = 0'],
-            ['Daze.Enabled =', f'Daze.Enabled = {'1' if settings['world.enable_daze'] else '0'}']
+            ['Daze.Enabled =', f'Daze.Enabled = {'1' if settings['world.enable_daze'] else '0'}'],
+            ['Progression.Patch =', f'Progression.Patch = {settings['module.progression.patch']}'],
+            ['Progression.IcecrownCitadel.Aura =', f'Progression.IcecrownCitadel.Aura = {settings['module.progression.aura']}'],
+            ['Progression.Level.Enforced =', 'Progression.Level.Enforced = 1'],
+            ['Progression.DungeonFinder.Enforced =', 'Progression.DungeonFinder.Enforced = 1'],
+            ['Progression.DualTalent.Enforced =', 'Progression.DualTalent.Enforced = 1' ],
+            ['Progression.QuestInfo.Enforced =', 'Progression.QuestInfo.Enforced = 1' ],
+            ['Progression.Multiplier.Damage =', f'Progression.Multiplier.Damage = {settings['module.progression.multiplier.damage']}'],
+            ['Progression.Multiplier.Healing =', f'Progression.Multiplier.Healing = {settings['module.progression.multiplier.healing']}'],
+            ['Progression.PatchNotes.Enabled =', f'Progression.PatchNotes.Enabled = 1']
         ]
         UpdateConfig(f'{path}/worldserver.conf', replacements)
 
@@ -997,8 +1006,9 @@ def UpdateConfigs():
                 ['AiPlayerbot.AddClassCommand =', 'AiPlayerbot.AddClassCommand = 0'],
                 ['AiPlayerbot.AddClassAccountPoolSize =', 'AiPlayerbot.AddClassAccountPoolSize = 0'],
                 ['AiPlayerbot.BotActiveAlone =', f'AiPlayerbot.BotActiveAlone = {settings['module.playerbots.bots_active_alone']}'],
-                ['AiPlayerbot.botActiveAloneAutoScale =', f'AiPlayerbot.botActiveAloneAutoScale = {'1' if settings['module.playerbots.bots_active_alone_autoscale'] else '0'}'],
-                ['AiPlayerbot.DisableDeathKnightLogin =', f'AiPlayerbot.DisableDeathKnightLogin = {'1' if settings['world.expansion'] < 2 or settings['module.progression.patch'] < 17 else '0'}']
+                ['AiPlayerbot.DisableDeathKnightLogin =', f'AiPlayerbot.DisableDeathKnightLogin = {'1' if settings['world.expansion'] < 2 or settings['module.progression.patch'] < 17 else '0'}'],
+                ['AiPlayerbot.botActiveAloneSmartScaleWhenMinLevel =', f'AiPlayerbot.botActiveAloneSmartScaleWhenMinLevel = {settings['module.playerbots.random_bots.max_level']}'],
+                ['AiPlayerbot.botActiveAloneSmartScaleWhenMaxLevel =', f'AiPlayerbot.botActiveAloneSmartScaleWhenMaxLevel = {settings['module.playerbots.random_bots.max_level']}']
             ]
             UpdateConfig(f'{path}/modules/playerbots.conf', replacements)
 
@@ -1011,6 +1021,8 @@ def UpdateConfigs():
                 ['Progression.DualTalent.Enforced =', 'Progression.DualTalent.Enforced = 1' ],
                 ['Progression.Multiplier.Damage =', f'Progression.Multiplier.Damage = {settings['module.progression.multiplier.damage']}'],
                 ['Progression.Multiplier.Healing =', f'Progression.Multiplier.Healing = {settings['module.progression.multiplier.healing']}'],
+                ['Progression.QuestInfo.Enforced =', 'Progression.QuestInfo.Enforced = 1' ],
+                ['Progression.PatchNotes.Enabled =', f'Progression.PatchNotes.Enabled = 1'],
                 ['Progression.Reset =', f'Progression.Reset = {'1' if settings['module.progression.reset'] else '0'}']
             ]
             UpdateConfig(f'{path}/modules/mod_progression.conf', replacements)
