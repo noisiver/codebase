@@ -1,3 +1,5 @@
+# ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+
 #import psutil
 #if os.name == 'nt':
     #for p in psutil.process_iter(attrs=['pid', 'name']):
@@ -14,7 +16,7 @@
 # apt install -y mysql-server
 
 # Linux prerequisites:
-# apt install python3-git python3-requests python3-tqdm python3-pymysql
+# apt install python3-git python3-requests python3-tqdm python3-pymysql python3-colorama
 # apt install screen cmake make gcc clang g++ libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost1.83-all-dev libmysqlclient-dev mysql-client
 
 # Windows prerequisites:
@@ -992,6 +994,8 @@ def UpdateConfigs():
                 ['AiPlayerbot.RandomBotGroupNearby =', f'AiPlayerbot.RandomBotGroupNearby = {'1' if settings['module.playerbots.random_bots.group_with_nearby'] else '0'}'],
                 ['AiPlayerbot.RandomBotMaps =', f'AiPlayerbot.RandomBotMaps = {settings['module.playerbots.random_bots.enabled_maps']}'],
                 ['AiPlayerbot.RandomBotAutoJoinBG =', f'AiPlayerbot.RandomBotAutoJoinBG = {'1' if settings['module.playerbots.random_bots.auto_join_battlegrounds'] else '0'}'],
+                ['AiPlayerbot.RandomBotAutoJoinWarsongBracket =', f'AiPlayerbot.RandomBotAutoJoinWarsongBracket = {settings['module.playerbots.random_bots.auto_join_battlegrounds.warsong_gulch.bracket']}'],
+                ['AiPlayerbot.RandomBotAutoJoinBGWarsongCount =', f'AiPlayerbot.RandomBotAutoJoinBGWarsongCount = {settings['module.playerbots.random_bots.auto_join_battlegrounds.warsong_gulch.instances']}'],
                 ['AiPlayerbot.RandomBotArenaTeam2v2Count =', f'AiPlayerbot.RandomBotArenaTeam2v2Count = {settings['module.playerbots.random_bots.arena_teams.2v2']}'],
                 ['AiPlayerbot.RandomBotArenaTeam3v3Count =', f'AiPlayerbot.RandomBotArenaTeam3v3Count = {settings['module.playerbots.random_bots.arena_teams.3v3']}'],
                 ['AiPlayerbot.RandomBotArenaTeam5v5Count =', f'AiPlayerbot.RandomBotArenaTeam5v5Count = {settings['module.playerbots.random_bots.arena_teams.5v5']}'],
@@ -1006,9 +1010,7 @@ def UpdateConfigs():
                 ['AiPlayerbot.AddClassCommand =', 'AiPlayerbot.AddClassCommand = 0'],
                 ['AiPlayerbot.AddClassAccountPoolSize =', 'AiPlayerbot.AddClassAccountPoolSize = 0'],
                 ['AiPlayerbot.BotActiveAlone =', f'AiPlayerbot.BotActiveAlone = {settings['module.playerbots.bots_active_alone']}'],
-                ['AiPlayerbot.DisableDeathKnightLogin =', f'AiPlayerbot.DisableDeathKnightLogin = {'1' if settings['world.expansion'] < 2 or settings['module.progression.patch'] < 17 else '0'}'],
-                ['AiPlayerbot.botActiveAloneSmartScaleWhenMinLevel =', f'AiPlayerbot.botActiveAloneSmartScaleWhenMinLevel = {settings['module.playerbots.random_bots.max_level']}'],
-                ['AiPlayerbot.botActiveAloneSmartScaleWhenMaxLevel =', f'AiPlayerbot.botActiveAloneSmartScaleWhenMaxLevel = {settings['module.playerbots.random_bots.max_level']}']
+                ['AiPlayerbot.botActiveAloneSmartScale =', 'AiPlayerbot.botActiveAloneSmartScale = 0']
             ]
             UpdateConfig(f'{path}/modules/playerbots.conf', replacements)
 
