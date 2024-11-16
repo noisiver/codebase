@@ -1,0 +1,57 @@
+DROP TABLE IF EXISTS `realm_settings`;
+CREATE TABLE `realm_settings` (
+	`id` INT(10) NOT NULL DEFAULT '-1',
+	`setting` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`value` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`id`, `setting`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+INSERT INTO `realm_settings` (`id`, `setting`, `value`) VALUES
+(-1, 'build.auth', 'true'),
+(-1, 'build.world', 'true'),
+(-1, 'database.auth', 'acore_auth'),
+(-1, 'database.characters', 'acore_characters'),
+(-1, 'database.playerbots', 'acore_playerbots'),
+(-1, 'database.world', 'acore_world'),
+(-1, 'git.branch', 'master'),
+(-1, 'git.repository', 'azerothcore/azerothcore-wotlk'),
+(-1, 'git.use_ssh', 'false'),
+(-1, 'module.ah_bot.enabled', 'false'),
+(-1, 'module.ah_bot.account_id', '0'),
+(-1, 'module.ah_bot.buyer.enabled', 'false'),
+(-1, 'module.ah_bot.character_guid', '0'),
+(-1, 'module.ah_bot.seller.enabled', 'false'),
+(-1, 'module.appreciation.enabled', 'false'),
+(-1, 'module.assistant.enabled', 'false'),
+(-1, 'module.fixes.enabled', 'false'),
+(-1, 'module.gamemaster.enabled', 'false'),
+(-1, 'module.groupquests.enabled', 'false'),
+(-1, 'module.junktogold.enabled', 'false'),
+(-1, 'module.learnspells.enabled', 'false'),
+(-1, 'module.playerbots.enabled', 'false'),
+(-1, 'module.playerbots.random_bots.accounts', '200'),
+(-1, 'module.playerbots.random_bots.active_alone', '100'),
+(-1, 'module.playerbots.random_bots.maximum', '50'),
+(-1, 'module.playerbots.random_bots.minimum', '50'),
+(-1, 'module.playerbots.random_bots.smart_scale', 'false'),
+(-1, 'module.recruitafriend.enabled', 'false'),
+(-1, 'module.skip_dk_starting_area.enabled', 'false'),
+(-1, 'module.weekendbonus.enabled', 'false'),
+(-1, 'telegram.chat_id', '0'),
+(-1, 'telegram.token', '0'),
+(-1, 'world.address', '127.0.0.1'),
+(-1, 'world.data_directory', '.'),
+(-1, 'world.game_type', '0'),
+(-1, 'world.local_address', '127.0.0.1'),
+(-1, 'world.name', 'AzerothCore'),
+(-1, 'world.preload_grids', 'false'),
+(-1, 'world.progression.aura', '4'),
+(-1, 'world.progression.multiplier.damage', '0.6'),
+(-1, 'world.progression.multiplier.healing', '0.5'),
+(-1, 'world.progression.patch', '21'),
+(-1, 'world.realm_zone', '1'),
+(-1, 'world.set_creatures_active', 'false'),
+(-1, 'world.warden', 'true');
