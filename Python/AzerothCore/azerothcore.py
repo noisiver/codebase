@@ -828,12 +828,12 @@ databases = [
     [options['database.characters'], True, True, f'{source}/data/sql/base/db_characters', False, '', 0],
     [options['database.characters'], True, True, f'{source}/data/sql/updates/db_characters', True, 'RELEASED', 0],
     [options['database.characters'], True, True, f'{source}/data/sql/custom/db_characters', True, 'CUSTOM', 0],
-    [options['database.characters'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/sql/characters', True, 'MODULE', 0],
+    [options['database.characters'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/data/sql/characters', True, 'MODULE', 0],
     [options['database.characters'], True, True, f'{cwd}/sql/characters', False, 'CUSTOM', 0],
     # playerbots
-    [options['database.playerbots'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/sql/playerbots/base', False, '', 0],
-    [options['database.playerbots'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/sql/playerbots/updates/db_playerbots', True, 'RELEASED', 0],
-    [options['database.playerbots'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/sql/playerbots/custom', True, 'CUSTOM', 0],
+    [options['database.playerbots'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/data/sql/playerbots/base', False, '', 0],
+    [options['database.playerbots'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/data/sql/playerbots/updates/db_playerbots', True, 'RELEASED', 0],
+    [options['database.playerbots'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/data/sql/playerbots/custom', True, 'CUSTOM', 0],
     # world
     [options['database.world'], True, True, f'{source}/data/sql/base/db_world', False, '', 0],
     [options['database.world'], True, True, f'{source}/data/sql/updates/db_world', True, 'RELEASED', 0],
@@ -842,7 +842,7 @@ databases = [
     [options['database.world'], options['module.appreciation.enabled'], True, f'{source}/modules/mod-appreciation/data/sql/db-world/base', True, 'MODULE', 12],
     [options['database.world'], options['module.assistant.enabled'], True, f'{source}/modules/mod-assistant/sql/world', True, 'MODULE', 0],
     [options['database.world'], options['module.fixes.enabled'], True, f'{source}/modules/mod-fixes/data/sql/db-world/base', True, 'MODULE', 17],
-    [options['database.world'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/sql/world', True, 'MODULE', 0],
+    [options['database.world'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/data/sql/world', True, 'MODULE', 0],
     [options['database.world'], options['module.skip_dk_starting_area.enabled'], True, f'{source}/modules/mod-skip-dk-starting-area/data/sql/db-world', True, 'MODULE', 17],
     [options['database.world'], True, True, f'{cwd}/sql/world', False, 'CUSTOM', 0]
 ]
