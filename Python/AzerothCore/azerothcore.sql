@@ -26,6 +26,7 @@ INSERT INTO `realm_settings` (`id`, `setting`, `value`) VALUES
 (-1, 'module.ah_bot.seller.enabled', 'false'),
 (-1, 'module.appreciation.enabled', 'false'),
 (-1, 'module.assistant.enabled', 'false'),
+(-1, 'module.eluna.enabled', 'false'),
 (-1, 'module.fixes.enabled', 'false'),
 (-1, 'module.gamemaster.enabled', 'false'),
 (-1, 'module.groupquests.enabled', 'false'),

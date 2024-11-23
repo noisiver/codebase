@@ -1,3 +1,4 @@
+# ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 # ALTER USER 'acore'@'127.0.0.1' IDENTIFIED WITH caching_sha2_password BY 'acore';
 
 # Install MySQL Server 8.4 on Linux:
@@ -7,6 +8,9 @@
 # apt install -y mysql-server
 
 # apt install -y git curl screen cmake make gcc clang g++ libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost1.83-all-dev libmysqlclient-dev mysql-client python3-git python3-requests python3-tqdm python3-pymysql python3-colorama
+
+# Windows prerequisites:
+# pip install colorama gitpython pymysql requests tqdm
 
 from pathlib import Path
 from tqdm import tqdm
@@ -23,6 +27,9 @@ import stat
 import sys
 import time
 
+if os.name == 'nt':
+    colorama.just_fix_windows_console()
+
 ##################################################
 
 cwd = os.getcwd()
@@ -38,6 +45,13 @@ mysql_password = 'acore'
 mysql_database = 'acore_auth'
 
 realm_port = 29724 + realm_id
+
+windows_paths = {
+    'msbuild': 'C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin',
+    'mysql': 'C:/Program Files/MySQL/MySQL Server 8.4',
+    'openssl': 'C:/Program Files/OpenSSL-Win64',
+    'cmake': 'C:/Program Files/CMake'
+}
 
 ##################################################
 
@@ -74,6 +88,7 @@ arguments = [
     [ [ 'database', 'db' ], 'Import all files to the specified databases' ],
     [ [ 'config', 'conf', 'cfg', 'settings', 'options' ], 'Updates all config files, including enabled modules, with options specified' ],
     [ 'dbc', 'Copy modified client data files to the proper folder' ],
+    [ 'lua', 'Copy lua scripts to the proper folder' ],
     [ 'reset', 'Drops all database tables from the world database' ],
     [ 'all', 'Run all parameters listed above, excluding reset but including stop and start' ],
     [ 'start', 'Starts the compiled processes, based off of the choice for compilation' ],
@@ -137,6 +152,7 @@ options = {
     'module.ah_bot.seller.enabled': False,
     'module.appreciation.enabled': False,
     'module.assistant.enabled': False,
+    'module.eluna.enabled': False,
     'module.fixes.enabled': False,
     'module.gamemaster.enabled': False,
     'module.groupquests.enabled': False,
@@ -203,6 +219,7 @@ modules = [
     ['mod-ah-bot', 'azerothcore/mod-ah-bot', 'master', options['module.ah_bot.enabled'], 0],
     ['mod-appreciation', 'noisiver/mod-appreciation', 'master', options['module.appreciation.enabled'], 12],
     ['mod-assistant', 'noisiver/mod-assistant', 'master', options['module.assistant.enabled'], 0],
+    ['mod-eluna', 'azerothcore/mod-eluna', 'master', options['module.eluna.enabled'], 0],
     ['mod-fixes', 'noisiver/mod-fixes', 'master', options['module.fixes.enabled'], 17],
     ['mod-gamemaster', 'noisiver/mod-gamemaster', 'master', options['module.gamemaster.enabled'], 0],
     ['mod-groupquests', 'noisiver/mod-groupquests', 'master', options['module.groupquests.enabled'], 0],
@@ -220,7 +237,8 @@ folders = [
     [f'{cwd}/sql', False],
     [f'{cwd}/sql/auth', False],
     [f'{cwd}/sql/characters', True],
-    [f'{cwd}/sql/world', True]
+    [f'{cwd}/sql/world', True],
+    [f'{cwd}/lua', options['module.eluna.enabled']]
 ]
 
 for folder in folders:
@@ -319,43 +337,58 @@ def GenerateProject():
     args = [
         f'-S {source}',
         f'-B {build}',
-        f'-DCMAKE_INSTALL_PREFIX={source}',
-        '-DCMAKE_C_COMPILER=/usr/bin/clang',
-        '-DCMAKE_CXX_COMPILER=/usr/bin/clang++',
-        '-DCMAKE_CXX_FLAGS="-w"',
         '-DWITH_WARNINGS=0',
         '-DSCRIPTS=static',
         f'-DAPPS_BUILD={apps}'
     ]
 
+    if os.name == 'nt':
+        args.append(f'-DMYSQL_EXECUTABLE={windows_paths['mysql']}/bin/mysql.exe')
+        args.append(f'-DMYSQL_INCLUDE_DIR={windows_paths['mysql']}/include')
+        args.append(f'-DMYSQL_LIBRARY={windows_paths['mysql']}/lib/libmysql.lib')
+    else:
+        args.append(f'-DCMAKE_INSTALL_PREFIX={source}')
+        args.append('-DCMAKE_C_COMPILER=/usr/bin/clang')
+        args.append('-DCMAKE_CXX_COMPILER=/usr/bin/clang++')
+        args.append('-DCMAKE_CXX_FLAGS="-w"')
+
     try:
-        subprocess.run(['cmake', *args], check=True)
+        subprocess.run([f'{windows_paths['cmake']}/bin/cmake.exe' if os.name == 'nt' else 'cmake', *args], check=True)
     except:
         HandleError('An error occurred while generating the project files')
 
     PrintHeader('Finished generating project files...')
 
 def CleanSource():
-    args = ['clean']
+    if os.name == 'nt':
+        args = [f'{build}/AzerothCore.sln', '/t:Clean']
+    else:
+        args = ['clean']
 
     try:
-        subprocess.run(['make', *args], cwd=build, check=True)
+        subprocess.run([f'{windows_paths['msbuild']}/MSBuild.exe' if os.name == 'nt' else 'make', *args], cwd=build, check=True)
     except:
         HandleError('An error occurred while compiling the source code')
 
 def CompileSource():
     PrintHeader('Compiling the source code...')
 
-    args = [
-        '-j',
-        str(multiprocessing.cpu_count()),
-        'install'
-    ]
+    if os.name == 'nt':
+        args = [f'{build}/AzerothCore.sln', '/p:Configuration=RelWithDebInfo', '/p:WarningLevel=0']
+
+        if options['build.auth'] and not options['build.world']:
+            args.append('/target:authserver')
+        elif not options['build.auth'] and options['build.world']:
+            args.append('/target:worldserver')
+        else:
+            args.append('/target:ALL_BUILD')
+    else:
+        args = ['-j', str(multiprocessing.cpu_count()), 'install']
 
     attempts = 1
     while attempts < 3:
         try:
-            subprocess.run(['make', *args], cwd=build, check=True)
+            subprocess.run([f'{windows_paths['msbuild']}/MSBuild.exe' if os.name == 'nt' else 'make', *args], cwd=build, check=True)
             break
         except:
             CleanSource()
@@ -374,32 +407,57 @@ def CreateScript(name, path, text):
     f.chmod(f.stat().st_mode | stat.S_IEXEC)
 
 def CreateScripts():
-    text = '#!/bin/bash\n'
-    if options['build.auth']:
-        text += 'screen -AmdS auth ./auth.sh\n'
-    if options['build.world']:
-        text += f'time=$(date +%s)\n'
-        text += f'screen -L -Logfile $time.log -AmdS world-{realm_id} ./world.sh\n'
-    CreateScript('start.sh', f'{source}/bin', text)
+    if os.name == 'nt':
+        if options['build.auth']:
+            text = '@echo off\ncd source/build/bin/RelWithDebInfo\n:auth\n    authserver.exe\ngoto auth\n'
+            CreateScript('auth.bat', cwd, text)
 
-    text = '#!/bin/bash\n'
-    if options['build.auth']:
-        text += 'screen -X -S "auth" quit\n'
-    if options['build.world']:
-        text += f'screen -X -S "world-{realm_id}" quit\n'
-    CreateScript('stop.sh', f'{source}/bin', text)
+        if options['build.world']:
+            text = '@echo off\ncd source/build/bin/RelWithDebInfo\n:world\n    worldserver.exe\n    timeout 10\ngoto world\n'
+            CreateScript('world.bat', cwd, text)
+    else:
+        text = '#!/bin/bash\n'
+        if options['build.auth']:
+            text += 'screen -AmdS auth ./auth.sh\n'
+        if options['build.world']:
+            text += f'time=$(date +%s)\n'
+            text += f'screen -L -Logfile $time.log -AmdS world-{realm_id} ./world.sh\n'
+        CreateScript('start.sh', f'{source}/bin', text)
 
-    if options['build.auth']:
-        text = '#!/bin/bash\nwhile :; do\n    ./authserver\n    sleep 5\ndone\n'
-        CreateScript('auth.sh', f'{source}/bin', text)
+        text = '#!/bin/bash\n'
+        if options['build.auth']:
+            text += 'screen -X -S "auth" quit\n'
+        if options['build.world']:
+            text += f'screen -X -S "world-{realm_id}" quit\n'
+        CreateScript('stop.sh', f'{source}/bin', text)
 
-    if options['build.world']:
-        text = '#!/bin/bash\nwhile :; do\n    nice -n -19 taskset -c 0,1,2,3 ./worldserver\n    if [[ $? == 0 ]]; then\n      break\n    fi\n    sleep 5\ndone\n'
-        CreateScript('world.sh', f'{source}/bin', text)
+        if options['build.auth']:
+            text = '#!/bin/bash\nwhile :; do\n    ./authserver\n    sleep 5\ndone\n'
+            CreateScript('auth.sh', f'{source}/bin', text)
+
+        if options['build.world']:
+            text = '#!/bin/bash\nwhile :; do\n    nice -n -19 taskset -c 0,1,2,3 ./worldserver\n    if [[ $? == 0 ]]; then\n      break\n    fi\n    sleep 5\ndone\n'
+            CreateScript('world.sh', f'{source}/bin', text)
+
+def CopyLibraries():
+    libraries = [
+        [f'{windows_paths['openssl']}/bin', 'legacy.dll'],
+        [f'{windows_paths['openssl']}/bin', 'libcrypto-3-x64.dll'],
+        [f'{windows_paths['openssl']}/bin', 'libssl-3-x64.dll'],
+        [f'{windows_paths['mysql']}/lib', 'libmysql.dll']
+    ]
+
+    PrintHeader('Copying required libraries...')
+
+    for lib in libraries:
+        PrintProgress(f'Copying {lib[1]}')
+        shutil.copyfile(f'{lib[0]}/{lib[1]}', f'{build}/bin/RelWithDebInfo/{lib[1]}')
+
+    PrintHeader('Finished copying required libraries...')
 
 def GetDataPath():
     data_dir = options['world.data_directory']
-    binary_path = f'{source}/bin'
+    binary_path = f'{build}/bin/RelWithDebInfo' if os.name == 'nt' else f'{source}/bin'
     if data_dir == '.':
         target = binary_path
     elif data_dir.startswith('./'):
@@ -428,7 +486,7 @@ def GetRemoteDataVersion():
     return data[0].rsplit('/', 1)[1].replace('v', '')
 
 def DeleteClientData():
-    dirs = [ 'Cameras', 'dbc', 'maps', 'mmaps', 'vmaps' ]
+    dirs = ['Cameras', 'dbc', 'maps', 'mmaps', 'vmaps']
     for dir in dirs:
         if os.path.exists(f'{GetDataPath()}/{dir}'):
             shutil.rmtree(f'{GetDataPath()}/{dir}')
@@ -502,11 +560,29 @@ def CopyDBCFiles():
 
         PrintHeader('Finished copying modified client data files...')
 
+def CopyLuaScripts():
+    if options['module.eluna.enabled']:
+        PrintHeader('Copying lua scripts...')
+
+        files = sorted(os.listdir(f'{cwd}/lua'))
+        if len(files) > 0:
+            for file in files:
+                if os.path.isfile(f'{cwd}/lua/{file}'):
+                    if file.endswith('.lua'):
+                        PrintProgress(f'Copying {file}')
+                        shutil.copyfile(f'{cwd}/lua/{file}', f'{build}/bin/RelWithDebInfo/lua_scripts/{file}' if os.name == 'nt' else f'{cwd}/bin/lua_scripts/{file}')
+        else:
+            PrintProgress('No files found in the directory')
+
+        PrintHeader('Finished copying lua scripts...')
+
 def Install():
     DownloadSource()
     GenerateProject()
     CompileSource()
     CreateScripts()
+    if os.name == 'nt':
+        CopyLibraries()
 
 ##################################################
 
@@ -560,6 +636,8 @@ configs = [
             ['CharacterDatabaseInfo = ', f'CharacterDatabaseInfo = "{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.characters']}"'],
             ['DataDir =', f'DataDir = "{GetDataPath()}"'],
             ['LogsDir =', f'LogsDir = "{cwd}/logs"'],
+            ['BeepAtStart =', 'BeepAtStart = 0'],
+            ['FlashAtStart =', 'FlashAtStart = 0'],
             ['Updates.EnableDatabases =', 'Updates.EnableDatabases = 0'],
             ['GameType =', f'GameType = {options['world.game_type']}'],
             ['RealmZone =', f'RealmZone = {options['world.realm_zone']}'],
@@ -712,6 +790,8 @@ def UpdateConfig(config, replacements):
 def UpdateConfigs():
     PrintHeader('Updating config files...')
 
+    path = f'{build}/bin/RelWithDebInfo/configs' if os.name == 'nt' else f'{source}/etc'
+
     for config in configs:
         filename = config[0]
         enabled = config[1]
@@ -731,7 +811,7 @@ def UpdateConfigs():
         if int(options['world.progression.patch']) < patch:
             continue
 
-        UpdateConfig(f'{source}/etc/{filename}', replacements)
+        UpdateConfig(f'{path}/{filename}', replacements)
 
     PrintHeader('Finished updating config files...')
 
@@ -791,7 +871,7 @@ def ImportDatabase(database, path):
                         PrintProgress(f'Skipping {file}')
                     else:
                         PrintProgress(f'Importing {file}')
-                        subprocess.run(f'mysql --defaults-extra-file={mysqlcnf} {database} < {path}/{file}', shell=True, check=True)
+                        subprocess.run(f'{f'"{windows_paths['mysql']}/bin/mysql.exe"' if os.name == 'nt' else 'mysql'} --defaults-extra-file={mysqlcnf} {database} < {path}/{file}', shell=True, check=True)
 
 def UpdateDatabase(database, path, type):
     if os.path.isdir(path):
@@ -813,7 +893,7 @@ def UpdateDatabase(database, path, type):
                         PrintProgress(f'Skipping {file}')
                     else:
                         PrintProgress(f'Importing {file}')
-                        subprocess.run(f'mysql --defaults-extra-file={mysqlcnf} {database} < {path}/{file}', shell=True, check=True)
+                        subprocess.run(f'{f'"{windows_paths['mysql']}/bin/mysql.exe"' if os.name == 'nt' else 'mysql'} --defaults-extra-file={mysqlcnf} {database} < {path}/{file}', shell=True, check=True)
                         cursor.execute(f"DELETE FROM updates WHERE name='{file}';")
                         cursor.execute(f"INSERT INTO updates (name, hash, state) VALUES ('{file}', '{sha}', '{type}');")
                         connect.commit()
@@ -949,7 +1029,7 @@ def RestartServer():
 
 ##################################################
 
-os.system('clear')
+os.system('cls' if os.name == 'nt' else 'clear')
 
 if not options['build.auth'] and not options['build.world']:
     PrintError('Auth and world are both disabled in the options')
@@ -960,29 +1040,46 @@ if not CheckArgument():
     sys.exit(1)
 
 if SelectArgument() == 'install':
-    StopServer()
+    if os.name != 'nt':
+        StopServer()
     Install()
+    UpdateClientData()
 elif SelectArgument() == 'database':
     ImportDatabases()
 elif SelectArgument() == 'config':
     UpdateConfigs()
 elif SelectArgument() == 'dbc':
     CopyDBCFiles()
+elif SelectArgument() == 'lua':
+    CopyLuaScripts()
 elif SelectArgument() == 'reset':
-    StopServer()
+    if os.name != 'nt':
+        StopServer()
     #ResetDatabase()
 elif SelectArgument() == 'all':
-    StopServer()
+    if os.name != 'nt':
+        StopServer()
     Install()
     UpdateConfigs()
     ImportDatabases()
     UpdateClientData()
     CopyDBCFiles()
-    StartServer()
+    CopyLuaScripts()
+    if os.name != 'nt':
+        StartServer()
 elif SelectArgument() == 'start':
+    if os.name == 'nt':
+        PrintError('This argument is only available on Linux')
+        sys.exit(1)
     StartServer()
 elif SelectArgument() == 'stop':
+    if os.name == 'nt':
+        PrintError('This argument is only available on Linux')
+        sys.exit(1)
     StopServer()
 elif SelectArgument() == 'restart':
+    if os.name == 'nt':
+        PrintError('This argument is only available on Linux')
+        sys.exit(1)
     StopServer()
     StartServer()
