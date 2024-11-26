@@ -597,7 +597,7 @@ elif int(options['world.progression.patch']) < 13:
 elif int(options['world.progression.patch']) < 14:
     ahbot_max_item_level = 120
 elif int(options['world.progression.patch']) < 17:
-    ahbot_max_item_level = 120
+    ahbot_max_item_level = 133
 elif int(options['world.progression.patch']) < 18:
     ahbot_max_item_level = 200
 elif int(options['world.progression.patch']) < 19:
