@@ -10,7 +10,7 @@
 # apt install -y git curl screen cmake make gcc clang g++ libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost1.83-all-dev libmysqlclient-dev mysql-client python3-git python3-requests python3-tqdm python3-pymysql python3-colorama
 
 # Windows prerequisites:
-# pip install colorama gitpython pymysql requests tqdm
+# pip install colorama gitpython pymysql requests tqdm cryptography
 
 from pathlib import Path
 from tqdm import tqdm
@@ -45,6 +45,8 @@ mysql_password = 'acore'
 mysql_database = 'acore_auth'
 
 realm_port = 29724 + realm_id
+
+map_update_threads = multiprocessing.cpu_count()
 
 windows_paths = {
     'msbuild': 'C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin',
@@ -216,7 +218,7 @@ PrintHeader('Finished loading options from the database...')
 ##################################################
 
 modules = [
-    ['mod-ah-bot', 'azerothcore/mod-ah-bot', 'master', options['module.ah_bot.enabled'], 0],
+    ['mod-ah-bot', 'noisiver/mod-ah-bot', 'noisiver', options['module.ah_bot.enabled'], 0],
     ['mod-appreciation', 'noisiver/mod-appreciation', 'master', options['module.appreciation.enabled'], 12],
     ['mod-assistant', 'noisiver/mod-assistant', 'master', options['module.assistant.enabled'], 0],
     ['mod-eluna', 'azerothcore/mod-eluna', 'master', options['module.eluna.enabled'], 0],
@@ -228,28 +230,33 @@ modules = [
     ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled'], 0],
     ['mod-recruitafriend', 'noisiver/mod-recruitafriend', 'master', options['module.recruitafriend.enabled'], 17],
     ['mod-skip-dk-starting-area', 'noisiver/mod-skip-dk-starting-area', 'noisiver', options['module.skip_dk_starting_area.enabled'], 17],
+    ['mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', True, 0],
     ['mod-weekendbonus', 'noisiver/mod-weekendbonus', 'master', options['module.weekendbonus.enabled'], 0]
 ]
 
 folders = [
-    [f'{cwd}/dbc', True],
-    [f'{cwd}/logs', False],
-    [f'{cwd}/sql', False],
-    [f'{cwd}/sql/auth', False],
-    [f'{cwd}/sql/characters', True],
-    [f'{cwd}/sql/world', True],
-    [f'{cwd}/lua', options['module.eluna.enabled']]
+    [f'{cwd}/dbc', True, True],
+    [f'{cwd}/logs', False, True],
+    [f'{cwd}/sql', False, True],
+    [f'{cwd}/sql/auth', False, True],
+    [f'{cwd}/sql/characters', True, True],
+    [f'{cwd}/sql/world', True, True],
+    [f'{cwd}/lua', True, options['module.eluna.enabled']]
 ]
 
 for folder in folders:
     name = folder[0]
     world_only = folder[1]
+    enabled = folder[2]
 
     if options['build.auth'] and not options['build.world'] and world_only:
         continue
 
+    if not enabled:
+        continue
+
     if not os.path.isdir(name):
-        os.mkdir(name, 0o666)
+        os.mkdir(name, 0o777)
 
 ##################################################
 
@@ -436,7 +443,7 @@ def CreateScripts():
             CreateScript('auth.sh', f'{source}/bin', text)
 
         if options['build.world']:
-            text = '#!/bin/bash\nwhile :; do\n    nice -n -19 taskset -c 0,1,2,3 ./worldserver\n    if [[ $? == 0 ]]; then\n      break\n    fi\n    sleep 5\ndone\n'
+            text = '#!/bin/bash\nwhile :; do\n    nice -n -19 ./worldserver\n    if [[ $? == 0 ]]; then\n      break\n    fi\n    sleep 5\ndone\n'
             CreateScript('world.sh', f'{source}/bin', text)
 
 def CopyLibraries():
@@ -643,7 +650,7 @@ configs = [
             ['RealmZone =', f'RealmZone = {options['world.realm_zone']}'],
             ['MinWorldUpdateTime =', 'MinWorldUpdateTime = 10'],
             ['MapUpdateInterval =', 'MapUpdateInterval = 100'],
-            ['MapUpdate.Threads =', f'MapUpdate.Threads = {multiprocessing.cpu_count()}'],
+            ['MapUpdate.Threads =', f'MapUpdate.Threads = {map_update_threads}'],
             ['PreloadAllNonInstancedMapGrids =', f'PreloadAllNonInstancedMapGrids = {'1' if options['world.preload_grids'] else '0'}'],
             ['SetAllCreaturesWithWaypointMovementActive =', f'SetAllCreaturesWithWaypointMovementActive = {'1' if options['world.set_creatures_active'] else '0'}'],
             ['Die.Command.Mode =', 'Die.Command.Mode = 0'],
@@ -703,6 +710,9 @@ configs = [
             ['Assistant.Heirlooms.Enabled  =', f'Assistant.Heirlooms.Enabled  = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
             ['Assistant.Glyphs.Enabled     =', f'Assistant.Glyphs.Enabled     = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
             ['Assistant.Gems.Enabled       =', f'Assistant.Gems.Enabled       = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Elixirs.Enabled    =', f'Assistant.Elixirs.Enabled    = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Food.Enabled       =', f'Assistant.Food.Enabled       = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Enchants.Enabled   =', f'Assistant.Enchants.Enabled   = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
             ['Assistant.FlightPaths.Vanilla.Enabled                  =', 'Assistant.FlightPaths.Vanilla.Enabled                  = 0'],
             ['Assistant.FlightPaths.BurningCrusade.Enabled           =', 'Assistant.FlightPaths.BurningCrusade.Enabled           = 0'],
             ['Assistant.Professions.Master.Enabled      =', f'Assistant.Professions.Master.Enabled      = {'0' if int(options['world.progression.patch']) < 12 else '1'}'],
@@ -748,13 +758,17 @@ configs = [
             ['AiPlayerbot.BotActiveAlone =', f'AiPlayerbot.BotActiveAlone = {options['module.playerbots.random_bots.active_alone']}'],
             ['AiPlayerbot.botActiveAloneSmartScale =', f'AiPlayerbot.botActiveAloneSmartScale = {'1' if options['module.playerbots.random_bots.smart_scale'] else '0'}'],
             ['AiPlayerbot.AutoAvoidAoe =', 'AiPlayerbot.AutoAvoidAoe = 1'],
-            ['AiPlayerbot.AutoPickReward =', 'AiPlayerbot.AutoPickReward = no'],
+            ['AiPlayerbot.CommandServerPort =', 'AiPlayerbot.CommandServerPort = 0'],
             ['AiPlayerbot.RandomBotArenaTeam2v2Count =', f'AiPlayerbot.RandomBotArenaTeam2v2Count = {'0' if int(options['world.progression.patch']) < 12 else '15'}'],
             ['AiPlayerbot.RandomBotArenaTeam3v3Count =', f'AiPlayerbot.RandomBotArenaTeam3v3Count = {'0' if int(options['world.progression.patch']) < 12 else '15'}'],
             ['AiPlayerbot.RandomBotArenaTeam5v5Count =', f'AiPlayerbot.RandomBotArenaTeam5v5Count = {'0' if int(options['world.progression.patch']) < 12 else '25'}'],
-            ['AiPlayerbot.KillXPRate =', 'AiPlayerbot.KillXPRate = 10'],
+            ['AiPlayerbot.KillXPRate =', 'AiPlayerbot.KillXPRate = 1'],
             ['AiPlayerbot.AutoEquipUpgradeLoot =', 'AiPlayerbot.AutoEquipUpgradeLoot = 0'],
-            ['AiPlayerbot.FreeFood =', 'AiPlayerbot.FreeFood = 0']
+            ['AiPlayerbot.FreeFood =', 'AiPlayerbot.FreeFood = 1'],
+            ['AiPlayerbot.AutoPickReward =', 'AiPlayerbot.AutoPickReward = no'],
+            ['AiPlayerbot.AutoTrainSpells =', 'AiPlayerbot.AutoTrainSpells = no'],
+            ['AiPlayerbot.EnableNewRpgStrategy =', 'AiPlayerbot.EnableNewRpgStrategy = 1'],
+            ['AiPlayerbot.DropObsoleteQuests =', 'AiPlayerbot.DropObsoleteQuests = 0']
         ]
     ],
     [
@@ -822,7 +836,7 @@ databases = [
     [options['database.auth'], True, False, f'{source}/data/sql/base/db_auth', False, '', 0],
     [options['database.auth'], True, False, f'{source}/data/sql/updates/db_auth', True, 'RELEASED', 0],
     [options['database.auth'], True, False, f'{source}/data/sql/custom/db_auth', True, 'CUSTOM', 0],
-    [options['database.auth'], options['module.recruitafriend.enabled'], True, f'{source}/modules/mod-recruitafriend/sql/auth', True, 'MODULE', 17],
+    [options['database.auth'], options['module.recruitafriend.enabled'], True, f'{source}/modules/mod-recruitafriend/data/sql/auth', True, 'MODULE', 17],
     [options['database.auth'], True, False, f'{cwd}/sql/auth', False, 'CUSTOM', 0],
     # characters
     [options['database.characters'], True, True, f'{source}/data/sql/base/db_characters', False, '', 0],
@@ -839,9 +853,9 @@ databases = [
     [options['database.world'], True, True, f'{source}/data/sql/updates/db_world', True, 'RELEASED', 0],
     [options['database.world'], True, True, f'{source}/data/sql/custom/db_world', True, 'CUSTOM', 0],
     [options['database.world'], options['module.ah_bot.enabled'], True, f'{source}/modules/mod-ah-bot/data/sql/db-world', True, 'MODULE', 0],
-    [options['database.world'], options['module.appreciation.enabled'], True, f'{source}/modules/mod-appreciation/data/sql/db-world/base', True, 'MODULE', 12],
-    [options['database.world'], options['module.assistant.enabled'], True, f'{source}/modules/mod-assistant/sql/world', True, 'MODULE', 0],
-    [options['database.world'], options['module.fixes.enabled'], True, f'{source}/modules/mod-fixes/data/sql/db-world/base', True, 'MODULE', 17],
+    [options['database.world'], options['module.appreciation.enabled'], True, f'{source}/modules/mod-appreciation/data/sql/world', True, 'MODULE', 12],
+    [options['database.world'], options['module.assistant.enabled'], True, f'{source}/modules/mod-assistant/data/sql/world', True, 'MODULE', 0],
+    [options['database.world'], options['module.fixes.enabled'], True, f'{source}/modules/mod-fixes/data/sql/world', True, 'MODULE', 17],
     [options['database.world'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/data/sql/world', True, 'MODULE', 0],
     [options['database.world'], options['module.skip_dk_starting_area.enabled'], True, f'{source}/modules/mod-skip-dk-starting-area/data/sql/db-world', True, 'MODULE', 17],
     [options['database.world'], True, True, f'{cwd}/sql/world', False, 'CUSTOM', 0]
