@@ -271,7 +271,7 @@ def ResetSource(path, branch):
     repo.git.reset('--hard', f'origin/{branch}')
 
 def CloneSource(path, repo, branch):
-    git.Repo.clone_from(url=repo, to_path=path, branch=branch, depth=1, progress=GitProgress())
+    git.Repo.clone_from(url=repo, to_path=path, branch=branch, depth=1, single_branch=True, progress=GitProgress())
 
 def PullSource(path):
     repo = git.Repo(path)
@@ -768,7 +768,8 @@ configs = [
             ['AiPlayerbot.AutoPickReward =', 'AiPlayerbot.AutoPickReward = no'],
             ['AiPlayerbot.AutoTrainSpells =', 'AiPlayerbot.AutoTrainSpells = no'],
             ['AiPlayerbot.EnableNewRpgStrategy =', 'AiPlayerbot.EnableNewRpgStrategy = 1'],
-            ['AiPlayerbot.DropObsoleteQuests =', 'AiPlayerbot.DropObsoleteQuests = 0']
+            ['AiPlayerbot.DropObsoleteQuests =', 'AiPlayerbot.DropObsoleteQuests = 0'],
+            ['AiPlayerbot.PvpProhibitedZoneIds =', 'AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298,139,4080"']
         ]
     ],
     [
