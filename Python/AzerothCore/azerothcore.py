@@ -161,7 +161,6 @@ options = {
     'module.junktogold.enabled': False,
     'module.learnspells.enabled': False,
     'module.playerbots.enabled': False,
-    'module.playerbots.random_bots.accounts': 200,
     'module.playerbots.random_bots.active_alone': 100,
     'module.playerbots.random_bots.maximum': 50,
     'module.playerbots.random_bots.minimum': 50,
@@ -227,10 +226,10 @@ modules = [
     ['mod-groupquests', 'noisiver/mod-groupquests', 'master', options['module.groupquests.enabled'], 0],
     ['mod-junk-to-gold', 'noisiver/mod-junk-to-gold', 'master', options['module.junktogold.enabled'], 0],
     ['mod-learnspells', 'noisiver/mod-learnspells', 'progression', options['module.learnspells.enabled'], 0],
-    ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled'], 0],
+    ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver-cataclysm', options['module.playerbots.enabled'], 0],
     ['mod-recruitafriend', 'noisiver/mod-recruitafriend', 'master', options['module.recruitafriend.enabled'], 17],
     ['mod-skip-dk-starting-area', 'noisiver/mod-skip-dk-starting-area', 'noisiver', options['module.skip_dk_starting_area.enabled'], 17],
-    ['mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', True, 0],
+    ['mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', True, 12],
     ['mod-weekendbonus', 'noisiver/mod-weekendbonus', 'master', options['module.weekendbonus.enabled'], 0]
 ]
 
@@ -617,7 +616,7 @@ else:
     ahbot_max_item_level = 0
 
 if int(options['world.progression.patch']) < 12:
-    playerbots_starting_level = 50
+    playerbots_starting_level = 60
     playerbots_maps = '0,1'
     playerbots_warrior_glyphs_1 = '0,0,0,0,0,0'
     playerbots_warrior_spec_1_60 = '30220321233351000021-30505300002'
@@ -707,7 +706,7 @@ if int(options['world.progression.patch']) < 12:
     playerbots_druid_spec_4_60 = '-5532020323220100531-205003002'
     playerbots_druid_spec_4_80 = playerbots_druid_spec_4_60
 elif int(options['world.progression.patch']) < 17:
-    playerbots_starting_level = 60
+    playerbots_starting_level = 70
     playerbots_maps = '0,1,530'
     playerbots_warrior_glyphs_1 = '0,0,0,0,0,0'
     playerbots_warrior_spec_1_60 = ''
@@ -777,11 +776,11 @@ elif int(options['world.progression.patch']) < 17:
     playerbots_warlock_spec_1_60 = ''
     playerbots_warlock_spec_1_70 = playerbots_warlock_spec_1_60
     playerbots_warlock_spec_1_80 = playerbots_warlock_spec_1_60
-    playerbots_warlock_glyphs_1 = playerbots_warrior_glyphs_1
+    playerbots_warlock_glyphs_2 = playerbots_warrior_glyphs_1
     playerbots_warlock_spec_2_60 = ''
     playerbots_warlock_spec_2_70 = playerbots_warlock_spec_2_60
     playerbots_warlock_spec_2_80 = playerbots_warlock_spec_2_60
-    playerbots_warlock_glyphs_1 = playerbots_warrior_glyphs_1
+    playerbots_warlock_glyphs_3 = playerbots_warrior_glyphs_1
     playerbots_warlock_spec_3_60 = ''
     playerbots_warlock_spec_3_80 = playerbots_warlock_spec_3_60
     playerbots_druid_glyphs_1 = playerbots_warrior_glyphs_1
@@ -797,7 +796,7 @@ elif int(options['world.progression.patch']) < 17:
     playerbots_druid_spec_4_60 = ''
     playerbots_druid_spec_4_80 = playerbots_druid_spec_4_60
 else:
-    playerbots_starting_level = 70
+    playerbots_starting_level = 80
     playerbots_maps = '0,1,530,571'
     playerbots_warrior_glyphs_1 = '43418,43395,43423,43399,49084,43421'
     playerbots_warrior_spec_1_60 = '3022032023335100002012211231241'
@@ -887,6 +886,20 @@ else:
     playerbots_druid_spec_4_60 = '-552202032322010053100030310501'
     playerbots_druid_spec_4_80 = '-553202032322010053100030310511-205503012'
 
+if int(options['world.progression.patch']) < 16:
+    playerbots_apprentice_riding = 40
+elif int(options['world.progression.patch']) < 19:
+    playerbots_apprentice_riding = 30
+else:
+    playerbots_apprentice_riding = 20
+
+if int(options['world.progression.patch']) < 19:
+    playerbots_journeyman_riding = 60
+    playerbots_expert_riding = 70
+else:
+    playerbots_journeyman_riding = 40
+    playerbots_expert_riding = 60
+
 configs = [
     [
         'authserver.conf', options['build.auth'], False, 0, [
@@ -902,6 +915,9 @@ configs = [
             ['LoginDatabaseInfo     =', f'LoginDatabaseInfo     ="{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.auth']}"'],
             ['WorldDatabaseInfo     =', f'WorldDatabaseInfo     ="{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.world']}"'],
             ['CharacterDatabaseInfo = ', f'CharacterDatabaseInfo = "{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.characters']}"'],
+            ['LoginDatabase.SynchThreads     =', 'LoginDatabase.SynchThreads     = 2'],
+            ['WorldDatabase.SynchThreads     =', 'WorldDatabase.SynchThreads     = 2'],
+            ['CharacterDatabase.SynchThreads =', 'CharacterDatabase.SynchThreads = 2'],
             ['DataDir =', f'DataDir = "{GetDataPath()}"'],
             ['LogsDir =', f'LogsDir = "{cwd}/logs"'],
             ['BeepAtStart =', 'BeepAtStart = 0'],
@@ -984,7 +1000,7 @@ configs = [
     [
         'modules/mod_learnspells.conf', options['module.learnspells.enabled'], True, 0, [
             ['LearnSpells.Gamemasters =', 'LearnSpells.Gamemasters = 1'],
-            ['LearnSpells.SpellsFromQuests =', 'LearnSpells.SpellsFromQuests = 0'],
+            ['LearnSpells.SpellsFromQuests =', 'LearnSpells.SpellsFromQuests = 1'],
             ['LearnSpells.Riding.Apprentice =', f'LearnSpells.Riding.Apprentice = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
             ['LearnSpells.Riding.Journeyman =', f'LearnSpells.Riding.Journeyman = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
             ['LearnSpells.Riding.Expert =', f'LearnSpells.Riding.Expert = {'0' if int(options['world.progression.patch']) < 17 else '1'}']
@@ -992,7 +1008,6 @@ configs = [
     ],
     [
         'modules/playerbots.conf', options['module.playerbots.enabled'], True, 0, [
-            ['AiPlayerbot.RandomBotAccountCount =', f'AiPlayerbot.RandomBotAccountCount = {options['module.playerbots.random_bots.accounts']}'],
             ['AiPlayerbot.MinRandomBots =', f'AiPlayerbot.MinRandomBots = {options['module.playerbots.random_bots.minimum']}'],
             ['AiPlayerbot.MaxRandomBots =', f'AiPlayerbot.MaxRandomBots = {options['module.playerbots.random_bots.maximum']}'],
             ['AiPlayerbot.AllowPlayerBots =', 'AiPlayerbot.AllowPlayerBots = 1'],
@@ -1032,92 +1047,99 @@ configs = [
             ['AiPlayerbot.EnableNewRpgStrategy =', 'AiPlayerbot.EnableNewRpgStrategy = 1'],
             ['AiPlayerbot.DropObsoleteQuests =', 'AiPlayerbot.DropObsoleteQuests = 0'],
             ['AiPlayerbot.PvpProhibitedZoneIds =', 'AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298,139,4080"'],
-            ['AiPlayerbot.PremadeSpecGlyph.1.0 =', f'AiPlayerbot.PremadeSpecGlyph.1.0 = {playerbots_warrior_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.1.0.60 =', f'AiPlayerbot.PremadeSpecLink.1.0.60 = {playerbots_warrior_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.1.0.80 =', f'AiPlayerbot.PremadeSpecLink.1.0.80 = {playerbots_warrior_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.1.1 =', f'AiPlayerbot.PremadeSpecGlyph.1.1 = {playerbots_warrior_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.1.1.60 =', f'AiPlayerbot.PremadeSpecLink.1.1.60 = {playerbots_warrior_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.1.1.80 =', f'AiPlayerbot.PremadeSpecLink.1.1.80 = {playerbots_warrior_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.1.2 =', f'AiPlayerbot.PremadeSpecGlyph.1.2 = {playerbots_warrior_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.1.2.60 =', f'AiPlayerbot.PremadeSpecLink.1.2.60 = {playerbots_warrior_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.1.2.80 =', f'AiPlayerbot.PremadeSpecLink.1.2.80 = {playerbots_warrior_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.2.0 =', f'AiPlayerbot.PremadeSpecGlyph.2.0 = {playerbots_paladin_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.2.0.60 =', f'AiPlayerbot.PremadeSpecLink.2.0.60 = {playerbots_paladin_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.2.0.80 =', f'AiPlayerbot.PremadeSpecLink.2.0.80 = {playerbots_paladin_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.2.1 =', f'AiPlayerbot.PremadeSpecGlyph.2.1 = {playerbots_paladin_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.2.1.60 =', f'AiPlayerbot.PremadeSpecLink.2.1.60 = {playerbots_paladin_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.2.1.80 =', f'AiPlayerbot.PremadeSpecLink.2.1.80 = {playerbots_paladin_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.2.2 =', f'AiPlayerbot.PremadeSpecGlyph.2.2 = {playerbots_paladin_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.2.2.60 =', f'AiPlayerbot.PremadeSpecLink.2.2.60 = {playerbots_paladin_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.2.2.65 =', f'AiPlayerbot.PremadeSpecLink.2.2.65 = {playerbots_paladin_spec_3_65} '],
-            ['AiPlayerbot.PremadeSpecLink.2.2.80 =', f'AiPlayerbot.PremadeSpecLink.2.2.80 = {playerbots_paladin_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.3.0 =', f'AiPlayerbot.PremadeSpecGlyph.3.0 = {playerbots_hunter_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.3.0.60 =', f'AiPlayerbot.PremadeSpecLink.3.0.60 = {playerbots_hunter_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.3.0.80 =', f'AiPlayerbot.PremadeSpecLink.3.0.80 = {playerbots_hunter_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.3.1 =', f'AiPlayerbot.PremadeSpecGlyph.3.1 = {playerbots_hunter_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.3.1.60 =', f'AiPlayerbot.PremadeSpecLink.3.1.60 = {playerbots_hunter_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.3.1.80 =', f'AiPlayerbot.PremadeSpecLink.3.1.80 = {playerbots_hunter_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.3.2 =', f'AiPlayerbot.PremadeSpecGlyph.3.2 = {playerbots_hunter_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.3.2.60 =', f'AiPlayerbot.PremadeSpecLink.3.2.60 = {playerbots_hunter_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.3.2.80 =', f'AiPlayerbot.PremadeSpecLink.3.2.80 = {playerbots_hunter_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.4.0 =', f'AiPlayerbot.PremadeSpecGlyph.4.0 = {playerbots_rogue_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.4.0.60 =', f'AiPlayerbot.PremadeSpecLink.4.0.60 = {playerbots_rogue_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.4.0.80 =', f'AiPlayerbot.PremadeSpecLink.4.0.80 = {playerbots_rogue_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.4.1 =', f'AiPlayerbot.PremadeSpecGlyph.4.1 = {playerbots_rogue_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.4.1.60 =', f'AiPlayerbot.PremadeSpecLink.4.1.60 = {playerbots_rogue_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.4.1.80 =', f'AiPlayerbot.PremadeSpecLink.4.1.80 = {playerbots_rogue_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.4.2 =', f'AiPlayerbot.PremadeSpecGlyph.4.2 = {playerbots_rogue_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.4.2.60 =', f'AiPlayerbot.PremadeSpecLink.4.2.60 = {playerbots_rogue_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.4.2.80 =', f'AiPlayerbot.PremadeSpecLink.4.2.80 = {playerbots_rogue_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.5.0 =', f'AiPlayerbot.PremadeSpecGlyph.5.0 = {playerbots_priest_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.5.0.60 =', f'AiPlayerbot.PremadeSpecLink.5.0.60 = {playerbots_priest_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.5.0.80 =', f'AiPlayerbot.PremadeSpecLink.5.0.80 = {playerbots_priest_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.5.1 =', f'AiPlayerbot.PremadeSpecGlyph.5.1 = {playerbots_priest_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.5.1.60 =', f'AiPlayerbot.PremadeSpecLink.5.1.60 = {playerbots_priest_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.5.1.80 =', f'AiPlayerbot.PremadeSpecLink.5.1.80 = {playerbots_priest_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.5.2 =', f'AiPlayerbot.PremadeSpecGlyph.5.2 = {playerbots_priest_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.5.2.60 =', f'AiPlayerbot.PremadeSpecLink.5.2.60 = {playerbots_priest_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.5.2.80 =', f'AiPlayerbot.PremadeSpecLink.5.2.80 = {playerbots_priest_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.7.0 =', f'AiPlayerbot.PremadeSpecGlyph.7.0 = {playerbots_shaman_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.7.0.60 =', f'AiPlayerbot.PremadeSpecLink.7.0.60 = {playerbots_shaman_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.7.0.80 =', f'AiPlayerbot.PremadeSpecLink.7.0.80 = {playerbots_shaman_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.7.1 =', f'AiPlayerbot.PremadeSpecGlyph.7.1 = {playerbots_shaman_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.7.1.60 =', f'AiPlayerbot.PremadeSpecLink.7.1.60 = {playerbots_shaman_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.7.1.80 =', f'AiPlayerbot.PremadeSpecLink.7.1.80 = {playerbots_shaman_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.7.2 =', f'AiPlayerbot.PremadeSpecGlyph.7.2 = {playerbots_shaman_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.7.2.60 =', f'AiPlayerbot.PremadeSpecLink.7.2.60 = {playerbots_shaman_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.7.2.80 =', f'AiPlayerbot.PremadeSpecLink.7.2.80 = {playerbots_shaman_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.8.0 =', f'AiPlayerbot.PremadeSpecGlyph.8.0 = {playerbots_mage_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.8.0.60 =', f'AiPlayerbot.PremadeSpecLink.8.0.60 = {playerbots_mage_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.8.0.80 =', f'AiPlayerbot.PremadeSpecLink.8.0.80 = {playerbots_mage_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.8.1 =', f'AiPlayerbot.PremadeSpecGlyph.8.1 = {playerbots_mage_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.8.1.60 =', f'AiPlayerbot.PremadeSpecLink.8.1.60 = {playerbots_mage_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.8.1.80 =', f'AiPlayerbot.PremadeSpecLink.8.1.80 = {playerbots_mage_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.8.2 =', f'AiPlayerbot.PremadeSpecGlyph.8.2 = {playerbots_mage_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.8.2.60 =', f'AiPlayerbot.PremadeSpecLink.8.2.60 = {playerbots_mage_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.8.2.80 =', f'AiPlayerbot.PremadeSpecLink.8.2.80 = {playerbots_mage_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.9.0 =', f'AiPlayerbot.PremadeSpecGlyph.9.0 = {playerbots_warlock_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.9.0.60 =', f'AiPlayerbot.PremadeSpecLink.9.0.60 = {playerbots_warlock_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.9.0.70 =', f'AiPlayerbot.PremadeSpecLink.9.0.70 = {playerbots_warlock_spec_1_70} '],
-            ['AiPlayerbot.PremadeSpecLink.9.0.80 =', f'AiPlayerbot.PremadeSpecLink.9.0.80 = {playerbots_warlock_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.9.1 =', f'AiPlayerbot.PremadeSpecGlyph.9.1 = {playerbots_warlock_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.9.1.60 =', f'AiPlayerbot.PremadeSpecLink.9.1.60 = {playerbots_warlock_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.9.1.70 =', f'AiPlayerbot.PremadeSpecLink.9.1.70 = {playerbots_warlock_spec_2_70} '],
-            ['AiPlayerbot.PremadeSpecLink.9.1.80 =', f'AiPlayerbot.PremadeSpecLink.9.1.80 = {playerbots_warlock_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.9.2 =', f'AiPlayerbot.PremadeSpecGlyph.9.2 = {playerbots_warlock_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.9.2.60 =', f'AiPlayerbot.PremadeSpecLink.9.2.60 = {playerbots_warlock_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.9.2.80 =', f'AiPlayerbot.PremadeSpecLink.9.2.80 = {playerbots_warlock_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.11.0 =', f'AiPlayerbot.PremadeSpecGlyph.11.0 = {playerbots_druid_glyphs_1} '],
-            ['AiPlayerbot.PremadeSpecLink.11.0.60 =', f'AiPlayerbot.PremadeSpecLink.11.0.60 = {playerbots_druid_spec_1_60} '],
-            ['AiPlayerbot.PremadeSpecLink.11.0.80 =', f'AiPlayerbot.PremadeSpecLink.11.0.80 = {playerbots_druid_spec_1_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.11.1 =', f'AiPlayerbot.PremadeSpecGlyph.11.1 = {playerbots_druid_glyphs_2} '],
-            ['AiPlayerbot.PremadeSpecLink.11.1.60 =', f'AiPlayerbot.PremadeSpecLink.11.1.60 = {playerbots_druid_spec_2_60} '],
-            ['AiPlayerbot.PremadeSpecLink.11.1.80 =', f'AiPlayerbot.PremadeSpecLink.11.1.80 = {playerbots_druid_spec_2_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.11.2 =', f'AiPlayerbot.PremadeSpecGlyph.11.2 = {playerbots_druid_glyphs_3} '],
-            ['AiPlayerbot.PremadeSpecLink.11.2.60 =', f'AiPlayerbot.PremadeSpecLink.11.2.60 = {playerbots_druid_spec_3_60} '],
-            ['AiPlayerbot.PremadeSpecLink.11.2.80 =', f'AiPlayerbot.PremadeSpecLink.11.2.80 = {playerbots_druid_spec_3_80} '],
-            ['AiPlayerbot.PremadeSpecGlyph.11.3 =', f'AiPlayerbot.PremadeSpecGlyph.11.3 = {playerbots_druid_glyphs_4} '],
-            ['AiPlayerbot.PremadeSpecLink.11.3.60 =', f'AiPlayerbot.PremadeSpecLink.11.3.60 = {playerbots_druid_spec_4_60} '],
+            ['PlayerbotsDatabase.WorkerThreads =', 'PlayerbotsDatabase.WorkerThreads = 4'],
+            ['AiPlayerbot.UseGroundMountAtMinLevel =', f'AiPlayerbot.UseGroundMountAtMinLevel = {playerbots_apprentice_riding}'],
+            ['AiPlayerbot.UseFastGroundMountAtMinLevel =', f'AiPlayerbot.UseFastGroundMountAtMinLevel = {playerbots_journeyman_riding}'],
+            ['AiPlayerbot.UseFlyMountAtMinLevel =', f'AiPlayerbot.UseFlyMountAtMinLevel = {playerbots_expert_riding}'],
+            ['AiPlayerbot.PremadeSpecGlyph.1.0 =', f'AiPlayerbot.PremadeSpecGlyph.1.0 = {playerbots_warrior_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.1.0.60 =', f'AiPlayerbot.PremadeSpecLink.1.0.60 = {playerbots_warrior_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.1.0.80 =', f'AiPlayerbot.PremadeSpecLink.1.0.80 = {playerbots_warrior_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.1.1 =', f'AiPlayerbot.PremadeSpecGlyph.1.1 = {playerbots_warrior_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.1.1.60 =', f'AiPlayerbot.PremadeSpecLink.1.1.60 = {playerbots_warrior_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.1.1.80 =', f'AiPlayerbot.PremadeSpecLink.1.1.80 = {playerbots_warrior_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.1.2 =', f'AiPlayerbot.PremadeSpecGlyph.1.2 = {playerbots_warrior_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.1.2.60 =', f'AiPlayerbot.PremadeSpecLink.1.2.60 = {playerbots_warrior_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.1.2.80 =', f'AiPlayerbot.PremadeSpecLink.1.2.80 = {playerbots_warrior_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.2.0 =', f'AiPlayerbot.PremadeSpecGlyph.2.0 = {playerbots_paladin_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.2.0.60 =', f'AiPlayerbot.PremadeSpecLink.2.0.60 = {playerbots_paladin_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.2.0.80 =', f'AiPlayerbot.PremadeSpecLink.2.0.80 = {playerbots_paladin_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.2.1 =', f'AiPlayerbot.PremadeSpecGlyph.2.1 = {playerbots_paladin_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.2.1.60 =', f'AiPlayerbot.PremadeSpecLink.2.1.60 = {playerbots_paladin_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.2.1.80 =', f'AiPlayerbot.PremadeSpecLink.2.1.80 = {playerbots_paladin_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.2.2 =', f'AiPlayerbot.PremadeSpecGlyph.2.2 = {playerbots_paladin_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.2.2.60 =', f'AiPlayerbot.PremadeSpecLink.2.2.60 = {playerbots_paladin_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.2.2.65 =', f'AiPlayerbot.PremadeSpecLink.2.2.65 = {playerbots_paladin_spec_3_65}'],
+            ['AiPlayerbot.PremadeSpecLink.2.2.80 =', f'AiPlayerbot.PremadeSpecLink.2.2.80 = {playerbots_paladin_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.3.0 =', f'AiPlayerbot.PremadeSpecGlyph.3.0 = {playerbots_hunter_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.3.0.60 =', f'AiPlayerbot.PremadeSpecLink.3.0.60 = {playerbots_hunter_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.3.0.80 =', f'AiPlayerbot.PremadeSpecLink.3.0.80 = {playerbots_hunter_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.3.1 =', f'AiPlayerbot.PremadeSpecGlyph.3.1 = {playerbots_hunter_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.3.1.60 =', f'AiPlayerbot.PremadeSpecLink.3.1.60 = {playerbots_hunter_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.3.1.80 =', f'AiPlayerbot.PremadeSpecLink.3.1.80 = {playerbots_hunter_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.3.2 =', f'AiPlayerbot.PremadeSpecGlyph.3.2 = {playerbots_hunter_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.3.2.60 =', f'AiPlayerbot.PremadeSpecLink.3.2.60 = {playerbots_hunter_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.3.2.80 =', f'AiPlayerbot.PremadeSpecLink.3.2.80 = {playerbots_hunter_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.4.0 =', f'AiPlayerbot.PremadeSpecGlyph.4.0 = {playerbots_rogue_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.4.0.60 =', f'AiPlayerbot.PremadeSpecLink.4.0.60 = {playerbots_rogue_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.4.0.80 =', f'AiPlayerbot.PremadeSpecLink.4.0.80 = {playerbots_rogue_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.4.1 =', f'AiPlayerbot.PremadeSpecGlyph.4.1 = {playerbots_rogue_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.4.1.60 =', f'AiPlayerbot.PremadeSpecLink.4.1.60 = {playerbots_rogue_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.4.1.80 =', f'AiPlayerbot.PremadeSpecLink.4.1.80 = {playerbots_rogue_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.4.2 =', f'AiPlayerbot.PremadeSpecGlyph.4.2 = {playerbots_rogue_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.4.2.60 =', f'AiPlayerbot.PremadeSpecLink.4.2.60 = {playerbots_rogue_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.4.2.80 =', f'AiPlayerbot.PremadeSpecLink.4.2.80 = {playerbots_rogue_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.5.0 =', f'AiPlayerbot.PremadeSpecGlyph.5.0 = {playerbots_priest_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.5.0.60 =', f'AiPlayerbot.PremadeSpecLink.5.0.60 = {playerbots_priest_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.5.0.80 =', f'AiPlayerbot.PremadeSpecLink.5.0.80 = {playerbots_priest_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.5.1 =', f'AiPlayerbot.PremadeSpecGlyph.5.1 = {playerbots_priest_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.5.1.60 =', f'AiPlayerbot.PremadeSpecLink.5.1.60 = {playerbots_priest_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.5.1.80 =', f'AiPlayerbot.PremadeSpecLink.5.1.80 = {playerbots_priest_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.5.2 =', f'AiPlayerbot.PremadeSpecGlyph.5.2 = {playerbots_priest_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.5.2.60 =', f'AiPlayerbot.PremadeSpecLink.5.2.60 = {playerbots_priest_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.5.2.80 =', f'AiPlayerbot.PremadeSpecLink.5.2.80 = {playerbots_priest_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.7.0 =', f'AiPlayerbot.PremadeSpecGlyph.7.0 = {playerbots_shaman_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.7.0.60 =', f'AiPlayerbot.PremadeSpecLink.7.0.60 = {playerbots_shaman_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.7.0.80 =', f'AiPlayerbot.PremadeSpecLink.7.0.80 = {playerbots_shaman_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.7.1 =', f'AiPlayerbot.PremadeSpecGlyph.7.1 = {playerbots_shaman_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.7.1.60 =', f'AiPlayerbot.PremadeSpecLink.7.1.60 = {playerbots_shaman_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.7.1.80 =', f'AiPlayerbot.PremadeSpecLink.7.1.80 = {playerbots_shaman_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.7.2 =', f'AiPlayerbot.PremadeSpecGlyph.7.2 = {playerbots_shaman_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.7.2.60 =', f'AiPlayerbot.PremadeSpecLink.7.2.60 = {playerbots_shaman_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.7.2.80 =', f'AiPlayerbot.PremadeSpecLink.7.2.80 = {playerbots_shaman_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.8.0 =', f'AiPlayerbot.PremadeSpecGlyph.8.0 = {playerbots_mage_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.8.0.60 =', f'AiPlayerbot.PremadeSpecLink.8.0.60 = {playerbots_mage_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.8.0.80 =', f'AiPlayerbot.PremadeSpecLink.8.0.80 = {playerbots_mage_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.8.1 =', f'AiPlayerbot.PremadeSpecGlyph.8.1 = {playerbots_mage_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.8.1.60 =', f'AiPlayerbot.PremadeSpecLink.8.1.60 = {playerbots_mage_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.8.1.80 =', f'AiPlayerbot.PremadeSpecLink.8.1.80 = {playerbots_mage_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.8.2 =', f'AiPlayerbot.PremadeSpecGlyph.8.2 = {playerbots_mage_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.8.2.60 =', f'AiPlayerbot.PremadeSpecLink.8.2.60 = {playerbots_mage_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.8.2.80 =', f'AiPlayerbot.PremadeSpecLink.8.2.80 = {playerbots_mage_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.8.3 =', f'AiPlayerbot.PremadeSpecGlyph.8.3 = {playerbots_mage_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.8.3.60 =', f'AiPlayerbot.PremadeSpecLink.8.3.60 = {playerbots_mage_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.8.3.80 =', f'AiPlayerbot.PremadeSpecLink.8.3.80 = {playerbots_mage_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.9.0 =', f'AiPlayerbot.PremadeSpecGlyph.9.0 = {playerbots_warlock_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.9.0.60 =', f'AiPlayerbot.PremadeSpecLink.9.0.60 = {playerbots_warlock_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.9.0.70 =', f'AiPlayerbot.PremadeSpecLink.9.0.70 = {playerbots_warlock_spec_1_70}'],
+            ['AiPlayerbot.PremadeSpecLink.9.0.80 =', f'AiPlayerbot.PremadeSpecLink.9.0.80 = {playerbots_warlock_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.9.1 =', f'AiPlayerbot.PremadeSpecGlyph.9.1 = {playerbots_warlock_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.9.1.60 =', f'AiPlayerbot.PremadeSpecLink.9.1.60 = {playerbots_warlock_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.9.1.70 =', f'AiPlayerbot.PremadeSpecLink.9.1.70 = {playerbots_warlock_spec_2_70}'],
+            ['AiPlayerbot.PremadeSpecLink.9.1.80 =', f'AiPlayerbot.PremadeSpecLink.9.1.80 = {playerbots_warlock_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.9.2 =', f'AiPlayerbot.PremadeSpecGlyph.9.2 = {playerbots_warlock_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.9.2.60 =', f'AiPlayerbot.PremadeSpecLink.9.2.60 = {playerbots_warlock_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.9.2.80 =', f'AiPlayerbot.PremadeSpecLink.9.2.80 = {playerbots_warlock_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.11.0 =', f'AiPlayerbot.PremadeSpecGlyph.11.0 = {playerbots_druid_glyphs_1}'],
+            ['AiPlayerbot.PremadeSpecLink.11.0.60 =', f'AiPlayerbot.PremadeSpecLink.11.0.60 = {playerbots_druid_spec_1_60}'],
+            ['AiPlayerbot.PremadeSpecLink.11.0.80 =', f'AiPlayerbot.PremadeSpecLink.11.0.80 = {playerbots_druid_spec_1_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.11.1 =', f'AiPlayerbot.PremadeSpecGlyph.11.1 = {playerbots_druid_glyphs_2}'],
+            ['AiPlayerbot.PremadeSpecLink.11.1.60 =', f'AiPlayerbot.PremadeSpecLink.11.1.60 = {playerbots_druid_spec_2_60}'],
+            ['AiPlayerbot.PremadeSpecLink.11.1.80 =', f'AiPlayerbot.PremadeSpecLink.11.1.80 = {playerbots_druid_spec_2_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.11.2 =', f'AiPlayerbot.PremadeSpecGlyph.11.2 = {playerbots_druid_glyphs_3}'],
+            ['AiPlayerbot.PremadeSpecLink.11.2.60 =', f'AiPlayerbot.PremadeSpecLink.11.2.60 = {playerbots_druid_spec_3_60}'],
+            ['AiPlayerbot.PremadeSpecLink.11.2.80 =', f'AiPlayerbot.PremadeSpecLink.11.2.80 = {playerbots_druid_spec_3_80}'],
+            ['AiPlayerbot.PremadeSpecGlyph.11.3 =', f'AiPlayerbot.PremadeSpecGlyph.11.3 = {playerbots_druid_glyphs_4}'],
+            ['AiPlayerbot.PremadeSpecLink.11.3.60 =', f'AiPlayerbot.PremadeSpecLink.11.3.60 = {playerbots_druid_spec_4_60}'],
             ['AiPlayerbot.PremadeSpecLink.11.3.80 =', f'AiPlayerbot.PremadeSpecLink.11.3.80 = {playerbots_druid_spec_4_80} ']
         ]
     ],
@@ -1130,6 +1152,16 @@ configs = [
     [
         'modules/skip_dk_module.conf', options['module.skip_dk_starting_area.enabled'], True, 17, [
             ['Skip.Deathknight.Starter.Announce.enable =', 'Skip.Deathknight.Starter.Announce.enable = 0']
+        ]
+    ],
+    [
+        'modules/mod_weekendbonus.conf', options['module.weekendbonus.enabled'], True, 0, [
+            ['WeekendBonus.Multiplier.Experience =', 'WeekendBonus.Multiplier.Experience = 2.0'],
+            ['WeekendBonus.Multiplier.Money =', 'WeekendBonus.Multiplier.Money = 2.0'],
+            ['WeekendBonus.Multiplier.Professions =', 'WeekendBonus.Multiplier.Professions = 2'],
+            ['WeekendBonus.Multiplier.Reputation =', 'WeekendBonus.Multiplier.Reputation = 2.0'],
+            ['WeekendBonus.Multiplier.Proficiencies =', 'WeekendBonus.Multiplier.Proficiencies = 2'],
+            ['WeekendBonus.Multiplier.Honor =', 'WeekendBonus.Multiplier.Honor = 2.0']
         ]
     ]
 ]

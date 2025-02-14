@@ -33,7 +33,6 @@ INSERT INTO `realm_settings` (`id`, `setting`, `value`) VALUES
 (-1, 'module.junktogold.enabled', 'false'),
 (-1, 'module.learnspells.enabled', 'false'),
 (-1, 'module.playerbots.enabled', 'false'),
-(-1, 'module.playerbots.random_bots.accounts', '200'),
 (-1, 'module.playerbots.random_bots.active_alone', '100'),
 (-1, 'module.playerbots.random_bots.maximum', '50'),
 (-1, 'module.playerbots.random_bots.minimum', '50'),
