@@ -165,6 +165,12 @@ options = {
     'module.playerbots.random_bots.maximum': 50,
     'module.playerbots.random_bots.minimum': 50,
     'module.playerbots.random_bots.smart_scale': False,
+    'module.progression.aura': 4,
+    'module.progression.enabled': False,
+    'module.progression.multiplier.damage': 0.6,
+    'module.progression.multiplier.healing': 0.5,
+    'module.progression.patch': 21,
+    'module.progression.reset': False,
     'module.recruitafriend.enabled': False,
     'module.skip_dk_starting_area.enabled': False,
     'module.weekendbonus.enabled': False,
@@ -176,10 +182,6 @@ options = {
     'world.local_address': '127.0.0.1',
     'world.name': 'AzerothCore',
     'world.preload_grids': False,
-    'world.progression.aura': 4,
-    'world.progression.multiplier.damage': 0.6,
-    'world.progression.multiplier.healing': 0.5,
-    'world.progression.patch': 21,
     'world.realm_zone': 1,
     'world.set_creatures_active': False,
     'world.warden': True
@@ -226,7 +228,8 @@ modules = [
     ['mod-groupquests', 'noisiver/mod-groupquests', 'master', options['module.groupquests.enabled'], 0],
     ['mod-junk-to-gold', 'noisiver/mod-junk-to-gold', 'master', options['module.junktogold.enabled'], 0],
     ['mod-learnspells', 'noisiver/mod-learnspells', 'progression', options['module.learnspells.enabled'], 0],
-    ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver-cataclysm', options['module.playerbots.enabled'], 0],
+    ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled'], 0],
+    ['mod-progression', 'noisiver/mod-progression', 'master', options['module.progression.enabled'], 0],
     ['mod-recruitafriend', 'noisiver/mod-recruitafriend', 'master', options['module.recruitafriend.enabled'], 17],
     ['mod-skip-dk-starting-area', 'noisiver/mod-skip-dk-starting-area', 'noisiver', options['module.skip_dk_starting_area.enabled'], 17],
     ['mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', True, 12],
@@ -294,16 +297,13 @@ def UpdateSource(path, repo, branch, name):
             print(e.stderr)
             HandleError(f'An error occurred while downloading the source code for {name}')
     else:
-        if HasChanges(path):
-            try:
-                PrintProgress(f'Updating the source code for {name}')
-                ResetSource(path, branch)
-                PullSource(path)
-            except Exception as e:
-                print(e.stderr)
-                HandleError(f'An error occurred while updating the source code for {name}')
-        else:
-            PrintProgress(f'The source code for {name} is up-to-date')
+        try:
+            PrintProgress(f'Updating the source code for {name}')
+            ResetSource(path, branch)
+            PullSource(path)
+        except Exception as e:
+            print(e.stderr)
+            HandleError(f'An error occurred while updating the source code for {name}')
 
 def DownloadSource():
     PrintHeader('Downloading source code...')
@@ -322,7 +322,7 @@ def DownloadSource():
         enabled = module[3]
         patch = module[4]
 
-        if options['build.world'] and enabled and int(options['world.progression.patch']) >= patch:
+        if options['build.world'] and enabled and int(options['module.progression.patch']) >= patch:
             UpdateSource(path, f'{cmd}{repo}', branch, module[0])
         else:
             if os.path.exists(path) and os.path.isdir(path):
@@ -592,308 +592,47 @@ def Install():
 
 ##################################################
 
-if int(options['world.progression.patch']) < 6:
+if int(options['module.progression.patch']) < 6:
     ahbot_max_item_level = 63
-elif int(options['world.progression.patch']) < 7:
+elif int(options['module.progression.patch']) < 7:
     ahbot_max_item_level = 66
-elif int(options['world.progression.patch']) < 12:
+elif int(options['module.progression.patch']) < 12:
     ahbot_max_item_level = 76
-elif int(options['world.progression.patch']) < 13:
+elif int(options['module.progression.patch']) < 13:
     ahbot_max_item_level = 110
-elif int(options['world.progression.patch']) < 14:
+elif int(options['module.progression.patch']) < 14:
     ahbot_max_item_level = 120
-elif int(options['world.progression.patch']) < 17:
+elif int(options['module.progression.patch']) < 17:
     ahbot_max_item_level = 133
-elif int(options['world.progression.patch']) < 18:
+elif int(options['module.progression.patch']) < 18:
     ahbot_max_item_level = 200
-elif int(options['world.progression.patch']) < 19:
+elif int(options['module.progression.patch']) < 19:
     ahbot_max_item_level = 213
-elif int(options['world.progression.patch']) < 20:
+elif int(options['module.progression.patch']) < 20:
     ahbot_max_item_level = 226
-elif int(options['world.progression.patch']) < 21:
+elif int(options['module.progression.patch']) < 21:
     ahbot_max_item_level = 245
 else:
     ahbot_max_item_level = 0
 
-if int(options['world.progression.patch']) < 12:
-    playerbots_starting_level = 60
+if int(options['module.progression.patch']) < 12:
+    playerbots_starting_level = 1
     playerbots_maps = '0,1'
-    playerbots_warrior_glyphs_1 = '0,0,0,0,0,0'
-    playerbots_warrior_spec_1_60 = '30220321233351000021-30505300002'
-    playerbots_warrior_spec_1_80 = playerbots_warrior_spec_1_60
-    playerbots_warrior_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_warrior_spec_2_60 = '30202301233-325000005502310051'
-    playerbots_warrior_spec_2_80 = playerbots_warrior_spec_2_60
-    playerbots_warrior_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_warrior_spec_3_60 = '352000001-3-05335122500021251'
-    playerbots_warrior_spec_3_80 = playerbots_warrior_spec_3_60
-    playerbots_paladin_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_paladin_spec_1_60 = '50350152020013251-5002-05202'
-    playerbots_paladin_spec_1_80 = playerbots_paladin_spec_1_60
-    playerbots_paladin_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_paladin_spec_2_60 = '-0500513520310231-502302500003'
-    playerbots_paladin_spec_2_80 = playerbots_paladin_spec_2_60
-    playerbots_paladin_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_paladin_spec_3_60 = '-453201002-05232051203331301'
-    playerbots_paladin_spec_3_65 = playerbots_paladin_spec_3_60
-    playerbots_paladin_spec_3_80 = playerbots_paladin_spec_3_60
-    playerbots_hunter_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_hunter_spec_1_60 = '51200201515012241-005305001-5'
-    playerbots_hunter_spec_1_80 = playerbots_hunter_spec_1_60
-    playerbots_hunter_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_hunter_spec_2_60 = '502-035305231230013231-5000002'
-    playerbots_hunter_spec_2_80 = playerbots_hunter_spec_2_60
-    playerbots_hunter_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_hunter_spec_3_60 = '-005305101-5000032500033330531'
-    playerbots_hunter_spec_3_80 = playerbots_hunter_spec_3_60
-    playerbots_rogue_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_rogue_spec_1_60 = '005303005350102501-005005001-502'
-    playerbots_rogue_spec_1_80 = playerbots_rogue_spec_1_60
-    playerbots_rogue_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_rogue_spec_2_60 = '00532000531-0252051000035015201'
-    playerbots_rogue_spec_2_80 = playerbots_rogue_spec_2_60
-    playerbots_rogue_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_rogue_spec_3_60 = '3053031-3-5320232030300121051'
-    playerbots_rogue_spec_3_80 = playerbots_rogue_spec_3_60
-    playerbots_priest_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_priest_spec_1_60 = '050320313030051231-2055100303'
-    playerbots_priest_spec_1_80 = playerbots_priest_spec_1_60
-    playerbots_priest_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_priest_spec_2_60 = '0503203-23505103030215251'
-    playerbots_priest_spec_2_80 = playerbots_priest_spec_2_60
-    playerbots_priest_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_priest_spec_3_60 = '05032031--3250230512230102231'
-    playerbots_priest_spec_3_80 = playerbots_priest_spec_3_60
-    playerbots_shaman_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_shaman_spec_1_60 = '3530001523213351-005050031'
-    playerbots_shaman_spec_1_80 = playerbots_shaman_spec_1_60
-    playerbots_shaman_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_shaman_spec_2_60 = '053030051-3020503300502133301'
-    playerbots_shaman_spec_2_80 = playerbots_shaman_spec_2_60
-    playerbots_shaman_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_shaman_spec_3_60 = '-0050503-0500533133531051'
-    playerbots_shaman_spec_3_80 = playerbots_shaman_spec_3_60
-    playerbots_mage_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_mage_spec_1_60 = '235005030100330150321-03-023023001'
-    playerbots_mage_spec_1_80 = playerbots_mage_spec_1_60
-    playerbots_mage_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_mage_spec_2_60 = '2300230311-0055032012303330051'
-    playerbots_mage_spec_2_80 = playerbots_mage_spec_2_60
-    playerbots_mage_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_mage_spec_3_60 = '23000503310003--0533030310233100031'
-    playerbots_mage_spec_3_80 = playerbots_mage_spec_3_60
-    playerbots_warlock_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_warlock_spec_1_60 = '235002203102351025--55000005'
-    playerbots_warlock_spec_1_70 = playerbots_warlock_spec_1_60
-    playerbots_warlock_spec_1_80 = playerbots_warlock_spec_1_60
-    playerbots_warlock_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_warlock_spec_2_60 = '002-203203301035012531-55000005'
-    playerbots_warlock_spec_2_70 = playerbots_warlock_spec_2_60
-    playerbots_warlock_spec_2_80 = playerbots_warlock_spec_2_60
-    playerbots_warlock_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_warlock_spec_3_60 = '025-03310030003-05203205220031051'
-    playerbots_warlock_spec_3_80 = playerbots_warlock_spec_3_60
-    playerbots_druid_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_druid_spec_1_60 = '503210312533130321--205003012'
-    playerbots_druid_spec_1_80 = playerbots_druid_spec_1_60
-    playerbots_druid_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_druid_spec_2_60 = '-5332321323220103531-205'
-    playerbots_druid_spec_2_80 = playerbots_druid_spec_2_60
-    playerbots_druid_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_druid_spec_3_60 = '05320001--23003331253151251'
-    playerbots_druid_spec_3_80 = playerbots_druid_spec_3_60
-    playerbots_druid_glyphs_4 = playerbots_warrior_glyphs_1
-    playerbots_druid_spec_4_60 = '-5532020323220100531-205003002'
-    playerbots_druid_spec_4_80 = playerbots_druid_spec_4_60
-elif int(options['world.progression.patch']) < 17:
-    playerbots_starting_level = 70
+elif int(options['module.progression.patch']) < 17:
+    playerbots_starting_level = 1
     playerbots_maps = '0,1,530'
-    playerbots_warrior_glyphs_1 = '0,0,0,0,0,0'
-    playerbots_warrior_spec_1_60 = ''
-    playerbots_warrior_spec_1_80 = playerbots_warrior_spec_1_60
-    playerbots_warrior_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_warrior_spec_2_60 = ''
-    playerbots_warrior_spec_2_80 = playerbots_warrior_spec_2_60
-    playerbots_warrior_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_warrior_spec_3_60 = ''
-    playerbots_warrior_spec_3_80 = playerbots_warrior_spec_3_60
-    playerbots_paladin_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_paladin_spec_1_60 = ''
-    playerbots_paladin_spec_1_80 = playerbots_paladin_spec_1_60
-    playerbots_paladin_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_paladin_spec_2_60 = ''
-    playerbots_paladin_spec_2_80 = playerbots_paladin_spec_2_60
-    playerbots_paladin_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_paladin_spec_3_60 = ''
-    playerbots_paladin_spec_3_65 = playerbots_paladin_spec_3_60
-    playerbots_paladin_spec_3_80 = playerbots_paladin_spec_3_60
-    playerbots_hunter_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_hunter_spec_1_60 = ''
-    playerbots_hunter_spec_1_80 = playerbots_hunter_spec_1_60
-    playerbots_hunter_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_hunter_spec_2_60 = ''
-    playerbots_hunter_spec_2_80 = playerbots_hunter_spec_2_60
-    playerbots_hunter_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_hunter_spec_3_60 = ''
-    playerbots_hunter_spec_3_80 = playerbots_hunter_spec_3_60
-    playerbots_rogue_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_rogue_spec_1_60 = ''
-    playerbots_rogue_spec_1_80 = playerbots_rogue_spec_1_60
-    playerbots_rogue_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_rogue_spec_2_60 = ''
-    playerbots_rogue_spec_2_80 = playerbots_rogue_spec_2_60
-    playerbots_rogue_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_rogue_spec_3_60 = ''
-    playerbots_rogue_spec_3_80 = playerbots_rogue_spec_3_60
-    playerbots_priest_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_priest_spec_1_60 = ''
-    playerbots_priest_spec_1_80 = playerbots_priest_spec_1_60
-    playerbots_priest_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_priest_spec_2_60 = ''
-    playerbots_priest_spec_2_80 = playerbots_priest_spec_2_60
-    playerbots_priest_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_priest_spec_3_60 = ''
-    playerbots_priest_spec_3_80 = playerbots_priest_spec_3_60
-    playerbots_shaman_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_shaman_spec_1_60 = ''
-    playerbots_shaman_spec_1_80 = playerbots_shaman_spec_1_60
-    playerbots_shaman_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_shaman_spec_2_60 = ''
-    playerbots_shaman_spec_2_80 = playerbots_shaman_spec_2_60
-    playerbots_shaman_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_shaman_spec_3_60 = ''
-    playerbots_shaman_spec_3_80 = playerbots_shaman_spec_3_60
-    playerbots_mage_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_mage_spec_1_60 = ''
-    playerbots_mage_spec_1_80 = playerbots_mage_spec_1_60
-    playerbots_mage_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_mage_spec_2_60 = ''
-    playerbots_mage_spec_2_80 = playerbots_mage_spec_2_60
-    playerbots_mage_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_mage_spec_3_60 = ''
-    playerbots_mage_spec_3_80 = playerbots_mage_spec_3_60
-    playerbots_warlock_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_warlock_spec_1_60 = ''
-    playerbots_warlock_spec_1_70 = playerbots_warlock_spec_1_60
-    playerbots_warlock_spec_1_80 = playerbots_warlock_spec_1_60
-    playerbots_warlock_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_warlock_spec_2_60 = ''
-    playerbots_warlock_spec_2_70 = playerbots_warlock_spec_2_60
-    playerbots_warlock_spec_2_80 = playerbots_warlock_spec_2_60
-    playerbots_warlock_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_warlock_spec_3_60 = ''
-    playerbots_warlock_spec_3_80 = playerbots_warlock_spec_3_60
-    playerbots_druid_glyphs_1 = playerbots_warrior_glyphs_1
-    playerbots_druid_spec_1_60 = ''
-    playerbots_druid_spec_1_80 = playerbots_druid_spec_1_60
-    playerbots_druid_glyphs_2 = playerbots_warrior_glyphs_1
-    playerbots_druid_spec_2_60 = ''
-    playerbots_druid_spec_2_80 = playerbots_druid_spec_2_60
-    playerbots_druid_glyphs_3 = playerbots_warrior_glyphs_1
-    playerbots_druid_spec_3_60 = ''
-    playerbots_druid_spec_3_80 = playerbots_druid_spec_3_60
-    playerbots_druid_glyphs_4 = playerbots_warrior_glyphs_1
-    playerbots_druid_spec_4_60 = ''
-    playerbots_druid_spec_4_80 = playerbots_druid_spec_4_60
 else:
-    playerbots_starting_level = 80
+    playerbots_starting_level = 1
     playerbots_maps = '0,1,530,571'
-    playerbots_warrior_glyphs_1 = '43418,43395,43423,43399,49084,43421'
-    playerbots_warrior_spec_1_60 = '3022032023335100002012211231241'
-    playerbots_warrior_spec_1_80 = '3022032023335100102012213231251-305-2033'
-    playerbots_warrior_glyphs_2 = '43418,43395,43414,43399,49084,43432'
-    playerbots_warrior_spec_2_60 = '-305053000500310053120501351'
-    playerbots_warrior_spec_2_80 = '32002300233-305053000500310153120511351'
-    playerbots_warrior_glyphs_3 = '43424,43395,43425,43399,49084,45793'
-    playerbots_warrior_spec_3_60 = '--053351225000210521030113321'
-    playerbots_warrior_spec_3_80 = '3500030023-301-053351225000210521030113321'
-    playerbots_paladin_glyphs_1 = '41106,43367,45741,43369,43365,41109'
-    playerbots_paladin_spec_1_60 = '50350151020013053100515221'
-    playerbots_paladin_spec_1_80 = '50350152220013053100515221-503201312'
-    playerbots_paladin_glyphs_2 = '41099,43367,43869,43369,43365,45745'
-    playerbots_paladin_spec_2_60 = '-05005135203102311333112321'
-    playerbots_paladin_spec_2_80 = '-05005135203102311333312321-502302012003'
-    playerbots_paladin_glyphs_3 = '41092,43367,41099,43369,43365,43869'
-    playerbots_paladin_spec_3_60 = '--05230051203331302133231131'
-    playerbots_paladin_spec_3_65 = '-05-05230051203331302133231131'
-    playerbots_paladin_spec_3_80 = '050501-05-05232051203331302133231331'
-    playerbots_hunter_glyphs_1 = '42912,43350,42902,43351,43338,45732'
-    playerbots_hunter_spec_1_60 = '51200201505112243100511351'
-    playerbots_hunter_spec_1_80 = '51200201505112253100531351-015305021'
-    playerbots_hunter_glyphs_2 = '42912,43350,42914,43351,43338,45732'
-    playerbots_hunter_spec_2_60 = '-025315101030013233125031051'
-    playerbots_hunter_spec_2_80 = '502-025335101030013233135031351-5000002'
-    playerbots_hunter_glyphs_3 = '42912,43350,45731,43351,43338,45732'
-    playerbots_hunter_spec_3_60 = '--5000032500033330502135201311'
-    playerbots_hunter_spec_3_80 = '-005305101-5000032500033330532135301321'
-    playerbots_rogue_glyphs_1 = '45768,43379,45761,43380,43378,45766'
-    playerbots_rogue_spec_1_60 = '005323005350100520103331051'
-    playerbots_rogue_spec_1_80 = '005323005350100520103331051-005005005003-2'
-    playerbots_rogue_glyphs_2 = '42962,43379,45762,43380,43378,42969'
-    playerbots_rogue_spec_2_60 = '-0252051000035015223100501251'
-    playerbots_rogue_spec_2_80 = '00532000523-0252051000035015223100501251'
-    playerbots_rogue_glyphs_3 = '42967,43379,45764,43380,43378,45767'
-    playerbots_rogue_spec_3_60 = '--5120122030321121050135031241'
-    playerbots_rogue_spec_3_80 = '0053231-2-5120222030321121050135231251'
-    playerbots_priest_glyphs_1 = '42408,43371,42400,43374,43342,45756'
-    playerbots_priest_spec_1_60 = '0503203130300512301323131051'
-    playerbots_priest_spec_1_80 = '0503203130300512331323231251-03520103'
-    playerbots_priest_glyphs_2 = '42408,43371,42400,43374,43342,42396'
-    playerbots_priest_spec_2_60 = '-035050031301152530000331331'
-    playerbots_priest_spec_2_80 = '05032031-235050032302152530000331351'
-    playerbots_priest_glyphs_3 = '42406,43371,42407,43374,43342,42415'
-    playerbots_priest_spec_3_60 = '--325003041203010323150301351'
-    playerbots_priest_spec_3_80 = '0503203--325023051223010323152301351'
-    playerbots_shaman_glyphs_1 = '41536,43385,41532,43386,44923,45776'
-    playerbots_shaman_spec_1_60 = '4530001520213351102301351'
-    playerbots_shaman_spec_1_80 = '3530001523213351322301351-005050031'
-    playerbots_shaman_glyphs_2 = '41542,43385,41539,43386,44923,45771'
-    playerbots_shaman_spec_2_60 = '-30205033005001333031131131051'
-    playerbots_shaman_spec_2_80 = '053030052-30205033005021333031131131051'
-    playerbots_shaman_glyphs_3 = '41517,43385,41527,43386,44923,45775'
-    playerbots_shaman_spec_3_60 = '--50005301235310501102321251'
-    playerbots_shaman_spec_3_80 = '-00502033-50005331335310501122331251'
-    playerbots_mage_glyphs_1 = '42735,43339,44955,43364,43361,42751'
-    playerbots_mage_spec_1_60 = '23000503110033014032310150532'
-    playerbots_mage_spec_1_80 = '23000523310033015032310250532-03-203203001'
-    playerbots_mage_glyphs_2 = '42739,43339,45737,43364,44920,42751'
-    playerbots_mage_spec_2_60 = '-0055030011302231053120321341'
-    playerbots_mage_spec_2_80 = '23000503110003-0055030011302331053120321351'
-    playerbots_mage_glyphs_3 = '42742,43339,50045,43364,43361,42751'
-    playerbots_mage_spec_3_60 = '--0533030313203100030152231151'
-    playerbots_mage_spec_3_80 = '23002303110003--0533030313203100030152231351'
-    playerbots_warlock_glyphs_1 = '45785,43390,50077,43394,43393,45779'
-    playerbots_warlock_spec_1_60 = '2350022001113510053500131151'
-    playerbots_warlock_spec_1_70 = '2350022001113510053500131151--55'
-    playerbots_warlock_spec_1_80 = '2350022001113510253500331151--5500000501'
-    playerbots_warlock_glyphs_2 = '45785,43390,50077,43394,43393,42459'
-    playerbots_warlock_spec_2_60 = '-003203301135112530135201051'
-    playerbots_warlock_spec_2_70 = '-003203301135112530135201051-55'
-    playerbots_warlock_spec_2_80 = '-003203301135112530135221351-55000005'
-    playerbots_warlock_glyphs_3 = '45785,43390,50077,43394,43393,42454'
-    playerbots_warlock_spec_3_60 = '--05203205210131051313230341'
-    playerbots_warlock_spec_3_80 = '-03310030003-05203205210331051335230351'
-    playerbots_druid_glyphs_1 = '40916,43331,40921,43335,44922,40919'
-    playerbots_druid_spec_1_60 = '5022203105331003213005301231'
-    playerbots_druid_spec_1_80 = '5032203105331303213305301231--205003012'
-    playerbots_druid_glyphs_2 = '40897,43331,46372,43335,43332,40899'
-    playerbots_druid_spec_2_60 = '-500232130322110353100301310501'
-    playerbots_druid_spec_2_80 = '-501232130322110353120303313511-20350001'
-    playerbots_druid_glyphs_3 = '40913,43331,40906,43335,44922,45602'
-    playerbots_druid_spec_3_60 = '--230033312031500531050113051'
-    playerbots_druid_spec_3_80 = '05320031--230033312031501531053313051'
-    playerbots_druid_glyphs_4 = '40902,43331,40901,43335,44922,45604'
-    playerbots_druid_spec_4_60 = '-552202032322010053100030310501'
-    playerbots_druid_spec_4_80 = '-553202032322010053100030310511-205503012'
 
-if int(options['world.progression.patch']) < 16:
+if int(options['module.progression.patch']) < 16:
     playerbots_apprentice_riding = 40
-elif int(options['world.progression.patch']) < 19:
+elif int(options['module.progression.patch']) < 19:
     playerbots_apprentice_riding = 30
 else:
     playerbots_apprentice_riding = 20
 
-if int(options['world.progression.patch']) < 19:
+if int(options['module.progression.patch']) < 19:
     playerbots_journeyman_riding = 60
     playerbots_expert_riding = 70
 else:
@@ -950,16 +689,7 @@ configs = [
             ['StrictChannelNames =', 'StrictChannelNames = 3'],
             ['Minigob.Manabonk.Enable =', 'Minigob.Manabonk.Enable = 0'],
             ['Daze.Enabled =', 'Daze.Enabled = 0'],
-            ['Warden.Enabled =', f'Warden.Enabled = {options['world.warden']}'],
-            ['Progression.Patch =', f'Progression.Patch = {int(options['world.progression.patch'])}'],
-            ['Progression.IcecrownCitadel.Aura =', f'Progression.IcecrownCitadel.Aura = {options['world.progression.aura']}'],
-            ['Progression.Level.Enforced =', 'Progression.Level.Enforced = 1'],
-            ['Progression.DungeonFinder.Enforced =', 'Progression.DungeonFinder.Enforced = 0'],
-            ['Progression.DualTalent.Enforced =', 'Progression.DualTalent.Enforced = 0' ],
-            ['Progression.QuestInfo.Enforced =', 'Progression.QuestInfo.Enforced = 0' ],
-            ['Progression.Multiplier.Damage =', f'Progression.Multiplier.Damage = {options['world.progression.multiplier.damage']}'],
-            ['Progression.Multiplier.Healing =', f'Progression.Multiplier.Healing = {options['world.progression.multiplier.healing']}'],
-            ['Progression.PatchNotes.Enabled =', 'Progression.PatchNotes.Enabled = 1']
+            ['Warden.Enabled =', f'Warden.Enabled = {options['world.warden']}']
         ]
     ],
     [
@@ -974,36 +704,36 @@ configs = [
     [
         'modules/mod_appreciation.conf', options['module.appreciation.enabled'], True, 12, [
             ['Appreciation.RequireCertificate.Enabled =', 'Appreciation.RequireCertificate.Enabled = 0'],
-            ['Appreciation.LevelBoost.TargetLevel =', f'Appreciation.LevelBoost.TargetLevel = {'60' if int(options['world.progression.patch']) < 17 else '70'}'],
-            ['Appreciation.LevelBoost.IncludedCopper =', f'Appreciation.LevelBoost.IncludedCopper = {'5000000' if int(options['world.progression.patch']) < 17 else '10000000'}'],
-            ['Appreciation.UnlockContinents.Enabled =', f'Appreciation.UnlockContinents.Enabled = {'0' if int(options['world.progression.patch']) < 12 else '1'}'],
-            ['Appreciation.UnlockContinents.EasternKingdoms.Enabled =', f'Appreciation.UnlockContinents.EasternKingdoms.Enabled = {'0' if int(options['world.progression.patch']) < 12 else '1'}'],
-            ['Appreciation.UnlockContinents.Kalimdor.Enabled =', f'Appreciation.UnlockContinents.Kalimdor.Enabled = {'0' if int(options['world.progression.patch']) < 12 else '1'}'],
-            ['Appreciation.UnlockContinents.Outland.Enabled =', f'Appreciation.UnlockContinents.Outland.Enabled = {'0' if int(options['world.progression.patch']) < 17 else '1'}']
+            ['Appreciation.LevelBoost.TargetLevel =', f'Appreciation.LevelBoost.TargetLevel = {'60' if int(options['module.progression.patch']) < 17 else '70'}'],
+            ['Appreciation.LevelBoost.IncludedCopper =', f'Appreciation.LevelBoost.IncludedCopper = {'5000000' if int(options['module.progression.patch']) < 17 else '10000000'}'],
+            ['Appreciation.UnlockContinents.Enabled =', f'Appreciation.UnlockContinents.Enabled = {'0' if int(options['module.progression.patch']) < 12 else '1'}'],
+            ['Appreciation.UnlockContinents.EasternKingdoms.Enabled =', f'Appreciation.UnlockContinents.EasternKingdoms.Enabled = {'0' if int(options['module.progression.patch']) < 12 else '1'}'],
+            ['Appreciation.UnlockContinents.Kalimdor.Enabled =', f'Appreciation.UnlockContinents.Kalimdor.Enabled = {'0' if int(options['module.progression.patch']) < 12 else '1'}'],
+            ['Appreciation.UnlockContinents.Outland.Enabled =', f'Appreciation.UnlockContinents.Outland.Enabled = {'0' if int(options['module.progression.patch']) < 17 else '1'}']
         ]
     ],
     [
         'modules/mod_assistant.conf', options['module.assistant.enabled'], True, 0, [
-            ['Assistant.Heirlooms.Enabled  =', f'Assistant.Heirlooms.Enabled  = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
-            ['Assistant.Glyphs.Enabled     =', f'Assistant.Glyphs.Enabled     = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
-            ['Assistant.Gems.Enabled       =', f'Assistant.Gems.Enabled       = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
-            ['Assistant.Elixirs.Enabled    =', f'Assistant.Elixirs.Enabled    = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
-            ['Assistant.Food.Enabled       =', f'Assistant.Food.Enabled       = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
-            ['Assistant.Enchants.Enabled   =', f'Assistant.Enchants.Enabled   = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Heirlooms.Enabled  =', f'Assistant.Heirlooms.Enabled  = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Glyphs.Enabled     =', f'Assistant.Glyphs.Enabled     = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Gems.Enabled       =', f'Assistant.Gems.Enabled       = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Elixirs.Enabled    =', f'Assistant.Elixirs.Enabled    = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Food.Enabled       =', f'Assistant.Food.Enabled       = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Enchants.Enabled   =', f'Assistant.Enchants.Enabled   = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
             ['Assistant.FlightPaths.Vanilla.Enabled                  =', 'Assistant.FlightPaths.Vanilla.Enabled                  = 0'],
             ['Assistant.FlightPaths.BurningCrusade.Enabled           =', 'Assistant.FlightPaths.BurningCrusade.Enabled           = 0'],
-            ['Assistant.Professions.Master.Enabled      =', f'Assistant.Professions.Master.Enabled      = {'0' if int(options['world.progression.patch']) < 12 else '1'}'],
-            ['Assistant.Professions.GrandMaster.Enabled =', f'Assistant.Professions.GrandMaster.Enabled = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
-            ['Assistant.Instances.Heroic.Enabled  =', f'Assistant.Instances.Heroic.Enabled  = {'0' if int(options['world.progression.patch']) < 12 else '1'}']
+            ['Assistant.Professions.Master.Enabled      =', f'Assistant.Professions.Master.Enabled      = {'0' if int(options['module.progression.patch']) < 12 else '1'}'],
+            ['Assistant.Professions.GrandMaster.Enabled =', f'Assistant.Professions.GrandMaster.Enabled = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
+            ['Assistant.Instances.Heroic.Enabled  =', f'Assistant.Instances.Heroic.Enabled  = {'0' if int(options['module.progression.patch']) < 12 else '1'}']
         ]
     ],
     [
         'modules/mod_learnspells.conf', options['module.learnspells.enabled'], True, 0, [
             ['LearnSpells.Gamemasters =', 'LearnSpells.Gamemasters = 1'],
             ['LearnSpells.SpellsFromQuests =', 'LearnSpells.SpellsFromQuests = 1'],
-            ['LearnSpells.Riding.Apprentice =', f'LearnSpells.Riding.Apprentice = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
-            ['LearnSpells.Riding.Journeyman =', f'LearnSpells.Riding.Journeyman = {'0' if int(options['world.progression.patch']) < 17 else '1'}'],
-            ['LearnSpells.Riding.Expert =', f'LearnSpells.Riding.Expert = {'0' if int(options['world.progression.patch']) < 17 else '1'}']
+            ['LearnSpells.Riding.Apprentice =', f'LearnSpells.Riding.Apprentice = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
+            ['LearnSpells.Riding.Journeyman =', f'LearnSpells.Riding.Journeyman = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
+            ['LearnSpells.Riding.Expert =', f'LearnSpells.Riding.Expert = {'0' if int(options['module.progression.patch']) < 17 else '1'}']
         ]
     ],
     [
@@ -1015,7 +745,7 @@ configs = [
             ['AiPlayerbot.SayWhenCollectingItems =', 'AiPlayerbot.SayWhenCollectingItems = 0'],
             ['AiPlayerbot.TellWhenAvoidAoe =', 'AiPlayerbot.TellWhenAvoidAoe = 0'],
             ['AiPlayerbot.AutoGearQualityLimit =', 'AiPlayerbot.AutoGearQualityLimit = 5'],
-            ['AiPlayerbot.DisableDeathKnightLogin =', f'AiPlayerbot.DisableDeathKnightLogin = {'1' if int(options['world.progression.patch']) < 17 else '0'}'],
+            ['AiPlayerbot.DisableDeathKnightLogin =', f'AiPlayerbot.DisableDeathKnightLogin = {'1' if int(options['module.progression.patch']) < 17 else '0'}'],
             ['AiPlayerbot.DisableRandomLevels =', 'AiPlayerbot.DisableRandomLevels = 1'],
             ['AiPlayerbot.RandombotStartingLevel =', f'AiPlayerbot.RandombotStartingLevel = {playerbots_starting_level}'],
             ['AiPlayerbot.RandomGearQualityLimit =', 'AiPlayerbot.RandomGearQualityLimit = 5'],
@@ -1036,9 +766,9 @@ configs = [
             ['AiPlayerbot.botActiveAloneSmartScale =', f'AiPlayerbot.botActiveAloneSmartScale = {'1' if options['module.playerbots.random_bots.smart_scale'] else '0'}'],
             ['AiPlayerbot.AutoAvoidAoe =', 'AiPlayerbot.AutoAvoidAoe = 1'],
             ['AiPlayerbot.CommandServerPort =', 'AiPlayerbot.CommandServerPort = 0'],
-            ['AiPlayerbot.RandomBotArenaTeam2v2Count =', f'AiPlayerbot.RandomBotArenaTeam2v2Count = {'0' if int(options['world.progression.patch']) < 12 else '15'}'],
-            ['AiPlayerbot.RandomBotArenaTeam3v3Count =', f'AiPlayerbot.RandomBotArenaTeam3v3Count = {'0' if int(options['world.progression.patch']) < 12 else '15'}'],
-            ['AiPlayerbot.RandomBotArenaTeam5v5Count =', f'AiPlayerbot.RandomBotArenaTeam5v5Count = {'0' if int(options['world.progression.patch']) < 12 else '25'}'],
+            ['AiPlayerbot.RandomBotArenaTeam2v2Count =', f'AiPlayerbot.RandomBotArenaTeam2v2Count = {'0' if int(options['module.progression.patch']) < 12 else '15'}'],
+            ['AiPlayerbot.RandomBotArenaTeam3v3Count =', f'AiPlayerbot.RandomBotArenaTeam3v3Count = {'0' if int(options['module.progression.patch']) < 12 else '15'}'],
+            ['AiPlayerbot.RandomBotArenaTeam5v5Count =', f'AiPlayerbot.RandomBotArenaTeam5v5Count = {'0' if int(options['module.progression.patch']) < 12 else '25'}'],
             ['AiPlayerbot.KillXPRate =', 'AiPlayerbot.KillXPRate = 1'],
             ['AiPlayerbot.AutoEquipUpgradeLoot =', 'AiPlayerbot.AutoEquipUpgradeLoot = 0'],
             ['AiPlayerbot.FreeFood =', 'AiPlayerbot.FreeFood = 1'],
@@ -1050,97 +780,17 @@ configs = [
             ['PlayerbotsDatabase.WorkerThreads =', 'PlayerbotsDatabase.WorkerThreads = 4'],
             ['AiPlayerbot.UseGroundMountAtMinLevel =', f'AiPlayerbot.UseGroundMountAtMinLevel = {playerbots_apprentice_riding}'],
             ['AiPlayerbot.UseFastGroundMountAtMinLevel =', f'AiPlayerbot.UseFastGroundMountAtMinLevel = {playerbots_journeyman_riding}'],
-            ['AiPlayerbot.UseFlyMountAtMinLevel =', f'AiPlayerbot.UseFlyMountAtMinLevel = {playerbots_expert_riding}'],
-            ['AiPlayerbot.PremadeSpecGlyph.1.0 =', f'AiPlayerbot.PremadeSpecGlyph.1.0 = {playerbots_warrior_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.1.0.60 =', f'AiPlayerbot.PremadeSpecLink.1.0.60 = {playerbots_warrior_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.1.0.80 =', f'AiPlayerbot.PremadeSpecLink.1.0.80 = {playerbots_warrior_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.1.1 =', f'AiPlayerbot.PremadeSpecGlyph.1.1 = {playerbots_warrior_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.1.1.60 =', f'AiPlayerbot.PremadeSpecLink.1.1.60 = {playerbots_warrior_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.1.1.80 =', f'AiPlayerbot.PremadeSpecLink.1.1.80 = {playerbots_warrior_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.1.2 =', f'AiPlayerbot.PremadeSpecGlyph.1.2 = {playerbots_warrior_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.1.2.60 =', f'AiPlayerbot.PremadeSpecLink.1.2.60 = {playerbots_warrior_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.1.2.80 =', f'AiPlayerbot.PremadeSpecLink.1.2.80 = {playerbots_warrior_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.2.0 =', f'AiPlayerbot.PremadeSpecGlyph.2.0 = {playerbots_paladin_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.2.0.60 =', f'AiPlayerbot.PremadeSpecLink.2.0.60 = {playerbots_paladin_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.2.0.80 =', f'AiPlayerbot.PremadeSpecLink.2.0.80 = {playerbots_paladin_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.2.1 =', f'AiPlayerbot.PremadeSpecGlyph.2.1 = {playerbots_paladin_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.2.1.60 =', f'AiPlayerbot.PremadeSpecLink.2.1.60 = {playerbots_paladin_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.2.1.80 =', f'AiPlayerbot.PremadeSpecLink.2.1.80 = {playerbots_paladin_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.2.2 =', f'AiPlayerbot.PremadeSpecGlyph.2.2 = {playerbots_paladin_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.2.2.60 =', f'AiPlayerbot.PremadeSpecLink.2.2.60 = {playerbots_paladin_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.2.2.65 =', f'AiPlayerbot.PremadeSpecLink.2.2.65 = {playerbots_paladin_spec_3_65}'],
-            ['AiPlayerbot.PremadeSpecLink.2.2.80 =', f'AiPlayerbot.PremadeSpecLink.2.2.80 = {playerbots_paladin_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.3.0 =', f'AiPlayerbot.PremadeSpecGlyph.3.0 = {playerbots_hunter_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.3.0.60 =', f'AiPlayerbot.PremadeSpecLink.3.0.60 = {playerbots_hunter_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.3.0.80 =', f'AiPlayerbot.PremadeSpecLink.3.0.80 = {playerbots_hunter_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.3.1 =', f'AiPlayerbot.PremadeSpecGlyph.3.1 = {playerbots_hunter_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.3.1.60 =', f'AiPlayerbot.PremadeSpecLink.3.1.60 = {playerbots_hunter_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.3.1.80 =', f'AiPlayerbot.PremadeSpecLink.3.1.80 = {playerbots_hunter_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.3.2 =', f'AiPlayerbot.PremadeSpecGlyph.3.2 = {playerbots_hunter_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.3.2.60 =', f'AiPlayerbot.PremadeSpecLink.3.2.60 = {playerbots_hunter_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.3.2.80 =', f'AiPlayerbot.PremadeSpecLink.3.2.80 = {playerbots_hunter_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.4.0 =', f'AiPlayerbot.PremadeSpecGlyph.4.0 = {playerbots_rogue_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.4.0.60 =', f'AiPlayerbot.PremadeSpecLink.4.0.60 = {playerbots_rogue_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.4.0.80 =', f'AiPlayerbot.PremadeSpecLink.4.0.80 = {playerbots_rogue_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.4.1 =', f'AiPlayerbot.PremadeSpecGlyph.4.1 = {playerbots_rogue_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.4.1.60 =', f'AiPlayerbot.PremadeSpecLink.4.1.60 = {playerbots_rogue_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.4.1.80 =', f'AiPlayerbot.PremadeSpecLink.4.1.80 = {playerbots_rogue_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.4.2 =', f'AiPlayerbot.PremadeSpecGlyph.4.2 = {playerbots_rogue_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.4.2.60 =', f'AiPlayerbot.PremadeSpecLink.4.2.60 = {playerbots_rogue_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.4.2.80 =', f'AiPlayerbot.PremadeSpecLink.4.2.80 = {playerbots_rogue_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.5.0 =', f'AiPlayerbot.PremadeSpecGlyph.5.0 = {playerbots_priest_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.5.0.60 =', f'AiPlayerbot.PremadeSpecLink.5.0.60 = {playerbots_priest_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.5.0.80 =', f'AiPlayerbot.PremadeSpecLink.5.0.80 = {playerbots_priest_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.5.1 =', f'AiPlayerbot.PremadeSpecGlyph.5.1 = {playerbots_priest_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.5.1.60 =', f'AiPlayerbot.PremadeSpecLink.5.1.60 = {playerbots_priest_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.5.1.80 =', f'AiPlayerbot.PremadeSpecLink.5.1.80 = {playerbots_priest_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.5.2 =', f'AiPlayerbot.PremadeSpecGlyph.5.2 = {playerbots_priest_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.5.2.60 =', f'AiPlayerbot.PremadeSpecLink.5.2.60 = {playerbots_priest_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.5.2.80 =', f'AiPlayerbot.PremadeSpecLink.5.2.80 = {playerbots_priest_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.7.0 =', f'AiPlayerbot.PremadeSpecGlyph.7.0 = {playerbots_shaman_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.7.0.60 =', f'AiPlayerbot.PremadeSpecLink.7.0.60 = {playerbots_shaman_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.7.0.80 =', f'AiPlayerbot.PremadeSpecLink.7.0.80 = {playerbots_shaman_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.7.1 =', f'AiPlayerbot.PremadeSpecGlyph.7.1 = {playerbots_shaman_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.7.1.60 =', f'AiPlayerbot.PremadeSpecLink.7.1.60 = {playerbots_shaman_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.7.1.80 =', f'AiPlayerbot.PremadeSpecLink.7.1.80 = {playerbots_shaman_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.7.2 =', f'AiPlayerbot.PremadeSpecGlyph.7.2 = {playerbots_shaman_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.7.2.60 =', f'AiPlayerbot.PremadeSpecLink.7.2.60 = {playerbots_shaman_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.7.2.80 =', f'AiPlayerbot.PremadeSpecLink.7.2.80 = {playerbots_shaman_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.8.0 =', f'AiPlayerbot.PremadeSpecGlyph.8.0 = {playerbots_mage_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.8.0.60 =', f'AiPlayerbot.PremadeSpecLink.8.0.60 = {playerbots_mage_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.8.0.80 =', f'AiPlayerbot.PremadeSpecLink.8.0.80 = {playerbots_mage_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.8.1 =', f'AiPlayerbot.PremadeSpecGlyph.8.1 = {playerbots_mage_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.8.1.60 =', f'AiPlayerbot.PremadeSpecLink.8.1.60 = {playerbots_mage_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.8.1.80 =', f'AiPlayerbot.PremadeSpecLink.8.1.80 = {playerbots_mage_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.8.2 =', f'AiPlayerbot.PremadeSpecGlyph.8.2 = {playerbots_mage_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.8.2.60 =', f'AiPlayerbot.PremadeSpecLink.8.2.60 = {playerbots_mage_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.8.2.80 =', f'AiPlayerbot.PremadeSpecLink.8.2.80 = {playerbots_mage_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.8.3 =', f'AiPlayerbot.PremadeSpecGlyph.8.3 = {playerbots_mage_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.8.3.60 =', f'AiPlayerbot.PremadeSpecLink.8.3.60 = {playerbots_mage_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.8.3.80 =', f'AiPlayerbot.PremadeSpecLink.8.3.80 = {playerbots_mage_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.9.0 =', f'AiPlayerbot.PremadeSpecGlyph.9.0 = {playerbots_warlock_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.9.0.60 =', f'AiPlayerbot.PremadeSpecLink.9.0.60 = {playerbots_warlock_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.9.0.70 =', f'AiPlayerbot.PremadeSpecLink.9.0.70 = {playerbots_warlock_spec_1_70}'],
-            ['AiPlayerbot.PremadeSpecLink.9.0.80 =', f'AiPlayerbot.PremadeSpecLink.9.0.80 = {playerbots_warlock_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.9.1 =', f'AiPlayerbot.PremadeSpecGlyph.9.1 = {playerbots_warlock_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.9.1.60 =', f'AiPlayerbot.PremadeSpecLink.9.1.60 = {playerbots_warlock_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.9.1.70 =', f'AiPlayerbot.PremadeSpecLink.9.1.70 = {playerbots_warlock_spec_2_70}'],
-            ['AiPlayerbot.PremadeSpecLink.9.1.80 =', f'AiPlayerbot.PremadeSpecLink.9.1.80 = {playerbots_warlock_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.9.2 =', f'AiPlayerbot.PremadeSpecGlyph.9.2 = {playerbots_warlock_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.9.2.60 =', f'AiPlayerbot.PremadeSpecLink.9.2.60 = {playerbots_warlock_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.9.2.80 =', f'AiPlayerbot.PremadeSpecLink.9.2.80 = {playerbots_warlock_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.11.0 =', f'AiPlayerbot.PremadeSpecGlyph.11.0 = {playerbots_druid_glyphs_1}'],
-            ['AiPlayerbot.PremadeSpecLink.11.0.60 =', f'AiPlayerbot.PremadeSpecLink.11.0.60 = {playerbots_druid_spec_1_60}'],
-            ['AiPlayerbot.PremadeSpecLink.11.0.80 =', f'AiPlayerbot.PremadeSpecLink.11.0.80 = {playerbots_druid_spec_1_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.11.1 =', f'AiPlayerbot.PremadeSpecGlyph.11.1 = {playerbots_druid_glyphs_2}'],
-            ['AiPlayerbot.PremadeSpecLink.11.1.60 =', f'AiPlayerbot.PremadeSpecLink.11.1.60 = {playerbots_druid_spec_2_60}'],
-            ['AiPlayerbot.PremadeSpecLink.11.1.80 =', f'AiPlayerbot.PremadeSpecLink.11.1.80 = {playerbots_druid_spec_2_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.11.2 =', f'AiPlayerbot.PremadeSpecGlyph.11.2 = {playerbots_druid_glyphs_3}'],
-            ['AiPlayerbot.PremadeSpecLink.11.2.60 =', f'AiPlayerbot.PremadeSpecLink.11.2.60 = {playerbots_druid_spec_3_60}'],
-            ['AiPlayerbot.PremadeSpecLink.11.2.80 =', f'AiPlayerbot.PremadeSpecLink.11.2.80 = {playerbots_druid_spec_3_80}'],
-            ['AiPlayerbot.PremadeSpecGlyph.11.3 =', f'AiPlayerbot.PremadeSpecGlyph.11.3 = {playerbots_druid_glyphs_4}'],
-            ['AiPlayerbot.PremadeSpecLink.11.3.60 =', f'AiPlayerbot.PremadeSpecLink.11.3.60 = {playerbots_druid_spec_4_60}'],
-            ['AiPlayerbot.PremadeSpecLink.11.3.80 =', f'AiPlayerbot.PremadeSpecLink.11.3.80 = {playerbots_druid_spec_4_80} ']
+            ['AiPlayerbot.UseFlyMountAtMinLevel =', f'AiPlayerbot.UseFlyMountAtMinLevel = {playerbots_expert_riding}']
+        ]
+    ],
+    [
+        'modules/mod_progression.conf', options['module.progression.enabled'], True, 0, [
+            ['Progression.Patch =', f'Progression.Patch = {options['module.progression.patch']}'],
+            ['Progression.IcecrownCitadel.Aura =', f'Progression.IcecrownCitadel.Aura = {options['module.progression.aura']}'],
+            ['Progression.TradableBindsOnPickup.Enforced =', 'Progression.TradableBindsOnPickup.Enforced = 0'],
+            ['Progression.QuestInfo.Enforced =', 'Progression.QuestInfo.Enforced = 0'],
+            ['Progression.Multiplier.Damage =', f'Progression.Multiplier.Damage = {options['module.progression.multiplier.damage']}'],
+            ['Progression.Multiplier.Healing =', f'Progression.Multiplier.Healing = {options['module.progression.multiplier.healing']}']
         ]
     ],
     [
@@ -1165,6 +815,37 @@ configs = [
         ]
     ]
 ]
+
+if int(options['module.progression.patch']) < 17:
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.0 =', f'AiPlayerbot.PremadeSpecGlyph.1.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.1 =', f'AiPlayerbot.PremadeSpecGlyph.1.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.2 =', f'AiPlayerbot.PremadeSpecGlyph.1.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.0 =', f'AiPlayerbot.PremadeSpecGlyph.2.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.1 =', f'AiPlayerbot.PremadeSpecGlyph.2.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.2 =', f'AiPlayerbot.PremadeSpecGlyph.2.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.0 =', f'AiPlayerbot.PremadeSpecGlyph.3.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.1 =', f'AiPlayerbot.PremadeSpecGlyph.3.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.2 =', f'AiPlayerbot.PremadeSpecGlyph.3.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.0 =', f'AiPlayerbot.PremadeSpecGlyph.4.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.1 =', f'AiPlayerbot.PremadeSpecGlyph.4.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.2 =', f'AiPlayerbot.PremadeSpecGlyph.4.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.0 =', f'AiPlayerbot.PremadeSpecGlyph.5.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.1 =', f'AiPlayerbot.PremadeSpecGlyph.5.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.2 =', f'AiPlayerbot.PremadeSpecGlyph.5.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.0 =', f'AiPlayerbot.PremadeSpecGlyph.7.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.1 =', f'AiPlayerbot.PremadeSpecGlyph.7.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.2 =', f'AiPlayerbot.PremadeSpecGlyph.7.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.0 =', f'AiPlayerbot.PremadeSpecGlyph.8.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.1 =', f'AiPlayerbot.PremadeSpecGlyph.8.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.2 =', f'AiPlayerbot.PremadeSpecGlyph.8.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.3 =', f'AiPlayerbot.PremadeSpecGlyph.8.3 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.0 =', f'AiPlayerbot.PremadeSpecGlyph.9.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.1 =', f'AiPlayerbot.PremadeSpecGlyph.9.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.2 =', f'AiPlayerbot.PremadeSpecGlyph.9.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.0 =', f'AiPlayerbot.PremadeSpecGlyph.11.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.1 =', f'AiPlayerbot.PremadeSpecGlyph.11.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.2 =', f'AiPlayerbot.PremadeSpecGlyph.11.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.3 =', f'AiPlayerbot.PremadeSpecGlyph.11.3 = 0,0,0,0,0,0'])
 
 def UpdateConfig(config, replacements):
     PrintProgress(f'Updating {config.rsplit('/', 1)[1]}')
@@ -1204,7 +885,7 @@ def UpdateConfigs():
         if not options['build.auth'] and options['build.world'] and not world_only:
             continue
 
-        if int(options['world.progression.patch']) < patch:
+        if int(options['module.progression.patch']) < patch:
             continue
 
         UpdateConfig(f'{path}/{filename}', replacements)
@@ -1239,6 +920,28 @@ databases = [
     [options['database.world'], options['module.assistant.enabled'], True, f'{source}/modules/mod-assistant/data/sql/world', True, 'MODULE', 0],
     [options['database.world'], options['module.fixes.enabled'], True, f'{source}/modules/mod-fixes/data/sql/world', True, 'MODULE', 17],
     [options['database.world'], options['module.playerbots.enabled'], True, f'{source}/modules/mod-playerbots/data/sql/world', True, 'MODULE', 0],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_00-1_1/sql', not options['module.progression.reset'], 'MODULE', 0],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_01-1_2/sql', not options['module.progression.reset'], 'MODULE', 1],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_02-1_3/sql', not options['module.progression.reset'], 'MODULE', 2],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_03-1_4/sql', not options['module.progression.reset'], 'MODULE', 3],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_04-1_5/sql', not options['module.progression.reset'], 'MODULE', 4],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_05-1_6/sql', not options['module.progression.reset'], 'MODULE', 5],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_06-1_7/sql', not options['module.progression.reset'], 'MODULE', 6],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_07-1_8/sql', not options['module.progression.reset'], 'MODULE', 7],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_08-1_9/sql', not options['module.progression.reset'], 'MODULE', 8],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_09-1_10/sql', not options['module.progression.reset'], 'MODULE', 9],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_10-1_11/sql', not options['module.progression.reset'], 'MODULE', 10],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_11-1_12/sql', not options['module.progression.reset'], 'MODULE', 11],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_12-2_0/sql', not options['module.progression.reset'], 'MODULE', 12],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_13-2_1/sql', not options['module.progression.reset'], 'MODULE', 13],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_14-2_2/sql', not options['module.progression.reset'], 'MODULE', 14],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_15-2_3/sql', not options['module.progression.reset'], 'MODULE', 15],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_16-2_4/sql', not options['module.progression.reset'], 'MODULE', 16],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_17-3_0/sql', not options['module.progression.reset'], 'MODULE', 17],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_18-3_1/sql', not options['module.progression.reset'], 'MODULE', 18],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_19-3_2/sql', not options['module.progression.reset'], 'MODULE', 19],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_20-3_3/sql', not options['module.progression.reset'], 'MODULE', 20],
+    [options['database.world'], options['module.progression.enabled'], True, f'{source}/modules/mod-progression/src/patch_21-3_3_5/sql', not options['module.progression.reset'], 'MODULE', 21],
     [options['database.world'], options['module.skip_dk_starting_area.enabled'], True, f'{source}/modules/mod-skip-dk-starting-area/data/sql/db-world', True, 'MODULE', 17],
     [options['database.world'], True, True, f'{cwd}/sql/world', False, 'CUSTOM', 0]
 ]
@@ -1347,7 +1050,7 @@ def ImportDatabases():
         if options['build.auth'] and not options['build.world'] and world_only:
             continue
 
-        if int(options['world.progression.patch']) < patch:
+        if int(options['module.progression.patch']) < patch:
             continue
 
         try:
