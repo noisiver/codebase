@@ -780,7 +780,9 @@ configs = [
             ['PlayerbotsDatabase.WorkerThreads =', 'PlayerbotsDatabase.WorkerThreads = 4'],
             ['AiPlayerbot.UseGroundMountAtMinLevel =', f'AiPlayerbot.UseGroundMountAtMinLevel = {playerbots_apprentice_riding}'],
             ['AiPlayerbot.UseFastGroundMountAtMinLevel =', f'AiPlayerbot.UseFastGroundMountAtMinLevel = {playerbots_journeyman_riding}'],
-            ['AiPlayerbot.UseFlyMountAtMinLevel =', f'AiPlayerbot.UseFlyMountAtMinLevel = {playerbots_expert_riding}']
+            ['AiPlayerbot.UseFlyMountAtMinLevel =', f'AiPlayerbot.UseFlyMountAtMinLevel = {playerbots_expert_riding}'],
+            ['AiPlayerbot.EquipmentPersistence =', 'AiPlayerbot.EquipmentPersistence = 1'],
+            ['AiPlayerbot.EquipmentPersistenceLevel =', 'AiPlayerbot.EquipmentPersistenceLevel = 1']
         ]
     ],
     [
