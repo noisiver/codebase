@@ -90,7 +90,7 @@ def RemoveFile(file):
 def ExportTables():
     connect = pymysql.connect(host=mysql_hostname, user=mysql_username, password=mysql_password, db='information_schema')
     cursor = connect.cursor()
-    cursor.execute('SELECT SCHEMA_NAME FROM SCHEMATA WHERE SCHEMA_NAME NOT IN ("information_schema", "mysql", "performance_schema", "sys", "phpmyadmin", "aowow") AND SCHEMA_NAME NOT LIKE "%world%" AND SCHEMA_NAME NOT LIKE "%playerbots%"')
+    cursor.execute('SELECT SCHEMA_NAME FROM SCHEMATA WHERE SCHEMA_NAME NOT IN ("information_schema", "mysql", "performance_schema", "sys", "phpmyadmin", "aowow") AND SCHEMA_NAME NOT LIKE "%world%" AND SCHEMA_NAME NOT LIKE "%playerbots%" AND SCHEMA_NAME NOT LIKE "spells_%"')
 
     databases = []
     for db in cursor.fetchall():
@@ -120,7 +120,7 @@ def CreateArchive():
     PrintHeader('Creating archive...')
     PrintProgress(f'Creating {timestamp}.{'7z' if os.name == 'nt' else 'tar.gz'}')
     try:
-        subprocess.run(f'"{windows_paths['7zip']}/7z.exe" a -mx9 -md2048m -mmt2 {cwd}/{timestamp}.7z {cwd}/tmp/*' if os.name == 'nt' else f'tar -czvf {cwd}/{timestamp}.tar.gz {temp_dir}/* > /dev/null 2>&1', shell=True, check=True)
+        subprocess.run(f'"{windows_paths['7zip']}/7z.exe" a -mx9 -md2048m -mmt2 {cwd}/{timestamp}.7z {cwd}/tmp/*' if os.name == 'nt' else f'cd {temp_dir} && tar -czvf {cwd}/{timestamp}.tar.gz * > /dev/null 2>&1', shell=True, check=True)
     except:
         HandleError('An error occurred while creating the archive')
     PrintHeader('Finished creating archive...')
