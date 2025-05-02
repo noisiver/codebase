@@ -592,37 +592,14 @@ def Install():
 
 ##################################################
 
-if int(options['module.progression.patch']) < 6:
-    ahbot_max_item_level = 63
-elif int(options['module.progression.patch']) < 7:
-    ahbot_max_item_level = 66
-elif int(options['module.progression.patch']) < 12:
-    ahbot_max_item_level = 76
-elif int(options['module.progression.patch']) < 13:
-    ahbot_max_item_level = 110
-elif int(options['module.progression.patch']) < 14:
-    ahbot_max_item_level = 120
-elif int(options['module.progression.patch']) < 17:
-    ahbot_max_item_level = 133
-elif int(options['module.progression.patch']) < 18:
-    ahbot_max_item_level = 200
-elif int(options['module.progression.patch']) < 19:
-    ahbot_max_item_level = 213
-elif int(options['module.progression.patch']) < 20:
-    ahbot_max_item_level = 226
-elif int(options['module.progression.patch']) < 21:
-    ahbot_max_item_level = 245
-else:
-    ahbot_max_item_level = 0
-
 if int(options['module.progression.patch']) < 12:
     playerbots_starting_level = 1
     playerbots_maps = '0,1'
 elif int(options['module.progression.patch']) < 17:
-    playerbots_starting_level = 1
+    playerbots_starting_level = 60
     playerbots_maps = '0,1,530'
 else:
-    playerbots_starting_level = 1
+    playerbots_starting_level = 70
     playerbots_maps = '0,1,530,571'
 
 if int(options['module.progression.patch']) < 16:
@@ -696,9 +673,7 @@ configs = [
         'modules/mod_ahbot.conf', options['module.ah_bot.enabled'], True, 0, [
             ['AuctionHouseBot.EnableSeller =', f'AuctionHouseBot.EnableSeller = {'1' if options['module.ah_bot.seller.enabled'] else '0'}'],
             ['AuctionHouseBot.EnableBuyer =', f'AuctionHouseBot.EnableBuyer = {'1' if options['module.ah_bot.buyer.enabled'] else '0'}'],
-            ['AuctionHouseBot.Account =', f'AuctionHouseBot.Account = {options['module.ah_bot.account_id']}'],
-            ['AuctionHouseBot.GUID =', f'AuctionHouseBot.GUID = {options['module.ah_bot.character_guid']}'],
-            ['AuctionHouseBot.DisableItemsAboveLevel =', f'AuctionHouseBot.DisableItemsAboveLevel = {ahbot_max_item_level}'],
+            ['AuctionHouseBot.GUIDs =', f'AuctionHouseBot.GUIDs = {options['module.ah_bot.character_guid']}']
         ]
     ],
     [
