@@ -148,9 +148,8 @@ options = {
     'git.repository': 'azerothcore/azerothcore-wotlk',
     'git.use_ssh': False,
     'module.ah_bot.enabled': False,
-    'module.ah_bot.account_id': 0,
     'module.ah_bot.buyer.enabled': False,
-    'module.ah_bot.character_guid': 0,
+    'module.ah_bot.character_guids': 0,
     'module.ah_bot.seller.enabled': False,
     'module.appreciation.enabled': False,
     'module.assistant.enabled': False,
@@ -673,7 +672,7 @@ configs = [
         'modules/mod_ahbot.conf', options['module.ah_bot.enabled'], True, 0, [
             ['AuctionHouseBot.EnableSeller =', f'AuctionHouseBot.EnableSeller = {'1' if options['module.ah_bot.seller.enabled'] else '0'}'],
             ['AuctionHouseBot.EnableBuyer =', f'AuctionHouseBot.EnableBuyer = {'1' if options['module.ah_bot.buyer.enabled'] else '0'}'],
-            ['AuctionHouseBot.GUIDs =', f'AuctionHouseBot.GUIDs = {options['module.ah_bot.character_guid']}']
+            ['AuctionHouseBot.GUIDs =', f'AuctionHouseBot.GUIDs = {options['module.ah_bot.character_guids']}']
         ]
     ],
     [
