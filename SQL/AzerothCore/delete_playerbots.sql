@@ -1,6 +1,3 @@
-USE `acore_playerbots`;
-DELETE FROM `playerbots_random_bots`;
-
 USE `acore_characters`;
 DELETE FROM `characters` WHERE `account` IN (SELECT `id` FROM `acore_auth`.`account` WHERE `username` LIKE 'RNDBOT%') OR `account` NOT IN (SELECT `id` FROM `acore_auth`.`account`);
 DELETE FROM `arena_team_member` WHERE `guid` NOT IN (SELECT `guid` FROM `characters`);
@@ -38,5 +35,8 @@ DELETE FROM `guild_rank` WHERE `guildid` NOT IN (SELECT `guildid` FROM `guild`);
 DELETE FROM `petition` WHERE `ownerguid` NOT IN (SELECT `guid` FROM `characters`);
 DELETE FROM `petition_sign` WHERE `ownerguid` NOT IN (SELECT `guid` FROM `characters`) OR `playerguid` NOT IN (SELECT `guid` FROM `characters`);
 
--- USE `acore_auth`;
--- DELETE FROM `account` WHERE `username` LIKE 'RNDBOT%';
+USE `acore_playerbots`;
+DELETE FROM `playerbots_random_bots`;
+
+USE `acore_auth`;
+DELETE FROM `account` WHERE `username` LIKE 'RNDBOT%';
