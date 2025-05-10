@@ -765,6 +765,7 @@ configs = [
             ['Progression.IcecrownCitadel.Aura =', f'Progression.IcecrownCitadel.Aura = {options['module.progression.aura']}'],
             ['Progression.TradableBindsOnPickup.Enforced =', 'Progression.TradableBindsOnPickup.Enforced = 0'],
             ['Progression.QuestInfo.Enforced =', 'Progression.QuestInfo.Enforced = 0'],
+            ['Progression.Achievements.Enforced =', 'Progression.Achievements.Enforced = 0'],
             ['Progression.Multiplier.Damage =', f'Progression.Multiplier.Damage = {options['module.progression.multiplier.damage']}'],
             ['Progression.Multiplier.Healing =', f'Progression.Multiplier.Healing = {options['module.progression.multiplier.healing']}']
         ]
