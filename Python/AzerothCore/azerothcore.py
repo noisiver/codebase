@@ -191,7 +191,7 @@ PrintHeader('Loading options from the database...')
 try:
     connect = pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, db=mysql_database)
     cursor = connect.cursor()
-    cursor.execute(f'WITH s AS (SELECT id, setting, VALUE, ROW_NUMBER() OVER (PARTITION BY setting ORDER BY id DESC) nr FROM realm_settings WHERE (id = {realm_id} OR id = -1)) SELECT setting, value FROM s WHERE nr = 1;')
+    cursor.execute(f'WITH s AS (SELECT `id`, `setting`, `VALUE`, ROW_NUMBER() OVER (PARTITION BY `setting` ORDER BY `id` DESC) nr FROM `realm_settings` WHERE (`id` = {realm_id} OR `id` = -1)) SELECT `setting`, `value` FROM s WHERE nr = 1;')
 
     settings = []
     for row in cursor.fetchall():
@@ -627,8 +627,8 @@ configs = [
         'worldserver.conf', options['build.world'], True, 0, [
             ['RealmID =', f'RealmID = {realm_id}'],
             ['WorldServerPort =', f'WorldServerPort = {realm_port}'],
-            ['LoginDatabaseInfo     =', f'LoginDatabaseInfo     ="{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.auth']}"'],
-            ['WorldDatabaseInfo     =', f'WorldDatabaseInfo     ="{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.world']}"'],
+            ['LoginDatabaseInfo     =', f'LoginDatabaseInfo     = "{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.auth']}"'],
+            ['WorldDatabaseInfo     =', f'WorldDatabaseInfo     = "{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.world']}"'],
             ['CharacterDatabaseInfo = ', f'CharacterDatabaseInfo = "{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['database.characters']}"'],
             ['LoginDatabase.SynchThreads     =', 'LoginDatabase.SynchThreads     = 2'],
             ['WorldDatabase.SynchThreads     =', 'WorldDatabase.SynchThreads     = 2'],
@@ -744,25 +744,19 @@ configs = [
             ['AiPlayerbot.AddClassAccountPoolSize =', 'AiPlayerbot.AddClassAccountPoolSize = 0'],
             ['AiPlayerbot.BotActiveAlone =', f'AiPlayerbot.BotActiveAlone = {options['module.playerbots.random_bots.active_alone']}'],
             ['AiPlayerbot.botActiveAloneSmartScale =', f'AiPlayerbot.botActiveAloneSmartScale = {'1' if options['module.playerbots.random_bots.smart_scale'] else '0'}'],
-            ['AiPlayerbot.AutoAvoidAoe =', 'AiPlayerbot.AutoAvoidAoe = 1'],
             ['AiPlayerbot.CommandServerPort =', 'AiPlayerbot.CommandServerPort = 0'],
             ['AiPlayerbot.RandomBotArenaTeam2v2Count =', f'AiPlayerbot.RandomBotArenaTeam2v2Count = {'0' if int(options['module.progression.patch']) < 12 else '15'}'],
             ['AiPlayerbot.RandomBotArenaTeam3v3Count =', f'AiPlayerbot.RandomBotArenaTeam3v3Count = {'0' if int(options['module.progression.patch']) < 12 else '15'}'],
             ['AiPlayerbot.RandomBotArenaTeam5v5Count =', f'AiPlayerbot.RandomBotArenaTeam5v5Count = {'0' if int(options['module.progression.patch']) < 12 else '25'}'],
-            ['AiPlayerbot.KillXPRate =', 'AiPlayerbot.KillXPRate = 1'],
             ['AiPlayerbot.AutoEquipUpgradeLoot =', 'AiPlayerbot.AutoEquipUpgradeLoot = 0'],
-            ['AiPlayerbot.FreeFood =', 'AiPlayerbot.FreeFood = 1'],
             ['AiPlayerbot.AutoPickReward =', 'AiPlayerbot.AutoPickReward = no'],
             ['AiPlayerbot.AutoTrainSpells =', 'AiPlayerbot.AutoTrainSpells = no'],
             ['AiPlayerbot.EnableNewRpgStrategy =', 'AiPlayerbot.EnableNewRpgStrategy = 1'],
             ['AiPlayerbot.DropObsoleteQuests =', 'AiPlayerbot.DropObsoleteQuests = 0'],
-            ['AiPlayerbot.PvpProhibitedZoneIds =', 'AiPlayerbot.PvpProhibitedZoneIds = "2255,656,2361,2362,2363,976,35,2268,3425,392,541,1446,3828,3712,3738,3565,3539,3623,4152,3988,4658,4284,4418,4436,4275,4323,4395,3703,4298,139,4080"'],
             ['PlayerbotsDatabase.WorkerThreads =', 'PlayerbotsDatabase.WorkerThreads = 4'],
             ['AiPlayerbot.UseGroundMountAtMinLevel =', f'AiPlayerbot.UseGroundMountAtMinLevel = {playerbots_apprentice_riding}'],
             ['AiPlayerbot.UseFastGroundMountAtMinLevel =', f'AiPlayerbot.UseFastGroundMountAtMinLevel = {playerbots_journeyman_riding}'],
             ['AiPlayerbot.UseFlyMountAtMinLevel =', f'AiPlayerbot.UseFlyMountAtMinLevel = {playerbots_expert_riding}'],
-            ['AiPlayerbot.EquipmentPersistence =', 'AiPlayerbot.EquipmentPersistence = 1'],
-            ['AiPlayerbot.EquipmentPersistenceLevel =', 'AiPlayerbot.EquipmentPersistenceLevel = 1'],
             ['AiPlayerbot.NonCombatStrategies =', 'AiPlayerbot.NonCombatStrategies = "+worldbuff,-food"']
         ]
     ],
@@ -985,7 +979,7 @@ def UpdateDatabase(database, path, type):
     if os.path.isdir(path):
         connect = pymysql.connect(host=mysql_hostname, user=mysql_username, password=mysql_password, db=database)
         cursor = connect.cursor()
-        cursor.execute('SELECT name, hash FROM updates')
+        cursor.execute('SELECT `name`, `hash` FROM `updates`')
         updates = []
         for d in cursor.fetchall():
             updates.append([d[0], d[1]])
@@ -1002,8 +996,8 @@ def UpdateDatabase(database, path, type):
                     else:
                         PrintProgress(f'Importing {file}')
                         subprocess.run(f'{f'"{windows_paths['mysql']}/bin/mysql.exe"' if os.name == 'nt' else 'mysql'} --defaults-extra-file={mysqlcnf} {database} < {path}/{file}', shell=True, check=True)
-                        cursor.execute(f"DELETE FROM updates WHERE name='{file}';")
-                        cursor.execute(f"INSERT INTO updates (name, hash, state) VALUES ('{file}', '{sha}', '{type}');")
+                        cursor.execute(f"DELETE FROM `updates` WHERE `name` = '{file}';")
+                        cursor.execute(f"INSERT INTO `updates` (`name`, `hash`, `state`) VALUES ('{file}', '{sha}', '{type}');")
                         connect.commit()
 
         cursor.close()
@@ -1015,8 +1009,8 @@ def UpdateRealmList():
     try:
         connect = pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, db=options['database.auth'])
         cursor = connect.cursor()
-        cursor.execute(f'DELETE FROM realmlist WHERE id={realm_id};')
-        cursor.execute(f"INSERT INTO realmlist (id, name, address, localAddress, port) VALUES ({realm_id}, '{options['world.name']}', '{options['world.address']}', '{options['world.local_address']}', {realm_port});")
+        cursor.execute(f'DELETE FROM `realmlist` WHERE `id` = {realm_id};')
+        cursor.execute(f"INSERT INTO `realmlist` (`id`, `name`, `address`, `localAddress`, `port`) VALUES ({realm_id}, '{options['world.name']}', '{options['world.address']}', '{options['world.local_address']}', {realm_port});")
         connect.commit()
         cursor.close()
         connect.close()
@@ -1029,8 +1023,8 @@ def UpdateMotd():
     try:
         connect = pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, db=options['database.auth'])
         cursor = connect.cursor()
-        cursor.execute(f'DELETE FROM motd WHERE realmid={realm_id};')
-        cursor.execute(f"INSERT INTO motd (realmid, text) VALUES ({realm_id}, 'Welcome to {options['world.name']}');")
+        cursor.execute(f'DELETE FROM `motd` WHERE `realmid` = {realm_id};')
+        cursor.execute(f"INSERT INTO `motd` (`realmid`, `text`) VALUES ({realm_id}, 'Welcome to {options['world.name']}');")
         connect.commit()
         cursor.close()
         connect.close()
@@ -1095,7 +1089,7 @@ def SendShutdown():
     subprocess.run(f'screen -S world-{realm_id} -p 0 -X stuff "server shutdown 10^m"', shell=True)
 
 def WaitForShutdown():
-    for c in range(1,30):
+    for c in range(1, 30):
         if not IsScreenActive(f'world-{realm_id}'):
             return
         time.sleep(1)
@@ -1189,5 +1183,4 @@ elif SelectArgument() == 'restart':
     if os.name == 'nt':
         PrintError('This argument is only available on Linux')
         sys.exit(1)
-    StopServer()
-    StartServer()
+    RestartServer()
