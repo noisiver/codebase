@@ -227,7 +227,7 @@ modules = [
     ['mod-groupquests', 'noisiver/mod-groupquests', 'master', options['module.groupquests.enabled'], 0],
     ['mod-junk-to-gold', 'noisiver/mod-junk-to-gold', 'master', options['module.junktogold.enabled'], 0],
     ['mod-learnspells', 'noisiver/mod-learnspells', 'progression', options['module.learnspells.enabled'], 0],
-    ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled'], 0],
+    ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver-cataclysm', options['module.playerbots.enabled'], 0],
     ['mod-progression', 'noisiver/mod-progression', 'master', options['module.progression.enabled'], 0],
     ['mod-recruitafriend', 'noisiver/mod-recruitafriend', 'master', options['module.recruitafriend.enabled'], 17],
     ['mod-skip-dk-starting-area', 'noisiver/mod-skip-dk-starting-area', 'noisiver', options['module.skip_dk_starting_area.enabled'], 17],
@@ -672,7 +672,13 @@ configs = [
         'modules/mod_ahbot.conf', options['module.ah_bot.enabled'], True, 0, [
             ['AuctionHouseBot.EnableSeller =', f'AuctionHouseBot.EnableSeller = {'1' if options['module.ah_bot.seller.enabled'] else '0'}'],
             ['AuctionHouseBot.EnableBuyer =', f'AuctionHouseBot.EnableBuyer = {'1' if options['module.ah_bot.buyer.enabled'] else '0'}'],
-            ['AuctionHouseBot.GUIDs =', f'AuctionHouseBot.GUIDs = {options['module.ah_bot.character_guids']}']
+            ['AuctionHouseBot.GUIDs =', f'AuctionHouseBot.GUIDs = {options['module.ah_bot.character_guids']}'],
+            ['AuctionHouseBot.Alliance.MinItems =', 'AuctionHouseBot.Alliance.MinItems = 100000'],
+            ['AuctionHouseBot.Alliance.MaxItems =', 'AuctionHouseBot.Alliance.MaxItems = 100000'],
+            ['AuctionHouseBot.Horde.MinItems =', 'AuctionHouseBot.Horde.MinItems = 100000'],
+            ['AuctionHouseBot.Horde.MaxItems =', 'AuctionHouseBot.Horde.MaxItems = 100000'],
+            ['AuctionHouseBot.Neutral.MinItems =', 'AuctionHouseBot.Neutral.MinItems = 100000'],
+            ['AuctionHouseBot.Neutral.MaxItems =', 'AuctionHouseBot.Neutral.MaxItems = 100000']
         ]
     ],
     [
@@ -756,7 +762,8 @@ configs = [
             ['AiPlayerbot.UseFastGroundMountAtMinLevel =', f'AiPlayerbot.UseFastGroundMountAtMinLevel = {playerbots_journeyman_riding}'],
             ['AiPlayerbot.UseFlyMountAtMinLevel =', f'AiPlayerbot.UseFlyMountAtMinLevel = {playerbots_expert_riding}'],
             ['AiPlayerbot.EquipmentPersistence =', 'AiPlayerbot.EquipmentPersistence = 1'],
-            ['AiPlayerbot.EquipmentPersistenceLevel =', 'AiPlayerbot.EquipmentPersistenceLevel = 1']
+            ['AiPlayerbot.EquipmentPersistenceLevel =', 'AiPlayerbot.EquipmentPersistenceLevel = 1'],
+            ['AiPlayerbot.NonCombatStrategies =', 'AiPlayerbot.NonCombatStrategies = "+worldbuff,-food"']
         ]
     ],
     [
@@ -767,7 +774,32 @@ configs = [
             ['Progression.QuestInfo.Enforced =', 'Progression.QuestInfo.Enforced = 0'],
             ['Progression.Achievements.Enforced =', 'Progression.Achievements.Enforced = 0'],
             ['Progression.Multiplier.Damage =', f'Progression.Multiplier.Damage = {options['module.progression.multiplier.damage']}'],
-            ['Progression.Multiplier.Healing =', f'Progression.Multiplier.Healing = {options['module.progression.multiplier.healing']}']
+            ['Progression.Multiplier.Healing =', f'Progression.Multiplier.Healing = {options['module.progression.multiplier.healing']}'],
+            ['Progression.WarEffort.CopperBar.Required          =', 'Progression.WarEffort.CopperBar.Required          = 90'],
+            ['Progression.WarEffort.IronBar.Required            =', 'Progression.WarEffort.IronBar.Required            = 28'],
+            ['Progression.WarEffort.ThoriumBar.Required         =', 'Progression.WarEffort.ThoriumBar.Required         = 24'],
+            ['Progression.WarEffort.TinBar.Required             =', 'Progression.WarEffort.TinBar.Required             = 22'],
+            ['Progression.WarEffort.MithrilBar.Required         =', 'Progression.WarEffort.MithrilBar.Required         = 18'],
+            ['Progression.WarEffort.Stranglekelp.Required       =', 'Progression.WarEffort.Stranglekelp.Required       = 33'],
+            ['Progression.WarEffort.PurpleLotus.Required        =', 'Progression.WarEffort.PurpleLotus.Required        = 26'],
+            ['Progression.WarEffort.ArthasTears.Required        =', 'Progression.WarEffort.ArthasTears.Required        = 20'],
+            ['Progression.WarEffort.Peacebloom.Required         =', 'Progression.WarEffort.Peacebloom.Required         = 96'],
+            ['Progression.WarEffort.Firebloom.Required          =', 'Progression.WarEffort.Firebloom.Required          = 19'],
+            ['Progression.WarEffort.LightLeather.Required       =', 'Progression.WarEffort.LightLeather.Required       = 180'],
+            ['Progression.WarEffort.MediumLeather.Required      =', 'Progression.WarEffort.MediumLeather.Required      = 110'],
+            ['Progression.WarEffort.ThickLeather.Required       =', 'Progression.WarEffort.ThickLeather.Required       = 80'],
+            ['Progression.WarEffort.HeavyLeather.Required       =', 'Progression.WarEffort.HeavyLeather.Required       = 60'],
+            ['Progression.WarEffort.RuggedLeather.Required      =', 'Progression.WarEffort.RuggedLeather.Required      = 60'],
+            ['Progression.WarEffort.LinenBandage.Required       =', 'Progression.WarEffort.LinenBandage.Required       = 800'],
+            ['Progression.WarEffort.SilkBandage.Required        =', 'Progression.WarEffort.SilkBandage.Required        = 600'],
+            ['Progression.WarEffort.RuneclothBandage.Required   =', 'Progression.WarEffort.RuneclothBandage.Required   = 400'],
+            ['Progression.WarEffort.WoolBandage.Required        =', 'Progression.WarEffort.WoolBandage.Required        = 250'],
+            ['Progression.WarEffort.MageweaveBandage.Required   =', 'Progression.WarEffort.MageweaveBandage.Required   = 250'],
+            ['Progression.WarEffort.RainbowFinAlbacore.Required =', 'Progression.WarEffort.RainbowFinAlbacore.Required = 14'],
+            ['Progression.WarEffort.RoastRaptor.Required        =', 'Progression.WarEffort.RoastRaptor.Required        = 20'],
+            ['Progression.WarEffort.SpottedYellowtail.Required  =', 'Progression.WarEffort.SpottedYellowtail.Required  = 17'],
+            ['Progression.WarEffort.LeanWolfSteak.Required      =', 'Progression.WarEffort.LeanWolfSteak.Required      = 10'],
+            ['Progression.WarEffort.BakedSalmon.Required        =', 'Progression.WarEffort.BakedSalmon.Required        = 10']
         ]
     ],
     [
@@ -823,69 +855,6 @@ if int(options['module.progression.patch']) < 17:
     configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.1 =', f'AiPlayerbot.PremadeSpecGlyph.11.1 = 0,0,0,0,0,0'])
     configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.2 =', f'AiPlayerbot.PremadeSpecGlyph.11.2 = 0,0,0,0,0,0'])
     configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.3 =', f'AiPlayerbot.PremadeSpecGlyph.11.3 = 0,0,0,0,0,0'])
-
-if int(options['module.progression.patch']) < 12:
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.1.0.60 =', f'AiPlayerbot.PremadeSpecLink.1.0.60 = 30220321233351000021-30505300002'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.1.0.80 =', f'AiPlayerbot.PremadeSpecLink.1.0.80 = 30220321233351000021-30505300002'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.1.1.60 =', f'AiPlayerbot.PremadeSpecLink.1.1.60 = 30202301233-325000005502310051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.1.1.80 =', f'AiPlayerbot.PremadeSpecLink.1.1.80 = 30202301233-325000005502310051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.1.2.60 =', f'AiPlayerbot.PremadeSpecLink.1.2.60 = 352000001-3-05335122500021251'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.1.2.80 =', f'AiPlayerbot.PremadeSpecLink.1.2.80 = 352000001-3-05335122500021251'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.2.0.60 =', f'AiPlayerbot.PremadeSpecLink.2.0.60 = 50350152020013251-5002-05202'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.2.0.80 =', f'AiPlayerbot.PremadeSpecLink.2.0.80 = 50350152020013251-5002-05202'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.2.1.60 =', f'AiPlayerbot.PremadeSpecLink.2.1.60 = -0500513520310231-502302500003'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.2.1.80 =', f'AiPlayerbot.PremadeSpecLink.2.1.80 = -0500513520310231-502302500003'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.2.2.60 =', f'AiPlayerbot.PremadeSpecLink.2.2.60 = -453201002-05232051203331301'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.2.2.65 =', f'AiPlayerbot.PremadeSpecLink.2.2.65 = -453201002-05232051203331301'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.2.2.80 =', f'AiPlayerbot.PremadeSpecLink.2.2.80 = -453201002-05232051203331301'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.3.0.60 =', f'AiPlayerbot.PremadeSpecLink.3.0.60 = 51200201515012241-005305001-5'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.3.0.80 =', f'AiPlayerbot.PremadeSpecLink.3.0.80 = 51200201515012241-005305001-5'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.3.1.60 =', f'AiPlayerbot.PremadeSpecLink.3.1.60 = 502-035305231230013231-5000002'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.3.1.80 =', f'AiPlayerbot.PremadeSpecLink.3.1.80 = 502-035305231230013231-5000002'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.3.2.60 =', f'AiPlayerbot.PremadeSpecLink.3.2.60 = -005305101-5000032500033330531'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.3.2.80 =', f'AiPlayerbot.PremadeSpecLink.3.2.80 = -005305101-5000032500033330531'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.4.0.60 =', f'AiPlayerbot.PremadeSpecLink.4.0.60 = 005303005350102501-005005001-502'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.4.0.80 =', f'AiPlayerbot.PremadeSpecLink.4.0.80 = 005303005350102501-005005001-502'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.4.1.60 =', f'AiPlayerbot.PremadeSpecLink.4.1.60 = 00532000531-0252051000035015201'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.4.1.80 =', f'AiPlayerbot.PremadeSpecLink.4.1.80 = 00532000531-0252051000035015201'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.4.2.60 =', f'AiPlayerbot.PremadeSpecLink.4.2.60 = 3053031-3-5320232030300121051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.4.2.80 =', f'AiPlayerbot.PremadeSpecLink.4.2.80 = 3053031-3-5320232030300121051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.5.0.60 =', f'AiPlayerbot.PremadeSpecLink.5.0.60 = 050320313030051231-2055100303'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.5.0.80 =', f'AiPlayerbot.PremadeSpecLink.5.0.80 = 050320313030051231-2055100303'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.5.1.60 =', f'AiPlayerbot.PremadeSpecLink.5.1.60 = 0503203-23505103030215251'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.5.1.80 =', f'AiPlayerbot.PremadeSpecLink.5.1.80 = 0503203-23505103030215251'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.5.2.60 =', f'AiPlayerbot.PremadeSpecLink.5.2.60 = 05032031--3250230512230102231'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.5.2.80 =', f'AiPlayerbot.PremadeSpecLink.5.2.80 = 05032031--3250230512230102231'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.7.0.60 =', f'AiPlayerbot.PremadeSpecLink.7.0.60 = 3530001523213351-005050031'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.7.0.80 =', f'AiPlayerbot.PremadeSpecLink.7.0.80 = 3530001523213351-005050031'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.7.1.60 =', f'AiPlayerbot.PremadeSpecLink.7.1.60 = 053030051-3020503300502133301'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.7.1.80 =', f'AiPlayerbot.PremadeSpecLink.7.1.80 = 053030051-3020503300502133301'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.7.2.60 =', f'AiPlayerbot.PremadeSpecLink.7.2.60 = -0050503-0500533133531051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.7.2.80 =', f'AiPlayerbot.PremadeSpecLink.7.2.80 = -0050503-0500533133531051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.8.0.60 =', f'AiPlayerbot.PremadeSpecLink.8.0.60 = 235005030100330150321-03-023023001'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.8.0.80 =', f'AiPlayerbot.PremadeSpecLink.8.0.80 = 235005030100330150321-03-023023001'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.8.1.60 =', f'AiPlayerbot.PremadeSpecLink.8.1.60 = 2300230311-0055032012303330051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.8.1.80 =', f'AiPlayerbot.PremadeSpecLink.8.1.80 = 2300230311-0055032012303330051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.8.2.60 =', f'AiPlayerbot.PremadeSpecLink.8.2.60 = 23000503310003--0533030310233100031'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.8.2.80 =', f'AiPlayerbot.PremadeSpecLink.8.2.80 = 23000503310003--0533030310233100031'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.8.3.60 =', f'AiPlayerbot.PremadeSpecLink.8.3.60 = 23000503310003--0533030310233100031'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.8.3.80 =', f'AiPlayerbot.PremadeSpecLink.8.3.80 = 23000503310003--0533030310233100031'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.9.0.60 =', f'AiPlayerbot.PremadeSpecLink.9.0.60 = 235002203102351025--55000005'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.9.0.70 =', f'AiPlayerbot.PremadeSpecLink.9.0.70 = 235002203102351025--55000005'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.9.0.80 =', f'AiPlayerbot.PremadeSpecLink.9.0.80 = 235002203102351025--55000005'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.9.1.60 =', f'AiPlayerbot.PremadeSpecLink.9.1.60 = 002-203203301035012531-55000005'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.9.1.70 =', f'AiPlayerbot.PremadeSpecLink.9.1.70 = 002-203203301035012531-55000005'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.9.1.80 =', f'AiPlayerbot.PremadeSpecLink.9.1.80 = 002-203203301035012531-55000005'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.9.2.60 =', f'AiPlayerbot.PremadeSpecLink.9.2.60 = 025-03310030003-05203205220031051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.9.2.80 =', f'AiPlayerbot.PremadeSpecLink.9.2.80 = 025-03310030003-05203205220031051'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.11.0.60 =', f'AiPlayerbot.PremadeSpecLink.11.0.60 = 503210312533130321--205003012'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.11.0.80 =', f'AiPlayerbot.PremadeSpecLink.11.0.80 = 503210312533130321--205003012'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.11.1.60 =', f'AiPlayerbot.PremadeSpecLink.11.1.60 = -5332321323220103531-205'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.11.1.80 =', f'AiPlayerbot.PremadeSpecLink.11.1.80 = -5332321323220103531-205'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.11.2.60 =', f'AiPlayerbot.PremadeSpecLink.11.2.60 = 05320001--23003331253151251'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.11.2.80 =', f'AiPlayerbot.PremadeSpecLink.11.2.80 = 05320001--23003331253151251'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.11.3.60 =', f'AiPlayerbot.PremadeSpecLink.11.3.60 = -5532020323220100531-205003002'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecLink.11.3.80 =', f'AiPlayerbot.PremadeSpecLink.11.3.80 = -5532020323220100531-205003002'])
 
 def UpdateConfig(config, replacements):
     PrintProgress(f'Updating {config.rsplit('/', 1)[1]}')
