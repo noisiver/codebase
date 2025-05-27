@@ -164,6 +164,8 @@ options = {
     'module.playerbots.random_bots.maximum': 50,
     'module.playerbots.random_bots.minimum': 50,
     'module.playerbots.random_bots.smart_scale': False,
+    'module.playerbots_level_brackets.dynamic_distribution': False,
+    'module.playerbots_level_brackets.enabled': False,
     'module.progression.aura': 4,
     'module.progression.enabled': False,
     'module.progression.multiplier.damage': 0.6,
@@ -227,7 +229,8 @@ modules = [
     ['mod-groupquests', 'noisiver/mod-groupquests', 'master', options['module.groupquests.enabled'], 0],
     ['mod-junk-to-gold', 'noisiver/mod-junk-to-gold', 'master', options['module.junktogold.enabled'], 0],
     ['mod-learnspells', 'noisiver/mod-learnspells', 'progression', options['module.learnspells.enabled'], 0],
-    ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver-cataclysm', options['module.playerbots.enabled'], 0],
+    ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled'], 0],
+    ['mod-player-bot-level-brackets', 'DustinHendrickson/mod-player-bot-level-brackets', 'main', options['module.playerbots_level_brackets.enabled'], 0],
     ['mod-progression', 'noisiver/mod-progression', 'master', options['module.progression.enabled'], 0],
     ['mod-recruitafriend', 'noisiver/mod-recruitafriend', 'master', options['module.recruitafriend.enabled'], 17],
     ['mod-skip-dk-starting-area', 'noisiver/mod-skip-dk-starting-area', 'noisiver', options['module.skip_dk_starting_area.enabled'], 17],
@@ -673,6 +676,7 @@ configs = [
             ['AuctionHouseBot.EnableSeller =', f'AuctionHouseBot.EnableSeller = {'1' if options['module.ah_bot.seller.enabled'] else '0'}'],
             ['AuctionHouseBot.EnableBuyer =', f'AuctionHouseBot.EnableBuyer = {'1' if options['module.ah_bot.buyer.enabled'] else '0'}'],
             ['AuctionHouseBot.GUIDs =', f'AuctionHouseBot.GUIDs = {options['module.ah_bot.character_guids']}'],
+            ['AuctionHouseBot.ItemsPerCycle =', 'AuctionHouseBot.ItemsPerCycle = 250' ],
             ['AuctionHouseBot.Alliance.MinItems =', 'AuctionHouseBot.Alliance.MinItems = 100000'],
             ['AuctionHouseBot.Alliance.MaxItems =', 'AuctionHouseBot.Alliance.MaxItems = 100000'],
             ['AuctionHouseBot.Horde.MinItems =', 'AuctionHouseBot.Horde.MinItems = 100000'],
@@ -761,6 +765,11 @@ configs = [
         ]
     ],
     [
+        'modules/mod_player_bot_level_brackets.conf', options['module.playerbots_level_brackets.enabled'], True, 0, [
+            ['BotLevelBrackets.Dynamic.UseDynamicDistribution =', f'BotLevelBrackets.Dynamic.UseDynamicDistribution = {'1' if options['module.playerbots_level_brackets.dynamic_distribution'] else '0'}']
+        ]
+    ],
+    [
         'modules/mod_progression.conf', options['module.progression.enabled'], True, 0, [
             ['Progression.Patch =', f'Progression.Patch = {options['module.progression.patch']}'],
             ['Progression.IcecrownCitadel.Aura =', f'Progression.IcecrownCitadel.Aura = {options['module.progression.aura']}'],
@@ -820,35 +829,78 @@ configs = [
 ]
 
 if int(options['module.progression.patch']) < 17:
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.0 =', f'AiPlayerbot.PremadeSpecGlyph.1.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.1 =', f'AiPlayerbot.PremadeSpecGlyph.1.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.2 =', f'AiPlayerbot.PremadeSpecGlyph.1.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.0 =', f'AiPlayerbot.PremadeSpecGlyph.2.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.1 =', f'AiPlayerbot.PremadeSpecGlyph.2.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.2 =', f'AiPlayerbot.PremadeSpecGlyph.2.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.0 =', f'AiPlayerbot.PremadeSpecGlyph.3.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.1 =', f'AiPlayerbot.PremadeSpecGlyph.3.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.2 =', f'AiPlayerbot.PremadeSpecGlyph.3.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.0 =', f'AiPlayerbot.PremadeSpecGlyph.4.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.1 =', f'AiPlayerbot.PremadeSpecGlyph.4.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.2 =', f'AiPlayerbot.PremadeSpecGlyph.4.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.0 =', f'AiPlayerbot.PremadeSpecGlyph.5.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.1 =', f'AiPlayerbot.PremadeSpecGlyph.5.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.2 =', f'AiPlayerbot.PremadeSpecGlyph.5.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.0 =', f'AiPlayerbot.PremadeSpecGlyph.7.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.1 =', f'AiPlayerbot.PremadeSpecGlyph.7.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.2 =', f'AiPlayerbot.PremadeSpecGlyph.7.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.0 =', f'AiPlayerbot.PremadeSpecGlyph.8.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.1 =', f'AiPlayerbot.PremadeSpecGlyph.8.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.2 =', f'AiPlayerbot.PremadeSpecGlyph.8.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.3 =', f'AiPlayerbot.PremadeSpecGlyph.8.3 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.0 =', f'AiPlayerbot.PremadeSpecGlyph.9.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.1 =', f'AiPlayerbot.PremadeSpecGlyph.9.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.2 =', f'AiPlayerbot.PremadeSpecGlyph.9.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.0 =', f'AiPlayerbot.PremadeSpecGlyph.11.0 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.1 =', f'AiPlayerbot.PremadeSpecGlyph.11.1 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.2 =', f'AiPlayerbot.PremadeSpecGlyph.11.2 = 0,0,0,0,0,0'])
-    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.3 =', f'AiPlayerbot.PremadeSpecGlyph.11.3 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.0 =', 'AiPlayerbot.PremadeSpecGlyph.1.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.1 =', 'AiPlayerbot.PremadeSpecGlyph.1.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.2 =', 'AiPlayerbot.PremadeSpecGlyph.1.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.0 =', 'AiPlayerbot.PremadeSpecGlyph.2.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.1 =', 'AiPlayerbot.PremadeSpecGlyph.2.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.2 =', 'AiPlayerbot.PremadeSpecGlyph.2.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.0 =', 'AiPlayerbot.PremadeSpecGlyph.3.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.1 =', 'AiPlayerbot.PremadeSpecGlyph.3.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.2 =', 'AiPlayerbot.PremadeSpecGlyph.3.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.0 =', 'AiPlayerbot.PremadeSpecGlyph.4.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.1 =', 'AiPlayerbot.PremadeSpecGlyph.4.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.2 =', 'AiPlayerbot.PremadeSpecGlyph.4.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.0 =', 'AiPlayerbot.PremadeSpecGlyph.5.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.1 =', 'AiPlayerbot.PremadeSpecGlyph.5.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.2 =', 'AiPlayerbot.PremadeSpecGlyph.5.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.0 =', 'AiPlayerbot.PremadeSpecGlyph.7.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.1 =', 'AiPlayerbot.PremadeSpecGlyph.7.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.2 =', 'AiPlayerbot.PremadeSpecGlyph.7.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.0 =', 'AiPlayerbot.PremadeSpecGlyph.8.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.1 =', 'AiPlayerbot.PremadeSpecGlyph.8.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.2 =', 'AiPlayerbot.PremadeSpecGlyph.8.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.3 =', 'AiPlayerbot.PremadeSpecGlyph.8.3 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.0 =', 'AiPlayerbot.PremadeSpecGlyph.9.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.1 =', 'AiPlayerbot.PremadeSpecGlyph.9.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.2 =', 'AiPlayerbot.PremadeSpecGlyph.9.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.0 =', 'AiPlayerbot.PremadeSpecGlyph.11.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.1 =', 'AiPlayerbot.PremadeSpecGlyph.11.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.2 =', 'AiPlayerbot.PremadeSpecGlyph.11.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.3 =', 'AiPlayerbot.PremadeSpecGlyph.11.3 = 0,0,0,0,0,0'])
+
+if int(options['module.progression.patch']) < 12:
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range1.Pct   =', 'BotLevelBrackets.Alliance.Range1.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range2.Pct   =', 'BotLevelBrackets.Alliance.Range2.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range3.Pct   =', 'BotLevelBrackets.Alliance.Range3.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range4.Pct   =', 'BotLevelBrackets.Alliance.Range4.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range5.Pct   =', 'BotLevelBrackets.Alliance.Range5.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range6.Pct   =', 'BotLevelBrackets.Alliance.Range6.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Upper =', 'BotLevelBrackets.Alliance.Range7.Upper = 60'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Pct   =', 'BotLevelBrackets.Alliance.Range7.Pct   = 28'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Pct   =', 'BotLevelBrackets.Alliance.Range8.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range9.Pct   =', 'BotLevelBrackets.Alliance.Range9.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range1.Pct   =', 'BotLevelBrackets.Horde.Range1.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range2.Pct   =', 'BotLevelBrackets.Horde.Range2.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range3.Pct   =', 'BotLevelBrackets.Horde.Range3.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range4.Pct   =', 'BotLevelBrackets.Horde.Range4.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range5.Pct   =', 'BotLevelBrackets.Horde.Range5.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range6.Pct   =', 'BotLevelBrackets.Horde.Range6.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Upper =', 'BotLevelBrackets.Horde.Range7.Upper = 60'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Pct   =', 'BotLevelBrackets.Horde.Range7.Pct   = 28'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range8.Pct   =', 'BotLevelBrackets.Horde.Range8.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range9.Pct   =', 'BotLevelBrackets.Horde.Range9.Pct   = 0'])
+elif int(options['module.progression.patch']) < 17:
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range1.Pct   =', 'BotLevelBrackets.Alliance.Range1.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range2.Pct   =', 'BotLevelBrackets.Alliance.Range2.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range3.Pct   =', 'BotLevelBrackets.Alliance.Range3.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range4.Pct   =', 'BotLevelBrackets.Alliance.Range4.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range5.Pct   =', 'BotLevelBrackets.Alliance.Range5.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range6.Pct   =', 'BotLevelBrackets.Alliance.Range6.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Pct   =', 'BotLevelBrackets.Alliance.Range7.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Upper =', 'BotLevelBrackets.Alliance.Range8.Upper = 70'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Pct   =', 'BotLevelBrackets.Alliance.Range8.Pct   = 30'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range9.Pct   =', 'BotLevelBrackets.Alliance.Range9.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range1.Pct   =', 'BotLevelBrackets.Horde.Range1.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range2.Pct   =', 'BotLevelBrackets.Horde.Range2.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range3.Pct   =', 'BotLevelBrackets.Horde.Range3.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range4.Pct   =', 'BotLevelBrackets.Horde.Range4.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range5.Pct   =', 'BotLevelBrackets.Horde.Range5.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range6.Pct   =', 'BotLevelBrackets.Horde.Range6.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Pct   =', 'BotLevelBrackets.Horde.Range7.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range8.Upper =', 'BotLevelBrackets.Horde.Range8.Upper = 70'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range8.Pct   =', 'BotLevelBrackets.Horde.Range8.Pct   = 30'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range9.Pct   =', 'BotLevelBrackets.Horde.Range9.Pct   = 0'])
 
 def UpdateConfig(config, replacements):
     PrintProgress(f'Updating {config.rsplit('/', 1)[1]}')

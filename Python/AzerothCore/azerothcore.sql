@@ -36,6 +36,8 @@ INSERT INTO `realm_settings` (`id`, `setting`, `value`) VALUES
 (-1, 'module.playerbots.random_bots.maximum', '50'),
 (-1, 'module.playerbots.random_bots.minimum', '50'),
 (-1, 'module.playerbots.random_bots.smart_scale', 'false'),
+(-1, 'module.playerbots_level_brackets.dynamic_distribution', 'false'),
+(-1, 'module.playerbots_level_brackets.enabled', 'false'),
 (-1, 'module.progression.aura', '4'),
 (-1, 'module.progression.enabled', 'false'),
 (-1, 'module.progression.multiplier.damage', '0.6'),
