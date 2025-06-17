@@ -2,7 +2,7 @@
 # ALTER USER 'acore'@'127.0.0.1' IDENTIFIED WITH caching_sha2_password BY 'acore';
 
 # Install MySQL Server 8.4 on Linux:
-# wget https://repo.mysql.com/mysql-apt-config_0.8.32-1_all.deb
+# wget https://repo.mysql.com/mysql-apt-config_0.8.34-1_all.deb
 # dpkg -i mysql-apt-config_0.8.32-1_all.deb
 # apt update
 # apt install -y mysql-server
@@ -156,7 +156,6 @@ options = {
     'module.eluna.enabled': False,
     'module.fixes.enabled': False,
     'module.gamemaster.enabled': False,
-    'module.groupquests.enabled': False,
     'module.junktogold.enabled': False,
     'module.learnspells.enabled': False,
     'module.playerbots.enabled': False,
@@ -172,7 +171,6 @@ options = {
     'module.progression.multiplier.healing': 0.5,
     'module.progression.patch': 21,
     'module.progression.reset': False,
-    'module.recruitafriend.enabled': False,
     'module.skip_dk_starting_area.enabled': False,
     'module.weekendbonus.enabled': False,
     'telegram.chat_id': 0,
@@ -226,13 +224,11 @@ modules = [
     ['mod-eluna', 'azerothcore/mod-eluna', 'master', options['module.eluna.enabled'], 0],
     ['mod-fixes', 'noisiver/mod-fixes', 'master', options['module.fixes.enabled'], 17],
     ['mod-gamemaster', 'noisiver/mod-gamemaster', 'master', options['module.gamemaster.enabled'], 0],
-    ['mod-groupquests', 'noisiver/mod-groupquests', 'master', options['module.groupquests.enabled'], 0],
     ['mod-junk-to-gold', 'noisiver/mod-junk-to-gold', 'master', options['module.junktogold.enabled'], 0],
     ['mod-learnspells', 'noisiver/mod-learnspells', 'progression', options['module.learnspells.enabled'], 0],
     ['mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled'], 0],
     ['mod-player-bot-level-brackets', 'DustinHendrickson/mod-player-bot-level-brackets', 'main', options['module.playerbots_level_brackets.enabled'], 0],
     ['mod-progression', 'noisiver/mod-progression', 'master', options['module.progression.enabled'], 0],
-    ['mod-recruitafriend', 'noisiver/mod-recruitafriend', 'master', options['module.recruitafriend.enabled'], 17],
     ['mod-skip-dk-starting-area', 'noisiver/mod-skip-dk-starting-area', 'noisiver', options['module.skip_dk_starting_area.enabled'], 17],
     ['mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', True, 12],
     ['mod-weekendbonus', 'noisiver/mod-weekendbonus', 'master', options['module.weekendbonus.enabled'], 0]
@@ -595,12 +591,15 @@ def Install():
 ##################################################
 
 if int(options['module.progression.patch']) < 12:
+    playerbots_max_level = 60
     playerbots_starting_level = 1
     playerbots_maps = '0,1'
 elif int(options['module.progression.patch']) < 17:
+    playerbots_max_level = 70
     playerbots_starting_level = 60
     playerbots_maps = '0,1,530'
 else:
+    playerbots_max_level = 80
     playerbots_starting_level = 70
     playerbots_maps = '0,1,530,571'
 
@@ -706,7 +705,12 @@ configs = [
             ['Assistant.Enchants.Enabled   =', f'Assistant.Enchants.Enabled   = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
             ['Assistant.FlightPaths.Vanilla.Enabled                  =', 'Assistant.FlightPaths.Vanilla.Enabled                  = 0'],
             ['Assistant.FlightPaths.BurningCrusade.Enabled           =', 'Assistant.FlightPaths.BurningCrusade.Enabled           = 0'],
+            ['Assistant.Professions.Apprentice.Cost     =', f'Assistant.Professions.Apprentice.Cost     = {'100000' if int(options['module.progression.patch']) < 17 else '1000000'}'],
+            ['Assistant.Professions.Journeyman.Cost     =', f'Assistant.Professions.Journeyman.Cost     = {'250000' if int(options['module.progression.patch']) < 17 else '2500000'}'],
+            ['Assistant.Professions.Expert.Cost         =', f'Assistant.Professions.Expert.Cost         = {'500000' if int(options['module.progression.patch']) < 17 else '5000000'}'],
+            ['Assistant.Professions.Artisan.Cost        =', f'Assistant.Professions.Artisan.Cost        = {'750000' if int(options['module.progression.patch']) < 17 else '7500000'}'],
             ['Assistant.Professions.Master.Enabled      =', f'Assistant.Professions.Master.Enabled      = {'0' if int(options['module.progression.patch']) < 12 else '1'}'],
+            ['Assistant.Professions.Master.Cost         =', f'Assistant.Professions.Master.Cost         = {'1250000' if int(options['module.progression.patch']) < 17 else '12500000'}'],
             ['Assistant.Professions.GrandMaster.Enabled =', f'Assistant.Professions.GrandMaster.Enabled = {'0' if int(options['module.progression.patch']) < 17 else '1'}'],
             ['Assistant.Instances.Heroic.Enabled  =', f'Assistant.Instances.Heroic.Enabled  = {'0' if int(options['module.progression.patch']) < 12 else '1'}']
         ]
@@ -730,7 +734,8 @@ configs = [
             ['AiPlayerbot.TellWhenAvoidAoe =', 'AiPlayerbot.TellWhenAvoidAoe = 0'],
             ['AiPlayerbot.AutoGearQualityLimit =', 'AiPlayerbot.AutoGearQualityLimit = 5'],
             ['AiPlayerbot.DisableDeathKnightLogin =', f'AiPlayerbot.DisableDeathKnightLogin = {'1' if int(options['module.progression.patch']) < 17 else '0'}'],
-            ['AiPlayerbot.DisableRandomLevels =', 'AiPlayerbot.DisableRandomLevels = 1'],
+            ['AiPlayerbot.DisableRandomLevels =', f'AiPlayerbot.DisableRandomLevels = {'0' if options['module.playerbots_level_brackets.enabled'] else '1'}'],
+            ['AiPlayerbot.RandomBotMaxLevel =', f'AiPlayerbot.RandomBotMaxLevel = {playerbots_max_level}'],
             ['AiPlayerbot.RandombotStartingLevel =', f'AiPlayerbot.RandombotStartingLevel = {playerbots_starting_level}'],
             ['AiPlayerbot.RandomGearQualityLimit =', 'AiPlayerbot.RandomGearQualityLimit = 5'],
             ['AiPlayerbot.RandomBotGroupNearby =', 'AiPlayerbot.RandomBotGroupNearby = 1'],
@@ -806,12 +811,6 @@ configs = [
         ]
     ],
     [
-        'modules/mod_recruitafriend.conf', options['module.recruitafriend.enabled'], True, 17, [
-            ['RecruitAFriend.Duration =', 'RecruitAFriend.Duration = 0'],
-            ['RecruitAFriend.MaxAccountAge =', 'RecruitAFriend.MaxAccountAge = 0']
-        ]
-    ],
-    [
         'modules/skip_dk_module.conf', options['module.skip_dk_starting_area.enabled'], True, 17, [
             ['Skip.Deathknight.Starter.Announce.enable =', 'Skip.Deathknight.Starter.Announce.enable = 0']
         ]
@@ -859,47 +858,80 @@ if int(options['module.progression.patch']) < 17:
     configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.2 =', 'AiPlayerbot.PremadeSpecGlyph.11.2 = 0,0,0,0,0,0'])
     configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.3 =', 'AiPlayerbot.PremadeSpecGlyph.11.3 = 0,0,0,0,0,0'])
 
+if int(options['module.progression.patch']) < 17:
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.0 =', f'AiPlayerbot.PremadeSpecGlyph.1.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.1 =', f'AiPlayerbot.PremadeSpecGlyph.1.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.1.2 =', f'AiPlayerbot.PremadeSpecGlyph.1.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.0 =', f'AiPlayerbot.PremadeSpecGlyph.2.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.1 =', f'AiPlayerbot.PremadeSpecGlyph.2.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.2.2 =', f'AiPlayerbot.PremadeSpecGlyph.2.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.0 =', f'AiPlayerbot.PremadeSpecGlyph.3.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.1 =', f'AiPlayerbot.PremadeSpecGlyph.3.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.3.2 =', f'AiPlayerbot.PremadeSpecGlyph.3.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.0 =', f'AiPlayerbot.PremadeSpecGlyph.4.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.1 =', f'AiPlayerbot.PremadeSpecGlyph.4.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.4.2 =', f'AiPlayerbot.PremadeSpecGlyph.4.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.0 =', f'AiPlayerbot.PremadeSpecGlyph.5.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.1 =', f'AiPlayerbot.PremadeSpecGlyph.5.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.5.2 =', f'AiPlayerbot.PremadeSpecGlyph.5.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.0 =', f'AiPlayerbot.PremadeSpecGlyph.7.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.1 =', f'AiPlayerbot.PremadeSpecGlyph.7.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.7.2 =', f'AiPlayerbot.PremadeSpecGlyph.7.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.0 =', f'AiPlayerbot.PremadeSpecGlyph.8.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.1 =', f'AiPlayerbot.PremadeSpecGlyph.8.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.2 =', f'AiPlayerbot.PremadeSpecGlyph.8.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.8.3 =', f'AiPlayerbot.PremadeSpecGlyph.8.3 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.0 =', f'AiPlayerbot.PremadeSpecGlyph.9.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.1 =', f'AiPlayerbot.PremadeSpecGlyph.9.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.9.2 =', f'AiPlayerbot.PremadeSpecGlyph.9.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.0 =', f'AiPlayerbot.PremadeSpecGlyph.11.0 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.1 =', f'AiPlayerbot.PremadeSpecGlyph.11.1 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.2 =', f'AiPlayerbot.PremadeSpecGlyph.11.2 = 0,0,0,0,0,0'])
+    configs[6][4].append(['AiPlayerbot.PremadeSpecGlyph.11.3 =', f'AiPlayerbot.PremadeSpecGlyph.11.3 = 0,0,0,0,0,0'])
+
 if int(options['module.progression.patch']) < 12:
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range1.Pct   =', 'BotLevelBrackets.Alliance.Range1.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.NumRanges =', 'BotLevelBrackets.NumRanges = 7'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range1.Pct   =', 'BotLevelBrackets.Alliance.Range1.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range2.Pct   =', 'BotLevelBrackets.Alliance.Range2.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range3.Pct   =', 'BotLevelBrackets.Alliance.Range3.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range4.Pct   =', 'BotLevelBrackets.Alliance.Range4.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range5.Pct   =', 'BotLevelBrackets.Alliance.Range5.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range6.Pct   =', 'BotLevelBrackets.Alliance.Range6.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Upper =', 'BotLevelBrackets.Alliance.Range7.Upper = 60'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Pct   =', 'BotLevelBrackets.Alliance.Range7.Pct   = 30'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Pct   =', 'BotLevelBrackets.Alliance.Range8.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range9.Pct   =', 'BotLevelBrackets.Alliance.Range9.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range1.Pct   =', 'BotLevelBrackets.Horde.Range1.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range2.Pct   =', 'BotLevelBrackets.Horde.Range2.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range3.Pct   =', 'BotLevelBrackets.Horde.Range3.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range4.Pct   =', 'BotLevelBrackets.Horde.Range4.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range5.Pct   =', 'BotLevelBrackets.Horde.Range5.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range6.Pct   =', 'BotLevelBrackets.Horde.Range6.Pct   = 14'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Upper =', 'BotLevelBrackets.Horde.Range7.Upper = 60'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Pct   =', 'BotLevelBrackets.Horde.Range7.Pct   = 30'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range8.Pct   =', 'BotLevelBrackets.Horde.Range8.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range9.Pct   =', 'BotLevelBrackets.Horde.Range9.Pct   = 0'])
+elif int(options['module.progression.patch']) < 17:
+    configs[7][4].append(['BotLevelBrackets.NumRanges =', 'BotLevelBrackets.NumRanges = 8'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range1.Pct   =', 'BotLevelBrackets.Alliance.Range1.Pct   = 0'])
     configs[7][4].append(['BotLevelBrackets.Alliance.Range2.Pct   =', 'BotLevelBrackets.Alliance.Range2.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Alliance.Range3.Pct   =', 'BotLevelBrackets.Alliance.Range3.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Alliance.Range4.Pct   =', 'BotLevelBrackets.Alliance.Range4.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Alliance.Range5.Pct   =', 'BotLevelBrackets.Alliance.Range5.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Alliance.Range6.Pct   =', 'BotLevelBrackets.Alliance.Range6.Pct   = 12'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Upper =', 'BotLevelBrackets.Alliance.Range7.Upper = 60'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Pct   =', 'BotLevelBrackets.Alliance.Range7.Pct   = 28'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Pct   =', 'BotLevelBrackets.Alliance.Range8.Pct   = 0'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Pct   =', 'BotLevelBrackets.Alliance.Range7.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Upper =', 'BotLevelBrackets.Alliance.Range8.Upper = 70'])
+    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Pct   =', 'BotLevelBrackets.Alliance.Range8.Pct   = 28'])
     configs[7][4].append(['BotLevelBrackets.Alliance.Range9.Pct   =', 'BotLevelBrackets.Alliance.Range9.Pct   = 0'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range1.Pct   =', 'BotLevelBrackets.Horde.Range1.Pct   = 12'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range1.Pct   =', 'BotLevelBrackets.Horde.Range1.Pct   = 0'])
     configs[7][4].append(['BotLevelBrackets.Horde.Range2.Pct   =', 'BotLevelBrackets.Horde.Range2.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Horde.Range3.Pct   =', 'BotLevelBrackets.Horde.Range3.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Horde.Range4.Pct   =', 'BotLevelBrackets.Horde.Range4.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Horde.Range5.Pct   =', 'BotLevelBrackets.Horde.Range5.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Horde.Range6.Pct   =', 'BotLevelBrackets.Horde.Range6.Pct   = 12'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Upper =', 'BotLevelBrackets.Horde.Range7.Upper = 60'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Pct   =', 'BotLevelBrackets.Horde.Range7.Pct   = 28'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range8.Pct   =', 'BotLevelBrackets.Horde.Range8.Pct   = 0'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range9.Pct   =', 'BotLevelBrackets.Horde.Range9.Pct   = 0'])
-elif int(options['module.progression.patch']) < 17:
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range1.Pct   =', 'BotLevelBrackets.Alliance.Range1.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range2.Pct   =', 'BotLevelBrackets.Alliance.Range2.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range3.Pct   =', 'BotLevelBrackets.Alliance.Range3.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range4.Pct   =', 'BotLevelBrackets.Alliance.Range4.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range5.Pct   =', 'BotLevelBrackets.Alliance.Range5.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range6.Pct   =', 'BotLevelBrackets.Alliance.Range6.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range7.Pct   =', 'BotLevelBrackets.Alliance.Range7.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Upper =', 'BotLevelBrackets.Alliance.Range8.Upper = 70'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range8.Pct   =', 'BotLevelBrackets.Alliance.Range8.Pct   = 30'])
-    configs[7][4].append(['BotLevelBrackets.Alliance.Range9.Pct   =', 'BotLevelBrackets.Alliance.Range9.Pct   = 0'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range1.Pct   =', 'BotLevelBrackets.Horde.Range1.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range2.Pct   =', 'BotLevelBrackets.Horde.Range2.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range3.Pct   =', 'BotLevelBrackets.Horde.Range3.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range4.Pct   =', 'BotLevelBrackets.Horde.Range4.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range5.Pct   =', 'BotLevelBrackets.Horde.Range5.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range6.Pct   =', 'BotLevelBrackets.Horde.Range6.Pct   = 10'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Pct   =', 'BotLevelBrackets.Horde.Range7.Pct   = 10'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range7.Pct   =', 'BotLevelBrackets.Horde.Range7.Pct   = 12'])
     configs[7][4].append(['BotLevelBrackets.Horde.Range8.Upper =', 'BotLevelBrackets.Horde.Range8.Upper = 70'])
-    configs[7][4].append(['BotLevelBrackets.Horde.Range8.Pct   =', 'BotLevelBrackets.Horde.Range8.Pct   = 30'])
+    configs[7][4].append(['BotLevelBrackets.Horde.Range8.Pct   =', 'BotLevelBrackets.Horde.Range8.Pct   = 28'])
     configs[7][4].append(['BotLevelBrackets.Horde.Range9.Pct   =', 'BotLevelBrackets.Horde.Range9.Pct   = 0'])
 
 def UpdateConfig(config, replacements):
@@ -954,7 +986,6 @@ databases = [
     [options['database.auth'], True, False, f'{source}/data/sql/base/db_auth', False, '', 0],
     [options['database.auth'], True, False, f'{source}/data/sql/updates/db_auth', True, 'RELEASED', 0],
     [options['database.auth'], True, False, f'{source}/data/sql/custom/db_auth', True, 'CUSTOM', 0],
-    [options['database.auth'], options['module.recruitafriend.enabled'], True, f'{source}/modules/mod-recruitafriend/data/sql/auth', True, 'MODULE', 17],
     [options['database.auth'], True, False, f'{cwd}/sql/auth', False, 'CUSTOM', 0],
     # characters
     [options['database.characters'], True, True, f'{source}/data/sql/base/db_characters', False, '', 0],
