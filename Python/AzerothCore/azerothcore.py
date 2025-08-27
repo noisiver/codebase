@@ -783,8 +783,8 @@ def UpdateConfigFiles():
                     'value': multiprocessing.cpu_count() if map_update_threads == -1 or map_update_threads == 0 else map_update_threads
                 },
                 'PreloadAllNonInstancedMapGrids': {
-                    'enabled': True,
-                    'value': 1 if options['world.preload_grids'] else 0
+                    'enabled': options['world.preload_grids'],
+                    'value': 1
                 },
                 'GM.LoginState': {
                     'enabled': True,
@@ -859,8 +859,8 @@ def UpdateConfigFiles():
                     'value': 0
                 },
                 'Warden.Enabled': {
-                    'enabled': True,
-                    'value': 1 if options['world.warden'] else 0
+                    'enabled': not options['world.warden'],
+                    'value': 0
                 }
             }
         },
@@ -868,12 +868,12 @@ def UpdateConfigFiles():
             'enabled': options['build.world'] and options['module.ah_bot.enabled'],
             'options': {
                 'AuctionHouseBot.EnableSeller': {
-                    'enabled': True,
-                    'value': 1 if options['module.ah_bot.seller.enabled'] else 0
+                    'enabled': options['module.ah_bot.seller.enabled'],
+                    'value': 1
                 },
                 'AuctionHouseBot.EnableBuyer': {
-                    'enabled': True,
-                    'value': 1 if options['module.ah_bot.buyer.enabled'] else 0
+                    'enabled': options['module.ah_bot.buyer.enabled'],
+                    'value': 1
                 },
                 'AuctionHouseBot.GUIDs': {
                     'enabled': True,
@@ -884,12 +884,12 @@ def UpdateConfigFiles():
                     'value': 250
                 },
                 'AuctionHouseBot.ListedItemLevelRestrict.Enabled': {
-                    'enabled': True,
-                    'value': 'true' if patch_id < 21 else 'false'
+                    'enabled': patch_id < 21,
+                    'value': 'true'
                 },
                 'AuctionHouseBot.ListedItemLevelRestrict.MaxItemLevel': {
-                    'enabled': True,
-                    'value': 63 if patch_id < 6 else 66 if patch_id < 7 else 76 if patch_id < 12 else 110 if patch_id < 13 else 120 if patch_id < 14 else 133 if patch_id < 17 else 200 if patch_id < 18 else 213 if patch_id < 19 else 226 if patch_id < 20 else 245 if patch_id < 21 else 0
+                    'enabled': patch_id < 21,
+                    'value': 63 if patch_id < 6 else 66 if patch_id < 7 else 76 if patch_id < 12 else 110 if patch_id < 13 else 120 if patch_id < 14 else 133 if patch_id < 17 else 200 if patch_id < 18 else 213 if patch_id < 19 else 226 if patch_id < 20 else 245
                 },
                 'AuctionHouseBot.Alliance.MinItems': {
                     'enabled': True,
@@ -921,36 +921,36 @@ def UpdateConfigFiles():
             'enabled': options['build.world'] and options['module.assistant.enabled'],
             'options': {
                 'Assistant.Heirlooms.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id < 17,
+                    'value': 0
                 },
                 'Assistant.Glyphs.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id < 17,
+                    'value': 0
                 },
                 'Assistant.Gems.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id < 17,
+                    'value': 0
                 },
                 'Assistant.Elixirs.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id < 17,
+                    'value': 0
                 },
                 'Assistant.Food.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id < 17,
+                    'value': 0
                 },
                 'Assistant.Enchants.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id < 17,
+                    'value': 0
                 },
                 'Assistant.FlightPaths.Vanilla.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 12 else 1
+                    'enabled': patch_id < 12,
+                    'value': 0
                 },
                 'Assistant.FlightPaths.BurningCrusade.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id < 17,
+                    'value': 0
                 },
                 'Assistant.Professions.Apprentice.Cost': {
                     'enabled': True,
@@ -969,20 +969,20 @@ def UpdateConfigFiles():
                     'value': 750000 if patch_id < 17 else 7500000
                 },
                 'Assistant.Professions.Master.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 12 else 1
+                    'enabled': patch_id >= 12,
+                    'value': 1
                 },
                 'Assistant.Professions.Master.Cost': {
                     'enabled': True,
                     'value': 1250000 if patch_id < 17 else 12500000
                 },
                 'Assistant.Professions.GrandMaster.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id >= 17,
+                    'value': 1
                 },
                 'Assistant.Instances.Heroic.Enabled': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 12 else 1
+                    'enabled': patch_id < 12,
+                    'value': 0
                 }
             }
         },
@@ -998,12 +998,12 @@ def UpdateConfigFiles():
                     'value': 1
                 },
                 'LearnSpells.Riding.Journeyman': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 12 else 1
+                    'enabled': patch_id >= 12,
+                    'value': 1
                 },
                 'LearnSpells.Riding.Expert': {
-                    'enabled': True,
-                    'value': 0 if patch_id < 17 else 1
+                    'enabled': patch_id >= 17,
+                    'value': 1
                 }
             }
         },
@@ -1019,8 +1019,8 @@ def UpdateConfigFiles():
                     'value': random_bots_maximum
                 },
                 'AiPlayerbot.RandomBotAccountCount': {
-                    'enabled': True,
-                    'value': random_bots_maximum * (9 if patch_id < 17 else 10) + 1 if random_bots_maximum > 0 else 0
+                    'enabled': random_bots_maximum > 0,
+                    'value': random_bots_maximum * (9 if patch_id < 17 else 10) + 1
                 },
                 'AiPlayerbot.SelfBotLevel': {
                     'enabled': True,
@@ -1035,12 +1035,12 @@ def UpdateConfigFiles():
                     'value': 5
                 },
                 'DisableDeathKnightLogin': {
-                    'enabled': True,
-                    'value': 1 if patch_id < 17 else 0
+                    'enabled': patch_id < 17,
+                    'value': 1
                 },
                 'DisableRandomLevels': {
-                    'enabled': True,
-                    'value': 0 if options['module.playerbots_level_brackets.enabled'] else 1
+                    'enabled': not options['module.playerbots_level_brackets.enabled'],
+                    'value': 1
                 },
                 'AiPlayerbot.RandomBotMaxLevel': {
                     'enabled': True,
@@ -1107,8 +1107,8 @@ def UpdateConfigFiles():
                     'value': options['module.playerbots.random_bots.active_alone']
                 },
                 'AiPlayerbot.botActiveAloneSmartScale': {
-                    'enabled': True,
-                    'value': 1 if options['module.playerbots.random_bots.smart_scale'] else 0
+                    'enabled': not options['module.playerbots.random_bots.smart_scale'],
+                    'value': 0
                 },
                 'AiPlayerbot.CommandServerPort': {
                     'enabled': True,
@@ -1127,36 +1127,36 @@ def UpdateConfigFiles():
                     'value': 0 if patch_id < 12 else 25
                 },
                 'AiPlayerbot.AutoEquipUpgradeLoot': {
-                    'enabled': True,
-                    'value': 1 if options['module.playerbots.auto_equip_upgrades'] else 0
+                    'enabled': not options['module.playerbots.auto_equip_upgrades'],
+                    'value': 0
                 },
                 'AiPlayerbot.AutoPickReward': {
-                    'enabled': True,
-                    'value': 'yes' if options['module.playerbots.auto_select_quest_reward'] else 'no'
+                    'enabled': not options['module.playerbots.auto_select_quest_reward'],
+                    'value': 'no'
                 },
                 'AiPlayerbot.AutoTrainSpells': {
                     'enabled': True,
                     'value': 'no'
                 },
                 'AiPlayerbot.DropObsoleteQuests': {
-                    'enabled': True,
-                    'value': 1 if options['module.playerbots.drop_obsolete_quests'] else 0
+                    'enabled': not options['module.playerbots.drop_obsolete_quests'],
+                    'value': 0
                 },
                 'PlayerbotsDatabase.WorkerThreads': {
                     'enabled': True,
                     'value': 4
                 },
                 'AiPlayerbot.UseGroundMountAtMinLevel': {
-                    'enabled': True,
-                    'value': 40 if patch_id < 16 else 30 if patch_id < 19 else 20
+                    'enabled': patch_id < 19,
+                    'value': 40 if patch_id < 16 else 30
                 },
                 'AiPlayerbot.UseFastGroundMountAtMinLevel': {
-                    'enabled': True,
-                    'value': 60 if patch_id < 19 else 40
+                    'enabled': patch_id < 19,
+                    'value': 60
                 },
                 'AiPlayerbot.UseFlyMountAtMinLevel': {
-                    'enabled': True,
-                    'value': 70 if patch_id < 19 else 60
+                    'enabled': patch_id < 19,
+                    'value': 70
                 },
                 'AiPlayerbot.NonCombatStrategies': {
                     'enabled': True,
@@ -1420,8 +1420,8 @@ def UpdateConfigFiles():
             'enabled': options['build.world'] and options['module.playerbots.enabled'] and options['module.playerbots_level_brackets.enabled'],
             'options': {
                 'BotLevelBrackets.Dynamic.UseDynamicDistribution': {
-                    'enabled': True,
-                    'value': 1 if options['module.playerbots_level_brackets.dynamic_distribution'] else 0
+                    'enabled': options['module.playerbots_level_brackets.dynamic_distribution'],
+                    'value': 1
                 },
                 'BotLevelBrackets.NumRanges': {
                     'enabled': patch_id < 17,
