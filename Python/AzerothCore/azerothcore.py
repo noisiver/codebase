@@ -237,7 +237,6 @@ def LoadOptionsFromDatabase():
 
         global options
         options = FlattenDict(nested_options)
-
     except pymysql.Error as e:
         ReportError(e.args[1])
 
@@ -604,7 +603,7 @@ def ImportDatabaseFiles():
                 cursor.execute('SHOW TABLES;')
                 tables = [row[0] for row in cursor.fetchall()]
             connect.commit()
-        except:
+        except pymysql.MySQLError:
             ReportError(f'Failed to load table data from {db_name}')
 
         for enabled, directory, description in entries:
@@ -1692,6 +1691,43 @@ def UpdateConfigFiles():
 
     print(f'{colorama.Fore.GREEN}Finished updating config files after {FormattedTime(int(time.time() - function_start_time))}...{colorama.Style.RESET_ALL}')
 
+def ResetWorldDatabase():
+    if not options.get('build.world'):
+        print(f'{colorama.Fore.RED}Skipped because world is not enabled{colorama.Style.RESET_ALL}')
+        return
+
+    print(f'{colorama.Fore.GREEN}Dropping database tables...{colorama.Style.RESET_ALL}')
+    start_time = time.time()
+
+    db_name = options['mysql.database.world']
+
+    try:
+        connect = pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=db_name)
+    except pymysql.MySQLError:
+        ReportError(f'Failed to connect to {db_name}')
+        return
+
+    try:
+        with connect.cursor() as cursor:
+            cursor.execute('SHOW TABLES;')
+            tables = [row[0] for row in cursor.fetchall()]
+
+        if not tables:
+            print(f"{colorama.Fore.YELLOW}No tables found in {db_name}{colorama.Style.RESET_ALL}")
+            return
+
+        with connect.cursor() as cursor:
+            for table in reversed(tables):
+                print(f'{colorama.Fore.YELLOW}Dropping {table}{colorama.Style.RESET_ALL}')
+                cursor.execute(f'DROP TABLE `{table}`;')
+        connect.commit()
+    except pymysql.MySQLError:
+        ReportError('Failed to drop tables')
+    finally:
+        connect.close()
+
+    print(f'{colorama.Fore.GREEN}Finished dropping database tables after {FormattedTime(int(time.time() - start_time))}...{colorama.Style.RESET_ALL}')
+
 if len(sys.argv) < 2:
     PrintAvailableArguments()
 
@@ -1708,6 +1744,7 @@ commands = {
     'settings': [UpdateConfigFiles],
     'options': [UpdateConfigFiles],
     'dbc': [CopyDBCFiles],
+    'reset': [ResetWorldDatabase],
     'all': [DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries, DownloadClientDataFiles, CopyDBCFiles, ImportDatabaseFiles, UpdateConfigFiles]
 }
 
