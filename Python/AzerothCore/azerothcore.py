@@ -218,9 +218,7 @@ def LoadOptionsFromDatabase():
         return items
 
     try:
-        with pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'],
-                             user=mysql_config['username'], password=mysql_config['password'],
-                             db=mysql_config['database']) as connect:
+        with pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=mysql_config['database']) as connect:
             with connect.cursor() as cursor:
                 cursor.execute(f'''
                     WITH s AS (
@@ -246,7 +244,6 @@ def CreateBaseFolders():
     folders = [
         (options['build.world'], 'dbc'),
         (True, 'logs'),
-        (True, 'sql'),
         (True, 'sql/auth'),
         (options['build.world'], 'sql/characters'),
         (options['build.world'], 'sql/world')
@@ -598,11 +595,10 @@ def ImportDatabaseFiles():
         section_start = time.time()
 
         try:
-            connect = pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=db_name)
-            with connect.cursor() as cursor:
-                cursor.execute('SHOW TABLES;')
-                tables = [row[0] for row in cursor.fetchall()]
-            connect.commit()
+            with pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=db_name) as connect:
+                with connect.cursor() as cursor:
+                    cursor.execute('SHOW TABLES;')
+                    tables = [row[0] for row in cursor.fetchall()]
         except pymysql.MySQLError:
             ReportError(f'Failed to load table data from {db_name}')
 
@@ -616,10 +612,10 @@ def ImportDatabaseFiles():
             updates = []
             if is_update:
                 try:
-                    with connect.cursor() as cursor:
-                        cursor.execute('SELECT `name`, `hash` FROM `updates`;')
-                        updates = [[row[0], row[1]] for row in cursor.fetchall()]
-                    connect.commit()
+                    with pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=db_name) as connect:
+                        with connect.cursor() as cursor:
+                            cursor.execute('SELECT `name`, `hash` FROM `updates`;')
+                            updates = [[row[0], row[1]] for row in cursor.fetchall()]
                 except:
                     ReportError('Failed to load updates')
 
@@ -643,32 +639,29 @@ def ImportDatabaseFiles():
 
                 if is_update:
                     try:
-                        with connect.cursor() as cursor:
-                            cursor.execute('DELETE FROM `updates` WHERE `name` = %s;', (file,))
-                            cursor.execute('INSERT INTO `updates` (`name`, `hash`, `state`) VALUES (%s, %s, %s);', (file, sha, description))
-                        connect.commit()
+                        with pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=db_name) as connect:
+                            with connect.cursor() as cursor:
+                                cursor.execute('DELETE FROM `updates` WHERE `name` = %s;', (file,))
+                                cursor.execute('INSERT INTO `updates` (`name`, `hash`, `state`) VALUES (%s, %s, %s);', (file, sha, description))
                     except:
                         ReportError('Failed to add file hash to updates')
 
-        connect.close()
         print(f'{colorama.Fore.MAGENTA}Finished importing database files for {db_name} after {FormattedTime(int(time.time() - section_start))}...{colorama.Style.RESET_ALL}')
 
     if options['build.world']:
         print(f'{colorama.Fore.MAGENTA}Updating realmlist and message of the day...{colorama.Style.RESET_ALL}')
         section_start = time.time()
         try:
-            connect = pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=mysql_config['database'])
-            with connect.cursor() as cursor:
-                print(f'{colorama.Fore.YELLOW}Updating realmlist{colorama.Style.RESET_ALL}')
-                cursor.execute(f'DELETE FROM `realmlist` WHERE `id` = %s;', (realm_id,))
-                cursor.execute('INSERT INTO `realmlist` (`id`, `name`, `address`, `localAddress`, `port`) VALUES (%s, %s, %s, %s, %s);',
-                               (realm_id, options['world.name'], options['world.address'], options['world.local_address'], realm_port))
+            with pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=mysql_config['database']) as connect:
+                with connect.cursor() as cursor:
+                    print(f'{colorama.Fore.YELLOW}Updating realmlist{colorama.Style.RESET_ALL}')
+                    cursor.execute(f'DELETE FROM `realmlist` WHERE `id` = %s;', (realm_id,))
+                    cursor.execute('INSERT INTO `realmlist` (`id`, `name`, `address`, `localAddress`, `port`) VALUES (%s, %s, %s, %s, %s);',
+                                   (realm_id, options['world.name'], options['world.address'], options['world.local_address'], realm_port))
 
-                print(f'{colorama.Fore.YELLOW}Updating message of the day{colorama.Style.RESET_ALL}')
-                cursor.execute(f'DELETE FROM `motd` WHERE `realmid` = %s;', (realm_id,))
-                cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (realm_id, f'Welcome to {options['world.name']}'))
-            connect.commit()
-            connect.close()
+                    print(f'{colorama.Fore.YELLOW}Updating message of the day{colorama.Style.RESET_ALL}')
+                    cursor.execute(f'DELETE FROM `motd` WHERE `realmid` = %s;', (realm_id,))
+                    cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (realm_id, f'Welcome to {options['world.name']}'))
         except pymysql.Error:
             ReportError('Failed to update realmlist and message of the day')
 
