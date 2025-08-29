@@ -559,6 +559,7 @@ def ImportDatabaseFiles():
             [options['build.world'], f'{cwd}/source/data/sql/updates/db_world', 'RELEASED'],
             [options['build.world'], f'{cwd}/source/data/sql/custom/db_world', 'CUSTOM'],
             [options['build.world'] and options['module.assistant.enabled'], f'{cwd}/source/modules/mod-assistant/data/sql/world', 'MODULE'],
+            [options['build.world'] and options['module.fixes.enabled'], f'{cwd}/source/modules/mod-fixes/data/sql/world', 'MODULE'],
             [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/world', 'MODULE'],
             [options['build.world'] and options['module.progression.enabled'], f'{cwd}/source/modules/mod-progression/src/patch_00-1_1/sql', None if options['module.progression.reset'] else 'MODULE'],
             [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 1, f'{cwd}/source/modules/mod-progression/src/patch_01-1_2/sql', None if options['module.progression.reset'] else 'MODULE'],
@@ -643,6 +644,7 @@ def ImportDatabaseFiles():
                             with connect.cursor() as cursor:
                                 cursor.execute('DELETE FROM `updates` WHERE `name` = %s;', (file,))
                                 cursor.execute('INSERT INTO `updates` (`name`, `hash`, `state`) VALUES (%s, %s, %s);', (file, sha, description))
+                                connect.commit()
                     except:
                         ReportError('Failed to add file hash to updates')
 
@@ -662,6 +664,8 @@ def ImportDatabaseFiles():
                     print(f'{colorama.Fore.YELLOW}Updating message of the day{colorama.Style.RESET_ALL}')
                     cursor.execute(f'DELETE FROM `motd` WHERE `realmid` = %s;', (realm_id,))
                     cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (realm_id, f'Welcome to {options['world.name']}'))
+
+                    connect.commit()
         except pymysql.Error:
             ReportError('Failed to update realmlist and message of the day')
 
@@ -1012,7 +1016,7 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.RandomBotAccountCount': {
                     'enabled': random_bots_maximum > 0,
-                    'value': random_bots_maximum * (9 if patch_id < 17 else 10) + 1
+                    'value': int(random_bots_maximum / (9 if patch_id < 17 else 10) + 1)
                 },
                 'AiPlayerbot.SelfBotLevel': {
                     'enabled': True,
@@ -1022,15 +1026,15 @@ def UpdateConfigFiles():
                     'enabled': True,
                     'value': 0
                 },
-                'AutoGearQualityLimit': {
+                'AiPlayerbot.AutoGearQualityLimit': {
                     'enabled': True,
                     'value': 5
                 },
-                'DisableDeathKnightLogin': {
+                'AiPlayerbot.DisableDeathKnightLogin': {
                     'enabled': patch_id < 17,
                     'value': 1
                 },
-                'DisableRandomLevels': {
+                'AiPlayerbot.DisableRandomLevels': {
                     'enabled': not options['module.playerbots_level_brackets.enabled'],
                     'value': 1
                 },
@@ -1042,13 +1046,13 @@ def UpdateConfigFiles():
                     'enabled': True,
                     'value': 5
                 },
-                'RandomBotGroupNearby': {
+                'AiPlayerbot.RandomBotGroupNearby': {
                     'enabled': True,
                     'value': 1
                 },
-                'RandomBotMaps': {
-                    'enabled': True,
-                    'value': '0,1' if patch_id < 12 else '0,1,530' if patch_id < 17 else '0,1,530,571'
+                'AiPlayerbot.RandomBotMaps': {
+                    'enabled': patch_id < 17,
+                    'value': '0,1' if patch_id < 12 else '0,1,530'
                 },
                 'PlayerbotsDatabaseInfo': {
                     'enabled': True,
