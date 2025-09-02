@@ -305,7 +305,7 @@ def DownloadSourceCode():
             ('mod-learnspells', 'noisiver/mod-learnspells', 'progression', options['module.learnspells.enabled']),
             ('mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled']),
             ('mod-player-bot-level-brackets', 'DustinHendrickson/mod-player-bot-level-brackets', 'main', options['module.playerbots.enabled'] and options['module.playerbots_level_brackets.enabled']),
-            ('mod-progression', 'noisiver/mod-progression', 'ptr', options['module.progression.enabled']),
+            ('mod-progression', 'noisiver/mod-progression', 'master', options['module.progression.enabled']),
             ('mod-skip-dk-starting-area', 'azerothcore/mod-skip-dk-starting-area', 'master', options['module.skip_dk_starting_area.enabled'] and int(options['module.progression.patch']) >= 17),
             ('mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', options['module.stop_killing_them.enabled'] and int(options['module.progression.patch']) >= 12),
             ('mod-weekendbonus', 'noisiver/mod-weekendbonus', 'master', options['module.weekendbonus.enabled'])
@@ -1017,6 +1017,10 @@ def UpdateConfigFiles():
                 'AiPlayerbot.RandomBotAccountCount': {
                     'enabled': random_bots_maximum > 0,
                     'value': int(random_bots_maximum / (9 if patch_id < 17 else 10) + 1)
+                },
+                'AiPlayerbot.DisabledWithoutRealPlayer': {
+                    'enabled': True,
+                    'value': 1
                 },
                 'AiPlayerbot.SelfBotLevel': {
                     'enabled': True,
