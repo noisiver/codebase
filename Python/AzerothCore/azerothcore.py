@@ -1,6 +1,6 @@
 # Linux: apt install -y git curl screen cmake make gcc clang g++ libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost1.83-all-dev libmysqlclient-dev mysql-client python3-git python3-requests python3-tqdm python3-pymysql python3-colorama
 # wget https://repo.mysql.com/mysql-apt-config_0.8.34-1_all.deb
-# dpkg -i mysql-apt-config_0.8.32-1_all.deb
+# dpkg -i mysql-apt-config_0.8.34-1_all.deb
 # apt update && apt install -y mysql-server
 
 # Windows: pip install cryptography gitpython pymysql requests tqdm
@@ -80,6 +80,7 @@ nested_options = {
                 'active_alone': 100,
                 'maximum': 50,
                 'minimum': 50,
+                'only_with_players': False,
                 'smart_scale': False
             },
             'drop_obsolete_quests': True
@@ -92,7 +93,8 @@ nested_options = {
             'aura': 4,
             'enabled': False,
             'multiplier': {
-                'damage': 0.6, 'healing': 0.5
+                'damage': 0.6,
+                'healing': 0.5
             },
             'patch': 21,
             'reset': False
@@ -551,7 +553,7 @@ def ImportDatabaseFiles():
         ],
         options['mysql.database.playerbots']: [
             [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/base', None],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/updates/db_playerbots', 'RELEASED'],
+            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/updates', 'RELEASED'],
             [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/custom', 'CUSTOM']
         ],
         options['mysql.database.world']: [
@@ -560,7 +562,8 @@ def ImportDatabaseFiles():
             [options['build.world'], f'{cwd}/source/data/sql/custom/db_world', 'CUSTOM'],
             [options['build.world'] and options['module.assistant.enabled'], f'{cwd}/source/modules/mod-assistant/data/sql/world', 'MODULE'],
             [options['build.world'] and options['module.fixes.enabled'], f'{cwd}/source/modules/mod-fixes/data/sql/world', 'MODULE'],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/world', 'MODULE'],
+            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/world/base', 'MODULE'],
+            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/world/updates', 'RELEASED'],
             [options['build.world'] and options['module.progression.enabled'], f'{cwd}/source/modules/mod-progression/src/patch_00-1_1/sql', None if options['module.progression.reset'] else 'MODULE'],
             [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 1, f'{cwd}/source/modules/mod-progression/src/patch_01-1_2/sql', None if options['module.progression.reset'] else 'MODULE'],
             [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 2, f'{cwd}/source/modules/mod-progression/src/patch_02-1_3/sql', None if options['module.progression.reset'] else 'MODULE'],
@@ -1019,7 +1022,7 @@ def UpdateConfigFiles():
                     'value': int(random_bots_maximum / (9 if patch_id < 17 else 10) + 1)
                 },
                 'AiPlayerbot.DisabledWithoutRealPlayer': {
-                    'enabled': True,
+                    'enabled': options['module.playerbots.random_bots.only_with_players'],
                     'value': 1
                 },
                 'AiPlayerbot.SelfBotLevel': {
@@ -1729,6 +1732,78 @@ def ResetWorldDatabase():
 
     print(f'{colorama.Fore.GREEN}Finished dropping database tables after {FormattedTime(int(time.time() - start_time))}...{colorama.Style.RESET_ALL}')
 
+def IsScreenActive(name) -> bool:
+    result = subprocess.run(
+        ['screen', '-list'],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True
+    )
+    return name in result.stdout
+
+def StartProcess(name):        
+    subprocess.run([f'./{name}'], cwd=f'{cwd}/source/bin', check=True)
+
+def SendShutdown():
+    subprocess.run([
+        'screen', '-S', f'world-{realm_id}', '-p', '0',
+        '-X', 'stuff', 'server shutdown 10^m'
+    ], check=True)
+
+def WaitForShutdown():
+    for _ in range(30):
+        if not IsScreenActive(f'world-{realm_id}'):
+            return
+        time.sleep(1)
+
+def StartServer():
+    if os.name == 'nt':
+        return
+
+    print(f'{colorama.Fore.GREEN}Starting the server...{colorama.Style.RESET_ALL}')
+    function_start_time = time.time()
+
+    auth_needed = options['build.auth'] and not IsScreenActive('auth')
+    world_needed = options['build.world'] and not IsScreenActive(f'world-{realm_id}')
+
+    if auth_needed or world_needed:
+        StartProcess('start.sh')
+
+        if options['build.auth'] and IsScreenActive('auth'):
+            print(f"{colorama.Fore.YELLOW}To access the authserver screen: screen -r auth{colorama.Style.RESET_ALL}")
+
+        if options['build.world'] and IsScreenActive(f'world-{realm_id}'):
+            print(f"{colorama.Fore.YELLOW}To access the worldserver screen: screen -r world-{realm_id}{colorama.Style.RESET_ALL}")
+    else:
+        print(f"{colorama.Fore.RED}The server is already running{colorama.Style.RESET_ALL}")
+
+    print(f'{colorama.Fore.GREEN}Finished starting the server after {FormattedTime(int(time.time() - start_time))}...{colorama.Style.RESET_ALL}')
+
+def StopServer():
+    if os.name == 'nt':
+        return
+
+    print(f'{colorama.Fore.GREEN}Stopping the server...{colorama.Style.RESET_ALL}')
+    function_start_time = time.time()
+
+    auth_running = options['build.auth'] and IsScreenActive('auth')
+    world_running = options['build.world'] and IsScreenActive(f'world-{realm_id}')
+
+    if auth_running or world_running:
+        if world_running:
+            print(f"{colorama.Fore.YELLOW}Telling the worldserver to shut down...{colorama.Style.RESET_ALL}")
+            SendShutdown()
+            WaitForShutdown()
+
+        auth_running = options['build.auth'] and IsScreenActive('auth')
+        world_running = options['build.world'] and IsScreenActive(f'world-{realm_id}')
+        if auth_running or world_running:
+            StartProcess('stop.sh')
+    else:
+        print(f"{colorama.Fore.RED}The server is not running{colorama.Style.RESET_ALL}")
+
+    print(f'{colorama.Fore.GREEN}Finished stopping the server after {FormattedTime(int(time.time() - start_time))}...{colorama.Style.RESET_ALL}')
+
 if len(sys.argv) < 2:
     PrintAvailableArguments()
 
@@ -1746,7 +1821,10 @@ commands = {
     'options': [UpdateConfigFiles],
     'dbc': [CopyDBCFiles],
     'reset': [ResetWorldDatabase],
-    'all': [DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries, DownloadClientDataFiles, CopyDBCFiles, ImportDatabaseFiles, UpdateConfigFiles]
+    'start': [StartServer],
+    'stop': [StopServer],
+    'restart': [StopServer, StartServer],
+    'all': [StopServer, DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries, DownloadClientDataFiles, CopyDBCFiles, ImportDatabaseFiles, UpdateConfigFiles, StartServer]
 }
 
 argument = sys.argv[1].lower()
