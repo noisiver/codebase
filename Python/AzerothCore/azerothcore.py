@@ -393,7 +393,7 @@ def CreateRequiredScripts():
         [f'world.{'bat' if os.name == 'nt' else 'sh'}', options['build.world'],
          cwd if os.name == 'nt' else f'{cwd}/source/bin',
          '@echo off\ncd source/build/bin/RelWithDebInfo\n:world\n    worldserver.exe\n    timeout 5\ngoto world\n' if os.name == 'nt' else
-         '#!/bin/bash\nwhile :; do\n    ./worldserver\n    if [[ $? == 0 ]]; then\n      break\n    fi\n    sleep 5\ndone\n'],
+         '#!/bin/bash\nwhile :; do\n    ./worldserver\n    [[ $? == 0 ]] && break\n    sleep 5\ndone\n'],
         ['start.sh', os.name != 'nt', f'{cwd}/source/bin',
          f'#!/bin/bash\n{'screen -AmdS auth ./auth.sh\n' if options['build.auth'] else ''}'
          f'{f'time=$(date +%s)\nscreen -L -Logfile $time.log -AmdS world-{realm_id} ./world.sh\n' if options['build.world'] else ''}'],
@@ -1550,106 +1550,6 @@ def UpdateConfigFiles():
                 'Progression.Multiplier.Healing': {
                     'enabled': True,
                     'value': options['module.progression.multiplier.healing']
-                },
-                'Progression.WarEffort.CopperBar.Required': {
-                    'enabled': True,
-                    'value': 90
-                },
-                'Progression.WarEffort.IronBar.Required': {
-                    'enabled': True,
-                    'value': 28
-                },
-                'Progression.WarEffort.ThoriumBar.Required': {
-                    'enabled': True,
-                    'value': 24
-                },
-                'Progression.WarEffort.TinBar.Required': {
-                    'enabled': True,
-                    'value': 22
-                },
-                'Progression.WarEffort.MithrilBar.Required': {
-                    'enabled': True,
-                    'value': 18
-                },
-                'Progression.WarEffort.Stranglekelp.Required': {
-                    'enabled': True,
-                    'value': 33
-                },
-                'Progression.WarEffort.PurpleLotus.Required': {
-                    'enabled': True,
-                    'value': 26
-                },
-                'Progression.WarEffort.ArthasTears.Required': {
-                    'enabled': True,
-                    'value': 20
-                },
-                'Progression.WarEffort.Peacebloom.Required': {
-                    'enabled': True,
-                    'value': 96
-                },
-                'Progression.WarEffort.Firebloom.Required': {
-                    'enabled': True,
-                    'value': 19
-                },
-                'Progression.WarEffort.LightLeather.Required': {
-                    'enabled': True,
-                    'value': 180
-                },
-                'Progression.WarEffort.MediumLeather.Required': {
-                    'enabled': True,
-                    'value': 110
-                },
-                'Progression.WarEffort.ThickLeather.Required': {
-                    'enabled': True,
-                    'value': 80
-                },
-                'Progression.WarEffort.HeavyLeather.Required': {
-                    'enabled': True,
-                    'value': 60
-                },
-                'Progression.WarEffort.RuggedLeather.Required': {
-                    'enabled': True,
-                    'value': 60
-                },
-                'Progression.WarEffort.LinenBandage.Required': {
-                    'enabled': True,
-                    'value': 800
-                },
-                'Progression.WarEffort.SilkBandage.Required': {
-                    'enabled': True,
-                    'value': 600
-                },
-                'Progression.WarEffort.RuneclothBandage.Required': {
-                    'enabled': True,
-                    'value': 400
-                },
-                'Progression.WarEffort.WoolBandage.Required': {
-                    'enabled': True,
-                    'value': 250
-                },
-                'Progression.WarEffort.MageweaveBandage.Required': {
-                    'enabled': True,
-                    'value': 250
-                },
-                'Progression.WarEffort.RainbowFinAlbacore.Required': {
-                    'enabled': True,
-                    'value': 14
-                },
-                'Progression.WarEffort.RoastRaptor.Required': {
-                    'enabled': True,
-                    'value': 20
-                },
-                'Progression.WarEffort.SpottedYellowtail.Required': {
-                    'enabled': True,
-                    'value': 17
-                },
-                'Progression.WarEffort.LeanWolfSteak.Required': {
-                    'enabled': True,
-                    'value': 10
-                },
-                'Progression.WarEffort.BakedSalmon.Required': {
-                    'enabled': True,
-                    'value': 10
                 }
             }
         },
@@ -1668,11 +1568,7 @@ def UpdateConfigFiles():
         if not config_data['enabled']:
             continue
 
-        file_path = os.path.join(
-            cwd,
-            *(['source', 'build', 'bin', 'RelWithDebInfo', 'configs'] if os.name == 'nt' else ['source', 'etc']),
-            config_file
-        )
+        file_path = os.path.join(cwd, *(['source', 'build', 'bin', 'RelWithDebInfo', 'configs'] if os.name == 'nt' else ['source', 'etc']), config_file)
         dist_file = f'{file_path}.dist'
 
         try:
