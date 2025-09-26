@@ -124,6 +124,7 @@ nested_options = {
         'address': '127.0.0.1',
         'data_directory': '.',
         'game_type': 0,
+        'infinite_ammo': False,
         'local_address': '127.0.0.1',
         'map_update_threads': -1,
         'name': 'AzerothCore',
@@ -856,6 +857,10 @@ def UpdateConfigFiles():
                 'Daze.Enabled': {
                     'enabled': True,
                     'value': 0
+                },
+                'InfiniteAmmo.Enabled': {
+                    'enabled': options['world.infinite_ammo'],
+                    'value': 1
                 },
                 'Warden.Enabled': {
                     'enabled': not options['world.warden'],
