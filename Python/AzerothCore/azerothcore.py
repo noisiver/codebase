@@ -1,4 +1,4 @@
-# Linux: apt install -y git curl screen cmake make gcc clang g++ libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost1.83-all-dev libmysqlclient-dev mysql-client python3-git python3-requests python3-tqdm python3-pymysql python3-colorama
+# Linux: apt install -y git screen cmake make gcc clang g++ libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost1.83-all-dev libmysqlclient-dev mysql-client python3-git python3-requests python3-tqdm python3-pymysql python3-colorama
 # wget https://repo.mysql.com/mysql-apt-config_0.8.34-1_all.deb
 # dpkg -i mysql-apt-config_0.8.34-1_all.deb
 # apt update && apt install -y mysql-server
@@ -31,6 +31,7 @@ mysql_config = {
 
 realm_id = 1
 realm_port = 29724 + realm_id
+use_custom_talent_trees = False
 
 options = {}
 nested_options = {
@@ -279,15 +280,9 @@ def DownloadOrUpdateSourceCode(repo, path, branch, name):
             print(f'{colorama.Fore.YELLOW}Downloading the source code for {name}{colorama.Style.RESET_ALL}')
             git.Repo.clone_from(url=url, to_path=path, branch=branch, depth=1, single_branch=True, progress=Progress())
         else:
-            repo_obj = git.Repo(path)
-            repo_obj.remotes.origin.fetch()
-            local, remote = repo_obj.head.commit.hexsha, repo_obj.remotes.origin.refs[branch].commit.hexsha
-            if local != remote:
-                print(f'{colorama.Fore.YELLOW}Updating the source code for {name}{colorama.Style.RESET_ALL}')
-                repo_obj.git.reset('--hard', f'origin/{branch}')
-                repo_obj.remotes.origin.pull(progress=Progress())
-            else:
-                print(f'{colorama.Fore.YELLOW}The source code for {name} is up-to-date{colorama.Style.RESET_ALL}')
+            print(f'{colorama.Fore.YELLOW}Updating the source code for {name}{colorama.Style.RESET_ALL}')
+            git.Repo(path).git.reset('--hard', f'origin/{branch}')
+            git.Repo(path).remotes.origin.pull(progress=Progress())
     except:
         ReportError(f'Failed to download or update the source code for {name}')
 
@@ -1030,6 +1025,10 @@ def UpdateConfigFiles():
                     'enabled': options['module.playerbots.random_bots.only_with_players'],
                     'value': 1
                 },
+                'AiPlayerbot.RandomBotGuildCount': {
+                    'enabled': True,
+                    'value': 0
+                },
                 'AiPlayerbot.SelfBotLevel': {
                     'enabled': True,
                     'value': 2
@@ -1174,121 +1173,365 @@ def UpdateConfigFiles():
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.1.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '30220321233351000021-30505300002' if patch_id < 12 else '302203212333510020201231-30502'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '30220321233351000021-30505300002' if patch_id < 12 else '302203212333510020201231-3050530004'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.1.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '30202301233-325000005502310051' if patch_id < 12 else '302013-3250000055013100531251'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '30202301233-325000005502310051' if patch_id < 12 else '30202301233-3250000055013100531251'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.1.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '352000001-3-05335122500021251' if patch_id < 12 else '35--053351225000212521031'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '352000001-3-05335122500021251' if patch_id < 12 else '3502000023-3-053351225000212521031'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.1.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '30220321233351000021-30505300002' if patch_id < 12 else '302203212333510020201231-30502'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '30220321233351000021-30505300002' if patch_id < 12 else '302203212333510020201231-3050530004'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.1.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '30202301233-325000005502310051' if patch_id < 12 else '302013-3250000055013100531251'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '30202301233-325000005502310051' if patch_id < 12 else '30202301233-3250000055013100531251'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.1.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '352000001-3-05335122500021251' if patch_id < 12 else '35--053351225000212521031'
+                },
+                'AiPlayerbot.PremadeSpecLink.1.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '352000001-3-05335122500021251' if patch_id < 12 else '3502000023-3-053351225000212521031'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.0': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.2.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '50350152020013251-5002-05202' if patch_id < 12 else '503500520020130531051-50023'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '50350152020013251-5002-05202' if patch_id < 12 else '503500520020130531051-500251022-03'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.2.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-0500513520310231-502302500003' if patch_id < 12 else '-25005135203102321331-5022'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-0500513520310231-502302500003' if patch_id < 12 else '-25005135203102321331-502300510003'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.2.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-453201002-05232051203331301' if patch_id < 12 else '-45-052220512033313021331'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-453201002-05232051203331301' if patch_id < 12 else '-553201002-052320512033313021331'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.2.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '50350152020013251-5002-05202' if patch_id < 12 else '503500520020130531051-50023'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '50350152020013251-5002-05202' if patch_id < 12 else '503500520020130531051-500251022-03'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.2.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-0500513520310231-502302500003' if patch_id < 12 else '-25005135203102321331-5022'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-0500513520310231-502302500003' if patch_id < 12 else '-25005135203102321331-502300510003'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.2.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-453201002-05232051203331301' if patch_id < 12 else '-45-052220512033313021331'
+                },
+                'AiPlayerbot.PremadeSpecLink.2.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-453201002-05232051203331301' if patch_id < 12 else '-553201002-052320512033313021331'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.0': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.3.0.40': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '5120020151501224' if patch_id < 12 else '51200201515012231'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '51200201515012241-005305001-5' if patch_id < 12 else '512002015150122331151-005302'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '51200201515012241-005305001-5' if patch_id < 12 else '512002015150122331151-005304-500003'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.3.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '502-035305231230013231-5000002' if patch_id < 12 else '502-0353050012300132331351'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '502-035305231230013231-5000002' if patch_id < 12 else '502-0353050012300132331351-5300002'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.3.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-005305101-5000032500033330531' if patch_id < 12 else '-0052-50000325000333305311151'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-005305101-5000032500033330531' if patch_id < 12 else '-00530511102-50000325000333305311151'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.3.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '51200201515012241-005305001-5' if patch_id < 12 else '512002015150122331151-005302'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '51200201515012241-005305001-5' if patch_id < 12 else '512002015150122331151-005304-500003'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.3.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '502-035305231230013231-5000002' if patch_id < 12 else '502-0353050012300132331351'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '502-035305231230013231-5000002' if patch_id < 12 else '502-0353050012300132331351-5300002'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.3.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-005305101-5000032500033330531' if patch_id < 12 else '-0052-50000325000333305311151'
+                },
+                'AiPlayerbot.PremadeSpecLink.3.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-005305101-5000032500033330531' if patch_id < 12 else '-00530511102-50000325000333305311151'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.0': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.4.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '005303005350102501-005005001-502' if patch_id < 12 else '005303105350102521131-005005'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '005303005350102501-005005001-502' if patch_id < 12 else '005303105350102521131-005005003-502'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.4.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '00532000531-0252051000035015201' if patch_id < 12 else '0053-02520510000350152231051'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '00532000531-0252051000035015201' if patch_id < 12 else '0053200053-02520510000350152231051'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.4.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '3053031-3-5320232030300121051' if patch_id < 12 else '302-3-51202320303001213501351'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '3053031-3-5320232030300121051' if patch_id < 12 else '3053031-3-51202320303001213501351'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.4.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '005303005350102501-005005001-502' if patch_id < 12 else '005303105350102521131-005005'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '005303005350102501-005005001-502' if patch_id < 12 else '005303105350102521131-005005003-502'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.4.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '00532000531-0252051000035015201' if patch_id < 12 else '0053-02520510000350152231051'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '00532000531-0252051000035015201' if patch_id < 12 else '0053200053-02520510000350152231051'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.4.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '3053031-3-5320232030300121051' if patch_id < 12 else '302-3-51202320303001213501351'
+                },
+                'AiPlayerbot.PremadeSpecLink.4.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '3053031-3-5320232030300121051' if patch_id < 12 else '3053031-3-51202320303001213501351'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.0': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.5.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '050320313030051231-2055100303' if patch_id < 12 else '0503203130302512301331-2053'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '050320313030051231-2055100303' if patch_id < 12 else '0523203130302512301331-2055000303'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.5.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '0503203-23505103030215251' if patch_id < 12 else '05-235051030302152530051'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '0503203-23505103030215251' if patch_id < 12 else '050320302-235051030302152530051'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.5.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '05032031--3250230512230102231' if patch_id < 12 else '04--3250230512230103231531'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '05032031--3250230512230102231' if patch_id < 12 else '050032031--3250230512230103231531'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.5.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '050320313030051231-2055100303' if patch_id < 12 else '0503203130302512301331-2053'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '050320313030051231-2055100303' if patch_id < 12 else '0523203130302512301331-2055000303'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.5.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '0503203-23505103030215251' if patch_id < 12 else '05-235051030302152530051'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '0503203-23505103030215251' if patch_id < 12 else '050320302-235051030302152530051'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.5.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '05032031--3250230512230102231' if patch_id < 12 else '04--3250230512230103231531'
+                },
+                'AiPlayerbot.PremadeSpecLink.5.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '05032031--3250230512230102231' if patch_id < 12 else '050032031--3250230512230103231531'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.0': {
                     'enabled': patch_id < 17,
@@ -1322,105 +1565,321 @@ def UpdateConfigFiles():
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.7.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '3530001523213351-005050031' if patch_id < 12 else '2530001523213351331-00503'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '3530001523213351-005050031' if patch_id < 12 else '5530011523213351331-0050531'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.7.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '053030051-3020503300502133301' if patch_id < 12 else '05302-30305033005021333031111'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '053030051-3020503300502133301' if patch_id < 12 else '053030052-30505033005021333031111'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.7.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-0050503-0500533133531051' if patch_id < 12 else '-0050103-05035331335010510301'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-0050503-0500533133531051' if patch_id < 12 else '0050523-05235331335010510321'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.7.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '3530001523213351-005050031' if patch_id < 12 else '2530001523213351331-00503'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '3530001523213351-005050031' if patch_id < 12 else '5530011523213351331-0050531'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.7.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '053030051-3020503300502133301' if patch_id < 12 else '05302-30305033005021333031111'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '053030051-3020503300502133301' if patch_id < 12 else '053030052-30505033005021333031111'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.7.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-0050503-0500533133531051' if patch_id < 12 else '-0050103-05035331335010510301'
+                },
+                'AiPlayerbot.PremadeSpecLink.7.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-0050503-0500533133531051' if patch_id < 12 else '0050523-05235331335010510321'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.0': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.8.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235005030100330150321-03-023023001' if patch_id < 12 else '233005030100030150323125-03-023001'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235005030100330150321-03-023023001' if patch_id < 12 else '235005030100330150323125-03-023023001'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.8.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '23002-0055032012303330053123'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '2300230331-0055032012303330053123'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.8.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '23000503310003--0533030310233100031' if patch_id < 12 else '230005--05330303102331000321521'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '23000503310003--0533030310233100031' if patch_id < 12 else '23000503310003--05330303102331000321521'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.8.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '-2305030012303331053123-023003'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '-2305030012303331053123-033323031'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.8.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235005030100330150321-03-023023001' if patch_id < 12 else '233005030100030150323125-03-023001'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235005030100330150321-03-023023001' if patch_id < 12 else '235005030100330150323125-03-023023001'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.8.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '23002-0055032012303330053123'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '2300230331-0055032012303330053123'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.6': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.8.6.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '23000503310003--0533030310233100031' if patch_id < 12 else '230005--05330303102331000321521'
+                },
+                'AiPlayerbot.PremadeSpecLink.8.6.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '23000503310003--0533030310233100031' if patch_id < 12 else '23000503310003--05330303102331000321521'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.9.0': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310035100550031--55'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.0.70': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310235102551031--55000005'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310235102551031--55000005'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.9.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '-0032033011352025301351-53'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.1.70': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '03-0032033011352025301351-55000005'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '03-0032033011352025301351-55000005'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.9.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '025-03310030003-05203205220031051' if patch_id < 12 else '-032-052032052203310513351'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '025-03310030003-05203205220031051' if patch_id < 12 else '005-0331003-052032052203310513351'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.9.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310035100550031--55'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310235102551031--55000005'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.9.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '-0032033011352025301351-53'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '03-0032033011352025301351-55000005'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.9.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '025-03310030003-05203205220031051' if patch_id < 12 else '-032-052032052203310513351'
+                },
+                'AiPlayerbot.PremadeSpecLink.9.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '025-03310030003-05203205220031051' if patch_id < 12 else '005-0331003-052032052203310513351'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.11.0': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.0.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '503210312533130321--205003012' if patch_id < 12 else '503200312533133201351--203'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.0.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '503210312533130321--205003012' if patch_id < 12 else '503200312533133221351--205003012'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.1': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.11.1.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-5332321323220103531-205' if patch_id < 12 else '-50323213232201035310001-2034'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.1.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-5332321323220103531-205' if patch_id < 12 else '-50323213232221035312001-20550201'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.11.2': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.2.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '05320001--23003331253151251' if patch_id < 12 else '051--230033312031502531251'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.2.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '05320001--23003331253151251' if patch_id < 12 else '05320001--230033312431502531351'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.3': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.11.3.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-5532020323220100531-205003002' if patch_id < 12 else '-51320203232201005312031-203203'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.3.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-5532020323220100531-205003002' if patch_id < 12 else '-55320203232201005312031-203503012'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.11.4': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.4.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '503210312533130321--205003012' if patch_id < 12 else '503200312533133201351--203'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.4.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '503210312533130321--205003012' if patch_id < 12 else '503200312533133221351--205003012'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.5': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
                 },
+                'AiPlayerbot.PremadeSpecLink.11.5.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-5532020323220100531-205003002' if patch_id < 12 else '-51320203232201005312031-203203'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.5.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '-5532020323220100531-205003002' if patch_id < 12 else '-55320203232201005312031-203503012'
+                },
                 'AiPlayerbot.PremadeSpecGlyph.11.6': {
                     'enabled': patch_id < 17,
                     'value': '0,0,0,0,0,0'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.6.60': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '05320001--23003331253151251' if patch_id < 12 else '051--230033312031502531251'
+                },
+                'AiPlayerbot.PremadeSpecLink.11.6.80': {
+                    'enabled': patch_id < 17 and use_custom_talent_trees,
+                    'value': '05320001--23003331253151251' if patch_id < 12 else '05320001--230033312431502531351'
                 }
             }
         },
