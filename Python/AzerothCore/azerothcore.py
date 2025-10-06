@@ -1037,6 +1037,62 @@ def UpdateConfigFiles():
                     'enabled': True,
                     'value': 0
                 },
+                'AiPlayerbot.MinBotsForGreaterBuff': {
+                    'enabled': True,
+                    'value': 1
+                },
+                'AiPlayerbot.AltMaintenanceAmmo': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceFood': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceReagents': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceBags': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceMounts': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceSkills': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceClassSpells': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceAvailableSpells': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceSpecialSpells': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceGemsEnchants': {
+                    'enabled': patch_id >= 17,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceReputation': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceAttunementQuests': {
+                    'enabled': True,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceKeyring': {
+                    'enabled': True,
+                    'value': 0
+                },
                 'AiPlayerbot.AutoGearQualityLimit': {
                     'enabled': True,
                     'value': 5
@@ -1595,7 +1651,7 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.PremadeSpecLink.7.2.80': {
                     'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0050503-0500533133531051' if patch_id < 12 else '0050523-05235331335010510321'
+                    'value': '-0050503-0500533133531051' if patch_id < 12 else '-0050523-05235331335010510321'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.3': {
                     'enabled': patch_id < 17,
