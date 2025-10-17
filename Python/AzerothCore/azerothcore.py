@@ -123,7 +123,10 @@ nested_options = {
     },
     'world': {
         'address': '127.0.0.1',
-        'data_directory': '.',
+        'data': {
+            'directory': '.',
+            'use_pre_extracted_files': True
+        },
         'game_type': 0,
         'infinite_ammo': False,
         'local_address': '127.0.0.1',
@@ -443,7 +446,7 @@ def CopyRequiredLibraries():
     print(f'{colorama.Fore.GREEN}Finished copying required libraries after {FormattedTime(int(time.time() - function_start_time))}...{colorama.Style.RESET_ALL}')
 
 def GetClientDataPath():
-    data_dir = options['world.data_directory']
+    data_dir = options['world.data.directory']
     binary_path = f'{cwd}/source/bin/RelWithDebInfo' if os.name == 'nt' else f'{cwd}/source/bin'
     return binary_path if data_dir == '.' else f'{binary_path}/{data_dir[2:]}' if data_dir.startswith('./') else data_dir
 
@@ -451,6 +454,11 @@ def DownloadClientDataFiles():
     if not options['build.world']:
         if sys.argv[1].lower() == 'data':
             print(f'{colorama.Fore.RED}Skipped because world is not enabled{colorama.Style.RESET_ALL}')
+        return
+
+    if not options['world.data.use_pre_extracted_files']:
+        if sys.argv[1].lower() == 'data':
+            print(f'{colorama.Fore.RED}Skipped because use of pre-extracted data is disabled{colorama.Style.RESET_ALL}')
         return
 
     print(f'{colorama.Fore.GREEN}Downloading client data files...{colorama.Style.RESET_ALL}')
@@ -1104,6 +1112,10 @@ def UpdateConfigFiles():
                 'AiPlayerbot.DisableRandomLevels': {
                     'enabled': not options['module.playerbots_level_brackets.enabled'],
                     'value': 1
+                },
+                'AiPlayerbot.RandombotStartingLevel': {
+                    'enabled': not options['module.playerbots_level_brackets.enabled'],
+                    'value': 59 if patch_id < 12 else 69 if patch_id < 17 else 79
                 },
                 'AiPlayerbot.RandomBotMaxLevel': {
                     'enabled': True,
@@ -2224,9 +2236,9 @@ if len(sys.argv) < 2:
     PrintAvailableArguments()
 
 commands = {
-    'install': [DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries],
-    'setup': [DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries],
-    'update': [DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries],
+    'install': [StopServer, DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries],
+    'setup': [StopServer, DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries],
+    'update': [StopServer, DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, CopyRequiredLibraries],
     'data': [DownloadClientDataFiles],
     'db': [ImportDatabaseFiles],
     'database': [ImportDatabaseFiles],
