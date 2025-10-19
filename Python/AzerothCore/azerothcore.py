@@ -552,7 +552,8 @@ def ImportDatabaseFiles():
             [options['build.world'], f'{cwd}/source/data/sql/base/db_characters', None],
             [options['build.world'], f'{cwd}/source/data/sql/updates/db_characters', 'RELEASED'],
             [options['build.world'], f'{cwd}/source/data/sql/custom/db_characters', 'CUSTOM'],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/characters', 'MODULE'],
+            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/characters/base', None],
+            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/characters/updates', 'RELEASED'],
             [options['build.world'], f'{cwd}/sql/characters', None]
         ],
         options['mysql.database.playerbots']: [
