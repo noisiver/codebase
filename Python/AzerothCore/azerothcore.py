@@ -470,8 +470,7 @@ def DownloadClientDataFiles():
     local_version = 0
     if os.path.isfile(version_file):
         with open(version_file, 'r') as f:
-            content = f.read()
-            local_version = int(content) if content.isnumeric() else 0
+            local_version = f.read().strip()
     if any(not os.path.exists(f'{data_path}/{d}') for d in dirs):
         local_version = 0
 
