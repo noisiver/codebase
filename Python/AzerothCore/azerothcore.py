@@ -2094,6 +2094,11 @@ def UpdateConfigFiles():
                 }
             }
         },
+        'modules/mod_weekendbonus.conf': {
+            'enabled': options['build.world'] and options['module.weekendbonus.enabled'],
+            'options': {
+            }
+        }
     }
 
     for config_file, config_data in config_values.items():
