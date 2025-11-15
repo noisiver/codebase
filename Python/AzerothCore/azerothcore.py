@@ -303,7 +303,7 @@ def DownloadSourceCode():
             ('mod-fixes', 'noisiver/mod-fixes', 'master', options['module.fixes.enabled']),
             ('mod-gamemaster', 'noisiver/mod-gamemaster', 'master', options['module.gamemaster.enabled']),
             ('mod-junk-to-gold', 'noisiver/mod-junk-to-gold', 'master', options['module.junktogold.enabled']),
-            ('mod-learnspells', 'noisiver/mod-learnspells', 'progression', options['module.learnspells.enabled']),
+            ('mod-learnspells', 'noisiver/mod-learnspells', 'master', options['module.learnspells.enabled']),
             ('mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled']),
             ('mod-player-bot-level-brackets', 'DustinHendrickson/mod-player-bot-level-brackets', 'main', options['module.playerbots.enabled'] and options['module.playerbots_level_brackets.enabled']),
             ('mod-progression', 'noisiver/mod-progression', 'master', options['module.progression.enabled']),
@@ -566,6 +566,7 @@ def ImportDatabaseFiles():
             [options['build.world'], f'{cwd}/source/data/sql/custom/db_world', 'CUSTOM'],
             [options['build.world'] and options['module.assistant.enabled'], f'{cwd}/source/modules/mod-assistant/data/sql/world', 'MODULE'],
             [options['build.world'] and options['module.fixes.enabled'], f'{cwd}/source/modules/mod-fixes/data/sql/world', 'MODULE'],
+            [options['build.world'] and options['module.learnspells.enabled'], f'{cwd}/source/modules/mod-learnspells/data/sql/world', 'MODULE'],
             [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/world/base', 'MODULE'],
             [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/world/updates', 'RELEASED'],
             [options['build.world'] and options['module.progression.enabled'], f'{cwd}/source/modules/mod-progression/src/patch_00-1_1/sql', None if options['module.progression.reset'] else 'MODULE'],
@@ -821,6 +822,10 @@ def UpdateConfigFiles():
                     'enabled': True,
                     'value': 3
                 },
+                'HeroicCharactersPerRealm': {
+                    'enabled': True,
+                    'value': 10
+                },
                 'CharacterCreating.MinLevelForHeroicCharacter': {
                     'enabled': True,
                     'value': 0
@@ -1005,11 +1010,11 @@ def UpdateConfigFiles():
                     'value': 1
                 },
                 'LearnSpells.Riding.Journeyman': {
-                    'enabled': patch_id >= 12,
+                    'enabled': True,
                     'value': 1
                 },
                 'LearnSpells.Riding.Expert': {
-                    'enabled': patch_id >= 17,
+                    'enabled': True,
                     'value': 1
                 }
             }
