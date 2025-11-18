@@ -128,6 +128,9 @@ nested_options = {
             'use_pre_extracted_files': True
         },
         'game_type': 0,
+        'rate': {
+            'experience': 1.0
+        },
         'infinite_ammo': False,
         'local_address': '127.0.0.1',
         'map_update_threads': -1,
@@ -149,8 +152,8 @@ def ReportError(message):
     if options.get('telegram.chat_id', 0) and options.get('telegram.token', 0):
         try:
             requests.get(
-                f'https://api.telegram.org/bot{options['telegram.token']}/sendMessage'
-                f'?chat_id={options['telegram.chat_id']}&text=[{options['world.name']} (id: {realm_id})]: {message}'
+                f'https://api.telegram.org/bot{options.get('telegram.token', 0)}/sendMessage'
+                f'?chat_id={options.get('telegram.chat_id', 0)}&text=[{options.get('world.name', 'AzerothCore')} (id: {realm_id})]: {message}'
             ).json()
         except:
             pass
@@ -249,11 +252,11 @@ def LoadOptionsFromDatabase():
 
 def CreateBaseFolders():
     folders = [
-        (options['build.world'], 'dbc'),
+        (options.get('build.world', True), 'dbc'),
         (True, 'logs'),
         (True, 'sql/auth'),
-        (options['build.world'], 'sql/characters'),
-        (options['build.world'], 'sql/world')
+        (options.get('build.world', True), 'sql/characters'),
+        (options.get('build.world', True), 'sql/world')
     ]
 
     created = False
@@ -277,7 +280,7 @@ class Progress(git.remote.RemoteProgress):
     def update(self, *args): print(self._cur_line)
 
 def DownloadOrUpdateSourceCode(repo, path, branch, name):
-    url = f'{'git@github.com:' if options['git.use_ssh'] else 'https://github.com/'}{repo}'
+    url = f'{'git@github.com:' if options.get('git.use_ssh', False) else 'https://github.com/'}{repo}'
     try:
         if not os.path.exists(path):
             print(f'{colorama.Fore.YELLOW}Downloading the source code for {name}{colorama.Style.RESET_ALL}')
@@ -293,23 +296,23 @@ def DownloadSourceCode():
     print(f'{colorama.Fore.GREEN}Downloading source code...{colorama.Style.RESET_ALL}')
     function_start_time = time.time()
 
-    DownloadOrUpdateSourceCode(options['git.repository'], os.path.join(cwd, 'source'), options['git.branch'], 'azerothcore')
+    DownloadOrUpdateSourceCode(options.get('git.repository', 'azerothcore/azerothcore-wotlk'), os.path.join(cwd, 'source'), options.get('git.branch', 'master'), 'azerothcore')
 
-    if options['build.world']:
+    if options.get('build.world', True):
         modules = [
-            ('mod-ah-bot', 'NathanHandley/mod-ah-bot', 'master', options['module.ah_bot.enabled']),
-            ('mod-assistant', 'noisiver/mod-assistant', 'master', options['module.assistant.enabled']),
-            ('mod-dungeoneer', 'noisiver/mod-dungeoneer', 'master', options['module.dungeoneer.enabled']),
-            ('mod-fixes', 'noisiver/mod-fixes', 'master', options['module.fixes.enabled']),
-            ('mod-gamemaster', 'noisiver/mod-gamemaster', 'master', options['module.gamemaster.enabled']),
-            ('mod-junk-to-gold', 'noisiver/mod-junk-to-gold', 'master', options['module.junktogold.enabled']),
-            ('mod-learnspells', 'noisiver/mod-learnspells', 'master', options['module.learnspells.enabled']),
-            ('mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options['module.playerbots.enabled']),
-            ('mod-player-bot-level-brackets', 'DustinHendrickson/mod-player-bot-level-brackets', 'main', options['module.playerbots.enabled'] and options['module.playerbots_level_brackets.enabled']),
-            ('mod-progression', 'noisiver/mod-progression', 'master', options['module.progression.enabled']),
-            ('mod-skip-dk-starting-area', 'azerothcore/mod-skip-dk-starting-area', 'master', options['module.skip_dk_starting_area.enabled'] and int(options['module.progression.patch']) >= 17),
-            ('mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', options['module.stop_killing_them.enabled'] and int(options['module.progression.patch']) >= 12),
-            ('mod-weekendbonus', 'noisiver/mod-weekendbonus', 'master', options['module.weekendbonus.enabled'])
+            ('mod-ah-bot', 'NathanHandley/mod-ah-bot', 'master', options.get('module.ah_bot.enabled', False)),
+            ('mod-assistant', 'noisiver/mod-assistant', 'master', options.get('module.assistant.enabled', False)),
+            ('mod-dungeoneer', 'noisiver/mod-dungeoneer', 'master', options.get('module.dungeoneer.enabled', False)),
+            ('mod-fixes', 'noisiver/mod-fixes', 'master', options.get('module.fixes.enabled', False)),
+            ('mod-gamemaster', 'noisiver/mod-gamemaster', 'master', options.get('module.gamemaster.enabled', False)),
+            ('mod-junk-to-gold', 'noisiver/mod-junk-to-gold', 'master', options.get('module.junktogold.enabled', False)),
+            ('mod-learnspells', 'noisiver/mod-learnspells', 'master', options.get('module.learnspells.enabled', False)),
+            ('mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options.get('module.playerbots.enabled', False)),
+            ('mod-player-bot-level-brackets', 'DustinHendrickson/mod-player-bot-level-brackets', 'main', options.get('module.playerbots.enabled', False) and options.get('module.playerbots_level_brackets.enabled', False)),
+            ('mod-progression', 'noisiver/mod-progression', 'master', options.get('module.progression.enabled', False)),
+            ('mod-skip-dk-starting-area', 'azerothcore/mod-skip-dk-starting-area', 'master', options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.patch', 21)) >= 17),
+            ('mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', options.get('module.stop_killing_them.enabled', False) and int(options.get('module.progression.patch', 21)) >= 12),
+            ('mod-weekendbonus', 'noisiver/mod-weekendbonus', 'master', options.get('module.weekendbonus.enabled', False))
         ]
 
         [DownloadOrUpdateSourceCode(repo, os.path.join(cwd, 'source/modules', name), branch, name)
@@ -321,7 +324,7 @@ def GenerateProject():
     print(f'{colorama.Fore.GREEN}Generating project files...{colorama.Style.RESET_ALL}')
     function_start_time = time.time()
 
-    apps = 'all' if options['build.auth'] and options['build.world'] else 'auth-only' if options['build.auth'] else 'world-only'
+    apps = 'all' if options.get('build.auth', True) and options.get('build.world', True) else 'auth-only' if options.get('build.auth', True) else 'world-only'
     cmake_cmd = f'{windows_paths['cmake']}/bin/cmake.exe' if os.name == 'nt' else 'cmake'
 
     args = [
@@ -358,8 +361,8 @@ def CompileSourceCode():
     is_windows = os.name == 'nt'
 
     if is_windows:
-        target = ('authserver' if options['build.auth'] and not options['build.world'] else
-                  'worldserver' if not options['build.auth'] and options['build.world'] else
+        target = ('authserver' if options.get('build.auth', True) and not options.get('build.world', True) else
+                  'worldserver' if not options.get('build.auth', True) and options.get('build.world', True) else
                   'ALL_BUILD')
         build_cmd, build_args, clean_args = f'{windows_paths['msbuild']}/MSBuild.exe', [f'{cwd}/source/build/AzerothCore.sln', '/p:Configuration=RelWithDebInfo', '/p:WarningLevel=0', f'/target:{target}'], [f'{cwd}/source/build/AzerothCore.sln', '/t:Clean']
     else:
@@ -385,20 +388,20 @@ def CreateRequiredScripts():
     function_start_time = time.time()
 
     scripts = [
-        [f'auth.{'bat' if os.name == 'nt' else 'sh'}', options['build.auth'],
+        [f'auth.{'bat' if os.name == 'nt' else 'sh'}', options.get('build.auth', True),
          cwd if os.name == 'nt' else f'{cwd}/source/bin',
          '@echo off\ncd source/build/bin/RelWithDebInfo\n:auth\n    authserver.exe\ngoto auth\n' if os.name == 'nt' else
          '#!/bin/bash\nwhile :; do\n    ./authserver\n    sleep 5\ndone\n'],
-        [f'world.{'bat' if os.name == 'nt' else 'sh'}', options['build.world'],
+        [f'world.{'bat' if os.name == 'nt' else 'sh'}', options.get('build.world', True),
          cwd if os.name == 'nt' else f'{cwd}/source/bin',
          '@echo off\ncd source/build/bin/RelWithDebInfo\n:world\n    worldserver.exe\n    timeout 5\ngoto world\n' if os.name == 'nt' else
          '#!/bin/bash\nwhile :; do\n    ./worldserver\n    [[ $? == 0 ]] && break\n    sleep 5\ndone\n'],
         ['start.sh', os.name != 'nt', f'{cwd}/source/bin',
-         f'#!/bin/bash\n{'screen -AmdS auth ./auth.sh\n' if options['build.auth'] else ''}'
-         f'{f'time=$(date +%s)\nscreen -L -Logfile $time.log -AmdS world-{realm_id} ./world.sh\n' if options['build.world'] else ''}'],
+         f'#!/bin/bash\n{'screen -AmdS auth ./auth.sh\n' if options.get('build.auth', True) else ''}'
+         f'{f'time=$(date +%s)\nscreen -L -Logfile $time.log -AmdS world-{realm_id} ./world.sh\n' if options.get('build.world', True) else ''}'],
         ['stop.sh', os.name != 'nt', f'{cwd}/source/bin',
-         f'#!/bin/bash\n{'screen -X -S auth quit\n' if options['build.auth'] else ''}'
-         f'{f'screen -X -S world-{realm_id} quit\n' if options['build.world'] else ''}']
+         f'#!/bin/bash\n{'screen -X -S auth quit\n' if options.get('build.auth', True) else ''}'
+         f'{f'screen -X -S world-{realm_id} quit\n' if options.get('build.world', True) else ''}']
     ]
 
     for name, enabled, path, text in scripts:
@@ -446,17 +449,17 @@ def CopyRequiredLibraries():
     print(f'{colorama.Fore.GREEN}Finished copying required libraries after {FormattedTime(int(time.time() - function_start_time))}...{colorama.Style.RESET_ALL}')
 
 def GetClientDataPath():
-    data_dir = options['world.data.directory']
+    data_dir = options.get('world.data.directory', '.')
     binary_path = f'{cwd}/source/bin/RelWithDebInfo' if os.name == 'nt' else f'{cwd}/source/bin'
     return binary_path if data_dir == '.' else f'{binary_path}/{data_dir[2:]}' if data_dir.startswith('./') else data_dir
 
 def DownloadClientDataFiles():
-    if not options['build.world']:
+    if not options.get('build.world', True):
         if sys.argv[1].lower() == 'data':
             print(f'{colorama.Fore.RED}Skipped because world is not enabled{colorama.Style.RESET_ALL}')
         return
 
-    if not options['world.data.use_pre_extracted_files']:
+    if not options.get('world.data.use_pre_extracted_files', True):
         if sys.argv[1].lower() == 'data':
             print(f'{colorama.Fore.RED}Skipped because use of pre-extracted data is disabled{colorama.Style.RESET_ALL}')
         return
@@ -508,7 +511,7 @@ def DownloadClientDataFiles():
     print(f'{colorama.Fore.GREEN}Finished downloading client data files after {FormattedTime(int(time.time() - function_start_time))}...{colorama.Style.RESET_ALL}')
 
 def CopyDBCFiles():
-    if not options['build.world']:
+    if not options.get('build.world', True):
         if sys.argv[1].lower() == 'dbc':
             print(f'{colorama.Fore.RED}Skipped because world is not enabled{colorama.Style.RESET_ALL}')
         return
@@ -547,52 +550,52 @@ def ImportDatabaseFiles():
             [True, f'{cwd}/source/data/sql/custom/db_auth', 'CUSTOM'],
             [True, f'{cwd}/sql/auth', None]
         ],
-        options['mysql.database.characters']: [
-            [options['build.world'], f'{cwd}/source/data/sql/base/db_characters', None],
-            [options['build.world'], f'{cwd}/source/data/sql/updates/db_characters', 'RELEASED'],
-            [options['build.world'], f'{cwd}/source/data/sql/custom/db_characters', 'CUSTOM'],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/characters/base', None],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/characters/updates', 'RELEASED'],
-            [options['build.world'], f'{cwd}/sql/characters', None]
+        options.get('mysql.database.characters', 'acore_characters'): [
+            [options.get('build.world', True), f'{cwd}/source/data/sql/base/db_characters', None],
+            [options.get('build.world', True), f'{cwd}/source/data/sql/updates/db_characters', 'RELEASED'],
+            [options.get('build.world', True), f'{cwd}/source/data/sql/custom/db_characters', 'CUSTOM'],
+            [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/characters/base', None],
+            [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/characters/updates', 'RELEASED'],
+            [options.get('build.world', True), f'{cwd}/sql/characters', None]
         ],
-        options['mysql.database.playerbots']: [
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/base', None],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/updates', 'RELEASED'],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/custom', 'CUSTOM']
+        options.get('mysql.database.playerbots', 'acore_playerbots'): [
+            [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/base', None],
+            [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/updates', 'RELEASED'],
+            [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/playerbots/custom', 'CUSTOM']
         ],
-        options['mysql.database.world']: [
-            [options['build.world'], f'{cwd}/source/data/sql/base/db_world', None],
-            [options['build.world'], f'{cwd}/source/data/sql/updates/db_world', 'RELEASED'],
-            [options['build.world'], f'{cwd}/source/data/sql/custom/db_world', 'CUSTOM'],
-            [options['build.world'] and options['module.assistant.enabled'], f'{cwd}/source/modules/mod-assistant/data/sql/world', 'MODULE'],
-            [options['build.world'] and options['module.fixes.enabled'], f'{cwd}/source/modules/mod-fixes/data/sql/world', 'MODULE'],
-            [options['build.world'] and options['module.learnspells.enabled'], f'{cwd}/source/modules/mod-learnspells/data/sql/world', 'MODULE'],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/world/base', 'MODULE'],
-            [options['build.world'] and options['module.playerbots.enabled'], f'{cwd}/source/modules/mod-playerbots/data/sql/world/updates', 'RELEASED'],
-            [options['build.world'] and options['module.progression.enabled'], f'{cwd}/source/modules/mod-progression/src/patch_00-1_1/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 1, f'{cwd}/source/modules/mod-progression/src/patch_01-1_2/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 2, f'{cwd}/source/modules/mod-progression/src/patch_02-1_3/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 3, f'{cwd}/source/modules/mod-progression/src/patch_03-1_4/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 4, f'{cwd}/source/modules/mod-progression/src/patch_04-1_5/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 5, f'{cwd}/source/modules/mod-progression/src/patch_05-1_6/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 6, f'{cwd}/source/modules/mod-progression/src/patch_06-1_7/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 7, f'{cwd}/source/modules/mod-progression/src/patch_07-1_8/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 8, f'{cwd}/source/modules/mod-progression/src/patch_08-1_9/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 9, f'{cwd}/source/modules/mod-progression/src/patch_09-1_10/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 10, f'{cwd}/source/modules/mod-progression/src/patch_10-1_11/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 11, f'{cwd}/source/modules/mod-progression/src/patch_11-1_12/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 12, f'{cwd}/source/modules/mod-progression/src/patch_12-2_0/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 13, f'{cwd}/source/modules/mod-progression/src/patch_13-2_1/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 14, f'{cwd}/source/modules/mod-progression/src/patch_14-2_2/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 15, f'{cwd}/source/modules/mod-progression/src/patch_15-2_3/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 16, f'{cwd}/source/modules/mod-progression/src/patch_16-2_4/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 17, f'{cwd}/source/modules/mod-progression/src/patch_17-3_0/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 18, f'{cwd}/source/modules/mod-progression/src/patch_18-3_1/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 19, f'{cwd}/source/modules/mod-progression/src/patch_19-3_2/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 20, f'{cwd}/source/modules/mod-progression/src/patch_20-3_3/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.progression.enabled'] and int(options['module.progression.patch']) >= 21, f'{cwd}/source/modules/mod-progression/src/patch_21-3_3_5/sql', None if options['module.progression.reset'] else 'MODULE'],
-            [options['build.world'] and options['module.skip_dk_starting_area.enabled'] and int(options['module.progression.patch']) >= 17, f'{cwd}/source/modules/mod-skip-dk-starting-area/data/sql/db-world', 'MODULE'],
-            [options['build.world'], f'{cwd}/sql/world', None]
+        options.get('mysql.database.world', 'acore_world'): [
+            [options.get('build.world', True), f'{cwd}/source/data/sql/base/db_world', None],
+            [options.get('build.world', True), f'{cwd}/source/data/sql/updates/db_world', 'RELEASED'],
+            [options.get('build.world', True), f'{cwd}/source/data/sql/custom/db_world', 'CUSTOM'],
+            [options.get('build.world', True) and options.get('module.assistant.enabled', False), f'{cwd}/source/modules/mod-assistant/data/sql/world', 'MODULE'],
+            [options.get('build.world', True) and options.get('module.fixes.enabled', False), f'{cwd}/source/modules/mod-fixes/data/sql/world', 'MODULE'],
+            [options.get('build.world', True) and options.get('module.learnspells.enabled', False), f'{cwd}/source/modules/mod-learnspells/data/sql/world', 'MODULE'],
+            [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/world/base', 'MODULE'],
+            [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/world/updates', 'RELEASED'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False), f'{cwd}/source/modules/mod-progression/src/patch_00-1_1/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 1, f'{cwd}/source/modules/mod-progression/src/patch_01-1_2/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 2, f'{cwd}/source/modules/mod-progression/src/patch_02-1_3/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 3, f'{cwd}/source/modules/mod-progression/src/patch_03-1_4/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 4, f'{cwd}/source/modules/mod-progression/src/patch_04-1_5/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 5, f'{cwd}/source/modules/mod-progression/src/patch_05-1_6/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 6, f'{cwd}/source/modules/mod-progression/src/patch_06-1_7/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 7, f'{cwd}/source/modules/mod-progression/src/patch_07-1_8/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 8, f'{cwd}/source/modules/mod-progression/src/patch_08-1_9/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 9, f'{cwd}/source/modules/mod-progression/src/patch_09-1_10/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 10, f'{cwd}/source/modules/mod-progression/src/patch_10-1_11/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 11, f'{cwd}/source/modules/mod-progression/src/patch_11-1_12/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 12, f'{cwd}/source/modules/mod-progression/src/patch_12-2_0/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 13, f'{cwd}/source/modules/mod-progression/src/patch_13-2_1/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 14, f'{cwd}/source/modules/mod-progression/src/patch_14-2_2/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 15, f'{cwd}/source/modules/mod-progression/src/patch_15-2_3/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 16, f'{cwd}/source/modules/mod-progression/src/patch_16-2_4/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 17, f'{cwd}/source/modules/mod-progression/src/patch_17-3_0/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 18, f'{cwd}/source/modules/mod-progression/src/patch_18-3_1/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 19, f'{cwd}/source/modules/mod-progression/src/patch_19-3_2/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 20, f'{cwd}/source/modules/mod-progression/src/patch_20-3_3/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 21, f'{cwd}/source/modules/mod-progression/src/patch_21-3_3_5/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.patch', 21)) >= 17, f'{cwd}/source/modules/mod-skip-dk-starting-area/data/sql/db-world', 'MODULE'],
+            [options.get('build.world', True), f'{cwd}/sql/world', None]
         ]
     }
 
@@ -658,7 +661,7 @@ def ImportDatabaseFiles():
 
         print(f'{colorama.Fore.MAGENTA}Finished importing database files for {db_name} after {FormattedTime(int(time.time() - section_start))}...{colorama.Style.RESET_ALL}')
 
-    if options['build.world']:
+    if options.get('build.world', True):
         print(f'{colorama.Fore.MAGENTA}Updating realmlist and message of the day...{colorama.Style.RESET_ALL}')
         section_start = time.time()
         try:
@@ -667,11 +670,11 @@ def ImportDatabaseFiles():
                     print(f'{colorama.Fore.YELLOW}Updating realmlist{colorama.Style.RESET_ALL}')
                     cursor.execute(f'DELETE FROM `realmlist` WHERE `id` = %s;', (realm_id,))
                     cursor.execute('INSERT INTO `realmlist` (`id`, `name`, `address`, `localAddress`, `port`) VALUES (%s, %s, %s, %s, %s);',
-                                   (realm_id, options['world.name'], options['world.address'], options['world.local_address'], realm_port))
+                                   (realm_id, options.get('world.name', 'AzerothCore'), options.get('world.address', '127.0.0.1'), options.get('world.local_address', '127.0.0.1'), realm_port))
 
                     print(f'{colorama.Fore.YELLOW}Updating message of the day{colorama.Style.RESET_ALL}')
                     cursor.execute(f'DELETE FROM `motd` WHERE `realmid` = %s;', (realm_id,))
-                    cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (realm_id, f'Welcome to {options['world.name']}'))
+                    cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (realm_id, f'Welcome to {options.get('world.name', 'AzerothCore')}'))
 
                     connect.commit()
         except pymysql.Error:
@@ -688,9 +691,9 @@ def UpdateConfigFiles():
     print(f'{colorama.Fore.GREEN}Updating config files...{colorama.Style.RESET_ALL}')
     function_start_time = time.time()
 
-    map_update_threads = int(options['world.map_update_threads'])
-    patch_id = int(options['module.progression.patch'])
-    random_bots_maximum = int(options['module.playerbots.random_bots.maximum'])
+    map_update_threads = int(options.get('world.map_update_threads', '-1'))
+    patch_id = int(options.get('module.progression.patch', 21))
+    random_bots_maximum = int(options.get('module.playerbots.random_bots.maximum', 50))
     mysql_hostname = mysql_config['hostname']
     mysql_port = mysql_config['port']
     mysql_username = mysql_config['username']
@@ -699,7 +702,7 @@ def UpdateConfigFiles():
 
     config_values = {
         'authserver.conf': {
-            'enabled': options['build.auth'],
+            'enabled': options.get('build.auth', True),
             'options': {
                 'LoginDatabaseInfo': {
                     'enabled': True,
@@ -716,7 +719,7 @@ def UpdateConfigFiles():
             }
         },
         'worldserver.conf': {
-            'enabled': options['build.world'],
+            'enabled': options.get('build.world', True),
             'options': {
                 'RealmID': {
                     'enabled': True,
@@ -732,11 +735,11 @@ def UpdateConfigFiles():
                 },
                 'WorldDatabaseInfo': {
                     'enabled': True,
-                    'value': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['mysql.database.world']}"'
+                    'value': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options.get('mysql.database.world', 'acore_world')}"'
                 },
                 'CharacterDatabaseInfo': {
                     'enabled': True,
-                    'value': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['mysql.database.characters']}"'
+                    'value': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options.get('mysql.database.characters', 'acore_characters')}"'
                 },
                 'LoginDatabase.SynchThreads': {
                     'enabled': True,
@@ -772,11 +775,11 @@ def UpdateConfigFiles():
                 },
                 'GameType': {
                     'enabled': True,
-                    'value': options['world.game_type']
+                    'value': options.get('world.game_type', 0)
                 },
                 'RealmZone': {
                     'enabled': True,
-                    'value': options['world.realm_zone']
+                    'value': options.get('world.realm_zone', 1)
                 },
                 'MapUpdateInterval': {
                     'enabled': True,
@@ -787,7 +790,7 @@ def UpdateConfigFiles():
                     'value': multiprocessing.cpu_count() if map_update_threads == -1 or map_update_threads == 0 else map_update_threads
                 },
                 'PreloadAllNonInstancedMapGrids': {
-                    'enabled': options['world.preload_grids'],
+                    'enabled': options.get('world.preload_grids', False),
                     'value': 1
                 },
                 'GM.LoginState': {
@@ -867,29 +870,49 @@ def UpdateConfigFiles():
                     'value': 0
                 },
                 'InfiniteAmmo.Enabled': {
-                    'enabled': options['world.infinite_ammo'],
+                    'enabled': options.get('world.infinite_ammo', False),
                     'value': 1
                 },
+                'Rate.XP.Kill': {
+                    'enabled': True,
+                    'value': options.get('world.rate.experience', 1.0)
+                },
+                'Rate.XP.Quest': {
+                    'enabled': True,
+                    'value': options.get('world.rate.experience', 1.0)
+                },
+                'Rate.XP.Quest.DF': {
+                    'enabled': True,
+                    'value': options.get('world.rate.experience', 1.0)
+                },
+                'Rate.XP.Explore': {
+                    'enabled': True,
+                    'value': options.get('world.rate.experience', 1.0)
+                },
+                'Rate.XP.Pet': {
+                    'enabled': True,
+                    'value': options.get('world.rate.experience', 1.0)
+                },
                 'Warden.Enabled': {
-                    'enabled': not options['world.warden'],
+                    'enabled': not options.get('world.warden', True),
                     'value': 0
                 }
             }
         },
         'modules/mod_ahbot.conf': {
-            'enabled': options['build.world'] and options['module.ah_bot.enabled'],
+            'enabled': options.get('build.world', True) and options.get('module.ah_bot.enabled', False),
             'options': {
                 'AuctionHouseBot.EnableSeller': {
-                    'enabled': options['module.ah_bot.seller.enabled'],
+                    'enabled': options.get('module.ah_bot.seller.enabled', False),
                     'value': 1
                 },
                 'AuctionHouseBot.EnableBuyer': {
-                    'enabled': options['module.ah_bot.buyer.enabled'],
+                    'enabled': options.get('module.ah_bot.buyer.enabled', False),
                     'value': 1
                 },
                 'AuctionHouseBot.GUIDs': {
                     'enabled': True,
-                    'value': options['module.ah_bot.character_guids']
+                    'value': options.get('module.ah_bot.character_guids', 0)
                 },
                 'AuctionHouseBot.ItemsPerCycle': {
                     'enabled': True,
@@ -930,7 +953,7 @@ def UpdateConfigFiles():
             }
         },
         'modules/mod_assistant.conf': {
-            'enabled': options['build.world'] and options['module.assistant.enabled'],
+            'enabled': options.get('build.world', True) and options.get('module.assistant.enabled', False),
             'options': {
                 'Assistant.Heirlooms.Enabled': {
                     'enabled': patch_id < 17,
@@ -999,7 +1022,7 @@ def UpdateConfigFiles():
             }
         },
         'modules/mod_learnspells.conf': {
-            'enabled': options['build.world'] and options['module.learnspells.enabled'],
+            'enabled': options.get('build.world', True) and options.get('module.learnspells.enabled', False),
             'options': {
                 'LearnSpells.Gamemasters': {
                     'enabled': True,
@@ -1020,11 +1043,11 @@ def UpdateConfigFiles():
             }
         },
         'modules/playerbots.conf': {
-            'enabled': options['build.world'] and options['module.playerbots.enabled'],
+            'enabled': options.get('build.world', True) and options.get('module.playerbots.enabled', False),
             'options': {
                 'AiPlayerbot.MinRandomBots': {
                     'enabled': True,
-                    'value': options['module.playerbots.random_bots.minimum']
+                    'value': options.get('module.playerbots.random_bots.minimum', 50)
                 },
                 'AiPlayerbot.MaxRandomBots': {
                     'enabled': True,
@@ -1035,7 +1058,7 @@ def UpdateConfigFiles():
                     'value': int(random_bots_maximum / (9 if patch_id < 17 else 10) + 1)
                 },
                 'AiPlayerbot.DisabledWithoutRealPlayer': {
-                    'enabled': options['module.playerbots.random_bots.only_with_players'],
+                    'enabled': options.get('module.playerbots.random_bots.only_with_players', False),
                     'value': 1
                 },
                 'AiPlayerbot.RandomBotGuildCount': {
@@ -1115,11 +1138,11 @@ def UpdateConfigFiles():
                     'value': 1
                 },
                 'AiPlayerbot.DisableRandomLevels': {
-                    'enabled': not options['module.playerbots_level_brackets.enabled'],
+                    'enabled': not options.get('module.playerbots_level_brackets.enabled', False),
                     'value': 1
                 },
                 'AiPlayerbot.RandombotStartingLevel': {
-                    'enabled': not options['module.playerbots_level_brackets.enabled'],
+                    'enabled': not options.get('module.playerbots_level_brackets.enabled', False),
                     'value': 59 if patch_id < 12 else 69 if patch_id < 17 else 79
                 },
                 'AiPlayerbot.RandomBotMaxLevel': {
@@ -1140,7 +1163,7 @@ def UpdateConfigFiles():
                 },
                 'PlayerbotsDatabaseInfo': {
                     'enabled': True,
-                    'value': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options['mysql.database.playerbots']}"'
+                    'value': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{options.get('mysql.database.playerbots', 'acore_playerbots')}"'
                 },
                 'Playerbots.Updates.EnableDatabases': {
                     'enabled': True,
@@ -1184,10 +1207,10 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.BotActiveAlone': {
                     'enabled': True,
-                    'value': options['module.playerbots.random_bots.active_alone']
+                    'value': options.get('module.playerbots.random_bots.active_alone', 100)
                 },
                 'AiPlayerbot.botActiveAloneSmartScale': {
-                    'enabled': not options['module.playerbots.random_bots.smart_scale'],
+                    'enabled': not options.get('module.playerbots.random_bots.smart_scale', False),
                     'value': 0
                 },
                 'AiPlayerbot.CommandServerPort': {
@@ -1207,11 +1230,11 @@ def UpdateConfigFiles():
                     'value': 0 if patch_id < 12 else 25
                 },
                 'AiPlayerbot.AutoEquipUpgradeLoot': {
-                    'enabled': not options['module.playerbots.auto_equip_upgrades'],
+                    'enabled': not options.get('module.playerbots.auto_equip_upgrades', True),
                     'value': 0
                 },
                 'AiPlayerbot.AutoPickReward': {
-                    'enabled': not options['module.playerbots.auto_select_quest_reward'],
+                    'enabled': not options.get('module.playerbots.auto_select_quest_reward', True),
                     'value': 'no'
                 },
                 'AiPlayerbot.AutoTrainSpells': {
@@ -1219,7 +1242,7 @@ def UpdateConfigFiles():
                     'value': 'no'
                 },
                 'AiPlayerbot.DropObsoleteQuests': {
-                    'enabled': not options['module.playerbots.drop_obsolete_quests'],
+                    'enabled': not options.get('module.playerbots.drop_obsolete_quests', True),
                     'value': 0
                 },
                 'PlayerbotsDatabase.WorkerThreads': {
@@ -1957,10 +1980,10 @@ def UpdateConfigFiles():
             }
         },
         'modules/mod_player_bot_level_brackets.conf': {
-            'enabled': options['build.world'] and options['module.playerbots.enabled'] and options['module.playerbots_level_brackets.enabled'],
+            'enabled': options.get('build.world', True) and options.get('module.playerbots.enabled', False) and options.get('module.playerbots_level_brackets.enabled', False),
             'options': {
                 'BotLevelBrackets.Dynamic.UseDynamicDistribution': {
-                    'enabled': options['module.playerbots_level_brackets.dynamic_distribution'],
+                    'enabled': options.get('module.playerbots_level_brackets.dynamic_distribution', False),
                     'value': 1
                 },
                 'BotLevelBrackets.NumRanges': {
@@ -2058,7 +2081,7 @@ def UpdateConfigFiles():
             }
         },
         'modules/mod_progression.conf': {
-            'enabled': options['build.world'] and options['module.progression.enabled'],
+            'enabled': options.get('build.world', True) and options.get('module.progression.enabled', False),
             'options': {
                 'Progression.Patch': {
                     'enabled': True,
@@ -2066,7 +2089,7 @@ def UpdateConfigFiles():
                 },
                 'Progression.IcecrownCitadel.Aura': {
                     'enabled': True,
-                    'value': options['module.progression.aura']
+                    'value': options.get('module.progression.aura', 4)
                 },
                 'Progression.TradableBindsOnPickup.Enforced': {
                     'enabled': True,
@@ -2082,16 +2105,16 @@ def UpdateConfigFiles():
                 },
                 'Progression.Multiplier.Damage': {
                     'enabled': True,
-                    'value': options['module.progression.multiplier.damage']
+                    'value': options.get('module.progression.multiplier.damage', 0.6)
                 },
                 'Progression.Multiplier.Healing': {
                     'enabled': True,
-                    'value': options['module.progression.multiplier.healing']
+                    'value': options.get('module.progression.multiplier.healing', 0.5)
                 }
             }
         },
         'modules/skip_dk_module.conf': {
-            'enabled': options['build.world'] and options['module.skip_dk_starting_area.enabled'] and patch_id >= 17,
+            'enabled': options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and patch_id >= 17,
             'options': {
                 'Skip.Deathknight.Starter.Announce.enable': {
                     'enabled': True,
@@ -2100,7 +2123,7 @@ def UpdateConfigFiles():
             }
         },
         'modules/mod_weekendbonus.conf': {
-            'enabled': options['build.world'] and options['module.weekendbonus.enabled'],
+            'enabled': options.get('build.world', True) and options.get('module.weekendbonus.enabled', False),
             'options': {
             }
         }
@@ -2141,7 +2164,7 @@ def ResetWorldDatabase():
     print(f'{colorama.Fore.GREEN}Dropping database tables...{colorama.Style.RESET_ALL}')
     start_time = time.time()
 
-    db_name = options['mysql.database.world']
+    db_name = options.get('mysql.database.world', 'acore_world')
 
     try:
         connect = pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=db_name)
@@ -2201,16 +2224,16 @@ def StartServer():
     print(f'{colorama.Fore.GREEN}Starting the server...{colorama.Style.RESET_ALL}')
     function_start_time = time.time()
 
-    auth_needed = options['build.auth'] and not IsScreenActive('auth')
-    world_needed = options['build.world'] and not IsScreenActive(f'world-{realm_id}')
+    auth_needed = options.get('build.auth', True) and not IsScreenActive('auth')
+    world_needed = options.get('build.world', True) and not IsScreenActive(f'world-{realm_id}')
 
     if auth_needed or world_needed:
         StartProcess('start.sh')
 
-        if options['build.auth'] and IsScreenActive('auth'):
+        if options.get('build.auth', True) and IsScreenActive('auth'):
             print(f"{colorama.Fore.YELLOW}To access the authserver screen: screen -r auth{colorama.Style.RESET_ALL}")
 
-        if options['build.world'] and IsScreenActive(f'world-{realm_id}'):
+        if options.get('build.world', True) and IsScreenActive(f'world-{realm_id}'):
             print(f"{colorama.Fore.YELLOW}To access the worldserver screen: screen -r world-{realm_id}{colorama.Style.RESET_ALL}")
     else:
         print(f"{colorama.Fore.RED}The server is already running{colorama.Style.RESET_ALL}")
@@ -2224,8 +2247,8 @@ def StopServer():
     print(f'{colorama.Fore.GREEN}Stopping the server...{colorama.Style.RESET_ALL}')
     function_start_time = time.time()
 
-    auth_running = options['build.auth'] and IsScreenActive('auth')
-    world_running = options['build.world'] and IsScreenActive(f'world-{realm_id}')
+    auth_running = options.get('build.auth', True) and IsScreenActive('auth')
+    world_running = options.get('build.world', True) and IsScreenActive(f'world-{realm_id}')
 
     if auth_running or world_running:
         if world_running:
@@ -2233,8 +2256,8 @@ def StopServer():
             SendShutdown()
             WaitForShutdown()
 
-        auth_running = options['build.auth'] and IsScreenActive('auth')
-        world_running = options['build.world'] and IsScreenActive(f'world-{realm_id}')
+        auth_running = options.get('build.auth', True) and IsScreenActive('auth')
+        world_running = options.get('build.world', True) and IsScreenActive(f'world-{realm_id}')
         if auth_running or world_running:
             StartProcess('stop.sh')
     else:
@@ -2275,7 +2298,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 LoadOptionsFromDatabase()
 
-if not (options['build.auth'] or options['build.world']):
+if not (options.get('build.auth', True) or options.get('build.world', True)):
     print(f'{colorama.Fore.RED}Stopping due to both auth and world being disabled{colorama.Style.RESET_ALL}')
     sys.exit(1)
 
