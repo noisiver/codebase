@@ -1,6 +1,6 @@
 # Linux: apt install -y git screen cmake make gcc clang g++ libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost1.83-all-dev libmysqlclient-dev mysql-client python3-git python3-requests python3-tqdm python3-pymysql python3-colorama
-# wget https://repo.mysql.com/mysql-apt-config_0.8.34-1_all.deb
-# dpkg -i mysql-apt-config_0.8.34-1_all.deb
+# wget https://repo.mysql.com/mysql-apt-config_0.8.36-1_all.deb
+# dpkg -i mysql-apt-config_0.8.36-1_all.deb
 # apt update && apt install -y mysql-server
 
 # Windows: pip install cryptography gitpython pymysql requests tqdm
@@ -364,7 +364,7 @@ def CompileSourceCode():
         target = ('authserver' if options.get('build.auth', True) and not options.get('build.world', True) else
                   'worldserver' if not options.get('build.auth', True) and options.get('build.world', True) else
                   'ALL_BUILD')
-        build_cmd, build_args, clean_args = f'{windows_paths['msbuild']}/MSBuild.exe', [f'{cwd}/source/build/AzerothCore.sln', '/p:Configuration=RelWithDebInfo', '/p:WarningLevel=0', f'/target:{target}'], [f'{cwd}/source/build/AzerothCore.sln', '/t:Clean']
+        build_cmd, build_args, clean_args = f'{windows_paths['msbuild']}/MSBuild.exe', [f'{cwd}/source/build/AzerothCore.slnx', '/p:Configuration=RelWithDebInfo', '/p:WarningLevel=0', f'/target:{target}'], [f'{cwd}/source/build/AzerothCore.sln', '/t:Clean']
     else:
         build_cmd, build_args, clean_args = 'make', ['-j', str(multiprocessing.cpu_count()), 'install'], ['clean']
 
@@ -1089,6 +1089,14 @@ def UpdateConfigFiles():
                     'enabled': True,
                     'value': 0
                 },
+                'AiPlayerbot.AltMaintenanceConsumables': {
+                    'enabled': True,
+                    'value': 1
+                },
+                'AiPlayerbot.AltMaintenancePotions': {
+                    'enabled': True,
+                    'value': 1
+                },
                 'AiPlayerbot.AltMaintenanceBags': {
                     'enabled': True,
                     'value': 0
@@ -1113,7 +1121,23 @@ def UpdateConfigFiles():
                     'enabled': True,
                     'value': 0
                 },
+                'AiPlayerbot.AltMaintenanceTalentTree': {
+                    'enabled': patch_id >= 17,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenanceGlyphs': {
+                    'enabled': True,
+                    'value': 0
+                },
                 'AiPlayerbot.AltMaintenanceGemsEnchants': {
+                    'enabled': patch_id >= 17,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenancePet': {
+                    'enabled': patch_id >= 17,
+                    'value': 0
+                },
+                'AiPlayerbot.AltMaintenancePetTalents': {
                     'enabled': patch_id >= 17,
                     'value': 0
                 },
@@ -1143,7 +1167,7 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.RandombotStartingLevel': {
                     'enabled': not options.get('module.playerbots_level_brackets.enabled', False),
-                    'value': 59 if patch_id < 12 else 69 if patch_id < 17 else 79
+                    'value': 60 if patch_id < 12 else 70 if patch_id < 17 else 80
                 },
                 'AiPlayerbot.RandomBotMaxLevel': {
                     'enabled': True,
