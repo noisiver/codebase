@@ -31,7 +31,6 @@ mysql_config = {
 
 realm_id = 1
 realm_port = 29724 + realm_id
-use_custom_talent_trees = False
 
 options = {}
 nested_options = {
@@ -45,16 +44,6 @@ nested_options = {
         'use_ssh': False
     },
     'module': {
-        'ah_bot': {
-            'enabled': False,
-            'buyer': {
-                'enabled': False
-            },
-            'character_guids': 0,
-            'seller': {
-                'enabled': False
-            }
-        },
         'assistant': {
             'enabled': False
         },
@@ -91,13 +80,9 @@ nested_options = {
             'enabled': False
         },
         'progression': {
-            'aura': 4,
+            'aura': 6,
             'enabled': False,
-            'multiplier': {
-                'damage': 0.6,
-                'healing': 0.5
-            },
-            'patch': 21,
+            'phase': 19,
             'reset': False
         },
         'skip_dk_starting_area': {
@@ -142,7 +127,7 @@ nested_options = {
 }
 
 windows_paths = {
-    'msbuild': 'C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin',
+    'msbuild': 'C:/Program Files/Microsoft Visual Studio/18/Community/MSBuild/Current/Bin',
     'mysql': 'C:/Program Files/MySQL/MySQL Server 8.4',
     'openssl': 'C:/Program Files/OpenSSL-Win64',
     'cmake': 'C:/Program Files/CMake'
@@ -300,7 +285,6 @@ def DownloadSourceCode():
 
     if options.get('build.world', True):
         modules = [
-            ('mod-ah-bot', 'NathanHandley/mod-ah-bot', 'master', options.get('module.ah_bot.enabled', False)),
             ('mod-assistant', 'noisiver/mod-assistant', 'master', options.get('module.assistant.enabled', False)),
             ('mod-dungeoneer', 'noisiver/mod-dungeoneer', 'master', options.get('module.dungeoneer.enabled', False)),
             ('mod-fixes', 'noisiver/mod-fixes', 'master', options.get('module.fixes.enabled', False)),
@@ -309,9 +293,9 @@ def DownloadSourceCode():
             ('mod-learnspells', 'noisiver/mod-learnspells', 'master', options.get('module.learnspells.enabled', False)),
             ('mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options.get('module.playerbots.enabled', False)),
             ('mod-player-bot-level-brackets', 'DustinHendrickson/mod-player-bot-level-brackets', 'main', options.get('module.playerbots.enabled', False) and options.get('module.playerbots_level_brackets.enabled', False)),
-            ('mod-progression', 'noisiver/mod-progression', 'master', options.get('module.progression.enabled', False)),
-            ('mod-skip-dk-starting-area', 'azerothcore/mod-skip-dk-starting-area', 'master', options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.patch', 21)) >= 17),
-            ('mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', options.get('module.stop_killing_them.enabled', False) and int(options.get('module.progression.patch', 21)) >= 12),
+            ('mod-progression', 'noisiver/mod-progression', 'phases', options.get('module.progression.enabled', False)),
+            ('mod-skip-dk-starting-area', 'azerothcore/mod-skip-dk-starting-area', 'master', options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.phase', 19)) >= 14),
+            ('mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', options.get('module.stop_killing_them.enabled', False) and int(options.get('module.progression.phase', 19)) >= 7),
             ('mod-weekendbonus', 'noisiver/mod-weekendbonus', 'master', options.get('module.weekendbonus.enabled', False))
         ]
 
@@ -572,29 +556,27 @@ def ImportDatabaseFiles():
             [options.get('build.world', True) and options.get('module.learnspells.enabled', False), f'{cwd}/source/modules/mod-learnspells/data/sql/world', 'MODULE'],
             [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/world/base', 'MODULE'],
             [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/world/updates', 'RELEASED'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False), f'{cwd}/source/modules/mod-progression/src/patch_00-1_1/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 1, f'{cwd}/source/modules/mod-progression/src/patch_01-1_2/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 2, f'{cwd}/source/modules/mod-progression/src/patch_02-1_3/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 3, f'{cwd}/source/modules/mod-progression/src/patch_03-1_4/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 4, f'{cwd}/source/modules/mod-progression/src/patch_04-1_5/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 5, f'{cwd}/source/modules/mod-progression/src/patch_05-1_6/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 6, f'{cwd}/source/modules/mod-progression/src/patch_06-1_7/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 7, f'{cwd}/source/modules/mod-progression/src/patch_07-1_8/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 8, f'{cwd}/source/modules/mod-progression/src/patch_08-1_9/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 9, f'{cwd}/source/modules/mod-progression/src/patch_09-1_10/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 10, f'{cwd}/source/modules/mod-progression/src/patch_10-1_11/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 11, f'{cwd}/source/modules/mod-progression/src/patch_11-1_12/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 12, f'{cwd}/source/modules/mod-progression/src/patch_12-2_0/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 13, f'{cwd}/source/modules/mod-progression/src/patch_13-2_1/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 14, f'{cwd}/source/modules/mod-progression/src/patch_14-2_2/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 15, f'{cwd}/source/modules/mod-progression/src/patch_15-2_3/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 16, f'{cwd}/source/modules/mod-progression/src/patch_16-2_4/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 17, f'{cwd}/source/modules/mod-progression/src/patch_17-3_0/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 18, f'{cwd}/source/modules/mod-progression/src/patch_18-3_1/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 19, f'{cwd}/source/modules/mod-progression/src/patch_19-3_2/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 20, f'{cwd}/source/modules/mod-progression/src/patch_20-3_3/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.patch', 21)) >= 21, f'{cwd}/source/modules/mod-progression/src/patch_21-3_3_5/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.patch', 21)) >= 17, f'{cwd}/source/modules/mod-skip-dk-starting-area/data/sql/db-world', 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False), f'{cwd}/source/modules/mod-progression/src/phase_00/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 1, f'{cwd}/source/modules/mod-progression/src/phase_01/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 2, f'{cwd}/source/modules/mod-progression/src/phase_02/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 3, f'{cwd}/source/modules/mod-progression/src/phase_03/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 4, f'{cwd}/source/modules/mod-progression/src/phase_04/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 5, f'{cwd}/source/modules/mod-progression/src/phase_05/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 6, f'{cwd}/source/modules/mod-progression/src/phase_06/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 7, f'{cwd}/source/modules/mod-progression/src/phase_07/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 8, f'{cwd}/source/modules/mod-progression/src/phase_08/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 9, f'{cwd}/source/modules/mod-progression/src/phase_09/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 10, f'{cwd}/source/modules/mod-progression/src/phase_10/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 11, f'{cwd}/source/modules/mod-progression/src/phase_11/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 12, f'{cwd}/source/modules/mod-progression/src/phase_12/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 13, f'{cwd}/source/modules/mod-progression/src/phase_13/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 14, f'{cwd}/source/modules/mod-progression/src/phase_14/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 15, f'{cwd}/source/modules/mod-progression/src/phase_15/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 16, f'{cwd}/source/modules/mod-progression/src/phase_16/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 17, f'{cwd}/source/modules/mod-progression/src/phase_17/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 18, f'{cwd}/source/modules/mod-progression/src/phase_18/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 19, f'{cwd}/source/modules/mod-progression/src/phase_19/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.phase', 19)) >= 14, f'{cwd}/source/modules/mod-skip-dk-starting-area/data/sql/db-world', 'MODULE'],
             [options.get('build.world', True), f'{cwd}/sql/world', None]
         ]
     }
@@ -692,7 +674,7 @@ def UpdateConfigFiles():
     function_start_time = time.time()
 
     map_update_threads = int(options.get('world.map_update_threads', '-1'))
-    patch_id = int(options.get('module.progression.patch', 21))
+    phase_id = int(options.get('module.progression.phase', 19))
     random_bots_maximum = int(options.get('module.playerbots.random_bots.maximum', 50))
     mysql_hostname = mysql_config['hostname']
     mysql_port = mysql_config['port']
@@ -899,124 +881,71 @@ def UpdateConfigFiles():
                 }
             }
         },
-        'modules/mod_ahbot.conf': {
-            'enabled': options.get('build.world', True) and options.get('module.ah_bot.enabled', False),
-            'options': {
-                'AuctionHouseBot.EnableSeller': {
-                    'enabled': options.get('module.ah_bot.seller.enabled', False),
-                    'value': 1
-                },
-                'AuctionHouseBot.EnableBuyer': {
-                    'enabled': options.get('module.ah_bot.buyer.enabled', False),
-                    'value': 1
-                },
-                'AuctionHouseBot.GUIDs': {
-                    'enabled': True,
-                    'value': options.get('module.ah_bot.character_guids', 0)
-                },
-                'AuctionHouseBot.ItemsPerCycle': {
-                    'enabled': True,
-                    'value': 250
-                },
-                'AuctionHouseBot.ListedItemLevelRestrict.Enabled': {
-                    'enabled': patch_id < 21,
-                    'value': 'true'
-                },
-                'AuctionHouseBot.ListedItemLevelRestrict.MaxItemLevel': {
-                    'enabled': patch_id < 21,
-                    'value': 63 if patch_id < 6 else 66 if patch_id < 7 else 76 if patch_id < 12 else 110 if patch_id < 13 else 120 if patch_id < 14 else 133 if patch_id < 17 else 200 if patch_id < 18 else 213 if patch_id < 19 else 226 if patch_id < 20 else 245
-                },
-                'AuctionHouseBot.Alliance.MinItems': {
-                    'enabled': True,
-                    'value': 15000
-                },
-                'AuctionHouseBot.Alliance.MaxItems': {
-                    'enabled': True,
-                    'value': 25000
-                },
-                'AuctionHouseBot.Horde.MinItems': {
-                    'enabled': True,
-                    'value': 25000
-                },
-                'AuctionHouseBot.Horde.MaxItems': {
-                    'enabled': True,
-                    'value': 25000
-                },
-                'AuctionHouseBot.Neutral.MinItems': {
-                    'enabled': True,
-                    'value': 25000
-                },
-                'AuctionHouseBot.Neutral.MaxItems': {
-                    'enabled': True,
-                    'value': 25000
-                },
-            }
-        },
         'modules/mod_assistant.conf': {
             'enabled': options.get('build.world', True) and options.get('module.assistant.enabled', False),
             'options': {
                 'Assistant.Heirlooms.Enabled': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'Assistant.Glyphs.Enabled': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'Assistant.Gems.Enabled': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'Assistant.Elixirs.Enabled': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'Assistant.Food.Enabled': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'Assistant.Enchants.Enabled': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'Assistant.FlightPaths.Vanilla.Enabled': {
-                    'enabled': patch_id < 12,
+                    'enabled': phase_id < 7,
                     'value': 0
                 },
                 'Assistant.FlightPaths.BurningCrusade.Enabled': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'Assistant.Professions.Apprentice.Cost': {
                     'enabled': True,
-                    'value': 100000 if patch_id < 17 else 1000000
+                    'value': 100000 if phase_id < 14 else 1000000
                 },
                 'Assistant.Professions.Journeyman.Cost': {
                     'enabled': True,
-                    'value': 250000 if patch_id < 17 else 2500000
+                    'value': 250000 if phase_id < 14 else 2500000
                 },
                 'Assistant.Professions.Expert.Cost': {
                     'enabled': True,
-                    'value': 500000 if patch_id < 17 else 5000000
+                    'value': 500000 if phase_id < 14 else 5000000
                 },
                 'Assistant.Professions.Artisan.Cost': {
                     'enabled': True,
-                    'value': 750000 if patch_id < 17 else 7500000
+                    'value': 750000 if phase_id < 14 else 7500000
                 },
                 'Assistant.Professions.Master.Enabled': {
-                    'enabled': patch_id >= 12,
+                    'enabled': phase_id >= 7,
                     'value': 1
                 },
                 'Assistant.Professions.Master.Cost': {
                     'enabled': True,
-                    'value': 1250000 if patch_id < 17 else 12500000
+                    'value': 1250000 if phase_id < 14 else 12500000
                 },
                 'Assistant.Professions.GrandMaster.Enabled': {
-                    'enabled': patch_id >= 17,
+                    'enabled': phase_id >= 14,
                     'value': 1
                 },
                 'Assistant.Instances.Heroic.Enabled': {
-                    'enabled': patch_id < 12,
+                    'enabled': phase_id < 8,
                     'value': 0
                 }
             }
@@ -1055,7 +984,7 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.RandomBotAccountCount': {
                     'enabled': random_bots_maximum > 0,
-                    'value': int(random_bots_maximum / (9 if patch_id < 17 else 10) + 1)
+                    'value': int(random_bots_maximum / (9 if phase_id < 14 else 10) + 1)
                 },
                 'AiPlayerbot.DisabledWithoutRealPlayer': {
                     'enabled': options.get('module.playerbots.random_bots.only_with_players', False),
@@ -1122,7 +1051,7 @@ def UpdateConfigFiles():
                     'value': 0
                 },
                 'AiPlayerbot.AltMaintenanceTalentTree': {
-                    'enabled': patch_id >= 17,
+                    'enabled': phase_id >= 14,
                     'value': 0
                 },
                 'AiPlayerbot.AltMaintenanceGlyphs': {
@@ -1130,15 +1059,15 @@ def UpdateConfigFiles():
                     'value': 0
                 },
                 'AiPlayerbot.AltMaintenanceGemsEnchants': {
-                    'enabled': patch_id >= 17,
+                    'enabled': phase_id >= 14,
                     'value': 0
                 },
                 'AiPlayerbot.AltMaintenancePet': {
-                    'enabled': patch_id >= 17,
+                    'enabled': phase_id >= 14,
                     'value': 0
                 },
                 'AiPlayerbot.AltMaintenancePetTalents': {
-                    'enabled': patch_id >= 17,
+                    'enabled': phase_id >= 14,
                     'value': 0
                 },
                 'AiPlayerbot.AltMaintenanceReputation': {
@@ -1158,7 +1087,7 @@ def UpdateConfigFiles():
                     'value': 5
                 },
                 'AiPlayerbot.DisableDeathKnightLogin': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 1
                 },
                 'AiPlayerbot.DisableRandomLevels': {
@@ -1167,11 +1096,11 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.RandombotStartingLevel': {
                     'enabled': not options.get('module.playerbots_level_brackets.enabled', False),
-                    'value': 60 if patch_id < 12 else 70 if patch_id < 17 else 80
+                    'value': 60 if phase_id < 7 else 70 if phase_id < 14 else 80
                 },
                 'AiPlayerbot.RandomBotMaxLevel': {
                     'enabled': True,
-                    'value': 60 if patch_id < 12 else 70 if patch_id < 17 else 80
+                    'value': 60 if phase_id < 7 else 70 if phase_id < 14 else 80
                 },
                 'AiPlayerbot.RandomGearQualityLimit': {
                     'enabled': True,
@@ -1182,8 +1111,8 @@ def UpdateConfigFiles():
                     'value': 1
                 },
                 'AiPlayerbot.RandomBotMaps': {
-                    'enabled': patch_id < 17,
-                    'value': '0,1' if patch_id < 12 else '0,1,530'
+                    'enabled': phase_id < 14,
+                    'value': '0,1' if phase_id < 7 else '0,1,530'
                 },
                 'PlayerbotsDatabaseInfo': {
                     'enabled': True,
@@ -1243,15 +1172,15 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.RandomBotArenaTeam2v2Count': {
                     'enabled': True,
-                    'value': 0 if patch_id < 12 else 15
+                    'value': 0 if phase_id < 8 else 15
                 },
                 'AiPlayerbot.RandomBotArenaTeam3v3Count': {
                     'enabled': True,
-                    'value': 0 if patch_id < 12 else 15
+                    'value': 0 if phase_id < 8 else 15
                 },
                 'AiPlayerbot.RandomBotArenaTeam5v5Count': {
                     'enabled': True,
-                    'value': 0 if patch_id < 12 else 25
+                    'value': 0 if phase_id < 8 else 25
                 },
                 'AiPlayerbot.AutoEquipUpgradeLoot': {
                     'enabled': not options.get('module.playerbots.auto_equip_upgrades', True),
@@ -1274,15 +1203,15 @@ def UpdateConfigFiles():
                     'value': 4
                 },
                 'AiPlayerbot.UseGroundMountAtMinLevel': {
-                    'enabled': patch_id < 19,
-                    'value': 40 if patch_id < 16 else 30
+                    'enabled': phase_id < 17,
+                    'value': 40 if phase_id < 16 else 30
                 },
                 'AiPlayerbot.UseFastGroundMountAtMinLevel': {
-                    'enabled': patch_id < 19,
+                    'enabled': phase_id < 17,
                     'value': 60
                 },
                 'AiPlayerbot.UseFlyMountAtMinLevel': {
-                    'enabled': patch_id < 19,
+                    'enabled': phase_id < 17,
                     'value': 70
                 },
                 'AiPlayerbot.NonCombatStrategies': {
@@ -1290,716 +1219,256 @@ def UpdateConfigFiles():
                     'value': '"+worldbuff,-food"'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '30220321233351000021-30505300002' if patch_id < 12 else '302203212333510020201231-30502'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '30220321233351000021-30505300002' if patch_id < 12 else '302203212333510020201231-3050530004'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '30202301233-325000005502310051' if patch_id < 12 else '302013-3250000055013100531251'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '30202301233-325000005502310051' if patch_id < 12 else '30202301233-3250000055013100531251'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '352000001-3-05335122500021251' if patch_id < 12 else '35--053351225000212521031'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '352000001-3-05335122500021251' if patch_id < 12 else '3502000023-3-053351225000212521031'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '30220321233351000021-30505300002' if patch_id < 12 else '302203212333510020201231-30502'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '30220321233351000021-30505300002' if patch_id < 12 else '302203212333510020201231-3050530004'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '30202301233-325000005502310051' if patch_id < 12 else '302013-3250000055013100531251'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '30202301233-325000005502310051' if patch_id < 12 else '30202301233-3250000055013100531251'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '352000001-3-05335122500021251' if patch_id < 12 else '35--053351225000212521031'
-                },
-                'AiPlayerbot.PremadeSpecLink.1.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '352000001-3-05335122500021251' if patch_id < 12 else '3502000023-3-053351225000212521031'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '50350152020013251-5002-05202' if patch_id < 12 else '503500520020130531051-50023'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '50350152020013251-5002-05202' if patch_id < 12 else '503500520020130531051-500251022-03'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0500513520310231-502302500003' if patch_id < 12 else '-25005135203102321331-5022'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0500513520310231-502302500003' if patch_id < 12 else '-25005135203102321331-502300510003'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-453201002-05232051203331301' if patch_id < 12 else '-45-052220512033313021331'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-453201002-05232051203331301' if patch_id < 12 else '-553201002-052320512033313021331'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '50350152020013251-5002-05202' if patch_id < 12 else '503500520020130531051-50023'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '50350152020013251-5002-05202' if patch_id < 12 else '503500520020130531051-500251022-03'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0500513520310231-502302500003' if patch_id < 12 else '-25005135203102321331-5022'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0500513520310231-502302500003' if patch_id < 12 else '-25005135203102321331-502300510003'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-453201002-05232051203331301' if patch_id < 12 else '-45-052220512033313021331'
-                },
-                'AiPlayerbot.PremadeSpecLink.2.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-453201002-05232051203331301' if patch_id < 12 else '-553201002-052320512033313021331'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.0.40': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '5120020151501224' if patch_id < 12 else '51200201515012231'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '51200201515012241-005305001-5' if patch_id < 12 else '512002015150122331151-005302'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '51200201515012241-005305001-5' if patch_id < 12 else '512002015150122331151-005304-500003'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '502-035305231230013231-5000002' if patch_id < 12 else '502-0353050012300132331351'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '502-035305231230013231-5000002' if patch_id < 12 else '502-0353050012300132331351-5300002'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-005305101-5000032500033330531' if patch_id < 12 else '-0052-50000325000333305311151'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-005305101-5000032500033330531' if patch_id < 12 else '-00530511102-50000325000333305311151'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '51200201515012241-005305001-5' if patch_id < 12 else '512002015150122331151-005302'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '51200201515012241-005305001-5' if patch_id < 12 else '512002015150122331151-005304-500003'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '502-035305231230013231-5000002' if patch_id < 12 else '502-0353050012300132331351'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '502-035305231230013231-5000002' if patch_id < 12 else '502-0353050012300132331351-5300002'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-005305101-5000032500033330531' if patch_id < 12 else '-0052-50000325000333305311151'
-                },
-                'AiPlayerbot.PremadeSpecLink.3.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-005305101-5000032500033330531' if patch_id < 12 else '-00530511102-50000325000333305311151'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '005303005350102501-005005001-502' if patch_id < 12 else '005303105350102521131-005005'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '005303005350102501-005005001-502' if patch_id < 12 else '005303105350102521131-005005003-502'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '00532000531-0252051000035015201' if patch_id < 12 else '0053-02520510000350152231051'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '00532000531-0252051000035015201' if patch_id < 12 else '0053200053-02520510000350152231051'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '3053031-3-5320232030300121051' if patch_id < 12 else '302-3-51202320303001213501351'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '3053031-3-5320232030300121051' if patch_id < 12 else '3053031-3-51202320303001213501351'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '005303005350102501-005005001-502' if patch_id < 12 else '005303105350102521131-005005'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '005303005350102501-005005001-502' if patch_id < 12 else '005303105350102521131-005005003-502'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '00532000531-0252051000035015201' if patch_id < 12 else '0053-02520510000350152231051'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '00532000531-0252051000035015201' if patch_id < 12 else '0053200053-02520510000350152231051'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '3053031-3-5320232030300121051' if patch_id < 12 else '302-3-51202320303001213501351'
-                },
-                'AiPlayerbot.PremadeSpecLink.4.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '3053031-3-5320232030300121051' if patch_id < 12 else '3053031-3-51202320303001213501351'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '050320313030051231-2055100303' if patch_id < 12 else '0503203130302512301331-2053'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '050320313030051231-2055100303' if patch_id < 12 else '0523203130302512301331-2055000303'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '0503203-23505103030215251' if patch_id < 12 else '05-235051030302152530051'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '0503203-23505103030215251' if patch_id < 12 else '050320302-235051030302152530051'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '05032031--3250230512230102231' if patch_id < 12 else '04--3250230512230103231531'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '05032031--3250230512230102231' if patch_id < 12 else '050032031--3250230512230103231531'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '050320313030051231-2055100303' if patch_id < 12 else '0503203130302512301331-2053'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '050320313030051231-2055100303' if patch_id < 12 else '0523203130302512301331-2055000303'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '0503203-23505103030215251' if patch_id < 12 else '05-235051030302152530051'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '0503203-23505103030215251' if patch_id < 12 else '050320302-235051030302152530051'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
                 },
-                'AiPlayerbot.PremadeSpecLink.5.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '05032031--3250230512230102231' if patch_id < 12 else '04--3250230512230103231531'
-                },
-                'AiPlayerbot.PremadeSpecLink.5.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '05032031--3250230512230102231' if patch_id < 12 else '050032031--3250230512230103231531'
-                },
                 'AiPlayerbot.PremadeSpecGlyph.6.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.6': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '3530001523213351-005050031' if patch_id < 12 else '2530001523213351331-00503'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '3530001523213351-005050031' if patch_id < 12 else '5530011523213351331-0050531'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '053030051-3020503300502133301' if patch_id < 12 else '05302-30305033005021333031111'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '053030051-3020503300502133301' if patch_id < 12 else '053030052-30505033005021333031111'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0050503-0500533133531051' if patch_id < 12 else '-0050103-05035331335010510301'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0050503-0500533133531051' if patch_id < 12 else '-0050523-05235331335010510321'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '3530001523213351-005050031' if patch_id < 12 else '2530001523213351331-00503'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '3530001523213351-005050031' if patch_id < 12 else '5530011523213351331-0050531'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '053030051-3020503300502133301' if patch_id < 12 else '05302-30305033005021333031111'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '053030051-3020503300502133301' if patch_id < 12 else '053030052-30505033005021333031111'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0050503-0500533133531051' if patch_id < 12 else '-0050103-05035331335010510301'
-                },
-                'AiPlayerbot.PremadeSpecLink.7.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-0050503-0500533133531051' if patch_id < 12 else '0050523-05235331335010510321'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235005030100330150321-03-023023001' if patch_id < 12 else '233005030100030150323125-03-023001'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235005030100330150321-03-023023001' if patch_id < 12 else '235005030100330150323125-03-023023001'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '23002-0055032012303330053123'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '2300230331-0055032012303330053123'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '23000503310003--0533030310233100031' if patch_id < 12 else '230005--05330303102331000321521'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '23000503310003--0533030310233100031' if patch_id < 12 else '23000503310003--05330303102331000321521'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '-2305030012303331053123-023003'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '-2305030012303331053123-033323031'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235005030100330150321-03-023023001' if patch_id < 12 else '233005030100030150323125-03-023001'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235005030100330150321-03-023023001' if patch_id < 12 else '235005030100330150323125-03-023023001'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '23002-0055032012303330053123'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '2300230311-0055032012303330051' if patch_id < 12 else '2300230331-0055032012303330053123'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.6': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.6.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '23000503310003--0533030310233100031' if patch_id < 12 else '230005--05330303102331000321521'
-                },
-                'AiPlayerbot.PremadeSpecLink.8.6.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '23000503310003--0533030310233100031' if patch_id < 12 else '23000503310003--05330303102331000321521'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310035100550031--55'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.0.70': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310235102551031--55000005'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310235102551031--55000005'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '-0032033011352025301351-53'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.1.70': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '03-0032033011352025301351-55000005'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '03-0032033011352025301351-55000005'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '025-03310030003-05203205220031051' if patch_id < 12 else '-032-052032052203310513351'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '025-03310030003-05203205220031051' if patch_id < 12 else '005-0331003-052032052203310513351'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310035100550031--55'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '235002203102351025--55000005' if patch_id < 12 else '23500220310235102551031--55000005'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '-0032033011352025301351-53'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '002-203203301035012531-55000005' if patch_id < 12 else '03-0032033011352025301351-55000005'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '025-03310030003-05203205220031051' if patch_id < 12 else '-032-052032052203310513351'
-                },
-                'AiPlayerbot.PremadeSpecLink.9.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '025-03310030003-05203205220031051' if patch_id < 12 else '005-0331003-052032052203310513351'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.0': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.0.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '503210312533130321--205003012' if patch_id < 12 else '503200312533133201351--203'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.0.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '503210312533130321--205003012' if patch_id < 12 else '503200312533133221351--205003012'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.1': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.1.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-5332321323220103531-205' if patch_id < 12 else '-50323213232201035310001-2034'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.1.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-5332321323220103531-205' if patch_id < 12 else '-50323213232221035312001-20550201'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.2': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.2.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '05320001--23003331253151251' if patch_id < 12 else '051--230033312031502531251'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.2.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '05320001--23003331253151251' if patch_id < 12 else '05320001--230033312431502531351'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.3': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.3.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-5532020323220100531-205003002' if patch_id < 12 else '-51320203232201005312031-203203'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.3.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-5532020323220100531-205003002' if patch_id < 12 else '-55320203232201005312031-203503012'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.4': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.4.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '503210312533130321--205003012' if patch_id < 12 else '503200312533133201351--203'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.4.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '503210312533130321--205003012' if patch_id < 12 else '503200312533133221351--205003012'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.5': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.5.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-5532020323220100531-205003002' if patch_id < 12 else '-51320203232201005312031-203203'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.5.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '-5532020323220100531-205003002' if patch_id < 12 else '-55320203232201005312031-203503012'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.6': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': '0,0,0,0,0,0'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.6.60': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '05320001--23003331253151251' if patch_id < 12 else '051--230033312031502531251'
-                },
-                'AiPlayerbot.PremadeSpecLink.11.6.80': {
-                    'enabled': patch_id < 17 and use_custom_talent_trees,
-                    'value': '05320001--23003331253151251' if patch_id < 12 else '05320001--230033312431502531351'
                 }
             }
         },
@@ -2011,95 +1480,95 @@ def UpdateConfigFiles():
                     'value': 1
                 },
                 'BotLevelBrackets.NumRanges': {
-                    'enabled': patch_id < 17,
-                    'value': 7 if patch_id < 12 else 8
+                    'enabled': phase_id < 14,
+                    'value': 7 if phase_id < 7 else 8
                 },
                 'BotLevelBrackets.Alliance.Range1.Pct': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'BotLevelBrackets.Alliance.Range2.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range3.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range4.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range5.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range6.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range7.Upper': {
-                    'enabled': patch_id < 12,
+                    'enabled': phase_id < 7,
                     'value': 60
                 },
                 'BotLevelBrackets.Alliance.Range7.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 30 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 30 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range8.Upper': {
-                    'enabled': patch_id >= 12 and patch_id < 17,
+                    'enabled': phase_id >= 7 and phase_id < 14,
                     'value': 70
                 },
                 'BotLevelBrackets.Alliance.Range8.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 0 if patch_id < 12 else 28
+                    'enabled': phase_id < 14,
+                    'value': 0 if phase_id < 7 else 28
                 },
                 'BotLevelBrackets.Alliance.Range9.Pct': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'BotLevelBrackets.Horde.Range1.Pct': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
                 'BotLevelBrackets.Horde.Range2.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range3.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range4.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range5.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range6.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 14 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range7.Upper': {
-                    'enabled': patch_id < 12,
+                    'enabled': phase_id < 7,
                     'value': 60
                 },
                 'BotLevelBrackets.Horde.Range7.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 30 if patch_id < 12 else 12
+                    'enabled': phase_id < 14,
+                    'value': 30 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range8.Upper': {
-                    'enabled': patch_id >= 12 and patch_id < 17,
+                    'enabled': phase_id >= 7 and phase_id < 14,
                     'value': 70
                 },
                 'BotLevelBrackets.Horde.Range8.Pct': {
-                    'enabled': patch_id < 17,
-                    'value': 0 if patch_id < 12 else 70
+                    'enabled': phase_id < 14,
+                    'value': 0 if phase_id < 7 else 70
                 },
                 'BotLevelBrackets.Horde.Range9.Pct': {
-                    'enabled': patch_id < 17,
+                    'enabled': phase_id < 14,
                     'value': 0
                 },
             }
@@ -2107,38 +1576,18 @@ def UpdateConfigFiles():
         'modules/mod_progression.conf': {
             'enabled': options.get('build.world', True) and options.get('module.progression.enabled', False),
             'options': {
-                'Progression.Patch': {
+                'Progression.Phase': {
                     'enabled': True,
-                    'value': patch_id
+                    'value': phase_id
                 },
                 'Progression.IcecrownCitadel.Aura': {
                     'enabled': True,
-                    'value': options.get('module.progression.aura', 4)
-                },
-                'Progression.TradableBindsOnPickup.Enforced': {
-                    'enabled': True,
-                    'value': 0
-                },
-                'Progression.QuestInfo.Enforced': {
-                    'enabled': True,
-                    'value': 0
-                },
-                'Progression.Achievements.Enforced': {
-                    'enabled': True,
-                    'value': 0
-                },
-                'Progression.Multiplier.Damage': {
-                    'enabled': True,
-                    'value': options.get('module.progression.multiplier.damage', 0.6)
-                },
-                'Progression.Multiplier.Healing': {
-                    'enabled': True,
-                    'value': options.get('module.progression.multiplier.healing', 0.5)
+                    'value': options.get('module.progression.aura', 6)
                 }
             }
         },
         'modules/skip_dk_module.conf': {
-            'enabled': options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and patch_id >= 17,
+            'enabled': options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and phase_id >= 14,
             'options': {
                 'Skip.Deathknight.Starter.Announce.enable': {
                     'enabled': True,
