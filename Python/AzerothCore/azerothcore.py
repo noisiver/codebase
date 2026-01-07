@@ -36,6 +36,7 @@ options = {}
 nested_options = {
     'build': {
         'auth': True,
+        'type': 'RelWithDebInfo',
         'world': True
     },
     'git': {
@@ -82,7 +83,7 @@ nested_options = {
         'progression': {
             'aura': 6,
             'enabled': False,
-            'phase': 19,
+            'phase': 18,
             'reset': False
         },
         'skip_dk_starting_area': {
@@ -294,13 +295,18 @@ def DownloadSourceCode():
             ('mod-playerbots', 'noisiver/mod-playerbots', 'noisiver', options.get('module.playerbots.enabled', False)),
             ('mod-player-bot-level-brackets', 'DustinHendrickson/mod-player-bot-level-brackets', 'main', options.get('module.playerbots.enabled', False) and options.get('module.playerbots_level_brackets.enabled', False)),
             ('mod-progression', 'noisiver/mod-progression', 'phases', options.get('module.progression.enabled', False)),
-            ('mod-skip-dk-starting-area', 'azerothcore/mod-skip-dk-starting-area', 'master', options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.phase', 19)) >= 14),
-            ('mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', options.get('module.stop_killing_them.enabled', False) and int(options.get('module.progression.phase', 19)) >= 7),
+            ('mod-skip-dk-starting-area', 'azerothcore/mod-skip-dk-starting-area', 'master', options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.phase', 18)) >= 13),
+            ('mod-stop-killing-them', 'noisiver/mod-stop-killing-them', 'master', options.get('module.stop_killing_them.enabled', False) and int(options.get('module.progression.phase', 18)) >= 7),
             ('mod-weekendbonus', 'noisiver/mod-weekendbonus', 'master', options.get('module.weekendbonus.enabled', False))
         ]
 
-        [DownloadOrUpdateSourceCode(repo, os.path.join(cwd, 'source/modules', name), branch, name)
-         for name, repo, branch, enabled in modules if enabled]
+        for name, repo, branch, enabled in modules:
+            path = os.path.join(cwd, 'source/modules', name)
+
+            if enabled:
+                DownloadOrUpdateSourceCode(repo, path, branch, name)
+            else:
+                shutil.rmtree(path, ignore_errors=True)
 
     print(f'{colorama.Fore.GREEN}Finished downloading source code after {FormattedTime(int(time.time() - function_start_time))}...{colorama.Style.RESET_ALL}')
 
@@ -317,6 +323,7 @@ def GenerateProject():
         '-DWITH_WARNINGS=0',
         '-DSCRIPTS=static',
         f'-DAPPS_BUILD={apps}',
+        f'-DCMAKE_BUILD_TYPE={build_type}',
     ] + (
         [
             '-Wno-dev',
@@ -348,7 +355,7 @@ def CompileSourceCode():
         target = ('authserver' if options.get('build.auth', True) and not options.get('build.world', True) else
                   'worldserver' if not options.get('build.auth', True) and options.get('build.world', True) else
                   'ALL_BUILD')
-        build_cmd, build_args, clean_args = f'{windows_paths['msbuild']}/MSBuild.exe', [f'{cwd}/source/build/AzerothCore.slnx', '/p:Configuration=RelWithDebInfo', '/p:WarningLevel=0', f'/target:{target}'], [f'{cwd}/source/build/AzerothCore.sln', '/t:Clean']
+        build_cmd, build_args, clean_args = f'{windows_paths['msbuild']}/MSBuild.exe', [f'{cwd}/source/build/AzerothCore.slnx', f'/p:Configuration={build_type}', '/p:WarningLevel=0', f'/target:{target}'], [f'{cwd}/source/build/AzerothCore.sln', '/t:Clean']
     else:
         build_cmd, build_args, clean_args = 'make', ['-j', str(multiprocessing.cpu_count()), 'install'], ['clean']
 
@@ -374,11 +381,11 @@ def CreateRequiredScripts():
     scripts = [
         [f'auth.{'bat' if os.name == 'nt' else 'sh'}', options.get('build.auth', True),
          cwd if os.name == 'nt' else f'{cwd}/source/bin',
-         '@echo off\ncd source/build/bin/RelWithDebInfo\n:auth\n    authserver.exe\ngoto auth\n' if os.name == 'nt' else
+         f'@echo off\ncd source/build/bin/{build_type}\n:auth\n    authserver.exe\ngoto auth\n' if os.name == 'nt' else
          '#!/bin/bash\nwhile :; do\n    ./authserver\n    sleep 5\ndone\n'],
         [f'world.{'bat' if os.name == 'nt' else 'sh'}', options.get('build.world', True),
          cwd if os.name == 'nt' else f'{cwd}/source/bin',
-         '@echo off\ncd source/build/bin/RelWithDebInfo\n:world\n    worldserver.exe\n    timeout 5\ngoto world\n' if os.name == 'nt' else
+         f'@echo off\ncd source/build/bin/{build_type}\n:world\n    worldserver.exe\n    timeout 5\ngoto world\n' if os.name == 'nt' else
          '#!/bin/bash\nwhile :; do\n    ./worldserver\n    [[ $? == 0 ]] && break\n    sleep 5\ndone\n'],
         ['start.sh', os.name != 'nt', f'{cwd}/source/bin',
          f'#!/bin/bash\n{'screen -AmdS auth ./auth.sh\n' if options.get('build.auth', True) else ''}'
@@ -426,7 +433,7 @@ def CopyRequiredLibraries():
         for filename in files:
             print(f'{colorama.Fore.YELLOW}Copying {filename}{colorama.Style.RESET_ALL}')
             try:
-                shutil.copyfile(f'{src_dir}/{filename}', f'{cwd}/source/build/bin/RelWithDebInfo/{filename}')
+                shutil.copyfile(f'{src_dir}/{filename}', f'{cwd}/source/build/bin/{build_type}/{filename}')
             except:
                 ReportError('Failed to copy required libraries')
 
@@ -434,7 +441,7 @@ def CopyRequiredLibraries():
 
 def GetClientDataPath():
     data_dir = options.get('world.data.directory', '.')
-    binary_path = f'{cwd}/source/bin/RelWithDebInfo' if os.name == 'nt' else f'{cwd}/source/bin'
+    binary_path = f'{cwd}/source/bin/{build_type}' if os.name == 'nt' else f'{cwd}/source/bin'
     return binary_path if data_dir == '.' else f'{binary_path}/{data_dir[2:]}' if data_dir.startswith('./') else data_dir
 
 def DownloadClientDataFiles():
@@ -557,26 +564,25 @@ def ImportDatabaseFiles():
             [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/world/base', 'MODULE'],
             [options.get('build.world', True) and options.get('module.playerbots.enabled', False), f'{cwd}/source/modules/mod-playerbots/data/sql/world/updates', 'RELEASED'],
             [options.get('build.world', True) and options.get('module.progression.enabled', False), f'{cwd}/source/modules/mod-progression/src/phase_00/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 1, f'{cwd}/source/modules/mod-progression/src/phase_01/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 2, f'{cwd}/source/modules/mod-progression/src/phase_02/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 3, f'{cwd}/source/modules/mod-progression/src/phase_03/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 4, f'{cwd}/source/modules/mod-progression/src/phase_04/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 5, f'{cwd}/source/modules/mod-progression/src/phase_05/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 6, f'{cwd}/source/modules/mod-progression/src/phase_06/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 7, f'{cwd}/source/modules/mod-progression/src/phase_07/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 8, f'{cwd}/source/modules/mod-progression/src/phase_08/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 9, f'{cwd}/source/modules/mod-progression/src/phase_09/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 10, f'{cwd}/source/modules/mod-progression/src/phase_10/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 11, f'{cwd}/source/modules/mod-progression/src/phase_11/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 12, f'{cwd}/source/modules/mod-progression/src/phase_12/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 13, f'{cwd}/source/modules/mod-progression/src/phase_13/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 14, f'{cwd}/source/modules/mod-progression/src/phase_14/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 15, f'{cwd}/source/modules/mod-progression/src/phase_15/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 16, f'{cwd}/source/modules/mod-progression/src/phase_16/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 17, f'{cwd}/source/modules/mod-progression/src/phase_17/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 18, f'{cwd}/source/modules/mod-progression/src/phase_18/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 19)) >= 19, f'{cwd}/source/modules/mod-progression/src/phase_19/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
-            [options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.phase', 19)) >= 14, f'{cwd}/source/modules/mod-skip-dk-starting-area/data/sql/db-world', 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 1, f'{cwd}/source/modules/mod-progression/src/phase_01/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 2, f'{cwd}/source/modules/mod-progression/src/phase_02/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 3, f'{cwd}/source/modules/mod-progression/src/phase_03/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 4, f'{cwd}/source/modules/mod-progression/src/phase_04/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 5, f'{cwd}/source/modules/mod-progression/src/phase_05/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 6, f'{cwd}/source/modules/mod-progression/src/phase_06/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 7, f'{cwd}/source/modules/mod-progression/src/phase_07/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 8, f'{cwd}/source/modules/mod-progression/src/phase_08/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 9, f'{cwd}/source/modules/mod-progression/src/phase_09/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 10, f'{cwd}/source/modules/mod-progression/src/phase_10/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 11, f'{cwd}/source/modules/mod-progression/src/phase_11/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 12, f'{cwd}/source/modules/mod-progression/src/phase_12/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 13, f'{cwd}/source/modules/mod-progression/src/phase_13/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 14, f'{cwd}/source/modules/mod-progression/src/phase_14/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 15, f'{cwd}/source/modules/mod-progression/src/phase_15/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 16, f'{cwd}/source/modules/mod-progression/src/phase_16/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 17, f'{cwd}/source/modules/mod-progression/src/phase_17/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.progression.enabled', False) and int(options.get('module.progression.phase', 18)) >= 18, f'{cwd}/source/modules/mod-progression/src/phase_18/sql', None if options.get('module.progression.reset', False) else 'MODULE'],
+            [options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and int(options.get('module.progression.phase', 18)) >= 14, f'{cwd}/source/modules/mod-skip-dk-starting-area/data/sql/db-world', 'MODULE'],
             [options.get('build.world', True), f'{cwd}/sql/world', None]
         ]
     }
@@ -674,7 +680,7 @@ def UpdateConfigFiles():
     function_start_time = time.time()
 
     map_update_threads = int(options.get('world.map_update_threads', '-1'))
-    phase_id = int(options.get('module.progression.phase', 19))
+    phase_id = int(options.get('module.progression.phase', 18))
     random_bots_maximum = int(options.get('module.playerbots.random_bots.maximum', 50))
     mysql_hostname = mysql_config['hostname']
     mysql_port = mysql_config['port']
@@ -885,27 +891,27 @@ def UpdateConfigFiles():
             'enabled': options.get('build.world', True) and options.get('module.assistant.enabled', False),
             'options': {
                 'Assistant.Heirlooms.Enabled': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'Assistant.Glyphs.Enabled': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'Assistant.Gems.Enabled': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'Assistant.Elixirs.Enabled': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'Assistant.Food.Enabled': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'Assistant.Enchants.Enabled': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'Assistant.FlightPaths.Vanilla.Enabled': {
@@ -913,24 +919,24 @@ def UpdateConfigFiles():
                     'value': 0
                 },
                 'Assistant.FlightPaths.BurningCrusade.Enabled': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'Assistant.Professions.Apprentice.Cost': {
                     'enabled': True,
-                    'value': 100000 if phase_id < 14 else 1000000
+                    'value': 100000 if phase_id < 13 else 1000000
                 },
                 'Assistant.Professions.Journeyman.Cost': {
                     'enabled': True,
-                    'value': 250000 if phase_id < 14 else 2500000
+                    'value': 250000 if phase_id < 13 else 2500000
                 },
                 'Assistant.Professions.Expert.Cost': {
                     'enabled': True,
-                    'value': 500000 if phase_id < 14 else 5000000
+                    'value': 500000 if phase_id < 13 else 5000000
                 },
                 'Assistant.Professions.Artisan.Cost': {
                     'enabled': True,
-                    'value': 750000 if phase_id < 14 else 7500000
+                    'value': 750000 if phase_id < 13 else 7500000
                 },
                 'Assistant.Professions.Master.Enabled': {
                     'enabled': phase_id >= 7,
@@ -938,14 +944,14 @@ def UpdateConfigFiles():
                 },
                 'Assistant.Professions.Master.Cost': {
                     'enabled': True,
-                    'value': 1250000 if phase_id < 14 else 12500000
+                    'value': 1250000 if phase_id < 13 else 12500000
                 },
                 'Assistant.Professions.GrandMaster.Enabled': {
-                    'enabled': phase_id >= 14,
+                    'enabled': phase_id >= 13,
                     'value': 1
                 },
                 'Assistant.Instances.Heroic.Enabled': {
-                    'enabled': phase_id < 8,
+                    'enabled': phase_id < 7,
                     'value': 0
                 }
             }
@@ -984,7 +990,7 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.RandomBotAccountCount': {
                     'enabled': random_bots_maximum > 0,
-                    'value': int(random_bots_maximum / (9 if phase_id < 14 else 10) + 1)
+                    'value': int(random_bots_maximum / (9 if phase_id < 13 else 10) + 1)
                 },
                 'AiPlayerbot.DisabledWithoutRealPlayer': {
                     'enabled': options.get('module.playerbots.random_bots.only_with_players', False),
@@ -1087,7 +1093,7 @@ def UpdateConfigFiles():
                     'value': 5
                 },
                 'AiPlayerbot.DisableDeathKnightLogin': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 1
                 },
                 'AiPlayerbot.DisableRandomLevels': {
@@ -1096,11 +1102,11 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.RandombotStartingLevel': {
                     'enabled': not options.get('module.playerbots_level_brackets.enabled', False),
-                    'value': 60 if phase_id < 7 else 70 if phase_id < 14 else 80
+                    'value': 60 if phase_id < 7 else 70 if phase_id < 13 else 80
                 },
                 'AiPlayerbot.RandomBotMaxLevel': {
                     'enabled': True,
-                    'value': 60 if phase_id < 7 else 70 if phase_id < 14 else 80
+                    'value': 60 if phase_id < 7 else 70 if phase_id < 13 else 80
                 },
                 'AiPlayerbot.RandomGearQualityLimit': {
                     'enabled': True,
@@ -1111,7 +1117,7 @@ def UpdateConfigFiles():
                     'value': 1
                 },
                 'AiPlayerbot.RandomBotMaps': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,1' if phase_id < 7 else '0,1,530'
                 },
                 'PlayerbotsDatabaseInfo': {
@@ -1219,255 +1225,255 @@ def UpdateConfigFiles():
                     'value': '"+worldbuff,-food"'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.1.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.2.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.3.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.4.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.5.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.6.6': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.7.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.8.6': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.9.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.0': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.1': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.2': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.3': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.4': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.5': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 },
                 'AiPlayerbot.PremadeSpecGlyph.11.6': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': '0,0,0,0,0,0'
                 }
             }
@@ -1480,31 +1486,31 @@ def UpdateConfigFiles():
                     'value': 1
                 },
                 'BotLevelBrackets.NumRanges': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 7 if phase_id < 7 else 8
                 },
                 'BotLevelBrackets.Alliance.Range1.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'BotLevelBrackets.Alliance.Range2.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range3.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range4.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range5.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range6.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range7.Upper': {
@@ -1512,43 +1518,43 @@ def UpdateConfigFiles():
                     'value': 60
                 },
                 'BotLevelBrackets.Alliance.Range7.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 30 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Alliance.Range8.Upper': {
-                    'enabled': phase_id >= 7 and phase_id < 14,
+                    'enabled': phase_id >= 7 and phase_id < 13,
                     'value': 70
                 },
                 'BotLevelBrackets.Alliance.Range8.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0 if phase_id < 7 else 28
                 },
                 'BotLevelBrackets.Alliance.Range9.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'BotLevelBrackets.Horde.Range1.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
                 'BotLevelBrackets.Horde.Range2.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range3.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range4.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range5.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range6.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 14 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range7.Upper': {
@@ -1556,19 +1562,19 @@ def UpdateConfigFiles():
                     'value': 60
                 },
                 'BotLevelBrackets.Horde.Range7.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 30 if phase_id < 7 else 12
                 },
                 'BotLevelBrackets.Horde.Range8.Upper': {
-                    'enabled': phase_id >= 7 and phase_id < 14,
+                    'enabled': phase_id >= 7 and phase_id < 13,
                     'value': 70
                 },
                 'BotLevelBrackets.Horde.Range8.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0 if phase_id < 7 else 70
                 },
                 'BotLevelBrackets.Horde.Range9.Pct': {
-                    'enabled': phase_id < 14,
+                    'enabled': phase_id < 13,
                     'value': 0
                 },
             }
@@ -1587,7 +1593,7 @@ def UpdateConfigFiles():
             }
         },
         'modules/skip_dk_module.conf': {
-            'enabled': options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and phase_id >= 14,
+            'enabled': options.get('build.world', True) and options.get('module.skip_dk_starting_area.enabled', False) and phase_id >= 13,
             'options': {
                 'Skip.Deathknight.Starter.Announce.enable': {
                     'enabled': True,
@@ -1606,7 +1612,7 @@ def UpdateConfigFiles():
         if not config_data['enabled']:
             continue
 
-        file_path = os.path.join(cwd, *(['source', 'build', 'bin', 'RelWithDebInfo', 'configs'] if os.name == 'nt' else ['source', 'etc']), config_file)
+        file_path = os.path.join(cwd, *(['source', 'build', 'bin', build_type, 'configs'] if os.name == 'nt' else ['source', 'etc']), config_file)
         dist_file = f'{file_path}.dist'
 
         try:
@@ -1774,6 +1780,11 @@ LoadOptionsFromDatabase()
 if not (options.get('build.auth', True) or options.get('build.world', True)):
     print(f'{colorama.Fore.RED}Stopping due to both auth and world being disabled{colorama.Style.RESET_ALL}')
     sys.exit(1)
+
+build_type = options.get('build.type', 'RelWithDebInfo')
+
+if not build_type.lower() == 'Debug' and not build_type.lower() == 'Release' and not build_type.lower() == 'RelWithDebInfo':
+    build_type = 'RelWithDebInfo'
 
 CreateBaseFolders()
 
