@@ -656,13 +656,22 @@ def ImportDatabaseFiles():
             with pymysql.connect(host=mysql_config['hostname'], port=mysql_config['port'], user=mysql_config['username'], password=mysql_config['password'], db=mysql_config['database']) as connect:
                 with connect.cursor() as cursor:
                     print(f'{colorama.Fore.YELLOW}Updating realmlist{colorama.Style.RESET_ALL}')
-                    cursor.execute(f'DELETE FROM `realmlist` WHERE `id` = %s;', (realm_id,))
-                    cursor.execute('INSERT INTO `realmlist` (`id`, `name`, `address`, `localAddress`, `port`) VALUES (%s, %s, %s, %s, %s);',
-                                   (realm_id, options.get('world.name', 'AzerothCore'), options.get('world.address', '127.0.0.1'), options.get('world.local_address', '127.0.0.1'), realm_port))
+                    cursor.execute('SELECT * FROM `realmlist` WHERE `id` = %s;', realm_id)
+                    row = cursor.fetchone()
+                    if row:
+                        cursor.execute('UPDATE `realmlist` SET `name` = %s, `address` = %s, `localAddress` = %s, `port` = %s WHERE `id` = %s;',
+                        (options.get('world.name', 'AzerothCore'), options.get('world.address', '127.0.0.1'), options.get('world.address', '127.0.0.1'), realm_port, realm_id))
+                    else:
+                        cursor.execute('INSERT INTO `realmlist` (`id`, `name`, `address`, `localAddress`, `port`) VALUES (%s, %s, %s, %s, %s);',
+                        (realm_id, options.get('world.name', 'AzerothCore'), options.get('world.address', '127.0.0.1'), options.get('world.address', '127.0.0.1'), realm_port))
 
                     print(f'{colorama.Fore.YELLOW}Updating message of the day{colorama.Style.RESET_ALL}')
-                    cursor.execute(f'DELETE FROM `motd` WHERE `realmid` = %s;', (realm_id,))
-                    cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (realm_id, f'Welcome to {options.get('world.name', 'AzerothCore')}'))
+                    cursor.execute('SELECT * FROM `motd` WHERE `realmid` = %s;', realm_id)
+                    row = cursor.fetchone()
+                    if row:
+                        cursor.execute('UPDATE `motd` SET `text` = %s WHERE `realmid` = %s;', (f'Welcome to {options.get('world.name', 'AzerothCore')}', realm_id))
+                    else:
+                        cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (realm_id, f'Welcome to {options.get('world.name', 'AzerothCore')}'))
 
                     connect.commit()
         except pymysql.Error:
@@ -1760,7 +1769,7 @@ commands = {
     'settings': [UpdateConfigFiles],
     'options': [UpdateConfigFiles],
     'dbc': [CopyDBCFiles],
-    'reset': [ResetWorldDatabase],
+    'reset': [StopServer, ResetWorldDatabase],
     'start': [StartServer],
     'stop': [StopServer],
     'restart': [StopServer, StartServer],
