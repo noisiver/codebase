@@ -65,6 +65,10 @@ nested_options = {
         },
         'playerbots': {
             'enabled': False,
+            'addclass_bots': {
+                'enabled': False,
+                'accounts': 50
+            },
             'auto_equip_upgrades': True,
             'auto_select_quest_reward': True,
             'random_bots': {
@@ -691,6 +695,8 @@ def UpdateConfigFiles():
     map_update_threads = int(options.get('world.map_update_threads', '-1'))
     phase_id = int(options.get('module.progression.phase', 18))
     random_bots_maximum = int(options.get('module.playerbots.random_bots.maximum', 50))
+    addclass_bots_enabled = options.get('module.playerbots.addclass_bots.enabled', False)
+    addclass_bots_accounts = int(options.get('module.playerbots.addclass_bots.accounts', 50)) if addclass_bots_enabled else 0
     mysql_hostname = mysql_config['hostname']
     mysql_port = mysql_config['port']
     mysql_username = mysql_config['username']
@@ -999,7 +1005,7 @@ def UpdateConfigFiles():
                 },
                 'AiPlayerbot.RandomBotAccountCount': {
                     'enabled': random_bots_maximum > 0,
-                    'value': int(random_bots_maximum / (9 if phase_id < 13 else 10) + 1)
+                    'value': int(random_bots_maximum / (9 if phase_id < 13 else 10) + 1 + addclass_bots_accounts)
                 },
                 'AiPlayerbot.DisabledWithoutRealPlayer': {
                     'enabled': options.get('module.playerbots.random_bots.only_with_players', False),
@@ -1166,12 +1172,12 @@ def UpdateConfigFiles():
                     'value': 0
                 },
                 'AiPlayerbot.AddClassCommand': {
-                    'enabled': True,
+                    'enabled': not addclass_bots_enabled,
                     'value': 0
                 },
                 'AiPlayerbot.AddClassAccountPoolSize': {
                     'enabled': True,
-                    'value': 0
+                    'value': addclass_bots_accounts
                 },
                 'AiPlayerbot.BotActiveAlone': {
                     'enabled': True,
