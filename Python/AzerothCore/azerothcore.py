@@ -18,6 +18,7 @@ import shutil
 import subprocess
 import stat
 import sys
+import time
 
 options = {
     'realm_id': 1,
@@ -169,7 +170,7 @@ build_world and not os.path.exists(os.path.join(sql_dir, 'characters')) and os.m
 build_world and not os.path.exists(os.path.join(sql_dir, 'world')) and os.makedirs(os.path.join(sql_dir, 'world'), exist_ok=True)
 build_world and not os.path.exists(dbc_dir) and os.makedirs(dbc_dir, exist_ok=True)
 
-class Progress(git.remote.RemoteProgress):
+class GitProgress(git.remote.RemoteProgress):
     def line_dropped(self, line): print(line)
     def update(self, *args): print(self._cur_line)
 
@@ -177,7 +178,7 @@ def DownloadOrUpdateSourceCode(name, path, branch, repository, use_ssh):
     if not os.path.exists(path):
         try:
             print(f'{colorama.Fore.YELLOW}Downloading the source code for {name}{colorama.Style.RESET_ALL}')
-            git.Repo.clone_from(url=f'git@github.com:{repository}' if use_ssh else f'https://github.com/{repository}.git', to_path=path, branch=branch, depth=1, single_branch=True, progress=Progress())
+            git.Repo.clone_from(url=f'git@github.com:{repository}' if use_ssh else f'https://github.com/{repository}.git', to_path=path, branch=branch, depth=1, single_branch=True, progress=GitProgress())
         except:
             print(f'{colorama.Fore.RED}Failed to download the source code for {name}{colorama.Style.RESET_ALL}')
             sys.exit(1)
@@ -185,7 +186,7 @@ def DownloadOrUpdateSourceCode(name, path, branch, repository, use_ssh):
         try:
             print(f'{colorama.Fore.YELLOW}Updating the source code for {name}{colorama.Style.RESET_ALL}')
             git.Repo(path).git.reset('--hard', f'origin/{branch}')
-            git.Repo(path).remotes.origin.pull(progress=Progress())
+            git.Repo(path).remotes.origin.pull(progress=GitProgress())
         except:
             print(f'{colorama.Fore.RED}Failed to update the source code for {name}{colorama.Style.RESET_ALL}')
             sys.exit(1)
@@ -193,16 +194,15 @@ def DownloadOrUpdateSourceCode(name, path, branch, repository, use_ssh):
 def DownloadSourceCode():
     print(f'{colorama.Fore.GREEN}Downloading source code...{colorama.Style.RESET_ALL}')
 
-    ac_path = os.path.join(cwd, 'src')
     ac_branch = options['azerothcore']['branch']
     ac_repository = options['azerothcore']['repository']
     ac_use_ssh = options['azerothcore']['use_ssh']
 
-    DownloadOrUpdateSourceCode('azerothcore', ac_path, ac_branch, ac_repository, ac_use_ssh)
+    DownloadOrUpdateSourceCode('azerothcore', src_dir, ac_branch, ac_repository, ac_use_ssh)
 
     for module_name, module_options in options['modules'].items():
         module_enabled = module_options['enabled']
-        module_path = os.path.join(ac_path, 'modules', module_name)
+        module_path = os.path.join(src_dir, 'modules', module_name)
         module_branch = module_options['branch']
         module_repository = module_options['repository']
         module_use_ssh = module_options['use_ssh']
@@ -343,7 +343,7 @@ def UpdateConfigs():
                 'LoginDatabaseInfo': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{mysql_database_auth}"',
                 'WorldDatabaseInfo': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{mysql_database_world}"',
                 'CharacterDatabaseInfo': f'"{mysql_hostname};{mysql_port};{mysql_username};{mysql_password};{mysql_database_characters}"',
-                'DataDir': '"./data"',
+                'DataDir': f'"{data_dir}"',
                 'Updates.EnableDatabases': 0,
                 'RealmZone': 8,
                 'MapUpdate.Threads': multiprocessing.cpu_count() if world_map_update_threads == -1 or world_map_update_threads == 0 else world_map_update_threads,
@@ -407,7 +407,7 @@ def UpdateConfigs():
             'options': {
                 'AiPlayerbot.MinRandomBots': min_random_bots,
                 'AiPlayerbot.MaxRandomBots': max_random_bots,
-                'AiPlayerbot.RandomBotAccountCount': int(max_random_bots / (9 if progression_phase_id < 13 else 10) + 1),
+                'AiPlayerbot.RandomBotAccountCount': int(max_random_bots / (9 if progression_phase_id < 13 else 10) + 1) if min_random_bots > 0 else 0,
                 'AiPlayerbot.AddClassAccountPoolSize': 0,
                 'AiPlayerbot.AddClassCommand': 0,
                 'AiPlayerbot.SelfBotLevel': 2,
@@ -560,6 +560,16 @@ def ImportDatabases():
                 'description': 'CUSTOM'
             },
             {
+                'enabled': build_world and playerbots_enabled,
+                'path': os.path.join(src_dir, 'modules', 'mod-playerbots', 'data', 'sql', 'characters', 'base'),
+                'description': 'MODULE'
+            },
+            {
+                'enabled': build_world and playerbots_enabled,
+                'path': os.path.join(src_dir, 'modules', 'mod-playerbots', 'data', 'sql', 'characters', 'updates'),
+                'description': 'MODULE'
+            },
+            {
                 'enabled': build_world,
                 'path': os.path.join(sql_dir, 'characters'),
                 'description': ''
@@ -580,6 +590,16 @@ def ImportDatabases():
                 'enabled': build_world,
                 'path': os.path.join(src_dir, 'data', 'sql', 'custom', 'db_world'),
                 'description': 'CUSTOM'
+            },
+            {
+                'enabled': build_world and playerbots_enabled,
+                'path': os.path.join(src_dir, 'modules', 'mod-playerbots', 'data', 'sql', 'world', 'base'),
+                'description': 'MODULE'
+            },
+            {
+                'enabled': build_world and playerbots_enabled,
+                'path': os.path.join(src_dir, 'modules', 'mod-playerbots', 'data', 'sql', 'world', 'updates'),
+                'description': 'MODULE'
             },
             {
                 'enabled': build_world and progression_enabled,
