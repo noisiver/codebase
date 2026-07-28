@@ -153,9 +153,6 @@ dbc_dir = os.path.join(custom_dir, 'dbc')
 
 realm_id = options['realm_id']
 
-cmake_cmd = 'cmake'
-build_cmd, build_args, clean_args = 'make', ['-j', str(multiprocessing.cpu_count()), 'install'], ['clean']
-
 mysql_hostname = options['mysql']['hostname']
 mysql_port = options['mysql']['port']
 mysql_username = options['mysql']['username']
@@ -220,8 +217,10 @@ def DownloadSourceCode():
 def GenerateProject():
     print(f'{colorama.Fore.GREEN}Generating project files...{colorama.Style.RESET_ALL}')
     args = [
-        f'-S {src_dir}',
-        f'-B {build_dir}',
+        '-S',
+        src_dir,
+        '-B',
+        build_dir,
         '-DWITH_WARNINGS=0',
         '-DSCRIPTS=static',
         f'-DAPPS_BUILD={build_apps}',
@@ -233,7 +232,7 @@ def GenerateProject():
     ]
 
     try:
-        subprocess.run([cmake_cmd, *args], check=True)
+        subprocess.run(['cmake', *args], check=True)
     except:
         print(f'{colorama.Fore.RED}Failed to generate the project files{colorama.Style.RESET_ALL}')
         sys.exit(1)
@@ -245,12 +244,12 @@ def CompileSourceCode():
 
     for attempt in range(2):
         try:
-            subprocess.run([build_cmd, *build_args], cwd=build_dir, check=True)
+            subprocess.run(['make', '-j', str(multiprocessing.cpu_count()), 'install'], cwd=build_dir, check=True)
             break
         except:
             if attempt == 0:
                 try:
-                    subprocess.run([build_cmd, *clean_args], cwd=build_dir, check=True)
+                    subprocess.run(['make', 'clean'], cwd=build_dir, check=True)
                 except:
                     print(f'{colorama.Fore.RED}Failed to clean the source code{colorama.Style.RESET_ALL}')
                     sys.exit(1)
