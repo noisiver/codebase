@@ -146,7 +146,7 @@ src_dir = os.path.join(cwd, 'src')
 build_dir = os.path.join(src_dir, 'build')
 install_dir = cwd
 bin_dir = os.path.join(install_dir, 'bin')
-data_dir = os.path.join(bin_dir, 'data')
+data_dir = os.path.join(cwd, 'data')
 custom_dir = os.path.join(cwd, 'custom')
 sql_dir = os.path.join(custom_dir, 'sql')
 dbc_dir = os.path.join(custom_dir, 'dbc')
@@ -805,7 +805,7 @@ def DownloadClientData():
     else:
         print(f'{colorama.Fore.MAGENTA}Checking the installed version{colorama.Style.RESET_ALL}')
 
-        version_file = os.path.join(bin_dir, 'version')
+        version_file = os.path.join(cwd, 'data.version')
         archive = os.path.join(cwd, 'data.zip')
 
         local_version = 0
@@ -877,6 +877,8 @@ def DownloadClientData():
                 sys.exit(1)
 
             with open(version_file, 'w') as f: f.write(remote_version)
+
+            os.path.exists(archive) and os.remove(archive)
 
             print(f'{colorama.Fore.MAGENTA}Finished extracting latest version{colorama.Style.RESET_ALL}')
         else:
