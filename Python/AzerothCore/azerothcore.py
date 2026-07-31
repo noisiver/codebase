@@ -34,7 +34,12 @@ options = {
         'config': {
             'realm_id': 1,
             'realm_port': 8085,
-            'map_update_threads': 0
+            'map_update_threads': 0,
+            'visibility': {
+                'continents': 100,
+                'instances': 170,
+                'battlegrounds': 250
+            }
         }
     },
     'modules': {
@@ -307,10 +312,12 @@ def UpdateConfigs():
     print(f'{colorama.Fore.GREEN}Updating config files...{colorama.Style.RESET_ALL}')
 
     world_options = options['azerothcore']['config']
-
     world_realm_id = world_options['realm_id']
     world_realm_port = world_options['realm_port']
     world_map_update_threads = world_options['map_update_threads']
+    world_visibility_continents = world_options['visibility']['continents']
+    world_visibility_instances = world_options['visibility']['instances']
+    world_visibility_battlegrounds = world_options['visibility']['battlegrounds']
 
     dungeon_clear_enabled = module_options['mod-dungeon-clear']['enabled']
 
@@ -345,6 +352,9 @@ def UpdateConfigs():
                 'DataDir': f'"{data_dir}"',
                 'Updates.EnableDatabases': 0,
                 'RealmZone': 8,
+                'Visibility.Distance.Continents': world_visibility_continents,
+                'Visibility.Distance.Instances': world_visibility_instances,
+                'Visibility.Distance.BGArenas': world_visibility_battlegrounds,
                 'MapUpdate.Threads': multiprocessing.cpu_count() if world_map_update_threads == -1 or world_map_update_threads == 0 else world_map_update_threads,
                 'GM.LoginState': 1,
                 'GM.Visible': 0,
