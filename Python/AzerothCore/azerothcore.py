@@ -448,7 +448,7 @@ def UpdateConfigs():
                 'AiPlayerbot.AutoGearScoreLimit': item_level_limit,
                 'AiPlayerbot.RandomBotMinLevel': 1,
                 'AiPlayerbot.RandomBotMaxLevel': 60 if progression_phase_id < 7 else 70 if progression_phase_id < 13 else 80,
-                'AiPlayerbot.DisableDeathKnightLogin': 0 if progression_phase_id < 13 else 1,
+                'AiPlayerbot.DisableDeathKnightLogin': 1 if progression_phase_id < 13 else 0,
                 'AiPlayerbot.DisableRandomLevels': 1,
                 'AiPlayerbot.RandombotStartingLevel': 60 if progression_phase_id < 7 else 70 if progression_phase_id < 13 else 80,
                 'AiPlayerbot.RandomGearQualityLimit': item_quality_limit,
