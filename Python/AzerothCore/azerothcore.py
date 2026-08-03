@@ -1043,7 +1043,7 @@ commands = {
     'settings': [UpdateConfigs],
     'options': [UpdateConfigs],
     'db': [ImportDatabases, UpdateRealmlistAndMotd],
-    'database': [ImportDatabases],
+    'database': [ImportDatabases, UpdateRealmlistAndMotd],
     'data': [DownloadClientData],
     'dbc': [CopyDbcFiles],
     'start': [StartServer],
