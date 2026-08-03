@@ -21,7 +21,6 @@ import sys
 import time
 
 options = {
-    'realm_id': 1,
     'build': {
         'auth': True,
         'world': True,
@@ -34,6 +33,8 @@ options = {
         'config': {
             'realm_id': 1,
             'realm_port': 8085,
+            'realm_name': 'AzerothCore',
+            'realm_address': '127.0.0.1',
             'map_update_threads': 0,
             'visibility': {
                 'continents': 100,
@@ -156,7 +157,11 @@ custom_dir = os.path.join(cwd, 'custom')
 sql_dir = os.path.join(custom_dir, 'sql')
 dbc_dir = os.path.join(custom_dir, 'dbc')
 
-realm_id = options['realm_id']
+world_options = options['azerothcore']['config']
+world_realm_id = world_options['realm_id']
+world_realm_port = world_options['realm_port']
+world_realm_name = world_options['realm_name']
+world_realm_address = world_options['realm_address']
 
 mysql_hostname = options['mysql']['hostname']
 mysql_port = options['mysql']['port']
@@ -278,11 +283,11 @@ def CreateRequiredScripts():
         ],
         [
             'start.sh', True,
-            f'#!/bin/bash\n{'screen -AmdS auth ./auth.sh\n' if build_auth else ''}{f'time=$(date +%s)\nscreen -L -Logfile $time.log -AmdS world-{realm_id} ./world.sh\n' if build_world else ''}'
+            f'#!/bin/bash\n{'screen -AmdS auth ./auth.sh\n' if build_auth else ''}{f'time=$(date +%s)\nscreen -L -Logfile $time.log -AmdS world-{world_realm_id} ./world.sh\n' if build_world else ''}'
         ],
         [
             'stop.sh', True,
-            f'#!/bin/bash\n{'screen -X -S auth quit\n' if build_auth else ''}{f'screen -X -S world-{realm_id} quit\n' if build_world else ''}'
+            f'#!/bin/bash\n{'screen -X -S auth quit\n' if build_auth else ''}{f'screen -X -S world-{world_realm_id} quit\n' if build_world else ''}'
         ]
             
     ]
@@ -311,9 +316,6 @@ def CreateRequiredScripts():
 def UpdateConfigs():
     print(f'{colorama.Fore.GREEN}Updating config files...{colorama.Style.RESET_ALL}')
 
-    world_options = options['azerothcore']['config']
-    world_realm_id = world_options['realm_id']
-    world_realm_port = world_options['realm_port']
     world_map_update_threads = world_options['map_update_threads']
     world_visibility_continents = world_options['visibility']['continents']
     world_visibility_instances = world_options['visibility']['instances']
@@ -807,6 +809,40 @@ def ImportDatabases():
 
     print(f'{colorama.Fore.GREEN}Finished importing database files...{colorama.Style.RESET_ALL}')
 
+def UpdateRealmlistAndMotd():
+    print(f'{colorama.Fore.GREEN}Updating realmlist and motd...{colorama.Style.RESET_ALL}')
+
+    if not build_world:
+        print(f'{colorama.Fore.CYAN}Skipped because world is not enabled{colorama.Style.RESET_ALL}')
+    else:
+        try:
+            with pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, db=mysql_database_auth) as connect:
+                with connect.cursor() as cursor:
+                    print(f'{colorama.Fore.YELLOW}Updating realmlist{colorama.Style.RESET_ALL}')
+                    cursor.execute('SELECT * FROM `realmlist` WHERE `id` = %s;', world_realm_id)
+                    row = cursor.fetchone()
+                    if row:
+                        cursor.execute('UPDATE `realmlist` SET `name` = %s, `address` = %s, `localAddress` = %s, `port` = %s WHERE `id` = %s;',
+                        (world_realm_name, world_realm_address, world_realm_address, world_realm_port, world_realm_id))
+                    else:
+                        cursor.execute('INSERT INTO `realmlist` (`id`, `name`, `address`, `localAddress`, `port`) VALUES (%s, %s, %s, %s, %s);',
+                        (world_realm_id, world_realm_name, world_realm_address, world_realm_address, world_realm_port))
+
+                    print(f'{colorama.Fore.YELLOW}Updating message of the day{colorama.Style.RESET_ALL}')
+                    cursor.execute('SELECT * FROM `motd` WHERE `realmid` = %s;', world_realm_id)
+                    row = cursor.fetchone()
+                    if row:
+                        cursor.execute('UPDATE `motd` SET `text` = %s WHERE `realmid` = %s;', (f'Welcome to {options.get('world.name', 'AzerothCore')}', world_realm_id))
+                    else:
+                        cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (world_realm_id, f'Welcome to {world_realm_name}.'))
+
+                    connect.commit()
+        except:
+            print(f'{colorama.Fore.RED}Failed to update realmlist and motd{colorama.Style.RESET_ALL}')
+            sys.exit(1)
+
+    print(f'{colorama.Fore.GREEN}Finished updating realmlist and motd...{colorama.Style.RESET_ALL}')
+
 def DownloadClientData():
     print(f'{colorama.Fore.GREEN}Downloading client data...{colorama.Style.RESET_ALL}')
 
@@ -929,12 +965,12 @@ def IsScreenActive(name) -> bool:
 
 def WaitForShutdown():
     subprocess.run([
-        'screen', '-S', f'world-{realm_id}', '-p', '0',
+        'screen', '-S', f'world-{world_realm_id}', '-p', '0',
         '-X', 'stuff', 'server shutdown 10^m'
     ], check=True)
 
     for _ in range(30):
-        if not IsScreenActive(f'world-{realm_id}'):
+        if not IsScreenActive(f'world-{world_realm_id}'):
             return
         time.sleep(1)
 
@@ -942,13 +978,13 @@ def StopServer():
     print(f'{colorama.Fore.GREEN}Stopping the server...{colorama.Style.RESET_ALL}')
 
     auth_running = build_auth and IsScreenActive('auth')
-    world_running = build_world and IsScreenActive(f'world-{realm_id}')
+    world_running = build_world and IsScreenActive(f'world-{world_realm_id}')
 
     if auth_running or world_running:
         if world_running:
             print(f'{colorama.Fore.YELLOW}Telling the worldserver to shut down{colorama.Style.RESET_ALL}')
             WaitForShutdown()
-            world_running = build_world and IsScreenActive(f'world-{realm_id}')
+            world_running = build_world and IsScreenActive(f'world-{world_realm_id}')
 
         if auth_running:
             print(f'{colorama.Fore.YELLOW}Stopping authserver{colorama.Style.RESET_ALL}')
@@ -967,7 +1003,7 @@ def StartServer():
     print(f'{colorama.Fore.GREEN}Starting the server...{colorama.Style.RESET_ALL}')
 
     auth_needed = build_auth and not IsScreenActive('auth')
-    world_needed = build_world and not IsScreenActive(f'world-{realm_id}')
+    world_needed = build_world and not IsScreenActive(f'world-{world_realm_id}')
 
     if auth_needed or world_needed:
         try:
@@ -979,7 +1015,7 @@ def StartServer():
             print(f'{colorama.Fore.YELLOW}To access the authserver screen: screen -r auth{colorama.Style.RESET_ALL}')
 
         if world_needed:
-            print(f'{colorama.Fore.YELLOW}To access the worldserver screen: screen -r world-{realm_id}{colorama.Style.RESET_ALL}')
+            print(f'{colorama.Fore.YELLOW}To access the worldserver screen: screen -r world-{world_realm_id}{colorama.Style.RESET_ALL}')
     else:
         print(f'{colorama.Fore.RED}The server is already running{colorama.Style.RESET_ALL}')
 
@@ -1006,14 +1042,14 @@ commands = {
     'cfg': [UpdateConfigs],
     'settings': [UpdateConfigs],
     'options': [UpdateConfigs],
-    'db': [ImportDatabases],
+    'db': [ImportDatabases, UpdateRealmlistAndMotd],
     'database': [ImportDatabases],
     'data': [DownloadClientData],
     'dbc': [CopyDbcFiles],
     'start': [StartServer],
     'stop': [StopServer],
     'restart': [StopServer, StartServer],
-    'all': [StopServer, DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, UpdateConfigs, ImportDatabases, DownloadClientData, CopyDbcFiles, StartServer]
+    'all': [StopServer, DownloadSourceCode, GenerateProject, CompileSourceCode, CreateRequiredScripts, UpdateConfigs, ImportDatabases, UpdateRealmlistAndMotd, DownloadClientData, CopyDbcFiles, StartServer]
 }
 
 def PrintAvailableArguments():
