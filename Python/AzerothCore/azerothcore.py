@@ -128,6 +128,10 @@ options = {
             'world': 'acore_world',
             'playerbots': 'acore_playerbots'
         }
+    },
+    'telegram': {
+        'chat_id': 0,
+        'token': 0
     }
 }
 
@@ -172,10 +176,29 @@ mysql_database_characters = options['mysql']['database']['characters']
 mysql_database_world = options['mysql']['database']['world']
 mysql_database_playerbots = options['mysql']['database']['playerbots']
 
+mysql_cnf = os.path.join(cwd, 'mysql.cnf')
+
 not os.path.exists(os.path.join(sql_dir, 'auth')) and os.makedirs(os.path.join(sql_dir, 'auth'), exist_ok=True)
 build_world and not os.path.exists(os.path.join(sql_dir, 'characters')) and os.makedirs(os.path.join(sql_dir, 'characters'), exist_ok=True)
 build_world and not os.path.exists(os.path.join(sql_dir, 'world')) and os.makedirs(os.path.join(sql_dir, 'world'), exist_ok=True)
 build_world and not os.path.exists(dbc_dir) and os.makedirs(dbc_dir, exist_ok=True)
+
+def PrintError(message):
+    telegram_chat_id = options['telegram']['chat_id']
+    telegram_token = options['telegram']['token']
+
+    if telegram_chat_id and telegram_token:
+        try:
+            requests.get(
+                f'https://api.telegram.org/bot{telegram_token}/sendMessage'
+                f'?chat_id={telegram_chat_id}&text={f'[{world_realm_name} (id: {world_realm_id})]' if build_world else '[Auth]'}: {message}'
+            ).json()
+        except:
+            pass
+
+    print(f'{colorama.Fore.RED}{message}{colorama.Style.RESET_ALL}')
+    os.path.exists(mysql_cnf) and os.remove(mysql_cnf)
+    sys.exit(1)
 
 class GitProgress(git.remote.RemoteProgress):
     def line_dropped(self, line): print(line)
@@ -187,16 +210,14 @@ def DownloadOrUpdateSourceCode(name, path, branch, repository, use_ssh):
             print(f'{colorama.Fore.YELLOW}Downloading the source code for {name}{colorama.Style.RESET_ALL}')
             git.Repo.clone_from(url=f'git@github.com:{repository}' if use_ssh else f'https://github.com/{repository}.git', to_path=path, branch=branch, depth=1, single_branch=True, progress=GitProgress())
         except:
-            print(f'{colorama.Fore.RED}Failed to download the source code for {name}{colorama.Style.RESET_ALL}')
-            sys.exit(1)
+            PrintError(f'Failed to download the source code for {name}')
     else:
         try:
             print(f'{colorama.Fore.YELLOW}Updating the source code for {name}{colorama.Style.RESET_ALL}')
             git.Repo(path).git.reset('--hard', f'origin/{branch}')
             git.Repo(path).remotes.origin.pull(progress=GitProgress())
         except:
-            print(f'{colorama.Fore.RED}Failed to update the source code for {name}{colorama.Style.RESET_ALL}')
-            sys.exit(1)
+            PrintError(f'Failed to update the source code for {name}')
 
 def DownloadSourceCode():
     print(f'{colorama.Fore.GREEN}Downloading source code...{colorama.Style.RESET_ALL}')
@@ -244,8 +265,7 @@ def GenerateProject():
     try:
         subprocess.run(['cmake', *args], check=True)
     except:
-        print(f'{colorama.Fore.RED}Failed to generate the project files{colorama.Style.RESET_ALL}')
-        sys.exit(1)
+        PrintError('Failed to generate the project files')
 
     print(f'{colorama.Fore.GREEN}Finished generating project files...{colorama.Style.RESET_ALL}')
 
@@ -261,11 +281,9 @@ def CompileSourceCode():
                 try:
                     subprocess.run(['make', 'clean'], cwd=build_dir, check=True)
                 except:
-                    print(f'{colorama.Fore.RED}Failed to clean the source code{colorama.Style.RESET_ALL}')
-                    sys.exit(1)
+                    PrintError('Failed to clean the source code')
             else:
-                print(f'{colorama.Fore.RED}Failed to compile the source code{colorama.Style.RESET_ALL}')
-                sys.exit(1)
+                PrintError('Failed to compile the source code')
 
     print(f'{colorama.Fore.GREEN}Finished compiling the source code...{colorama.Style.RESET_ALL}')
 
@@ -308,8 +326,7 @@ def CreateRequiredScripts():
                 f.write(content)
             Path(script_path).chmod(Path(script_path).stat().st_mode | stat.S_IEXEC)
         except:
-            print(f'{colorama.Fore.RED}Failed to create {name}{colorama.Style.RESET_ALL}')
-            sys.exit(1)
+            PrintError(f'Failed to create {name}')
 
     print(f'{colorama.Fore.GREEN}Finished creating required scripts...{colorama.Style.RESET_ALL}')
 
@@ -500,8 +517,7 @@ def UpdateConfigs():
         try:
             shutil.copy(dist_file, config_file)
         except:
-            print(f'{colorama.Fore.RED}Failed to update {base_file_name}{colorama.Style.RESET_ALL}')
-            sys.exit(1)
+            PrintError(f'Failed to update {base_file_name}')
 
         with open(config_file, 'r+') as f:
             lines = f.readlines()
@@ -525,8 +541,6 @@ def GetFileHash(file):
 
 def ImportDatabases():
     print(f'{colorama.Fore.GREEN}Importing database files...{colorama.Style.RESET_ALL}')
-
-    mysql_cnf = os.path.join(cwd, 'mysql.cnf')
 
     with open(mysql_cnf, 'w') as f:
         f.write(f'[client]\nhost="{mysql_hostname}"\nport="{mysql_port}"\nuser="{mysql_username}"\npassword="{mysql_password}"')
@@ -765,9 +779,7 @@ def ImportDatabases():
                             cursor.execute('SHOW TABLES;')
                             tables = [row[0] for row in cursor.fetchall()]
             except:
-                print(f'{colorama.Fore.RED}Failed to load {'updates' if is_update else 'table data'} from {name}{colorama.Style.RESET_ALL}')
-                os.path.exists(mysql_cnf) and os.remove(mysql_cnf)
-                sys.exit(1)
+                PrintError(f'Failed to load {'updates' if is_update else 'table data'} from {name}')
 
             for file in sorted(os.listdir(path)):
                 file_path = os.path.join(path, file)
@@ -787,9 +799,7 @@ def ImportDatabases():
                 try:
                     subprocess.run(f'mysql --defaults-extra-file={mysql_cnf} {name} < {file_path}', shell=True, check=True)
                 except:
-                    print(f'{colorama.Fore.RED}Failed to import {file} to {name}{colorama.Style.RESET_ALL}')
-                    os.path.exists(mysql_cnf) and os.remove(mysql_cnf)
-                    sys.exit(1)
+                    PrintError(f'Failed to import {file} to {name}')
 
                 if is_update:
                     try:
@@ -799,9 +809,7 @@ def ImportDatabases():
                                 cursor.execute('INSERT INTO `updates` (`name`, `hash`, `state`) VALUES (%s, %s, %s);', (file, sha, description))
                                 connect.commit()
                     except:
-                        print(f'{colorama.Fore.RED}Failed to add file hash for {file} to {name}{colorama.Style.RESET_ALL}')
-                        os.path.exists(mysql_cnf) and os.remove(mysql_cnf)
-                        sys.exit(1)
+                        PrintError(f'Failed to add file hash for {file} to {name}')
 
         print(f'{colorama.Fore.MAGENTA}Finished importing files for {name}{colorama.Style.RESET_ALL}')
 
@@ -838,8 +846,7 @@ def UpdateRealmlistAndMotd():
 
                     connect.commit()
         except:
-            print(f'{colorama.Fore.RED}Failed to update realmlist and motd{colorama.Style.RESET_ALL}')
-            sys.exit(1)
+            PrintError('Failed to update realmlist and motd')
 
     print(f'{colorama.Fore.GREEN}Finished updating realmlist and motd...{colorama.Style.RESET_ALL}')
 
@@ -871,8 +878,7 @@ def DownloadClientData():
         try:
             remote_version = sorted(git.cmd.Git().ls_remote('--tags', 'https://github.com/wowgaming/client-data.git').split('\n'), reverse=True)[0].rsplit('/', 1)[1].replace('v', '')
         except:
-            print(f'{colorama.Fore.RED}Failed to retreive the latest version{colorama.Style.RESET_ALL}')
-            sys.exit(1)
+            PrintError('Failed to retreive the latest version')
 
         print(f'{colorama.Fore.YELLOW}Found version {remote_version}{colorama.Style.RESET_ALL}')
 
@@ -886,15 +892,13 @@ def DownloadClientData():
 
             response = requests.get(f'https://github.com/wowgaming/client-data/releases/download/v{remote_version}/data.zip', stream=True)
             if response.status_code != 200:
-                print(f'{colorama.Fore.RED}Failed to download the latest version{colorama.Style.RESET_ALL}')
-                sys.exit(1)
+                PrintError('Failed to download the latest version')
 
             try:
                 with open(archive, 'wb') as f, tqdm(total=int(response.headers.get('content-length', 0)), unit='iB', unit_scale=True, unit_divisor=1024) as bar:
                     [bar.update(f.write(chunk)) for chunk in response.iter_content(1024)]
             except:
-                print(f'{colorama.Fore.RED}Failed to download the latest version{colorama.Style.RESET_ALL}')
-                sys.exit(1)
+                PrintError('Failed to download the latest version')
 
             print(f'{colorama.Fore.MAGENTA}Finished downloading the latest version{colorama.Style.RESET_ALL}')
             print(f'{colorama.Fore.MAGENTA}Extracting the latest version{colorama.Style.RESET_ALL}')
@@ -919,8 +923,7 @@ def DownloadClientData():
                                     dst.write(chunk)
                                     bar.update(len(chunk))
             except:
-                print(f'{colorama.Fore.RED}Failed to extract the latest version{colorama.Style.RESET_ALL}')
-                sys.exit(1)
+                PrintError('Failed to extract the latest version')
 
             with open(version_file, 'w') as f: f.write(remote_version)
 
@@ -947,8 +950,7 @@ def CopyDbcFiles():
                 try:
                     shutil.copyfile(os.path.join(dbc_dir, file), os.path.join(data_dir, 'dbc', file))
                 except:
-                    print(f'{colorama.Fore.RED}Failed to copy {file}{colorama.Style.RESET_ALL}')
-                    sys.exit(1)
+                    PrintError(f'Failed to copy {file}')
         else:
             print(f'{colorama.Fore.YELLOW}No files found in directory{colorama.Style.RESET_ALL}')
 
