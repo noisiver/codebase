@@ -770,7 +770,7 @@ def ImportDatabases():
             updates = []
 
             try:
-                with pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, db=name) as connect:
+                with pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, database=name) as connect:
                     with connect.cursor() as cursor:
                         if is_update:
                             cursor.execute('SELECT `name`, `hash` FROM `updates`;')
@@ -803,7 +803,7 @@ def ImportDatabases():
 
                 if is_update:
                     try:
-                        with pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, db=name) as connect:
+                        with pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, database=name) as connect:
                             with connect.cursor() as cursor:
                                 cursor.execute('DELETE FROM `updates` WHERE `name` = %s;', (file,))
                                 cursor.execute('INSERT INTO `updates` (`name`, `hash`, `state`) VALUES (%s, %s, %s);', (file, sha, description))
@@ -824,7 +824,7 @@ def UpdateRealmlistAndMotd():
         print(f'{colorama.Fore.CYAN}Skipped because world is not enabled{colorama.Style.RESET_ALL}')
     else:
         try:
-            with pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, db=mysql_database_auth) as connect:
+            with pymysql.connect(host=mysql_hostname, port=mysql_port, user=mysql_username, password=mysql_password, database=mysql_database_auth) as connect:
                 with connect.cursor() as cursor:
                     print(f'{colorama.Fore.YELLOW}Updating realmlist{colorama.Style.RESET_ALL}')
                     cursor.execute('SELECT * FROM `realmlist` WHERE `id` = %s;', world_realm_id)
@@ -840,7 +840,7 @@ def UpdateRealmlistAndMotd():
                     cursor.execute('SELECT * FROM `motd` WHERE `realmid` = %s;', world_realm_id)
                     row = cursor.fetchone()
                     if row:
-                        cursor.execute('UPDATE `motd` SET `text` = %s WHERE `realmid` = %s;', (f'Welcome to {options.get('world.name', 'AzerothCore')}', world_realm_id))
+                        cursor.execute('UPDATE `motd` SET `text` = %s WHERE `realmid` = %s;', (f'Welcome to {world_realm_name}', world_realm_id))
                     else:
                         cursor.execute('INSERT INTO `motd` (`realmid`, `text`) VALUES (%s, %s);', (world_realm_id, f'Welcome to {world_realm_name}.'))
 
